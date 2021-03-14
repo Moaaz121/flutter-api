@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
 
-
 enum languages { English, Arabic, Indian }
 
 class Constants {
   static String appName = "Login App";
-  static int isActive=0;
-  static int userType=0;
-
-
-
-
-
+  static int isActive = 0;
+  static int userType = 0;
 
   static languages languageId = languages.English;
-  static TextDirection textDirection = Constants.languageId == languages.Arabic ? TextDirection.rtl : TextDirection.ltr;
-  
-  static updateTextDirection () {
-    textDirection = Constants.languageId == languages.Arabic ? TextDirection.rtl : TextDirection.ltr;
+  static TextDirection textDirection = Constants.languageId == languages.Arabic
+      ? TextDirection.rtl
+      : TextDirection.ltr;
+
+  static updateTextDirection() {
+    textDirection = Constants.languageId == languages.Arabic
+        ? TextDirection.rtl
+        : TextDirection.ltr;
   }
 
   //Colors for theme
@@ -70,3 +68,27 @@ class Constants {
     return TextStyle(color: color ?? Colors.black, fontSize: fontSize ?? 14);
   }
 }
+
+// Start Karem
+
+// end karem
+
+// Start Asmaa
+
+// end Asmaa
+
+// Start Bahaa
+
+// end Bahaa
+
+// Start Mosdik
+
+// end Mosdik
+
+// Start Moaaz
+
+// end Moaaz
+
+// Start Islam
+
+// end Islam

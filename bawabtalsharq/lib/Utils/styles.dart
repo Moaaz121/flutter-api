@@ -24,10 +24,10 @@ const linkColor = Color.fromRGBO(238, 161, 26, 1);
 const medicineColor = Color.fromRGBO(152, 188, 229, 1);
 const backIconColor = Color.fromRGBO(130, 130, 130, 1);
 const backTabColor = Color.fromRGBO(163, 172, 194, 0.14);
-const defaultOrangeColor = Color(0xFFe16036);
 
 const defaultSecondaryBackgroundColor = Color(0xFF3D5A80);
 const defaultPrimaryBackgroundColor = Color(0xFFEE6C4D);
+
 
 const defaultAppBarTheme = AppBarTheme(
     color: Colors.white,
@@ -48,3 +48,28 @@ TextStyle titleStyle(
     String fontFamily = 'Font-Regular'}) {
   return TextStyle(fontFamily: fontFamily, color: color, fontSize: fontSize);
 }
+
+// Start Karem
+
+// end karem
+
+// Start Asmaa
+const defaultOrangeColor = Color(0xFFe16036);
+
+// end Asmaa
+
+// Start Bahaa
+
+// end Bahaa
+
+// Start Mosdik
+
+// end Mosdik
+
+// Start Moaaz
+
+// end Moaaz
+
+// Start Islam
+
+// end Islam

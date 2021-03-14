@@ -1,3 +1,5 @@
+
+
 import 'Strings Data/strings_ar.dart';
 import 'Strings Data/strings_en.dart';
 import 'Strings Data/strings_inr.dart';
@@ -17,6 +19,11 @@ class Strings {
     }
   }
 
+// Start Karem
+
+// end karem
+
+// Start Asmaa
   String allCategories() {
     switch (Constants.languageId) {
       case languages.Arabic:
@@ -29,4 +36,23 @@ class Strings {
         return StringsEN.all_categories;
     }
   }
+
+// end Asmaa
+
+// Start Bahaa
+
+// end Bahaa
+
+// Start Mosdik
+
+// end Mosdik
+
+// Start Moaaz
+
+// end Moaaz
+
+// Start Islam
+
+// end Islam
+
 }
