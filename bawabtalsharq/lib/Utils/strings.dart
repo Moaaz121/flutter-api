@@ -1,5 +1,3 @@
-
-
 import 'Strings Data/strings_ar.dart';
 import 'Strings Data/strings_en.dart';
 import 'Strings Data/strings_inr.dart';

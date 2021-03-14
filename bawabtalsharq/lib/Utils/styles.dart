@@ -28,7 +28,6 @@ const backTabColor = Color.fromRGBO(163, 172, 194, 0.14);
 const defaultSecondaryBackgroundColor = Color(0xFF3D5A80);
 const defaultPrimaryBackgroundColor = Color(0xFFEE6C4D);
 
-
 const defaultAppBarTheme = AppBarTheme(
     color: Colors.white,
     brightness: Brightness.light,
