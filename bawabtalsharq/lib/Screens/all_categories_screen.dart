@@ -1,3 +1,4 @@
+import 'package:bawabtalsharq/Screens/sub_categories_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../Utils/images.dart';
@@ -37,7 +38,8 @@ class _AllCategoriesState extends State<AllCategories> {
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
-                  print('cell Tapped');
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SubCategories()));
                 },
                 child: Container(
                   margin: EdgeInsets.all(10),
@@ -60,7 +62,7 @@ class _AllCategoriesState extends State<AllCategories> {
                         width: 20,
                       ),
                       Expanded(
-                        child: Text('BEVERAGES'),
+                        child: Text('Category Name'),
                       ),
                       Icon(Icons.navigate_next),
                     ],
