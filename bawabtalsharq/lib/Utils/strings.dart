@@ -1,5 +1,3 @@
-
-
 import 'Strings Data/strings_ar.dart';
 import 'Strings Data/strings_en.dart';
 import 'Strings Data/strings_inr.dart';
@@ -19,6 +17,16 @@ class Strings {
     }
   }
 
-
-
+  String allCategories() {
+    switch (Constants.languageId) {
+      case languages.Arabic:
+        return StringsAR.all_categories;
+        break;
+      case languages.Indian:
+        return StringsINR.all_categories;
+        break;
+      default:
+        return StringsEN.all_categories;
+    }
+  }
 }

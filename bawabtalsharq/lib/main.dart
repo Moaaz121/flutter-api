@@ -1,3 +1,4 @@
+import 'package:bawabtalsharq/Screens/all_categories_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -108,8 +109,10 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => AllCategories()));
+        },
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
