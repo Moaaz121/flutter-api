@@ -17,7 +17,7 @@ class _AllCategoriesState extends State<AllCategories> {
       appBar: appBarBuilder(
         title: Strings().allCategories(),
         onBackPressed: () {
-          print('Back Button Pressed');
+          Navigator.pop(context);
         },
       ),
       floatingActionButton: buildFloatingActionBtn(
