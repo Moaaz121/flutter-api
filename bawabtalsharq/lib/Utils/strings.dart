@@ -1,5 +1,3 @@
-
-
 import 'Strings Data/strings_ar.dart';
 import 'Strings Data/strings_en.dart';
 import 'Strings Data/strings_inr.dart';
@@ -19,6 +17,28 @@ class Strings {
     }
   }
 
+// Start Karem
 
+// end karem
+
+// Start Asmaa
+
+// end Asmaa
+
+// Start Bahaa
+
+// end Bahaa
+
+// Start Mosdik
+
+// end Mosdik
+
+// Start Moaaz
+
+// end Moaaz
+
+// Start Islam
+
+// end Islam
 
 }

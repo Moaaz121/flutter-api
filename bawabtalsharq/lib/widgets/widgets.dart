@@ -3,7 +3,6 @@ import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:flutter/material.dart';
 
-
 class Widgets {
   call() {}
 }
@@ -97,7 +96,8 @@ Widget textField(String hintText, Function callback,
   );
 }
 
-Widget button(Function onPress, String labelText, {bool isFilledColor = true, Color color}) {
+Widget button(Function onPress, String labelText,
+    {bool isFilledColor = true, Color color}) {
   return Container(
     width: double.infinity,
     height: 50,
@@ -110,7 +110,9 @@ Widget button(Function onPress, String labelText, {bool isFilledColor = true, Co
       disabledColor: Color.fromRGBO(144, 156, 179, 1),
       disabledTextColor: Colors.white,
       elevation: 0,
-      color: color != null ? color : (isFilledColor ? defaultBackgroundColor : Colors.white),
+      color: color != null
+          ? color
+          : (isFilledColor ? defaultBackgroundColor : Colors.white),
       child: Text(
         labelText,
         style: TextStyle(
@@ -188,39 +190,43 @@ Widget buttonWithIcon(String image, String labelText,
   );
 }
 
-Widget cardChangeState(bool isEmpty,
-    String activeImage, String inactiveImage, String labelText,
+Widget cardChangeState(
+    bool isEmpty, String activeImage, String inactiveImage, String labelText,
     {bool isFActive = true}) {
-
-   return isEmpty  ? Container(
-  height: 120,
-    padding: EdgeInsets.only(left: 5, right: 5),
-    child: Card(
-      elevation: 5,
-      color: isFActive ? Color.fromRGBO(221, 231, 247, 1)  : Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Image.asset(
-            isFActive ? activeImage : inactiveImage,
-            fit: BoxFit.contain,
+  return isEmpty
+      ? Container(
+          height: 120,
+          padding: EdgeInsets.only(left: 5, right: 5),
+          child: Card(
+            elevation: 5,
+            color: isFActive ? Color.fromRGBO(221, 231, 247, 1) : Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Image.asset(
+                  isFActive ? activeImage : inactiveImage,
+                  fit: BoxFit.contain,
+                ),
+                SizedBox(height: 20),
+                Text(
+                  labelText,
+                  style: TextStyle(
+                      color: isFActive
+                          ? Color.fromRGBO(33, 99, 206, 1)
+                          : medicineColor,
+                      fontSize: 16,
+                      fontFamily:
+                          isFActive ? semiBoldFontFamily : mediumFontFamily),
+                ),
+              ],
+            ),
           ),
-          SizedBox(height: 20),
-          Text(
-            labelText,
-            style: TextStyle(
-                color: isFActive ? Color.fromRGBO(33, 99, 206, 1) : medicineColor,
-                fontSize: 16,
-                fontFamily: isFActive ? semiBoldFontFamily : mediumFontFamily),
-          ),
-        ],
-      ),
-    ),
-  ) : Container();
+        )
+      : Container();
 }
 
 Widget headerBg() {
@@ -254,3 +260,27 @@ showLoadingDialog(BuildContext context) async {
     );
   });
 }
+
+// Start Karem
+
+// end karem
+
+// Start Asmaa
+
+// end Asmaa
+
+// Start Bahaa
+
+// end Bahaa
+
+// Start Mosdik
+
+// end Mosdik
+
+// Start Moaaz
+
+// end Moaaz
+
+// Start Islam
+
+// end Islam
