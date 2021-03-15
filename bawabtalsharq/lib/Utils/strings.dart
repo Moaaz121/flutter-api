@@ -18,7 +18,11 @@ class Strings {
   }
 
 // Start Karem
-
+  String home = 'Home';
+  String feature = 'Feature';
+  String notifications = 'Notifications';
+  String myAccount = 'My Account';
+  String search = 'Search';
 // end karem
 
 // Start Asmaa

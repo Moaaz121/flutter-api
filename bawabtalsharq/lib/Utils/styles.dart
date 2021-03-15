@@ -49,6 +49,14 @@ TextStyle titleStyle(
 }
 
 // Start Karem
+const backgroundColor = Colors.white;
+const orangeColor = Color(0xffE16036);
+const orangeShadowColor = Color(0x26e16036);
+const blueColor = Color(0xff65B8f9);
+const redColor = Color(0xffff8e8e);
+const yellowColor = Color(0xffecff6a);
+const purpleColor = Color(0xff9080ff);
+const greenColor = Color(0xff4Ac367);
 
 // end karem
 

@@ -2,8 +2,13 @@ import 'dart:ui';
 
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
+import 'package:bawabtalsharq/Utils/strings.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:carousel_slider/carousel_controller.dart';
+import 'package:carousel_slider/carousel_options.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Widgets {
   call() {}
@@ -264,6 +269,259 @@ showLoadingDialog(BuildContext context) async {
 }
 
 // Start Karem
+Widget bottomAppBar(Function(int x) _selectionFunction, PageController controller,int currentPage){
+  return  Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 25),
+    child: ClipRRect(
+      borderRadius: BorderRadius.all(Radius.circular(20)),
+      child: BottomNavigationBar(
+        backgroundColor: orangeColor,
+        type: BottomNavigationBarType.fixed,
+        elevation: 5,
+        showUnselectedLabels: true,
+        currentIndex: currentPage,
+        selectedItemColor: Color(0xffffffff),
+        unselectedItemColor: Color(0xccffffff),
+        items: [
+          BottomNavigationBarItem(icon: Image.asset(currentPage == 0 ? tabHomeS : tabHome, width: 30,height: 30), title: Padding(
+            padding: const EdgeInsets.only(top: 7,),
+            child: Text(Strings().home),
+          ),),
+          BottomNavigationBarItem(icon: Image.asset(currentPage == 1 ? tabFeatureS : tabFeature, width: 30,height: 30,), title: Padding(
+            padding: const EdgeInsets.only(top: 7),
+            child: Text(Strings().feature),
+          )),
+          BottomNavigationBarItem(icon: Image.asset(currentPage == 2 ? tabNotificationS : tabNotification, width: 30,height: 30,), title: Padding(
+            padding: const EdgeInsets.only(top: 7),
+            child: Text(Strings().notifications),
+          )),
+          BottomNavigationBarItem(icon: Image.asset(currentPage == 3 ? tabAccountS : tabAccount, width: 30,height: 30,), title: Padding(
+            padding: const EdgeInsets.only(top: 7),
+            child: Text(Strings().myAccount),
+          )),
+        ],
+        onTap: _selectionFunction,
+        // child: Container(
+        //   height: 70,
+        //   decoration: BoxDecoration(
+        //     color: Colors.transparent,
+        //     borderRadius: BorderRadius.all(Radius.circular(20)),
+        //   ),
+        //   child: Row(
+        //     mainAxisSize: MainAxisSize.max,
+        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //     children: <Widget>[
+        //       IconButton(
+        //         iconSize: 42,
+        //         padding: EdgeInsets.only(left: 28),
+        //         icon:Image.asset(_pageSelected == 0 ? 'assets/images/tab_1s.png' : 'assets/images/tab_1.png',),
+        //         onPressed: () {
+        //           _selectionFunction(0);
+        //           // widget.controller.animateToPage(0,duration: Duration(milliseconds: 1), curve: Curves.bounceIn);
+        //         },
+        //       ),
+        //       IconButton(
+        //         iconSize: 42.0,
+        //         padding: EdgeInsets.only(right: 28.0),
+        //         icon:Image.asset(_pageSelected == 1  ? 'assets/images/tab_2s.png' : 'assets/images/tab_2.png'),
+        //         onPressed: () {
+        //             _selectionFunction(1);
+        //             // widget.controller.animateToPage(1,duration: Duration(milliseconds: 1), curve: Curves.ease);
+        //           // setState(() {
+        //           //   widget.controller.animateToPage(1, duration: Duration(seconds: 500), curve: Curves.bounceIn);
+        //           // });
+        //         },
+        //       ),
+        //       IconButton(
+        //         iconSize: 42.0,
+        //         padding: EdgeInsets.only(left: 28.0),
+        //         icon:Image.asset(_pageSelected == 2  ? 'assets/images/tab_3s.png' : 'assets/images/tab_3.png'),
+        //         onPressed: () {
+        //           _selectionFunction(2);
+        //             // widget.controller.animateToPage(2,duration: Duration(milliseconds: 1), curve: Curves.bounceIn);
+        //           // setState(() {
+        //           //   _tab2Toggled = _tab3Toggled;
+        //           //   _tab1Toggled = _tab3Toggled;
+        //           //   _tab4Toggled = _tab3Toggled;
+        //           //   _tab3Toggled = !_tab3Toggled;
+        //           //   widget.controller.animateToPage(2, duration: Duration(seconds: 500), curve: Curves.bounceIn);
+        //           // });
+        //         },
+        //       ),
+        //       IconButton(
+        //         iconSize: 42.0,
+        //         padding: EdgeInsets.only(right: 28.0),
+        //         icon:Image.asset(_pageSelected == 3  ? 'assets/images/tab_4s.png' : 'assets/images/tab_4.png'),
+        //         onPressed: () {
+        //           _selectionFunction(3);
+        //             // widget.controller.animateToPage(3, duration: Duration(milliseconds: 1), curve: Curves.bounceIn);
+        //           // setState(() {
+        //           //   _tab2Toggled = _tab4Toggled;
+        //           //   _tab3Toggled = _tab4Toggled;
+        //           //   _tab1Toggled = _tab4Toggled;
+        //           //   _tab4Toggled = !_tab4Toggled;
+        //           //   widget.controller.animateToPage(3, duration: Duration(seconds: 500), curve: Curves.bounceIn);
+        //           // });
+        //         },
+        //       )
+        //     ],
+        //   ),
+        // ),
+      ),
+    ),
+  );
+}
+
+Widget searchButton(Function _function){
+  return SizedBox(
+    height: 35,
+    child: Container(
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.horizontal(right: Radius.circular(15)),
+          boxShadow: [
+            BoxShadow(
+                color: orangeShadowColor,
+                blurRadius: 5,
+                spreadRadius:2,
+                offset: Offset(10,0)
+            )
+          ]
+      ),
+      child: FlatButton(
+          splashColor: orangeColor.withOpacity(0.4),
+          highlightColor: orangeShadowColor,
+          onPressed: _function,
+          shape: OutlineInputBorder(
+              borderRadius: BorderRadius.horizontal(right: Radius.circular(15)),
+              borderSide: BorderSide.none
+          ),
+          child : Row(
+            children: [
+              Text(Strings().search,
+                style: TextStyle(
+                  color: orangeColor,
+                ),),
+              SizedBox(width: 5,),
+              Icon(Icons.search,color: orangeColor,)
+            ],
+          )),
+    ),
+  );
+}
+
+Widget chatButton(Function _function){
+  return Padding(
+    padding: const EdgeInsets.all(16.0),
+    child: SizedBox(
+        width: 45,
+        height: 45,
+        child: Container(
+          decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                    color: orangeShadowColor,
+                    spreadRadius: 2,
+                    blurRadius: 10
+                )
+              ]
+          ),
+          child: ClipOval(
+            child: Material(
+              shadowColor: orangeShadowColor,
+              color: Colors.white,
+              child: InkWell(
+                splashColor: orangeColor.withOpacity(0.4),
+                highlightColor: orangeShadowColor,
+                child: Image.asset(chat,width: 55,height: 55,),
+                onTap: () {},
+              ),
+            ),
+          ),
+        )
+    ),
+  );
+}
+
+class mainSlider extends StatefulWidget {
+  @override
+  _mainSliderState createState() => _mainSliderState();
+}
+
+class _mainSliderState extends State<mainSlider> {
+  CarouselController control = CarouselController();
+  int position = 0;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        CarouselSlider(
+            carouselController: control,
+            items: [
+              sliderItem(context,slider1),
+              sliderItem(context,slider2),
+              sliderItem(context,slider3),
+              sliderItem(context,slider2),
+            ],
+            options: CarouselOptions(
+              onPageChanged: (int page, CarouselPageChangedReason reason){
+                setState(() {
+                  position = page;
+                });
+              },
+              height: 170,
+              aspectRatio: 16 / 9,
+              viewportFraction: 0.8,
+              pauseAutoPlayInFiniteScroll: true,
+              pauseAutoPlayOnTouch: true,
+              initialPage: 0,
+              disableCenter: true,
+              enableInfiniteScroll: false,
+              reverse: false,
+              autoPlay: true,
+              autoPlayInterval: Duration(seconds: 3),
+              autoPlayAnimationDuration: Duration(milliseconds: 800),
+              autoPlayCurve: Curves.fastOutSlowIn,
+              enlargeCenterPage: true,
+              scrollDirection: Axis.horizontal,
+            )
+        ),
+        sliderIndicator(position)
+      ],
+    );
+  }
+}
+
+
+Widget sliderItem(BuildContext context,String image){
+  return ClipRRect(
+    borderRadius: BorderRadius.all(Radius.circular(15)),
+    child: Image.asset(image,
+      fit: BoxFit.fill,),
+  );
+}
+
+Widget sliderIndicator(int page){
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 16,horizontal: 65),
+    child: AnimatedSmoothIndicator(
+      activeIndex: page,
+      count: 4,
+      axisDirection: Axis.horizontal,
+      effect:  ExpandingDotsEffect(
+          spacing:  5.0,
+          radius:  3.0,
+          dotWidth:  12.0,
+          dotHeight:  8.0,
+          expansionFactor: 2,
+          dotColor:  orangeShadowColor,
+          activeDotColor:  orangeColor
+      ),
+    ),
+  );
+}
 
 // end karem
 
