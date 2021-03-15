@@ -270,9 +270,10 @@ showLoadingDialog(BuildContext context) async {
 }
 
 // Start Karem
-Widget bottomAppBar(Function(int x) _selectionFunction, PageController controller,int currentPage){
-  return  Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 25),
+Widget bottomAppBar(Function(int x) _selectionFunction,
+    PageController controller, int currentPage) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
     child: ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(20)),
       child: BottomNavigationBar(
@@ -284,22 +285,46 @@ Widget bottomAppBar(Function(int x) _selectionFunction, PageController controlle
         selectedItemColor: Color(0xffffffff),
         unselectedItemColor: Color(0xccffffff),
         items: [
-          BottomNavigationBarItem(icon: Image.asset(currentPage == 0 ? tabHomeS : tabHome, width: 30,height: 30), title: Padding(
-            padding: const EdgeInsets.only(top: 7,),
-            child: Text(Strings().home),
-          ),),
-          BottomNavigationBarItem(icon: Image.asset(currentPage == 1 ? tabFeatureS : tabFeature, width: 30,height: 30,), title: Padding(
-            padding: const EdgeInsets.only(top: 7),
-            child: Text(Strings().feature),
-          )),
-          BottomNavigationBarItem(icon: Image.asset(currentPage == 2 ? tabNotificationS : tabNotification, width: 30,height: 30,), title: Padding(
-            padding: const EdgeInsets.only(top: 7),
-            child: Text(Strings().notifications),
-          )),
-          BottomNavigationBarItem(icon: Image.asset(currentPage == 3 ? tabAccountS : tabAccount, width: 30,height: 30,), title: Padding(
-            padding: const EdgeInsets.only(top: 7),
-            child: Text(Strings().myAccount),
-          )),
+          BottomNavigationBarItem(
+            icon: Image.asset(currentPage == 0 ? tabHomeS : tabHome,
+                width: 30, height: 30),
+            title: Padding(
+              padding: const EdgeInsets.only(
+                top: 7,
+              ),
+              child: Text(Strings().home),
+            ),
+          ),
+          BottomNavigationBarItem(
+              icon: Image.asset(
+                currentPage == 1 ? tabFeatureS : tabFeature,
+                width: 30,
+                height: 30,
+              ),
+              title: Padding(
+                padding: const EdgeInsets.only(top: 7),
+                child: Text(Strings().feature),
+              )),
+          BottomNavigationBarItem(
+              icon: Image.asset(
+                currentPage == 2 ? tabNotificationS : tabNotification,
+                width: 30,
+                height: 30,
+              ),
+              title: Padding(
+                padding: const EdgeInsets.only(top: 7),
+                child: Text(Strings().notifications),
+              )),
+          BottomNavigationBarItem(
+              icon: Image.asset(
+                currentPage == 3 ? tabAccountS : tabAccount,
+                width: 30,
+                height: 30,
+              ),
+              title: Padding(
+                padding: const EdgeInsets.only(top: 7),
+                child: Text(Strings().myAccount),
+              )),
         ],
         onTap: _selectionFunction,
         // child: Container(
@@ -373,7 +398,7 @@ Widget bottomAppBar(Function(int x) _selectionFunction, PageController controlle
   );
 }
 
-Widget searchButton(Function _function){
+Widget searchButton(Function _function) {
   return SizedBox(
     height: 35,
     child: Container(
@@ -384,50 +409,47 @@ Widget searchButton(Function _function){
             BoxShadow(
                 color: orangeShadowColor,
                 blurRadius: 5,
-                spreadRadius:2,
-                offset: Offset(10,0)
-            )
-          ]
-      ),
+                spreadRadius: 2,
+                offset: Offset(10, 0))
+          ]),
       child: FlatButton(
           splashColor: orangeColor.withOpacity(0.4),
           highlightColor: orangeShadowColor,
           onPressed: _function,
           shape: OutlineInputBorder(
               borderRadius: BorderRadius.horizontal(right: Radius.circular(15)),
-              borderSide: BorderSide.none
-          ),
-          child : Row(
+              borderSide: BorderSide.none),
+          child: Row(
             children: [
-              Text(Strings().search,
+              Text(
+                Strings().search,
                 style: TextStyle(
                   color: orangeColor,
-                ),),
-              SizedBox(width: 5,),
-              Icon(Icons.search,color: orangeColor,)
+                ),
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Icon(
+                Icons.search,
+                color: orangeColor,
+              )
             ],
           )),
     ),
   );
 }
 
-Widget chatButton(Function _function){
+Widget chatButton(Function _function) {
   return Padding(
     padding: const EdgeInsets.all(16.0),
     child: SizedBox(
         width: 45,
         height: 45,
         child: Container(
-          decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                    color: orangeShadowColor,
-                    spreadRadius: 2,
-                    blurRadius: 10
-                )
-              ]
-          ),
+          decoration: BoxDecoration(shape: BoxShape.circle, boxShadow: [
+            BoxShadow(color: orangeShadowColor, spreadRadius: 2, blurRadius: 10)
+          ]),
           child: ClipOval(
             child: Material(
               shadowColor: orangeShadowColor,
@@ -436,11 +458,10 @@ Widget chatButton(Function _function){
                 splashColor: orangeColor.withOpacity(0.4),
                 highlightColor: orangeShadowColor,
                 child: Image.asset(chat,width: 55,height: 55,fit: BoxFit.fill,),
-                onTap: () {},
-              ),
             ),
           ),
-        )
+        ),
+  ),
     ),
   );
 }
@@ -461,13 +482,13 @@ class _mainSliderState extends State<mainSlider> {
         CarouselSlider(
             carouselController: control,
             items: [
-              sliderItem(context,slider1),
-              sliderItem(context,slider2),
-              sliderItem(context,slider3),
-              sliderItem(context,slider2),
+              sliderItem(context, slider1),
+              sliderItem(context, slider2),
+              sliderItem(context, slider3),
+              sliderItem(context, slider2),
             ],
             options: CarouselOptions(
-              onPageChanged: (int page, CarouselPageChangedReason reason){
+              onPageChanged: (int page, CarouselPageChangedReason reason) {
                 setState(() {
                   position = page;
                 });
@@ -487,39 +508,38 @@ class _mainSliderState extends State<mainSlider> {
               autoPlayCurve: Curves.fastOutSlowIn,
               enlargeCenterPage: true,
               scrollDirection: Axis.horizontal,
-            )
-        ),
+            )),
         sliderIndicator(position)
       ],
     );
   }
 }
 
-
-Widget sliderItem(BuildContext context,String image){
+Widget sliderItem(BuildContext context, String image) {
   return ClipRRect(
     borderRadius: BorderRadius.all(Radius.circular(15)),
-    child: Image.asset(image,
-      fit: BoxFit.fill,),
+    child: Image.asset(
+      image,
+      fit: BoxFit.fill,
+    ),
   );
 }
 
-Widget sliderIndicator(int page){
+Widget sliderIndicator(int page) {
   return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 16,horizontal: 65),
+    padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 65),
     child: AnimatedSmoothIndicator(
       activeIndex: page,
       count: 4,
       axisDirection: Axis.horizontal,
-      effect:  ExpandingDotsEffect(
-          spacing:  5.0,
-          radius:  3.0,
-          dotWidth:  12.0,
-          dotHeight:  8.0,
+      effect: ExpandingDotsEffect(
+          spacing: 5.0,
+          radius: 3.0,
+          dotWidth: 12.0,
+          dotHeight: 8.0,
           expansionFactor: 2,
-          dotColor:  orangeShadowColor,
-          activeDotColor:  orangeColor
-      ),
+          dotColor: orangeShadowColor,
+          activeDotColor: orangeColor),
     ),
   );
 }
@@ -771,7 +791,7 @@ Widget supplierView(
                       fontSize: 10.0,
                       fontWeight: FontWeight.w300,
                       color: Colors.black54
-                  ),)
+                  ),),
               ],
             ),
           ],
@@ -956,33 +976,85 @@ Widget mostPopularCateg(
   return GestureDetector(
       onTap: onPress,
       child: Container(
-        height: 120.0,
-        width: 230.0,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(productImage),
-              fit: BoxFit.fitWidth,
-
+        height: 200,
+        width: 200,
+        child: Stack(children: [
+          Padding(
+            padding:
+                const EdgeInsets.only(left: 20, bottom: 40, right: 20, top: 30),
+            child: Container(
+              width: 160,
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(15)),
+              child: Stack(children: [
+                Positioned(
+                  top: -50,
+                  left: -50,
+                  child: SizedBox(
+                      height: 115,
+                      width: 115,
+                      child: CircleAvatar(
+                        backgroundColor: Colors.red[100],
+                      )),
+                ),
+              ]),
             ),
-            
-            // borderRadius: BorderRadius.circular(15.0),
-            // color: backgroundColor,
           ),
-          margin: EdgeInsets.all(20.0),
-
-          // child: Stack(
-          //   children: [
-          //     Positioned(
-          //         top: -50,
-          //         right: -110,
-          //         child: Image(
-          //           image: AssetImage(productImage),
-          //           height: 170,
-          //           width: 170,
-          //         )
-          //     ),
-          //   ],
-          // )
+          Positioned(
+              left: -10,
+              top: 6,
+              child: SizedBox(
+                width: 100,
+                height: 100,
+                child: Image(image: AssetImage(productImage)),
+              )),
+          Padding(
+            padding: const EdgeInsets.only(left: 25.0, top: 100.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  nameProduct,
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
+                ),
+                SizedBox(
+                  height: 7.0,
+                ),
+                Row(
+                  children: [
+                    Text(
+                      '$price EGP',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                          color: Colors.deepOrangeAccent),
+                    ),
+                    SizedBox(
+                      width: 30,
+                    ),
+                    Image(
+                      image: iconAdd,
+                      width: 20.0,
+                      height: 20.0,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Image(
+                      image: iconFavo,
+                      width: 20.0,
+                      height: 20.0,
+                    ),
+                  ],
+                )
+              ],
+            ),
+          )
+        ]
+        ),
       )
   );
 }
