@@ -98,6 +98,8 @@ class _AllCategoriesState extends State<AllCategories>
   Positioned getSubCategoriesList(BuildContext context) {
     return Positioned(
       right: 0,
+      top: 0,
+      bottom: 0,
       width: MediaQuery.of(context).size.width * 0.83,
       child: Container(
         margin: EdgeInsets.only(top: 25),
@@ -108,12 +110,11 @@ class _AllCategoriesState extends State<AllCategories>
           ),
         ),
         child: ListView.builder(
-          shrinkWrap: true,
           itemCount: 30,
           scrollDirection: Axis.vertical,
           itemBuilder: (context, index) {
             return Container(
-              margin: EdgeInsets.only(left: 15, right: 15, top: 20),
+              margin: EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 5),
               child: Row(
                 children: [
                   Container(
