@@ -7,6 +7,7 @@ import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -434,7 +435,7 @@ Widget chatButton(Function _function){
               child: InkWell(
                 splashColor: orangeColor.withOpacity(0.4),
                 highlightColor: orangeShadowColor,
-                child: Image.asset(chat,width: 55,height: 55,),
+                child: Image.asset(chat,width: 55,height: 55,fit: BoxFit.fill,),
                 onTap: () {},
               ),
             ),
@@ -523,6 +524,179 @@ Widget sliderIndicator(int page){
   );
 }
 
+Widget mainHeaderButton(Function function,String title, String image,Color color){
+  return Container(
+    decoration: BoxDecoration(
+
+      borderRadius: BorderRadius.circular(15),
+      boxShadow: [
+        BoxShadow(
+          color: orangeShadowColor,
+          blurRadius: 10,
+          spreadRadius: 1
+        ),
+      ]
+    ),
+    child: FlatButton(
+        splashColor: orangeColor.withOpacity(0.4),
+        highlightColor: orangeShadowColor,
+        onPressed: function,
+        shape: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: BorderSide.none
+        ),
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: color,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Image.asset(image,height: 25,width: 25,fit: BoxFit.fill,),
+                ),
+              ),
+              SizedBox(height: 8,),
+              Text(title,
+              style: mainHeaderTitleStyle(),),
+            ],
+          ),
+        )),
+  );
+}
+
+Widget ourGoldenSupplier(){
+  return Column(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      ourGoldenSupplierHeader(),
+      SizedBox(
+        height: 190,
+        child: ListView.builder(
+          physics:  const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+
+          reverse: true,
+          scrollDirection: Axis.horizontal,
+          itemCount: 20,
+          itemBuilder: (context, position) {
+            return supplierView(onPress: (){},
+              category: position.isOdd ? 'Food & Beverages' : 'Agriculture Crops',
+              nameSupplier: position.isOdd ? 'Kareem Hassanien' : 'Mohamed Mosadaq',
+              supplierImg: AssetImage( position.isOdd ? kareem_img : mosadaq_img),
+              years: position.isOdd ? 3 : 5,
+            );
+          },
+        ),
+      )
+    ],
+  );
+}
+
+Widget ourGoldenSupplierHeader(){
+  return Padding(
+    padding: const EdgeInsets.only(right: 20,left: 20,top: 20),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(Strings().ourGoldenSupplier,
+        style: titlesStyle(),),
+        FlatButton(
+          splashColor: orangeColor.withOpacity(0.4),
+          highlightColor: orangeShadowColor,
+          shape: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide.none
+          ),
+          onPressed: (){
+
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                Strings().more,
+                style: moreStyle(),
+              ),
+              SizedBox(width: 8,),
+              Icon(Icons.arrow_forward_rounded,size: 15,color:  Colors.black.withOpacity(0.7),)
+            ],
+          ),
+        )
+      ],
+    ),
+  );
+}
+
+Widget mostPopularIn(){
+  return Column(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      mostPopularInHeader(),
+      SizedBox(
+        height: 190,
+        child: ListView.builder(
+          physics:  const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+          reverse: true,
+          padding: EdgeInsets.symmetric(horizontal:8 ),
+          semanticChildCount: 2,
+          scrollDirection: Axis.horizontal,
+          itemCount: 20,
+          itemBuilder: (context, position) {
+            return supplierView(onPress: (){},
+              category: position.isOdd ? 'Food & Beverages' : 'Agriculture Crops',
+              nameSupplier: position.isOdd ? 'Kareem Hassanien' : 'Mohamed Mosadaq',
+              supplierImg: AssetImage( position.isOdd ? kareem_img : mosadaq_img),
+              years: position.isOdd ? 3 : 5,
+            );
+          },
+        ),
+      )
+    ],
+  );
+}
+
+Widget mostPopularInHeader(){
+  return Padding(
+    padding: const EdgeInsets.only(right: 20,left: 20,top: 20),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text('${Strings().mostPopularIn}Egypt',
+          style: titlesStyle(),),
+        FlatButton(
+          splashColor: orangeColor.withOpacity(0.4),
+          highlightColor: orangeShadowColor,
+          shape: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide.none
+          ),
+          onPressed: (){
+
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                Strings().more,
+                style: moreStyle(),
+              ),
+              SizedBox(width: 8,),
+              Icon(Icons.arrow_forward_rounded,size: 15,color:  Colors.black.withOpacity(0.7),)
+            ],
+          ),
+        )
+      ],
+    ),
+  );
+}
+
 // end karem
 
 // Start Asmaa
@@ -536,38 +710,51 @@ Widget sliderIndicator(int page){
 // Start Mosdik
 Widget supplierView(
     {Function onPress,
-    Colors colors,
-    String nameSupplier,
-    String category,
-    String years,
-    AssetImage supplierImg,
-    AssetImage icon}) {
+      Colors colors,
+      String nameSupplier,
+      String category,
+      int years,
+      AssetImage supplierImg}) {
   return GestureDetector(
     onTap: onPress,
-    child: Container(
-      color: Colors.white38,
-      height: 210.0,
-      width: 150.0,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 20.0),
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 8),
+      child: Container(
+        width: 105.0,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image(
-              image: supplierImg,
-              height: 100.0,
-              width: 120.0,
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(13),
+
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20.0),
+                child: Image (
+                  image: supplierImg,
+                  width: double.infinity,
+                  height: 105,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 10,
             ),
             Text(
               nameSupplier,
-              style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 11.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
             ),
             SizedBox(
               height: 5.0,
             ),
             Text(
               category,
-              style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w300),
+              style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w300,
+                  color: Colors.black54),
             ),
             SizedBox(
               height: 5.0,
@@ -575,11 +762,16 @@ Widget supplierView(
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Image(image: icon),
+                Icon(Icons.access_time_rounded,size: 13,),
                 SizedBox(
-                  width: 10.0,
+                  width: 5.0,
                 ),
-                Text(years)
+                Text('$years YRS',
+                  style: TextStyle(
+                      fontSize: 10.0,
+                      fontWeight: FontWeight.w300,
+                      color: Colors.black54
+                  ),)
               ],
             ),
           ],

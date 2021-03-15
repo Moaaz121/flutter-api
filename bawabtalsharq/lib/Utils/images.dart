@@ -1,3 +1,5 @@
+import 'package:bawabtalsharq/Utils/strings.dart';
+
 const String Login_background = 'assets/images/bg.png';
 
 // Start Karem
@@ -13,6 +15,12 @@ const String tabAccountS = 'assets/images/profile_1.png';
 const String slider1 = 'assets/images/slider1.png';
 const String slider2 = 'assets/images/slider2.jpg';
 const String slider3 = 'assets/images/slider3.jpg';
+const String allCategories = 'assets/images/all_categories.png';
+const String requestForQ = 'assets/images/request_for_q.png';
+const String joinUs = 'assets/images/Join_us.png';
+const String personTest = 'assets/images/person_test.jpg';
+const String mosadaq_img = 'assets/images/mosadaq_img.jpg';
+const String kareem_img = 'assets/images/kareem_img.jpg';
 // end karem
 
 // Start Asmaa

@@ -58,6 +58,30 @@ const yellowColor = Color(0xffecff6a);
 const purpleColor = Color(0xff9080ff);
 const greenColor = Color(0xff4Ac367);
 
+TextStyle mainHeaderTitleStyle(){
+  return TextStyle(
+    fontFamily: 'Font-Regular',
+    fontSize: 11,
+    color: Colors.black54
+  );
+}
+
+TextStyle titlesStyle(){
+  return TextStyle(
+      fontFamily: 'Font-Regular',
+      fontSize: 17,
+      fontWeight: FontWeight.bold,
+      color: Colors.black
+  );
+}
+
+TextStyle moreStyle(){
+  return TextStyle(
+      fontFamily: 'Font-Regular',
+      fontSize: 12,
+      color: Colors.black.withOpacity(0.7)
+  );
+}
 // end karem
 
 // Start Asmaa
