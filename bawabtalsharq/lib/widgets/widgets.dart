@@ -267,8 +267,11 @@ showLoadingDialog(BuildContext context) async {
 
 // Start Asmaa
 AppBar appBarBuilder(
-    {@required String title, @required Function onBackPressed}) {
+    {@required String title,
+    @required Function onBackPressed,
+    List<Widget> actions}) {
   return AppBar(
+      actions: actions,
       toolbarHeight: 60.0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(

@@ -15,7 +15,17 @@ class _AllCategoriesState extends State<AllCategories> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawerScrimColor: Colors.transparent,
+      endDrawerEnableOpenDragGesture: false,
+      endDrawer: Container(
+        width: MediaQuery.of(context).size.width * 0.8,
+        margin: EdgeInsets.only(top: 124),
+        child: Drawer(
+          child: SubCategories(),
+        ),
+      ),
       appBar: appBarBuilder(
+        actions: [Container()],
         title: Strings().allCategories(),
         onBackPressed: () {
           Navigator.pop(context);
@@ -38,8 +48,7 @@ class _AllCategoriesState extends State<AllCategories> {
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SubCategories()));
+                  Scaffold.of(context).openEndDrawer();
                 },
                 child: Container(
                   margin: EdgeInsets.all(10),
@@ -50,7 +59,7 @@ class _AllCategoriesState extends State<AllCategories> {
                             borderRadius: BorderRadius.circular(10),
                             color: Colors.green[200]),
                         child: Padding(
-                          padding: const EdgeInsets.all(3),
+                          padding: const EdgeInsets.all(2),
                           child: Image.asset(
                             cold_drinks,
                             height: 45,
