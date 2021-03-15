@@ -1,3 +1,4 @@
+import 'package:bawabtalsharq/homeTest.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -108,7 +109,12 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: (){
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+          );
+        },
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.

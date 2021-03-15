@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
@@ -274,7 +276,266 @@ showLoadingDialog(BuildContext context) async {
 // end Bahaa
 
 // Start Mosdik
+Widget supplierView(
+    {Function onPress,
+    Colors colors,
+    String nameSupplier,
+    String category,
+    String years,
+    AssetImage supplierImg,
+    AssetImage icon}) {
+  return GestureDetector(
+    onTap: onPress,
+    child: Container(
+      color: Colors.white38,
+      height: 210.0,
+      width: 150.0,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Image(
+              image: supplierImg,
+              height: 100.0,
+              width: 120.0,
+            ),
+            Text(
+              nameSupplier,
+              style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Text(
+              category,
+              style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w300),
+            ),
+            SizedBox(
+              height: 5.0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Image(image: icon),
+                SizedBox(
+                  width: 10.0,
+                ),
+                Text(years)
+              ],
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
 
+Widget mainMostPopularProduct(
+    {Function onPress,
+    Color backgroundColor,
+    AssetImage productImg,
+    AssetImage iconAdd,
+    AssetImage iconFavo,
+    String nameProduct,
+    String nameCategory,
+    String price}) {
+  return GestureDetector(
+    onTap: onPress,
+    child: Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15.0),
+        color: backgroundColor,
+      ),
+      margin: EdgeInsets.all(20.0),
+      height: 200.0,
+      width: 150.0,
+      child: Stack(
+        children: [
+          Positioned(
+              top: -50,
+              left: -50,
+              child: Image(
+                image: AssetImage(productImage),
+                height: 170,
+                width: 170,
+              )),
+          Padding(
+            padding: const EdgeInsets.only(left: 100.0),
+            child: Row(
+              children: [
+                Image(
+                  image: iconAdd,
+                  width: 20.0,
+                  height: 20.0,
+                ),
+                Image(
+                  image: iconFavo,
+                  width: 20.0,
+                  height: 20.0,
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 100.0, left: 5.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  nameProduct,
+                  style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Text(
+                  nameCategory,
+                  style: TextStyle(fontWeight: FontWeight.w400, fontSize: 15.0),
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                Text(
+                  price,
+                  style: TextStyle(
+                    color: Colors.deepOrangeAccent,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15.0,
+                  ),
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+Widget subMostPopularProduct(
+    {Function onPress,
+    Color backgroundColor,
+    AssetImage productImg,
+    AssetImage iconAdd,
+    AssetImage iconFavo,
+    String nameProduct,
+    String nameCategory,
+    String price}) {
+  return GestureDetector(
+    onTap: onPress,
+    child: Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15.0),
+        color: backgroundColor,
+      ),
+      margin: EdgeInsets.all(20.0),
+      height: 120.0,
+      width: 230.0,
+      child: Stack(
+        children: [
+          Positioned(
+              bottom: -50,
+              right: -50,
+              child: Image(
+                image: AssetImage(productImage),
+                height: 170,
+                width: 170,
+              )),
+          Padding(
+            padding: const EdgeInsets.only(left: 180.0),
+            child: Row(
+              children: [
+                Image(
+                  image: iconAdd,
+                  width: 20.0,
+                  height: 20.0,
+                ),
+                Image(
+                  image: iconFavo,
+                  width: 20.0,
+                  height: 20.0,
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  nameProduct,
+                  style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Text(
+                  nameCategory,
+                  style: TextStyle(fontWeight: FontWeight.w400, fontSize: 15.0),
+                ),
+                SizedBox(
+                  height: 30.0,
+                ),
+                Text(
+                  price,
+                  style: TextStyle(
+                    color: Colors.deepOrangeAccent,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15.0,
+                  ),
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+Widget mostPopularCateg(
+    {Function onPress,
+    Color backgroundColor,
+    AssetImage productImg,
+    AssetImage iconAdd,
+    AssetImage iconFavo,
+    String nameProduct,
+    String price}) {
+  return GestureDetector(
+      onTap: onPress,
+      child: Container(
+        height: 120.0,
+        width: 230.0,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage(productImage),
+              fit: BoxFit.fitWidth,
+
+            ),
+            
+            // borderRadius: BorderRadius.circular(15.0),
+            // color: backgroundColor,
+          ),
+          margin: EdgeInsets.all(20.0),
+
+          // child: Stack(
+          //   children: [
+          //     Positioned(
+          //         top: -50,
+          //         right: -110,
+          //         child: Image(
+          //           image: AssetImage(productImage),
+          //           height: 170,
+          //           width: 170,
+          //         )
+          //     ),
+          //   ],
+          // )
+      )
+  );
+}
 // end Mosdik
 
 // Start Moaaz
