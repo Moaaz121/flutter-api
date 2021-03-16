@@ -653,17 +653,174 @@ Widget ourGoldenSupplierHeader(){
   );
 }
 
+class Carroussel extends StatefulWidget {
+  @override
+  _CarrousselState createState() => new _CarrousselState();
+}
+
+class _CarrousselState extends State<Carroussel> {
+  PageController controller;
+  int currentpage = 0;
+
+  @override
+  initState() {
+    super.initState();
+    controller = PageController(
+      initialPage: currentpage,
+      keepPage: false,
+      viewportFraction: 1,
+    );
+  }
+
+  @override
+  dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Container(
+          child: PageView.builder(
+              onPageChanged: (value) {
+                setState(() {
+                  currentpage = value;
+                });
+              },
+              controller: controller,
+              itemBuilder: (context, index) => builder(index)),
+        ),
+      ),
+    );
+  }
+
+  builder(int index) {
+    return AnimatedBuilder(
+      animation: controller,
+      builder: (context, child) {
+        double value = 1.0;
+        if (controller.position.haveDimensions) {
+          value = controller.page - index;
+          value = (0.8 - (value.abs() * .5)).clamp(0.0, 1);
+        }
+
+        return Center(
+          child: SizedBox(
+            height: Curves.easeOut.transform(value) * 300,
+            width: Curves.easeOut.transform(value) * 250,
+            child: child,
+          ),
+        );
+      },
+      child: Container(
+        margin: const EdgeInsets.all(8.0),
+        color: index % 2 == 0 ? Colors.blue : Colors.red,
+      ),
+    );
+  }
+}
+
+class Carousel extends StatelessWidget {
+  Carousel({
+    Key key,
+    @required this.items,
+    @required this.builderFunction,
+    @required this.height,
+    this.dividerIndent = 10,
+  }) : super(key: key);
+
+  final List<dynamic> items;
+  final double dividerIndent;
+
+  final Function(BuildContext context, dynamic item) builderFunction;
+
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: height,
+      child: ListView.separated(
+          physics: PageScrollPhysics(),
+          separatorBuilder: (context, index) => Divider(
+            indent: dividerIndent,
+          ),
+          reverse: true,
+          scrollDirection: Axis.horizontal,
+          itemCount: items.length,
+          itemBuilder: (context, index) {
+            Widget item = builderFunction(context, items[index]);
+            if (index == 0) {
+              return Padding(
+                child: item,
+                padding: EdgeInsets.only(left: dividerIndent),
+              );
+            } else if (index == items.length - 1) {
+              return Padding(
+                child: item,
+                padding: EdgeInsets.only(right: dividerIndent),
+              );
+            }
+            return item;
+          }),
+    );
+  }
+}
 Widget mostPopularIn(){
   return Column(
     mainAxisSize: MainAxisSize.min,
     children: [
       mostPopularInHeader(),
       SizedBox(
+        height: 250,
+          child:  Carousel(
+            height: 150,
+            items: [
+              Container(
+              color: Colors.indigoAccent,
+              ),
+              Container(
+                color: Colors.orangeAccent,
+              ),
+              Container(
+                color: Colors.indigoAccent,
+              ),
+              Container(
+                color: Colors.indigoAccent,
+              ),
+              Container(
+                color: Colors.indigoAccent,
+              ),
+            ],
+            builderFunction: (context, item) {
+              return ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(25)),
+                child: Container(
+                  width: MediaQuery.of(context).size.width-70,
+                  color: Colors.lightBlue,
+                  child: Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(20),
+                      child: Text(
+                        'KAreem',
+                        style: TextStyle(fontSize: 70),
+                        maxLines: 1,
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          )
+      ),
+      SizedBox(
         height: 190,
         child: ListView.builder(
           physics:  const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
           reverse: true,
-          padding: EdgeInsets.symmetric(horizontal:8 ),
+          padding: EdgeInsets.symmetric(horizontal: 8),
           semanticChildCount: 2,
           scrollDirection: Axis.horizontal,
           itemCount: 20,
