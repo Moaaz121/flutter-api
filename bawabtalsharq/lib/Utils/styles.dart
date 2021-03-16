@@ -65,6 +65,14 @@ TextStyle titleStyle(
 // end Mosdik
 
 // Start Moaaz
+const BaseOrange = Color(0xFFE16036);
+const BlueColor = Color(0xFF65B8F9);
+const RedColor = Color(0xFFFF8E8E);
+const OrangeColor = Color(0xFFFF8200);
+const PurpleColor = Color(0xFF9080FF);
+const GreenColor = Color(0xFF4AC367);
+const BlackColor = Color(0xFF303030);
+const GrayColor = Color(0xFF646464);
 
 // end Moaaz
 
