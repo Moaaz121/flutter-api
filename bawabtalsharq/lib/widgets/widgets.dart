@@ -314,6 +314,22 @@ FloatingActionButton buildFloatingActionBtn(
   );
 }
 
+Text buildText(String text, double fontSize,
+    {Color color = Colors.black,
+    textAlign = TextAlign.start,
+    fontWeight = FontWeight.normal,
+    String fontFamily}) {
+  return Text(
+    text,
+    textAlign: textAlign,
+    style: TextStyle(
+      fontFamily: 'Tajawal',
+      fontSize: fontSize,
+      fontWeight: fontWeight,
+      color: color,
+    ),
+  );
+}
 // end Asmaa
 
 // Start Bahaa
