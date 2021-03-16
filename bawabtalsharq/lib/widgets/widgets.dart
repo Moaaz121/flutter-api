@@ -606,7 +606,7 @@ Widget ourGoldenSupplier(){
           itemBuilder: (context, position) {
             return supplierView(onPress: (){},
               category: position.isOdd ? 'Food & Beverages' : 'Agriculture Crops',
-              nameSupplier: position.isOdd ? 'Kareem Hassanien' : 'Mohamed Mosadaq',
+              nameSupplier: position.isOdd ? 'Kareem Hassanien' : 'Mohamed Mosadik',
               supplierImg: AssetImage( position.isOdd ? kareem_img : mosadaq_img),
               years: position.isOdd ? 3 : 5,
             );
@@ -670,7 +670,7 @@ Widget mostPopularIn(){
           itemBuilder: (context, position) {
             return supplierView(onPress: (){},
               category: position.isOdd ? 'Food & Beverages' : 'Agriculture Crops',
-              nameSupplier: position.isOdd ? 'Kareem Hassanien' : 'Mohamed Mosadaq',
+              nameSupplier: position.isOdd ? 'Kareem Hassanien' : 'Mohamed Mosadik',
               supplierImg: AssetImage( position.isOdd ? kareem_img : mosadaq_img),
               years: position.isOdd ? 3 : 5,
             );
@@ -728,6 +728,73 @@ Widget mostPopularInHeader(){
 // end Bahaa
 
 // Start Mosdik
+
+Widget mostPopularInEgy(){
+  return Column(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      mostPopularInEgyHeader(),
+      SizedBox(
+        height: 190,
+        child: ListView.builder(
+          physics:  const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+          reverse: true,
+          padding: EdgeInsets.symmetric(horizontal:8 ),
+          semanticChildCount: 2,
+          scrollDirection: Axis.horizontal,
+          itemCount: 20,
+          itemBuilder: (context, position) {
+            return mostPopularCateg(onPress: (){},
+              nameProduct: position.isOdd ? 'Food & Beverages' : 'Agriculture Crops',
+              productImg: AssetImage( position.isOdd ? kareem_img : mosadaq_img),
+              price: '800.00',
+              iconFavo: AssetImage(productIcon1),
+              iconAdd: AssetImage(productIcon2),
+            );
+          },
+        ),
+      )
+    ],
+  );
+}
+
+Widget mostPopularInEgyHeader(){
+  return Padding(
+    padding: const EdgeInsets.only(right: 20,left: 20,top: 20),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text('${Strings().Category}',
+          style: titlesStyle(),),
+        FlatButton(
+          splashColor: orangeColor.withOpacity(0.4),
+          highlightColor: orangeShadowColor,
+          shape: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide.none
+          ),
+          onPressed: (){
+
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                Strings().seeAll,
+                style: moreStyle(),
+              ),
+              SizedBox(width: 8,),
+              Icon(Icons.arrow_forward_rounded,size: 15,color:  Colors.black.withOpacity(0.7),)
+            ],
+          ),
+        )
+      ],
+    ),
+  );
+}
+
+
 Widget supplierView(
     {Function onPress,
       Colors colors,
@@ -818,7 +885,7 @@ Widget mainMostPopularProduct(
         color: backgroundColor,
       ),
       margin: EdgeInsets.all(20.0),
-      height: 200.0,
+      height: 240.0,
       width: 150.0,
       child: Stack(
         children: [
@@ -901,7 +968,7 @@ Widget subMostPopularProduct(
       ),
       margin: EdgeInsets.all(20.0),
       height: 120.0,
-      width: 230.0,
+      width: 200.0,
       child: Stack(
         children: [
           Positioned(
@@ -913,7 +980,7 @@ Widget subMostPopularProduct(
                 width: 170,
               )),
           Padding(
-            padding: const EdgeInsets.only(left: 180.0),
+            padding: const EdgeInsets.only(left: 150.0,top: 10),
             child: Row(
               children: [
                 Image(
@@ -976,6 +1043,10 @@ Widget mostPopularCateg(
   return GestureDetector(
       onTap: onPress,
       child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          shape: BoxShape.rectang
+        ),
         height: 200,
         width: 200,
         child: Stack(children: [

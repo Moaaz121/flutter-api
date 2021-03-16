@@ -42,6 +42,7 @@ class Strings {
 // end Bahaa
 
 // Start Mosdik
+  String Category = 'Shoes & Accessories ';
 
 // end Mosdik
 
