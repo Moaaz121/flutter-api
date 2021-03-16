@@ -3,12 +3,12 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-const regularFontFamily = 'Font-Regular';
-const lightFontFamily = 'Font-Light';
-const mediumFontFamily = 'Font-Medium';
+const regularFontFamily = 'Roboto-Regular';
+const lightFontFamily = 'Roboto-Light';
+const mediumFontFamily = 'Roboto-Medium';
 const boldFontFamily = 'Roboto-Bold';
-const semiBoldFontFamily = 'Font-SemiBold';
-const HeavyBoldFontFamily = 'Font-HeavyBold';
+const semiBoldFontFamily = 'Roboto-Medium';
+const HeavyBoldFontFamily = 'Roboto-HeavyBold';
 
 const defaultBackgroundColor = Color.fromRGBO(0, 81, 173, 1);
 const greyColor = Color.fromRGBO(122, 134, 154, 1);
