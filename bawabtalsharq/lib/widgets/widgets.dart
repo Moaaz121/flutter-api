@@ -774,48 +774,6 @@ Widget mostPopularIn(){
     children: [
       mostPopularInHeader(),
       SizedBox(
-        height: 250,
-          child:  Carousel(
-            height: 150,
-            items: [
-              Container(
-              color: Colors.indigoAccent,
-              ),
-              Container(
-                color: Colors.orangeAccent,
-              ),
-              Container(
-                color: Colors.indigoAccent,
-              ),
-              Container(
-                color: Colors.indigoAccent,
-              ),
-              Container(
-                color: Colors.indigoAccent,
-              ),
-            ],
-            builderFunction: (context, item) {
-              return ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(25)),
-                child: Container(
-                  width: MediaQuery.of(context).size.width-70,
-                  color: Colors.lightBlue,
-                  child: Center(
-                    child: Padding(
-                      padding: EdgeInsets.all(20),
-                      child: Text(
-                        'KAreem',
-                        style: TextStyle(fontSize: 70),
-                        maxLines: 1,
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            },
-          )
-      ),
-      SizedBox(
         height: 190,
         child: ListView.builder(
           physics:  const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
