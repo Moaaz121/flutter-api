@@ -39,8 +39,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             ourGoldenSupplier(),
             mostPopularIn(),
-            mostPopularCateg(onPress: (){},
-            productImg: AssetImage(productImage), iconAdd: AssetImage(productIcon1), iconFavo: AssetImage(productIcon2), nameProduct: 'mohamed', price: '800.00')
+            MainMostPopularCategory(),
+
           ],
         ),
       ),

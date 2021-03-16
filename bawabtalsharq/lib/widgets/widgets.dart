@@ -444,24 +444,29 @@ Widget chatButton(Function _function) {
   return Padding(
     padding: const EdgeInsets.all(16.0),
     child: SizedBox(
-        width: 45,
-        height: 45,
-        child: Container(
-          decoration: BoxDecoration(shape: BoxShape.circle, boxShadow: [
-            BoxShadow(color: orangeShadowColor, spreadRadius: 2, blurRadius: 10)
-          ]),
-          child: ClipOval(
-            child: Material(
-              shadowColor: orangeShadowColor,
-              color: Colors.white,
-              child: InkWell(
-                splashColor: orangeColor.withOpacity(0.4),
-                highlightColor: orangeShadowColor,
-                child: Image.asset(chat,width: 55,height: 55,fit: BoxFit.fill,),
+      width: 45,
+      height: 45,
+      child: Container(
+        decoration: BoxDecoration(shape: BoxShape.circle, boxShadow: [
+          BoxShadow(color: orangeShadowColor, spreadRadius: 2, blurRadius: 10)
+        ]),
+        child: ClipOval(
+          child: Material(
+            shadowColor: orangeShadowColor,
+            color: Colors.white,
+            child: InkWell(
+              splashColor: orangeColor.withOpacity(0.4),
+              highlightColor: orangeShadowColor,
+              child: Image.asset(
+                chat,
+                width: 55,
+                height: 55,
+                fit: BoxFit.fill,
+              ),
             ),
           ),
         ),
-  ),
+      ),
     ),
   );
 }
@@ -544,27 +549,20 @@ Widget sliderIndicator(int page) {
   );
 }
 
-Widget mainHeaderButton(Function function,String title, String image,Color color){
+Widget mainHeaderButton(
+    Function function, String title, String image, Color color) {
   return Container(
-    decoration: BoxDecoration(
-
-      borderRadius: BorderRadius.circular(15),
-      boxShadow: [
-        BoxShadow(
-          color: orangeShadowColor,
-          blurRadius: 10,
-          spreadRadius: 1
-        ),
-      ]
-    ),
+    decoration:
+        BoxDecoration(borderRadius: BorderRadius.circular(15), boxShadow: [
+      BoxShadow(color: orangeShadowColor, blurRadius: 10, spreadRadius: 1),
+    ]),
     child: FlatButton(
         splashColor: orangeColor.withOpacity(0.4),
         highlightColor: orangeShadowColor,
         onPressed: function,
         shape: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide.none
-        ),
+            borderRadius: BorderRadius.circular(15),
+            borderSide: BorderSide.none),
         color: Colors.white,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
@@ -578,19 +576,28 @@ Widget mainHeaderButton(Function function,String title, String image,Color color
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(8),
-                  child: Image.asset(image,height: 25,width: 25,fit: BoxFit.fill,),
+                  child: Image.asset(
+                    image,
+                    height: 25,
+                    width: 25,
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
-              SizedBox(height: 8,),
-              Text(title,
-              style: mainHeaderTitleStyle(),),
+              SizedBox(
+                height: 8,
+              ),
+              Text(
+                title,
+                style: mainHeaderTitleStyle(),
+              ),
             ],
           ),
         )),
   );
 }
 
-Widget ourGoldenSupplier(){
+Widget ourGoldenSupplier() {
   return Column(
     mainAxisSize: MainAxisSize.min,
     children: [
@@ -598,16 +605,20 @@ Widget ourGoldenSupplier(){
       SizedBox(
         height: 190,
         child: ListView.builder(
-          physics:  const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-
+          physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics()),
           reverse: true,
           scrollDirection: Axis.horizontal,
           itemCount: 20,
           itemBuilder: (context, position) {
-            return supplierView(onPress: (){},
-              category: position.isOdd ? 'Food & Beverages' : 'Agriculture Crops',
-              nameSupplier: position.isOdd ? 'Kareem Hassanien' : 'Mohamed Mosadik',
-              supplierImg: AssetImage( position.isOdd ? kareem_img : mosadaq_img),
+            return supplierView(
+              onPress: () {},
+              category:
+                  position.isOdd ? 'Food & Beverages' : 'Agriculture Crops',
+              nameSupplier:
+                  position.isOdd ? 'Kareem Hassanien' : 'Mohamed Mosadik',
+              supplierImg:
+                  AssetImage(position.isOdd ? kareem_img : mosadaq_img),
               years: position.isOdd ? 3 : 5,
             );
           },
@@ -617,25 +628,24 @@ Widget ourGoldenSupplier(){
   );
 }
 
-Widget ourGoldenSupplierHeader(){
+Widget ourGoldenSupplierHeader() {
   return Padding(
-    padding: const EdgeInsets.only(right: 20,left: 20,top: 20),
+    padding: const EdgeInsets.only(right: 20, left: 20, top: 20),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(Strings().ourGoldenSupplier,
-        style: titlesStyle(),),
+        Text(
+          Strings().ourGoldenSupplier,
+          style: titlesStyle(),
+        ),
         FlatButton(
           splashColor: orangeColor.withOpacity(0.4),
           highlightColor: orangeShadowColor,
           shape: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide.none
-          ),
-          onPressed: (){
-
-          },
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide.none),
+          onPressed: () {},
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -643,8 +653,14 @@ Widget ourGoldenSupplierHeader(){
                 Strings().more,
                 style: moreStyle(),
               ),
-              SizedBox(width: 8,),
-              Icon(Icons.arrow_forward_rounded,size: 15,color:  Colors.black.withOpacity(0.7),)
+              SizedBox(
+                width: 8,
+              ),
+              Icon(
+                Icons.arrow_forward_rounded,
+                size: 15,
+                color: Colors.black.withOpacity(0.7),
+              )
             ],
           ),
         )
@@ -653,7 +669,7 @@ Widget ourGoldenSupplierHeader(){
   );
 }
 
-Widget mostPopularIn(){
+Widget mostPopularIn() {
   return Column(
     mainAxisSize: MainAxisSize.min,
     children: [
@@ -661,17 +677,22 @@ Widget mostPopularIn(){
       SizedBox(
         height: 190,
         child: ListView.builder(
-          physics:  const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+          physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics()),
           reverse: true,
-          padding: EdgeInsets.symmetric(horizontal:8 ),
+          padding: EdgeInsets.symmetric(horizontal: 8),
           semanticChildCount: 2,
           scrollDirection: Axis.horizontal,
           itemCount: 20,
           itemBuilder: (context, position) {
-            return supplierView(onPress: (){},
-              category: position.isOdd ? 'Food & Beverages' : 'Agriculture Crops',
-              nameSupplier: position.isOdd ? 'Kareem Hassanien' : 'Mohamed Mosadik',
-              supplierImg: AssetImage( position.isOdd ? kareem_img : mosadaq_img),
+            return supplierView(
+              onPress: () {},
+              category:
+                  position.isOdd ? 'Food & Beverages' : 'Agriculture Crops',
+              nameSupplier:
+                  position.isOdd ? 'Kareem Hassanien' : 'Mohamed Mosadik',
+              supplierImg:
+                  AssetImage(position.isOdd ? kareem_img : mosadaq_img),
               years: position.isOdd ? 3 : 5,
             );
           },
@@ -681,25 +702,24 @@ Widget mostPopularIn(){
   );
 }
 
-Widget mostPopularInHeader(){
+Widget mostPopularInHeader() {
   return Padding(
-    padding: const EdgeInsets.only(right: 20,left: 20,top: 20),
+    padding: const EdgeInsets.only(right: 20, left: 20, top: 20),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text('${Strings().mostPopularIn}Egypt',
-          style: titlesStyle(),),
+        Text(
+          '${Strings().mostPopularIn}Egypt',
+          style: titlesStyle(),
+        ),
         FlatButton(
           splashColor: orangeColor.withOpacity(0.4),
           highlightColor: orangeShadowColor,
           shape: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide.none
-          ),
-          onPressed: (){
-
-          },
+              borderSide: BorderSide.none),
+          onPressed: () {},
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -707,8 +727,14 @@ Widget mostPopularInHeader(){
                 Strings().more,
                 style: moreStyle(),
               ),
-              SizedBox(width: 8,),
-              Icon(Icons.arrow_forward_rounded,size: 15,color:  Colors.black.withOpacity(0.7),)
+              SizedBox(
+                width: 8,
+              ),
+              Icon(
+                Icons.arrow_forward_rounded,
+                size: 15,
+                color: Colors.black.withOpacity(0.7),
+              )
             ],
           ),
         )
@@ -729,7 +755,7 @@ Widget mostPopularInHeader(){
 
 // Start Mosdik
 
-Widget mostPopularInEgy(){
+Widget mostPopularInEgy() {
   return Column(
     mainAxisSize: MainAxisSize.min,
     children: [
@@ -737,19 +763,22 @@ Widget mostPopularInEgy(){
       SizedBox(
         height: 190,
         child: ListView.builder(
-          physics:  const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+          physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics()),
           reverse: true,
-          padding: EdgeInsets.symmetric(horizontal:8 ),
+          padding: EdgeInsets.symmetric(horizontal: 8),
           semanticChildCount: 2,
           scrollDirection: Axis.horizontal,
           itemCount: 20,
           itemBuilder: (context, position) {
-            return mostPopularCateg(onPress: (){},
-              nameProduct: position.isOdd ? 'Food & Beverages' : 'Agriculture Crops',
-              productImg: AssetImage( position.isOdd ? kareem_img : mosadaq_img),
+            return mostPopularCateg(
+              onPress: () {},
+              nameProduct:
+                  position.isOdd ? 'Food & Beverages' : 'Agriculture Crops',
+              productImg: AssetImage(position.isOdd ? kareem_img : mosadaq_img),
               price: '800.00',
-              iconFavo: AssetImage(productIcon1),
-              iconAdd: AssetImage(productIcon2),
+              // iconFavo: AssetImage(productIcon1),
+              // iconAdd: AssetImage(productIcon2),
             );
           },
         ),
@@ -758,25 +787,24 @@ Widget mostPopularInEgy(){
   );
 }
 
-Widget mostPopularInEgyHeader(){
+Widget mostPopularInEgyHeader() {
   return Padding(
-    padding: const EdgeInsets.only(right: 20,left: 20,top: 20),
+    padding: const EdgeInsets.only(right: 20, left: 20, top: 20),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text('${Strings().Category}',
-          style: titlesStyle(),),
+        Text(
+          '${Strings().Category}',
+          style: titlesStyle(),
+        ),
         FlatButton(
           splashColor: orangeColor.withOpacity(0.4),
           highlightColor: orangeShadowColor,
           shape: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide.none
-          ),
-          onPressed: (){
-
-          },
+              borderSide: BorderSide.none),
+          onPressed: () {},
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -784,8 +812,14 @@ Widget mostPopularInEgyHeader(){
                 Strings().seeAll,
                 style: moreStyle(),
               ),
-              SizedBox(width: 8,),
-              Icon(Icons.arrow_forward_rounded,size: 15,color:  Colors.black.withOpacity(0.7),)
+              SizedBox(
+                width: 8,
+              ),
+              Icon(
+                Icons.arrow_forward_rounded,
+                size: 15,
+                color: Colors.black.withOpacity(0.7),
+              )
             ],
           ),
         )
@@ -794,18 +828,17 @@ Widget mostPopularInEgyHeader(){
   );
 }
 
-
 Widget supplierView(
     {Function onPress,
-      Colors colors,
-      String nameSupplier,
-      String category,
-      int years,
-      AssetImage supplierImg}) {
+    Colors colors,
+    String nameSupplier,
+    String category,
+    int years,
+    AssetImage supplierImg}) {
   return GestureDetector(
     onTap: onPress,
     child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Container(
         width: 105.0,
         child: Column(
@@ -813,12 +846,19 @@ Widget supplierView(
           children: [
             Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(13),
-
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.black.withOpacity(0.50),
+                      blurRadius: 10,
+                      spreadRadius: 0.1,
+                      offset: Offset(1, 3))
+                ],
+                borderRadius: BorderRadius.circular(20),
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20.0),
-                child: Image (
+                child: Image(
                   image: supplierImg,
                   width: double.infinity,
                   height: 105,
@@ -831,7 +871,8 @@ Widget supplierView(
             ),
             Text(
               nameSupplier,
-              style: TextStyle(fontSize: 11.0,
+              style: TextStyle(
+                  fontSize: 11.0,
                   fontWeight: FontWeight.bold,
                   color: Colors.black),
             ),
@@ -840,7 +881,9 @@ Widget supplierView(
             ),
             Text(
               category,
-              style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w300,
+              style: TextStyle(
+                  fontSize: 11.0,
+                  fontWeight: FontWeight.w300,
                   color: Colors.black54),
             ),
             SizedBox(
@@ -849,16 +892,20 @@ Widget supplierView(
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Icon(Icons.access_time_rounded,size: 13,),
+                Icon(
+                  Icons.access_time_rounded,
+                  size: 13,
+                ),
                 SizedBox(
                   width: 5.0,
                 ),
-                Text('$years YRS',
+                Text(
+                  '$years YRS',
                   style: TextStyle(
                       fontSize: 10.0,
                       fontWeight: FontWeight.w300,
-                      color: Colors.black54
-                  ),),
+                      color: Colors.black54),
+                ),
               ],
             ),
           ],
@@ -872,8 +919,6 @@ Widget mainMostPopularProduct(
     {Function onPress,
     Color backgroundColor,
     AssetImage productImg,
-    AssetImage iconAdd,
-    AssetImage iconFavo,
     String nameProduct,
     String nameCategory,
     String price}) {
@@ -901,16 +946,11 @@ Widget mainMostPopularProduct(
             padding: const EdgeInsets.only(left: 100.0),
             child: Row(
               children: [
-                Image(
-                  image: iconAdd,
-                  width: 20.0,
-                  height: 20.0,
+                Icon(
+                  Icons.add_to_photos, size: 17,
                 ),
-                Image(
-                  image: iconFavo,
-                  width: 20.0,
-                  height: 20.0,
-                ),
+                Icon(
+                  Icons.bookmark_border, size: 17,)
               ],
             ),
           ),
@@ -954,8 +994,6 @@ Widget subMostPopularProduct(
     {Function onPress,
     Color backgroundColor,
     AssetImage productImg,
-    AssetImage iconAdd,
-    AssetImage iconFavo,
     String nameProduct,
     String nameCategory,
     String price}) {
@@ -980,19 +1018,14 @@ Widget subMostPopularProduct(
                 width: 170,
               )),
           Padding(
-            padding: const EdgeInsets.only(left: 150.0,top: 10),
+            padding: const EdgeInsets.only(left: 150.0, top: 10),
             child: Row(
               children: [
-                Image(
-                  image: iconAdd,
-                  width: 20.0,
-                  height: 20.0,
+                Icon(
+                  Icons.add_to_photos, size: 17,
                 ),
-                Image(
-                  image: iconFavo,
-                  width: 20.0,
-                  height: 20.0,
-                ),
+                Icon(
+                  Icons.bookmark_border, size: 17,)
               ],
             ),
           ),
@@ -1032,41 +1065,63 @@ Widget subMostPopularProduct(
   );
 }
 
+
+Widget MainMostPopularCategory(){
+
+  return SizedBox(
+    height: 200,
+    child: ListView.builder(
+      padding: EdgeInsets.only(left: 20,right: 30),
+      physics: const BouncingScrollPhysics(
+          parent: AlwaysScrollableScrollPhysics()),
+      reverse: true,
+      scrollDirection: Axis.horizontal,
+      itemCount: 3,
+      itemBuilder: (context, position) {
+        return SizedBox(
+          width: MediaQuery.of(context).size.width/3-12,
+          child: mostPopularCateg(
+            onPress: () {},
+            backgroundColor: position.isOdd ? Colors.deepOrange : Colors.cyan,
+            nameProduct: position.isOdd ? 'Negrsgo' : 'koshary',
+            productImg: AssetImage(position.isOdd ? productImage : productImage),
+            price: '800.00',
+          ),
+        );
+      },
+    ),
+  );
+}
+
+
 Widget mostPopularCateg(
     {Function onPress,
     Color backgroundColor,
     AssetImage productImg,
-    AssetImage iconAdd,
-    AssetImage iconFavo,
     String nameProduct,
     String price}) {
   return GestureDetector(
       onTap: onPress,
       child: Container(
-
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            color: Colors.yellow[100],
-            border: Border.all(
-              color: Colors.red,
-              width: 5,
-
-
-            )
-          // borderRadius: BorderRadius.circular(15),
-
-        ),
-
         height: 200,
-        width: 200,
         child: Stack(children: [
           Padding(
             padding:
-                const EdgeInsets.only(left: 20, bottom: 40, right: 20, top: 30),
+                const EdgeInsets.only(left: 20, bottom: 40, right: 0, top: 30),
             child: Container(
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.black.withOpacity(0.09),
+                      blurRadius: 10,
+                      spreadRadius: 0.1,
+                      offset: Offset(1, 3))
+                ],
+                borderRadius: BorderRadius.circular(15),
+              ),
               width: 160,
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(15)),
               child: Stack(children: [
                 Positioned(
                   top: -50,
@@ -1074,9 +1129,19 @@ Widget mostPopularCateg(
                   child: SizedBox(
                       height: 115,
                       width: 115,
-                      child: CircleAvatar(
-                        backgroundColor: Colors.red[100],
-                      )),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: LinearGradient(
+                                colors: [
+                                  redColor.withOpacity(0.9),
+                                  redColor.withOpacity(0.05)
+                                ],
+                                begin: Alignment.topLeft,
+                                tileMode: TileMode.clamp)
+                        ),
+                      )
+                  ),
                 ),
               ]),
             ),
@@ -1097,12 +1162,12 @@ Widget mostPopularCateg(
                 Text(
                   nameProduct,
                   style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 10,
                       fontWeight: FontWeight.bold,
                       color: Colors.black),
                 ),
                 SizedBox(
-                  height: 7.0,
+                  height: 12.0,
                 ),
                 Row(
                   children: [
@@ -1110,35 +1175,31 @@ Widget mostPopularCateg(
                       '$price EGP',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 12,
+                          fontSize: 10,
                           color: Colors.deepOrangeAccent),
                     ),
                     SizedBox(
-                      width: 30,
+                      width: 5,
                     ),
-                    Image(
-                      image: iconAdd,
-                      width: 20.0,
-                      height: 20.0,
+                    Icon(
+                      Icons.add_to_photos, size: 17,
+
                     ),
                     SizedBox(
-                      width: 10,
+                      width: 5,
                     ),
-                    Image(
-                      image: iconFavo,
-                      width: 20.0,
-                      height: 20.0,
-                    ),
+                    Icon(
+                      Icons.bookmark_border, size: 17,)
                   ],
                 )
               ],
             ),
           )
-        ]
-        ),
-      )
-  );
+        ]),
+      ));
 }
+
+
 // end Mosdik
 
 // Start Moaaz
