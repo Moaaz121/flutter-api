@@ -1043,10 +1043,20 @@ Widget mostPopularCateg(
   return GestureDetector(
       onTap: onPress,
       child: Container(
+
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          shape: BoxShape.rectang
+            borderRadius: BorderRadius.circular(15),
+            color: Colors.yellow[100],
+            border: Border.all(
+              color: Colors.red,
+              width: 5,
+
+
+            )
+          // borderRadius: BorderRadius.circular(15),
+
         ),
+
         height: 200,
         width: 200,
         child: Stack(children: [
