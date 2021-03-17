@@ -81,13 +81,17 @@ class _AllCategoriesState extends State<AllCategories>
             return GestureDetector(
               onTap: () {
                 setState(() {
-                  if (_isPressed) {
-                    _stackWidgets.removeLast();
-                  }
-                  _stackWidgets.add(getSubCategoriesList(
-                      context,
-                      categoriesArr[index].subCategory,
-                      Color(categoriesArr[index].color)));
+                  categoriesArr.forEach((element) {
+                    element.isSelected = false;
+                  });
+                  _stackWidgets = [
+                    getMainCategoriesList(context),
+                    getSubCategoriesList(
+                        context,
+                        index,
+                        categoriesArr[index].subCategory,
+                        Color(categoriesArr[index].color))
+                  ];
                   _appBarTitle = categoriesArr[index].name;
                   _isPressed = true;
                   categoriesArr[index].isSelected = true;
@@ -111,7 +115,7 @@ class _AllCategoriesState extends State<AllCategories>
                       ),
                     ),
                     Visibility(
-                      visible: true,
+                      visible: categoriesArr[index].isSelected,
                       child: Center(
                         child: Container(
                           child: Transform.rotate(
@@ -141,11 +145,11 @@ class _AllCategoriesState extends State<AllCategories>
     );
   }
 
-  Positioned getSubCategoriesList(
-      BuildContext context, List<SubCategory> subCategoryArr, Color color) {
+  Positioned getSubCategoriesList(BuildContext context, int categoryIndex,
+      List<SubCategory> subCategoryArr, Color color) {
     setupAnimation();
     return Positioned(
-      left: 65,
+      left: 70,
       top: 0,
       bottom: 0,
       width: MediaQuery.of(context).size.width,
@@ -157,7 +161,8 @@ class _AllCategoriesState extends State<AllCategories>
             setState(() {
               _appBarTitle = Strings().allCategories();
               _isPressed = false;
-              _stackWidgets.removeLast();
+              categoriesArr[categoryIndex].isSelected = false;
+              _stackWidgets = [getMainCategoriesList(context)];
             });
           }
         },
@@ -250,6 +255,6 @@ class DrawTriangle extends CustomPainter {
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
-    return null;
+    return true;
   }
 }
