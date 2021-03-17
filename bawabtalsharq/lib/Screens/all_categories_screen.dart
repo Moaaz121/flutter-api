@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bawabtalsharq/Model/categories_model.dart';
 import 'package:flutter/material.dart';
 
@@ -88,6 +90,7 @@ class _AllCategoriesState extends State<AllCategories>
                       Color(categoriesArr[index].color)));
                   _appBarTitle = categoriesArr[index].name;
                   _isPressed = true;
+                  categoriesArr[index].isSelected = true;
                 });
               },
               child: Container(
@@ -104,6 +107,20 @@ class _AllCategoriesState extends State<AllCategories>
                           cold_drinks,
                           height: 45,
                           width: 45,
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: true,
+                      child: Center(
+                        child: Container(
+                          child: Transform.rotate(
+                            angle: pi / 2,
+                            child: CustomPaint(
+                              size: Size(12, 12),
+                              painter: DrawTriangle(categoriesArr[index].color),
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -208,5 +225,31 @@ class _AllCategoriesState extends State<AllCategories>
       parent: _controller,
       curve: Curves.easeIn,
     ));
+  }
+}
+
+class DrawTriangle extends CustomPainter {
+  Paint _paint;
+  int color;
+  DrawTriangle(this.color) {
+    _paint = Paint()
+      ..color = Color(color)
+      ..style = PaintingStyle.fill
+      ..isAntiAlias = true;
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    var path = Path();
+    path.moveTo(size.width / 2, 0);
+    path.lineTo(0, size.height);
+    path.lineTo(size.height, size.width);
+    path.close();
+    canvas.drawPath(path, _paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return null;
   }
 }

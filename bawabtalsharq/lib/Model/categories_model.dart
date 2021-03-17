@@ -7,6 +7,7 @@ class Category {
   int color;
   String icon;
   List<SubCategory> subCategory = [];
+  bool isSelected = false;
   Category(this.name, this.color, this.icon, this.subCategory);
 }
 
