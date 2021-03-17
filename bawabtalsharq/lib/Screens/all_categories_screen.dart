@@ -10,7 +10,11 @@ class AllCategories extends StatefulWidget {
   _AllCategoriesState createState() => _AllCategoriesState();
 }
 
-class _AllCategoriesState extends State<AllCategories> {
+class _AllCategoriesState extends State<AllCategories>
+    with TickerProviderStateMixin {
+  AnimationController _controller;
+  Animation<Offset> _animation;
+
   ScrollController _mainScrollController = ScrollController();
   ScrollController _subScrollController = ScrollController();
   List<Positioned> _stackWidgets = List<Positioned>();
@@ -19,8 +23,18 @@ class _AllCategoriesState extends State<AllCategories> {
 
   @override
   void initState() {
+    _controller = AnimationController(
+      duration: const Duration(seconds: 2),
+      vsync: this,
+    )..forward();
     _stackWidgets.add(getMainCategoriesList(context));
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
   }
 
   @override
@@ -112,6 +126,7 @@ class _AllCategoriesState extends State<AllCategories> {
 
   Positioned getSubCategoriesList(
       BuildContext context, List<SubCategory> subCategoryArr, Color color) {
+    setupAnimation();
     return Positioned(
       left: 65,
       top: 0,
@@ -129,56 +144,69 @@ class _AllCategoriesState extends State<AllCategories> {
             });
           }
         },
-        child: Container(
-          margin: EdgeInsets.only(top: 25),
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(8),
+        child: SlideTransition(
+          position: _animation,
+          child: Container(
+            margin: EdgeInsets.only(top: 25),
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(8),
+              ),
             ),
-          ),
-          child: ListView.builder(
-            controller: _subScrollController,
-            itemCount: subCategoryArr.length,
-            scrollDirection: Axis.vertical,
-            itemBuilder: (context, index) {
-              return GestureDetector(
-                onTap: () {
-                  print('sub pressed');
-                },
-                child: Container(
-                  margin:
-                      EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 5),
-                  child: Row(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(18),
-                            color: Colors.white),
-                        child: Padding(
-                          padding: const EdgeInsets.all(3),
-                          child: Image.asset(
-                            cold_drinks,
-                            height: 37,
-                            width: 37,
+            child: ListView.builder(
+              controller: _subScrollController,
+              itemCount: subCategoryArr.length,
+              scrollDirection: Axis.vertical,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {
+                    print('sub pressed');
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(
+                        left: 15, right: 15, top: 15, bottom: 5),
+                    child: Row(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(18),
+                              color: Colors.white),
+                          child: Padding(
+                            padding: const EdgeInsets.all(3),
+                            child: Image.asset(
+                              cold_drinks,
+                              height: 37,
+                              width: 37,
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Expanded(
-                        child: Text(subCategoryArr[index].name),
-                      ),
-                      Icon(Icons.navigate_next),
-                    ],
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Expanded(
+                          child: Text(subCategoryArr[index].name),
+                        ),
+                        Icon(Icons.navigate_next),
+                      ],
+                    ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         ),
       ),
     );
+  }
+
+  void setupAnimation() {
+    _animation = Tween<Offset>(
+      begin: const Offset(1, 0),
+      end: const Offset(0.0, 0.0),
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeIn,
+    ));
   }
 }
