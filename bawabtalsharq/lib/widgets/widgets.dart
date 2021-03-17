@@ -455,6 +455,7 @@ Widget chatButton(Function _function) {
               shadowColor: orangeShadowColor,
               color: Colors.white,
               child: InkWell(
+                onTap: _function,
                 splashColor: orangeColor.withOpacity(0.4),
                 highlightColor: orangeShadowColor,
                 child: Image.asset(chat,width: 55,height: 55,fit: BoxFit.fill,),
@@ -527,17 +528,17 @@ Widget sliderItem(BuildContext context, String image) {
 
 Widget sliderIndicator(int page) {
   return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 65),
+    padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 55),
     child: AnimatedSmoothIndicator(
       activeIndex: page,
       count: 4,
       axisDirection: Axis.horizontal,
       effect: ExpandingDotsEffect(
           spacing: 5.0,
-          radius: 3.0,
-          dotWidth: 12.0,
+          radius: 8.0,
+          dotWidth: 8.0,
           dotHeight: 8.0,
-          expansionFactor: 2,
+          expansionFactor: 2.7,
           dotColor: orangeShadowColor,
           activeDotColor: orangeColor),
     ),
@@ -599,7 +600,7 @@ Widget ourGoldenSupplier(){
         height: 190,
         child: ListView.builder(
           physics:  const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-
+          padding: EdgeInsets.symmetric(horizontal: 12),
           reverse: true,
           scrollDirection: Axis.horizontal,
           itemCount: 20,
@@ -663,20 +664,20 @@ Widget mostPopularIn(BuildContext context){
         child: Stack(
           children: [
             Positioned(
-              left: MediaQuery.of(context).size.width/3*.35,
+              left: MediaQuery.of(context).size.width/3*.205,
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: 165,
                 child: CarouselSlider(
                     items: [
-                      popularSlider(context),
-                      popularSlider(context),
-                      popularSlider(context),
-                      popularSlider(context),
+                      popularSlider(context,0),
+                      popularSlider(context,1),
+                      popularSlider(context,0),
+                      popularSlider(context,1),
                     ],
                     options: CarouselOptions(
                       aspectRatio: 16 / 9,
-                      viewportFraction: 0.6,
+                      viewportFraction: 0.45,
                       pauseAutoPlayInFiniteScroll: true,
                       pauseAutoPlayOnTouch: true,
                       initialPage: 0,
@@ -710,60 +711,30 @@ Widget mostPopularIn(BuildContext context){
 }
 
 
-Widget popularSlider(BuildContext context){
+Widget popularSlider(BuildContext context,int pos){
   return SizedBox(
-    child: Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            subMostPopularProduct(productImg: AssetImage(productImage),
-                backgroundColor: redColor.withOpacity(.3),
-                onPress: (){},
-                nameProduct: 'Pasta',
-                nameCategory: 'Food',
-                iconAdd: AssetImage(productIcon1),
-                iconFavo: AssetImage(productIcon2),
-                price: '\$\590.0',
-                context: context
-            ),
-            subMostPopularProduct(productImg: AssetImage(productImage),
-                backgroundColor: orangeColor.withOpacity(.3),
-                onPress: (){},
-                nameProduct: 'Pasta',
-                nameCategory: 'Food',
-                iconAdd: AssetImage(productIcon1),
-                iconFavo: AssetImage(productIcon2),
-                price: '\$\125.0',
-                context: context
-            ),
-          ],
+        subMostPopularProduct(productImg: AssetImage(productImage),
+            backgroundColor: pos ==0 ?redColor.withOpacity(.3) : blueColor.withOpacity(.3) ,
+            onPress: (){},
+            nameProduct: 'Pasta',
+            nameCategory: 'Food',
+            iconAdd: AssetImage(productIcon1),
+            iconFavo: AssetImage(productIcon2),
+            price: '\$\590.0',
+            context: context
         ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            subMostPopularProduct(productImg: AssetImage(productImage),
-                backgroundColor: blueColor.withOpacity(.3),
-                onPress: (){},
-                nameProduct: 'Pasta',
-                nameCategory: 'Food',
-                iconAdd: AssetImage(productIcon1),
-                iconFavo: AssetImage(productIcon2),
-                price: '\$\265.0',
-                context: context
-            ),
-            subMostPopularProduct(productImg: AssetImage(productImage),
-                backgroundColor: purpleColor.withOpacity(.3),
-                onPress: (){},
-                nameProduct: 'Pasta',
-                nameCategory: 'Food',
-                iconAdd: AssetImage(productIcon1),
-                iconFavo: AssetImage(productIcon2),
-                price: '\$\845.0',
-                context: context
-            ),
-          ],
+        subMostPopularProduct(productImg: AssetImage(productImage),
+            backgroundColor: pos ==0 ? orangeColor.withOpacity(.3) : purpleColor.withOpacity(.3) ,
+            onPress: (){},
+            nameProduct: 'Pasta',
+            nameCategory: 'Food',
+            iconAdd: AssetImage(productIcon1),
+            iconFavo: AssetImage(productIcon2),
+            price: '\$\125.0',
+            context: context
         ),
       ],
     ),
@@ -805,6 +776,8 @@ Widget mostPopularInHeader(){
     ),
   );
 }
+
+
 
 // end karem
 
@@ -894,23 +867,22 @@ Widget supplierView(
   return GestureDetector(
     onTap: onPress,
     child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 8),
+      padding: const EdgeInsets.only(top: 8,bottom: 8,right: 10,left: 8),
       child: Container(
-        width: 105.0,
+        width: 100.0,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(13),
-
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20.0),
                 child: Image (
                   image: supplierImg,
                   width: double.infinity,
-                  height: 105,
+                  height: 100,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -974,7 +946,7 @@ Widget mainMostPopularProduct(
         color: Colors.white,
       ),
       margin: EdgeInsets.only(left: 20,right: 3,bottom: 3,top: 3),
-      width: MediaQuery.of(context).size.width/3-30,
+      width: MediaQuery.of(context).size.width/3*0.85,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15.0),
@@ -1071,36 +1043,28 @@ Widget subMostPopularProduct(
       ),
       margin: EdgeInsets.all(3.0),
       height: 75,
-      width: MediaQuery.of(context).size.width/3-20,
+      width: MediaQuery.of(context).size.width/1.5,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(15),
         child: Stack(
           children: [
             Positioned(
-
                 bottom: -50,
                 right: -50,
                 child: Image(
                   image: AssetImage(productImage),
-                  height: 115,
-                  width: 115,
+                  height: 130,
+                  width: 130,
                 )),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 50,vertical: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Image(
-                    image: iconAdd,
-                    width: 15.0,
-                    height: 15.0,
-                  ),
+                  Icon(Icons.add_to_photos_rounded,size: 19,color: Colors.black54,),
                   SizedBox(width: 5,),
-                  Image(
-                    image: iconFavo,
-                    width: 15.0,
-                    height: 15.0,
-                  ),
+                  Icon(Icons.bookmark_border_rounded,size: 19,color: Colors.black54,)
+
                 ],
               ),
             ),
