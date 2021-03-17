@@ -117,64 +117,65 @@ class _AllCategoriesState extends State<AllCategories> {
       top: 0,
       bottom: 0,
       width: MediaQuery.of(context).size.width * 0.83,
-      // child: GestureDetector(
-      //   onHorizontalDragEnd: (update) {
-      //     setState(() {
-      //       _appBarTitle = Strings().allCategories();
-      //       _isPressed = false;
-      //       _stackWidgets.removeLast();
-      //     });
-      //   },
-      child: Container(
-        margin: EdgeInsets.only(top: 25),
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(8),
+      child: GestureDetector(
+        onTap: () {},
+        onHorizontalDragEnd: (update) {
+          setState(() {
+            _appBarTitle = Strings().allCategories();
+            _isPressed = false;
+            _stackWidgets.removeLast();
+          });
+        },
+        child: Container(
+          margin: EdgeInsets.only(top: 25),
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(8),
+            ),
           ),
-        ),
-        child: ListView.builder(
-          controller: _subScrollController,
-          itemCount: subCategoryArr.length,
-          scrollDirection: Axis.vertical,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-                print('sub pressed');
-              },
-              child: Container(
-                margin:
-                    EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 5),
-                child: Row(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(18),
-                          color: Colors.white),
-                      child: Padding(
-                        padding: const EdgeInsets.all(3),
-                        child: Image.asset(
-                          cold_drinks,
-                          height: 37,
-                          width: 37,
+          child: ListView.builder(
+            controller: _subScrollController,
+            itemCount: subCategoryArr.length,
+            scrollDirection: Axis.vertical,
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () {
+                  print('sub pressed');
+                },
+                child: Container(
+                  margin:
+                      EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 5),
+                  child: Row(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(18),
+                            color: Colors.white),
+                        child: Padding(
+                          padding: const EdgeInsets.all(3),
+                          child: Image.asset(
+                            cold_drinks,
+                            height: 37,
+                            width: 37,
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Expanded(
-                      child: Text(subCategoryArr[index].name),
-                    ),
-                    Icon(Icons.navigate_next),
-                  ],
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Expanded(
+                        child: Text(subCategoryArr[index].name),
+                      ),
+                      Icon(Icons.navigate_next),
+                    ],
+                  ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
-      //   ),
     );
   }
 }
