@@ -699,8 +699,6 @@ Widget mostPopularIn(BuildContext context){
                 onPress: (){},
                 nameProduct: 'Pasta',
                 nameCategory: 'Food',
-                iconAdd: AssetImage(productIcon1),
-                iconFavo: AssetImage(productIcon2),
                 price: '\$\265.0',
                 context: context),
           ],
@@ -721,8 +719,6 @@ Widget popularSlider(BuildContext context,int pos){
             onPress: (){},
             nameProduct: 'Pasta',
             nameCategory: 'Food',
-            iconAdd: AssetImage(productIcon1),
-            iconFavo: AssetImage(productIcon2),
             price: '\$\590.0',
             context: context
         ),
@@ -731,8 +727,6 @@ Widget popularSlider(BuildContext context,int pos){
             onPress: (){},
             nameProduct: 'Pasta',
             nameCategory: 'Food',
-            iconAdd: AssetImage(productIcon1),
-            iconFavo: AssetImage(productIcon2),
             price: '\$\125.0',
             context: context
         ),
@@ -928,6 +922,13 @@ Widget supplierView(
           children: [
             Container(
               decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.black.withOpacity(0.4),
+                      blurRadius: 7,
+                      spreadRadius: 0.17,
+                      offset: Offset(1,1))
+                ],
                 borderRadius: BorderRadius.circular(13),
               ),
               child: ClipRRect(
@@ -986,8 +987,6 @@ Widget mainMostPopularProduct(
     {Function onPress,
     Color backgroundColor,
     AssetImage productImg,
-    AssetImage iconAdd,
-    AssetImage iconFavo,
     String nameProduct,
     String nameCategory,
     String price,BuildContext context}) {
@@ -1023,15 +1022,16 @@ Widget mainMostPopularProduct(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Image(
-                      image: iconAdd,
-                      width: 20.0,
-                      height: 20.0,
+                    GestureDetector(
+                        child: Icon(
+                          Icons.add_to_photos,size: 20,color: Colors.black54,),
+                      onTap: (){
+                      },
                     ),
-                    Image(
-                      image: iconFavo,
-                      width: 20.0,
-                      height: 20.0,
+                    SizedBox(width: 5),
+                    GestureDetector(
+                        child: Icon(Icons.bookmark_border,size: 20,color: Colors.black54,),
+                      onTap: (){},
                     ),
                   ],
                 ),
@@ -1082,8 +1082,6 @@ Widget subMostPopularProduct(
     {Function onPress,
     Color backgroundColor,
     AssetImage productImg,
-    AssetImage iconAdd,
-    AssetImage iconFavo,
     String nameProduct,
     String nameCategory,
     String price,BuildContext context}) {
@@ -1114,9 +1112,17 @@ Widget subMostPopularProduct(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Icon(Icons.add_to_photos_rounded,size: 19,color: Colors.black54,),
+                  GestureDetector(
+                      child: Icon(
+                        Icons.add_to_photos_rounded,size: 18,color: Colors.black54,),
+                    onTap: (){},
+                  ),
                   SizedBox(width: 5,),
-                  Icon(Icons.bookmark_border_rounded,size: 19,color: Colors.black54,)
+                  GestureDetector(
+                      child: Icon(
+                        Icons.bookmark_border_rounded,size: 18,color: Colors.black54,),
+                    onTap: (){},
+                  )
 
                 ],
               ),

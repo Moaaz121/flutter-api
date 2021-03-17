@@ -38,6 +38,10 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             ourGoldenSupplier(),
+            mostPopularIn(context),
+            mostPopularByCategoryHeader(),
+            mostPopularByCategoryStable(),
+            mostPopularByCategoryFooter(),
       
 
           ],
