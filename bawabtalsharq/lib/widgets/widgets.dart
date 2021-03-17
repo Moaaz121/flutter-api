@@ -791,38 +791,43 @@ Widget mostPopularInHeader(){
 
 // Start Mosdik
 
-Widget mostPopularInEgy(){
-  return Column(
-    mainAxisSize: MainAxisSize.min,
-    children: [
-      mostPopularInEgyHeader(),
-      SizedBox(
-        height: 190,
-        child: ListView.builder(
-          physics:  const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-          reverse: true,
-          padding: EdgeInsets.symmetric(horizontal:8 ),
-          semanticChildCount: 2,
-          scrollDirection: Axis.horizontal,
-          itemCount: 20,
-          itemBuilder: (context, position) {
-            return mostPopularCateg(onPress: (){},
-              nameProduct: position.isOdd ? 'Food & Beverages' : 'Agriculture Crops',
-              productImg: AssetImage( position.isOdd ? kareem_img : mosadaq_img),
-              price: '800.00',
-              iconFavo: AssetImage(productIcon1),
-              iconAdd: AssetImage(productIcon2),
-            );
-          },
+Widget mostPopularByCategoryHeader(){
+
+  return Padding(
+    padding: const EdgeInsets.only(top: 20),
+    child: Container(
+      height: 50,
+      width: 430,
+      decoration: BoxDecoration(
+        shape: BoxShape.rectangle,
+          gradient: LinearGradient(
+              colors: [
+                Colors.white.withOpacity(1),
+                Colors.black.withOpacity(0.3)
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              tileMode: TileMode.repeated) ,
+        color: Colors.black12,
+        borderRadius: BorderRadius.horizontal(right: Radius.circular(20), left: Radius.circular(20),
+        )
+      ),
+
+      child: Padding(
+        padding: const EdgeInsets.only(left: 20.0,top: 15.0),
+        child: Text
+          ('${Strings().mostPopularByCategories}',
+          style: titlesStyle(),
         ),
-      )
-    ],
+      ),
+    ),
   );
 }
 
-Widget mostPopularInEgyHeader(){
+
+Widget mostPopularByCategoryStable(){
   return Padding(
-    padding: const EdgeInsets.only(right: 20,left: 20,top: 20),
+    padding: const EdgeInsets.only(right: 20,left: 20,top: 0),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -855,6 +860,54 @@ Widget mostPopularInEgyHeader(){
     ),
   );
 }
+
+Widget mostPopularByCategoryFooter(){
+  return Container(
+    height: 200,
+    width: 430,
+    decoration: BoxDecoration(
+        shape: BoxShape.rectangle,
+        gradient: LinearGradient(
+            colors: [
+              Colors.white.withOpacity(1),
+              Colors.black.withOpacity(0.3)
+            ],
+            begin: Alignment.bottomCenter,
+            end: Alignment.topCenter,
+            tileMode: TileMode.repeated) ,
+        color: Colors.black12,
+        borderRadius: BorderRadius.horizontal(right: Radius.circular(20), left: Radius.circular(20),
+        )
+    ),
+    child: MainMostPopularCategory(),
+
+  );
+}
+
+
+Widget mostPopularByCategoryAfterProd(){
+  return Container(
+    height: 50,
+    width: 430,
+    decoration: BoxDecoration(
+        shape: BoxShape.rectangle,
+        gradient: LinearGradient(
+            colors: [
+              Colors.white.withOpacity(1),
+              Colors.black.withOpacity(0.3)
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            tileMode: TileMode.repeated) ,
+        color: Colors.black12,
+        borderRadius: BorderRadius.horizontal(right: Radius.circular(20), left: Radius.circular(20),
+        )
+    ),
+
+  );
+}
+
+
 
 
 Widget supplierView(
@@ -1105,49 +1158,92 @@ Widget subMostPopularProduct(
   );
 }
 
+
+
+
+
+
+Widget MainMostPopularCategory(){
+
+  return SizedBox(
+    height: 200,
+    child: ListView.builder(
+      padding: EdgeInsets.only(right: 16),
+      physics: const NeverScrollableScrollPhysics(),
+      reverse: true,
+      scrollDirection: Axis.horizontal,
+      itemCount: 3,
+      itemBuilder: (context, position) {
+        return SizedBox(
+          width: MediaQuery.of(context).size.width/3-5,
+          child: mostPopularCateg(
+            onPress: () {},
+            backgroundColor: position.isOdd ? Colors.deepOrange : Colors.cyan,
+            nameProduct: position.isOdd ? 'Negrsgo' : 'koshary',
+            productImg: AssetImage(position.isOdd ? productImage : productImage),
+            price: '80.00',
+          ),
+        );
+      },
+    ),
+  );
+}
+
 Widget mostPopularCateg(
     {Function onPress,
     Color backgroundColor,
     AssetImage productImg,
-    AssetImage iconAdd,
-    AssetImage iconFavo,
     String nameProduct,
     String price}) {
   return GestureDetector(
       onTap: onPress,
       child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            color: Colors.yellow[100],
-            border: Border.all(
-              color: Colors.red,
-              width: 5,
-            )
-          // borderRadius: BorderRadius.circular(15),
-
-        ),
         height: 200,
-        width: 200,
         child: Stack(children: [
           Padding(
             padding:
-                const EdgeInsets.only(left: 20, bottom: 40, right: 20, top: 30),
+                const EdgeInsets.only(left: 20, bottom: 40, right: 0, top: 30),
             child: Container(
               width: 160,
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(15)),
-              child: Stack(children: [
-                Positioned(
-                  top: -50,
-                  left: -50,
-                  child: SizedBox(
-                      height: 115,
-                      width: 115,
-                      child: CircleAvatar(
-                        backgroundColor: Colors.red[100],
-                      )),
-                ),
-              ]),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.black.withOpacity(0.15),
+                      blurRadius: 10,
+                      spreadRadius: 0.1,
+                      offset: Offset(1, 3))
+                ],
+
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Stack(children: [
+                  Positioned(
+                    top: -50,
+                    left: -50,
+                    child: SizedBox(
+                        height: 115,
+                        width: 115,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              gradient: LinearGradient(
+                                  colors: [
+                                    redColor.withOpacity(0.9),
+                                    redColor.withOpacity(0.05)
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  tileMode: TileMode.clamp)
+                          ),
+                        )
+                    ),
+                    ),
+
+                ]),
+              ),
             ),
           ),
           Positioned(
@@ -1159,7 +1255,7 @@ Widget mostPopularCateg(
                 child: Image(image: AssetImage(productImage)),
               )),
           Padding(
-            padding: const EdgeInsets.only(left: 25.0, top: 100.0),
+            padding: const EdgeInsets.only(left: 25.0, top: 110.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -1171,41 +1267,57 @@ Widget mostPopularCateg(
                       color: Colors.black),
                 ),
                 SizedBox(
-                  height: 7.0,
+                  height: 9.0,
                 ),
                 Row(
                   children: [
-                    Text(
-                      '$price EGP',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12,
-                          color: Colors.deepOrangeAccent),
-                    ),
-                    SizedBox(
-                      width: 30,
-                    ),
-                    Image(
-                      image: iconAdd,
-                      width: 20.0,
-                      height: 20.0,
+                    Flexible(
+                      child: Container(
+                        child: Text(
+                          '$price EGP',
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 12,
+                              color: Colors.deepOrangeAccent),
+                        ),
+                      ),
                     ),
                     SizedBox(
                       width: 10,
                     ),
-                    Image(
-                      image: iconFavo,
-                      width: 20.0,
-                      height: 20.0,
+
+                    Icon(
+                      Icons.add_to_photos,size: 14,
+
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+
+                    Icon(
+                        Icons.bookmark_border,size: 14,
                     ),
                   ],
+
                 )
+
+
               ],
+
             ),
-          )
+
+          ),
+          Positioned(
+            bottom: 10,
+              child: mostPopularByCategoryAfterProd())
         ]
+
         ),
+
+
       )
+
   );
 }
 // end Mosdik
