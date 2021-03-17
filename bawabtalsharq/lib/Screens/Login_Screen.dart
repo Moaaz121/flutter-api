@@ -13,171 +13,215 @@ class LoginScreen extends StatelessWidget {
           fit: BoxFit.fitHeight,
         ),
       ),
-      child: SafeArea(
-        child: Container(
-          margin: EdgeInsets.only(top: 40, left: 35, right: 35, bottom: 40),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30),
-              bottomLeft: Radius.circular(30),
-              topRight: Radius.circular(30),
-              bottomRight: Radius.circular(30),
+      child: Container(
+        color: Colors.white.withOpacity(0.4),
+        child: SafeArea(
+          child: Container(
+            margin: EdgeInsets.only(top: 40, left: 26, right: 25, bottom: 20),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30),
+                bottomLeft: Radius.circular(30),
+                topRight: Radius.circular(30),
+                bottomRight: Radius.circular(30),
+              ),
             ),
-          ),
-          child: Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Image(
-                          image: AssetImage(logo),
-                          width: (50),
-                          height: (70),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(3.0),
-                          child: Row(
-                            children: [
-                              Text('Sign up'),
-                              IconButton(
-                                icon: Icon(Icons.arrow_forward_rounded),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Text(
-                      'Login',
-                      style: TextStyle(fontFamily: 'Roboto', fontSize: 50),
-                    ),
-                    SizedBox(
-                      height: 40,
-                    ),
-                    TextField(
-                      decoration: InputDecoration(
-                          // hintText: 'username',
-
-                          prefixIcon: Icon(
-                            Icons.person_add_rounded,
-                            color: Colors.grey,
-                          ),
-                          labelText: 'Username',
-                          labelStyle: TextStyle(
-                              fontFamily: 'montserrat',
-                              fontWeight: FontWeight.bold),
-                          focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.grey))),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    TextField(
-                      decoration: InputDecoration(
-                          prefixIcon: Icon(
-                            Icons.lock_rounded,
-                            color: Colors.grey,
-                          ),
-                          suffixIcon: Icon(Icons.visibility_off),
-                          labelText: 'passward',
-                          labelStyle: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.bold),
-                          focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.grey))),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    FlatButton(
-                      onPressed: () {},
-                      child: (Text(
-                        'Forget passward?',
-                        style: TextStyle(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Roboto',
-                            decoration: TextDecoration.underline),
-                      )),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: FlatButton(
-                        shape: RoundedRectangleBorder(
-                            side: BorderSide(
-                              color: Colors.red,
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(30)),
-                        onPressed: () {},
-                        color: Colors.white,
-                        child: Text(
-                          'Sign in',
-                          style: TextStyle(fontSize: 15, color: Colors.red),
-                        ),
+            child: Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 20,
                       ),
-                    ),
-                    SizedBox(
-                      height: 35,
-                    ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: FlatButton(
-                        onPressed: () {},
-                        child: (Text(
-                          'Already have an account?',
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.grey,
-                              fontWeight: FontWeight.normal,
-                              fontFamily: 'Roboto',
-                              decoration: TextDecoration.underline),
-                        )),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 50),
-                      child: Row(
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          IconButton(
-                            icon: Image.asset(google),
-                            iconSize: 30,
-                            onPressed: () {},
+                          Image(
+                            image: AssetImage(logo),
+                            width: (40),
+                            height: (50),
                           ),
-                          IconButton(
-                            icon: Image.asset(facebook),
-                            iconSize: 30,
-                            onPressed: () {},
+                          Padding(
+                            padding: const EdgeInsets.all(3.0),
+                            child: Row(
+                              children: [
+                                GestureDetector(
+                                    onTap: () => print('hey'),
+                                    child: Text('Sign up')),
+                                IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(Icons.arrow_forward_rounded),
+                                ),
+                                // FlatButton(
+                                //     onPressed: () {}, child: Text('Sign Up')),
+                                // FlatButton.icon(
+                                //     onPressed: () {},
+                                //     icon: Icon(Icons.arrow_forward_rounded))
+                              ],
+                            ),
                           ),
-                          IconButton(
-                            icon: Image.asset(twitter),
-                            iconSize: 30,
-                            onPressed: () {},
-                          )
                         ],
                       ),
-                    )
-                  ],
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Text(
+                        'Login',
+                        style: TextStyle(
+                            fontFamily: 'Roboto-Black.ttf',
+                            fontSize: 50,
+                            fontWeight: FontWeight.w700),
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      TextField(
+                        decoration: InputDecoration(
+                            //hintText: 'username',
+                            prefixIcon: Icon(
+                              Icons.person,
+                              color: Colors.grey,
+                            ),
+                            labelText: 'Username',
+                            labelStyle: TextStyle(
+                                fontFamily: 'Roboto-Thin.ttf',
+                                fontWeight: FontWeight.w200),
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.grey))),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      TextField(
+                        decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.lock,
+                              color: Colors.grey,
+                            ),
+                            suffixIcon: Icon(Icons.visibility_off),
+                            labelText: 'Passward',
+                            labelStyle: TextStyle(
+                                fontFamily: 'Roboto-Thin.ttf',
+                                fontWeight: FontWeight.w200),
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.grey))),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15, top: 5),
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: (Text(
+                            'Forget Passward?',
+                            style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: 'Roboto',
+                                decoration: TextDecoration.underline),
+                          )),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 45,
+                      ),
+                      Align(
+                        alignment: Alignment.bottomRight,
+                        child: FlatButton(
+                          shape: RoundedRectangleBorder(
+                              side: BorderSide(
+                                color: Colors.red,
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(11)),
+                          onPressed: () {},
+                          color: Colors.white,
+                          child: Text(
+                            'Sign in',
+                            style: TextStyle(fontSize: 15, color: Colors.red),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 55,
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: (Text(
+                            'Already have an account?',
+                            style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.grey,
+                                fontWeight: FontWeight.w700,
+                                fontFamily: 'Roboto-Regular.ttf',
+                                decoration: TextDecoration.underline),
+                          )),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 50),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16),
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                        blurRadius: 10,
+                                        spreadRadius: 2,
+                                        color: Colors.black.withOpacity(.1))
+                                  ]),
+                              child: IconButton(
+                                icon: Image.asset(google),
+                                iconSize: 15,
+                                color: Colors.white,
+                                onPressed: () => print('google '),
+                              ),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16),
+                                color: Colors.blueAccent,
+                              ),
+                              child: IconButton(
+                                icon: Image.asset(facebook),
+                                iconSize: 15,
+                                onPressed: () => print('facebook '),
+                              ),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16),
+                                color: Colors.lightBlue,
+                                //fontWeight: FontWeight.w400,
+                              ),
+                              child: IconButton(
+                                icon: Image.asset(twitter),
+                                iconSize: 15,
+                                onPressed: () => print('tweeter '),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
