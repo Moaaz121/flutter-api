@@ -113,10 +113,10 @@ class _AllCategoriesState extends State<AllCategories> {
   Positioned getSubCategoriesList(
       BuildContext context, List<SubCategory> subCategoryArr, Color color) {
     return Positioned(
-      right: 0,
+      left: 65,
       top: 0,
       bottom: 0,
-      width: MediaQuery.of(context).size.width * 0.83,
+      width: MediaQuery.of(context).size.width,
       child: Dismissible(
         key: ValueKey('dismiss'),
         direction: DismissDirection.startToEnd,
