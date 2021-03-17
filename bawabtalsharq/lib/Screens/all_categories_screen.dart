@@ -15,8 +15,8 @@ class _AllCategoriesState extends State<AllCategories> {
   ScrollController _subScrollController = ScrollController();
   List<Positioned> _stackWidgets = List<Positioned>();
   bool _isPressed = false;
-
   String _appBarTitle = Strings().allCategories();
+
   @override
   void initState() {
     _stackWidgets.add(getMainCategoriesList(context));
@@ -117,14 +117,17 @@ class _AllCategoriesState extends State<AllCategories> {
       top: 0,
       bottom: 0,
       width: MediaQuery.of(context).size.width * 0.83,
-      child: GestureDetector(
-        onTap: () {},
-        onHorizontalDragEnd: (update) {
-          setState(() {
-            _appBarTitle = Strings().allCategories();
-            _isPressed = false;
-            _stackWidgets.removeLast();
-          });
+      child: Dismissible(
+        key: ValueKey('dismiss'),
+        direction: DismissDirection.startToEnd,
+        onDismissed: (direction) {
+          if (direction == DismissDirection.startToEnd) {
+            setState(() {
+              _appBarTitle = Strings().allCategories();
+              _isPressed = false;
+              _stackWidgets.removeLast();
+            });
+          }
         },
         child: Container(
           margin: EdgeInsets.only(top: 25),
