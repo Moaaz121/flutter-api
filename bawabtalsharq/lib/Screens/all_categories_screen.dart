@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:bawabtalsharq/Model/categories_model.dart';
 import 'package:flutter/material.dart';
 
@@ -25,10 +23,6 @@ class _AllCategoriesState extends State<AllCategories>
 
   @override
   void initState() {
-    _controller = AnimationController(
-      duration: const Duration(seconds: 2),
-      vsync: this,
-    )..forward();
     _stackWidgets.add(getMainCategoriesList(context));
     super.initState();
   }
@@ -36,6 +30,9 @@ class _AllCategoriesState extends State<AllCategories>
   @override
   void dispose() {
     super.dispose();
+    categoriesArr.forEach((element) {
+      element.isSelected = false;
+    }); // to do remove after add api
     _controller.dispose();
   }
 
@@ -102,29 +99,28 @@ class _AllCategoriesState extends State<AllCategories>
                 child: Row(
                   children: [
                     Container(
+                      padding: categoriesArr[index].isSelected
+                          ? EdgeInsets.all(2)
+                          : EdgeInsets.all(0),
                       decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: categoriesArr[index].isSelected
+                            ? Border.all(
+                                color: Color(categoriesArr[index].color),
+                                width: 3)
+                            : Border.all(color: Colors.transparent),
+                        color: Colors.white,
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Color(categoriesArr[index].color)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(2),
+                          color: Color(categoriesArr[index].color),
+                        ),
+                        padding: EdgeInsets.all(2),
                         child: Image.asset(
                           cold_drinks,
                           height: 45,
                           width: 45,
-                        ),
-                      ),
-                    ),
-                    Visibility(
-                      visible: categoriesArr[index].isSelected,
-                      child: Center(
-                        child: Container(
-                          child: Transform.rotate(
-                            angle: pi / 2,
-                            child: CustomPaint(
-                              size: Size(12, 12),
-                              painter: DrawTriangle(categoriesArr[index].color),
-                            ),
-                          ),
                         ),
                       ),
                     ),
@@ -223,6 +219,10 @@ class _AllCategoriesState extends State<AllCategories>
   }
 
   void setupAnimation() {
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 500),
+      vsync: this,
+    )..forward();
     _animation = Tween<Offset>(
       begin: const Offset(1, 0),
       end: const Offset(0.0, 0.0),
@@ -230,31 +230,5 @@ class _AllCategoriesState extends State<AllCategories>
       parent: _controller,
       curve: Curves.easeIn,
     ));
-  }
-}
-
-class DrawTriangle extends CustomPainter {
-  Paint _paint;
-  int color;
-  DrawTriangle(this.color) {
-    _paint = Paint()
-      ..color = Color(color)
-      ..style = PaintingStyle.fill
-      ..isAntiAlias = true;
-  }
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    var path = Path();
-    path.moveTo(size.width / 2, 0);
-    path.lineTo(0, size.height);
-    path.lineTo(size.height, size.width);
-    path.close();
-    canvas.drawPath(path, _paint);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
   }
 }
