@@ -609,7 +609,7 @@ Widget ourGoldenSupplier() {
           physics: const BouncingScrollPhysics(
               parent: AlwaysScrollableScrollPhysics()),
           padding: EdgeInsets.symmetric(horizontal: 12),
-          reverse: true,
+          reverse: false,
           scrollDirection: Axis.horizontal,
           itemCount: 20,
           itemBuilder: (context, position) {
@@ -972,7 +972,7 @@ Widget supplierView(
     child: Padding(
       padding: const EdgeInsets.only(top: 8, bottom: 8, right: 10, left: 8),
       child: Container(
-        width: 100.0,
+        width: 80.0,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -985,7 +985,7 @@ Widget supplierView(
                 child: Image(
                   image: supplierImg,
                   width: double.infinity,
-                  height: 100,
+                  height: 80,
                   fit: BoxFit.cover,
                 ),
               ),

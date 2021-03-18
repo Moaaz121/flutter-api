@@ -15,28 +15,32 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int currentPage = 0;
   PageController controller = PageController(initialPage: 0, keepPage: true);
+
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBody: true,
-      bottomNavigationBar: bottomAppBar((int position){
-        setState(() {
+    return SafeArea(
+      child: Scaffold(
+        extendBody: true,
+        bottomNavigationBar: bottomAppBar((int position){
+
           controller.animateToPage(position, duration: Duration(milliseconds: 200), curve: Curves.linear);
-        });
 
-      },controller,currentPage),
-      body: PageView(
-        controller: controller,
-        children: [
-          HomeScreen(),
-          FeatureScreen(),
-          NotificationScreen(),
-          ProfileScreen(),
-        ],
-        onPageChanged: (page){
-            currentPage = page;
-
-        },
+        },controller,currentPage),
+        body: PageView(
+          controller: controller,
+          children: [
+            HomeScreen(),
+            FeatureScreen(),
+            NotificationScreen(),
+            ProfileScreen(),
+          ],
+          onPageChanged: (page){
+            setState(() {
+              currentPage = page;
+            });
+          },
+        ),
       ),
     );
   }
