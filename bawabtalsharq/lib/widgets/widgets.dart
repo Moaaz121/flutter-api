@@ -886,7 +886,7 @@ Widget mostPopularByCategoryStable(BuildContext context) {
         ),
       ),
       SizedBox(
-        height: 200,
+        height: 175,
         child: Stack(
           children: [
             Container(
