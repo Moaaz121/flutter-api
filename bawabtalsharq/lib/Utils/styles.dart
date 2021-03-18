@@ -54,7 +54,7 @@ TextStyle titleStyle(
 
 // Start Asmaa
 const defaultOrangeColor = Color(0xFFe16036);
-
+const textColor = Color(0xFF5b5b5b);
 // end Asmaa
 
 // Start Bahaa

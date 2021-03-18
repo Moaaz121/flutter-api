@@ -1,4 +1,5 @@
 import 'package:bawabtalsharq/Model/categories_model.dart';
+import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:flutter/material.dart';
 
 import '../Utils/images.dart';
@@ -39,6 +40,7 @@ class _AllCategoriesState extends State<AllCategories>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: appBarBuilder(
         actions: [Container()],
         title: _appBarTitle,
@@ -87,7 +89,7 @@ class _AllCategoriesState extends State<AllCategories>
                         context,
                         index,
                         categoriesArr[index].subCategory,
-                        Color(categoriesArr[index].color))
+                        Color(categoriesArr[index].color).withOpacity(0.15))
                   ];
                   _appBarTitle = categoriesArr[index].name;
                   _isPressed = true;
@@ -106,7 +108,8 @@ class _AllCategoriesState extends State<AllCategories>
                         borderRadius: BorderRadius.circular(10),
                         border: categoriesArr[index].isSelected
                             ? Border.all(
-                                color: Color(categoriesArr[index].color),
+                                color: Color(categoriesArr[index].color)
+                                    .withOpacity(0.15),
                                 width: 3)
                             : Border.all(color: Colors.transparent),
                         color: Colors.white,
@@ -114,7 +117,8 @@ class _AllCategoriesState extends State<AllCategories>
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Color(categoriesArr[index].color),
+                          color: Color(categoriesArr[index].color)
+                              .withOpacity(0.15),
                         ),
                         padding: EdgeInsets.all(2),
                         child: Image.asset(
@@ -128,7 +132,10 @@ class _AllCategoriesState extends State<AllCategories>
                       width: 20,
                     ),
                     Expanded(
-                      child: Text(categoriesArr[index].name),
+                      child: buildText(categoriesArr[index].name, 15.0,
+                          color: textColor,
+                          fontFamily: semiBoldFontFamily,
+                          fontWeight: FontWeight.w700),
                     ),
                     Icon(Icons.navigate_next),
                   ],
@@ -148,7 +155,7 @@ class _AllCategoriesState extends State<AllCategories>
       left: 70,
       top: 0,
       bottom: 0,
-      width: MediaQuery.of(context).size.width,
+      width: MediaQuery.of(context).size.width - 70,
       child: Dismissible(
         key: ValueKey('dismiss'),
         direction: DismissDirection.startToEnd,
@@ -165,52 +172,64 @@ class _AllCategoriesState extends State<AllCategories>
         child: SlideTransition(
           position: _animation,
           child: Container(
-            margin: EdgeInsets.only(top: 25),
             decoration: BoxDecoration(
-              color: color,
+              color: Colors.white,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(8),
               ),
             ),
-            child: ListView.builder(
-              controller: _subScrollController,
-              itemCount: subCategoryArr.length,
-              scrollDirection: Axis.vertical,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    print('sub pressed');
-                  },
-                  child: Container(
-                    margin: EdgeInsets.only(
-                        left: 15, right: 15, top: 15, bottom: 5),
-                    child: Row(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
+            child: Container(
+              margin: EdgeInsets.only(top: 25),
+              decoration: BoxDecoration(
+                color: color.withOpacity(0.15),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(8),
+                ),
+              ),
+              child: ListView.builder(
+                controller: _subScrollController,
+                itemCount: subCategoryArr.length,
+                scrollDirection: Axis.vertical,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      print('sub pressed');
+                    },
+                    child: Container(
+                      margin: EdgeInsets.only(
+                          left: 15, right: 15, top: 15, bottom: 5),
+                      child: Row(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(18),
-                              color: Colors.white),
-                          child: Padding(
-                            padding: const EdgeInsets.all(3),
-                            child: Image.asset(
-                              cold_drinks,
-                              height: 37,
-                              width: 37,
+                              color: Colors.white,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(3),
+                              child: Image.asset(
+                                cold_drinks,
+                                height: 37,
+                                width: 37,
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Expanded(
-                          child: Text(subCategoryArr[index].name),
-                        ),
-                        Icon(Icons.navigate_next),
-                      ],
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Expanded(
+                            child: buildText(subCategoryArr[index].name, 15.0,
+                                color: textColor,
+                                fontFamily: semiBoldFontFamily,
+                                fontWeight: FontWeight.w700),
+                          ),
+                          Icon(Icons.navigate_next),
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
           ),
         ),

@@ -279,7 +279,7 @@ AppBar appBarBuilder(
           bottomRight: Radius.circular(10),
         ),
       ),
-      backgroundColor: Colors.deepOrange[400],
+      backgroundColor: defaultOrangeColor.withOpacity(0.8),
       title: Text(
         title,
         style: TextStyle(
@@ -323,7 +323,7 @@ Text buildText(String text, double fontSize,
     text,
     textAlign: textAlign,
     style: TextStyle(
-      fontFamily: 'Tajawal',
+      fontFamily: fontFamily,
       fontSize: fontSize,
       fontWeight: fontWeight,
       color: color,
