@@ -271,6 +271,7 @@ AppBar appBarBuilder(
     @required Function onBackPressed,
     List<Widget> actions}) {
   return AppBar(
+      centerTitle: true,
       actions: actions,
       toolbarHeight: 60.0,
       shape: RoundedRectangleBorder(
@@ -280,14 +281,10 @@ AppBar appBarBuilder(
         ),
       ),
       backgroundColor: defaultOrangeColor.withOpacity(0.8),
-      title: Text(
-        title,
-        style: TextStyle(
-            fontFamily: boldFontFamily,
-            fontSize: 18.0,
-            fontWeight: FontWeight.bold),
-      ),
-      centerTitle: true,
+      title: buildText(title, 18.0,
+          fontFamily: boldFontFamily,
+          color: Colors.white,
+          fontWeight: FontWeight.bold),
       leading: IconButton(
         onPressed: onBackPressed,
         icon: CircleAvatar(

@@ -6,7 +6,7 @@ class StringsAR {
 // end karem
 
 // Start Asmaa
-  static const String all_categories = 'ALL CATEGORIES';
+  static const String all_categories = 'الأقسام';
 
 // end Asmaa
 

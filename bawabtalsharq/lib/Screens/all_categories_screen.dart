@@ -13,11 +13,11 @@ class AllCategories extends StatefulWidget {
 
 class _AllCategoriesState extends State<AllCategories>
     with TickerProviderStateMixin {
-  AnimationController _controller;
-  Animation<Offset> _animation;
-
+  AnimationController _sliderController;
+  Animation<Offset> _sliderAnimation;
   ScrollController _mainScrollController = ScrollController();
   ScrollController _subScrollController = ScrollController();
+
   List<Positioned> _stackWidgets = List<Positioned>();
   bool _isPressed = false;
   String _appBarTitle = Strings().allCategories();
@@ -34,7 +34,7 @@ class _AllCategoriesState extends State<AllCategories>
     categoriesArr.forEach((element) {
       element.isSelected = false;
     }); // to do remove after add api
-    _controller.dispose();
+    _sliderController.dispose();
   }
 
   @override
@@ -170,7 +170,7 @@ class _AllCategoriesState extends State<AllCategories>
           }
         },
         child: SlideTransition(
-          position: _animation,
+          position: _sliderAnimation,
           child: Container(
             decoration: BoxDecoration(
               color: Colors.white,
@@ -238,15 +238,15 @@ class _AllCategoriesState extends State<AllCategories>
   }
 
   void setupAnimation() {
-    _controller = AnimationController(
+    _sliderController = AnimationController(
       duration: const Duration(milliseconds: 500),
       vsync: this,
     )..forward();
-    _animation = Tween<Offset>(
+    _sliderAnimation = Tween<Offset>(
       begin: const Offset(1, 0),
       end: const Offset(0.0, 0.0),
     ).animate(CurvedAnimation(
-      parent: _controller,
+      parent: _sliderController,
       curve: Curves.easeIn,
     ));
   }
