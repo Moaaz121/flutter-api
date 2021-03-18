@@ -1242,7 +1242,8 @@ Widget MainMostPopularCategory() {
           width: MediaQuery.of(context).size.width / 3 - 5,
           child: mostPopularCateg(
             onPress: () {},
-            backgroundColor: position.isOdd ? Colors.deepOrange : Colors.cyan,
+            position: position,
+            backgroundColor: position== 2 ? redColor : (position == 1 ? orangeColor : blueColor),
             nameProduct: position.isOdd ? 'Negrsgo' : 'koshary',
             productImg:
             AssetImage(position.isOdd ? productImage : productImage),
@@ -1256,6 +1257,7 @@ Widget MainMostPopularCategory() {
 
 Widget mostPopularCateg(
     {Function onPress,
+      int position,
       Color backgroundColor,
       AssetImage productImg,
       String nameProduct,
@@ -1286,7 +1288,7 @@ Widget mostPopularCateg(
                 child: Stack(children: [
                   Positioned(
                     top: -50,
-                    left: -50,
+                    left: position == 2 ? -50 : (position == 1 ? 0 : 50),
                     child: SizedBox(
                         height: 115,
                         width: 115,
@@ -1295,9 +1297,10 @@ Widget mostPopularCateg(
                               shape: BoxShape.circle,
                               gradient: LinearGradient(
                                   colors: [
-                                    redColor.withOpacity(0.9),
-                                    redColor.withOpacity(0.05)],
-                                  begin: Alignment.topLeft,
+                                    backgroundColor.withOpacity(0.5),
+                                    backgroundColor.withOpacity(0.0)],
+                                  begin: position == 2 ? Alignment.topLeft : (position == 1 ? Alignment.topCenter :  Alignment.topRight),
+                                  end: position == 2 ? Alignment.bottomRight : (position == 1 ? Alignment.bottomCenter :  Alignment.bottomLeft),
                                   tileMode: TileMode.clamp)),
                         )),
                   ),
@@ -1306,7 +1309,7 @@ Widget mostPopularCateg(
             ),
           ),
           Positioned(
-              left: -10,
+              left: position == 2 ? -10 : (position == 1 ? 27 : 60),
               child: SizedBox(
                 width: 100,
                 height: 100,
