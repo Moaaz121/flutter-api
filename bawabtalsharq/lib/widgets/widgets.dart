@@ -1296,8 +1296,7 @@ Widget mostPopularCateg(
                               gradient: LinearGradient(
                                   colors: [
                                     redColor.withOpacity(0.9),
-                                    redColor.withOpacity(0.05)
-                                  ],
+                                    redColor.withOpacity(0.05)],
                                   begin: Alignment.topLeft,
                                   tileMode: TileMode.clamp)),
                         )),

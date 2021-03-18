@@ -34,9 +34,8 @@ class _MainScreenState extends State<MainScreen> {
           ProfileScreen(),
         ],
         onPageChanged: (page){
-          setState(() {
             currentPage = page;
-          });
+
         },
       ),
     );
