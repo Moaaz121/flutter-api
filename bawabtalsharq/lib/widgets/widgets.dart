@@ -282,5 +282,24 @@ showLoadingDialog(BuildContext context) async {
 // end Moaaz
 
 // Start Islam
-
+TextField customTextField(
+    {String label, IconData rightIcon, IconData leftIcon}) {
+  return TextField(
+    decoration: InputDecoration(
+        //hintText: 'username',
+        prefixIcon: Icon(
+          leftIcon,
+          color: Colors.grey,
+        ),
+        suffixIcon: Icon(
+          rightIcon,
+          color: Colors.grey,
+        ),
+        labelText: label,
+        labelStyle: TextStyle(
+            fontFamily: 'Roboto-Thin.ttf', fontWeight: FontWeight.w200),
+        focusedBorder:
+            UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey))),
+  );
+}
 // end Islam

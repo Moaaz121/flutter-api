@@ -1,4 +1,5 @@
 import 'package:bawabtalsharq/Utils/images.dart';
+import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -28,7 +29,7 @@ class LoginScreen extends StatelessWidget {
                 bottomRight: Radius.circular(30),
               ),
             ),
-            child: Stack(
+            child: ListView(
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -80,37 +81,15 @@ class LoginScreen extends StatelessWidget {
                       SizedBox(
                         height: 40,
                       ),
-                      TextField(
-                        decoration: InputDecoration(
-                            //hintText: 'username',
-                            prefixIcon: Icon(
-                              Icons.person,
-                              color: Colors.grey,
-                            ),
-                            labelText: 'Username',
-                            labelStyle: TextStyle(
-                                fontFamily: 'Roboto-Thin.ttf',
-                                fontWeight: FontWeight.w200),
-                            focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey))),
-                      ),
+                      customTextField(
+                          label: 'Username', leftIcon: Icons.person),
                       SizedBox(
                         height: height * 0.03,
                       ),
-                      TextField(
-                        decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.lock,
-                              color: Colors.grey,
-                            ),
-                            suffixIcon: Icon(Icons.visibility_off),
-                            labelText: 'Passward',
-                            labelStyle: TextStyle(
-                                fontFamily: 'Roboto-Thin.ttf',
-                                fontWeight: FontWeight.w200),
-                            focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey))),
-                      ),
+                      customTextField(
+                          label: 'Password',
+                          leftIcon: Icons.lock,
+                          rightIcon: Icons.visibility_off),
                       SizedBox(
                         height: height * .005,
                       ),
