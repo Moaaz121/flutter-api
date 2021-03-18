@@ -5,6 +5,7 @@ class LoginScreen extends StatelessWidget {
   static String id = 'LoginScreen';
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
         body: Container(
       decoration: BoxDecoration(
@@ -35,7 +36,7 @@ class LoginScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        height: 20,
+                        height: height * 0.02,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -67,7 +68,7 @@ class LoginScreen extends StatelessWidget {
                         ],
                       ),
                       SizedBox(
-                        height: 30,
+                        height: height * 0.03,
                       ),
                       Text(
                         'Login',
@@ -94,7 +95,7 @@ class LoginScreen extends StatelessWidget {
                                 borderSide: BorderSide(color: Colors.grey))),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: height * 0.03,
                       ),
                       TextField(
                         decoration: InputDecoration(
@@ -111,7 +112,7 @@ class LoginScreen extends StatelessWidget {
                                 borderSide: BorderSide(color: Colors.grey))),
                       ),
                       SizedBox(
-                        height: 5,
+                        height: height * .005,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 15, top: 5),
@@ -129,7 +130,7 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        height: 45,
+                        height: height * .045,
                       ),
                       Align(
                         alignment: Alignment.bottomRight,
@@ -149,7 +150,7 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        height: 55,
+                        height: height * 0.080,
                       ),
                       Align(
                         alignment: Alignment.center,
@@ -167,7 +168,7 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: height * .02,
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 50),
