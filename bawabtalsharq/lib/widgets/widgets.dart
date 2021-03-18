@@ -17,17 +17,17 @@ class Widgets {
 
 Widget textField(String hintText, Function callback,
     {bool isPassword = false,
-    bool isDense = true,
-    Function showPassword,
-    bool isPhoneKeyboard = false,
-    bool isClicable,
-    TextEditingController controller,
-    Icon icon,
-    Color color,
-    double fontSize = 16,
-    Widget prefixIcon,
-    int maxLines = 1,
-    Function onChange}) {
+      bool isDense = true,
+      Function showPassword,
+      bool isPhoneKeyboard = false,
+      bool isClicable,
+      TextEditingController controller,
+      Icon icon,
+      Color color,
+      double fontSize = 16,
+      Widget prefixIcon,
+      int maxLines = 1,
+      Function onChange}) {
   return Container(
     height: 50,
     child: TextFormField(
@@ -79,10 +79,10 @@ Widget textField(String hintText, Function callback,
         //     : icon == null ? null : icon,
         prefixIcon: prefixIcon != null
             ? Container(
-                child: prefixIcon,
-                height: 30,
-                width: 30,
-              )
+          child: prefixIcon,
+          height: 30,
+          width: 30,
+        )
             : null,
       ),
       textInputAction: TextInputAction.done,
@@ -174,7 +174,7 @@ Widget buttonWithIcon(String image, String labelText,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(isBackground ? 15 : 0),
         side:
-            BorderSide(color: isBackground ? buttonBorderColor : Colors.white),
+        BorderSide(color: isBackground ? buttonBorderColor : Colors.white),
       ),
       color: Colors.white,
       elevation: isBackground ? 5 : 0,
@@ -188,7 +188,7 @@ Widget buttonWithIcon(String image, String labelText,
             labelText,
             style: TextStyle(
                 color:
-                    isBackground ? defaultBackgroundColor : buttonBorderColor,
+                isBackground ? defaultBackgroundColor : buttonBorderColor,
                 fontSize: 16,
                 fontFamily: semiBoldFontFamily),
           ),
@@ -203,37 +203,37 @@ Widget cardChangeState(
     {bool isFActive = true}) {
   return isEmpty
       ? Container(
-          height: 120,
-          padding: EdgeInsets.only(left: 5, right: 5),
-          child: Card(
-            elevation: 5,
-            color: isFActive ? Color.fromRGBO(221, 231, 247, 1) : Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Image.asset(
-                  isFActive ? activeImage : inactiveImage,
-                  fit: BoxFit.contain,
-                ),
-                SizedBox(height: 20),
-                Text(
-                  labelText,
-                  style: TextStyle(
-                      color: isFActive
-                          ? Color.fromRGBO(33, 99, 206, 1)
-                          : medicineColor,
-                      fontSize: 16,
-                      fontFamily:
-                          isFActive ? semiBoldFontFamily : mediumFontFamily),
-                ),
-              ],
-            ),
+    height: 120,
+    padding: EdgeInsets.only(left: 5, right: 5),
+    child: Card(
+      elevation: 5,
+      color: isFActive ? Color.fromRGBO(221, 231, 247, 1) : Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Image.asset(
+            isFActive ? activeImage : inactiveImage,
+            fit: BoxFit.contain,
           ),
-        )
+          SizedBox(height: 20),
+          Text(
+            labelText,
+            style: TextStyle(
+                color: isFActive
+                    ? Color.fromRGBO(33, 99, 206, 1)
+                    : medicineColor,
+                fontSize: 16,
+                fontFamily:
+                isFActive ? semiBoldFontFamily : mediumFontFamily),
+          ),
+        ],
+      ),
+    ),
+  )
       : Container();
 }
 
@@ -444,25 +444,30 @@ Widget chatButton(Function _function) {
   return Padding(
     padding: const EdgeInsets.all(16.0),
     child: SizedBox(
-        width: 45,
-        height: 45,
-        child: Container(
-          decoration: BoxDecoration(shape: BoxShape.circle, boxShadow: [
-            BoxShadow(color: orangeShadowColor, spreadRadius: 2, blurRadius: 10)
-          ]),
-          child: ClipOval(
-            child: Material(
-              shadowColor: orangeShadowColor,
-              color: Colors.white,
-              child: InkWell(
-                onTap: _function,
-                splashColor: orangeColor.withOpacity(0.4),
-                highlightColor: orangeShadowColor,
-                child: Image.asset(chat,width: 55,height: 55,fit: BoxFit.fill,),
+      width: 45,
+      height: 45,
+      child: Container(
+        decoration: BoxDecoration(shape: BoxShape.circle, boxShadow: [
+          BoxShadow(color: orangeShadowColor, spreadRadius: 2, blurRadius: 10)
+        ]),
+        child: ClipOval(
+          child: Material(
+            shadowColor: orangeShadowColor,
+            color: Colors.white,
+            child: InkWell(
+              onTap: _function,
+              splashColor: orangeColor.withOpacity(0.4),
+              highlightColor: orangeShadowColor,
+              child: Image.asset(
+                chat,
+                width: 55,
+                height: 55,
+                fit: BoxFit.fill,
+              ),
             ),
           ),
         ),
-  ),
+      ),
     ),
   );
 }
@@ -545,27 +550,20 @@ Widget sliderIndicator(int page) {
   );
 }
 
-Widget mainHeaderButton(Function function,String title, String image,Color color){
+Widget mainHeaderButton(
+    Function function, String title, String image, Color color) {
   return Container(
-    decoration: BoxDecoration(
-
-      borderRadius: BorderRadius.circular(15),
-      boxShadow: [
-        BoxShadow(
-          color: orangeShadowColor,
-          blurRadius: 10,
-          spreadRadius: 1
-        ),
-      ]
-    ),
+    decoration:
+    BoxDecoration(borderRadius: BorderRadius.circular(15), boxShadow: [
+      BoxShadow(color: orangeShadowColor, blurRadius: 10, spreadRadius: 1),
+    ]),
     child: FlatButton(
         splashColor: orangeColor.withOpacity(0.4),
         highlightColor: orangeShadowColor,
         onPressed: function,
         shape: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide.none
-        ),
+            borderRadius: BorderRadius.circular(15),
+            borderSide: BorderSide.none),
         color: Colors.white,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
@@ -579,19 +577,28 @@ Widget mainHeaderButton(Function function,String title, String image,Color color
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(8),
-                  child: Image.asset(image,height: 25,width: 25,fit: BoxFit.fill,),
+                  child: Image.asset(
+                    image,
+                    height: 25,
+                    width: 25,
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
-              SizedBox(height: 8,),
-              Text(title,
-              style: mainHeaderTitleStyle(),),
+              SizedBox(
+                height: 8,
+              ),
+              Text(
+                title,
+                style: mainHeaderTitleStyle(),
+              ),
             ],
           ),
         )),
   );
 }
 
-Widget ourGoldenSupplier(){
+Widget ourGoldenSupplier() {
   return Column(
     mainAxisSize: MainAxisSize.min,
     children: [
@@ -599,16 +606,21 @@ Widget ourGoldenSupplier(){
       SizedBox(
         height: 190,
         child: ListView.builder(
-          physics:  const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+          physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics()),
           padding: EdgeInsets.symmetric(horizontal: 12),
-          reverse: true,
+          reverse: false,
           scrollDirection: Axis.horizontal,
           itemCount: 20,
           itemBuilder: (context, position) {
-            return supplierView(onPress: (){},
-              category: position.isOdd ? 'Food & Beverages' : 'Agriculture Crops',
-              nameSupplier: position.isOdd ? 'Kareem Hassanien' : 'Mohamed Mosadik',
-              supplierImg: AssetImage( position.isOdd ? kareem_img : mosadaq_img),
+            return supplierView(
+              onPress: () {},
+              category:
+              position.isOdd ? 'Food & Beverages' : 'Agriculture Crops',
+              nameSupplier:
+              position.isOdd ? 'Kareem Hassanien' : 'Mohamed Mosadik',
+              supplierImg:
+              AssetImage(position.isOdd ? kareem_img : mosadaq_img),
               years: position.isOdd ? 3 : 5,
             );
           },
@@ -618,25 +630,24 @@ Widget ourGoldenSupplier(){
   );
 }
 
-Widget ourGoldenSupplierHeader(){
+Widget ourGoldenSupplierHeader() {
   return Padding(
-    padding: const EdgeInsets.only(right: 20,left: 20,top: 20),
+    padding: const EdgeInsets.only(right: 20, left: 20, top: 20),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(Strings().ourGoldenSupplier,
-        style: titlesStyle(),),
+        Text(
+          Strings().ourGoldenSupplier,
+          style: titlesStyle(),
+        ),
         FlatButton(
           splashColor: orangeColor.withOpacity(0.4),
           highlightColor: orangeShadowColor,
           shape: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide.none
-          ),
-          onPressed: (){
-
-          },
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide.none),
+          onPressed: () {},
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -644,8 +655,14 @@ Widget ourGoldenSupplierHeader(){
                 Strings().more,
                 style: moreStyle(),
               ),
-              SizedBox(width: 8,),
-              Icon(Icons.arrow_forward_rounded,size: 15,color:  Colors.black.withOpacity(0.7),)
+              SizedBox(
+                width: 8,
+              ),
+              Icon(
+                Icons.arrow_forward_rounded,
+                size: 15,
+                color: Colors.black.withOpacity(0.7),
+              )
             ],
           ),
         )
@@ -654,8 +671,7 @@ Widget ourGoldenSupplierHeader(){
   );
 }
 
-
-Widget mostPopularIn(BuildContext context){
+Widget mostPopularIn(BuildContext context) {
   return Column(
     children: [
       mostPopularInHeader(),
@@ -664,16 +680,16 @@ Widget mostPopularIn(BuildContext context){
         child: Stack(
           children: [
             Positioned(
-              left: MediaQuery.of(context).size.width/3*.205,
+              left: MediaQuery.of(context).size.width / 3 * .205,
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: 165,
                 child: CarouselSlider(
                     items: [
-                      popularSlider(context,0),
-                      popularSlider(context,1),
-                      popularSlider(context,0),
-                      popularSlider(context,1),
+                      popularSlider(context, 0),
+                      popularSlider(context, 1),
+                      popularSlider(context, 0),
+                      popularSlider(context, 1),
                     ],
                     options: CarouselOptions(
                       aspectRatio: 16 / 9,
@@ -690,15 +706,17 @@ Widget mostPopularIn(BuildContext context){
                       autoPlayCurve: Curves.fastOutSlowIn,
                       enlargeCenterPage: true,
                       scrollDirection: Axis.horizontal,
-                    )
-                ),
+                    )),
               ),
             ),
-            mainMostPopularProduct(productImg: AssetImage(productImage),
+            mainMostPopularProduct(
+                productImg: AssetImage(productImage),
                 backgroundColor: yellowColor.withOpacity(.3),
-                onPress: (){},
+                onPress: () {},
                 nameProduct: 'Pasta',
                 nameCategory: 'Food',
+                iconAdd: AssetImage(productIcon1),
+                iconFavo: AssetImage(productIcon2),
                 price: '\$\265.0',
                 context: context),
           ],
@@ -708,52 +726,57 @@ Widget mostPopularIn(BuildContext context){
   );
 }
 
-
-Widget popularSlider(BuildContext context,int pos){
+Widget popularSlider(BuildContext context, int pos) {
   return SizedBox(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        subMostPopularProduct(productImg: AssetImage(productImage),
-            backgroundColor: pos ==0 ?redColor.withOpacity(.3) : blueColor.withOpacity(.3) ,
-            onPress: (){},
+        subMostPopularProduct(
+            productImg: AssetImage(productImage),
+            backgroundColor:
+            pos == 0 ? redColor.withOpacity(.3) : blueColor.withOpacity(.3),
+            onPress: () {},
             nameProduct: 'Pasta',
             nameCategory: 'Food',
+            iconAdd: AssetImage(productIcon1),
+            iconFavo: AssetImage(productIcon2),
             price: '\$\590.0',
-            context: context
-        ),
-        subMostPopularProduct(productImg: AssetImage(productImage),
-            backgroundColor: pos ==0 ? orangeColor.withOpacity(.3) : purpleColor.withOpacity(.3) ,
-            onPress: (){},
+            context: context),
+        subMostPopularProduct(
+            productImg: AssetImage(productImage),
+            backgroundColor: pos == 0
+                ? orangeColor.withOpacity(.3)
+                : purpleColor.withOpacity(.3),
+            onPress: () {},
             nameProduct: 'Pasta',
             nameCategory: 'Food',
+            iconAdd: AssetImage(productIcon1),
+            iconFavo: AssetImage(productIcon2),
             price: '\$\125.0',
-            context: context
-        ),
+            context: context),
       ],
     ),
   );
 }
 
-Widget mostPopularInHeader(){
+Widget mostPopularInHeader() {
   return Padding(
-    padding: const EdgeInsets.only(right: 20,left: 20,top: 0),
+    padding: const EdgeInsets.only(right: 20, left: 20, top: 0),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text('${Strings().mostPopularIn}Egypt',
-          style: titlesStyle(),),
+        Text(
+          '${Strings().mostPopularIn}Egypt',
+          style: titlesStyle(),
+        ),
         FlatButton(
           splashColor: orangeColor.withOpacity(0.4),
           highlightColor: orangeShadowColor,
           shape: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide.none
-          ),
-          onPressed: (){
-
-          },
+              borderSide: BorderSide.none),
+          onPressed: () {},
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -761,8 +784,14 @@ Widget mostPopularInHeader(){
                 Strings().more,
                 style: moreStyle(),
               ),
-              SizedBox(width: 8,),
-              Icon(Icons.arrow_forward_rounded,size: 15,color:  Colors.black.withOpacity(0.7),)
+              SizedBox(
+                width: 8,
+              ),
+              Icon(
+                Icons.arrow_forward_rounded,
+                size: 15,
+                color: Colors.black.withOpacity(0.7),
+              )
             ],
           ),
         )
@@ -770,8 +799,6 @@ Widget mostPopularInHeader(){
     ),
   );
 }
-
-
 
 // end karem
 
@@ -785,15 +812,14 @@ Widget mostPopularInHeader(){
 
 // Start Mosdik
 
-Widget mostPopularByCategoryHeader(){
-
+Widget mostPopularByCategoryHeader() {
   return Padding(
     padding: const EdgeInsets.only(top: 20),
     child: Container(
       height: 50,
       width: 430,
       decoration: BoxDecoration(
-        shape: BoxShape.rectangle,
+          shape: BoxShape.rectangle,
           gradient: LinearGradient(
               colors: [
                 Colors.white.withOpacity(1),
@@ -801,16 +827,16 @@ Widget mostPopularByCategoryHeader(){
               ],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              tileMode: TileMode.repeated) ,
-        color: Colors.black12,
-        borderRadius: BorderRadius.horizontal(right: Radius.circular(20), left: Radius.circular(20),
-        )
-      ),
-
+              tileMode: TileMode.repeated),
+          color: Colors.black12,
+          borderRadius: BorderRadius.horizontal(
+            right: Radius.circular(20),
+            left: Radius.circular(20),
+          )),
       child: Padding(
-        padding: const EdgeInsets.only(left: 20.0,top: 15.0),
-        child: Text
-          ('${Strings().mostPopularByCategories}',
+        padding: const EdgeInsets.only(left: 20.0, top: 15.0),
+        child: Text(
+          '${Strings().mostPopularByCategories}',
           style: titlesStyle(),
         ),
       ),
@@ -818,68 +844,101 @@ Widget mostPopularByCategoryHeader(){
   );
 }
 
-
-Widget mostPopularByCategoryStable(){
-  return Padding(
-    padding: const EdgeInsets.only(right: 20,left: 20,top: 0),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text('${Strings().Category}',
-          style: titlesStyle(),),
-        FlatButton(
-          splashColor: orangeColor.withOpacity(0.4),
-          highlightColor: orangeShadowColor,
-          shape: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide.none
-          ),
-          onPressed: (){
-
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                Strings().seeAll,
-                style: moreStyle(),
+Widget mostPopularByCategoryStable(BuildContext context) {
+  return Column(
+    children: [
+      Padding(
+        padding: const EdgeInsets.only(right: 20, left: 20, top: 0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              '${Strings().Category}',
+              style: titlesStyle(),
+            ),
+            FlatButton(
+              splashColor: orangeColor.withOpacity(0.4),
+              highlightColor: orangeShadowColor,
+              shape: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide.none),
+              onPressed: () {},
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    Strings().seeAll,
+                    style: moreStyle(),
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Icon(
+                    Icons.arrow_forward_rounded,
+                    size: 15,
+                    color: Colors.black.withOpacity(0.7),
+                  )
+                ],
               ),
-              SizedBox(width: 8,),
-              Icon(Icons.arrow_forward_rounded,size: 15,color:  Colors.black.withOpacity(0.7),)
-            ],
-          ),
-        )
-      ],
-    ),
+            )
+          ],
+        ),
+      ),
+      SizedBox(
+        height: 200,
+        child: Stack(
+          children: [
+            Container(
+              height: 40,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+                boxShadow : [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                  ),
+                  BoxShadow(
+                      color: Colors.white,
+                      spreadRadius: -1.0,
+                      blurRadius: 8.0,
+                      offset: Offset(0,8)
+                  ),
+
+                ],
+              ),
+            ),
+
+            Positioned(
+              top: 135,
+              child: Container(
+                height: 40,
+                width:  MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.vertical(bottom: Radius.circular(25)),
+                  boxShadow : [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                    ),
+                    BoxShadow(
+                        color: Colors.white,
+                        spreadRadius: 1.0,
+                        blurRadius: 8.0,
+                        offset: Offset(0,-8)
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Positioned(
+                child: MainMostPopularCategory()),
+          ],
+        ),
+      ),
+    ],
   );
 }
 
-Widget mostPopularByCategoryFooter(){
-  return Container(
-    height: 200,
-    width: 430,
-    decoration: BoxDecoration(
-        shape: BoxShape.rectangle,
-        gradient: LinearGradient(
-            colors: [
-              Colors.white.withOpacity(1),
-              Colors.black.withOpacity(0.3)
-            ],
-            begin: Alignment.bottomCenter,
-            end: Alignment.topCenter,
-            tileMode: TileMode.repeated) ,
-        color: Colors.black12,
-        borderRadius: BorderRadius.horizontal(right: Radius.circular(20), left: Radius.circular(20),
-        )
-    ),
-    child: MainMostPopularCategory(),
-
-  );
-}
-
-
-Widget mostPopularByCategoryAfterProd(){
+Widget mostPopularByCategoryAfterProd() {
   return Container(
     height: 50,
     width: 430,
@@ -892,17 +951,14 @@ Widget mostPopularByCategoryAfterProd(){
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            tileMode: TileMode.repeated) ,
+            tileMode: TileMode.repeated),
         color: Colors.black12,
-        borderRadius: BorderRadius.horizontal(right: Radius.circular(20), left: Radius.circular(20),
-        )
-    ),
-
+        borderRadius: BorderRadius.horizontal(
+          right: Radius.circular(20),
+          left: Radius.circular(20),
+        )),
   );
 }
-
-
-
 
 Widget supplierView(
     {Function onPress,
@@ -914,29 +970,22 @@ Widget supplierView(
   return GestureDetector(
     onTap: onPress,
     child: Padding(
-      padding: const EdgeInsets.only(top: 8,bottom: 8,right: 10,left: 8),
+      padding: const EdgeInsets.only(top: 8, bottom: 8, right: 10, left: 8),
       child: Container(
-        width: 100.0,
+        width: 80.0,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.black.withOpacity(0.4),
-                      blurRadius: 7,
-                      spreadRadius: 0.17,
-                      offset: Offset(1,1))
-                ],
                 borderRadius: BorderRadius.circular(13),
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20.0),
-                child: Image (
+                child: Image(
                   image: supplierImg,
                   width: double.infinity,
-                  height: 100,
+                  height: 80,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -946,7 +995,8 @@ Widget supplierView(
             ),
             Text(
               nameSupplier,
-              style: TextStyle(fontSize: 11.0,
+              style: TextStyle(
+                  fontSize: 11.0,
                   fontWeight: FontWeight.bold,
                   color: Colors.black),
             ),
@@ -955,7 +1005,9 @@ Widget supplierView(
             ),
             Text(
               category,
-              style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w300,
+              style: TextStyle(
+                  fontSize: 11.0,
+                  fontWeight: FontWeight.w300,
                   color: Colors.black54),
             ),
             SizedBox(
@@ -964,16 +1016,20 @@ Widget supplierView(
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Icon(Icons.access_time_rounded,size: 13,),
+                Icon(
+                  Icons.access_time_rounded,
+                  size: 13,
+                ),
                 SizedBox(
                   width: 5.0,
                 ),
-                Text('$years YRS',
+                Text(
+                  '$years YRS',
                   style: TextStyle(
                       fontSize: 10.0,
                       fontWeight: FontWeight.w300,
-                      color: Colors.black54
-                  ),),
+                      color: Colors.black54),
+                ),
               ],
             ),
           ],
@@ -985,11 +1041,14 @@ Widget supplierView(
 
 Widget mainMostPopularProduct(
     {Function onPress,
-    Color backgroundColor,
-    AssetImage productImg,
-    String nameProduct,
-    String nameCategory,
-    String price,BuildContext context}) {
+      Color backgroundColor,
+      AssetImage productImg,
+      AssetImage iconAdd,
+      AssetImage iconFavo,
+      String nameProduct,
+      String nameCategory,
+      String price,
+      BuildContext context}) {
   return GestureDetector(
     onTap: onPress,
     child: Container(
@@ -997,14 +1056,13 @@ Widget mainMostPopularProduct(
         borderRadius: BorderRadius.circular(15.0),
         color: Colors.white,
       ),
-      margin: EdgeInsets.only(left: 20,right: 3,bottom: 3,top: 3),
-      width: MediaQuery.of(context).size.width/3*0.85,
+      margin: EdgeInsets.only(left: 20, right: 3, bottom: 3, top: 3),
+      width: MediaQuery.of(context).size.width / 3 * 0.85,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15.0),
           color: backgroundColor,
         ),
-
         child: ClipRRect(
           borderRadius: BorderRadius.circular(15),
           child: Stack(
@@ -1022,16 +1080,15 @@ Widget mainMostPopularProduct(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    GestureDetector(
-                        child: Icon(
-                          Icons.add_to_photos,size: 20,color: Colors.black54,),
-                      onTap: (){
-                      },
+                    Image(
+                      image: iconAdd,
+                      width: 20.0,
+                      height: 20.0,
                     ),
-                    SizedBox(width: 5),
-                    GestureDetector(
-                        child: Icon(Icons.bookmark_border,size: 20,color: Colors.black54,),
-                      onTap: (){},
+                    Image(
+                      image: iconFavo,
+                      width: 20.0,
+                      height: 20.0,
                     ),
                   ],
                 ),
@@ -1043,14 +1100,16 @@ Widget mainMostPopularProduct(
                   children: [
                     Text(
                       nameProduct,
-                      style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 17.0, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
                       height: 5.0,
                     ),
                     Text(
                       nameCategory,
-                      style: TextStyle(fontWeight: FontWeight.w400, fontSize: 15.0),
+                      style: TextStyle(
+                          fontWeight: FontWeight.w400, fontSize: 15.0),
                     ),
                     SizedBox(
                       height: 16.0,
@@ -1069,7 +1128,6 @@ Widget mainMostPopularProduct(
                   ],
                 ),
               ),
-
             ],
           ),
         ),
@@ -1080,11 +1138,14 @@ Widget mainMostPopularProduct(
 
 Widget subMostPopularProduct(
     {Function onPress,
-    Color backgroundColor,
-    AssetImage productImg,
-    String nameProduct,
-    String nameCategory,
-    String price,BuildContext context}) {
+      Color backgroundColor,
+      AssetImage productImg,
+      AssetImage iconAdd,
+      AssetImage iconFavo,
+      String nameProduct,
+      String nameCategory,
+      String price,
+      BuildContext context}) {
   return GestureDetector(
     onTap: onPress,
     child: Container(
@@ -1094,7 +1155,7 @@ Widget subMostPopularProduct(
       ),
       margin: EdgeInsets.all(3.0),
       height: 75,
-      width: MediaQuery.of(context).size.width/1.5,
+      width: MediaQuery.of(context).size.width / 1.5,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(15),
         child: Stack(
@@ -1108,22 +1169,23 @@ Widget subMostPopularProduct(
                   width: 130,
                 )),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 50,vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  GestureDetector(
-                      child: Icon(
-                        Icons.add_to_photos_rounded,size: 18,color: Colors.black54,),
-                    onTap: (){},
+                  Icon(
+                    Icons.add_to_photos_rounded,
+                    size: 19,
+                    color: Colors.black54,
                   ),
-                  SizedBox(width: 5,),
-                  GestureDetector(
-                      child: Icon(
-                        Icons.bookmark_border_rounded,size: 18,color: Colors.black54,),
-                    onTap: (){},
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Icon(
+                    Icons.bookmark_border_rounded,
+                    size: 19,
+                    color: Colors.black54,
                   )
-
                 ],
               ),
             ),
@@ -1134,14 +1196,16 @@ Widget subMostPopularProduct(
                 children: [
                   Text(
                     nameProduct,
-                    style: TextStyle(fontSize: 13.0, fontWeight: FontWeight.bold),
+                    style:
+                    TextStyle(fontSize: 13.0, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
                     height: 5.0,
                   ),
                   Text(
                     nameCategory,
-                    style: TextStyle(fontWeight: FontWeight.w400, fontSize: 13.0),
+                    style:
+                    TextStyle(fontWeight: FontWeight.w400, fontSize: 13.0),
                   ),
                   SizedBox(
                     height: 5.0,
@@ -1164,29 +1228,24 @@ Widget subMostPopularProduct(
   );
 }
 
-
-
-
-
-
-Widget MainMostPopularCategory(){
-
+Widget MainMostPopularCategory() {
   return SizedBox(
-    height: 200,
+    height: 170,
     child: ListView.builder(
-      padding: EdgeInsets.only(right: 16),
       physics: const NeverScrollableScrollPhysics(),
       reverse: true,
       scrollDirection: Axis.horizontal,
+      shrinkWrap: true,
       itemCount: 3,
       itemBuilder: (context, position) {
         return SizedBox(
-          width: MediaQuery.of(context).size.width/3-5,
+          width: MediaQuery.of(context).size.width / 3 - 5,
           child: mostPopularCateg(
             onPress: () {},
             backgroundColor: position.isOdd ? Colors.deepOrange : Colors.cyan,
             nameProduct: position.isOdd ? 'Negrsgo' : 'koshary',
-            productImg: AssetImage(position.isOdd ? productImage : productImage),
+            productImg:
+            AssetImage(position.isOdd ? productImage : productImage),
             price: '80.00',
           ),
         );
@@ -1197,18 +1256,17 @@ Widget MainMostPopularCategory(){
 
 Widget mostPopularCateg(
     {Function onPress,
-    Color backgroundColor,
-    AssetImage productImg,
-    String nameProduct,
-    String price}) {
+      Color backgroundColor,
+      AssetImage productImg,
+      String nameProduct,
+      String price}) {
   return GestureDetector(
       onTap: onPress,
       child: Container(
-        height: 200,
         child: Stack(children: [
           Padding(
             padding:
-                const EdgeInsets.only(left: 20, bottom: 40, right: 0, top: 30),
+            const EdgeInsets.only(left: 20, bottom: 15, right: 4, top: 30),
             child: Container(
               width: 160,
               alignment: Alignment.center,
@@ -1217,12 +1275,11 @@ Widget mostPopularCateg(
                 borderRadius: BorderRadius.circular(15),
                 boxShadow: [
                   BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
-                      blurRadius: 10,
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 4,
                       spreadRadius: 0.1,
                       offset: Offset(1, 3))
                 ],
-
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
@@ -1239,22 +1296,17 @@ Widget mostPopularCateg(
                               gradient: LinearGradient(
                                   colors: [
                                     redColor.withOpacity(0.9),
-                                    redColor.withOpacity(0.05)
-                                  ],
+                                    redColor.withOpacity(0.05)],
                                   begin: Alignment.topLeft,
-                                  tileMode: TileMode.clamp)
-                          ),
-                        )
-                    ),
-                    ),
-
+                                  tileMode: TileMode.clamp)),
+                        )),
+                  ),
                 ]),
               ),
             ),
           ),
           Positioned(
               left: -10,
-              top: 6,
               child: SizedBox(
                 width: 100,
                 height: 100,
@@ -1280,51 +1332,36 @@ Widget mostPopularCateg(
                     Flexible(
                       child: Container(
                         child: Text(
-                          '$price EGP',
+                          '$price\EGP',
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                               fontWeight: FontWeight.w600,
-                              fontSize: 12,
+                              fontSize: 10,
                               color: Colors.deepOrangeAccent),
                         ),
                       ),
                     ),
                     SizedBox(
-                      width: 10,
+                      width: 3,
                     ),
-
                     Icon(
-                      Icons.add_to_photos,size: 14,
-
+                      Icons.add_to_photos,
+                      size: 14,
                     ),
                     SizedBox(
-                      width: 5,
+                      width: 3,
                     ),
-
                     Icon(
-                        Icons.bookmark_border,size: 14,
+                      Icons.bookmark_border,
+                      size: 14,
                     ),
                   ],
-
                 )
-
-
               ],
-
             ),
-
           ),
-          Positioned(
-            bottom: 10,
-              child: mostPopularByCategoryAfterProd())
-        ]
-
-        ),
-
-
-      )
-
-  );
+        ]),
+      ));
 }
 // end Mosdik
 
