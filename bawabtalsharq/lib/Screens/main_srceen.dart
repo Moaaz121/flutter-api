@@ -26,8 +26,7 @@ class _MainScreenState extends State<MainScreen> {
         controller.animateToPage(position, duration: Duration(milliseconds: 200), curve: Curves.linear);
 
       },controller,currentPage),
-      body: SafeArea(
-        child: PageView(
+      body: PageView(
           controller: controller,
           children: [
             HomeScreen(),
@@ -41,7 +40,7 @@ class _MainScreenState extends State<MainScreen> {
             });
           },
         ),
-      ),
+
     );
   }
 }

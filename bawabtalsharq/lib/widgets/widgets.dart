@@ -290,7 +290,7 @@ Widget bottomAppBar(Function(int x) _selectionFunction,
                 width: 30, height: 30),
             title: Padding(
               padding: const EdgeInsets.only(
-                top: 7,
+                top: 7
               ),
               child: Text(Strings().home),
             ),
@@ -327,72 +327,6 @@ Widget bottomAppBar(Function(int x) _selectionFunction,
               )),
         ],
         onTap: _selectionFunction,
-        // child: Container(
-        //   height: 70,
-        //   decoration: BoxDecoration(
-        //     color: Colors.transparent,
-        //     borderRadius: BorderRadius.all(Radius.circular(20)),
-        //   ),
-        //   child: Row(
-        //     mainAxisSize: MainAxisSize.max,
-        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //     children: <Widget>[
-        //       IconButton(
-        //         iconSize: 42,
-        //         padding: EdgeInsets.only(left: 28),
-        //         icon:Image.asset(_pageSelected == 0 ? 'assets/images/tab_1s.png' : 'assets/images/tab_1.png',),
-        //         onPressed: () {
-        //           _selectionFunction(0);
-        //           // widget.controller.animateToPage(0,duration: Duration(milliseconds: 1), curve: Curves.bounceIn);
-        //         },
-        //       ),
-        //       IconButton(
-        //         iconSize: 42.0,
-        //         padding: EdgeInsets.only(right: 28.0),
-        //         icon:Image.asset(_pageSelected == 1  ? 'assets/images/tab_2s.png' : 'assets/images/tab_2.png'),
-        //         onPressed: () {
-        //             _selectionFunction(1);
-        //             // widget.controller.animateToPage(1,duration: Duration(milliseconds: 1), curve: Curves.ease);
-        //           // setState(() {
-        //           //   widget.controller.animateToPage(1, duration: Duration(seconds: 500), curve: Curves.bounceIn);
-        //           // });
-        //         },
-        //       ),
-        //       IconButton(
-        //         iconSize: 42.0,
-        //         padding: EdgeInsets.only(left: 28.0),
-        //         icon:Image.asset(_pageSelected == 2  ? 'assets/images/tab_3s.png' : 'assets/images/tab_3.png'),
-        //         onPressed: () {
-        //           _selectionFunction(2);
-        //             // widget.controller.animateToPage(2,duration: Duration(milliseconds: 1), curve: Curves.bounceIn);
-        //           // setState(() {
-        //           //   _tab2Toggled = _tab3Toggled;
-        //           //   _tab1Toggled = _tab3Toggled;
-        //           //   _tab4Toggled = _tab3Toggled;
-        //           //   _tab3Toggled = !_tab3Toggled;
-        //           //   widget.controller.animateToPage(2, duration: Duration(seconds: 500), curve: Curves.bounceIn);
-        //           // });
-        //         },
-        //       ),
-        //       IconButton(
-        //         iconSize: 42.0,
-        //         padding: EdgeInsets.only(right: 28.0),
-        //         icon:Image.asset(_pageSelected == 3  ? 'assets/images/tab_4s.png' : 'assets/images/tab_4.png'),
-        //         onPressed: () {
-        //           _selectionFunction(3);
-        //             // widget.controller.animateToPage(3, duration: Duration(milliseconds: 1), curve: Curves.bounceIn);
-        //           // setState(() {
-        //           //   _tab2Toggled = _tab4Toggled;
-        //           //   _tab3Toggled = _tab4Toggled;
-        //           //   _tab1Toggled = _tab4Toggled;
-        //           //   _tab4Toggled = !_tab4Toggled;
-        //           //   widget.controller.animateToPage(3, duration: Duration(seconds: 500), curve: Curves.bounceIn);
-        //           // });
-        //         },
-        //       )
-        //     ],
-        //   ),
-        // ),
       ),
     ),
   );
@@ -812,12 +746,12 @@ Widget mostPopularInHeader() {
 
 // Start Mosdik
 
-Widget mostPopularByCategoryHeader() {
+Widget mostPopularByCategoryHeader(BuildContext context) {
   return Padding(
     padding: const EdgeInsets.only(top: 20),
     child: Container(
       height: 50,
-      width: 430,
+      width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
           shape: BoxShape.rectangle,
           gradient: LinearGradient(
@@ -1241,6 +1175,7 @@ Widget MainMostPopularCategory() {
         return SizedBox(
           width: MediaQuery.of(context).size.width / 3 - 5,
           child: mostPopularCateg(
+            context: context,
             onPress: () {},
             position: position,
             backgroundColor: position== 2 ? redColor : (position == 1 ? orangeColor : blueColor),
@@ -1261,7 +1196,8 @@ Widget mostPopularCateg(
       Color backgroundColor,
       AssetImage productImg,
       String nameProduct,
-      String price}) {
+      String price,
+    BuildContext context}) {
   return GestureDetector(
       onTap: onPress,
       child: Container(
@@ -1270,7 +1206,7 @@ Widget mostPopularCateg(
             padding:
             const EdgeInsets.only(left: 20, bottom: 15, right: 4, top: 30),
             child: Container(
-              width: 160,
+              width: MediaQuery.of(context).size.width,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -1288,7 +1224,7 @@ Widget mostPopularCateg(
                 child: Stack(children: [
                   Positioned(
                     top: -50,
-                    left: position == 2 ? -50 : (position == 1 ? 0 : 50),
+                    left: position == 2 ? -MediaQuery.of(context).size.width*.06 : (position == 1 ? 0 : MediaQuery.of(context).size.width*0.2),
                     child: SizedBox(
                         height: 115,
                         width: 115,
