@@ -918,9 +918,7 @@ Widget mostPopularByCategoryStable(BuildContext context) {
                 ),
               ),
             ),
-            Positioned(
-              left: 5,
-                child: mainMostPopularCategory()),
+            Positioned(left: 5, child: mainMostPopularCategory()),
           ],
         ),
       ),
@@ -1091,7 +1089,8 @@ Widget mainMostPopularProduct(
                     Text(
                       nameProduct,
                       style: TextStyle(
-                          fontSize: MediaQuery.of(context).textScaleFactor*17, fontWeight: FontWeight.bold),
+                          fontSize: MediaQuery.of(context).textScaleFactor * 17,
+                          fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
                       height: 5.0,
@@ -1099,7 +1098,9 @@ Widget mainMostPopularProduct(
                     Text(
                       nameCategory,
                       style: TextStyle(
-                          fontWeight: FontWeight.w400, fontSize: MediaQuery.of(context).textScaleFactor*15),
+                          fontWeight: FontWeight.w400,
+                          fontSize:
+                              MediaQuery.of(context).textScaleFactor * 15),
                     ),
                     SizedBox(
                       height: 16.0,
@@ -1109,9 +1110,9 @@ Widget mainMostPopularProduct(
                       child: Text(
                         price,
                         style: TextStyle(
-                          color: orab,
+                          color: orangeColor,
                           fontWeight: FontWeight.bold,
-                          fontSize: MediaQuery.of(context).textScaleFactor*15,
+                          fontSize: MediaQuery.of(context).textScaleFactor * 15,
                         ),
                       ),
                     )
@@ -1186,17 +1187,18 @@ Widget subMostPopularProduct(
                 children: [
                   Text(
                     nameProduct,
-                    style:
-                        TextStyle(fontSize: MediaQuery.of(context).textScaleFactor*13,
-                            fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: MediaQuery.of(context).textScaleFactor * 13,
+                        fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
                     height: 5.0,
                   ),
                   Text(
                     nameCategory,
-                    style:
-                        TextStyle(fontWeight: FontWeight.w400, fontSize: MediaQuery.of(context).textScaleFactor*13),
+                    style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: MediaQuery.of(context).textScaleFactor * 13),
                   ),
                   SizedBox(
                     height: 5.0,
@@ -1206,7 +1208,7 @@ Widget subMostPopularProduct(
                     style: TextStyle(
                       color: Colors.deepOrangeAccent,
                       fontWeight: FontWeight.bold,
-                      fontSize: MediaQuery.of(context).textScaleFactor*13,
+                      fontSize: MediaQuery.of(context).textScaleFactor * 13,
                     ),
                   )
                 ],
@@ -1261,119 +1263,127 @@ Widget mostPopularCateg(
       onTap: onPress,
       child: Container(
         child: Stack(
-            alignment: position == 2 ?  AlignmentDirectional.topEnd : (position == 1 ? AlignmentDirectional.topCenter : AlignmentDirectional.topStart),
+            alignment: position == 2
+                ? AlignmentDirectional.topEnd
+                : (position == 1
+                    ? AlignmentDirectional.topCenter
+                    : AlignmentDirectional.topStart),
             children: [
-          Padding(
-            padding:
-                const EdgeInsets.only(left: 5, bottom: 15, right: 5, top: 30),
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(15),
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 4,
-                      spreadRadius: 0.1,
-                      offset: Offset(1, 3))
-                ],
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: Stack(
-                    alignment: position == 2 ?  AlignmentDirectional.centerEnd : (position == 1 ? AlignmentDirectional.center : AlignmentDirectional.centerStart),
-                    children: [
-                  Positioned(
-                    top: -50,
-                    left: position == 2 ? -50 : null,
-                    right: position == 0 ? -50 : null,
-                    child: SizedBox(
-                        height: 115,
-                        width: 115,
-                        child: Container(
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              gradient: LinearGradient(
-                                  colors: [
-                                    backgroundColor.withOpacity(0.5),
-                                    backgroundColor.withOpacity(0.0)
-                                  ],
-                                  begin: position == 2
-                                      ? Alignment.topLeft
-                                      : (position == 1
-                                          ? Alignment.topCenter
-                                          : Alignment.topRight),
-                                  end: position == 2
-                                      ? Alignment.bottomRight
-                                      : (position == 1
-                                          ? Alignment.bottomCenter
-                                          : Alignment.bottomLeft),
-                                  tileMode: TileMode.clamp)),
-                        )),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 5, bottom: 15, right: 5, top: 30),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 4,
+                          spreadRadius: 0.1,
+                          offset: Offset(1, 3))
+                    ],
                   ),
-                ]),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: Stack(
+                        alignment: position == 2
+                            ? AlignmentDirectional.centerEnd
+                            : (position == 1
+                                ? AlignmentDirectional.center
+                                : AlignmentDirectional.centerStart),
+                        children: [
+                          Positioned(
+                            top: -50,
+                            left: position == 2 ? -50 : null,
+                            right: position == 0 ? -50 : null,
+                            child: SizedBox(
+                                height: 115,
+                                width: 115,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      gradient: LinearGradient(
+                                          colors: [
+                                            backgroundColor.withOpacity(0.5),
+                                            backgroundColor.withOpacity(0.0)
+                                          ],
+                                          begin: position == 2
+                                              ? Alignment.topLeft
+                                              : (position == 1
+                                                  ? Alignment.topCenter
+                                                  : Alignment.topRight),
+                                          end: position == 2
+                                              ? Alignment.bottomRight
+                                              : (position == 1
+                                                  ? Alignment.bottomCenter
+                                                  : Alignment.bottomLeft),
+                                          tileMode: TileMode.clamp)),
+                                )),
+                          ),
+                        ]),
+                  ),
+                ),
               ),
-            ),
-          ),
-          Positioned(
-              left: position == 2 ? -20 : null,
-              right: position == 0 ? -20 : null,
-              child: SizedBox(
-                width: 100,
-                height: 100,
-                child: Image(image: AssetImage(productImage)),
-              )),
-          Padding(
-            padding: const EdgeInsets.only(left: 12.0, top: 110.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  nameProduct,
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
-                ),
-                SizedBox(
-                  height: 9.0,
-                ),
-                Row(
+              Positioned(
+                  left: position == 2 ? -20 : null,
+                  right: position == 0 ? -20 : null,
+                  child: SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: Image(image: AssetImage(productImage)),
+                  )),
+              Padding(
+                padding: const EdgeInsets.only(left: 12.0, top: 110.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Flexible(
-                      child: Container(
-                        child: Text(
-                          '$price\EGP',
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 10,
-                              color: Colors.deepOrangeAccent),
+                    Text(
+                      nameProduct,
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
+                    ),
+                    SizedBox(
+                      height: 9.0,
+                    ),
+                    Row(
+                      children: [
+                        Flexible(
+                          child: Container(
+                            child: Text(
+                              '$price\EGP',
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 10,
+                                  color: Colors.deepOrangeAccent),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 3,
-                    ),
-                    Icon(
-                      Icons.add_to_photos,
-                      size: 14,
-                    ),
-                    SizedBox(
-                      width: 3,
-                    ),
-                    Icon(
-                      Icons.bookmark_border,
-                      size: 14,
-                    ),
+                        SizedBox(
+                          width: 3,
+                        ),
+                        Icon(
+                          Icons.add_to_photos,
+                          size: 14,
+                        ),
+                        SizedBox(
+                          width: 3,
+                        ),
+                        Icon(
+                          Icons.bookmark_border,
+                          size: 14,
+                        ),
+                      ],
+                    )
                   ],
-                )
-              ],
-            ),
-          ),
-        ]),
+                ),
+              ),
+            ]),
       ));
 }
 // end Mosdik
