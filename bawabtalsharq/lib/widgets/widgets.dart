@@ -918,7 +918,9 @@ Widget mostPopularByCategoryStable(BuildContext context) {
                 ),
               ),
             ),
-            Positioned(child: mainMostPopularCategory()),
+            Positioned(
+              left: 5,
+                child: mainMostPopularCategory()),
           ],
         ),
       ),
@@ -1089,7 +1091,7 @@ Widget mainMostPopularProduct(
                     Text(
                       nameProduct,
                       style: TextStyle(
-                          fontSize: 17.0, fontWeight: FontWeight.bold),
+                          fontSize: MediaQuery.of(context).textScaleFactor*17, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
                       height: 5.0,
@@ -1097,7 +1099,7 @@ Widget mainMostPopularProduct(
                     Text(
                       nameCategory,
                       style: TextStyle(
-                          fontWeight: FontWeight.w400, fontSize: 15.0),
+                          fontWeight: FontWeight.w400, fontSize: MediaQuery.of(context).textScaleFactor*15),
                     ),
                     SizedBox(
                       height: 16.0,
@@ -1107,9 +1109,9 @@ Widget mainMostPopularProduct(
                       child: Text(
                         price,
                         style: TextStyle(
-                          color: Colors.deepOrangeAccent,
+                          color: orab,
                           fontWeight: FontWeight.bold,
-                          fontSize: 15.0,
+                          fontSize: MediaQuery.of(context).textScaleFactor*15,
                         ),
                       ),
                     )
@@ -1163,7 +1165,7 @@ Widget subMostPopularProduct(
                 children: [
                   Icon(
                     Icons.add_to_photos_rounded,
-                    size: 19,
+                    size: MediaQuery.of(context).size.width * 0.045,
                     color: Colors.black54,
                   ),
                   SizedBox(
@@ -1171,7 +1173,7 @@ Widget subMostPopularProduct(
                   ),
                   Icon(
                     Icons.bookmark_border_rounded,
-                    size: 19,
+                    size: MediaQuery.of(context).size.width * 0.045,
                     color: Colors.black54,
                   )
                 ],
@@ -1185,7 +1187,8 @@ Widget subMostPopularProduct(
                   Text(
                     nameProduct,
                     style:
-                        TextStyle(fontSize: 13.0, fontWeight: FontWeight.bold),
+                        TextStyle(fontSize: MediaQuery.of(context).textScaleFactor*13,
+                            fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
                     height: 5.0,
@@ -1193,7 +1196,7 @@ Widget subMostPopularProduct(
                   Text(
                     nameCategory,
                     style:
-                        TextStyle(fontWeight: FontWeight.w400, fontSize: 13.0),
+                        TextStyle(fontWeight: FontWeight.w400, fontSize: MediaQuery.of(context).textScaleFactor*13),
                   ),
                   SizedBox(
                     height: 5.0,
@@ -1203,7 +1206,7 @@ Widget subMostPopularProduct(
                     style: TextStyle(
                       color: Colors.deepOrangeAccent,
                       fontWeight: FontWeight.bold,
-                      fontSize: 13.0,
+                      fontSize: MediaQuery.of(context).textScaleFactor*13,
                     ),
                   )
                 ],
@@ -1257,10 +1260,12 @@ Widget mostPopularCateg(
   return GestureDetector(
       onTap: onPress,
       child: Container(
-        child: Stack(children: [
+        child: Stack(
+            alignment: position == 2 ?  AlignmentDirectional.topEnd : (position == 1 ? AlignmentDirectional.topCenter : AlignmentDirectional.topStart),
+            children: [
           Padding(
             padding:
-                const EdgeInsets.only(left: 20, bottom: 15, right: 4, top: 30),
+                const EdgeInsets.only(left: 5, bottom: 15, right: 5, top: 30),
             child: Container(
               width: MediaQuery.of(context).size.width,
               alignment: Alignment.center,
@@ -1277,14 +1282,13 @@ Widget mostPopularCateg(
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
-                child: Stack(children: [
+                child: Stack(
+                    alignment: position == 2 ?  AlignmentDirectional.centerEnd : (position == 1 ? AlignmentDirectional.center : AlignmentDirectional.centerStart),
+                    children: [
                   Positioned(
                     top: -50,
-                    left: position == 2
-                        ? -MediaQuery.of(context).size.width * .06
-                        : (position == 1
-                            ? 0
-                            : MediaQuery.of(context).size.width * 0.2),
+                    left: position == 2 ? -50 : null,
+                    right: position == 0 ? -50 : null,
                     child: SizedBox(
                         height: 115,
                         width: 115,
@@ -1314,14 +1318,15 @@ Widget mostPopularCateg(
             ),
           ),
           Positioned(
-              left: position == 2 ? -10 : (position == 1 ? 27 : 60),
+              left: position == 2 ? -20 : null,
+              right: position == 0 ? -20 : null,
               child: SizedBox(
                 width: 100,
                 height: 100,
                 child: Image(image: AssetImage(productImage)),
               )),
           Padding(
-            padding: const EdgeInsets.only(left: 25.0, top: 110.0),
+            padding: const EdgeInsets.only(left: 12.0, top: 110.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
