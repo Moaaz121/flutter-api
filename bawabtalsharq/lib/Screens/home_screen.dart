@@ -1,4 +1,4 @@
-
+import 'package:bawabtalsharq/Screens/all_categories_screen.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/strings.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
@@ -19,18 +19,31 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Stack(
           children: [
             SingleChildScrollView(
-              physics:  const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+              physics: const BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics()),
               child: Column(
                 children: [
-                  SizedBox(height: 75,),
+                  SizedBox(
+                    height: 75,
+                  ),
                   mainSlider(),
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      mainHeaderButton((){}, Strings().allCategories, allCategories, blueColor.withOpacity(0.15)),
-                      mainHeaderButton((){}, Strings().requestForQ, requestForQ, orangeColor.withOpacity(0.15)),
-                      mainHeaderButton((){}, Strings().joinUs, joinUs, purpleColor.withOpacity(0.15)),
+                      mainHeaderButton(() {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AllCategories()));
+                      }, Strings().allCategories(), allCategories,
+                          blueColor.withOpacity(0.15)),
+                      mainHeaderButton(() {}, Strings().requestForQ(),
+                          requestForQ, orangeColor.withOpacity(0.15)),
+                      mainHeaderButton(() {}, Strings().joinUs(), joinUs,
+                          purpleColor.withOpacity(0.15)),
                     ],
                   ),
                   ourGoldenSupplier(),
@@ -44,7 +57,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   mostPopularByCategoryStable(context),
                   mostPopularByCategoryStable(context),
                   mostPopularByCategoryStable(context),
-
                 ],
               ),
             ),
@@ -53,10 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    searchButton((){}),
-                    chatButton((){})
-                  ],
+                  children: [searchButton(() {}), chatButton(() {})],
                 ),
               ],
             ),

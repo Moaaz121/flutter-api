@@ -17,17 +17,17 @@ class Widgets {
 
 Widget textField(String hintText, Function callback,
     {bool isPassword = false,
-      bool isDense = true,
-      Function showPassword,
-      bool isPhoneKeyboard = false,
-      bool isClicable,
-      TextEditingController controller,
-      Icon icon,
-      Color color,
-      double fontSize = 16,
-      Widget prefixIcon,
-      int maxLines = 1,
-      Function onChange}) {
+    bool isDense = true,
+    Function showPassword,
+    bool isPhoneKeyboard = false,
+    bool isClicable,
+    TextEditingController controller,
+    Icon icon,
+    Color color,
+    double fontSize = 16,
+    Widget prefixIcon,
+    int maxLines = 1,
+    Function onChange}) {
   return Container(
     height: 50,
     child: TextFormField(
@@ -79,10 +79,10 @@ Widget textField(String hintText, Function callback,
         //     : icon == null ? null : icon,
         prefixIcon: prefixIcon != null
             ? Container(
-          child: prefixIcon,
-          height: 30,
-          width: 30,
-        )
+                child: prefixIcon,
+                height: 30,
+                width: 30,
+              )
             : null,
       ),
       textInputAction: TextInputAction.done,
@@ -174,7 +174,7 @@ Widget buttonWithIcon(String image, String labelText,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(isBackground ? 15 : 0),
         side:
-        BorderSide(color: isBackground ? buttonBorderColor : Colors.white),
+            BorderSide(color: isBackground ? buttonBorderColor : Colors.white),
       ),
       color: Colors.white,
       elevation: isBackground ? 5 : 0,
@@ -188,7 +188,7 @@ Widget buttonWithIcon(String image, String labelText,
             labelText,
             style: TextStyle(
                 color:
-                isBackground ? defaultBackgroundColor : buttonBorderColor,
+                    isBackground ? defaultBackgroundColor : buttonBorderColor,
                 fontSize: 16,
                 fontFamily: semiBoldFontFamily),
           ),
@@ -203,37 +203,37 @@ Widget cardChangeState(
     {bool isFActive = true}) {
   return isEmpty
       ? Container(
-    height: 120,
-    padding: EdgeInsets.only(left: 5, right: 5),
-    child: Card(
-      elevation: 5,
-      color: isFActive ? Color.fromRGBO(221, 231, 247, 1) : Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Image.asset(
-            isFActive ? activeImage : inactiveImage,
-            fit: BoxFit.contain,
+          height: 120,
+          padding: EdgeInsets.only(left: 5, right: 5),
+          child: Card(
+            elevation: 5,
+            color: isFActive ? Color.fromRGBO(221, 231, 247, 1) : Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Image.asset(
+                  isFActive ? activeImage : inactiveImage,
+                  fit: BoxFit.contain,
+                ),
+                SizedBox(height: 20),
+                Text(
+                  labelText,
+                  style: TextStyle(
+                      color: isFActive
+                          ? Color.fromRGBO(33, 99, 206, 1)
+                          : medicineColor,
+                      fontSize: 16,
+                      fontFamily:
+                          isFActive ? semiBoldFontFamily : mediumFontFamily),
+                ),
+              ],
+            ),
           ),
-          SizedBox(height: 20),
-          Text(
-            labelText,
-            style: TextStyle(
-                color: isFActive
-                    ? Color.fromRGBO(33, 99, 206, 1)
-                    : medicineColor,
-                fontSize: 16,
-                fontFamily:
-                isFActive ? semiBoldFontFamily : mediumFontFamily),
-          ),
-        ],
-      ),
-    ),
-  )
+        )
       : Container();
 }
 
@@ -289,10 +289,8 @@ Widget bottomAppBar(Function(int x) _selectionFunction,
             icon: Image.asset(currentPage == 0 ? tabHomeS : tabHome,
                 width: 30, height: 30),
             title: Padding(
-              padding: const EdgeInsets.only(
-                top: 7
-              ),
-              child: Text(Strings().home),
+              padding: const EdgeInsets.only(top: 7),
+              child: Text(Strings().home()),
             ),
           ),
           BottomNavigationBarItem(
@@ -303,7 +301,7 @@ Widget bottomAppBar(Function(int x) _selectionFunction,
               ),
               title: Padding(
                 padding: const EdgeInsets.only(top: 7),
-                child: Text(Strings().feature),
+                child: Text(Strings().feature()),
               )),
           BottomNavigationBarItem(
               icon: Image.asset(
@@ -313,7 +311,7 @@ Widget bottomAppBar(Function(int x) _selectionFunction,
               ),
               title: Padding(
                 padding: const EdgeInsets.only(top: 7),
-                child: Text(Strings().notifications),
+                child: Text(Strings().notifications()),
               )),
           BottomNavigationBarItem(
               icon: Image.asset(
@@ -323,7 +321,7 @@ Widget bottomAppBar(Function(int x) _selectionFunction,
               ),
               title: Padding(
                 padding: const EdgeInsets.only(top: 7),
-                child: Text(Strings().myAccount),
+                child: Text(Strings().myAccount()),
               )),
         ],
         onTap: _selectionFunction,
@@ -356,7 +354,7 @@ Widget searchButton(Function _function) {
           child: Row(
             children: [
               Text(
-                Strings().search,
+                Strings().search(),
                 style: TextStyle(
                   color: orangeColor,
                 ),
@@ -488,7 +486,7 @@ Widget mainHeaderButton(
     Function function, String title, String image, Color color) {
   return Container(
     decoration:
-    BoxDecoration(borderRadius: BorderRadius.circular(15), boxShadow: [
+        BoxDecoration(borderRadius: BorderRadius.circular(15), boxShadow: [
       BoxShadow(color: orangeShadowColor, blurRadius: 10, spreadRadius: 1),
     ]),
     child: FlatButton(
@@ -550,11 +548,11 @@ Widget ourGoldenSupplier() {
             return supplierView(
               onPress: () {},
               category:
-              position.isOdd ? 'Food & Beverages' : 'Agriculture Crops',
+                  position.isOdd ? 'Food & Beverages' : 'Agriculture Crops',
               nameSupplier:
-              position.isOdd ? 'Kareem Hassanien' : 'Mohamed Mosadik',
+                  position.isOdd ? 'Kareem Hassanien' : 'Mohamed Mosadik',
               supplierImg:
-              AssetImage(position.isOdd ? kareem_img : mosadaq_img),
+                  AssetImage(position.isOdd ? kareem_img : mosadaq_img),
               years: position.isOdd ? 3 : 5,
             );
           },
@@ -572,7 +570,7 @@ Widget ourGoldenSupplierHeader() {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
-          Strings().ourGoldenSupplier,
+          Strings().ourGoldenSupplier(),
           style: titlesStyle(),
         ),
         FlatButton(
@@ -586,7 +584,7 @@ Widget ourGoldenSupplierHeader() {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
-                Strings().more,
+                Strings().more(),
                 style: moreStyle(),
               ),
               SizedBox(
@@ -668,7 +666,7 @@ Widget popularSlider(BuildContext context, int pos) {
         subMostPopularProduct(
             productImg: AssetImage(productImage),
             backgroundColor:
-            pos == 0 ? redColor.withOpacity(.3) : blueColor.withOpacity(.3),
+                pos == 0 ? redColor.withOpacity(.3) : blueColor.withOpacity(.3),
             onPress: () {},
             nameProduct: 'Pasta',
             nameCategory: 'Food',
@@ -701,7 +699,7 @@ Widget mostPopularInHeader() {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
-          '${Strings().mostPopularIn}Egypt',
+          '${Strings().mostPopularIn()}Egypt',
           style: titlesStyle(),
         ),
         FlatButton(
@@ -715,7 +713,7 @@ Widget mostPopularInHeader() {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
-                Strings().more,
+                Strings().more(),
                 style: moreStyle(),
               ),
               SizedBox(
@@ -848,7 +846,7 @@ Widget mostPopularByCategoryStable(BuildContext context) {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              '${Strings().Category}',
+              '${Strings().allCategories()}',
               style: titlesStyle(),
             ),
             FlatButton(
@@ -862,7 +860,7 @@ Widget mostPopularByCategoryStable(BuildContext context) {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    Strings().seeAll,
+                    Strings().seeAll(),
                     style: moreStyle(),
                   ),
                   SizedBox(
@@ -887,7 +885,7 @@ Widget mostPopularByCategoryStable(BuildContext context) {
               height: 40,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
-                boxShadow : [
+                boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.05),
                   ),
@@ -895,21 +893,19 @@ Widget mostPopularByCategoryStable(BuildContext context) {
                       color: Colors.white,
                       spreadRadius: -1.0,
                       blurRadius: 8.0,
-                      offset: Offset(0,8)
-                  ),
-
+                      offset: Offset(0, 8)),
                 ],
               ),
             ),
-
             Positioned(
               top: 135,
               child: Container(
                 height: 40,
-                width:  MediaQuery.of(context).size.width,
+                width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.vertical(bottom: Radius.circular(25)),
-                  boxShadow : [
+                  borderRadius:
+                      BorderRadius.vertical(bottom: Radius.circular(25)),
+                  boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.05),
                     ),
@@ -917,14 +913,12 @@ Widget mostPopularByCategoryStable(BuildContext context) {
                         color: Colors.white,
                         spreadRadius: 1.0,
                         blurRadius: 8.0,
-                        offset: Offset(0,-8)
-                    ),
+                        offset: Offset(0, -8)),
                   ],
                 ),
               ),
             ),
-            Positioned(
-                child: MainMostPopularCategory()),
+            Positioned(child: mainMostPopularCategory()),
           ],
         ),
       ),
@@ -956,11 +950,11 @@ Widget mostPopularByCategoryAfterProd() {
 
 Widget supplierView(
     {Function onPress,
-      Colors colors,
-      String nameSupplier,
-      String category,
-      int years,
-      AssetImage supplierImg}) {
+    Colors colors,
+    String nameSupplier,
+    String category,
+    int years,
+    AssetImage supplierImg}) {
   return GestureDetector(
     onTap: onPress,
     child: Padding(
@@ -1035,14 +1029,14 @@ Widget supplierView(
 
 Widget mainMostPopularProduct(
     {Function onPress,
-      Color backgroundColor,
-      AssetImage productImg,
-      AssetImage iconAdd,
-      AssetImage iconFavo,
-      String nameProduct,
-      String nameCategory,
-      String price,
-      BuildContext context}) {
+    Color backgroundColor,
+    AssetImage productImg,
+    AssetImage iconAdd,
+    AssetImage iconFavo,
+    String nameProduct,
+    String nameCategory,
+    String price,
+    BuildContext context}) {
   return GestureDetector(
     onTap: onPress,
     child: Container(
@@ -1132,14 +1126,14 @@ Widget mainMostPopularProduct(
 
 Widget subMostPopularProduct(
     {Function onPress,
-      Color backgroundColor,
-      AssetImage productImg,
-      AssetImage iconAdd,
-      AssetImage iconFavo,
-      String nameProduct,
-      String nameCategory,
-      String price,
-      BuildContext context}) {
+    Color backgroundColor,
+    AssetImage productImg,
+    AssetImage iconAdd,
+    AssetImage iconFavo,
+    String nameProduct,
+    String nameCategory,
+    String price,
+    BuildContext context}) {
   return GestureDetector(
     onTap: onPress,
     child: Container(
@@ -1191,7 +1185,7 @@ Widget subMostPopularProduct(
                   Text(
                     nameProduct,
                     style:
-                    TextStyle(fontSize: 13.0, fontWeight: FontWeight.bold),
+                        TextStyle(fontSize: 13.0, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
                     height: 5.0,
@@ -1199,7 +1193,7 @@ Widget subMostPopularProduct(
                   Text(
                     nameCategory,
                     style:
-                    TextStyle(fontWeight: FontWeight.w400, fontSize: 13.0),
+                        TextStyle(fontWeight: FontWeight.w400, fontSize: 13.0),
                   ),
                   SizedBox(
                     height: 5.0,
@@ -1222,7 +1216,7 @@ Widget subMostPopularProduct(
   );
 }
 
-Widget MainMostPopularCategory() {
+Widget mainMostPopularCategory() {
   return SizedBox(
     height: 170,
     child: ListView.builder(
@@ -1238,10 +1232,12 @@ Widget MainMostPopularCategory() {
             context: context,
             onPress: () {},
             position: position,
-            backgroundColor: position== 2 ? redColor : (position == 1 ? orangeColor : blueColor),
+            backgroundColor: position == 2
+                ? redColor
+                : (position == 1 ? orangeColor : blueColor),
             nameProduct: position.isOdd ? 'Negrsgo' : 'koshary',
             productImg:
-            AssetImage(position.isOdd ? productImage : productImage),
+                AssetImage(position.isOdd ? productImage : productImage),
             price: '80.00',
           ),
         );
@@ -1252,11 +1248,11 @@ Widget MainMostPopularCategory() {
 
 Widget mostPopularCateg(
     {Function onPress,
-      int position,
-      Color backgroundColor,
-      AssetImage productImg,
-      String nameProduct,
-      String price,
+    int position,
+    Color backgroundColor,
+    AssetImage productImg,
+    String nameProduct,
+    String price,
     BuildContext context}) {
   return GestureDetector(
       onTap: onPress,
@@ -1264,7 +1260,7 @@ Widget mostPopularCateg(
         child: Stack(children: [
           Padding(
             padding:
-            const EdgeInsets.only(left: 20, bottom: 15, right: 4, top: 30),
+                const EdgeInsets.only(left: 20, bottom: 15, right: 4, top: 30),
             child: Container(
               width: MediaQuery.of(context).size.width,
               alignment: Alignment.center,
@@ -1284,7 +1280,11 @@ Widget mostPopularCateg(
                 child: Stack(children: [
                   Positioned(
                     top: -50,
-                    left: position == 2 ? -MediaQuery.of(context).size.width*.06 : (position == 1 ? 0 : MediaQuery.of(context).size.width*0.2),
+                    left: position == 2
+                        ? -MediaQuery.of(context).size.width * .06
+                        : (position == 1
+                            ? 0
+                            : MediaQuery.of(context).size.width * 0.2),
                     child: SizedBox(
                         height: 115,
                         width: 115,
@@ -1294,9 +1294,18 @@ Widget mostPopularCateg(
                               gradient: LinearGradient(
                                   colors: [
                                     backgroundColor.withOpacity(0.5),
-                                    backgroundColor.withOpacity(0.0)],
-                                  begin: position == 2 ? Alignment.topLeft : (position == 1 ? Alignment.topCenter :  Alignment.topRight),
-                                  end: position == 2 ? Alignment.bottomRight : (position == 1 ? Alignment.bottomCenter :  Alignment.bottomLeft),
+                                    backgroundColor.withOpacity(0.0)
+                                  ],
+                                  begin: position == 2
+                                      ? Alignment.topLeft
+                                      : (position == 1
+                                          ? Alignment.topCenter
+                                          : Alignment.topRight),
+                                  end: position == 2
+                                      ? Alignment.bottomRight
+                                      : (position == 1
+                                          ? Alignment.bottomCenter
+                                          : Alignment.bottomLeft),
                                   tileMode: TileMode.clamp)),
                         )),
                   ),

@@ -30,11 +30,11 @@ class _AllCategoriesState extends State<AllCategories>
 
   @override
   void dispose() {
-    super.dispose();
     categoriesArr.forEach((element) {
       element.isSelected = false;
     }); // to do remove after add api
     _sliderController.dispose();
+    super.dispose();
   }
 
   @override
