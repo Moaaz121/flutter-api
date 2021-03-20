@@ -22,14 +22,7 @@ class LoginScreen extends StatelessWidget {
           child: Container(
             margin: EdgeInsets.only(top: 58, left: 26, right: 25, bottom: 20),
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                bottomLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
-                bottomRight: Radius.circular(30),
-              ),
-            ),
+                color: Colors.white, borderRadius: BorderRadius.circular(33)),
             child: ListView(
               children: [
                 Padding(
@@ -45,8 +38,8 @@ class LoginScreen extends StatelessWidget {
                         children: [
                           Image(
                             image: AssetImage(logo),
-                            width: (40),
-                            height: (50),
+                            width: width * .1,
+                            height: height * .07,
                           ),
                           Padding(
                             padding: const EdgeInsets.all(3.0),
