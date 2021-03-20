@@ -49,7 +49,39 @@ TextStyle titleStyle(
 }
 
 // Start Karem
+const backgroundColor = Colors.white;
+const orangeColor = Color(0xffE16036);
+const orangeShadowColor = Color(0x26e16036);
+const blueColor = Color(0xff65B8f9);
+const redColor = Color(0xffff8e8e);
+const yellowColor = Color(0xffecff6a);
+const purpleColor = Color(0xff9080ff);
+const greenColor = Color(0xff4Ac367);
 
+TextStyle mainHeaderTitleStyle(){
+  return TextStyle(
+    fontFamily: 'Font-Regular',
+    fontSize: 11,
+    color: Colors.black54
+  );
+}
+
+TextStyle titlesStyle(){
+  return TextStyle(
+      fontFamily: 'Font-Regular',
+      fontSize: 17,
+      fontWeight: FontWeight.bold,
+      color: Colors.black
+  );
+}
+
+TextStyle moreStyle(){
+  return TextStyle(
+      fontFamily: 'Font-Regular',
+      fontSize: 12,
+      color: Colors.black.withOpacity(0.7)
+  );
+}
 // end karem
 
 // Start Asmaa
