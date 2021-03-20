@@ -102,14 +102,13 @@ class _AllCategoriesState extends State<AllCategories>
                   children: [
                     Container(
                       padding: categoriesArr[index].isSelected
-                          ? EdgeInsets.all(2)
+                          ? EdgeInsets.all(3)
                           : EdgeInsets.all(0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         border: categoriesArr[index].isSelected
                             ? Border.all(
-                                color: Color(categoriesArr[index].color)
-                                    .withOpacity(0.15),
+                                color: defaultOrangeColor.withOpacity(0.8),
                                 width: 3)
                             : Border.all(color: Colors.transparent),
                         color: Colors.white,
@@ -152,10 +151,10 @@ class _AllCategoriesState extends State<AllCategories>
       List<SubCategory> subCategoryArr, Color color) {
     setupAnimation();
     return Positioned(
-      left: 70,
+      left: 75,
       top: 0,
       bottom: 0,
-      width: MediaQuery.of(context).size.width - 70,
+      width: MediaQuery.of(context).size.width - 75,
       child: Dismissible(
         key: ValueKey('dismiss'),
         direction: DismissDirection.startToEnd,
