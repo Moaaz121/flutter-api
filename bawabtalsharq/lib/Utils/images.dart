@@ -21,6 +21,7 @@ const String joinUs = 'assets/images/Join_us.png';
 const String personTest = 'assets/images/person_test.jpg';
 const String mosadaq_img = 'assets/images/mosadaq_img.jpg';
 const String kareem_img = 'assets/images/kareem_img.jpg';
+const String bahaa_image = 'assets/images/bahaa_im.png';
 // end karem
 
 // Start Asmaa
@@ -29,6 +30,7 @@ const String cold_drinks = 'assets/images/cold_drinks.png';
 // end Asmaa
 
 // Start Bahaa
+const String settings = 'assets/images/ic_settings.png';
 
 // end Bahaa
 
