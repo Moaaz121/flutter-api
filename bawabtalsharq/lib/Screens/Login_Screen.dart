@@ -1,4 +1,5 @@
 import 'package:bawabtalsharq/Utils/images.dart';
+import 'package:bawabtalsharq/Utils/strings.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +22,7 @@ class LoginScreen extends StatelessWidget {
           color: Colors.white.withOpacity(0.4),
           child: SafeArea(
             child: Container(
-              margin: EdgeInsets.only(top: 58, left: 26, right: 25, bottom: 20),
+              margin: EdgeInsets.only(top: 48, left: 26, right: 25, bottom: 20),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(33),
@@ -48,7 +49,7 @@ class LoginScreen extends StatelessWidget {
                             children: [
                               GestureDetector(
                                   onTap: () => print('hey'),
-                                  child: Text('Sign up')),
+                                  child: Text(Strings().signUp())),
                               IconButton(
                                 onPressed: () {},
                                 icon: Icon(Icons.arrow_forward_rounded),
@@ -64,10 +65,11 @@ class LoginScreen extends StatelessWidget {
                       ],
                     ),
                     SizedBox(
-                      height: height * 0.04,
+                      height: height * 0.02,
                     ),
                     Text(
-                      'Login',
+                      Strings().logIn(),
+                      //'Login',
                       style: TextStyle(
                           fontFamily: 'Roboto-Black.ttf',
                           fontSize: 50,
@@ -76,12 +78,14 @@ class LoginScreen extends StatelessWidget {
                     SizedBox(
                       height: height * 0.04,
                     ),
-                    customTextField(label: 'Username', leftIcon: Icons.person),
+                    customTextField(
+                        label: Strings().userName(), leftIcon: Icons.person),
                     SizedBox(
-                      height: height * 0.05,
+                      height: height * 0.03,
                     ),
                     customTextField(
-                        label: 'Password',
+                        label: (Strings().password()),
+                        //'Password',
                         leftIcon: Icons.lock,
                         rightIcon: Icons.visibility_off),
                     SizedBox(
@@ -90,17 +94,16 @@ class LoginScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(left: 15, top: 5),
                       child: GestureDetector(
-                        onTap: () {},
-                        child: (Text(
-                          'Forget Password?',
-                          style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: 'Roboto',
-                              decoration: TextDecoration.underline),
-                        )),
-                      ),
+                          onTap: () {},
+                          child: Text(
+                            Strings().forgetPassword(),
+                            style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: 'Roboto',
+                                decoration: TextDecoration.underline),
+                          )),
                     ),
                     SizedBox(
                       height: height * .05,
@@ -117,20 +120,20 @@ class LoginScreen extends StatelessWidget {
                         onPressed: () {},
                         color: Colors.white,
                         child: Text(
-                          'Sign in',
+                          Strings().signIn(),
                           style: TextStyle(fontSize: 15, color: Colors.red),
                         ),
                       ),
                     ),
                     SizedBox(
-                      height: height * .04,
+                      height: height * .03,
                     ),
                     Align(
                       alignment: Alignment.center,
                       child: GestureDetector(
                         onTap: () {},
                         child: (Text(
-                          'Already have an account?',
+                          Strings().alreadyHaveAnAccount(),
                           style: TextStyle(
                               fontSize: 16,
                               color: Colors.grey,

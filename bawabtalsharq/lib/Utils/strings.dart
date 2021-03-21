@@ -116,6 +116,19 @@ class Strings {
     }
   }
 
+  String signIn() {
+    switch (Constants.languageId) {
+      case languages.Arabic:
+        return StringsAR.SignIn;
+        break;
+      case languages.Indian:
+        return StringsINR.SignIn;
+        break;
+      default:
+        return StringsEN.SignIn;
+    }
+  }
+
 // end Islam
 
 }

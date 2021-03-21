@@ -28,7 +28,7 @@ class StringsAR {
   static const String Password = 'كلمه المرور';
   static const String ForgetPassword = 'هل نسيت كلمه السر';
   static const String Already_Have_An_Account = 'هل لديك حساب بالفعل';
-
+  static const String SignIn = 'تسجيل الدخول';
 // end Islam
 
 }
