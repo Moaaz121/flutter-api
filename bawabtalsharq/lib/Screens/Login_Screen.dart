@@ -54,11 +54,6 @@ class LoginScreen extends StatelessWidget {
                                 onPressed: () {},
                                 icon: Icon(Icons.arrow_forward_rounded),
                               ),
-                              // FlatButton(
-                              //     onPressed: () {}, child: Text('Sign Up')),
-                              // FlatButton.icon(
-                              //     onPressed: () {},
-                              //     icon: Icon(Icons.arrow_forward_rounded))
                             ],
                           ),
                         ),
@@ -145,21 +140,21 @@ class LoginScreen extends StatelessWidget {
                     ),
                     SizedBox(
                       height: height * .02,
-                      //width: 5,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                    blurRadius: 10,
-                                    spreadRadius: 2,
-                                    color: Colors.black.withOpacity(.1))
-                              ]),
+                            borderRadius: BorderRadius.circular(16),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                  blurRadius: 10,
+                                  spreadRadius: 2,
+                                  color: Colors.black.withOpacity(.1))
+                            ],
+                          ),
                           child: IconButton(
                             icon: Image.asset(google),
                             iconSize: 15,
