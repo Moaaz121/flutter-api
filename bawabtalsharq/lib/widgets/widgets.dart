@@ -1386,6 +1386,68 @@ Widget mostPopularCateg(
             ]),
       ));
 }
+
+
+Widget notification(BuildContext context, ScrollController controller){
+return
+  Container(
+    height: MediaQuery.of(context).size.height,
+    child: ListView.builder(
+      controller: controller,
+      scrollDirection: Axis.vertical,
+      itemCount: 100,
+      itemBuilder: (context, position) {
+        return Container(
+          height: 80,
+          margin: EdgeInsets.all(14),
+          child: notificationItems(
+            onPress: () {},
+            title: position.isOdd
+                ? '50Off In Ultraboost All Terrain Ltd Shoes'
+                : 'check Out Quality Products From Global Star Suppliers',
+            imageView: AssetImage(
+                position.isOdd ? productImage : productImage),
+          ),
+        );
+      },
+    ),
+  );
+
+}
+
+
+Widget notificationItems({
+  Function onPress,
+  String title,
+  AssetImage imageView,
+}) {
+  return GestureDetector(
+    child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25),
+            color: Colors.white),
+        child: Row(
+          children: [
+            Image(
+              image: imageView,
+              width: 90,
+              height: 90,
+            ),
+            Expanded(
+                child: Text(
+              title,
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+              ),
+            )),
+            Icon(
+              Icons.navigate_next,
+              size: 30,
+            )
+          ],
+        )),
+  );
+}
 // end Mosdik
 
 // Start Moaaz

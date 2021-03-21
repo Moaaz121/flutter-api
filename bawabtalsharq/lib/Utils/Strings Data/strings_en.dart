@@ -29,6 +29,7 @@ class StringsEN {
 // Start Mosdik
   static String category = 'Shoes & Accessories ';
 
+
 // end Mosdik
 
 // Start Moaaz

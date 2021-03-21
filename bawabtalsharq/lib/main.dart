@@ -6,7 +6,7 @@ import 'Screens/main_srceen.dart';
 
 void main() => runApp(
       DevicePreview(
-        enabled: !kReleaseMode,
+        enabled: false,
         builder: (context) => BawabtAlsharqApp(), // Wrap your app
       ),
     );

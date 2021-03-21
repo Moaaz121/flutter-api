@@ -19,28 +19,32 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBody: true,
-      bottomNavigationBar: bottomAppBar((int position){
+    return SafeArea(
+      top: false,
 
-        controller.animateToPage(position, duration: Duration(milliseconds: 200), curve: Curves.linear);
+      child: Scaffold(
+        extendBody: true,
+        bottomNavigationBar: bottomAppBar((int position){
 
-      },controller,currentPage),
-      body: PageView(
-          controller: controller,
-          children: [
-            HomeScreen(),
-            FeatureScreen(),
-            NotificationScreen(),
-            ProfileScreen(),
-          ],
-          onPageChanged: (page){
-            setState(() {
-              currentPage = page;
-            });
-          },
-        ),
+          controller.animateToPage(position, duration: Duration(milliseconds: 200), curve: Curves.linear);
 
+        },controller,currentPage),
+        body: PageView(
+            controller: controller,
+            children: [
+              HomeScreen(),
+              FeatureScreen(),
+              NotificationScreen(),
+              ProfileScreen(),
+            ],
+            onPageChanged: (page){
+              setState(() {
+                currentPage = page;
+              });
+            },
+          ),
+
+      ),
     );
   }
 }
