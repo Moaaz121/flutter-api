@@ -92,7 +92,7 @@ class LoginScreen extends StatelessWidget {
                       child: GestureDetector(
                         onTap: () {},
                         child: (Text(
-                          'Forget Passward?',
+                          'Forget Password?',
                           style: TextStyle(
                               fontSize: 12,
                               color: Colors.grey,
