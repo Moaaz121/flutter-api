@@ -14,9 +14,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       top: false,
-      child: Container(
-        color: defaultOrangeColor.withOpacity(0.15),
-        child: Column(
+      child: Scaffold(
+        backgroundColor: defaultOrangeColor.withOpacity(0.15),
+        body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
@@ -37,8 +37,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   SizedBox(
                     width: 14,
                   ),
-                  buildText('EN', 16,
-                      fontWeight: FontWeight.bold, color: defaultOrangeColor),
+                  GestureDetector(
+                    onTap: () {
+                      showLanguagesDialog(context, 0);
+                    },
+                    child: buildText('EN', 16,
+                        fontWeight: FontWeight.bold, color: defaultOrangeColor),
+                  ),
                 ],
               ),
             ),
@@ -260,6 +265,49 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  void showLanguagesDialog(BuildContext context, int selectedLanguage) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Center(
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20), color: Colors.white),
+            width: MediaQuery.of(context).size.width * 0.9,
+            height: MediaQuery.of(context).size.height * 0.4,
+            child: ListView.builder(
+              itemCount: 5,
+              itemBuilder: (context, index) {
+                return Container(
+                  height: 60,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Expanded(
+                          child: buildText('English', 15,
+                              fontFamily: mediumFontFamily,
+                              fontWeight: FontWeight.w700)),
+                      selectedLanguage == index
+                          ? Image.asset(
+                              checkBox,
+                              width: 40,
+                              height: 40,
+                            )
+                          : Text('')
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        );
+      },
     );
   }
 // end asmaa

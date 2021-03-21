@@ -25,6 +25,7 @@ const String bahaa_image = 'assets/images/bahaa_im.png';
 // Start Asmaa
 const String cold_drinks = 'assets/images/cold_drinks.png';
 const String message = 'assets/images/message.png';
+const String checkBox = 'assets/images/checkBox.png';
 
 // end Asmaa
 
