@@ -1391,24 +1391,35 @@ Widget mostPopularCateg(
 Widget notification(BuildContext context, ScrollController controller){
 return
   Container(
+
     height: MediaQuery.of(context).size.height,
     child: ListView.builder(
+
       controller: controller,
       scrollDirection: Axis.vertical,
-      itemCount: 100,
-      itemBuilder: (context, position) {
-        return Container(
-          height: 80,
-          margin: EdgeInsets.all(14),
-          child: notificationItems(
-            onPress: () {},
-            title: position.isOdd
-                ? '50Off In Ultraboost All Terrain Ltd Shoes'
-                : 'check Out Quality Products From Global Star Suppliers',
-            imageView: AssetImage(
-                position.isOdd ? productImage : productImage),
-          ),
-        );
+      itemCount: 15,
+
+      itemBuilder: (context, position)
+
+
+      {
+        if (position == 14){
+          return SizedBox(height: MediaQuery.of(context).size.height*0.10);
+        }else{
+          return Container(
+            height: 80,
+            margin: EdgeInsets.all(14),
+            child: notificationItems(
+              onPress: () {},
+              title: position.isOdd
+                  ? '50Off In Ultra boost All Terrain Ltd Shoes'
+                  : 'check Out Quality Products From Global Star Suppliers',
+              imageView: AssetImage(
+                  position.isOdd ? productImage : productImage),
+            ),
+          );
+        }
+
       },
     ),
   );

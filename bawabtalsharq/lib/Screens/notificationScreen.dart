@@ -20,11 +20,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
       color: Color(0xfff8f8f8),
       child: SafeArea(
           bottom: false,
-
           child: Stack(
-
             children: [
-
               SingleChildScrollView(
                 physics: const BouncingScrollPhysics(
                     parent: AlwaysScrollableScrollPhysics()),
@@ -43,6 +40,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         ),
                       ),
                       notification(context, _mainScrollController),
+
                     ]),
               ),
 
