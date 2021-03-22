@@ -4,6 +4,7 @@ import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
+import 'package:bawabtalsharq/Utils/strings.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -28,11 +29,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.white,
-                    radius: 18,
-                    child: Image.asset(
-                      settings,
+                  GestureDetector(
+                    onTap: () {
+                      print('settings');
+                    },
+                    child: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      radius: 18,
+                      child: Image.asset(
+                        settings,
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -40,10 +46,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      showLanguagesDialog(context, 0);
+                      showLanguagesDialog(context);
                     },
-                    child: buildText('EN', 16,
-                        fontWeight: FontWeight.bold, color: defaultOrangeColor),
+                    child: buildText(
+                      'EN',
+                      16,
+                      fontWeight: FontWeight.bold,
+                      color: defaultOrangeColor,
+                    ),
                   ),
                 ],
               ),
@@ -60,7 +70,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
-                          image: AssetImage(bahaa_image), fit: BoxFit.fill),
+                        image: AssetImage(profile_image),
+                        fit: BoxFit.fill,
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -70,7 +82,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      buildText('Jessie Robert', 16,
+                      buildText('Bahaa Robert', 16,
                           fontWeight: FontWeight.w600),
                       SizedBox(
                         height: 2,
@@ -94,7 +106,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     onPressed: () {
                       print('Notification');
                     },
-                    text: 'Notifications',
+                    text: Strings().notifications(),
                     subText: '33 items',
                     icon: Icons.notifications_none,
                     colorIcon: Colors.blue[300],
@@ -103,7 +115,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     onPressed: () {
                       print('Saved');
                     },
-                    text: 'Saved',
+                    text: Strings().saved(),
                     subText: '33 items',
                     icon: Icons.bookmark_rounded,
                     colorIcon: Colors.deepOrange[300],
@@ -112,7 +124,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     onPressed: () {
                       print('Compares');
                     },
-                    text: 'Compares',
+                    text: Strings().compares(),
                     subText: '33 items',
                     icon: Icons.add_to_photos_rounded,
                     colorIcon: Colors.deepPurpleAccent,
@@ -121,7 +133,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     onPressed: () {
                       print('History');
                     },
-                    text: 'History',
+                    text: Strings().history(),
                     icon: Icons.av_timer_rounded,
                     colorIcon: Colors.green[400],
                   ),
@@ -159,14 +171,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
         SizedBox(
           height: 7,
         ),
-        buildText(text, 12),
-        buildText(subText, 11, color: Colors.grey[500]),
+        buildText(
+          text,
+          12,
+          fontWeight: FontWeight.w600,
+          fontFamily: semiBoldFontFamily,
+        ),
+        buildText(
+          subText,
+          11,
+          color: Color(0xFF303030),
+        ),
       ],
     );
   }
+
 //end bahaa
 
 //start asmaa
+
+  BoxDecoration boxDecorationBuilder() {
+    return BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(20),
+      boxShadow: [makeShadow()],
+    );
+  }
+
   Widget profileListBuilder(BuildContext context) {
     return Expanded(
       child: Container(
@@ -186,22 +217,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               Container(
                 margin: EdgeInsets.only(right: 15, left: 15),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [makeShadow()],
-                ),
+                decoration: boxDecorationBuilder(),
                 child: Column(
                   children: [
-                    profileItemBuilder(quotation, 'Request For Quotation', () {
-                      print('Quotation Pressed');
-                    }),
-                    profileItemBuilder(message, 'Message Center', () {
-                      print('Message Pressed');
-                    }),
-                    profileItemBuilder(user, 'New User Guide', () {
-                      print('User Guide Pressed');
-                    }),
+                    profileItemBuilder(
+                      quotation,
+                      'Request For Quotation',
+                      () {
+                        print('Quotation Pressed');
+                      },
+                    ),
+                    profileItemBuilder(
+                      message,
+                      'Message Center',
+                      () {
+                        print('Message Pressed');
+                      },
+                    ),
+                    profileItemBuilder(
+                      user,
+                      'New User Guide',
+                      () {
+                        print('User Guide Pressed');
+                      },
+                      drawDivider: false,
+                    ),
                   ],
                 ),
               ),
@@ -210,28 +250,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               Container(
                 margin: EdgeInsets.only(right: 15, left: 15),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color(0xFF727272).withOpacity(0.2),
-                        blurRadius: 6,
-                        offset: Offset(0, 2),
-                        spreadRadius: 0,
-                      )
-                    ]),
+                decoration: boxDecorationBuilder(),
                 child: Column(
                   children: [
-                    profileItemBuilder(quotation, 'Request For Quotation', () {
-                      print('Quotation Pressed');
-                    }),
-                    profileItemBuilder(message, 'Message Center', () {
-                      print('Message Pressed');
-                    }),
-                    profileItemBuilder(user, 'New User Guide', () {
-                      print('User guide Pressed');
-                    }),
+                    profileItemBuilder(
+                      quotation,
+                      'Request For Quotation',
+                      () {
+                        print('Quotation Pressed');
+                      },
+                    ),
+                    profileItemBuilder(
+                      message,
+                      'Message Center',
+                      () {
+                        print('Message Pressed');
+                      },
+                    ),
+                    profileItemBuilder(
+                      user,
+                      'New User Guide',
+                      () {
+                        print('User guide Pressed');
+                      },
+                      drawDivider: false,
+                    ),
                   ],
                 ),
               ),
@@ -240,23 +283,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               Container(
                 margin: EdgeInsets.only(right: 15, left: 15),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color(0xFF727272).withOpacity(0.2),
-                        blurRadius: 6,
-                        offset: Offset(0, 2),
-                        spreadRadius: 0,
-                      )
-                    ]),
-                child: profileItemBuilder(logout, 'Log out', () {
-                  print('Logout Pressed');
-                }),
-              ),
-              SizedBox(
-                height: 10,
+                decoration: boxDecorationBuilder(),
+                child: profileItemBuilder(
+                  logout,
+                  'Log out',
+                  () {
+                    print('Logout Pressed');
+                  },
+                  drawDivider: false,
+                ),
               ),
             ],
           ),
@@ -265,7 +300,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget profileItemBuilder(String image, String title, Function onPressed) {
+  Widget profileItemBuilder(String image, String title, Function onPressed,
+      {bool drawDivider = true}) {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
@@ -273,28 +309,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
           borderRadius: BorderRadius.circular(15),
         ),
         margin: EdgeInsets.all(15),
-        child: Row(
+        child: Column(
           children: [
-            Image.asset(
-              image,
-              width: 40,
-              height: 40,
+            Row(
+              children: [
+                Image.asset(
+                  image,
+                  width: 40,
+                  height: 40,
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                Expanded(
+                  child: buildText(title, 16.0,
+                      fontFamily: semiBoldFontFamily,
+                      fontWeight: FontWeight.w700),
+                ),
+                Icon(Icons.navigate_next),
+              ],
             ),
             SizedBox(
-              width: 20,
+              height: 10,
             ),
-            Expanded(
-              child: buildText(title, 16.0,
-                  fontFamily: semiBoldFontFamily, fontWeight: FontWeight.w700),
-            ),
-            Icon(Icons.navigate_next),
+            drawDivider
+                ? Divider(
+                    thickness: 2,
+                    height: 2,
+                  )
+                : SizedBox(
+                    height: 0,
+                  )
           ],
         ),
       ),
     );
   }
 
-  void showLanguagesDialog(BuildContext context, int selectedLanguage) {
+  void showLanguagesDialog(BuildContext context) {
+    int selectedLanguageIndex = 0;
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -304,7 +357,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 borderRadius: BorderRadius.circular(20), color: Colors.white),
             width: MediaQuery.of(context).size.width * 0.9,
             height: MediaQuery.of(context).size.height * 0.4,
-            child: ListView.builder(
+            child: ListView.separated(
               shrinkWrap: true,
               itemCount: languagesArr.length,
               itemBuilder: (context, index) {
@@ -324,18 +377,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             child: buildText(languagesArr[index], 15,
                                 fontFamily: mediumFontFamily,
                                 fontWeight: FontWeight.w600)),
-                        selectedLanguage == index
+                        selectedLanguageIndex == index
                             ? Image.asset(
                                 checkBox,
                                 width: 40,
                                 height: 40,
                               )
-                            : Text('')
+                            : Text(''),
+                        SizedBox(
+                          width: 10,
+                        ),
                       ],
                     ),
                   ),
                 );
               },
+              separatorBuilder: (BuildContext context, int index) => Padding(
+                padding: const EdgeInsets.only(right: 20, left: 20),
+                child: Divider(
+                  height: 2,
+                  thickness: 2,
+                ),
+              ),
             ),
           ),
         );

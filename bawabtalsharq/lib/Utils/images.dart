@@ -19,7 +19,7 @@ const String joinUs = 'assets/images/Join_us.png';
 const String personTest = 'assets/images/person_test.jpg';
 const String mosadaq_img = 'assets/images/mosadaq_img.jpg';
 const String kareem_img = 'assets/images/kareem_img.jpg';
-const String bahaa_image = 'assets/images/bahaa_im.png';
+
 // end karem
 
 // Start Asmaa
@@ -34,6 +34,8 @@ const String settings = 'assets/images/ic_settings.png';
 const String quotation = 'assets/images/ic_quotation.png';
 const String user = 'assets/images/ic_user.png';
 const String logout = 'assets/images/ic_logout.png';
+const String profile_image = 'assets/images/bahaa_im.png';
+
 // end Bahaa
 
 // Start Mosdik

@@ -194,7 +194,44 @@ class Strings {
 // end Asmaa
 
 // Start Bahaa
+  String saved() {
+    switch (Constants.languageId) {
+      case languages.Arabic:
+        return StringsAR.saved;
+        break;
+      case languages.Indian:
+        return StringsINR.saved;
+        break;
+      default:
+        return StringsEN.saved;
+    }
+  }
 
+  String compares() {
+    switch (Constants.languageId) {
+      case languages.Arabic:
+        return StringsAR.compares;
+        break;
+      case languages.Indian:
+        return StringsINR.compares;
+        break;
+      default:
+        return StringsEN.compares;
+    }
+  }
+
+  String history() {
+    switch (Constants.languageId) {
+      case languages.Arabic:
+        return StringsAR.history;
+        break;
+      case languages.Indian:
+        return StringsINR.history;
+        break;
+      default:
+        return StringsEN.history;
+    }
+  }
 // end Bahaa
 
 // Start Mosdik
