@@ -1,10 +1,10 @@
+import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
+import 'package:bawabtalsharq/Utils/strings.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:bawabtalsharq/Utils/constants.dart';
-import 'package:bawabtalsharq/Utils/strings.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -159,8 +159,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           onTap: onPressed,
           child: Container(
             padding: EdgeInsets.all(14),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10), color: Colors.white),
+            decoration: boxDecorationBuilder(20),
             child: Icon(
               icon,
               color: colorIcon,
@@ -190,10 +189,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
 //start asmaa
 
-  BoxDecoration boxDecorationBuilder() {
+  BoxDecoration boxDecorationBuilder(double radius) {
     return BoxDecoration(
       color: Colors.white,
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(radius),
       boxShadow: [makeShadow()],
     );
   }
@@ -217,7 +216,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               Container(
                 margin: EdgeInsets.only(right: 15, left: 15),
-                decoration: boxDecorationBuilder(),
+                decoration: boxDecorationBuilder(20),
                 child: Column(
                   children: [
                     profileItemBuilder(
@@ -250,7 +249,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               Container(
                 margin: EdgeInsets.only(right: 15, left: 15),
-                decoration: boxDecorationBuilder(),
+                decoration: boxDecorationBuilder(20),
                 child: Column(
                   children: [
                     profileItemBuilder(
@@ -282,8 +281,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 height: 20,
               ),
               Container(
-                margin: EdgeInsets.only(right: 15, left: 15),
-                decoration: boxDecorationBuilder(),
+                margin: EdgeInsets.only(right: 15, left: 15, bottom: 10),
+                decoration: boxDecorationBuilder(10),
                 child: profileItemBuilder(
                   logout,
                   'Log out',
@@ -308,7 +307,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
         ),
-        margin: EdgeInsets.all(15),
+        margin: EdgeInsets.only(top: 10, left: 15, right: 15),
         child: Column(
           children: [
             Row(
@@ -334,12 +333,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             drawDivider
                 ? Divider(
-                    thickness: 2,
-                    height: 2,
+                    thickness: 1,
+                    height: 1,
                   )
                 : SizedBox(
                     height: 0,
-                  )
+                  ),
           ],
         ),
       ),
@@ -356,7 +355,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20), color: Colors.white),
             width: MediaQuery.of(context).size.width * 0.9,
-            height: MediaQuery.of(context).size.height * 0.4,
             child: ListView.separated(
               shrinkWrap: true,
               itemCount: languagesArr.length,
@@ -395,8 +393,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               separatorBuilder: (BuildContext context, int index) => Padding(
                 padding: const EdgeInsets.only(right: 20, left: 20),
                 child: Divider(
-                  height: 2,
-                  thickness: 2,
+                  height: 1,
+                  thickness: 1,
                 ),
               ),
             ),
