@@ -219,6 +219,96 @@ class Strings {
 // end Moaaz
 
 // Start Islam
+  String signUp() {
+    switch (Constants.languageId) {
+      case languages.Arabic:
+        return StringsAR.signUp;
+        break;
+      case languages.Indian:
+        return StringsINR.signUp;
+        break;
+      default:
+        return StringsEN.signUp;
+    }
+  }
+
+  String logIn() {
+    switch (Constants.languageId) {
+      case languages.Arabic:
+        return StringsAR.login;
+        break;
+      case languages.Indian:
+        return StringsINR.login;
+        break;
+      default:
+        return StringsEN.login;
+    }
+  }
+
+  String userName() {
+    switch (Constants.languageId) {
+      case languages.Arabic:
+        return StringsAR.userName;
+        break;
+      case languages.Indian:
+        return StringsINR.userName;
+        break;
+      default:
+        return StringsEN.userName;
+    }
+  }
+
+  String password() {
+    switch (Constants.languageId) {
+      case languages.Arabic:
+        return StringsAR.password;
+        break;
+      case languages.Indian:
+        return StringsINR.password;
+        break;
+      default:
+        return StringsEN.password;
+    }
+  }
+
+  String forgetPassword() {
+    switch (Constants.languageId) {
+      case languages.Arabic:
+        return StringsAR.forgetPassword;
+        break;
+      case languages.Indian:
+        return StringsINR.forgetPassword;
+        break;
+      default:
+        return StringsEN.forgetPassword;
+    }
+  }
+
+  String alreadyHaveAnAccount() {
+    switch (Constants.languageId) {
+      case languages.Arabic:
+        return StringsAR.alreadyHaveAccount;
+        break;
+      case languages.Indian:
+        return StringsINR.alreadyHaveAccount;
+        break;
+      default:
+        return StringsEN.alreadyHaveAccount;
+    }
+  }
+
+  String signIn() {
+    switch (Constants.languageId) {
+      case languages.Arabic:
+        return StringsAR.signIn;
+        break;
+      case languages.Indian:
+        return StringsINR.signIn;
+        break;
+      default:
+        return StringsEN.signIn;
+    }
+  }
 
 // end Islam
 

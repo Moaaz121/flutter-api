@@ -37,6 +37,13 @@ class StringsINR {
 // end Moaaz
 
 // Start Islam
+  static const String signUp = 'SignUp';
+  static const String login = 'Login';
+  static const String userName = 'Username';
+  static const String password = 'Password';
+  static const String forgetPassword = 'Forget Password?';
+  static const String alreadyHaveAccount = 'Already have an account';
+  static const String signIn = 'SignIn';
 
 // end Islam
 }

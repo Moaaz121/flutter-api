@@ -8,7 +8,8 @@ const lightFontFamily = 'Roboto-Light';
 const mediumFontFamily = 'Roboto-Medium';
 const boldFontFamily = 'Roboto-Bold';
 const semiBoldFontFamily = 'Roboto-Medium';
-const HeavyBoldFontFamily = 'Roboto-HeavyBold';
+const heavyBoldFontFamily = 'Roboto-HeavyBold';
+const blackFontFamily = 'Roboto-Black';
 
 const defaultBackgroundColor = Color.fromRGBO(0, 81, 173, 1);
 const greyColor = Color.fromRGBO(122, 134, 154, 1);
@@ -58,29 +59,24 @@ const yellowColor = Color(0xffecff6a);
 const purpleColor = Color(0xff9080ff);
 const greenColor = Color(0xff4Ac367);
 
-TextStyle mainHeaderTitleStyle(){
+TextStyle mainHeaderTitleStyle() {
   return TextStyle(
-    fontFamily: 'Font-Regular',
-    fontSize: 11,
-    color: Colors.black54
-  );
+      fontFamily: 'Font-Regular', fontSize: 11, color: Colors.black54);
 }
 
-TextStyle titlesStyle(){
+TextStyle titlesStyle() {
   return TextStyle(
       fontFamily: 'Font-Regular',
       fontSize: 17,
       fontWeight: FontWeight.bold,
-      color: Colors.black
-  );
+      color: Colors.black);
 }
 
-TextStyle moreStyle(){
+TextStyle moreStyle() {
   return TextStyle(
       fontFamily: 'Font-Regular',
       fontSize: 12,
-      color: Colors.black.withOpacity(0.7)
-  );
+      color: Colors.black.withOpacity(0.7));
 }
 // end karem
 
