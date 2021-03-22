@@ -23,8 +23,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
           child: Stack(
             children: [
               SingleChildScrollView(
-                physics: const BouncingScrollPhysics(
-                    parent: AlwaysScrollableScrollPhysics()),
+                physics: BouncingScrollPhysics(
+                    parent: NeverScrollableScrollPhysics()),
                 child: Column(
 
                     crossAxisAlignment: CrossAxisAlignment.start,
