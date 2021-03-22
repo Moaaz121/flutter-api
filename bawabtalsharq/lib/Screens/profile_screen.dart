@@ -3,6 +3,7 @@ import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:bawabtalsharq/Utils/constants.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -90,24 +91,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   cardProfile(
+                    onPressed: () {
+                      print('Notification');
+                    },
                     text: 'Notifications',
                     subText: '33 items',
                     icon: Icons.notifications_none,
                     colorIcon: Colors.blue[300],
                   ),
                   cardProfile(
+                    onPressed: () {
+                      print('Saved');
+                    },
                     text: 'Saved',
                     subText: '33 items',
                     icon: Icons.bookmark_rounded,
                     colorIcon: Colors.deepOrange[300],
                   ),
                   cardProfile(
+                    onPressed: () {
+                      print('Compares');
+                    },
                     text: 'Compares',
                     subText: '33 items',
                     icon: Icons.add_to_photos_rounded,
                     colorIcon: Colors.deepPurpleAccent,
                   ),
                   cardProfile(
+                    onPressed: () {
+                      print('History');
+                    },
                     text: 'History',
                     icon: Icons.av_timer_rounded,
                     colorIcon: Colors.green[400],
@@ -123,17 +136,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Column cardProfile(
-      {IconData icon, Color colorIcon, String text, String subText = ''}) {
+      {Function onPressed,
+      IconData icon,
+      Color colorIcon,
+      String text,
+      String subText = ''}) {
     return Column(
       children: [
-        Container(
-          padding: EdgeInsets.all(14),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10), color: Colors.white),
-          child: Icon(
-            icon,
-            color: colorIcon,
-            size: 36,
+        GestureDetector(
+          onTap: onPressed,
+          child: Container(
+            padding: EdgeInsets.all(14),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10), color: Colors.white),
+            child: Icon(
+              icon,
+              color: colorIcon,
+              size: 36,
+            ),
           ),
         ),
         SizedBox(
@@ -167,22 +187,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Container(
                 margin: EdgeInsets.only(right: 15, left: 15),
                 decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color(0xFF727272).withOpacity(0.2),
-                        blurRadius: 6,
-                        offset: Offset(0, 2),
-                        spreadRadius: 0,
-                      )
-                    ]),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [makeShadow()],
+                ),
                 child: Column(
                   children: [
-                    profileItemBuilder(
-                        quotation, 'Request For Quotation', () {}),
-                    profileItemBuilder(message, 'Message Center', () {}),
-                    profileItemBuilder(user, 'New User Guide', () {}),
+                    profileItemBuilder(quotation, 'Request For Quotation', () {
+                      print('Quotation Pressed');
+                    }),
+                    profileItemBuilder(message, 'Message Center', () {
+                      print('Message Pressed');
+                    }),
+                    profileItemBuilder(user, 'New User Guide', () {
+                      print('User Guide Pressed');
+                    }),
                   ],
                 ),
               ),
@@ -204,10 +223,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ]),
                 child: Column(
                   children: [
-                    profileItemBuilder(
-                        quotation, 'Request For Quotation', () {}),
-                    profileItemBuilder(message, 'Message Center', () {}),
-                    profileItemBuilder(user, 'New User Guide', () {}),
+                    profileItemBuilder(quotation, 'Request For Quotation', () {
+                      print('Quotation Pressed');
+                    }),
+                    profileItemBuilder(message, 'Message Center', () {
+                      print('Message Pressed');
+                    }),
+                    profileItemBuilder(user, 'New User Guide', () {
+                      print('User guide Pressed');
+                    }),
                   ],
                 ),
               ),
@@ -227,7 +251,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         spreadRadius: 0,
                       )
                     ]),
-                child: profileItemBuilder(logout, 'Log out', () {}),
+                child: profileItemBuilder(logout, 'Log out', () {
+                  print('Logout Pressed');
+                }),
               ),
               SizedBox(
                 height: 10,
@@ -279,28 +305,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
             width: MediaQuery.of(context).size.width * 0.9,
             height: MediaQuery.of(context).size.height * 0.4,
             child: ListView.builder(
-              itemCount: 15,
+              shrinkWrap: true,
+              itemCount: languagesArr.length,
               itemBuilder: (context, index) {
-                return Container(
-                  height: 60,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Expanded(
-                          child: buildText('English', 15,
-                              fontFamily: mediumFontFamily,
-                              fontWeight: FontWeight.w700)),
-                      selectedLanguage == index
-                          ? Image.asset(
-                              checkBox,
-                              width: 40,
-                              height: 40,
-                            )
-                          : Text('')
-                    ],
+                return GestureDetector(
+                  onTap: () {
+                    print(languagesArr[index]);
+                  },
+                  child: Container(
+                    height: 60,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Expanded(
+                            child: buildText(languagesArr[index], 15,
+                                fontFamily: mediumFontFamily,
+                                fontWeight: FontWeight.w600)),
+                        selectedLanguage == index
+                            ? Image.asset(
+                                checkBox,
+                                width: 40,
+                                height: 40,
+                              )
+                            : Text('')
+                      ],
+                    ),
                   ),
                 );
               },

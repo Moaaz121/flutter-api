@@ -78,6 +78,7 @@ class Constants {
 // end Asmaa
 
 // Start Bahaa
+List<String> languagesArr = ['English', 'العربية', 'indian'];
 
 // end Bahaa
 
