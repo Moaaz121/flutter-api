@@ -16,13 +16,11 @@ class _MainScreenState extends State<MainScreen> {
   int currentPage = 0;
   PageController controller = PageController(initialPage: 0, keepPage: true);
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
       bottomNavigationBar: bottomAppBar((int position){
-
         controller.animateToPage(position, duration: Duration(milliseconds: 200), curve: Curves.linear);
 
       },controller,currentPage),
@@ -40,7 +38,6 @@ class _MainScreenState extends State<MainScreen> {
             });
           },
         ),
-
     );
   }
 }
