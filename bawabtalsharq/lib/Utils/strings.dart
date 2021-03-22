@@ -175,6 +175,19 @@ class Strings {
     }
   }
 
+  String requestForQutation() {
+    switch (Constants.languageId) {
+      case languages.Arabic:
+        return StringsAR.requestForQutation;
+        break;
+      case languages.Indian:
+        return StringsINR.requestForQutation;
+        break;
+      default:
+        return StringsEN.requestForQutation;
+    }
+  }
+
 // end karem
 
 // Start Asmaa
@@ -212,6 +225,19 @@ class Strings {
     }
   }
 
+
+  String postSourcingRequestNow() {
+    switch (Constants.languageId) {
+      case languages.Arabic:
+        return StringsAR.postSourcingRequestNow;
+        break;
+      case languages.Indian:
+        return StringsINR.postSourcingRequestNow;
+        break;
+      default:
+        return StringsEN.postSourcingRequestNow;
+    }
+  }
 // end Mosdik
 
 // Start Moaaz
