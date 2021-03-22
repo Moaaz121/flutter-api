@@ -31,7 +31,9 @@ const String checkBox = 'assets/images/checkBox.png';
 
 // Start Bahaa
 const String settings = 'assets/images/ic_settings.png';
-
+const String quotation = 'assets/images/ic_quotation.png';
+const String user = 'assets/images/ic_user.png';
+const String logout = 'assets/images/ic_logout.png';
 // end Bahaa
 
 // Start Mosdik

@@ -144,8 +144,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ],
     );
   }
-// start bahaa
-
 //end bahaa
 
 //start asmaa
@@ -181,9 +179,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ]),
                 child: Column(
                   children: [
+                    profileItemBuilder(
+                        quotation, 'Request For Quotation', () {}),
                     profileItemBuilder(message, 'Message Center', () {}),
-                    profileItemBuilder(message, 'Message Center', () {}),
-                    profileItemBuilder(message, 'Message Center', () {}),
+                    profileItemBuilder(user, 'New User Guide', () {}),
                   ],
                 ),
               ),
@@ -205,9 +204,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ]),
                 child: Column(
                   children: [
+                    profileItemBuilder(
+                        quotation, 'Request For Quotation', () {}),
                     profileItemBuilder(message, 'Message Center', () {}),
-                    profileItemBuilder(message, 'Message Center', () {}),
-                    profileItemBuilder(message, 'Message Center', () {}),
+                    profileItemBuilder(user, 'New User Guide', () {}),
                   ],
                 ),
               ),
@@ -227,7 +227,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         spreadRadius: 0,
                       )
                     ]),
-                child: profileItemBuilder(message, 'Log out', () {}),
+                child: profileItemBuilder(logout, 'Log out', () {}),
               ),
               SizedBox(
                 height: 10,
@@ -279,7 +279,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             width: MediaQuery.of(context).size.width * 0.9,
             height: MediaQuery.of(context).size.height * 0.4,
             child: ListView.builder(
-              itemCount: 5,
+              itemCount: 15,
               itemBuilder: (context, index) {
                 return Container(
                   height: 60,
