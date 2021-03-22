@@ -1394,18 +1394,13 @@ return
 
     height: MediaQuery.of(context).size.height,
     child: ListView.builder(
-
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height*0.23),
       controller: controller,
       scrollDirection: Axis.vertical,
       itemCount: 15,
-
       itemBuilder: (context, position)
-
-
       {
-        if (position == 14){
-          return SizedBox(height: MediaQuery.of(context).size.height*0.10);
-        }else{
+
           return Container(
             height: 80,
             margin: EdgeInsets.all(14),
@@ -1418,7 +1413,7 @@ return
                   position.isOdd ? productImage : productImage),
             ),
           );
-        }
+
 
       },
     ),
