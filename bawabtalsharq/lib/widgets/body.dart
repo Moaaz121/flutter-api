@@ -89,7 +89,7 @@ class _BodyState extends State<Body> {
                       ],
                     ),
                     Positioned(
-                      top: MediaQuery.of(context).size.height * 0.5 + 20,
+                      top: MediaQuery.of(context).size.height * 0.62 + 35,
                       child: Container(
                         alignment: Alignment.center,
                         child: AnimatedSmoothIndicator(
@@ -162,9 +162,6 @@ class _BodyState extends State<Body> {
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height * 0.5,
           ),
-          SizedBox(
-            height: 30,
-          ),
           Container(
             margin: EdgeInsets.only(top: 20),
             child: Text(
@@ -203,9 +200,6 @@ class _BodyState extends State<Body> {
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height * 0.5,
           ),
-          SizedBox(
-            height: 30,
-          ),
           Container(
             margin: EdgeInsets.only(top: 20),
             child: Text(
@@ -243,9 +237,6 @@ class _BodyState extends State<Body> {
             fit: BoxFit.fill,
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height * 0.5,
-          ),
-          SizedBox(
-            height: 30,
           ),
           Container(
             margin: EdgeInsets.only(top: 20),
