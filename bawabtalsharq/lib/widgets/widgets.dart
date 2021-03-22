@@ -273,7 +273,7 @@ showLoadingDialog(BuildContext context) async {
 Widget bottomAppBar(Function(int x) _selectionFunction,
     PageController controller, int currentPage) {
   return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
+    padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 25),
     child: ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(20)),
       child: BottomNavigationBar(
@@ -311,7 +311,9 @@ Widget bottomAppBar(Function(int x) _selectionFunction,
               ),
               title: Padding(
                 padding: const EdgeInsets.only(top: 7),
-                child: Text(Strings().notifications()),
+                child: Text(Strings().notifications(),style: TextStyle(
+                  fontSize: 10
+                ),),
               )),
           BottomNavigationBarItem(
               icon: Image.asset(
