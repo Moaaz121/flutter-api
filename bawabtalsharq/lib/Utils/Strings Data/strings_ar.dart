@@ -37,6 +37,13 @@ class StringsAR {
 // end Moaaz
 
 // Start Islam
+  static const String signUp = 'اشتراك';
+  static const String login = 'تسجيل الدخول';
+  static const String userName = 'اسم المستخدم';
+  static const String password = 'كلمه المرور';
+  static const String forgetPassword = 'هل نسيت كلمه السر';
+  static const String alreadyHaveAccount = 'هل لديك حساب بالفعل';
+  static const String signIn = 'تسجيل الدخول';
 
 // end Islam
 
