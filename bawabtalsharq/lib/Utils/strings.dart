@@ -216,9 +216,190 @@ class Strings {
 
 // Start Moaaz
 
+  String intro1Title() {
+    switch (Constants.languageId) {
+      case languages.Arabic:
+        return StringsAR.intro1Title;
+        break;
+      case languages.Indian:
+        return StringsINR.intro1Title;
+        break;
+      default:
+        return StringsEN.intro1Title;
+    }
+  }
+
+  String intro1SubTitle() {
+    switch (Constants.languageId) {
+      case languages.Arabic:
+        return StringsAR.intro1SubTitle;
+        break;
+      case languages.Indian:
+        return StringsINR.intro1SubTitle;
+        break;
+      default:
+        return StringsEN.intro1SubTitle;
+    }
+  }
+
+  String intro2Title() {
+    switch (Constants.languageId) {
+      case languages.Arabic:
+        return StringsAR.intro2Title;
+        break;
+      case languages.Indian:
+        return StringsINR.intro2Title;
+        break;
+      default:
+        return StringsEN.intro2Title;
+    }
+  }
+
+  String intro2SubTitle() {
+    switch (Constants.languageId) {
+      case languages.Arabic:
+        return StringsAR.intro2SubTitle;
+        break;
+      case languages.Indian:
+        return StringsINR.intro2SubTitle;
+        break;
+      default:
+        return StringsEN.intro2SubTitle;
+    }
+  }
+
+  String intro3Title() {
+    switch (Constants.languageId) {
+      case languages.Arabic:
+        return StringsAR.intro3Title;
+        break;
+      case languages.Indian:
+        return StringsINR.intro3Title;
+        break;
+      default:
+        return StringsEN.intro3Title;
+    }
+  }
+
+  String intro3SubTitle() {
+    switch (Constants.languageId) {
+      case languages.Arabic:
+        return StringsAR.intro3SubTitle;
+        break;
+      case languages.Indian:
+        return StringsINR.intro3SubTitle;
+        break;
+      default:
+        return StringsEN.intro3SubTitle;
+    }
+  }
+
+  String next() {
+    switch (Constants.languageId) {
+      case languages.Arabic:
+        return StringsAR.next;
+        break;
+      case languages.Indian:
+        return StringsINR.next;
+        break;
+      default:
+        return StringsEN.next;
+    }
+  }
+
 // end Moaaz
 
 // Start Islam
+  String signUp() {
+    switch (Constants.languageId) {
+      case languages.Arabic:
+        return StringsAR.signUp;
+        break;
+      case languages.Indian:
+        return StringsINR.signUp;
+        break;
+      default:
+        return StringsEN.signUp;
+    }
+  }
+
+  String logIn() {
+    switch (Constants.languageId) {
+      case languages.Arabic:
+        return StringsAR.login;
+        break;
+      case languages.Indian:
+        return StringsINR.login;
+        break;
+      default:
+        return StringsEN.login;
+    }
+  }
+
+  String userName() {
+    switch (Constants.languageId) {
+      case languages.Arabic:
+        return StringsAR.userName;
+        break;
+      case languages.Indian:
+        return StringsINR.userName;
+        break;
+      default:
+        return StringsEN.userName;
+    }
+  }
+
+  String password() {
+    switch (Constants.languageId) {
+      case languages.Arabic:
+        return StringsAR.password;
+        break;
+      case languages.Indian:
+        return StringsINR.password;
+        break;
+      default:
+        return StringsEN.password;
+    }
+  }
+
+  String forgetPassword() {
+    switch (Constants.languageId) {
+      case languages.Arabic:
+        return StringsAR.forgetPassword;
+        break;
+      case languages.Indian:
+        return StringsINR.forgetPassword;
+        break;
+      default:
+        return StringsEN.forgetPassword;
+    }
+  }
+
+  String alreadyHaveAnAccount() {
+    switch (Constants.languageId) {
+      case languages.Arabic:
+        return StringsAR.alreadyHaveAccount;
+        break;
+      case languages.Indian:
+        return StringsINR.alreadyHaveAccount;
+        break;
+      default:
+        return StringsEN.alreadyHaveAccount;
+    }
+  }
+
+  String signIn() {
+    switch (Constants.languageId) {
+      case languages.Arabic:
+        return StringsAR.signIn;
+        break;
+      case languages.Indian:
+        return StringsINR.signIn;
+        break;
+      default:
+        return StringsEN.signIn;
+    }
+  }
 
 // end Islam
 

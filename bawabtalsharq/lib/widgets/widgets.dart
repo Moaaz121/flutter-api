@@ -807,6 +807,15 @@ Text buildText(String text, double fontSize,
     ),
   );
 }
+
+BoxShadow makeShadow() {
+  return BoxShadow(
+    color: Color(0xFF727272).withOpacity(0.2),
+    blurRadius: 6,
+    offset: Offset(0, 2),
+    spreadRadius: 0,
+  );
+}
 // end Asmaa
 
 // Start Bahaa
@@ -1418,5 +1427,25 @@ Widget mostPopularCateg(
 // end Moaaz
 
 // Start Islam
+TextField customTextField(
+    {String label, IconData rightIcon, IconData leftIcon}) {
+  return TextField(
+    decoration: InputDecoration(
+        //hintText: 'username',
+        prefixIcon: Icon(
+          leftIcon,
+          color: Colors.grey,
+        ),
+        suffixIcon: Icon(
+          rightIcon,
+          color: Colors.grey,
+        ),
+        labelText: label,
+        labelStyle: TextStyle(
+            fontFamily: 'Roboto-Thin.ttf', fontWeight: FontWeight.w200),
+        focusedBorder:
+            UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey))),
+  );
+}
 
 // end Islam
