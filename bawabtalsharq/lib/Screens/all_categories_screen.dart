@@ -33,7 +33,6 @@ class _AllCategoriesState extends State<AllCategories>
     categoriesArr.forEach((element) {
       element.isSelected = false;
     }); // to do remove after add api
-    _sliderController.dispose();
     super.dispose();
   }
 
