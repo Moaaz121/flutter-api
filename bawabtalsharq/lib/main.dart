@@ -3,6 +3,7 @@ import 'package:bawabtalsharq/Screens/feature_screen.dart';
 import 'package:bawabtalsharq/Screens/home_screen.dart';
 import 'package:bawabtalsharq/Screens/intro_screen.dart';
 import 'package:bawabtalsharq/Screens/login_screen.dart';
+import 'package:bawabtalsharq/Screens/settings_screen.dart';
 import 'package:bawabtalsharq/Screens/splash_screen.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
@@ -42,19 +43,21 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.profileScreen: (_) => ProfileScreen(),
         ScreenRoutes.featureScreen: (_) => FeatureScreen(),
         ScreenRoutes.categoriesScreen: (_) => AllCategories(),
+        ScreenRoutes.settingsScreen: (_) => SettingsScreen()
       },
     );
   }
 }
 
 class ScreenRoutes {
-  static const String splashScreen = '/SplashScreen';
-  static const String introScreen = '/IntroScreen';
-  static const String loginScreen = '/LoginScreen';
-  static const String homeScreen = '/HomeScreen';
-  static const String mainScreen = '/MainScreen';
-  static const String notificationScreen = '/NotificationScreen';
-  static const String profileScreen = '/ProfileScreen';
-  static const String featureScreen = '/FeatureScreen';
-  static const String categoriesScreen = '/AllCategories';
+  static const String splashScreen = '/splashScreen';
+  static const String introScreen = '/introScreen';
+  static const String loginScreen = '/loginScreen';
+  static const String homeScreen = '/homeScreen';
+  static const String mainScreen = '/mainScreen';
+  static const String notificationScreen = '/notificationScreen';
+  static const String profileScreen = '/profileScreen';
+  static const String featureScreen = '/featureScreen';
+  static const String categoriesScreen = '/allCategories';
+  static const String settingsScreen = '/settingsScreen';
 }

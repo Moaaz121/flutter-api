@@ -2,6 +2,7 @@ import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/strings.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      print('settings');
+                      Navigator.pushNamed(context, ScreenRoutes.settingsScreen);
                     },
                     child: CircleAvatar(
                       backgroundColor: Colors.white,
