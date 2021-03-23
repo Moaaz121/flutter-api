@@ -41,7 +41,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
               ),
               Positioned(
                 right: 20,
-                bottom: 110,
+                bottom: 130,
                 child: buildFloatingActionBtn(
                   icon: Icons.arrow_upward,
                   onPressed: () {

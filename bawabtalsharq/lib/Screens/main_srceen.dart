@@ -19,13 +19,15 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       top: false,
+      bottom: false,
       child: Scaffold(
         extendBody: true,
         bottomNavigationBar: bottomAppBar((int position) {
           controller.animateToPage(position,
-              duration: Duration(milliseconds: 200), curve: Curves.linear);
+              duration: Duration(milliseconds: 1), curve: Curves.linear);
         }, controller, currentPage, context),
         body: PageView(
+          physics: NeverScrollableScrollPhysics(),
           controller: controller,
           children: [
             HomeScreen(),
