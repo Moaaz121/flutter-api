@@ -11,11 +11,9 @@ class Setting extends StatefulWidget {
 class _SettingState extends State<Setting> {
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: appBarBuilder(
-        actions: [Container()],
-        title: ' Setting',
+        title: ' Settings',
         onBackPressed: () {
           Navigator.pop(context);
         },
@@ -30,14 +28,8 @@ class _SettingState extends State<Setting> {
                 Padding(
                   padding: const EdgeInsets.only(left: 20),
                   child: Text(
-                    'Request For Qutataion', //first
-                    style: TextStyle(
-                      fontFamily: semiBoldFontFamily,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
-                      fontSize: MediaQuery.of(context).textScaleFactor * 16,
-                    ),
-                    //fontWeight: FontWeight.w700),
+                    'Request For Quotation',
+                    style: buildTextStyle(context),
                   ),
                 ),
                 Padding(
@@ -64,13 +56,8 @@ class _SettingState extends State<Setting> {
                     top: 40,
                   ),
                   child: Text(
-                    'Request For Qutation', //second text
-                    style: TextStyle(
-                      fontFamily: semiBoldFontFamily,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
-                      fontSize: MediaQuery.of(context).textScaleFactor * 16,
-                    ),
+                    'Request For Quotation', //second text
+                    style: buildTextStyle(context),
                   ),
                 ),
                 Padding(
@@ -89,13 +76,8 @@ class _SettingState extends State<Setting> {
                 Padding(
                   padding: const EdgeInsets.only(left: 20, top: 40),
                   child: Text(
-                    'Request For Qutation', // last text
-                    style: TextStyle(
-                      fontFamily: semiBoldFontFamily,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
-                      fontSize: MediaQuery.of(context).textScaleFactor * 16,
-                    ),
+                    'Request For Quotation',
+                    style: buildTextStyle(context),
                   ),
                 ),
                 Padding(
@@ -116,6 +98,15 @@ class _SettingState extends State<Setting> {
           ),
         ),
       ),
+    );
+  }
+
+  TextStyle buildTextStyle(BuildContext context) {
+    return TextStyle(
+      fontFamily: semiBoldFontFamily,
+      fontWeight: FontWeight.w600,
+      color: Colors.black,
+      fontSize: MediaQuery.of(context).textScaleFactor * 16,
     );
   }
 
