@@ -275,7 +275,7 @@ Widget bottomAppBar(Function(int x) _selectionFunction,
 {
   return SafeArea(
     child: Padding(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(20)),
         child: BottomNavigationBar(
