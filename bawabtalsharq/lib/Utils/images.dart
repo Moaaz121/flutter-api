@@ -19,14 +19,22 @@ const String joinUs = 'assets/images/Join_us.png';
 const String personTest = 'assets/images/person_test.jpg';
 const String mosadaq_img = 'assets/images/mosadaq_img.jpg';
 const String kareem_img = 'assets/images/kareem_img.jpg';
+
 // end karem
 
 // Start Asmaa
 const String cold_drinks = 'assets/images/cold_drinks.png';
+const String message = 'assets/images/message.png';
+const String checkBox = 'assets/images/checkBox.png';
 
 // end Asmaa
 
 // Start Bahaa
+const String settings = 'assets/images/ic_settings.png';
+const String quotation = 'assets/images/ic_quotation.png';
+const String user = 'assets/images/ic_user.png';
+const String logout = 'assets/images/ic_logout.png';
+const String profile_image = 'assets/images/bahaa_im.png';
 
 // end Bahaa
 

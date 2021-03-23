@@ -559,6 +559,7 @@ Text buildText(String text, double fontSize,
     text,
     textAlign: textAlign,
     style: TextStyle(
+      decoration: TextDecoration.none,
       fontFamily: fontFamily,
       fontSize: fontSize,
       fontWeight: fontWeight,

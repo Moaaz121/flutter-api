@@ -24,7 +24,9 @@ class StringsINR {
 // end Asmaa
 
 // Start Bahaa
-
+  static const String saved = 'Saved';
+  static const String compares = 'Compares';
+  static const String history = 'History';
 // end Bahaa
 
 // Start Mosdik
