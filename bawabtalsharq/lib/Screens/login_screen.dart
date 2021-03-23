@@ -118,7 +118,8 @@ class LoginScreen extends StatelessWidget {
                       ),
                       onPressed: () {
                         // TO DO check login
-                        Navigator.pushNamed(context, ScreenRoutes.mainScreen);
+                        Navigator.pushReplacementNamed(
+                            context, ScreenRoutes.mainScreen);
                       },
                       color: Colors.white,
                       child: Text(

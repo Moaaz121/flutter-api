@@ -68,6 +68,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           return Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
+              boxShadow: [makeShadow()],
               color: Colors.white,
             ),
             margin: EdgeInsets.only(top: 10, right: 14, left: 14, bottom: 10),

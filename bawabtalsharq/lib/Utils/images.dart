@@ -26,6 +26,8 @@ const String kareem_img = 'assets/images/kareem_img.jpg';
 const String cold_drinks = 'assets/images/cold_drinks.png';
 const String message = 'assets/images/message.png';
 const String checkBox = 'assets/images/checkBox.png';
+const String splashImage = 'assets/images/Splash.png';
+const String companyName = 'assets/images/company_name.png';
 
 // end Asmaa
 

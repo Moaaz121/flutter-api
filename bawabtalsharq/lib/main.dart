@@ -1,6 +1,7 @@
 import 'package:bawabtalsharq/Screens/all_categories_screen.dart';
 import 'package:bawabtalsharq/Screens/feature_screen.dart';
 import 'package:bawabtalsharq/Screens/home_screen.dart';
+import 'package:bawabtalsharq/Screens/intro_screen.dart';
 import 'package:bawabtalsharq/Screens/login_screen.dart';
 import 'package:bawabtalsharq/Screens/splash_screen.dart';
 import 'package:device_preview/device_preview.dart';
@@ -33,6 +34,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
       home: SplashScreen(),
       routes: {
         ScreenRoutes.splashScreen: (_) => SplashScreen(),
+        ScreenRoutes.introScreen: (_) => IntroScreen(),
         ScreenRoutes.loginScreen: (_) => LoginScreen(),
         ScreenRoutes.homeScreen: (_) => HomeScreen(),
         ScreenRoutes.mainScreen: (_) => MainScreen(),
@@ -47,6 +49,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
 
 class ScreenRoutes {
   static const String splashScreen = '/SplashScreen';
+  static const String introScreen = '/IntroScreen';
   static const String loginScreen = '/LoginScreen';
   static const String homeScreen = '/HomeScreen';
   static const String mainScreen = '/MainScreen';
