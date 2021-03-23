@@ -16,6 +16,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       top: false,
+      bottom: false,
       child: Scaffold(
         backgroundColor: defaultOrangeColor.withOpacity(0.15),
         body: Column(
@@ -209,6 +210,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           color: Colors.white,
         ),
         child: SingleChildScrollView(
+          padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).size.height * 0.13),
           child: Column(
             children: [
               SizedBox(
