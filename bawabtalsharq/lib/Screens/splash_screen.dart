@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/size_config.dart';
 import 'package:bawabtalsharq/Utils/strings.dart';
+import 'package:bawabtalsharq/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -133,7 +134,8 @@ class _SplashScreenState extends State<SplashScreen> {
                                   imageIndex < 2
                                       ? _pageController
                                           .jumpToPage(imageIndex + 1)
-                                      : print('login');
+                                      : Navigator.pushNamed(
+                                          context, ScreenRoutes.loginScreen);
                                 },
                                 child: Text(
                                   Strings().next(),

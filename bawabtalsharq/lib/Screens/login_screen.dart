@@ -1,6 +1,7 @@
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/strings.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -115,7 +116,10 @@ class LoginScreen extends StatelessWidget {
                         ),
                         borderRadius: BorderRadius.circular(9),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        // TO DO check login
+                        Navigator.pushNamed(context, ScreenRoutes.mainScreen);
+                      },
                       color: Colors.white,
                       child: Text(
                         Strings().signIn(),
