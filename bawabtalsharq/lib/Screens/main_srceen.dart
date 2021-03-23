@@ -24,7 +24,7 @@ class _MainScreenState extends State<MainScreen> {
         bottomNavigationBar: bottomAppBar((int position) {
           controller.animateToPage(position,
               duration: Duration(milliseconds: 200), curve: Curves.linear);
-        }, controller, currentPage),
+        }, controller, currentPage, context),
         body: PageView(
           controller: controller,
           children: [

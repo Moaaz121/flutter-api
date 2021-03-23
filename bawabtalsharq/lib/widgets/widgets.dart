@@ -271,7 +271,8 @@ showLoadingDialog(BuildContext context) async {
 
 // Start Karem
 Widget bottomAppBar(Function(int x) _selectionFunction,
-    PageController controller, int currentPage) {
+    PageController controller, int currentPage, BuildContext context)
+{
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 25),
     child: ClipRRect(
@@ -290,7 +291,11 @@ Widget bottomAppBar(Function(int x) _selectionFunction,
                 width: 30, height: 30),
             title: Padding(
               padding: const EdgeInsets.only(top: 7),
-              child: Text(Strings().home()),
+              child: Text(Strings().home(),
+                style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.height * 0.014,
+                ),
+              ),
             ),
           ),
           BottomNavigationBarItem(
@@ -301,7 +306,11 @@ Widget bottomAppBar(Function(int x) _selectionFunction,
               ),
               title: Padding(
                 padding: const EdgeInsets.only(top: 7),
-                child: Text(Strings().feature()),
+                child: Text(Strings().feature(),
+                  style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.height * 0.014,
+                  ),
+                ),
               )),
           BottomNavigationBarItem(
               icon: Image.asset(
@@ -311,9 +320,11 @@ Widget bottomAppBar(Function(int x) _selectionFunction,
               ),
               title: Padding(
                 padding: const EdgeInsets.only(top: 7),
-                child: Text(Strings().notifications(),style: TextStyle(
-                  fontSize: 10
-                ),),
+                child: Text(Strings().notifications(),
+                  style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.height * 0.014,
+                ),
+                ),
               )),
           BottomNavigationBarItem(
               icon: Image.asset(
@@ -323,7 +334,11 @@ Widget bottomAppBar(Function(int x) _selectionFunction,
               ),
               title: Padding(
                 padding: const EdgeInsets.only(top: 7),
-                child: Text(Strings().myAccount()),
+                child: Text(Strings().myAccount(),
+                  style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.height * 0.014,
+                  ),
+                ),
               )),
         ],
         onTap: _selectionFunction,
@@ -649,8 +664,6 @@ Widget mostPopularIn(BuildContext context) {
                 onPress: () {},
                 nameProduct: 'Pasta',
                 nameCategory: 'Food',
-                iconAdd: AssetImage(productIcon1),
-                iconFavo: AssetImage(productIcon2),
                 price: '\$\265.0',
                 context: context),
           ],
@@ -672,8 +685,6 @@ Widget popularSlider(BuildContext context, int pos) {
             onPress: () {},
             nameProduct: 'Pasta',
             nameCategory: 'Food',
-            iconAdd: AssetImage(productIcon1),
-            iconFavo: AssetImage(productIcon2),
             price: '\$\590.0',
             context: context),
         subMostPopularProduct(
@@ -684,8 +695,6 @@ Widget popularSlider(BuildContext context, int pos) {
             onPress: () {},
             nameProduct: 'Pasta',
             nameCategory: 'Food',
-            iconAdd: AssetImage(productIcon1),
-            iconFavo: AssetImage(productIcon2),
             price: '\$\125.0',
             context: context),
       ],
@@ -837,6 +846,27 @@ Widget mostPopularByCategoryHeader(BuildContext context) {
     ),
   );
 }
+
+Widget listOfCateWidget() {
+  return ListView.builder(
+    physics: NeverScrollableScrollPhysics(),
+    reverse: false,
+    scrollDirection: Axis.vertical,
+    shrinkWrap: true,
+    itemCount: 5,
+    itemBuilder: (context, position) {
+      return SizedBox(
+        width: MediaQuery.of(context).size.width / 3 - 5,
+        child: mostPopularByCategoryStable(context)
+      );
+    },
+  );
+}
+
+
+
+
+
 
 Widget mostPopularByCategoryStable(BuildContext context) {
   return Column(
@@ -1033,8 +1063,6 @@ Widget mainMostPopularProduct(
     {Function onPress,
     Color backgroundColor,
     AssetImage productImg,
-    AssetImage iconAdd,
-    AssetImage iconFavo,
     String nameProduct,
     String nameCategory,
     String price,
@@ -1070,16 +1098,10 @@ Widget mainMostPopularProduct(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Image(
-                      image: iconAdd,
-                      width: 20.0,
-                      height: 20.0,
-                    ),
-                    Image(
-                      image: iconFavo,
-                      width: 20.0,
-                      height: 20.0,
-                    ),
+                    Icon(Icons.add_to_photos, size: MediaQuery.of(context).size.height * 0.020,
+                      color: Colors.black54),
+                    Icon(Icons.bookmark_border, size: MediaQuery.of(context).size.height * 0.020,
+                color: Colors.black54,)
                   ],
                 ),
               ),
@@ -1133,8 +1155,6 @@ Widget subMostPopularProduct(
     {Function onPress,
     Color backgroundColor,
     AssetImage productImg,
-    AssetImage iconAdd,
-    AssetImage iconFavo,
     String nameProduct,
     String nameCategory,
     String price,
@@ -1168,7 +1188,7 @@ Widget subMostPopularProduct(
                 children: [
                   Icon(
                     Icons.add_to_photos_rounded,
-                    size: MediaQuery.of(context).size.width * 0.045,
+                    size: MediaQuery.of(context).size.height * 0.020,
                     color: Colors.black54,
                   ),
                   SizedBox(
@@ -1176,7 +1196,7 @@ Widget subMostPopularProduct(
                   ),
                   Icon(
                     Icons.bookmark_border_rounded,
-                    size: MediaQuery.of(context).size.width * 0.045,
+                    size: MediaQuery.of(context).size.height * 0.020,
                     color: Colors.black54,
                   )
                 ],
@@ -1350,7 +1370,7 @@ Widget mostPopularCateg(
                           color: Colors.black),
                     ),
                     SizedBox(
-                      height: 9.0,
+                      height: 5,
                     ),
                     Row(
                       children: [
@@ -1367,18 +1387,20 @@ Widget mostPopularCateg(
                           ),
                         ),
                         SizedBox(
-                          width: 3,
+                          width: 1.1*MediaQuery.of(context).size.width * 0.020,
                         ),
                         Icon(
                           Icons.add_to_photos,
-                          size: 14,
+                           size: MediaQuery.of(context).size.height * 0.020,
+  color: Colors.black54,
                         ),
                         SizedBox(
                           width: 3,
                         ),
                         Icon(
                           Icons.bookmark_border,
-                          size: 14,
+                          size: MediaQuery.of(context).size.height * 0.020,
+                          color: Colors.black54,
                         ),
                       ],
                     )

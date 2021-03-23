@@ -8,7 +8,7 @@ class StringsAR {
   static String myAccount = 'My Account';
   static String search = 'Search';
   static String allCategories = 'All Categories';
-  static String requestForQ = 'Request For Quotations';
+  static String requestForQ = 'R.F.Q';
   static String joinUs = 'Join For Us';
   static String ourGoldenSupplier = 'Our Golden Supplier';
   static String mostPopularIn = 'Most Popular In ';
