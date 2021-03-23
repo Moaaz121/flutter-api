@@ -7,7 +7,7 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 
 import 'Screens/main_srceen.dart';
-import 'Screens/notificationScreen.dart';
+import 'Screens/notification_screen.dart';
 import 'Screens/profile_screen.dart';
 
 void main() => runApp(

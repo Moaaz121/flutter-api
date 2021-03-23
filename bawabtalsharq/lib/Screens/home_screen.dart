@@ -2,6 +2,7 @@ import 'package:bawabtalsharq/Screens/all_categories_screen.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/strings.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -34,10 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       mainHeaderButton(() {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AllCategories()));
+                        Navigator.pushNamed(context, ScreenRoutes.categoriesScreen);
                       }, Strings().allCategories(), allCategories,
                           blueColor.withOpacity(0.15)),
                       mainHeaderButton(() {}, Strings().requestForQ(),
