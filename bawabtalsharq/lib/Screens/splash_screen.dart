@@ -98,7 +98,7 @@ class _SplashScreenState extends State<SplashScreen> {
                         ],
                       ),
                       Positioned(
-                        top: MediaQuery.of(context).size.height * 0.62 + 35,
+                        top: MediaQuery.of(context).size.height * 0.62 + 10,
                         child: Container(
                           alignment: Alignment.center,
                           child: AnimatedSmoothIndicator(
@@ -119,8 +119,8 @@ class _SplashScreenState extends State<SplashScreen> {
                         ),
                       ),
                       Positioned(
-                        right: 30,
-                        bottom: 30,
+                        right: 20,
+                        bottom: 20,
                         child: Row(
                           children: [
                             Padding(
@@ -174,27 +174,27 @@ class _SplashScreenState extends State<SplashScreen> {
             imageName,
             fit: BoxFit.fill,
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.5,
+            height: MediaQuery.of(context).size.height * 0.4,
           ),
           Container(
-            margin: EdgeInsets.only(top: 20),
+            margin: EdgeInsets.only(top: 10),
             child: Text(
               title,
               style: TextStyle(
                   fontFamily: "Segoe UI",
                   fontWeight: FontWeight.w700,
-                  fontSize: 30),
+                  fontSize: 20),
             ),
           ),
           Container(
-            margin: EdgeInsets.all(20),
+            margin: EdgeInsets.all(10),
             child: Text(
               subTitle,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: "Segoe UI",
                 fontWeight: FontWeight.w400,
-                fontSize: 18,
+                fontSize: 15,
               ),
             ),
           ),
