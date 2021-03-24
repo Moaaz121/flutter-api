@@ -122,41 +122,37 @@ class _IntroScreenState extends State<IntroScreen> {
                           ),
                         ),
                       ),
-                      Positioned(
-                        right: LanguageHelper.isEnglish ? 20 : 250,
-                        bottom: 20,
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsetsDirectional.only(
-                                bottom: 20,
-                                end: 25,
+                      Positioned.directional(
+                        textDirection:Directionality.of(context),
+                        end: 30,
+                        bottom: 30,
+                        child: GestureDetector(
+                          onTap: () {
+                            imageIndex < 2
+                                ? _pageController
+                                .jumpToPage(imageIndex + 1)
+                                : Navigator.pushReplacementNamed(
+                                context, ScreenRoutes.loginScreen);
+                          },
+                          child: Row(
+                            children: [
+                              Text(
+                                Languages.of(context).next,
+                                style: TextStyle(fontSize: 20),
                               ),
-                              child: GestureDetector(
-                                onTap: () {
-                                  imageIndex < 2
-                                      ? _pageController
-                                          .jumpToPage(imageIndex + 1)
-                                      : Navigator.pushReplacementNamed(
-                                          context, ScreenRoutes.loginScreen);
-                                },
-                                child: Text(
-                                  Languages.of(context).next,
-                                  style: TextStyle(fontSize: 20),
-                                ),
+                              SizedBox(
+                                width: 5,
                               ),
-                            ),
 
-                            Padding(
-                              padding: const EdgeInsetsDirectional.only(bottom: 15),
-                              child: Icon(
+                              Icon(
                                 LanguageHelper.isEnglish
                                     ? Icons.arrow_forward_rounded
                                     : Icons.arrow_back_rounded,
                                 size: 17,
-                              ),
-                            )
-                          ],
+                              )
+
+                            ],
+                          ),
                         ),
                       ),
                     ],
