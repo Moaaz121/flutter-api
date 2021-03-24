@@ -32,7 +32,7 @@ class LanguageEn extends Languages {
   String get feature => 'Feature';
   String get myAccount => 'My Account';
   String get search => 'Search';
-  String get allCategories => 'All Categories';
+
   String get requestForQ => 'R.F.Q';
   String get joinUs => 'Join For Us';
   String get ourGoldenSupplier => 'Our Golden Supplier';

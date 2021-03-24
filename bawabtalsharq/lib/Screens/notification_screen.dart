@@ -1,3 +1,5 @@
+import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
+import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/strings.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
@@ -28,9 +30,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        margin: EdgeInsets.only(left: 15),
+                        margin: EdgeInsetsDirectional.only(start: 15),
                         child: buildText(
-                          Strings().notifications(),
+                          Languages.of(context).notification,
                           35.0,
                           fontWeight: FontWeight.bold,
                           color: orangeColor,
@@ -71,7 +73,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
               boxShadow: [makeShadow()],
               color: Colors.white,
             ),
-            margin: EdgeInsets.only(top: 10, right: 14, left: 14, bottom: 10),
+            margin: EdgeInsetsDirectional.only(top: 10, start: 14, end: 14, bottom: 10),
             child: notificationItems(
               onPress: () {},
               title: position.isOdd

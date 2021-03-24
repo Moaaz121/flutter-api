@@ -32,7 +32,7 @@ class LanguageAr extends Languages {
   String get feature => 'الميزات';
   String get myAccount => 'حسابي';
   String get search => 'البحث';
-  String get allCategories => 'جميع الفئات';
+
   String get requestForQ => 'طلب عرض أسعار';
   String get joinUs => 'انضم إلينا';
   String get ourGoldenSupplier => 'موردينا الذهبيين';

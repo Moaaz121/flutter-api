@@ -34,7 +34,7 @@ abstract class Languages {
   String get feature ;
   String get myAccount;
   String get search;
-  String get allCategories;
+
   String get requestForQ ;
   String get joinUs ;
   String get ourGoldenSupplier;
