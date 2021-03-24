@@ -353,7 +353,7 @@ Widget bottomAppBar(Function(int x) _selectionFunction,
   );
 }
 
-Widget searchButton(BuildContext context,Function _function) {
+Widget searchButton(BuildContext context, Function _function) {
   return SizedBox(
     height: 35,
     child: Container(
