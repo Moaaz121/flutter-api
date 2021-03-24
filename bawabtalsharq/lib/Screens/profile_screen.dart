@@ -27,7 +27,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               height: 20,
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 14, top: 14),
+              padding: const EdgeInsetsDirectional.fromSTEB(14, 14, 14, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -61,7 +61,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 14),
+              padding: const EdgeInsetsDirectional.fromSTEB(14, 0, 14, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -109,7 +109,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       print('Notification');
                     },
                     text: Languages.of(context).notification,
-                    subText: '33 items',
+                    subText: '33 ' + Languages.of(context).items,
                     icon: Icons.notifications_none,
                     colorIcon: Colors.blue[300],
                   ),
@@ -117,8 +117,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     onPressed: () {
                       print('Saved');
                     },
-                    text: Strings().saved(),
-                    subText: '33 items',
+                    text: Languages.of(context).saved,
+                    subText: '33 ' + Languages.of(context).items,
                     icon: Icons.bookmark_rounded,
                     colorIcon: Colors.deepOrange[300],
                   ),
@@ -126,8 +126,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     onPressed: () {
                       print('Compares');
                     },
-                    text: Strings().compares(),
-                    subText: '33 items',
+                    text: Languages.of(context).compares,
+                    subText: '33 ' + Languages.of(context).items,
                     icon: Icons.add_to_photos_rounded,
                     colorIcon: Colors.deepPurpleAccent,
                   ),
@@ -135,7 +135,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     onPressed: () {
                       print('History');
                     },
-                    text: Strings().history(),
+                    text: Languages.of(context).history,
                     icon: Icons.av_timer_rounded,
                     colorIcon: Colors.green[400],
                   ),
@@ -225,21 +225,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     profileItemBuilder(
                       quotation,
-                      'Request For Quotation',
+                      Languages.of(context).quotation,
                       () {
                         print('Quotation Pressed');
                       },
                     ),
                     profileItemBuilder(
                       message,
-                      'Message Center',
+                      Languages.of(context).messageCenter,
                       () {
                         print('Message Pressed');
                       },
                     ),
                     profileItemBuilder(
                       user,
-                      'New User Guide',
+                      Languages.of(context).userGuide,
                       () {
                         print('User Guide Pressed');
                       },
@@ -258,21 +258,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     profileItemBuilder(
                       quotation,
-                      'Request For Quotation',
+                      Languages.of(context).quotation,
                       () {
                         print('Quotation Pressed');
                       },
                     ),
                     profileItemBuilder(
                       message,
-                      'Message Center',
+                      Languages.of(context).messageCenter,
                       () {
                         print('Message Pressed');
                       },
                     ),
                     profileItemBuilder(
                       user,
-                      'New User Guide',
+                      Languages.of(context).userGuide,
                       () {
                         print('User guide Pressed');
                       },
@@ -289,7 +289,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 decoration: boxDecorationBuilder(10),
                 child: profileItemBuilder(
                   logout,
-                  'Log out',
+                  Languages.of(context).logOut,
                   () {
                     print('Logout Pressed');
                   },
