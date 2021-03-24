@@ -1,11 +1,10 @@
-
 import 'package:bawabtalsharq/Screens/profile_screen.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 import 'feature_screen.dart';
 import 'home_screen.dart';
-import 'notificationScreen.dart';
+import 'notification_screen.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -16,17 +15,19 @@ class _MainScreenState extends State<MainScreen> {
   int currentPage = 0;
   PageController controller = PageController(initialPage: 0, keepPage: true);
 
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBody: true,
-      bottomNavigationBar: bottomAppBar((int position){
-
-        controller.animateToPage(position, duration: Duration(milliseconds: 200), curve: Curves.linear);
-
-      },controller,currentPage),
-      body: PageView(
+    return SafeArea(
+      top: false,
+      bottom: false,
+      child: Scaffold(
+        extendBody: true,
+        bottomNavigationBar: bottomAppBar((int position) {
+          controller.animateToPage(position,
+              duration: Duration(milliseconds: 1), curve: Curves.linear);
+        }, controller, currentPage, context),
+        body: PageView(
+          physics: NeverScrollableScrollPhysics(),
           controller: controller,
           children: [
             HomeScreen(),
@@ -34,13 +35,13 @@ class _MainScreenState extends State<MainScreen> {
             NotificationScreen(),
             ProfileScreen(),
           ],
-          onPageChanged: (page){
+          onPageChanged: (page) {
             setState(() {
               currentPage = page;
             });
           },
         ),
-
+      ),
     );
   }
 }

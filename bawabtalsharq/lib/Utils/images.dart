@@ -1,5 +1,3 @@
-import 'package:bawabtalsharq/Utils/strings.dart';
-
 const String Login_background = 'assets/images/bg.png';
 
 // Start Karem
@@ -29,10 +27,19 @@ const String rFqSlider3 = 'assets/images/r_f_q_slider_3.jpg';
 
 // Start Asmaa
 const String cold_drinks = 'assets/images/cold_drinks.png';
+const String message = 'assets/images/message.png';
+const String checkBox = 'assets/images/checkBox.png';
+const String splashImage = 'assets/images/Splash.png';
+const String companyName = 'assets/images/company_name.png';
 
 // end Asmaa
 
 // Start Bahaa
+const String settings = 'assets/images/ic_settings.png';
+const String quotation = 'assets/images/ic_quotation.png';
+const String user = 'assets/images/ic_user.png';
+const String logout = 'assets/images/ic_logout.png';
+const String profile_image = 'assets/images/bahaa_im.png';
 
 // end Bahaa
 
@@ -45,9 +52,19 @@ const String productIcon2 = 'assets/images/Icon bookmark.png';
 // end Mosdik
 
 // Start Moaaz
-
+const String intro1 = 'assets/images/intro.png';
+const String intro2 = 'assets/images/intro1.png';
+const String intro3 = 'assets/images/intro2.png';
+const String background1 = 'assets/images/Background.png';
+const String background2 = 'assets/images/Background1.png';
+const String background3 = 'assets/images/Background2.png';
 // end Moaaz
 
 // Start Islam
+const String facebook = 'assets/images/facebook.png';
+const String logo = 'assets/images/logo.png';
+const String logo1 = 'assets/images/logo1.png';
+const String twitter = 'assets/images/twitter.png';
+const String google = 'assets/images/google.png';
 
 // end Islam

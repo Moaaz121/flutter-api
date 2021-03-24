@@ -1,14 +1,12 @@
 import 'dart:async';
 
-import 'package:bawabtalsharq/Utils/strings.dart';
-import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/Utils/images.dart';
+import 'package:bawabtalsharq/main.dart';
 import 'package:flutter/material.dart';
-
-
 
 class SplashScreen extends StatefulWidget {
   @override
-  _SplashScreenState createState() => new _SplashScreenState();
+  _SplashScreenState createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
@@ -21,8 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void navigationPage() async {
-    // Navigator.of(context)
-    //     .pushReplacement(MaterialPageRoute(builder: (context) => LoginScreen()));
+    Navigator.pushReplacementNamed(context, ScreenRoutes.introScreen);
   }
 
   @override
@@ -39,36 +36,21 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      body: Stack(
-        alignment: Alignment.center,
-        children: <Widget>[
-          Container(
-            // decoration: BoxDecoration(
-            //   image: DecorationImage(
-            //       image: AssetImage(SplashBG), fit: BoxFit.cover),
-            // ),
-            // child: Center(
-            //   child: Center(
-            //     child: Image.asset(Icon_Logo),
-            //   ),
-            // ),
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(splashImage),
+          fit: BoxFit.fill,
+        ),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(logo),
+          SizedBox(
+            height: 20,
           ),
-          Container(
-            height: 100,
-          ),
-          Container(
-            alignment: Alignment.bottomCenter,
-            margin: EdgeInsets.only(bottom: 20),
-            child: Text(
-              Strings().appName(),
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontFamily: regularFontFamily,
-                  color: Colors.white,
-                  fontSize: 16),
-            ),
-          ),
+          Image.asset(companyName),
         ],
       ),
     );

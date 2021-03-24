@@ -1,9 +1,9 @@
 import 'package:bawabtalsharq/Model/categories_model.dart';
+import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:flutter/material.dart';
 
 import '../Utils/images.dart';
-import '../Utils/strings.dart';
 import '../widgets/widgets.dart';
 
 class AllCategories extends StatefulWidget {
@@ -20,7 +20,7 @@ class _AllCategoriesState extends State<AllCategories>
 
   List<Positioned> _stackWidgets = List<Positioned>();
   bool _isPressed = false;
-  String _appBarTitle = Strings().allCategories();
+  String _appBarTitle;
 
   @override
   void initState() {
@@ -33,12 +33,14 @@ class _AllCategoriesState extends State<AllCategories>
     categoriesArr.forEach((element) {
       element.isSelected = false;
     }); // to do remove after add api
-    _sliderController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (!_isPressed) {
+      _appBarTitle = Languages.of(context).allCategories;
+    }
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: appBarBuilder(
@@ -161,7 +163,7 @@ class _AllCategoriesState extends State<AllCategories>
         onDismissed: (direction) {
           if (direction == DismissDirection.startToEnd) {
             setState(() {
-              _appBarTitle = Strings().allCategories();
+              _appBarTitle = Languages.of(context).allCategories;
               _isPressed = false;
               categoriesArr[categoryIndex].isSelected = false;
               _stackWidgets = [getMainCategoriesList(context)];

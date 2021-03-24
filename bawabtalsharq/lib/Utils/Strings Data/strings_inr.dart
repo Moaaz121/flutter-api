@@ -8,7 +8,7 @@ class StringsINR {
   static String myAccount = 'My Account';
   static String search = 'Search';
   static String allCategories = 'All Categories';
-  static String requestForQ = 'Request For Quotations';
+  static String requestForQ = 'R.F.Q';
   static String joinUs = 'Join For Us';
   static String ourGoldenSupplier = 'Our Golden Supplier';
   static String mostPopularIn = 'Most Popular In ';
@@ -26,7 +26,9 @@ class StringsINR {
 // end Asmaa
 
 // Start Bahaa
-
+  static const String saved = 'Saved';
+  static const String compares = 'Compares';
+  static const String history = 'History';
 // end Bahaa
 
 // Start Mosdik
@@ -35,10 +37,27 @@ class StringsINR {
 // end Mosdik
 
 // Start Moaaz
+  static const String intro1Title = 'Discover';
+  static const String intro1SubTitle =
+      'Our app is now sleeker, smarter and easier to use. Go on and enjoy it!';
+  static const String intro2Title = 'Easy Communicate';
+  static const String intro2SubTitle =
+      'Our app is now sleeker, smarter and easier to use. Go on and enjoy it!';
+  static const String intro3Title = 'Grow Your Buisness';
+  static const String intro3SubTitle =
+      'Our app is now sleeker, smarter and easier to use. Go on and enjoy it!';
+  static const String next = 'Next';
 
 // end Moaaz
 
 // Start Islam
+  static const String signUp = 'SignUp';
+  static const String login = 'Login';
+  static const String userName = 'Username';
+  static const String password = 'Password';
+  static const String forgetPassword = 'Forget Password?';
+  static const String alreadyHaveAccount = 'Already have an account';
+  static const String signIn = 'SignIn';
 
 // end Islam
 }
