@@ -43,6 +43,17 @@ class LanguageAr extends Languages {
   // String get notification => "الاشعارات";
   String get egypt => 'مصر';
 
+  String get intro1Title => 'استكشاف';
+  String get intro1SubTitle =>
+  'أصبح تطبيقنا الآن أكثر أناقة وذكاء وأسهل في الاستخدام. استمر واستمتع به!';
+  String get intro2Title => 'سهولة التواصل';
+  String get  intro2SubTitle =>
+  'أصبح تطبيقنا الآن أكثر أناقة وذكاء وأسهل في الاستخدام. استمر واستمتع به!';
+  String get intro3Title => 'ينمو عملك';
+  String get intro3SubTitle =>
+  'أصبح تطبيقنا الآن أكثر أناقة وذكاء وأسهل في الاستخدام. استمر واستمتع به!';
+  String get next => 'التالي';
+
 // end Mosdik
 
 // Start Moaaz
