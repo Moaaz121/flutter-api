@@ -294,7 +294,7 @@ Widget bottomAppBar(Function(int x) _selectionFunction,
               title: Padding(
                 padding: const EdgeInsets.only(top: 7),
                 child: Text(
-                  Strings().home(),
+                  Languages.of(context).home,
                   style: TextStyle(
                     fontSize: MediaQuery.of(context).size.height * 0.014,
                   ),
@@ -310,7 +310,7 @@ Widget bottomAppBar(Function(int x) _selectionFunction,
                 title: Padding(
                   padding: const EdgeInsets.only(top: 7),
                   child: Text(
-                    Strings().feature(),
+                    Languages.of(context).feature,
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.height * 0.014,
                     ),
@@ -325,7 +325,7 @@ Widget bottomAppBar(Function(int x) _selectionFunction,
                 title: Padding(
                   padding: const EdgeInsets.only(top: 7),
                   child: Text(
-                    Strings().notifications(),
+                    Languages.of(context).notification,
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.height * 0.014,
                     ),
@@ -340,7 +340,7 @@ Widget bottomAppBar(Function(int x) _selectionFunction,
                 title: Padding(
                   padding: const EdgeInsets.only(top: 7),
                   child: Text(
-                    Strings().myAccount(),
+                    Languages.of(context).myAccount,
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.height * 0.014,
                     ),
