@@ -53,12 +53,12 @@ class LanguageEn extends Languages {
   String get settings => 'Settings';
   String get requestForQuotation => 'Request For Quotation';
   String get languages => 'Language';
-  String get signUp => 'SignUp';
+  String get signUp => 'Sign Up';
   String get login => 'Login';
   String get userName => 'Username';
   String get password => 'Password';
   String get forgetPassword => 'Forget Password?';
-  String get alreadyHaveAccount => 'Already have an account';
+  String get alreadyHaveAccount => 'Already have an account ?';
   String get signIn => 'SignIn';
 // end Islam
 }
