@@ -44,6 +44,15 @@ abstract class Languages {
   String get more;
   String get egypt;
 
+
+ String get intro1Title ;
+ String get intro1SubTitle ;
+  String get intro2Title;
+  String get intro2SubTitle ;
+  String get intro3Title;
+  String get intro3SubTitle;
+  String get next ;
+
 // end Mosdik
 
 // Start Moaaz
