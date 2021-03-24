@@ -5,12 +5,15 @@ import 'package:bawabtalsharq/Screens/intro_screen.dart';
 import 'package:bawabtalsharq/Screens/login_screen.dart';
 import 'package:bawabtalsharq/Screens/settings_screen.dart';
 import 'package:bawabtalsharq/Screens/splash_screen.dart';
+import 'package:bawabtalsharq/Utils/Localization/AppLocalizationDelgate.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'Screens/main_srceen.dart';
 import 'Screens/notification_screen.dart';
 import 'Screens/profile_screen.dart';
+import 'Utils/Localization/LanguageHelper.dart';
 
 void main() => runApp(
       DevicePreview(
@@ -20,15 +23,22 @@ void main() => runApp(
     );
 
 class BawabtAlsharqApp extends StatefulWidget {
+
+  static void setLocale(BuildContext context, Locale newLocale) {
+    var state = context.findAncestorStateOfType<_BawabtAlsharqAppState>();
+    state.setLocale(newLocale);
+  }
+
   @override
   _BawabtAlsharqAppState createState() => _BawabtAlsharqAppState();
 }
 
 class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
+  Locale _locale;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      locale: DevicePreview.locale(context),
+      // locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.deepOrange),
@@ -45,9 +55,54 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.categoriesScreen: (_) => AllCategories(),
         ScreenRoutes.settingsScreen: (_) => SettingsScreen()
       },
+      locale: _locale,
+      supportedLocales: supportedLocales,
+      localizationsDelegates: localizationsDelegates,
+      localeResolutionCallback: localeResolutionCallback,
     );
   }
+  @override
+  void didChangeDependencies() async {
+    LanguageHelper.getLocale().then((locale) {
+      setState(() {
+        _locale = locale;
+      });
+    });
+    super.didChangeDependencies();
+  }
+
+  void setLocale(Locale locale) {
+    setState(() {
+      _locale = locale;
+    });
+  }
 }
+
+extension Localization on _BawabtAlsharqAppState {
+  Iterable<Locale> get supportedLocales => [
+    Locale('en', ''),
+    Locale('ar', ''),
+  ];
+
+  Iterable<LocalizationsDelegate<dynamic>> get localizationsDelegates => [
+    AppLocalizationsDelegate(),
+    GlobalMaterialLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+  ];
+
+  LocaleResolutionCallback get localeResolutionCallback =>
+          (locale, supportedLocales) {
+        for (var supportedLocale in supportedLocales) {
+          if (supportedLocale?.languageCode == locale?.languageCode &&
+              supportedLocale?.countryCode == locale?.countryCode) {
+            return supportedLocale;
+          }
+        }
+        return supportedLocales?.first;
+      };
+}
+
 
 class ScreenRoutes {
   static const String splashScreen = '/splashScreen';

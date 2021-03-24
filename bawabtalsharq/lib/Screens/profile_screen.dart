@@ -1,3 +1,4 @@
+import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/strings.dart';
@@ -350,6 +351,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void showLanguagesDialog(BuildContext context) {
+    String lan = 'en';
     int selectedLanguageIndex = 0;
     showDialog(
       context: context,
@@ -365,7 +367,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
-                    print(languagesArr[index]);
+                    lan = lan == 'en' ? 'ar':'en';
+                    LanguageHelper.changeLanguage(context, lan);
                   },
                   child: Container(
                     height: 60,
