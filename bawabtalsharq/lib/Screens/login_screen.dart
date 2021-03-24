@@ -1,11 +1,17 @@
+import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
-import 'package:bawabtalsharq/Utils/strings.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  bool obSecureText = true;
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -51,10 +57,11 @@ class LoginScreen extends StatelessWidget {
                           children: [
                             GestureDetector(
                                 onTap: () => print('hey'),
-                                child: Text(Strings().signUp())),
+                                child: Text(Languages.of(context).signUp)),
+                            // Languages.of(context).languages,
                             IconButton(
                               onPressed: () {},
-                              icon: Icon(Icons.arrow_forward_rounded),
+                              icon: Icon(Icons.arrow_forward),
                             ),
                           ],
                         ),
@@ -65,26 +72,38 @@ class LoginScreen extends StatelessWidget {
                     height: height * 0.02,
                   ),
                   Text(
-                    Strings().logIn(),
+                    (Languages.of(context).login),
                     //'Login',
                     style: TextStyle(
                         fontFamily: blackFontFamily,
-                        fontSize: 50,
+                        fontSize: 30,
                         fontWeight: FontWeight.w700),
                   ),
                   SizedBox(
                     height: height * 0.04,
                   ),
                   customTextField(
-                      label: Strings().userName(), leftIcon: Icons.person),
+                      label: Languages.of(context).userName,
+                      leftIcon: Icons.person),
                   SizedBox(
                     height: height * 0.03,
                   ),
                   customTextField(
-                      label: (Strings().password()),
-                      //'Password',
-                      leftIcon: Icons.lock,
-                      rightIcon: Icons.visibility_off),
+                    isPassword: obSecureText,
+                    label: (Languages.of(context).password),
+                    //'Password',
+                    leftIcon: Icons.lock,
+                    rightBtn: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          obSecureText = !obSecureText;
+                        });
+                      },
+                      icon: Icon(obSecureText
+                          ? Icons.visibility_off
+                          : Icons.visibility),
+                    ),
+                  ),
                   SizedBox(
                     height: height * .003,
                   ),
@@ -93,7 +112,7 @@ class LoginScreen extends StatelessWidget {
                     child: GestureDetector(
                         onTap: () {},
                         child: Text(
-                          Strings().forgetPassword(),
+                          Languages.of(context).forgetPassword,
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.grey,
@@ -109,6 +128,8 @@ class LoginScreen extends StatelessWidget {
                   Align(
                     alignment: Alignment.bottomRight,
                     child: FlatButton(
+                      splashColor: orangeColor.withOpacity(0.5),
+                      highlightColor: orangeColor.withOpacity(0.2),
                       shape: RoundedRectangleBorder(
                         side: BorderSide(
                           color: Colors.red,
@@ -123,7 +144,7 @@ class LoginScreen extends StatelessWidget {
                       },
                       color: Colors.white,
                       child: Text(
-                        Strings().signIn(),
+                        (Languages.of(context).signIn),
                         style: TextStyle(fontSize: 15, color: Colors.red),
                       ),
                     ),
@@ -136,7 +157,7 @@ class LoginScreen extends StatelessWidget {
                     child: GestureDetector(
                       onTap: () {},
                       child: (Text(
-                        Strings().alreadyHaveAnAccount(),
+                        Languages.of(context).alreadyHaveAccount,
                         style: TextStyle(
                             fontSize: 16,
                             color: Colors.grey,

@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/strings.dart';
@@ -10,7 +11,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 
 class Widgets {
   call() {}
@@ -655,18 +655,19 @@ void showLanguagesDialog(BuildContext context) {
 
 // Start Islam
 TextField customTextField(
-    {String label, IconData rightIcon, IconData leftIcon}) {
+    {String label,
+    IconButton rightBtn,
+    IconData leftIcon,
+    bool isPassword = false}) {
   return TextField(
+    obscureText: isPassword,
     decoration: InputDecoration(
         //hintText: 'username',
         prefixIcon: Icon(
           leftIcon,
           color: Colors.grey,
         ),
-        suffixIcon: Icon(
-          rightIcon,
-          color: Colors.grey,
-        ),
+        suffixIcon: rightBtn,
         labelText: label,
         labelStyle: TextStyle(
             fontFamily: 'Roboto-Thin.ttf', fontWeight: FontWeight.w200),

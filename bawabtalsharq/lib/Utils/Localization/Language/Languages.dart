@@ -29,6 +29,15 @@ abstract class Languages {
 // end Moaaz
 
 // Start Islam
-
+  String get settings;
+  String get requestForQuotation;
+  String get languages;
+  String get signUp;
+  String get login;
+  String get userName;
+  String get password;
+  String get forgetPassword;
+  String get alreadyHaveAccount;
+  String get signIn;
 // end Islam
 }
