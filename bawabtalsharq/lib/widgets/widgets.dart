@@ -4,7 +4,6 @@ import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
-import 'package:bawabtalsharq/Utils/strings.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_options.dart';
@@ -354,7 +353,7 @@ Widget bottomAppBar(Function(int x) _selectionFunction,
   );
 }
 
-Widget searchButton(BuildContext context,Function _function) {
+Widget searchButton(BuildContext context, Function _function) {
   return SizedBox(
     height: 35,
     child: Container(
@@ -665,18 +664,19 @@ void showLanguagesDialog(BuildContext context) {
 
 // Start Islam
 TextField customTextField(
-    {String label, IconData rightIcon, IconData leftIcon}) {
+    {String label,
+    IconButton rightBtn,
+    IconData leftIcon,
+    bool isPassword = false}) {
   return TextField(
+    obscureText: isPassword,
     decoration: InputDecoration(
         //hintText: 'username',
         prefixIcon: Icon(
           leftIcon,
           color: Colors.grey,
         ),
-        suffixIcon: Icon(
-          rightIcon,
-          color: Colors.grey,
-        ),
+        suffixIcon: rightBtn,
         labelText: label,
         labelStyle: TextStyle(
             fontFamily: 'Roboto-Thin.ttf', fontWeight: FontWeight.w200),

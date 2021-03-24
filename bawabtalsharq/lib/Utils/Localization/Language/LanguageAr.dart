@@ -61,6 +61,16 @@ class LanguageAr extends Languages {
 // end Moaaz
 
 // Start Islam
+  String get settings => 'الضبط';
+  String get requestForQuotation => 'طلب عرض اسعار';
+  String get languages => 'اللغه';
+  String get signUp => 'اشتراك';
+  String get login => 'تسجيل الدخول';
+  String get userName => 'اسم المستخدم';
+  String get password => 'كلمه المرور';
+  String get forgetPassword => 'هل نسيت كلمه السر';
+  String get alreadyHaveAccount => 'هل لديك حساب بالفعل';
+  String get signIn => 'تسجيل الدخول';
 
 // end Islam
 
