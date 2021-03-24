@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/strings.dart';
@@ -10,7 +11,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 
 class Widgets {
   call() {}
@@ -533,7 +533,9 @@ AppBar appBarBuilder(
           radius: 12,
           backgroundColor: Colors.white,
           child: Icon(
-            Icons.keyboard_arrow_left_outlined,
+            LanguageHelper.isEnglish
+                ? Icons.keyboard_arrow_left_outlined
+                : Icons.keyboard_arrow_right_outlined,
             size: 20,
             color: defaultOrangeColor,
           ),

@@ -13,6 +13,7 @@ abstract class Languages {
 // end karem
 
 // Start Asmaa
+  String get allCategories;
 
 // end Asmaa
 

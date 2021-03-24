@@ -11,6 +11,7 @@ class LanguageAr extends Languages {
 // end karem
 
 // Start Asmaa
+  String get allCategories => 'التصنيفات';
 
 // end Asmaa
 
