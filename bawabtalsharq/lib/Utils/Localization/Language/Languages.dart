@@ -13,11 +13,19 @@ abstract class Languages {
 // end karem
 
 // Start Asmaa
+  String get allCategories;
 
 // end Asmaa
 
 // Start Bahaa
-
+  String get saved;
+  String get compares;
+  String get history;
+  String get quotation;
+  String get messageCenter;
+  String get userGuide;
+  String get logOut;
+  String get items;
 // end Bahaa
 
 // Start Mosdik

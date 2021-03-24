@@ -541,7 +541,9 @@ AppBar appBarBuilder(
           radius: 12,
           backgroundColor: Colors.white,
           child: Icon(
-            Icons.keyboard_arrow_left_outlined,
+            LanguageHelper.isEnglish
+                ? Icons.keyboard_arrow_left_outlined
+                : Icons.keyboard_arrow_right_outlined,
             size: 20,
             color: defaultOrangeColor,
           ),
