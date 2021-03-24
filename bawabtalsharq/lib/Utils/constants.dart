@@ -28,7 +28,6 @@ class Constants {
   static Color badgeColor = Colors.red;
   static Color whitegray = Color(0xfff8f8f8);
 
-
   static ThemeData lightTheme = ThemeData(
     backgroundColor: lightBG,
     primaryColor: lightPrimary,
@@ -80,7 +79,7 @@ class Constants {
 // end Asmaa
 
 // Start Bahaa
-List<String> languagesArr = ['English', 'العربية', 'indian'];
+List<String> languagesArr = ['English', 'العربية'];
 
 // end Bahaa
 

@@ -1,5 +1,4 @@
-import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
-import 'package:bawabtalsharq/Utils/constants.dart';
+import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/strings.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
@@ -52,7 +51,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       showLanguagesDialog(context);
                     },
                     child: buildText(
-                      'EN',
+                      Languages.of(context).language,
                       16,
                       fontWeight: FontWeight.bold,
                       color: defaultOrangeColor,
@@ -109,7 +108,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     onPressed: () {
                       print('Notification');
                     },
-                    text: Strings().notifications(),
+                    text: Languages.of(context).notification,
                     subText: '33 items',
                     icon: Icons.notifications_none,
                     colorIcon: Colors.blue[300],
@@ -347,67 +346,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
         ),
       ),
-    );
-  }
-
-  void showLanguagesDialog(BuildContext context) {
-    String lan = 'en';
-    int selectedLanguageIndex = 0;
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Center(
-          child: Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20), color: Colors.white),
-            width: MediaQuery.of(context).size.width * 0.9,
-            child: ListView.separated(
-              shrinkWrap: true,
-              itemCount: languagesArr.length,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    lan = lan == 'en' ? 'ar':'en';
-                    LanguageHelper.changeLanguage(context, lan);
-                  },
-                  child: Container(
-                    height: 60,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Expanded(
-                            child: buildText(languagesArr[index], 15,
-                                fontFamily: mediumFontFamily,
-                                fontWeight: FontWeight.w600)),
-                        selectedLanguageIndex == index
-                            ? Image.asset(
-                                checkBox,
-                                width: 40,
-                                height: 40,
-                              )
-                            : Text(''),
-                        SizedBox(
-                          width: 10,
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-              separatorBuilder: (BuildContext context, int index) => Padding(
-                padding: const EdgeInsets.only(right: 20, left: 20),
-                child: Divider(
-                  height: 1,
-                  thickness: 1,
-                ),
-              ),
-            ),
-          ),
-        );
-      },
     );
   }
 // end asmaa

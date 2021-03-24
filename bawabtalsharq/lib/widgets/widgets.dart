@@ -10,6 +10,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 
 class Widgets {
   call() {}
@@ -271,8 +272,7 @@ showLoadingDialog(BuildContext context) async {
 
 // Start Karem
 Widget bottomAppBar(Function(int x) _selectionFunction,
-    PageController controller, int currentPage, BuildContext context)
-{
+    PageController controller, int currentPage, BuildContext context) {
   return SafeArea(
     child: Padding(
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
@@ -292,7 +292,8 @@ Widget bottomAppBar(Function(int x) _selectionFunction,
                   width: 30, height: 30),
               title: Padding(
                 padding: const EdgeInsets.only(top: 7),
-                child: Text(Strings().home(),
+                child: Text(
+                  Strings().home(),
                   style: TextStyle(
                     fontSize: MediaQuery.of(context).size.height * 0.014,
                   ),
@@ -307,7 +308,8 @@ Widget bottomAppBar(Function(int x) _selectionFunction,
                 ),
                 title: Padding(
                   padding: const EdgeInsets.only(top: 7),
-                  child: Text(Strings().feature(),
+                  child: Text(
+                    Strings().feature(),
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.height * 0.014,
                     ),
@@ -321,10 +323,11 @@ Widget bottomAppBar(Function(int x) _selectionFunction,
                 ),
                 title: Padding(
                   padding: const EdgeInsets.only(top: 7),
-                  child: Text(Strings().notifications(),
+                  child: Text(
+                    Strings().notifications(),
                     style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.height * 0.014,
-                  ),
+                      fontSize: MediaQuery.of(context).size.height * 0.014,
+                    ),
                   ),
                 )),
             BottomNavigationBarItem(
@@ -335,7 +338,8 @@ Widget bottomAppBar(Function(int x) _selectionFunction,
                 ),
                 title: Padding(
                   padding: const EdgeInsets.only(top: 7),
-                  child: Text(Strings().myAccount(),
+                  child: Text(
+                    Strings().myAccount(),
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.height * 0.014,
                     ),
@@ -501,7 +505,6 @@ Widget sliderIndicator(int page) {
   );
 }
 
-
 // end karem
 
 // Start Asmaa
@@ -579,12 +582,70 @@ BoxShadow makeShadow() {
 // end Asmaa
 
 // Start Bahaa
+void showLanguagesDialog(BuildContext context) {
+  int selectedLanguageIndex = LanguageHelper.isEnglish ? 0 : 1;
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Center(
+        child: Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20), color: Colors.white),
+          width: MediaQuery.of(context).size.width * 0.9,
+          child: ListView.separated(
+            shrinkWrap: true,
+            itemCount: languagesArr.length,
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () {
+                  LanguageHelper.changeLanguage(
+                      context, index == 0 ? 'en' : 'ar');
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  height: 60,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Expanded(
+                          child: buildText(languagesArr[index], 15,
+                              fontFamily: mediumFontFamily,
+                              fontWeight: FontWeight.w600)),
+                      selectedLanguageIndex == index
+                          ? Image.asset(
+                              checkBox,
+                              width: 40,
+                              height: 40,
+                            )
+                          : Text(''),
+                      SizedBox(
+                        width: 10,
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+            separatorBuilder: (BuildContext context, int index) => Padding(
+              padding: const EdgeInsets.only(right: 20, left: 20),
+              child: Divider(
+                height: 1,
+                thickness: 1,
+              ),
+            ),
+          ),
+        ),
+      );
+    },
+  );
+}
 
 // end Bahaa
 
 // Start Mosdik
-
-
 
 // end Mosdik
 

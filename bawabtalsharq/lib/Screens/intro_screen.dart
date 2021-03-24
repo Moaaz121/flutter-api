@@ -7,6 +7,8 @@ import 'package:bawabtalsharq/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:bawabtalsharq/widgets/widgets.dart';
+import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 
 class IntroScreen extends StatefulWidget {
   @override
@@ -45,13 +47,13 @@ class _IntroScreenState extends State<IntroScreen> {
                 ),
                 child: GestureDetector(
                   onTap: () {
-                    print('language');
+                    showLanguagesDialog(context);
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'EN',
+                        Languages.of(context).language,
                         style: TextStyle(color: Colors.black54, fontSize: 18),
                       ),
                       Padding(
