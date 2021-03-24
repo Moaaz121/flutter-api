@@ -1,4 +1,4 @@
-import 'package:bawabtalsharq/Screens/all_categories_screen.dart';
+import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/strings.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
@@ -111,16 +111,16 @@ Widget listOfCateWidget() {
     itemBuilder: (context, position) {
       return SizedBox(
           width: MediaQuery.of(context).size.width / 3 - 5,
-          child: mostPopularByCategoryStable(context, (){}));
+          child: mostPopularByCategoryStable(context, () {}));
     },
   );
 }
 
-Widget mostPopularByCategoryStable(BuildContext context,Function onPress()) {
+Widget mostPopularByCategoryStable(BuildContext context, Function onPress()) {
   return Column(
     children: [
       Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 25),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -305,7 +305,9 @@ Widget ourGoldenSupplierHeader({Function onPress()}) {
                 width: 8,
               ),
               Icon(
-                Icons.arrow_forward_rounded,
+                LanguageHelper.isEnglish
+                    ? Icons.arrow_forward_rounded
+                    : Icons.arrow_back_rounded,
                 size: 15,
                 color: Colors.black.withOpacity(0.7),
               )
@@ -325,8 +327,8 @@ Widget mostPopularIn(BuildContext context) {
         width: MediaQuery.of(context).size.width,
         child: Stack(
           children: [
-            Positioned(
-              left: MediaQuery.of(context).size.width / 3 * .205,
+            PositionedDirectional(
+              start: MediaQuery.of(context).size.width / 3 * .205,
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: 165,
@@ -423,7 +425,9 @@ Widget mostPopularInHeader({Function onPress()}) {
                 width: 8,
               ),
               Icon(
-                Icons.arrow_forward_rounded,
+                LanguageHelper.isEnglish
+                    ? Icons.arrow_forward_rounded
+                    : Icons.arrow_back_rounded,
                 size: 15,
                 color: Colors.black.withOpacity(0.7),
               )
@@ -551,7 +555,7 @@ Widget mainMostPopularProduct(
         borderRadius: BorderRadius.circular(15.0),
         color: Colors.white,
       ),
-      margin: EdgeInsets.only(left: 20, right: 3, bottom: 3, top: 3),
+      margin: EdgeInsetsDirectional.only(start: 20, end: 3, bottom: 3, top: 3),
       width: MediaQuery.of(context).size.width / 3 * 0.85,
       child: Container(
         decoration: BoxDecoration(
@@ -562,9 +566,9 @@ Widget mainMostPopularProduct(
           borderRadius: BorderRadius.circular(15),
           child: Stack(
             children: [
-              Positioned(
+              PositionedDirectional(
                   top: -40,
-                  left: -50,
+                  start: -50,
                   child: Image(
                     image: AssetImage(productImage),
                     height: 120,
@@ -587,7 +591,8 @@ Widget mainMostPopularProduct(
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 70.0, left: 3.0),
+                padding:
+                    const EdgeInsetsDirectional.only(top: 70.0, start: 3.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -654,9 +659,9 @@ Widget subMostPopularProduct(
         borderRadius: BorderRadius.circular(15),
         child: Stack(
           children: [
-            Positioned(
+            PositionedDirectional(
                 bottom: -50,
-                right: -50,
+                end: -50,
                 child: Image(
                   image: AssetImage(productImage),
                   height: 130,
@@ -798,10 +803,10 @@ Widget mostPopularCateg(
                                 ? AlignmentDirectional.center
                                 : AlignmentDirectional.centerStart),
                         children: [
-                          Positioned(
+                          PositionedDirectional(
                             top: -50,
-                            left: position == 2 ? -50 : null,
-                            right: position == 0 ? -50 : null,
+                            start: position == 2 ? -50 : null,
+                            end: position == 0 ? -50 : null,
                             child: SizedBox(
                                 height: 115,
                                 width: 115,
@@ -814,15 +819,17 @@ Widget mostPopularCateg(
                                             backgroundColor.withOpacity(0.0)
                                           ],
                                           begin: position == 2
-                                              ? Alignment.topLeft
+                                              ? AlignmentDirectional.topStart
                                               : (position == 1
                                                   ? Alignment.topCenter
-                                                  : Alignment.topRight),
+                                                  : AlignmentDirectional
+                                                      .topEnd),
                                           end: position == 2
-                                              ? Alignment.bottomRight
+                                              ? AlignmentDirectional.bottomEnd
                                               : (position == 1
                                                   ? Alignment.bottomCenter
-                                                  : Alignment.bottomLeft),
+                                                  : AlignmentDirectional
+                                                      .bottomStart),
                                           tileMode: TileMode.clamp)),
                                 )),
                           ),
@@ -830,16 +837,17 @@ Widget mostPopularCateg(
                   ),
                 ),
               ),
-              Positioned(
-                  left: position == 2 ? -20 : null,
-                  right: position == 0 ? -20 : null,
+              PositionedDirectional(
+                  start: position == 2 ? -20 : null,
+                  end: position == 0 ? -20 : null,
                   child: SizedBox(
                     width: 100,
                     height: 100,
                     child: Image(image: AssetImage(productImage)),
                   )),
               Padding(
-                padding: const EdgeInsets.only(left: 12.0, top: 110.0),
+                padding:
+                    const EdgeInsetsDirectional.only(start: 12.0, top: 110.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

@@ -359,20 +359,27 @@ Widget searchButton(Function _function) {
     child: Container(
       decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.horizontal(right: Radius.circular(15)),
+          borderRadius:
+              BorderRadiusDirectional.horizontal(end: Radius.circular(15)),
           boxShadow: [
             BoxShadow(
-                color: orangeShadowColor,
-                blurRadius: 5,
-                spreadRadius: 2,
-                offset: Offset(10, 0))
+              color: orangeShadowColor,
+              blurRadius: 5,
+              spreadRadius: 2,
+            )
           ]),
       child: FlatButton(
           splashColor: orangeColor.withOpacity(0.4),
           highlightColor: orangeShadowColor,
           onPressed: _function,
           shape: OutlineInputBorder(
-              borderRadius: BorderRadius.horizontal(right: Radius.circular(15)),
+              borderRadius: BorderRadius.horizontal(
+                  right: LanguageHelper.isEnglish
+                      ? Radius.circular(15)
+                      : Radius.zero,
+                  left: !LanguageHelper.isEnglish
+                      ? Radius.circular(15)
+                      : Radius.zero),
               borderSide: BorderSide.none),
           child: Row(
             children: [

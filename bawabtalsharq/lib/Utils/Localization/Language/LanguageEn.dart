@@ -5,6 +5,7 @@ class LanguageEn extends Languages {
   String get name => "english name";
   String get notification => "notification";
   String get language => 'EN';
+
 // Start Karem
 
 // end karem
