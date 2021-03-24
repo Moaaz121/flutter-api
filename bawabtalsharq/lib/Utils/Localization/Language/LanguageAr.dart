@@ -20,6 +20,21 @@ class LanguageAr extends Languages {
 
 // Start Mosdik
 
+  String get home => 'الصفحة الرئيسية';
+  String get feature => 'الميزات';
+  String get myAccount => 'حسابي';
+  String get search => 'البحث';
+  String get allCategories => 'جميع الفئات';
+  String get requestForQ => 'طلب عرض أسعار';
+  String get joinUs => 'انضم إلينا';
+  String get ourGoldenSupplier => 'موردينا الذهبيين';
+  String get mostPopularIn => 'الأكثر شهرة في ';
+  String get mostPopularByCategories => 'الأكثر شعبية حسب الفئات';
+  String get seeAll => 'اظهار الكل';
+  String get more => 'أكثر';
+  // String get notification => "الاشعارات";
+  String get egypt => 'مصر';
+
 // end Mosdik
 
 // Start Moaaz

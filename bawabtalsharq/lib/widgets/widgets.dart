@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
@@ -353,7 +354,7 @@ Widget bottomAppBar(Function(int x) _selectionFunction,
   );
 }
 
-Widget searchButton(Function _function) {
+Widget searchButton(BuildContext context,Function _function) {
   return SizedBox(
     height: 35,
     child: Container(
@@ -384,7 +385,7 @@ Widget searchButton(Function _function) {
           child: Row(
             children: [
               Text(
-                Strings().search(),
+                Languages.of(context).search,
                 style: TextStyle(
                   color: orangeColor,
                 ),

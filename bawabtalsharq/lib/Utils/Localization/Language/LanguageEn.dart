@@ -20,6 +20,21 @@ class LanguageEn extends Languages {
 
 // Start Mosdik
 
+  String get home => 'Home';
+  String get feature => 'Feature';
+  String get myAccount => 'My Account';
+  String get search => 'Search';
+  String get allCategories => 'All Categories';
+  String get requestForQ => 'R.F.Q';
+  String get joinUs => 'Join For Us';
+  String get ourGoldenSupplier => 'Our Golden Supplier';
+  String get mostPopularIn => 'Most Popular In ';
+  String get mostPopularByCategories => 'Most Popular By Categories';
+  String get seeAll => 'See All';
+  String get more => 'More';
+  // String get notification => 'notification';
+  String get egypt => 'Egypt';
+
 // end Mosdik
 
 // Start Moaaz
