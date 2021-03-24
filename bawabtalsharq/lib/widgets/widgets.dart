@@ -1,9 +1,9 @@
 import 'dart:ui';
 
+import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
-import 'package:bawabtalsharq/Utils/strings.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_options.dart';
@@ -293,7 +293,7 @@ Widget bottomAppBar(Function(int x) _selectionFunction,
               title: Padding(
                 padding: const EdgeInsets.only(top: 7),
                 child: Text(
-                  Strings().home(),
+                  Languages.of(context).home,
                   style: TextStyle(
                     fontSize: MediaQuery.of(context).size.height * 0.014,
                   ),
@@ -309,7 +309,7 @@ Widget bottomAppBar(Function(int x) _selectionFunction,
                 title: Padding(
                   padding: const EdgeInsets.only(top: 7),
                   child: Text(
-                    Strings().feature(),
+                    Languages.of(context).feature,
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.height * 0.014,
                     ),
@@ -324,7 +324,7 @@ Widget bottomAppBar(Function(int x) _selectionFunction,
                 title: Padding(
                   padding: const EdgeInsets.only(top: 7),
                   child: Text(
-                    Strings().notifications(),
+                    Languages.of(context).notification,
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.height * 0.014,
                     ),
@@ -339,7 +339,7 @@ Widget bottomAppBar(Function(int x) _selectionFunction,
                 title: Padding(
                   padding: const EdgeInsets.only(top: 7),
                   child: Text(
-                    Strings().myAccount(),
+                    Languages.of(context).myAccount,
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.height * 0.014,
                     ),
@@ -353,31 +353,38 @@ Widget bottomAppBar(Function(int x) _selectionFunction,
   );
 }
 
-Widget searchButton(Function _function) {
+Widget searchButton(BuildContext context,Function _function) {
   return SizedBox(
     height: 35,
     child: Container(
       decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.horizontal(right: Radius.circular(15)),
+          borderRadius:
+              BorderRadiusDirectional.horizontal(end: Radius.circular(15)),
           boxShadow: [
             BoxShadow(
-                color: orangeShadowColor,
-                blurRadius: 5,
-                spreadRadius: 2,
-                offset: Offset(10, 0))
+              color: orangeShadowColor,
+              blurRadius: 5,
+              spreadRadius: 2,
+            )
           ]),
       child: FlatButton(
           splashColor: orangeColor.withOpacity(0.4),
           highlightColor: orangeShadowColor,
           onPressed: _function,
           shape: OutlineInputBorder(
-              borderRadius: BorderRadius.horizontal(right: Radius.circular(15)),
+              borderRadius: BorderRadius.horizontal(
+                  right: LanguageHelper.isEnglish
+                      ? Radius.circular(15)
+                      : Radius.zero,
+                  left: !LanguageHelper.isEnglish
+                      ? Radius.circular(15)
+                      : Radius.zero),
               borderSide: BorderSide.none),
           child: Row(
             children: [
               Text(
-                Strings().search(),
+                Languages.of(context).search,
                 style: TextStyle(
                   color: orangeColor,
                 ),
@@ -533,7 +540,9 @@ AppBar appBarBuilder(
           radius: 12,
           backgroundColor: Colors.white,
           child: Icon(
-            Icons.keyboard_arrow_left_outlined,
+            LanguageHelper.isEnglish
+                ? Icons.keyboard_arrow_left_outlined
+                : Icons.keyboard_arrow_right_outlined,
             size: 20,
             color: defaultOrangeColor,
           ),
