@@ -1,5 +1,6 @@
 import 'package:bawabtalsharq/Model/categories_model.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
+import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:flutter/material.dart';
 
@@ -73,7 +74,7 @@ class _AllCategoriesState extends State<AllCategories>
   Positioned getMainCategoriesList(BuildContext context) {
     return Positioned(
       child: Container(
-        margin: EdgeInsets.only(top: 25),
+        margin: EdgeInsetsDirectional.only(top: 25),
         child: ListView.builder(
           controller: _mainScrollController,
           itemCount: categoriesArr.length,
@@ -99,13 +100,13 @@ class _AllCategoriesState extends State<AllCategories>
                 });
               },
               child: Container(
-                margin: EdgeInsets.only(bottom: 15, left: 8, right: 8),
+                margin: EdgeInsetsDirectional.only(bottom: 15, start: 8, end: 8),
                 child: Row(
                   children: [
                     Container(
                       padding: categoriesArr[index].isSelected
-                          ? EdgeInsets.all(3)
-                          : EdgeInsets.all(0),
+                          ? EdgeInsetsDirectional.fromSTEB(3, 3, 3, 3)
+                          : EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         border: categoriesArr[index].isSelected
@@ -121,7 +122,7 @@ class _AllCategoriesState extends State<AllCategories>
                           color: Color(categoriesArr[index].color)
                               .withOpacity(0.15),
                         ),
-                        padding: EdgeInsets.all(2),
+                        padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
                         child: Image.asset(
                           cold_drinks,
                           height: 45,
@@ -152,8 +153,9 @@ class _AllCategoriesState extends State<AllCategories>
   Positioned getSubCategoriesList(BuildContext context, int categoryIndex,
       List<SubCategory> subCategoryArr, Color color) {
     setupAnimation();
-    return Positioned(
-      left: 75,
+    return Positioned.directional(
+      textDirection: Directionality.of(context),
+      start: 75,
       top: 0,
       bottom: 0,
       width: MediaQuery.of(context).size.width - 75,
@@ -180,7 +182,7 @@ class _AllCategoriesState extends State<AllCategories>
               ),
             ),
             child: Container(
-              margin: EdgeInsets.only(top: 25),
+              margin: EdgeInsetsDirectional.only(top: 25),
               decoration: BoxDecoration(
                 color: color.withOpacity(0.15),
                 borderRadius: BorderRadius.only(
@@ -197,8 +199,8 @@ class _AllCategoriesState extends State<AllCategories>
                       print('sub pressed');
                     },
                     child: Container(
-                      margin: EdgeInsets.only(
-                          left: 15, right: 15, top: 15, bottom: 5),
+                      margin: EdgeInsetsDirectional.only(
+                          start: 15, end: 15, top: 15, bottom: 5),
                       child: Row(
                         children: [
                           Container(
@@ -207,7 +209,7 @@ class _AllCategoriesState extends State<AllCategories>
                               color: Colors.white,
                             ),
                             child: Padding(
-                              padding: const EdgeInsets.all(3),
+                              padding: const EdgeInsetsDirectional.only(start: 3, top: 3, end: 3, bottom: 3),
                               child: Image.asset(
                                 cold_drinks,
                                 height: 37,
@@ -244,8 +246,8 @@ class _AllCategoriesState extends State<AllCategories>
       vsync: this,
     )..forward();
     _sliderAnimation = Tween<Offset>(
-      begin: const Offset(1, 0),
-      end: const Offset(0.0, 0.0),
+      begin: LanguageHelper.isEnglish ? Offset(1, 0) : Offset(-1, 0),
+        end: const Offset(0.0, 0.0),
     ).animate(CurvedAnimation(
       parent: _sliderController,
       curve: Curves.easeIn,
