@@ -55,7 +55,7 @@ class StringsINR {
   static const String password = 'Password';
   static const String forgetPassword = 'Forget Password?';
   static const String alreadyHaveAccount = 'Already have an account';
-  static const String signIn = 'SignIn';
+  static const String signIn = 'Sign In';
 
 // end Islam
 }

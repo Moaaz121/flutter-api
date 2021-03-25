@@ -43,12 +43,11 @@ class LanguageEn extends Languages {
   // String get notification => 'notification';
   String get egypt => 'Egypt';
 
-
   String get intro1Title => 'Discover';
   String get intro1SubTitle =>
       'Our app is now sleeker, smarter and easier to use. Go on and enjoy it!';
   String get intro2Title => 'Easy Communicate';
-  String get  intro2SubTitle =>
+  String get intro2SubTitle =>
       'Our app is now sleeker, smarter and easier to use. Go on and enjoy it!';
   String get intro3Title => 'Grow Your Buisness';
   String get intro3SubTitle =>
@@ -71,6 +70,6 @@ class LanguageEn extends Languages {
   String get password => 'Password';
   String get forgetPassword => 'Forget Password?';
   String get alreadyHaveAccount => 'Already have an account ?';
-  String get signIn => 'SignIn';
+  String get signIn => 'Sign In';
 // end Islam
 }
