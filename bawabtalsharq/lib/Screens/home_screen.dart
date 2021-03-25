@@ -276,7 +276,7 @@ Widget ourGoldenSupplier(BuildContext context) {
                   position.isOdd ? 'Kareem Hassanien' : 'Mohamed Mosadik'  : position.isOdd ? 'كريم حسانين' : 'محمد مصدق',
               supplierImg:
                   AssetImage(position.isOdd ? kareem_img : mosadaq_img),
-              years:  position.isOdd ? 3 : 5,
+              years: LanguageHelper.isEnglish ? position.isOdd ? '3' : '5' : position.isOdd ? '٣': '٥',
             );
           },
         ),
@@ -366,7 +366,7 @@ Widget mostPopularIn(BuildContext context) {
                 onPress: () {},
                 nameProduct: LanguageHelper.isEnglish ? 'Pasta': 'بيتزا',
                 nameCategory: LanguageHelper.isEnglish ? 'Food': 'الطعام',
-                price: '\$\265.0',
+                price: LanguageHelper.isEnglish ? '\$\265.0' : ' ٢٥٦ ج.م',
                 context: context),
           ],
         ),
@@ -387,7 +387,7 @@ Widget popularSlider(BuildContext context, int pos) {
             onPress: () {},
             nameProduct: LanguageHelper.isEnglish ? 'Pasta': 'بيتزا',
             nameCategory: LanguageHelper.isEnglish ? 'Food': 'الطعام',
-            price: '\$\590.0',
+            price: LanguageHelper.isEnglish ? '\$\265.0' : ' ٢٥٦ ج.م',
             context: context),
         subMostPopularProduct(
             productImg: AssetImage(productImage),
@@ -397,7 +397,7 @@ Widget popularSlider(BuildContext context, int pos) {
             onPress: () {},
             nameProduct: LanguageHelper.isEnglish ? 'Pasta': 'بيتزا',
             nameCategory: LanguageHelper.isEnglish ? 'Food': 'الطعام',
-            price: '\$\125.0',
+            price: LanguageHelper.isEnglish ? '\$\265.0' : ' ٢٥٦ ج.م',
             context: context),
       ],
     ),
@@ -469,7 +469,7 @@ Widget supplierView(
     Colors colors,
     String nameSupplier,
     String category,
-    int years,
+    String years,
     AssetImage supplierImg}) {
   return GestureDetector(
     onTap: onPress,
@@ -527,8 +527,8 @@ Widget supplierView(
                 SizedBox(
                   width: 5.0,
                 ),
-                Text(
-                  '$years YRS',
+                Text( LanguageHelper.isEnglish ?
+                  '$years YRS': '$years سنة ',
                   style: TextStyle(
                       fontSize: 10.0,
                       fontWeight: FontWeight.w300,
@@ -753,7 +753,7 @@ Widget mainMostPopularCategory() {
             nameProduct: LanguageHelper.isEnglish? position.isOdd ? 'Negrsgo' : 'koshary' : position.isOdd ? 'نجرسكو' :'كشري',
             productImg:
                 AssetImage(position.isOdd ? productImage : productImage),
-            price: '80.00',
+            price: LanguageHelper.isEnglish ? '80.00' : '٨٠',
           ),
         );
       },
@@ -867,8 +867,7 @@ Widget mostPopularCateg(
                       children: [
                         Flexible(
                           child: Container(
-                            child: Text(
-                              '$price\EGP',
+                            child: Text( LanguageHelper.isEnglish ? '$price\EGP' : '$price \ج.م',
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   fontWeight: FontWeight.w600,

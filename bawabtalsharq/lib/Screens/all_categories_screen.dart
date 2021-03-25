@@ -51,6 +51,7 @@ class _AllCategoriesState extends State<AllCategories>
           Navigator.pop(context);
         },
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: buildFloatingActionBtn(
         icon: Icons.arrow_upward_rounded,
         onPressed: () {
