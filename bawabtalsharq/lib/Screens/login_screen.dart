@@ -1,4 +1,5 @@
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
+import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/main.dart';
@@ -55,7 +56,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: height * .07,
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(3.0),
+                            padding: EdgeInsetsDirectional.only(
+                                top: height * .01, start: height * .03),
                             child: Row(
                               children: [
                                 GestureDetector(
@@ -74,24 +76,24 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(
                         height: height * 0.04,
                       ),
-                      Text(
-                        (Languages.of(context).login),
-                        //'Login',
-                        style: TextStyle(
-                            fontFamily: blackFontFamily,
-                            fontSize: height * .056,
-                            letterSpacing: 1,
-                            fontWeight: FontWeight.w700),
-                      ),
+                      Text((Languages.of(context).login),
+                          style: LanguageHelper.isEnglish
+                              ? TextStyle(
+                                  fontFamily: blackFontFamily,
+                                  fontSize: height * .056,
+                                  letterSpacing: 1,
+                                  fontWeight: FontWeight.w700)
+                              : TextStyle(
+                                  fontFamily: blackFontFamily,
+                                  fontSize: height * .040,
+                                  letterSpacing: 1,
+                                  fontWeight: FontWeight.w700)),
                       SizedBox(
-                        height: height * 0.07,
+                        height: height * 0.04,
                       ),
-                      SizedBox(
-                        height: 33,
-                        child: customTextField(
-                            label: Languages.of(context).userName,
-                            leftIcon: Icons.person),
-                      ),
+                      customTextField(
+                          label: Languages.of(context).userName,
+                          leftIcon: Icons.person),
                       SizedBox(
                         height: height * 0.03,
                       ),
@@ -111,11 +113,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               : Icons.visibility),
                         ),
                       ),
-                      SizedBox(
-                        height: height * .003,
-                      ),
+                      // SizedBox(
+                      //   height: height * .003,
+                      // ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 15, top: 5),
+                        padding:
+                            const EdgeInsetsDirectional.only(start: 15, top: 5),
                         child: GestureDetector(
                             onTap: () {},
                             child: Text(
@@ -130,39 +133,53 @@ class _LoginScreenState extends State<LoginScreen> {
                             )),
                       ),
                       SizedBox(
-                        height: height * .04,
+                        height: MediaQuery.of(context).size.height * .05,
                       ),
-                      Align(
-                        alignment: Alignment.bottomRight,
-                        child: FlatButton(
-                          splashColor: orangeColor.withOpacity(0.5),
-                          highlightColor: orangeColor.withOpacity(0.2),
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(
-                              color: Colors.red,
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(9),
-                          ),
-                          onPressed: () {
-                            // TO DO check login
-                            Navigator.pushReplacementNamed(
-                                context, ScreenRoutes.mainScreen);
-                          },
-                          color: Colors.white,
-                          child: Text(
-                            (Languages.of(context).signIn),
-                            style: TextStyle(fontSize: 15, color: Colors.red),
-                          ),
-                        ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: height * .01, right: height * .01),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              FlatButton(
+                                padding: EdgeInsetsDirectional.only(
+                                  start: 35,
+                                  end: 35,
+                                  top: 11,
+                                  bottom: 11,
+                                ),
+                                splashColor: orangeColor.withOpacity(0.5),
+                                highlightColor: orangeColor.withOpacity(0.2),
+                                shape: RoundedRectangleBorder(
+                                  side: BorderSide(
+                                    color: Colors.red,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(9),
+                                ),
+                                onPressed: () {
+                                  // TO DO check login
+                                  Navigator.pushReplacementNamed(
+                                      context, ScreenRoutes.mainScreen);
+                                },
+                                color: Colors.white,
+                                child: Text(
+                                  (Languages.of(context).signIn),
+                                  style: TextStyle(
+                                      fontSize: height * .015,
+                                      color: Colors.red),
+                                ),
+                              ),
+                            ]),
                       ),
+
                       // SizedBox(
                       //   height: height * .03,
                       // ),
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 60),
+                    padding: EdgeInsets.only(bottom: height * 0.05),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -240,7 +257,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
