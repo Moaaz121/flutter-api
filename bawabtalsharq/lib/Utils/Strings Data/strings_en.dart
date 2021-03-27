@@ -15,6 +15,9 @@ class StringsEN {
   static String mostPopularByCategories = 'Most Popular By Categories';
   static String seeAll = 'See All';
   static String more = 'More';
+  static String requestForQutation = 'Request For Qutation';
+  static String postSourcingRequestNow = 'Post Sourcing Request Now';
+
 // end karem
 
 // Start Asmaa
