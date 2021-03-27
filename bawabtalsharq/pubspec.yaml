@@ -32,6 +32,8 @@ dependencies:
   device_preview:
   carousel_slider: ^3.0.0
   smooth_page_indicator: ^0.2.1
+  flutter_dropdown: ^0.0.8
+  line_icons:
 
 dev_dependencies:
   flutter_test:
@@ -70,8 +72,3 @@ flutter:
         - asset: assets/fonts/Roboto-Regular.ttf
         - asset: assets/fonts/Roboto-Thin.ttf
         - asset: assets/fonts/Roboto-ThinItalic.ttf
-
-
-
-
-
