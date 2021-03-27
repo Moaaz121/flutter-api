@@ -1,10 +1,10 @@
+import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bawabtalsharq/Utils/strings.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:flutter_dropdown/flutter_dropdown.dart';
-import 'package:line_icons/line_icons.dart';
 
 class Requestforqutation extends StatefulWidget {
   @override
@@ -33,30 +33,30 @@ class _RequestforqutationState extends State<Requestforqutation> {
             children: [
               buildColumnText(
                 context,
-                text: 'Product name',
-                inputText: 'please enter product name...',
+                text: Languages.of(context).productName,
+                inputText: Languages.of(context).inputProduct,
               ),
 
               buildColumnDrop(context,
-                  text: 'Category name',
-                  dropText: 'Select Category',
+                  text: Languages.of(context).categoryName,
+                  dropText: Languages.of(context).dropCategory,
                   dropList: ['ahmed', 'moaaz']),
 
               buildColumnDrop(context,
-                  text: 'Sourcing Purpose',
-                  dropText: 'please enter product name...',
+                  text: Languages.of(context).sourcingPurpose,
+                  dropText: Languages.of(context).dropSourcing,
                   dropList: ['ahmed', 'moaaz']),
 
               buildColumnText(
                 context,
-                text: 'Quantity',
+                text: Languages.of(context).quantity,
                 inputText: '000000000',
                 margin: 60,
               ),
 
               Center(
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
+                  padding: const EdgeInsetsDirectional.only(top: 8.0),
                   child: Container(
                     width: MediaQuery.of(context).size.width * 0.9,
                     height: MediaQuery.of(context).size.height * 0.055,
@@ -67,7 +67,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
                       ),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
                       child: DropDown<String>(
                         showUnderline: false,
                         isExpanded: true,
@@ -78,7 +78,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
                           "sony",
                         ],
                         hint: Text(
-                          "Pieces",
+                          Languages.of(context).dropQuantity,
                           style: TextStyle(
                             color: backTabColor.withOpacity(0.8),
                             decoration: TextDecoration.none,
@@ -92,20 +92,20 @@ class _RequestforqutationState extends State<Requestforqutation> {
               ),
 
               buildColumnDrop(context,
-                  text: 'Trade Terms',
-                  dropText: 'FCA',
+                  text: Languages.of(context).tradeTerms,
+                  dropText: Languages.of(context).dropTrade,
                   dropList: ['ahmed', 'moaaz']),
 
               // <----start Details---->
               buildColumnText(
                 context,
-                text: 'Details',
-                inputText: 'Please Enter At least 20 Character',
+                text: Languages.of(context).details,
+                inputText: Languages.of(context).inputDetails,
                 height: 0.3,
               ),
 
               Padding(
-                padding: const EdgeInsets.only(top: 15),
+                padding: const EdgeInsetsDirectional.only(top: 15),
                 child: Center(
                   child: Container(
                     width: MediaQuery.of(context).size.width * 0.8,
@@ -122,7 +122,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
                           size: MediaQuery.of(context).size.width * 0.3,
                         ),
                         Text(
-                          "Upload Sourcing Document",
+                          Languages.of(context).uploadDocument,
                           style: TextStyle(
                               color: Color(0xFF5E5E5E),
                               decoration: TextDecoration.underline),
@@ -134,7 +134,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
               ),
 
               Padding(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
@@ -145,7 +145,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Advanced',
+                        Languages.of(context).advanced,
                         style: TextStyle(
                             fontSize: 17,
                             color: orangeColor,
@@ -153,7 +153,8 @@ class _RequestforqutationState extends State<Requestforqutation> {
                       ),
                       Expanded(
                         child: Container(
-                          margin: EdgeInsets.only(right: 10, left: 10),
+                          margin:
+                              EdgeInsetsDirectional.only(start: 10, end: 10),
                           height: 2,
                           color: orangeColor.withOpacity(0.3),
                         ),
@@ -175,10 +176,10 @@ class _RequestforqutationState extends State<Requestforqutation> {
                   children: [
                     Container(
                       child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 20, top: 5, bottom: 5, right: 20),
+                        padding: const EdgeInsetsDirectional.only(
+                            start: 20, top: 5, bottom: 5, end: 20),
                         child: Text(
-                          'Supplier Capability',
+                          Languages.of(context).supplierCapability,
                           style: TextStyle(
                             fontFamily: 'assets/fonts/Roboto-Light.ttf',
                             fontSize: 17,
@@ -188,8 +189,8 @@ class _RequestforqutationState extends State<Requestforqutation> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(
-                          top: 10, bottom: 20, left: 20, right: 20),
+                      padding: const EdgeInsetsDirectional.only(
+                          top: 10, bottom: 20, end: 20, start: 20),
                       child: Container(
                         width: MediaQuery.of(context).size.width * 0.9,
                         height: 2,
@@ -197,21 +198,21 @@ class _RequestforqutationState extends State<Requestforqutation> {
                       ),
                     ),
                     buildColumnDrop(context,
-                        text: 'Certifications',
-                        dropText: 'Select Certificate',
+                        text: Languages.of(context).certifications,
+                        dropText: Languages.of(context).dropCertificate,
                         dropList: ['ahmed', 'moaaz']),
                     buildColumnText(
                       context,
-                      text: 'Details',
-                      inputText: 'Please Enter At least 20 Character',
+                      text: Languages.of(context).requirements,
+                      inputText: Languages.of(context).inputRequire,
                       height: 0.3,
                     ),
                     Container(
                       child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 20, top: 5, bottom: 5, right: 20),
+                        padding: const EdgeInsetsDirectional.only(
+                            end: 20, top: 5, bottom: 5, start: 20),
                         child: Text(
-                          'Shipping & Payment',
+                          Languages.of(context).shipping,
                           style: TextStyle(
                               fontFamily: 'assets/fonts/Roboto-Light.ttf',
                               fontSize: 17,
@@ -220,8 +221,8 @@ class _RequestforqutationState extends State<Requestforqutation> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(
-                          top: 10, bottom: 20, left: 20, right: 20),
+                      padding: const EdgeInsetsDirectional.only(
+                          top: 10, bottom: 20, end: 20, start: 20),
                       child: Container(
                         width: MediaQuery.of(context).size.width * 0.9,
                         height: 2,
@@ -229,44 +230,41 @@ class _RequestforqutationState extends State<Requestforqutation> {
                       ),
                     ),
                     buildColumnDrop(context,
-                        text: 'Shipping Method',
-                        dropText: 'Select Shipping',
+                        text: Languages.of(context).shippingMethod,
+                        dropText: Languages.of(context).dropShipping,
                         dropList: ['ahmed', 'moaaz']),
                     buildColumnDrop(context,
-                        text: 'Destination',
-                        dropText: 'Select Destination',
+                        text: Languages.of(context).destination,
+                        dropText: Languages.of(context).dropDestination,
                         dropList: ['ahmed', 'moaaz']),
                     buildColumnText(
                       context,
-                      text: 'Port',
-                      inputText: 'enter port',
+                      text: Languages.of(context).port,
+                      inputText: Languages.of(context).port,
                     ),
                     buildColumnText(context,
-                        text: 'Lead Time Ship in',
+                        text: Languages.of(context).leadTime,
                         inputText: '000000000',
                         margin: 60),
                     buildColumnText(
                       context,
-                      text: 'Payment Term',
-                      inputText: 'Mone Gram',
+                      text: Languages.of(context).paymentTerm,
+                      inputText: Languages.of(context).paymentTerm,
                     ),
-                    buildCheckbox(1,
-                        text:
-                            'I agree to share my Business Card with quoted suppliers'),
-                    buildCheckbox(2,
-                        text:
-                            'I have read, Understood and agree to payed, by the Buying Request Posting Rules'),
+                    buildCheckbox(1, text: Languages.of(context).check1),
+                    buildCheckbox(2, text: Languages.of(context).check2),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(right: 15, bottom: 20),
+                          padding: const EdgeInsetsDirectional.only(
+                              start: 15, bottom: 20),
                           child: SizedBox(
                             width: MediaQuery.of(context).size.width * 0.3,
                             child: RaisedButton(
                               disabledColor: Colors.transparent,
                               child: Text(
-                                'Submit',
+                                Languages.of(context).submit,
                                 style: TextStyle(color: orangeColor),
                               ),
                               onPressed: null,
@@ -314,7 +312,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
     List<String> dropList,
   }) {
     return Padding(
-      padding: const EdgeInsets.all(18),
+      padding: const EdgeInsetsDirectional.fromSTEB(18, 18, 18, 18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -325,8 +323,8 @@ class _RequestforqutationState extends State<Requestforqutation> {
           ),
           Center(
             child: Container(
-              padding: EdgeInsets.only(left: 10),
-              margin: EdgeInsets.only(top: 10),
+              padding: EdgeInsetsDirectional.only(end: 10),
+              margin: EdgeInsetsDirectional.only(top: 10),
               height: MediaQuery.of(context).size.height * 0.055,
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -335,7 +333,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
                 child: DropDown<String>(
                   showUnderline: false,
                   isExpanded: true,
@@ -363,7 +361,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
       double margin = 0,
       double height = 0.055}) {
     return Padding(
-      padding: const EdgeInsets.all(18),
+      padding: const EdgeInsetsDirectional.fromSTEB(18, 18, 18, 18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -374,8 +372,9 @@ class _RequestforqutationState extends State<Requestforqutation> {
           ),
           Center(
             child: Container(
-              padding: EdgeInsets.only(left: 10),
-              margin: EdgeInsets.only(top: 10, left: margin, right: margin),
+              padding: EdgeInsetsDirectional.only(end: 10),
+              margin: EdgeInsetsDirectional.only(
+                  top: 10, end: margin, start: margin),
               height: MediaQuery.of(context).size.height * height,
               decoration: BoxDecoration(
                 color: Colors.white,
