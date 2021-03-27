@@ -24,6 +24,9 @@ dependencies:
   flutter:
     sdk: flutter
   device_preview:
+#  animated_list_view_scroll: any
+  flutter_dropdown: ^0.0.8
+  line_icons:
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -31,6 +34,7 @@ dependencies:
   cupertino_icons: ^1.0.0
   carousel_slider: ^3.0.0
   smooth_page_indicator: ^0.2.1
+
 
 dev_dependencies:
   flutter_test:

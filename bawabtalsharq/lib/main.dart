@@ -3,10 +3,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'Screens/main_srceen.dart';
+import 'Screens/request_for_qutation.dart';
 
 void main() => runApp(
       DevicePreview(
-        enabled: !kReleaseMode,
+        enabled: false,
         builder: (context) => BawabtAlsharqApp(), // Wrap your app
       ),
     );
@@ -24,7 +25,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.deepOrange),
-      home: MainScreen(),
+      home: Requestforqutation(),
     );
   }
 }
