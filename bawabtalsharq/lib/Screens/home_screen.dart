@@ -1,8 +1,6 @@
-
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
-import 'package:bawabtalsharq/Utils/strings.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
@@ -42,10 +40,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             context, ScreenRoutes.categoriesScreen);
                       }, Languages.of(context).allCategories, allCategories,
                           blueColor.withOpacity(0.15)),
-                      mainHeaderButton(() {}, Languages.of(context).requestForQ,
-                          requestForQ, orangeColor.withOpacity(0.15)),
-                      mainHeaderButton(() {}, Languages.of(context).joinUs, joinUs,
-                          purpleColor.withOpacity(0.15)),
+                      mainHeaderButton(() {
+                        Navigator.pushNamed(
+                            context, ScreenRoutes.requestForQuotation);
+                      }, Languages.of(context).requestForQ, requestForQ,
+                          orangeColor.withOpacity(0.15)),
+                      mainHeaderButton(() {}, Languages.of(context).joinUs,
+                          joinUs, purpleColor.withOpacity(0.15)),
                     ],
                   ),
                   ourGoldenSupplier(context),
@@ -60,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [searchButton(context,() {}), chatButton(() {})],
+                  children: [searchButton(context, () {}), chatButton(() {})],
                 ),
               ],
             ),
@@ -95,7 +96,7 @@ Widget mostPopularByCategoryHeader(BuildContext context) {
       child: Padding(
         padding: const EdgeInsets.only(left: 20.0, top: 15.0),
         child: Text(
-           Languages.of(context).mostPopularByCategories,
+          Languages.of(context).mostPopularByCategories,
           style: titlesStyle(),
         ),
       ),
@@ -270,13 +271,29 @@ Widget ourGoldenSupplier(BuildContext context) {
           itemBuilder: (context, position) {
             return supplierView(
               onPress: () {},
-              category: LanguageHelper.isEnglish ?
-                  position.isOdd ? 'Food & Beverages' : 'Agriculture Crops' : position.isOdd ? 'المحاصيل الزارعية' : 'الخضروات والفاكهة',
-              nameSupplier: LanguageHelper.isEnglish ?
-                  position.isOdd ? 'Kareem Hassanien' : 'Mohamed Mosadik'  : position.isOdd ? 'كريم حسانين' : 'محمد مصدق',
+              category: LanguageHelper.isEnglish
+                  ? position.isOdd
+                      ? 'Food & Beverages'
+                      : 'Agriculture Crops'
+                  : position.isOdd
+                      ? 'المحاصيل الزارعية'
+                      : 'الخضروات والفاكهة',
+              nameSupplier: LanguageHelper.isEnglish
+                  ? position.isOdd
+                      ? 'Kareem Hassanien'
+                      : 'Mohamed Mosadik'
+                  : position.isOdd
+                      ? 'كريم حسانين'
+                      : 'محمد مصدق',
               supplierImg:
                   AssetImage(position.isOdd ? kareem_img : mosadaq_img),
-              years: LanguageHelper.isEnglish ? position.isOdd ? '3' : '5' : position.isOdd ? '٣': '٥',
+              years: LanguageHelper.isEnglish
+                  ? position.isOdd
+                      ? '3'
+                      : '5'
+                  : position.isOdd
+                      ? '٣'
+                      : '٥',
             );
           },
         ),
@@ -285,7 +302,7 @@ Widget ourGoldenSupplier(BuildContext context) {
   );
 }
 
-Widget ourGoldenSupplierHeader(BuildContext context, {Function onPress()} ) {
+Widget ourGoldenSupplierHeader(BuildContext context, {Function onPress()}) {
   return Padding(
     padding: const EdgeInsets.all(20),
     child: Row(
@@ -364,8 +381,8 @@ Widget mostPopularIn(BuildContext context) {
                 productImg: AssetImage(productImage),
                 backgroundColor: yellowColor.withOpacity(.3),
                 onPress: () {},
-                nameProduct: LanguageHelper.isEnglish ? 'Pasta': 'بيتزا',
-                nameCategory: LanguageHelper.isEnglish ? 'Food': 'الطعام',
+                nameProduct: LanguageHelper.isEnglish ? 'Pasta' : 'بيتزا',
+                nameCategory: LanguageHelper.isEnglish ? 'Food' : 'الطعام',
                 price: LanguageHelper.isEnglish ? '\$\265.0' : ' ٢٥٦ ج.م',
                 context: context),
           ],
@@ -385,8 +402,8 @@ Widget popularSlider(BuildContext context, int pos) {
             backgroundColor:
                 pos == 0 ? redColor.withOpacity(.3) : blueColor.withOpacity(.3),
             onPress: () {},
-            nameProduct: LanguageHelper.isEnglish ? 'Pasta': 'بيتزا',
-            nameCategory: LanguageHelper.isEnglish ? 'Food': 'الطعام',
+            nameProduct: LanguageHelper.isEnglish ? 'Pasta' : 'بيتزا',
+            nameCategory: LanguageHelper.isEnglish ? 'Food' : 'الطعام',
             price: LanguageHelper.isEnglish ? '\$\265.0' : ' ٢٥٦ ج.م',
             context: context),
         subMostPopularProduct(
@@ -395,8 +412,8 @@ Widget popularSlider(BuildContext context, int pos) {
                 ? orangeColor.withOpacity(.3)
                 : purpleColor.withOpacity(.3),
             onPress: () {},
-            nameProduct: LanguageHelper.isEnglish ? 'Pasta': 'بيتزا',
-            nameCategory: LanguageHelper.isEnglish ? 'Food': 'الطعام',
+            nameProduct: LanguageHelper.isEnglish ? 'Pasta' : 'بيتزا',
+            nameCategory: LanguageHelper.isEnglish ? 'Food' : 'الطعام',
             price: LanguageHelper.isEnglish ? '\$\265.0' : ' ٢٥٦ ج.م',
             context: context),
       ],
@@ -404,7 +421,7 @@ Widget popularSlider(BuildContext context, int pos) {
   );
 }
 
-Widget mostPopularInHeader(BuildContext context,{Function onPress()}) {
+Widget mostPopularInHeader(BuildContext context, {Function onPress()}) {
   return Padding(
     padding: const EdgeInsets.all(20),
     child: Row(
@@ -527,8 +544,8 @@ Widget supplierView(
                 SizedBox(
                   width: 5.0,
                 ),
-                Text( LanguageHelper.isEnglish ?
-                  '$years YRS': '$years سنة ',
+                Text(
+                  LanguageHelper.isEnglish ? '$years YRS' : '$years سنة ',
                   style: TextStyle(
                       fontSize: 10.0,
                       fontWeight: FontWeight.w300,
@@ -750,7 +767,13 @@ Widget mainMostPopularCategory() {
             backgroundColor: position == 2
                 ? redColor
                 : (position == 1 ? orangeColor : blueColor),
-            nameProduct: LanguageHelper.isEnglish? position.isOdd ? 'Negrsgo' : 'koshary' : position.isOdd ? 'نجرسكو' :'كشري',
+            nameProduct: LanguageHelper.isEnglish
+                ? position.isOdd
+                    ? 'Negrsgo'
+                    : 'koshary'
+                : position.isOdd
+                    ? 'نجرسكو'
+                    : 'كشري',
             productImg:
                 AssetImage(position.isOdd ? productImage : productImage),
             price: LanguageHelper.isEnglish ? '80.00' : '٨٠',
@@ -867,7 +890,10 @@ Widget mostPopularCateg(
                       children: [
                         Flexible(
                           child: Container(
-                            child: Text( LanguageHelper.isEnglish ? '$price\EGP' : '$price \ج.م',
+                            child: Text(
+                              LanguageHelper.isEnglish
+                                  ? '$price\EGP'
+                                  : '$price \ج.م',
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   fontWeight: FontWeight.w600,

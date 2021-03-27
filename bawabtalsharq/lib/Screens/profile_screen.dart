@@ -1,6 +1,5 @@
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
-import 'package:bawabtalsharq/Utils/strings.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
@@ -187,10 +186,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-//end bahaa
-
-//start asmaa
-
   BoxDecoration boxDecorationBuilder(double radius) {
     return BoxDecoration(
       color: Colors.white,
@@ -348,5 +343,4 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
-// end asmaa
 }
