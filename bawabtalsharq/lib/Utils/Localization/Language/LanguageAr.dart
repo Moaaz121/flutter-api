@@ -4,7 +4,7 @@ class LanguageAr extends Languages {
   @override
   String get name => "العربي";
   String get notification => "الاشعارات";
-  String get language => 'AR';
+  String get language => 'عربي';
 
 // Start Karem
 
