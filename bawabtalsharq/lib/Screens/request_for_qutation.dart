@@ -18,12 +18,11 @@ class _RequestforqutationState extends State<Requestforqutation> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return SafeArea(
+      child: Scaffold(
         backgroundColor: Colors.white54.withOpacity(0.92),
         appBar: appBarBuilder(
-            title: Strings().requestForQ(),
+            title: Languages.of(context).requestForQuotation,
             onBackPressed: () {
               Navigator.pop(context);
             }),
@@ -323,7 +322,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
           ),
           Center(
             child: Container(
-              padding: EdgeInsetsDirectional.only(end: 10),
+              padding: EdgeInsetsDirectional.only(start: 10),
               margin: EdgeInsetsDirectional.only(top: 10),
               height: MediaQuery.of(context).size.height * 0.055,
               decoration: BoxDecoration(
@@ -372,7 +371,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
           ),
           Center(
             child: Container(
-              padding: EdgeInsetsDirectional.only(end: 10),
+              padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
               margin: EdgeInsetsDirectional.only(
                   top: 10, end: margin, start: margin),
               height: MediaQuery.of(context).size.height * height,
