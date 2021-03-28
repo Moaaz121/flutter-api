@@ -58,6 +58,10 @@ abstract class Languages {
   String get intro3SubTitle;
   String get next;
 
+  String get email;
+  String get subject;
+  String get writeAMessage;
+
 // end Mosdik
 
 // Start Moaaz

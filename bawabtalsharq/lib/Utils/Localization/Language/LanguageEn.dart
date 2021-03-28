@@ -60,6 +60,10 @@ class LanguageEn extends Languages {
       'Our app is now sleeker, smarter and easier to use. Go on and enjoy it!';
   String get next => 'Next';
 
+  String get email => 'E-mail';
+  String get subject => 'Subject';
+  String get writeAMessage => 'Write Your Message';
+
 // end Mosdik
 
 // Start Moaaz

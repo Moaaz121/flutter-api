@@ -323,18 +323,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           child: Column(
                                             children: [
                                               textFiledMessage(context,
-                                                  text: 'E-mail'),
+                                                  text: Languages.of(context)
+                                                      .email),
                                               textFiledMessage(context,
-                                                  text: 'subject'),
+                                                  text: Languages.of(context)
+                                                      .subject),
                                               textFiledMessage(context,
-                                                  text: 'Write Your Message',
+                                                  text: Languages.of(context)
+                                                      .writeAMessage,
                                                   keyboardType:
                                                       TextInputType.multiline,
                                                   lines: 5),
                                               SizedBox(
                                                 height: 10,
                                               ),
-                                              submitButton(() {})
+                                              submitButton(() {}, context)
                                             ],
                                           ),
                                         ),
@@ -558,7 +561,6 @@ Widget textFiledMessage(BuildContext context,
               const Radius.circular(15.0),
             ),
           ),
-          // contentPadding: hight,
           labelText: text,
         ),
       ),
@@ -567,13 +569,13 @@ Widget textFiledMessage(BuildContext context,
   );
 }
 
-Widget submitButton(Function _function) {
+Widget submitButton(Function _function, BuildContext context) {
   return FlatButton(
     onPressed: _function,
     child: Padding(
       padding: const EdgeInsets.all(12),
       child: Text(
-        'Submit',
+        Languages.of(context).submit,
         style: TextStyle(
           fontSize: 17,
           fontWeight: FontWeight.bold,
