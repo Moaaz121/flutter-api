@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
@@ -271,7 +273,56 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             textSize: 14),
                         unExpansionProfileItem(
                             message, Languages.of(context).sendMessage, () {
-                          print('send Message');
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return Center(
+                                  child: ListView(
+                                    shrinkWrap: true,
+                                    children: [
+                                      Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                            color: Colors.white,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                  color: Color(0x26e16036),
+                                                  offset: Offset(0, 1),
+                                                  blurRadius: 6,
+                                                  spreadRadius: 0),
+                                            ],
+                                          ),
+                                          margin: EdgeInsets.only(
+                                              right: 20, left: 20),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(20.0),
+                                            child: Material(
+                                              child: Column(
+                                                children: [
+                                                  textFiledMessage(context,
+                                                      text: 'E-mail'),
+                                                  textFiledMessage(context,
+                                                      text: 'subject'),
+                                                  textFiledMessage(context,
+                                                      text:
+                                                          'Write Your Message',
+                                                      keyboardType:
+                                                          TextInputType
+                                                              .multiline,
+                                                      lines: 5),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  submitButton(() {})
+                                                ],
+                                              ),
+                                            ),
+                                          )),
+                                    ],
+                                  ),
+                                );
+                              });
                         },
                             fontWeight: FontWeight.normal,
                             drawDivider: false,
@@ -398,4 +449,53 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
+}
+
+Widget textFiledMessage(BuildContext context,
+    {String text,
+    TextInputType keyboardType = TextInputType.text,
+    int lines = 1}) {
+  return Column(
+    children: [
+      TextField(
+        minLines: 1,
+        maxLines: lines,
+        keyboardType: keyboardType,
+        enabled: true,
+        decoration: InputDecoration(
+          isDense: true,
+          border: OutlineInputBorder(
+            borderRadius: const BorderRadius.all(
+              const Radius.circular(15.0),
+            ),
+          ),
+          // contentPadding: hight,
+          labelText: text,
+        ),
+      ),
+      SizedBox(height: 24)
+    ],
+  );
+}
+
+Widget submitButton(Function _function) {
+  return FlatButton(
+    onPressed: _function,
+    child: Padding(
+      padding: const EdgeInsets.all(12),
+      child: Text(
+        'Submit',
+        style: TextStyle(
+          fontSize: 17,
+          fontWeight: FontWeight.bold,
+          color: orangeColor,
+        ),
+      ),
+    ),
+    shape: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(25),
+        borderSide: BorderSide(width: 3, color: orangeColor)),
+    highlightColor: orangeColor.withOpacity(0.2),
+    splashColor: orangeColor.withOpacity(0.5),
+  );
 }
