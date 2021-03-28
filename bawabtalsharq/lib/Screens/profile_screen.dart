@@ -299,55 +299,50 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         unExpansionProfileItem(
                             message, Languages.of(context).sendMessage, () {
                           showDialog(
-                              context: context,
-                              builder: (context) {
-                                return Center(
-                                  child: ListView(
-                                    shrinkWrap: true,
-                                    children: [
-                                      Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(15),
-                                            color: Colors.white,
-                                            boxShadow: [
-                                              BoxShadow(
-                                                  color: Color(0x26e16036),
-                                                  offset: Offset(0, 1),
-                                                  blurRadius: 6,
-                                                  spreadRadius: 0),
+                            Center(
+                              child: ListView(
+                                shrinkWrap: true,
+                                children: [
+                                  Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(15),
+                                        color: Colors.white,
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color: Color(0x26e16036),
+                                              offset: Offset(0, 1),
+                                              blurRadius: 6,
+                                              spreadRadius: 0),
+                                        ],
+                                      ),
+                                      margin:
+                                          EdgeInsets.only(right: 20, left: 20),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(20.0),
+                                        child: Material(
+                                          child: Column(
+                                            children: [
+                                              textFiledMessage(context,
+                                                  text: 'E-mail'),
+                                              textFiledMessage(context,
+                                                  text: 'subject'),
+                                              textFiledMessage(context,
+                                                  text: 'Write Your Message',
+                                                  keyboardType:
+                                                      TextInputType.multiline,
+                                                  lines: 5),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              submitButton(() {})
                                             ],
                                           ),
-                                          margin: EdgeInsets.only(
-                                              right: 20, left: 20),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(20.0),
-                                            child: Material(
-                                              child: Column(
-                                                children: [
-                                                  textFiledMessage(context,
-                                                      text: 'E-mail'),
-                                                  textFiledMessage(context,
-                                                      text: 'subject'),
-                                                  textFiledMessage(context,
-                                                      text:
-                                                          'Write Your Message',
-                                                      keyboardType:
-                                                          TextInputType
-                                                              .multiline,
-                                                      lines: 5),
-                                                  SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  submitButton(() {})
-                                                ],
-                                              ),
-                                            ),
-                                          )),
-                                    ],
-                                  ),
-                                );
-                              });
+                                        ),
+                                      )),
+                                ],
+                              ),
+                            ),
+                          );
                         },
                             fontWeight: FontWeight.normal,
                             drawDivider: false,
@@ -525,7 +520,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  void showDialog(Container container) {
+  void showDialog(Widget widget) {
     showGeneralDialog(
       barrierLabel: "Barrier",
       barrierDismissible: true,
@@ -533,7 +528,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       transitionDuration: Duration(milliseconds: 700),
       context: context,
       pageBuilder: (_, __, ___) {
-        return Align(alignment: Alignment.center, child: container);
+        return Align(alignment: Alignment.center, child: widget);
       },
       transitionBuilder: (_, anim, __, child) {
         return SlideTransition(
