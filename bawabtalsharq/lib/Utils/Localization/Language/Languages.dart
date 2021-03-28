@@ -32,6 +32,9 @@ abstract class Languages {
   String get userGuide;
   String get logOut;
   String get items;
+  String get address;
+  String get phone;
+  String get getLocation;
 // end Bahaa
 
 // Start Mosdik

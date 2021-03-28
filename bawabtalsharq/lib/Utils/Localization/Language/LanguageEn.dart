@@ -30,6 +30,10 @@ class LanguageEn extends Languages {
   String get location => 'Location';
   String get phoneNumber => 'Phone Number';
   String get sendMessage => 'Send Message';
+  String get address =>
+      '21 Mohamed Tawfik Diab St.\nFrom Makram Ebid St. Nasr City,';
+  String get getLocation => 'Get Location';
+  String get phone => '+2 15453';
 // end Bahaa
 
 // Start Mosdik

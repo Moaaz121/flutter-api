@@ -268,16 +268,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       children: [
                         unExpansionProfileItem(
                             message, Languages.of(context).phoneNumber, () {
-                          showDialog(
+                          showCustomDialog(
                             Container(
                               height: 50,
                               width: MediaQuery.of(context).size.width,
                               child: Center(
                                 child: GestureDetector(
                                   onTap: () {
-                                    launch("tel://01148743177");
+                                    launch("tel://+215453");
                                   },
-                                  child: buildText('+20 0155412015', 14,
+                                  child: buildText(
+                                      Languages.of(context).phone, 14,
                                       color: orangeColor,
                                       fontWeight: FontWeight.w600,
                                       textDecoration: TextDecoration.underline,
@@ -298,7 +299,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             textSize: 14),
                         unExpansionProfileItem(
                             message, Languages.of(context).sendMessage, () {
-                          showDialog(
+                          showCustomDialog(
                             Center(
                               child: ListView(
                                 shrinkWrap: true,
@@ -349,7 +350,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             textSize: 14),
                         unExpansionProfileItem(
                             message, Languages.of(context).location, () {
-                          showDialog(
+                          showCustomDialog(
                             Container(
                               height: 70,
                               width: MediaQuery.of(context).size.width,
@@ -367,7 +368,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         width: 5,
                                       ),
                                       buildText(
-                                        '21 Mohamed Tawfik Diab St.\nFrom Makram Ebid St. Nasr City,',
+                                        Languages.of(context).address,
                                         12,
                                         fontWeight: FontWeight.w600,
                                       ),
@@ -383,7 +384,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         31.341721,
                                       );
                                     },
-                                    child: buildText('Get Location', 12,
+                                    child: buildText(
+                                        Languages.of(context).getLocation, 12,
                                         color: orangeColor,
                                         fontWeight: FontWeight.w600,
                                         textDecoration:
@@ -520,7 +522,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  void showDialog(Widget widget) {
+  void showCustomDialog(Widget widget) {
     showGeneralDialog(
       barrierLabel: "Barrier",
       barrierDismissible: true,
