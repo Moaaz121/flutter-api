@@ -9,7 +9,8 @@ abstract class Languages {
   String get notification;
   String get language;
 // Start Karem
-
+  static String requestForQutation = 'Request For Qutation';
+  static String postSourcingRequestNow = 'Post Sourcing Request Now';
 // end karem
 
 // Start Asmaa
@@ -31,12 +32,12 @@ abstract class Languages {
 // Start Mosdik
 
   String get home;
-  String get feature ;
+  String get feature;
   String get myAccount;
   String get search;
 
-  String get requestForQ ;
-  String get joinUs ;
+  String get requestForQ;
+  String get joinUs;
   String get ourGoldenSupplier;
   String get mostPopularIn;
   String get mostPopularByCategories;

@@ -1,9 +1,9 @@
 import 'package:bawabtalsharq/Screens/profile_screen.dart';
+import 'package:bawabtalsharq/Screens/request_for_quatation_screen.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 import 'feature_screen.dart';
-import 'home_screen.dart';
 import 'notification_screen.dart';
 
 class MainScreen extends StatefulWidget {
@@ -30,7 +30,7 @@ class _MainScreenState extends State<MainScreen> {
           physics: NeverScrollableScrollPhysics(),
           controller: controller,
           children: [
-            HomeScreen(),
+            requestForQscreen(),
             FeatureScreen(),
             NotificationScreen(),
             ProfileScreen(),
