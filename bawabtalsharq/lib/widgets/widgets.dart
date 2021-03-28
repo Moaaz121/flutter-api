@@ -566,12 +566,15 @@ Text buildText(String text, double fontSize,
     {Color color = Colors.black,
     textAlign = TextAlign.start,
     fontWeight = FontWeight.normal,
-    String fontFamily}) {
+    String fontFamily,
+    TextDecoration textDecoration = TextDecoration.none,
+    Color decorationColor}) {
   return Text(
     text,
     textAlign: textAlign,
     style: TextStyle(
-      decoration: TextDecoration.none,
+      decoration: textDecoration,
+      decorationColor: decorationColor,
       fontFamily: fontFamily,
       fontSize: fontSize,
       fontWeight: fontWeight,

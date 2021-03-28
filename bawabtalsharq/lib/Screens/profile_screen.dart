@@ -1,10 +1,12 @@
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
+import 'package:bawabtalsharq/Utils/map_util.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -264,7 +266,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       children: [
                         unExpansionProfileItem(
                             message, Languages.of(context).phoneNumber, () {
-                          print('Phone Number');
+                          showDialog(
+                            Container(
+                              height: 50,
+                              width: MediaQuery.of(context).size.width,
+                              child: Center(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    launch("tel://01148743177");
+                                  },
+                                  child: buildText('+20 0155412015', 14,
+                                      color: orangeColor,
+                                      fontWeight: FontWeight.w600,
+                                      textDecoration: TextDecoration.underline,
+                                      decorationColor: orangeColor),
+                                ),
+                              ),
+                              margin: EdgeInsets.only(
+                                  bottom: 50, left: 16, right: 16),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                            ),
+                          );
                         },
                             fontWeight: FontWeight.normal,
                             drawDivider: false,
@@ -278,7 +303,57 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             textSize: 14),
                         unExpansionProfileItem(
                             message, Languages.of(context).location, () {
-                          print('location');
+                          showDialog(
+                            Container(
+                              height: 70,
+                              width: MediaQuery.of(context).size.width,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.location_on_rounded,
+                                        size: 14,
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      buildText(
+                                        '21 Mohamed Tawfik Diab St.\nFrom Makram Ebid St. Nasr City,',
+                                        12,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      MapUtils.openMap(
+                                        30.063216,
+                                        31.341721,
+                                      );
+                                    },
+                                    child: buildText('Get Location', 12,
+                                        color: orangeColor,
+                                        fontWeight: FontWeight.w600,
+                                        textDecoration:
+                                            TextDecoration.underline,
+                                        decorationColor: orangeColor),
+                                  ),
+                                ],
+                              ),
+                              margin: EdgeInsets.only(
+                                  bottom: 50, left: 16, right: 16),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                            ),
+                          );
                         },
                             fontWeight: FontWeight.normal,
                             drawDivider: false,
@@ -396,6 +471,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  void showDialog(Container container) {
+    showGeneralDialog(
+      barrierLabel: "Barrier",
+      barrierDismissible: true,
+      barrierColor: Color(0xffcfcece).withOpacity(0.5),
+      transitionDuration: Duration(milliseconds: 700),
+      context: context,
+      pageBuilder: (_, __, ___) {
+        return Align(alignment: Alignment.center, child: container);
+      },
+      transitionBuilder: (_, anim, __, child) {
+        return SlideTransition(
+          position: Tween(begin: Offset(0, 1), end: Offset(0, 0)).animate(anim),
+          child: child,
+        );
+      },
     );
   }
 }
