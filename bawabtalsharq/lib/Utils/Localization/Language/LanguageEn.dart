@@ -44,13 +44,94 @@ class LanguageEn extends Languages {
   // String get notification => 'notification';
   String get egypt => 'Egypt';
 
+  String get intro1Title => 'Discover';
+  String get intro1SubTitle =>
+      'Our app is now sleeker, smarter and easier to use. Go on and enjoy it!';
+  String get intro2Title => 'Easy Communicate';
+  String get intro2SubTitle =>
+      'Our app is now sleeker, smarter and easier to use. Go on and enjoy it!';
+  String get intro3Title => 'Grow Your Buisness';
+  String get intro3SubTitle =>
+      'Our app is now sleeker, smarter and easier to use. Go on and enjoy it!';
+  String get next => 'Next';
+
 // end Mosdik
 
 // Start Moaaz
+  String get categoryName => 'Category name';
+
+  String get certifications => 'Certifications';
+
+  String get check1 =>
+      'I agree to share my Business Card with quoted suppliers';
+
+  String get check2 =>
+      'I have read, Understood and agree to payed, by the Buying Request Posting Rules';
+
+  String get destination => 'destination';
+
+  String get details => 'details';
+
+  String get advanced => 'advanced';
+
+  String get port => 'port';
+
+  String get paymentTerm => 'payment Term';
+
+  String get submit => 'Submit';
+
+  String get dropCategory => 'Select category';
+
+  String get dropCertificate => 'Select certificates';
+
+  String get dropDestination => 'Select Destination';
+
+  String get dropQuantity => 'Pieces';
+
+  String get dropShipping => 'Shipping';
+
+  String get dropSourcing => 'Sourcing purpose';
+
+  String get dropTrade => 'FCA';
+
+  String get inputDetails => 'Please Enter At least 20 Character';
+
+  String get inputProduct => 'please enter product name...';
+
+  String get inputRequire => 'Please Enter At least 20 Character';
+
+  String get leadTime => 'Lead Time For in';
+
+  String get productName => 'Product name';
+
+  String get quantity => 'quantity';
+
+  String get requirements => 'Other Requirments';
+
+  String get shipping => 'Shipping';
+
+  String get shippingMethod => ' Shipping Method';
+
+  String get sourcingPurpose => ' sourcingPurpose ';
+
+  String get supplierCapability => 'Supplier Capability';
+
+  String get tradeTerms => 'Trade Terms';
+
+  String get uploadDocument => 'Upload Sourcing Documents';
 
 // end Moaaz
 
 // Start Islam
-
+  String get settings => 'Settings';
+  String get requestForQuotation => 'Request For Quotation';
+  String get languages => 'Language';
+  String get signUp => 'Sign Up';
+  String get login => 'Login';
+  String get userName => 'Username';
+  String get password => 'Password';
+  String get forgetPassword => 'Forget Password?';
+  String get alreadyHaveAccount => 'Already have an account ?';
+  String get signIn => 'Sign In';
 // end Islam
 }

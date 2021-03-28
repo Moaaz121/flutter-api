@@ -34,7 +34,6 @@ class StringsEN {
 // Start Mosdik
   static String category = 'Shoes & Accessories ';
 
-
 // end Mosdik
 
 // Start Moaaz
@@ -52,7 +51,7 @@ class StringsEN {
 // end Moaaz
 
 // Start Islam
-  static const String signUp = 'SignUp';
+  static const String signUp = 'Sign Up';
   static const String login = 'Login';
   static const String userName = 'Username';
   static const String password = 'Password';

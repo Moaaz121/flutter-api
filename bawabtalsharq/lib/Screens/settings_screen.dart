@@ -1,3 +1,4 @@
+import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,7 +14,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarBuilder(
-        title: ' Settings',
+        title: Languages.of(context).settings,
         onBackPressed: () {
           Navigator.pop(context);
         },
@@ -28,25 +29,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 Padding(
                   padding: const EdgeInsets.only(left: 20),
                   child: Text(
-                    'Request For Quotation',
+                    Languages.of(context).requestForQuotation,
                     style: buildTextStyle(context),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: cardSetting(
-                      text: 'Language',
+                      text: Languages.of(context).languages,
                       onPress: () {},
                       icon: Icons.language,
                       iconColor: Colors.blue),
                 ),
                 cardSetting(
-                    text: 'Language',
+                    text: Languages.of(context).languages,
                     onPress: () {},
                     icon: Icons.language,
                     iconColor: Colors.orange),
                 cardSetting(
-                    text: 'Language',
+                    text: Languages.of(context).languages,
                     onPress: () {},
                     icon: Icons.language,
                     iconColor: Colors.deepPurple),
@@ -56,40 +57,40 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     top: 40,
                   ),
                   child: Text(
-                    'Request For Quotation', //second text
+                    Languages.of(context).requestForQuotation, //second text
                     style: buildTextStyle(context),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: cardSetting(
-                      text: 'Language',
+                      text: Languages.of(context).languages,
                       onPress: () {},
                       icon: Icons.language,
                       iconColor: Colors.blue),
                 ),
                 cardSetting(
-                    text: 'Language',
+                    text: Languages.of(context).languages,
                     onPress: () {},
                     icon: Icons.language,
                     iconColor: Colors.orange),
                 Padding(
                   padding: const EdgeInsets.only(left: 20, top: 40),
                   child: Text(
-                    'Request For Quotation',
+                    Languages.of(context).requestForQuotation,
                     style: buildTextStyle(context),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: cardSetting(
-                      text: 'Language',
+                      text: Languages.of(context).languages,
                       onPress: () {},
                       icon: Icons.language,
                       iconColor: Colors.blue),
                 ),
                 cardSetting(
-                    text: 'Language',
+                    text: Languages.of(context).languages,
                     onPress: () {},
                     icon: Icons.language,
                     iconColor: Colors.orange),
@@ -137,7 +138,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             SizedBox(width: 20),
             Expanded(child: Text(text)),
-            Icon(Icons.keyboard_arrow_right),
+            Icon(Icons.navigate_next),
             //Icon(Icons.ac_unit),
           ],
         ),

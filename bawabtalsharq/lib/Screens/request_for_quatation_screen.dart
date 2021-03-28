@@ -1,6 +1,7 @@
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_options.dart';
@@ -8,12 +9,12 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class requestForQscreen extends StatefulWidget {
+class RequestForQScreen extends StatefulWidget {
   @override
-  _requestForQscreenState createState() => _requestForQscreenState();
+  _RequestForQScreenState createState() => _RequestForQScreenState();
 }
 
-class _requestForQscreenState extends State<requestForQscreen> {
+class _RequestForQScreenState extends State<RequestForQScreen> {
   CarouselController control = CarouselController();
   int position = 0;
 
@@ -28,15 +29,17 @@ class _requestForQscreenState extends State<requestForQscreen> {
       body: SafeArea(
         child: Column(
           children: [
-            requestForQuataionSlider(),
-            postSourcingRequestNowButton(() {}),
+            requestForQuotationSlider(),
+            postSourcingRequestNowButton(() {
+              Navigator.pushNamed(context, ScreenRoutes.postQuotationRequest);
+            }),
           ],
         ),
       ),
     );
   }
 
-  Widget requestForQuataionSlider() {
+  Widget requestForQuotationSlider() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: SizedBox(
@@ -52,9 +55,9 @@ class _requestForQscreenState extends State<requestForQscreen> {
                   child: CarouselSlider(
                       carouselController: control,
                       items: [
-                        requestForQuataionsliderItem(context, rFqSlider1),
-                        requestForQuataionsliderItem(context, rFqSlider2),
-                        requestForQuataionsliderItem(context, rFqSlider3),
+                        requestForQuotationSliderItem(context, rFqSlider1),
+                        requestForQuotationSliderItem(context, rFqSlider2),
+                        requestForQuotationSliderItem(context, rFqSlider3),
                       ],
                       options: CarouselOptions(
                         onPageChanged:
@@ -80,7 +83,7 @@ class _requestForQscreenState extends State<requestForQscreen> {
                         scrollDirection: Axis.horizontal,
                       )),
                 ),
-                requestForQuataionsliderIndicator(position)
+                requestForQuotationSliderIndicator(position)
               ],
             ),
           ],
@@ -89,7 +92,7 @@ class _requestForQscreenState extends State<requestForQscreen> {
     );
   }
 
-  Widget requestForQuataionsliderItem(BuildContext context, String image) {
+  Widget requestForQuotationSliderItem(BuildContext context, String image) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
@@ -105,7 +108,7 @@ class _requestForQscreenState extends State<requestForQscreen> {
     );
   }
 
-  Widget requestForQuataionsliderIndicator(int page) {
+  Widget requestForQuotationSliderIndicator(int page) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 55),
       child: AnimatedSmoothIndicator(

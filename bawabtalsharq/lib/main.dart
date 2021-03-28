@@ -3,6 +3,7 @@ import 'package:bawabtalsharq/Screens/feature_screen.dart';
 import 'package:bawabtalsharq/Screens/home_screen.dart';
 import 'package:bawabtalsharq/Screens/intro_screen.dart';
 import 'package:bawabtalsharq/Screens/login_screen.dart';
+import 'package:bawabtalsharq/Screens/request_for_qutation.dart';
 import 'package:bawabtalsharq/Screens/settings_screen.dart';
 import 'package:bawabtalsharq/Screens/splash_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/AppLocalizationDelgate.dart';
@@ -13,6 +14,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'Screens/main_srceen.dart';
 import 'Screens/notification_screen.dart';
 import 'Screens/profile_screen.dart';
+import 'Screens/request_for_quatation_screen.dart';
+import 'Screens/request_for_qutation.dart';
 import 'Utils/Localization/LanguageHelper.dart';
 
 void main() => runApp(
@@ -52,7 +55,9 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.profileScreen: (_) => ProfileScreen(),
         ScreenRoutes.featureScreen: (_) => FeatureScreen(),
         ScreenRoutes.categoriesScreen: (_) => AllCategories(),
-        ScreenRoutes.settingsScreen: (_) => SettingsScreen()
+        ScreenRoutes.settingsScreen: (_) => SettingsScreen(),
+        ScreenRoutes.requestForQuotation: (_) => RequestForQScreen(),
+        ScreenRoutes.postQuotationRequest: (_) => Requestforqutation()
       },
       locale: _locale,
       supportedLocales: supportedLocales,
@@ -114,4 +119,6 @@ class ScreenRoutes {
   static const String featureScreen = '/featureScreen';
   static const String categoriesScreen = '/allCategories';
   static const String settingsScreen = '/settingsScreen';
+  static const String requestForQuotation = '/requestForQuotation';
+  static const String postQuotationRequest = '/postQuotationRequest';
 }

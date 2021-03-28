@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/size_config.dart';
 import 'package:bawabtalsharq/Utils/strings.dart';
@@ -40,7 +41,7 @@ class _IntroScreenState extends State<IntroScreen> {
               Container(
                 width: 70,
                 height: 30,
-                margin: EdgeInsets.only(top: 10, bottom: 10, right: 12),
+                margin: EdgeInsetsDirectional.only(top: 10, bottom: 10, start: 12),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
@@ -57,7 +58,7 @@ class _IntroScreenState extends State<IntroScreen> {
                         style: TextStyle(color: Colors.black54, fontSize: 18),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 10),
+                        padding: const EdgeInsetsDirectional.only(end: 10),
                         child: Icon(
                           Icons.arrow_drop_down,
                           size: 25,
@@ -92,12 +93,12 @@ class _IntroScreenState extends State<IntroScreen> {
                           });
                         },
                         children: [
-                          pageBuilder(intro1, Strings().intro1Title(),
-                              Strings().intro1SubTitle()),
-                          pageBuilder(intro2, Strings().intro2Title(),
-                              Strings().intro2SubTitle()),
-                          pageBuilder(intro3, Strings().intro3Title(),
-                              Strings().intro3SubTitle())
+                          pageBuilder(intro1, Languages.of(context).intro1Title,
+                              Languages.of(context).intro1SubTitle),
+                          pageBuilder(intro2,  Languages.of(context).intro2Title,
+                              Languages.of(context).intro2SubTitle),
+                          pageBuilder(intro3, Languages.of(context).intro3Title,
+                              Languages.of(context).intro3SubTitle)
                         ],
                       ),
                       Positioned(
@@ -121,41 +122,37 @@ class _IntroScreenState extends State<IntroScreen> {
                           ),
                         ),
                       ),
-                      Positioned(
-                        right: 20,
-                        bottom: 20,
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                bottom: 20,
-                                left: 25,
+                      Positioned.directional(
+                        textDirection:Directionality.of(context),
+                        end: 30,
+                        bottom: 30,
+                        child: GestureDetector(
+                          onTap: () {
+                            imageIndex < 2
+                                ? _pageController
+                                .jumpToPage(imageIndex + 1)
+                                : Navigator.pushReplacementNamed(
+                                context, ScreenRoutes.loginScreen);
+                          },
+                          child: Row(
+                            children: [
+                              Text(
+                                Languages.of(context).next,
+                                style: TextStyle(fontSize: 20),
                               ),
-                              child: GestureDetector(
-                                onTap: () {
-                                  imageIndex < 2
-                                      ? _pageController
-                                          .jumpToPage(imageIndex + 1)
-                                      : Navigator.pushReplacementNamed(
-                                          context, ScreenRoutes.loginScreen);
-                                },
-                                child: Text(
-                                  Strings().next(),
-                                  style: TextStyle(fontSize: 20),
-                                ),
+                              SizedBox(
+                                width: 5,
                               ),
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 15),
-                              child: Icon(
-                                Icons.arrow_forward,
+
+                              Icon(
+                                LanguageHelper.isEnglish
+                                    ? Icons.arrow_forward_rounded
+                                    : Icons.arrow_back_rounded,
                                 size: 17,
-                              ),
-                            )
-                          ],
+                              )
+
+                            ],
+                          ),
                         ),
                       ),
                     ],
