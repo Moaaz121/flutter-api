@@ -289,7 +289,7 @@ Widget bottomAppBar(Function(int x) _selectionFunction,
           items: [
             BottomNavigationBarItem(
               icon: Image.asset(currentPage == 0 ? tabHomeS : tabHome,
-                  width: 30, height: 30),
+                  width: 23, height: 23),
               title: Padding(
                 padding: const EdgeInsets.only(top: 7),
                 child: Text(
@@ -303,8 +303,8 @@ Widget bottomAppBar(Function(int x) _selectionFunction,
             BottomNavigationBarItem(
                 icon: Image.asset(
                   currentPage == 1 ? tabFeatureS : tabFeature,
-                  width: 30,
-                  height: 30,
+                  width: 23,
+                  height: 23,
                 ),
                 title: Padding(
                   padding: const EdgeInsets.only(top: 7),
@@ -318,8 +318,8 @@ Widget bottomAppBar(Function(int x) _selectionFunction,
             BottomNavigationBarItem(
                 icon: Image.asset(
                   currentPage == 2 ? tabNotificationS : tabNotification,
-                  width: 30,
-                  height: 30,
+                  width: 23,
+                  height: 23,
                 ),
                 title: Padding(
                   padding: const EdgeInsets.only(top: 7),
@@ -333,8 +333,8 @@ Widget bottomAppBar(Function(int x) _selectionFunction,
             BottomNavigationBarItem(
                 icon: Image.asset(
                   currentPage == 3 ? tabAccountS : tabAccount,
-                  width: 30,
-                  height: 30,
+                  width: 23,
+                  height: 23,
                 ),
                 title: Padding(
                   padding: const EdgeInsets.only(top: 7),
@@ -420,11 +420,14 @@ Widget chatButton(Function _function) {
               onTap: _function,
               splashColor: orangeColor.withOpacity(0.4),
               highlightColor: orangeShadowColor,
-              child: Image.asset(
-                chat,
-                width: 55,
-                height: 55,
-                fit: BoxFit.fill,
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Image.asset(
+                  chat,
+                  width: 30,
+                  height: 30,
+                  fit: BoxFit.fill,
+                ),
               ),
             ),
           ),
