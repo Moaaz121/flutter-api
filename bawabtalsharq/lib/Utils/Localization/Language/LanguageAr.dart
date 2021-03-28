@@ -24,6 +24,12 @@ class LanguageAr extends Languages {
   String get saved => 'المفضلة';
   String get userGuide => 'دليل المستخدم الجديد';
   String get items => 'العناصر';
+  String get aboutUs => 'معلومات عنا';
+  String get accountInfo => 'معلومات الحساب';
+  String get contactUs => 'اتصل بنا';
+  String get location => 'العنوان';
+  String get phoneNumber => 'رقم التليفون';
+  String get sendMessage => 'أرسل رسالة';
 // end Bahaa
 
 // Start Mosdik

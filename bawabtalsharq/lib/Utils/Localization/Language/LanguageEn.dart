@@ -24,6 +24,12 @@ class LanguageEn extends Languages {
   String get saved => 'Saved';
   String get userGuide => 'New User Guide';
   String get items => 'items';
+  String get aboutUs => 'About Us';
+  String get accountInfo => 'Account Info';
+  String get contactUs => 'Contact Us';
+  String get location => 'Location';
+  String get phoneNumber => 'Phone Number';
+  String get sendMessage => 'Send Message';
 // end Bahaa
 
 // Start Mosdik

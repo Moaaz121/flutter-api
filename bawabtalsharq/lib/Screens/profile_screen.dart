@@ -218,21 +218,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 decoration: boxDecorationBuilder(20),
                 child: Column(
                   children: [
-                    profileItemBuilder(
+                    unExpansionProfileItem(
                       quotation,
                       Languages.of(context).quotation,
                       () {
                         print('Quotation Pressed');
                       },
                     ),
-                    profileItemBuilder(
+                    unExpansionProfileItem(
                       message,
                       Languages.of(context).messageCenter,
                       () {
                         print('Message Pressed');
                       },
                     ),
-                    profileItemBuilder(
+                    unExpansionProfileItem(
                       user,
                       Languages.of(context).userGuide,
                       () {
@@ -251,25 +251,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 decoration: boxDecorationBuilder(20),
                 child: Column(
                   children: [
-                    profileItemBuilder(
+                    unExpansionProfileItem(
                       quotation,
-                      Languages.of(context).quotation,
+                      Languages.of(context).accountInfo,
                       () {
-                        print('Quotation Pressed');
+                        print('Account Info');
                       },
                     ),
-                    profileItemBuilder(
-                      message,
-                      Languages.of(context).messageCenter,
-                      () {
-                        print('Message Pressed');
-                      },
+                    expansionProfileItem(
+                      title: Languages.of(context).contactUs,
+                      image: message,
+                      children: [
+                        unExpansionProfileItem(
+                            message, Languages.of(context).phoneNumber, () {
+                          print('Phone Number');
+                        },
+                            fontWeight: FontWeight.normal,
+                            drawDivider: false,
+                            textSize: 14),
+                        unExpansionProfileItem(
+                            message, Languages.of(context).sendMessage, () {
+                          print('send Message');
+                        },
+                            fontWeight: FontWeight.normal,
+                            drawDivider: false,
+                            textSize: 14),
+                        unExpansionProfileItem(
+                            message, Languages.of(context).location, () {
+                          print('location');
+                        },
+                            fontWeight: FontWeight.normal,
+                            drawDivider: false,
+                            textSize: 14),
+                      ],
                     ),
-                    profileItemBuilder(
+                    unExpansionProfileItem(
                       user,
-                      Languages.of(context).userGuide,
+                      Languages.of(context).aboutUs,
                       () {
-                        print('User guide Pressed');
+                        print('About Us');
                       },
                       drawDivider: false,
                     ),
@@ -282,7 +302,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Container(
                 margin: EdgeInsets.only(right: 15, left: 15, bottom: 10),
                 decoration: boxDecorationBuilder(10),
-                child: profileItemBuilder(
+                child: unExpansionProfileItem(
                   logout,
                   Languages.of(context).logOut,
                   () {
@@ -298,8 +318,44 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget profileItemBuilder(String image, String title, Function onPressed,
-      {bool drawDivider = true}) {
+  Column expansionProfileItem(
+      {@required String title,
+      @required String image,
+      @required List<Widget> children}) {
+    return Column(
+      children: [
+        ExpansionTile(
+          tilePadding: EdgeInsetsDirectional.fromSTEB(0, 0, 15, 0),
+          title: unExpansionProfileItem(image, title, () {
+            print('Contact Us');
+          }, drawDivider: false, isParent: true),
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+              decoration: BoxDecoration(
+                color: Colors.blue[100],
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Column(children: children),
+            )
+          ],
+        ),
+        Divider(
+          indent: 15,
+          endIndent: 15,
+          thickness: 1,
+          height: 1,
+        ),
+      ],
+    );
+  }
+
+  Widget unExpansionProfileItem(String image, String title, Function onPressed,
+      {bool drawDivider = true,
+      bool isParent = false,
+      double textSize = 16.0,
+      FontWeight fontWeight = FontWeight.w700}) {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
@@ -317,14 +373,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   height: 40,
                 ),
                 SizedBox(
-                  width: 20,
+                  width: 16,
                 ),
                 Expanded(
-                  child: buildText(title, 16.0,
-                      fontFamily: semiBoldFontFamily,
-                      fontWeight: FontWeight.w700),
+                  child: buildText(title, textSize,
+                      fontFamily: semiBoldFontFamily, fontWeight: fontWeight),
                 ),
-                Icon(Icons.navigate_next),
+                isParent ? SizedBox() : Icon(Icons.navigate_next),
               ],
             ),
             SizedBox(

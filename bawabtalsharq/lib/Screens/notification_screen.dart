@@ -1,7 +1,5 @@
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
-import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
-import 'package:bawabtalsharq/Utils/strings.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -74,7 +72,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
               boxShadow: [makeShadow()],
               color: Colors.white,
             ),
-            margin: EdgeInsetsDirectional.only(top: 10, start: 14, end: 14, bottom: 10),
+            margin: EdgeInsetsDirectional.only(
+                top: 10, start: 14, end: 14, bottom: 10),
             child: notificationItems(
               onPress: () {},
               title: position.isOdd
