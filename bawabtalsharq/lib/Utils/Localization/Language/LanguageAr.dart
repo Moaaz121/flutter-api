@@ -63,6 +63,10 @@ class LanguageAr extends Languages {
       'أصبح تطبيقنا الآن أكثر أناقة وذكاء وأسهل في الاستخدام. استمر واستمتع به!';
   String get next => 'التالي';
 
+  String get email => 'بريديك الإلكتروني';
+  String get subject => 'الموضوع';
+  String get writeAMessage => 'اكتب رسالتك هنا';
+
 // end Mosdik
 
 // Start Moaaz

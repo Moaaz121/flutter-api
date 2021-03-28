@@ -265,6 +265,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     expansionProfileItem(
                       title: Languages.of(context).contactUs,
                       image: message,
+                      onClick: () {},
                       children: [
                         unExpansionProfileItem(
                             message, Languages.of(context).phoneNumber, () {
@@ -324,18 +325,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           child: Column(
                                             children: [
                                               textFiledMessage(context,
-                                                  text: 'E-mail'),
+                                                  text: Languages.of(context)
+                                                      .email),
                                               textFiledMessage(context,
-                                                  text: 'subject'),
+                                                  text: Languages.of(context)
+                                                      .subject),
                                               textFiledMessage(context,
-                                                  text: 'Write Your Message',
+                                                  text: Languages.of(context)
+                                                      .writeAMessage,
                                                   keyboardType:
                                                       TextInputType.multiline,
                                                   lines: 5),
                                               SizedBox(
                                                 height: 10,
                                               ),
-                                              submitButton(() {})
+                                              submitButton(() {}, context)
                                             ],
                                           ),
                                         ),
@@ -441,36 +445,40 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Column expansionProfileItem(
+  GestureDetector expansionProfileItem(
       {@required String title,
       @required String image,
-      @required List<Widget> children}) {
-    return Column(
-      children: [
-        ExpansionTile(
-          tilePadding: EdgeInsetsDirectional.fromSTEB(0, 0, 15, 0),
-          title: unExpansionProfileItem(image, title, () {
-            print('Contact Us');
-          }, drawDivider: false, isParent: true),
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
-              decoration: BoxDecoration(
-                color: Colors.blue[100],
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Column(children: children),
-            )
-          ],
-        ),
-        Divider(
-          indent: 15,
-          endIndent: 15,
-          thickness: 1,
-          height: 1,
-        ),
-      ],
+      @required List<Widget> children,
+      @required Function onClick}) {
+    return GestureDetector(
+      onTap: onClick,
+      child: Column(
+        children: [
+          ExpansionTile(
+            tilePadding: EdgeInsetsDirectional.fromSTEB(0, 0, 15, 0),
+            title: unExpansionProfileItem(image, title, () {
+              print('Contact Us');
+            }, drawDivider: false, isParent: true),
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width,
+                margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                decoration: BoxDecoration(
+                  color: Colors.blue[100],
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(children: children),
+              )
+            ],
+          ),
+          Divider(
+            indent: 15,
+            endIndent: 15,
+            thickness: 1,
+            height: 1,
+          ),
+        ],
+      ),
     );
   }
 
@@ -560,7 +568,6 @@ Widget textFiledMessage(BuildContext context,
               const Radius.circular(15.0),
             ),
           ),
-          // contentPadding: hight,
           labelText: text,
         ),
       ),
@@ -569,13 +576,13 @@ Widget textFiledMessage(BuildContext context,
   );
 }
 
-Widget submitButton(Function _function) {
+Widget submitButton(Function _function, BuildContext context) {
   return FlatButton(
     onPressed: _function,
     child: Padding(
       padding: const EdgeInsets.all(12),
       child: Text(
-        'Submit',
+        Languages.of(context).submit,
         style: TextStyle(
           fontSize: 17,
           fontWeight: FontWeight.bold,
