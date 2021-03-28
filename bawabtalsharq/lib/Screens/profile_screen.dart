@@ -265,6 +265,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     expansionProfileItem(
                       title: Languages.of(context).contactUs,
                       image: message,
+                      onClick: () {},
                       children: [
                         unExpansionProfileItem(
                             message, Languages.of(context).phoneNumber, () {
@@ -442,36 +443,40 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Column expansionProfileItem(
+  GestureDetector expansionProfileItem(
       {@required String title,
       @required String image,
-      @required List<Widget> children}) {
-    return Column(
-      children: [
-        ExpansionTile(
-          tilePadding: EdgeInsetsDirectional.fromSTEB(0, 0, 15, 0),
-          title: unExpansionProfileItem(image, title, () {
-            print('Contact Us');
-          }, drawDivider: false, isParent: true),
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
-              decoration: BoxDecoration(
-                color: Colors.blue[100],
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Column(children: children),
-            )
-          ],
-        ),
-        Divider(
-          indent: 15,
-          endIndent: 15,
-          thickness: 1,
-          height: 1,
-        ),
-      ],
+      @required List<Widget> children,
+      @required Function onClick}) {
+    return GestureDetector(
+      onTap: onClick,
+      child: Column(
+        children: [
+          ExpansionTile(
+            tilePadding: EdgeInsetsDirectional.fromSTEB(0, 0, 15, 0),
+            title: unExpansionProfileItem(image, title, () {
+              print('Contact Us');
+            }, drawDivider: false, isParent: true),
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width,
+                margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                decoration: BoxDecoration(
+                  color: Colors.blue[100],
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(children: children),
+              )
+            ],
+          ),
+          Divider(
+            indent: 15,
+            endIndent: 15,
+            thickness: 1,
+            height: 1,
+          ),
+        ],
+      ),
     );
   }
 
