@@ -1,5 +1,5 @@
+import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
-import 'package:bawabtalsharq/Utils/strings.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:carousel_slider/carousel_controller.dart';
@@ -21,7 +21,7 @@ class _requestForQscreenState extends State<requestForQscreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarBuilder(
-          title: Strings().requestForQutation(),
+          title: Languages.of(context).requestForQutation,
           onBackPressed: () {
             Navigator.pop(context);
           }),
@@ -130,7 +130,7 @@ class _requestForQscreenState extends State<requestForQscreen> {
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Text(
-          Strings().postSourcingRequestNow(),
+          Languages.of(context).postSourcingRequestNow,
           style: TextStyle(
             fontSize: 17,
             fontWeight: FontWeight.bold,

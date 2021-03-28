@@ -9,8 +9,8 @@ abstract class Languages {
   String get notification;
   String get language;
 // Start Karem
-  static String requestForQutation = 'Request For Qutation';
-  static String postSourcingRequestNow = 'Post Sourcing Request Now';
+  String get requestForQutation;
+  String get postSourcingRequestNow;
 // end karem
 
 // Start Asmaa

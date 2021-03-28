@@ -7,8 +7,8 @@ class LanguageEn extends Languages {
   String get language => 'EN';
 
 // Start Karem
-  static String requestForQutation = 'Request For Qutation';
-  static String postSourcingRequestNow = 'Post Sourcing Request Now';
+  String get requestForQutation => 'Request For Qutation';
+  String get postSourcingRequestNow => 'Post Sourcing Request Now';
 // end karem
 
 // Start Asmaa

@@ -7,8 +7,8 @@ class LanguageAr extends Languages {
   String get language => 'AR';
 
 // Start Karem
-  static String requestForQutation = 'طلب عرض أسعار';
-  static String postSourcingRequestNow = 'طلب مصدر الاَن';
+  String get requestForQutation => 'طلب عرض أسعار';
+  String get postSourcingRequestNow => 'طلب مصدر الاَن';
 // end karem
 
 // Start Asmaa
