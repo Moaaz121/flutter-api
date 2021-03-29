@@ -380,7 +380,9 @@ Widget mostPopularIn(BuildContext context) {
             mainMostPopularProduct(
                 productImg: AssetImage(productImage),
                 backgroundColor: yellowColor.withOpacity(.3),
-                onPress: () {},
+                onPress: () {
+                  Navigator.pushNamed(context, ScreenRoutes.individualProduct);
+                },
                 nameProduct: LanguageHelper.isEnglish ? 'Pasta' : 'بيتزا',
                 nameCategory: LanguageHelper.isEnglish ? 'Food' : 'الطعام',
                 price: LanguageHelper.isEnglish ? '\$\265.0' : ' ٢٥٦ ج.م',

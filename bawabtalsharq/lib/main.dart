@@ -1,5 +1,6 @@
 import 'package:bawabtalsharq/Screens/all_categories_screen.dart';
 import 'package:bawabtalsharq/Screens/feature_screen.dart';
+import 'package:bawabtalsharq/Screens/individual_product_screen.dart';
 import 'package:bawabtalsharq/Screens/home_screen.dart';
 import 'package:bawabtalsharq/Screens/intro_screen.dart';
 import 'package:bawabtalsharq/Screens/login_screen.dart';
@@ -57,7 +58,8 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.categoriesScreen: (_) => AllCategories(),
         ScreenRoutes.settingsScreen: (_) => SettingsScreen(),
         ScreenRoutes.requestForQuotation: (_) => RequestForQScreen(),
-        ScreenRoutes.postQuotationRequest: (_) => Requestforqutation()
+        ScreenRoutes.postQuotationRequest: (_) => Requestforqutation(),
+        ScreenRoutes.individualProduct: (_) => IndividualProduct(),
       },
       locale: _locale,
       supportedLocales: supportedLocales,
@@ -121,4 +123,5 @@ class ScreenRoutes {
   static const String settingsScreen = '/settingsScreen';
   static const String requestForQuotation = '/requestForQuotation';
   static const String postQuotationRequest = '/postQuotationRequest';
+  static const String individualProduct = '/individual_product_screen';
 }
