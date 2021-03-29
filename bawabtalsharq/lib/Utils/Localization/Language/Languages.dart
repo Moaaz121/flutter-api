@@ -9,7 +9,8 @@ abstract class Languages {
   String get notification;
   String get language;
 // Start Karem
-
+  String get requestForQutation;
+  String get postSourcingRequestNow;
 // end karem
 
 // Start Asmaa
