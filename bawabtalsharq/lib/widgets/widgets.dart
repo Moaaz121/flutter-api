@@ -566,6 +566,8 @@ Text buildText(String text, double fontSize,
     {Color color = Colors.black,
     textAlign = TextAlign.start,
     fontWeight = FontWeight.normal,
+    fontStyle: FontStyle.normal,
+    letterSpacing: 0.192,
     String fontFamily}) {
   return Text(
     text,
@@ -575,6 +577,8 @@ Text buildText(String text, double fontSize,
       fontFamily: fontFamily,
       fontSize: fontSize,
       fontWeight: fontWeight,
+      fontStyle: FontStyle.normal,
+      letterSpacing: 0.192,
       color: color,
     ),
   );

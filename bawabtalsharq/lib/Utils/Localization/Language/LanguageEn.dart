@@ -132,5 +132,9 @@ class LanguageEn extends Languages {
   String get forgetPassword => 'Forget Password?';
   String get alreadyHaveAccount => 'Already have an account ?';
   String get signIn => 'Sign In';
+  String get aboutUs => 'About Us';
+  String get ourGroup => 'Our Group';
+  String get ourGroupCompanies => 'Our Group Companies';
+
 // end Islam
 }
