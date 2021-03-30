@@ -61,7 +61,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [searchButton(context, () {}), chatButton(() {})],
+                  children: [
+                    searchButton(context, () {}),
+                    chatButton(() {
+                      Navigator.pushNamed(context, ScreenRoutes.chatsScreen);
+                    })
+                  ],
                 ),
               ],
             ),

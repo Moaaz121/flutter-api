@@ -1,3 +1,5 @@
+import 'package:bawabtalsharq/Screens/Chat/chat_screen.dart';
+import 'package:bawabtalsharq/Screens/Chat/conversation.dart';
 import 'package:bawabtalsharq/Screens/all_categories_screen.dart';
 import 'package:bawabtalsharq/Screens/feature_screen.dart';
 import 'package:bawabtalsharq/Screens/home_screen.dart';
@@ -56,7 +58,9 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.categoriesScreen: (_) => AllCategories(),
         ScreenRoutes.settingsScreen: (_) => SettingsScreen(),
         ScreenRoutes.requestForQuotation: (_) => RequestForQScreen(),
-        ScreenRoutes.postQuotationRequest: (_) => Requestforqutation()
+        ScreenRoutes.postQuotationRequest: (_) => Requestforqutation(),
+        ScreenRoutes.chatsScreen: (_) => ChatsScreen(),
+        ScreenRoutes.conversation: (_) => Conversation()
       },
       locale: _locale,
       supportedLocales: supportedLocales,
@@ -120,4 +124,6 @@ class ScreenRoutes {
   static const String settingsScreen = '/settingsScreen';
   static const String requestForQuotation = '/requestForQuotation';
   static const String postQuotationRequest = '/postQuotationRequest';
+  static const String chatsScreen = '/chatsScreen';
+  static const String conversation = '/conversation';
 }
