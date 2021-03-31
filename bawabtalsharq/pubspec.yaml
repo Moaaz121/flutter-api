@@ -35,6 +35,9 @@ dependencies:
   flutter_dropdown: ^0.0.8
   line_icons:
   rocket_chat_connector_flutter: ^0.0.18
+  bloc:
+  flutter_bloc:
+  http:
 
 dev_dependencies:
   flutter_test:
