@@ -24,9 +24,18 @@ abstract class Languages {
   String get history;
   String get quotation;
   String get messageCenter;
+  String get contactUs;
+  String get aboutUs;
+  String get accountInfo;
+  String get location;
+  String get phoneNumber;
+  String get sendMessage;
   String get userGuide;
   String get logOut;
   String get items;
+  String get address;
+  String get phone;
+  String get getLocation;
 // end Bahaa
 
 // Start Mosdik
@@ -52,6 +61,10 @@ abstract class Languages {
   String get intro3Title;
   String get intro3SubTitle;
   String get next;
+
+  String get email;
+  String get subject;
+  String get writeAMessage;
 
 // end Mosdik
 

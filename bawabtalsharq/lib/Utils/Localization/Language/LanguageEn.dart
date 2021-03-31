@@ -25,6 +25,16 @@ class LanguageEn extends Languages {
   String get saved => 'Saved';
   String get userGuide => 'New User Guide';
   String get items => 'items';
+  String get aboutUs => 'About Us';
+  String get accountInfo => 'Account Info';
+  String get contactUs => 'Contact Us';
+  String get location => 'Location';
+  String get phoneNumber => 'Phone Number';
+  String get sendMessage => 'Send Message';
+  String get address =>
+      '21 Mohamed Tawfik Diab St.\nFrom Makram Ebid St. Nasr City,';
+  String get getLocation => 'Get Location';
+  String get phone => '+2 15453';
 // end Bahaa
 
 // Start Mosdik
@@ -54,6 +64,10 @@ class LanguageEn extends Languages {
   String get intro3SubTitle =>
       'Our app is now sleeker, smarter and easier to use. Go on and enjoy it!';
   String get next => 'Next';
+
+  String get email => 'E-mail';
+  String get subject => 'Subject';
+  String get writeAMessage => 'Write Your Message';
 
 // end Mosdik
 

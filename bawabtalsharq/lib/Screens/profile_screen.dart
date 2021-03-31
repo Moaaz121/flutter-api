@@ -1,10 +1,14 @@
+import 'dart:ui';
+
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
+import 'package:bawabtalsharq/Utils/map_util.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -218,21 +222,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 decoration: boxDecorationBuilder(20),
                 child: Column(
                   children: [
-                    profileItemBuilder(
+                    unExpansionProfileItem(
                       quotation,
                       Languages.of(context).quotation,
                       () {
                         print('Quotation Pressed');
                       },
                     ),
-                    profileItemBuilder(
+                    unExpansionProfileItem(
                       message,
                       Languages.of(context).messageCenter,
                       () {
                         print('Message Pressed');
                       },
                     ),
-                    profileItemBuilder(
+                    unExpansionProfileItem(
                       user,
                       Languages.of(context).userGuide,
                       () {
@@ -251,25 +255,168 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 decoration: boxDecorationBuilder(20),
                 child: Column(
                   children: [
-                    profileItemBuilder(
+                    unExpansionProfileItem(
                       quotation,
-                      Languages.of(context).quotation,
+                      Languages.of(context).accountInfo,
                       () {
-                        print('Quotation Pressed');
+                        print('Account Info');
                       },
                     ),
-                    profileItemBuilder(
-                      message,
-                      Languages.of(context).messageCenter,
-                      () {
-                        print('Message Pressed');
-                      },
+                    expansionProfileItem(
+                      title: Languages.of(context).contactUs,
+                      image: message,
+                      onClick: () {},
+                      children: [
+                        unExpansionProfileItem(
+                            message, Languages.of(context).phoneNumber, () {
+                          showCustomDialog(
+                            Container(
+                              height: 50,
+                              width: MediaQuery.of(context).size.width,
+                              child: Center(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    launch("tel://+215453");
+                                  },
+                                  child: buildText(
+                                      Languages.of(context).phone, 14,
+                                      color: orangeColor,
+                                      fontWeight: FontWeight.w600,
+                                      textDecoration: TextDecoration.underline,
+                                      decorationColor: orangeColor),
+                                ),
+                              ),
+                              margin: EdgeInsets.only(
+                                  bottom: 50, left: 16, right: 16),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                            ),
+                          );
+                        },
+                            fontWeight: FontWeight.normal,
+                            drawDivider: false,
+                            textSize: 14),
+                        unExpansionProfileItem(
+                            message, Languages.of(context).sendMessage, () {
+                          showCustomDialog(
+                            Center(
+                              child: ListView(
+                                shrinkWrap: true,
+                                children: [
+                                  Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(15),
+                                        color: Colors.white,
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color: Color(0x26e16036),
+                                              offset: Offset(0, 1),
+                                              blurRadius: 6,
+                                              spreadRadius: 0),
+                                        ],
+                                      ),
+                                      margin:
+                                          EdgeInsets.only(right: 20, left: 20),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(20.0),
+                                        child: Material(
+                                          child: Column(
+                                            children: [
+                                              textFiledMessage(context,
+                                                  text: Languages.of(context)
+                                                      .email),
+                                              textFiledMessage(context,
+                                                  text: Languages.of(context)
+                                                      .subject),
+                                              textFiledMessage(context,
+                                                  text: Languages.of(context)
+                                                      .writeAMessage,
+                                                  keyboardType:
+                                                      TextInputType.multiline,
+                                                  lines: 5),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              submitButton(() {}, context)
+                                            ],
+                                          ),
+                                        ),
+                                      )),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                            fontWeight: FontWeight.normal,
+                            drawDivider: false,
+                            textSize: 14),
+                        unExpansionProfileItem(
+                            message, Languages.of(context).location, () {
+                          showCustomDialog(
+                            Container(
+                              height: 70,
+                              width: MediaQuery.of(context).size.width,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.location_on_rounded,
+                                        size: 14,
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      buildText(
+                                        Languages.of(context).address,
+                                        12,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      MapUtils.openMap(
+                                        30.063216,
+                                        31.341721,
+                                      );
+                                    },
+                                    child: buildText(
+                                        Languages.of(context).getLocation, 12,
+                                        color: orangeColor,
+                                        fontWeight: FontWeight.w600,
+                                        textDecoration:
+                                            TextDecoration.underline,
+                                        decorationColor: orangeColor),
+                                  ),
+                                ],
+                              ),
+                              margin: EdgeInsets.only(
+                                  bottom: 50, left: 16, right: 16),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                            ),
+                          );
+                        },
+                            fontWeight: FontWeight.normal,
+                            drawDivider: false,
+                            textSize: 14),
+                      ],
                     ),
-                    profileItemBuilder(
+                    unExpansionProfileItem(
                       user,
-                      Languages.of(context).userGuide,
+                      Languages.of(context).aboutUs,
                       () {
-                        print('User guide Pressed');
+                        print('About Us');
                       },
                       drawDivider: false,
                     ),
@@ -282,7 +429,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Container(
                 margin: EdgeInsets.only(right: 15, left: 15, bottom: 10),
                 decoration: boxDecorationBuilder(10),
-                child: profileItemBuilder(
+                child: unExpansionProfileItem(
                   logout,
                   Languages.of(context).logOut,
                   () {
@@ -298,8 +445,48 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget profileItemBuilder(String image, String title, Function onPressed,
-      {bool drawDivider = true}) {
+  GestureDetector expansionProfileItem(
+      {@required String title,
+      @required String image,
+      @required List<Widget> children,
+      @required Function onClick}) {
+    return GestureDetector(
+      onTap: onClick,
+      child: Column(
+        children: [
+          ExpansionTile(
+            tilePadding: EdgeInsetsDirectional.fromSTEB(0, 0, 15, 0),
+            title: unExpansionProfileItem(image, title, () {
+              print('Contact Us');
+            }, drawDivider: false, isParent: true),
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width,
+                margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                decoration: BoxDecoration(
+                  color: Colors.blue[100],
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(children: children),
+              )
+            ],
+          ),
+          Divider(
+            indent: 15,
+            endIndent: 15,
+            thickness: 1,
+            height: 1,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget unExpansionProfileItem(String image, String title, Function onPressed,
+      {bool drawDivider = true,
+      bool isParent = false,
+      double textSize = 16.0,
+      FontWeight fontWeight = FontWeight.w700}) {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
@@ -317,14 +504,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   height: 40,
                 ),
                 SizedBox(
-                  width: 20,
+                  width: 16,
                 ),
                 Expanded(
-                  child: buildText(title, 16.0,
-                      fontFamily: semiBoldFontFamily,
-                      fontWeight: FontWeight.w700),
+                  child: buildText(title, textSize,
+                      fontFamily: semiBoldFontFamily, fontWeight: fontWeight),
                 ),
-                Icon(Icons.navigate_next),
+                isParent ? SizedBox() : Icon(Icons.navigate_next),
               ],
             ),
             SizedBox(
@@ -343,4 +529,71 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
+
+  void showCustomDialog(Widget widget) {
+    showGeneralDialog(
+      barrierLabel: "Barrier",
+      barrierDismissible: true,
+      barrierColor: Color(0xffcfcece).withOpacity(0.5),
+      transitionDuration: Duration(milliseconds: 700),
+      context: context,
+      pageBuilder: (_, __, ___) {
+        return Align(alignment: Alignment.center, child: widget);
+      },
+      transitionBuilder: (_, anim, __, child) {
+        return SlideTransition(
+          position: Tween(begin: Offset(0, 1), end: Offset(0, 0)).animate(anim),
+          child: child,
+        );
+      },
+    );
+  }
+}
+
+Widget textFiledMessage(BuildContext context,
+    {String text,
+    TextInputType keyboardType = TextInputType.text,
+    int lines = 1}) {
+  return Column(
+    children: [
+      TextField(
+        minLines: 1,
+        maxLines: lines,
+        keyboardType: keyboardType,
+        enabled: true,
+        decoration: InputDecoration(
+          isDense: true,
+          border: OutlineInputBorder(
+            borderRadius: const BorderRadius.all(
+              const Radius.circular(15.0),
+            ),
+          ),
+          labelText: text,
+        ),
+      ),
+      SizedBox(height: 24)
+    ],
+  );
+}
+
+Widget submitButton(Function _function, BuildContext context) {
+  return FlatButton(
+    onPressed: _function,
+    child: Padding(
+      padding: const EdgeInsets.all(12),
+      child: Text(
+        Languages.of(context).submit,
+        style: TextStyle(
+          fontSize: 17,
+          fontWeight: FontWeight.bold,
+          color: orangeColor,
+        ),
+      ),
+    ),
+    shape: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(25),
+        borderSide: BorderSide(width: 3, color: orangeColor)),
+    highlightColor: orangeColor.withOpacity(0.2),
+    splashColor: orangeColor.withOpacity(0.5),
+  );
 }

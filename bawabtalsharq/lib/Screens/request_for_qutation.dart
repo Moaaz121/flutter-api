@@ -19,6 +19,8 @@ class _RequestforqutationState extends State<Requestforqutation> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      bottom: false,
+      top: false,
       child: Scaffold(
         backgroundColor: Colors.white54.withOpacity(0.92),
         appBar: appBarBuilder(
