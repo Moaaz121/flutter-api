@@ -54,8 +54,8 @@ class _IndividualProductState extends State<IndividualProduct>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: productFab(),
       body: SafeArea(
-        bottom: false,
         child: Container(
           color: Color(0xfff9dfd6),
           child: CustomScrollView(
@@ -208,16 +208,27 @@ class _IndividualProductState extends State<IndividualProduct>
       ),
       body: TabBarView(controller: _controller, children: [
         SingleChildScrollView(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.1),
           child: Column(
             children: [
               overViewText(),
               SizedBox(
-                height: 10,
+                height: 20,
               ),
               productFaq(title: 'FAQ:', question: 'Question', answer: 'Answer'),
+              SizedBox(
+                height: 20,
+              ),
               detailsPictures(),
-              certificateListView(),
+              SizedBox(
+                height: 20,
+              ),
               listOfBackingChipping(),
+              SizedBox(
+                height: 20,
+              ),
+              certificateListView(),
             ],
           ),
         ),
@@ -233,6 +244,83 @@ class _IndividualProductState extends State<IndividualProduct>
       ]),
     );
   }
+}
+
+Padding productFab() {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 10),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          padding: EdgeInsets.all(10),
+          height: 50,
+          decoration: BoxDecoration(
+              boxShadow: [makeShadow(color: (0x29e16036), offset: 3)],
+              borderRadius: BorderRadius.circular(16),
+              color: Colors.white),
+          child: Center(
+            child: Text(
+              '\$15.00 : \$200.00',
+              style: TextStyle(color: orangeColor, fontWeight: FontWeight.bold),
+            ),
+          ),
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        Container(
+          padding: EdgeInsets.all(10),
+          height: 50,
+          decoration: BoxDecoration(
+              boxShadow: [makeShadow(color: (0x29e16036), offset: 3)],
+              borderRadius: BorderRadius.circular(16),
+              color: orangeColor),
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Icon(
+                        Icons.person_pin_rounded,
+                        size: 18,
+                        color: Colors.white,
+                      ),
+                      Text(
+                        'Chat Supplier',
+                        style: TextStyle(color: Colors.white, fontSize: 9),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    width: 30,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Icon(
+                        Icons.person_pin_rounded,
+                        size: 18,
+                        color: Colors.white,
+                      ),
+                      Text(
+                        'Buy Now',
+                        style: TextStyle(color: Colors.white, fontSize: 9),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
 }
 
 Widget productOption(
@@ -336,7 +424,7 @@ Widget productFaq({String title, String question, String answer}) {
     children: [
       Text(
         title,
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
       ),
       ListView.builder(
         physics: BouncingScrollPhysics(
@@ -354,14 +442,14 @@ Widget productFaq({String title, String question, String answer}) {
               children: [
                 Text(
                   question,
-                  style: TextStyle(color: Colors.black, fontSize: 14),
+                  style: TextStyle(color: Colors.black, fontSize: 12),
                 ),
                 SizedBox(
                   height: 2,
                 ),
                 Text(
                   answer,
-                  style: TextStyle(color: Colors.black54, fontSize: 14),
+                  style: TextStyle(color: Colors.black54, fontSize: 12),
                 ),
               ],
             ),
@@ -481,48 +569,59 @@ Widget overViewText() {
 }
 
 Widget listOfBackingChipping() {
-  return ListView.builder(
-    physics: NeverScrollableScrollPhysics(),
-    reverse: false,
-    scrollDirection: Axis.vertical,
-    shrinkWrap: true,
-    itemCount: 5,
-    itemBuilder: (context, position) {
-      return SizedBox(
-          width: MediaQuery.of(context).size.width / 3 - 5,
-          child: backingChipping(
-              'gdfgt dfdnfu dkfbhdhkslfb', productImage, context));
-    },
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      buildText('Packiging & Shipping', 14, fontWeight: FontWeight.w600),
+      SizedBox(
+        height: 10,
+      ),
+      ListView.builder(
+        physics: NeverScrollableScrollPhysics(),
+        reverse: false,
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemCount: 5,
+        itemBuilder: (context, position) {
+          return backingChipping(
+              'Kedo Running Shoes From Addiddas Kedo Running Shoes From Addiddas Kedo Running Shoes From Addiddas Running Shoes From Addiddas',
+              slider2,
+              context);
+        },
+      ),
+    ],
   );
 }
 
 Widget backingChipping(String text, String image, BuildContext context) {
-  return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-    buildText('Packiging & Shipping', 16),
-    Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * .15,
-      decoration: new BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(logo),
-          fit: BoxFit.fill,
+  return Padding(
+    padding: const EdgeInsets.only(bottom: 20),
+    child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+      Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height * .15,
+        decoration: new BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(image),
+            fit: BoxFit.fill,
+          ),
+          borderRadius: BorderRadius.circular(16),
+          color: Colors.white,
         ),
-        borderRadius: BorderRadius.circular(16),
-        color: Colors.white,
       ),
-    ),
-    SizedBox(
-      height: 11,
-    ),
-    buildText(text, 16, fontWeight: FontWeight.w400),
-  ]);
+      SizedBox(
+        height: 11,
+      ),
+      buildText(text, 12, textAlign: TextAlign.center, color: Colors.black87),
+    ]),
+  );
 }
 
 Widget certificateListView() {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      buildText('Certificates :', 14, fontWeight: FontWeight.bold),
+      buildText('Certificates :', 14, fontWeight: FontWeight.w600),
       SizedBox(
         height: 11,
       ),
@@ -530,16 +629,15 @@ Widget certificateListView() {
         height: 80,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          shrinkWrap: true,
-          // padding: const EdgeInsets.all(2.0),
           itemCount: 5,
           itemBuilder: (context, position) {
             return Container(
+              margin: EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
                 color: Colors.white,
               ),
-              child: Image.asset(productImage),
+              child: Image.asset(certificate),
             );
           },
         ),
@@ -552,7 +650,7 @@ Widget detailsPictures() {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      buildText('Detailed Pictures', 14, fontWeight: FontWeight.bold),
+      buildText('Detailed Pictures', 14, fontWeight: FontWeight.w600),
       SizedBox(
         height: 11,
       ),
@@ -569,7 +667,7 @@ Widget detailsPictures() {
             child: Card(
                 color: Colors.white,
                 child: Center(
-                  child: Image.asset(logo),
+                  child: Image.asset(shoes_image),
                 )),
           );
         }),
