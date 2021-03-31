@@ -69,5 +69,8 @@ const String logo = 'assets/images/logo.png';
 const String logo1 = 'assets/images/logo1.png';
 const String twitter = 'assets/images/twitter.png';
 const String google = 'assets/images/google.png';
+const String devatchy = 'assets/images/devatchy.png';
+const String devatchys = 'assets/images/devatchys.png';
+const String snappyLaunch = 'assets/images/snappyLaunch.png';
 
 // end Islam

@@ -112,5 +112,9 @@ abstract class Languages {
   String get forgetPassword;
   String get alreadyHaveAccount;
   String get signIn;
+  String get aboutUs;
+  String get ourGroup;
+  String get ourGroupCompanies;
+
 // end Islam
 }
