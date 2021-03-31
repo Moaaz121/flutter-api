@@ -217,8 +217,7 @@ class _IndividualProductState extends State<IndividualProduct>
               productFaq(title: 'FAQ:', question: 'Question', answer: 'Answer'),
               detailsPictures(),
               certificateListView(),
-              backingChipping(
-                  'gdfgt dfdnfu dkfbhdhkslfb', productImage, context),
+              listOfBackingChipping(),
             ],
           ),
         ),
@@ -481,12 +480,25 @@ Widget overViewText() {
   );
 }
 
+Widget listOfBackingChipping() {
+  return ListView.builder(
+    physics: NeverScrollableScrollPhysics(),
+    reverse: false,
+    scrollDirection: Axis.vertical,
+    shrinkWrap: true,
+    itemCount: 5,
+    itemBuilder: (context, position) {
+      return SizedBox(
+          width: MediaQuery.of(context).size.width / 3 - 5,
+          child: backingChipping(
+              'gdfgt dfdnfu dkfbhdhkslfb', productImage, context));
+    },
+  );
+}
+
 Widget backingChipping(String text, String image, BuildContext context) {
   return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-    Text('Packiging&Shipping '),
-    SizedBox(
-      height: 11,
-    ),
+    buildText('Packiging & Shipping', 16),
     Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height * .15,
@@ -502,15 +514,7 @@ Widget backingChipping(String text, String image, BuildContext context) {
     SizedBox(
       height: 11,
     ),
-    Text((text),
-        style: TextStyle(
-          fontFamily: 'SegoeUI',
-          color: Color(0xff231e36),
-          fontSize: 16,
-          fontWeight: FontWeight.w400,
-          fontStyle: FontStyle.normal,
-          letterSpacing: 0.156,
-        )),
+    buildText(text, 16, fontWeight: FontWeight.w400),
   ]);
 }
 
@@ -518,12 +522,12 @@ Widget certificateListView() {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Text('Certificates : '),
+      buildText('Certificates :', 14, fontWeight: FontWeight.bold),
       SizedBox(
         height: 11,
       ),
       Container(
-        height: 200,
+        height: 80,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
           shrinkWrap: true,
@@ -531,8 +535,7 @@ Widget certificateListView() {
           itemCount: 5,
           itemBuilder: (context, position) {
             return Container(
-              height: 103,
-              decoration: new BoxDecoration(
+              decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
                 color: Colors.white,
               ),
@@ -549,7 +552,7 @@ Widget detailsPictures() {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Text('Detailed Pictures'),
+      buildText('Detailed Pictures', 14, fontWeight: FontWeight.bold),
       SizedBox(
         height: 11,
       ),
