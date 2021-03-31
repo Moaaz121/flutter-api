@@ -1,12 +1,10 @@
 import 'package:bawabtalsharq/Utils/images.dart';
+import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/widgets/widgets.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:line_icons/line_icon.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:bawabtalsharq/Utils/styles.dart';
 
 class IndividualProduct extends StatefulWidget {
   @override
@@ -217,6 +215,10 @@ class _IndividualProductState extends State<IndividualProduct>
                 height: 10,
               ),
               productFaq(title: 'FAQ:', question: 'Question', answer: 'Answer'),
+              detailsPictures(),
+              certificateListView(),
+              backingChipping(
+                  'gdfgt dfdnfu dkfbhdhkslfb', productImage, context),
             ],
           ),
         ),
@@ -338,6 +340,9 @@ Widget productFaq({String title, String question, String answer}) {
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
       ),
       ListView.builder(
+        physics: BouncingScrollPhysics(
+          parent: NeverScrollableScrollPhysics(),
+        ),
         padding: EdgeInsets.only(top: 5, bottom: 5),
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
@@ -473,5 +478,99 @@ Widget overViewText() {
             color: Colors.grey)
       ],
     ),
+  );
+}
+
+Widget backingChipping(String text, String image, BuildContext context) {
+  return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+    Text('Packiging&Shipping '),
+    SizedBox(
+      height: 11,
+    ),
+    Container(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height * .15,
+      decoration: new BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(logo),
+          fit: BoxFit.fill,
+        ),
+        borderRadius: BorderRadius.circular(16),
+        color: Colors.white,
+      ),
+    ),
+    SizedBox(
+      height: 11,
+    ),
+    Text((text),
+        style: TextStyle(
+          fontFamily: 'SegoeUI',
+          color: Color(0xff231e36),
+          fontSize: 16,
+          fontWeight: FontWeight.w400,
+          fontStyle: FontStyle.normal,
+          letterSpacing: 0.156,
+        )),
+  ]);
+}
+
+Widget certificateListView() {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text('Certificates : '),
+      SizedBox(
+        height: 11,
+      ),
+      Container(
+        height: 200,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          shrinkWrap: true,
+          // padding: const EdgeInsets.all(2.0),
+          itemCount: 5,
+          itemBuilder: (context, position) {
+            return Container(
+              height: 103,
+              decoration: new BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                color: Colors.white,
+              ),
+              child: Image.asset(productImage),
+            );
+          },
+        ),
+      ),
+    ],
+  );
+}
+
+Widget detailsPictures() {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text('Detailed Pictures'),
+      SizedBox(
+        height: 11,
+      ),
+      GridView.count(
+        physics: BouncingScrollPhysics(
+          parent: NeverScrollableScrollPhysics(),
+        ),
+        shrinkWrap: true,
+        crossAxisCount: 4,
+        crossAxisSpacing: 15,
+        mainAxisSpacing: 15,
+        children: List.generate(12, (index) {
+          return GridTile(
+            child: Card(
+                color: Colors.white,
+                child: Center(
+                  child: Image.asset(logo),
+                )),
+          );
+        }),
+      ),
+    ],
   );
 }
