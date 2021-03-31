@@ -14,7 +14,15 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   @override
   Stream<ChatState> mapEventToState(
     ChatEvent event,
-  ) async* {}
+  ) async* {
+    //start Asmaa
+
+    //end Asmaa
+
+    //start karem
+
+    //end karem
+  }
 
   @override
   // TODO: implement initialState
