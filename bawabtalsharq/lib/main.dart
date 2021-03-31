@@ -12,7 +12,7 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'Screens/about_us.dart';
+import 'Screens/about_us_screen.dart';
 import 'Screens/main_srceen.dart';
 import 'Screens/notification_screen.dart';
 import 'Screens/profile_screen.dart';
@@ -46,7 +46,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.deepOrange),
-      home: AboutUs(),
+      home: SplashScreen(),
       routes: {
         ScreenRoutes.splashScreen: (_) => SplashScreen(),
         ScreenRoutes.introScreen: (_) => IntroScreen(),
@@ -61,6 +61,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.requestForQuotation: (_) => RequestForQScreen(),
         ScreenRoutes.postQuotationRequest: (_) => Requestforqutation(),
         ScreenRoutes.individualProduct: (_) => IndividualProduct(),
+        ScreenRoutes.aboutUs: (_) => AboutUs(),
       },
       locale: _locale,
       supportedLocales: supportedLocales,
@@ -125,4 +126,5 @@ class ScreenRoutes {
   static const String requestForQuotation = '/requestForQuotation';
   static const String postQuotationRequest = '/postQuotationRequest';
   static const String individualProduct = '/individual_product_screen';
+  static const String aboutUs = '/about_us_screen';
 }

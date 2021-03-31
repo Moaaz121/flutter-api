@@ -147,7 +147,6 @@ class LanguageAr extends Languages {
   String get forgetPassword => 'هل نسيت كلمه السر';
   String get alreadyHaveAccount => 'هل لديك حساب بالفعل';
   String get signIn => 'تسجيل الدخول';
-  String get aboutUs => 'معلومات عنا';
   String get ourGroup => 'مجموعتنا';
   String get ourGroupCompanies => 'شركاتنا';
 
