@@ -1,3 +1,4 @@
+import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/strings.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
@@ -22,7 +23,11 @@ class _RequestForQScreenState extends State<RequestForQScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarBuilder(
-          title: Strings().requestForQutation(),
+          titleWidget: buildText(
+              Languages.of(context).requestForQuotation, 18.0,
+              fontFamily: boldFontFamily,
+              color: Colors.white,
+              fontWeight: FontWeight.bold),
           onBackPressed: () {
             Navigator.pop(context);
           }),

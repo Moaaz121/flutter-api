@@ -1,3 +1,4 @@
+import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/main.dart';
 import 'package:flutter/material.dart';
 
@@ -91,7 +92,7 @@ class _ChatItemState extends State<ChatItem> {
                 : Container(
                     padding: EdgeInsets.all(1),
                     decoration: BoxDecoration(
-                      color: Colors.red,
+                      color: defaultOrangeColor,
                       borderRadius: BorderRadius.circular(6),
                     ),
                     constraints: BoxConstraints(

@@ -1,4 +1,7 @@
 import 'package:bawabtalsharq/Model/chat_model.dart';
+import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
+import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 import 'chat_item.dart';
@@ -9,21 +12,39 @@ class ChatsScreen extends StatefulWidget {
 }
 
 class _ChatsScreenState extends State<ChatsScreen> {
+  bool _isSearchPressed = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: TextField(
-          decoration: InputDecoration.collapsed(
-            hintText: 'Search',
-          ),
-        ),
-        actions: <Widget>[
+      appBar: appBarBuilder(
+        titleWidget: _isSearchPressed
+            ? TextField(
+                decoration: InputDecoration.collapsed(
+                  hintText: 'Search',
+                ),
+              )
+            : buildText(Languages.of(context).chats, 18.0,
+                fontFamily: boldFontFamily,
+                color: Colors.white,
+                fontWeight: FontWeight.bold),
+        onBackPressed: () {
+          Navigator.pop(context);
+        },
+        actions: [
           IconButton(
+            onPressed: () {
+              setState(() {
+                _isSearchPressed = !_isSearchPressed;
+              });
+            },
             icon: Icon(
               Icons.search,
+              size: 25,
+              color: Colors.white,
             ),
-            onPressed: () {},
+          ),
+          SizedBox(
+            width: 10,
           ),
         ],
       ),

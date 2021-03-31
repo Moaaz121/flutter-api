@@ -1,26 +1,39 @@
 import 'package:bawabtalsharq/Model/chat_model.dart';
+import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
+import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:flutter/material.dart';
 
 import 'chat_bubble.dart';
 
-class Conversation extends StatefulWidget {
+class ConversationScreen extends StatefulWidget {
   @override
-  _ConversationState createState() => _ConversationState();
+  _ConversationScreenState createState() => _ConversationScreenState();
 }
 
-class _ConversationState extends State<Conversation> {
+class _ConversationScreenState extends State<ConversationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: defaultOrangeColor,
         elevation: 3,
         leading: IconButton(
-          icon: Icon(
-            Icons.keyboard_backspace,
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: CircleAvatar(
+            radius: 12,
+            backgroundColor: Colors.white,
+            child: Icon(
+              LanguageHelper.isEnglish
+                  ? Icons.keyboard_arrow_left_outlined
+                  : Icons.keyboard_arrow_right_outlined,
+              size: 20,
+              color: defaultOrangeColor,
+            ),
           ),
-          onPressed: () => Navigator.pop(context),
         ),
         titleSpacing: 0,
         title: InkWell(
@@ -49,7 +62,7 @@ class _ConversationState extends State<Conversation> {
                     Visibility(
                       visible: true,
                       child: Text(
-                        "Online",
+                        Languages.of(context).online,
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 11,
@@ -72,9 +85,12 @@ class _ConversationState extends State<Conversation> {
           ),
           IconButton(
             icon: Icon(
-              Icons.video_call,
+              Icons.videocam,
             ),
             onPressed: () {},
+          ),
+          SizedBox(
+            width: 10,
           ),
         ],
       ),
@@ -98,9 +114,6 @@ class _ConversationState extends State<Conversation> {
                     type: msg['type'],
                     replyText: msg["replyText"],
                     isMe: msg['isMe'],
-                    isGroup: msg['isGroup'],
-                    isReply: msg['isReply'],
-                    replyName: 'Ali',
                   );
                 },
               ),
@@ -119,7 +132,7 @@ class _ConversationState extends State<Conversation> {
                     children: <Widget>[
                       IconButton(
                         icon: Icon(
-                          Icons.add,
+                          Icons.attach_file,
                           color: defaultOrangeColor,
                         ),
                         onPressed: () {},

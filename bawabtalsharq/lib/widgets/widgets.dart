@@ -516,7 +516,7 @@ Widget sliderIndicator(int page) {
 
 // Start Asmaa
 AppBar appBarBuilder(
-    {@required String title,
+    {@required Widget titleWidget,
     @required Function onBackPressed,
     List<Widget> actions}) {
   return AppBar(
@@ -529,11 +529,8 @@ AppBar appBarBuilder(
           bottomRight: Radius.circular(10),
         ),
       ),
-      backgroundColor: defaultOrangeColor.withOpacity(0.8),
-      title: buildText(title, 18.0,
-          fontFamily: boldFontFamily,
-          color: Colors.white,
-          fontWeight: FontWeight.bold),
+      backgroundColor: defaultOrangeColor,
+      title: titleWidget,
       leading: IconButton(
         onPressed: onBackPressed,
         icon: CircleAvatar(

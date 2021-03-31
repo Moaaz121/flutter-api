@@ -14,6 +14,8 @@ abstract class Languages {
 
 // Start Asmaa
   String get allCategories;
+  String get chats;
+  String get online;
 
 // end Asmaa
 
@@ -31,12 +33,12 @@ abstract class Languages {
 // Start Mosdik
 
   String get home;
-  String get feature ;
+  String get feature;
   String get myAccount;
   String get search;
 
-  String get requestForQ ;
-  String get joinUs ;
+  String get requestForQ;
+  String get joinUs;
   String get ourGoldenSupplier;
   String get mostPopularIn;
   String get mostPopularByCategories;
@@ -44,14 +46,13 @@ abstract class Languages {
   String get more;
   String get egypt;
 
-
- String get intro1Title ;
- String get intro1SubTitle ;
+  String get intro1Title;
+  String get intro1SubTitle;
   String get intro2Title;
-  String get intro2SubTitle ;
+  String get intro2SubTitle;
   String get intro3Title;
   String get intro3SubTitle;
-  String get next ;
+  String get next;
 
 // end Mosdik
 

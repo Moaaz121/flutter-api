@@ -51,6 +51,4 @@ List conversation = List.generate(
           "type": types[random.nextInt(2)],
           "replyText": messages[random.nextInt(10)],
           "isMe": random.nextBool(),
-          "isGroup": false,
-          "isReply": random.nextBool(),
         });

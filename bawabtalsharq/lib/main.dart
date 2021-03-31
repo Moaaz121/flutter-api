@@ -1,5 +1,5 @@
 import 'package:bawabtalsharq/Screens/Chat/chat_screen.dart';
-import 'package:bawabtalsharq/Screens/Chat/conversation.dart';
+import 'package:bawabtalsharq/Screens/Chat/conversation_screen.dart';
 import 'package:bawabtalsharq/Screens/all_categories_screen.dart';
 import 'package:bawabtalsharq/Screens/feature_screen.dart';
 import 'package:bawabtalsharq/Screens/home_screen.dart';
@@ -60,7 +60,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.requestForQuotation: (_) => RequestForQScreen(),
         ScreenRoutes.postQuotationRequest: (_) => Requestforqutation(),
         ScreenRoutes.chatsScreen: (_) => ChatsScreen(),
-        ScreenRoutes.conversation: (_) => Conversation()
+        ScreenRoutes.conversation: (_) => ConversationScreen()
       },
       locale: _locale,
       supportedLocales: supportedLocales,

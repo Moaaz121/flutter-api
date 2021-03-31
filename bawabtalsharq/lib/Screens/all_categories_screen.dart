@@ -46,7 +46,10 @@ class _AllCategoriesState extends State<AllCategories>
       backgroundColor: Colors.white,
       appBar: appBarBuilder(
         actions: [Container()],
-        title: _appBarTitle,
+        titleWidget: buildText(_appBarTitle, 18.0,
+            fontFamily: boldFontFamily,
+            color: Colors.white,
+            fontWeight: FontWeight.bold),
         onBackPressed: () {
           Navigator.pop(context);
         },
@@ -101,7 +104,8 @@ class _AllCategoriesState extends State<AllCategories>
                 });
               },
               child: Container(
-                margin: EdgeInsetsDirectional.only(bottom: 15, start: 8, end: 8),
+                margin:
+                    EdgeInsetsDirectional.only(bottom: 15, start: 8, end: 8),
                 child: Row(
                   children: [
                     Container(
@@ -210,7 +214,8 @@ class _AllCategoriesState extends State<AllCategories>
                               color: Colors.white,
                             ),
                             child: Padding(
-                              padding: const EdgeInsetsDirectional.only(start: 3, top: 3, end: 3, bottom: 3),
+                              padding: const EdgeInsetsDirectional.only(
+                                  start: 3, top: 3, end: 3, bottom: 3),
                               child: Image.asset(
                                 cold_drinks,
                                 height: 37,
@@ -248,7 +253,7 @@ class _AllCategoriesState extends State<AllCategories>
     )..forward();
     _sliderAnimation = Tween<Offset>(
       begin: LanguageHelper.isEnglish ? Offset(1, 0) : Offset(-1, 0),
-        end: const Offset(0.0, 0.0),
+      end: const Offset(0.0, 0.0),
     ).animate(CurvedAnimation(
       parent: _sliderController,
       curve: Curves.easeIn,
