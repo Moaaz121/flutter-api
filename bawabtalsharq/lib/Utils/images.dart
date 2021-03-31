@@ -40,6 +40,8 @@ const String quotation = 'assets/images/ic_quotation.png';
 const String user = 'assets/images/ic_user.png';
 const String logout = 'assets/images/ic_logout.png';
 const String profile_image = 'assets/images/bahaa_im.png';
+const String shoes_image = 'assets/images/addiddas.png';
+const String medalImage = 'assets/images/ic_medal.png';
 
 // end Bahaa
 

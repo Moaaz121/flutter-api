@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
@@ -496,9 +495,11 @@ Widget sliderItem(BuildContext context, String image) {
   );
 }
 
-Widget sliderIndicator(int page) {
+Widget sliderIndicator(int page, {bool noPadding = false}) {
   return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 55),
+    padding: noPadding
+        ? const EdgeInsets.symmetric(vertical: 0, horizontal: 0)
+        : const EdgeInsets.symmetric(vertical: 16, horizontal: 55),
     child: AnimatedSmoothIndicator(
       activeIndex: page,
       count: 4,
@@ -583,11 +584,11 @@ Text buildText(String text, double fontSize,
   );
 }
 
-BoxShadow makeShadow() {
+BoxShadow makeShadow({int color = 0xFF727272, double offset = 2}) {
   return BoxShadow(
-    color: Color(0xFF727272).withOpacity(0.2),
+    color: Color(color).withOpacity(0.2),
     blurRadius: 6,
-    offset: Offset(0, 2),
+    offset: Offset(0, offset),
     spreadRadius: 0,
   );
 }
@@ -652,6 +653,21 @@ void showLanguagesDialog(BuildContext context) {
         ),
       );
     },
+  );
+}
+
+RawMaterialButton iconRound(IconData icon) {
+  return RawMaterialButton(
+    constraints: BoxConstraints(
+        minWidth: 38.0, maxWidth: 38.0, minHeight: 38.0, maxHeight: 38.0),
+    onPressed: () {},
+    elevation: 2.0,
+    fillColor: Colors.white,
+    child: Icon(
+      icon,
+      color: Colors.black54,
+    ),
+    shape: CircleBorder(),
   );
 }
 
