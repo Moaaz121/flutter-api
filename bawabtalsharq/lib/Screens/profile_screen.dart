@@ -1,14 +1,15 @@
 import 'dart:ui';
-
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
-import 'package:bawabtalsharq/Utils/map_util.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:bawabtalsharq/Screens/profile/about_us/about_us_dialog.dart';
+import 'package:bawabtalsharq/Screens/profile/contact_us/phone_dialog.dart';
+import 'package:bawabtalsharq/Screens/profile/contact_us/send_message_dialog.dart';
+import 'package:bawabtalsharq/Screens/profile/contact_us/location_dialog.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -269,30 +270,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       children: [
                         unExpansionProfileItem(
                             message, Languages.of(context).phoneNumber, () {
-                          showCustomDialog(
-                            Container(
-                              height: 50,
-                              width: MediaQuery.of(context).size.width,
-                              child: Center(
-                                child: GestureDetector(
-                                  onTap: () {
-                                    launch("tel://+215453");
-                                  },
-                                  child: buildText(
-                                      Languages.of(context).phone, 14,
-                                      color: orangeColor,
-                                      fontWeight: FontWeight.w600,
-                                      textDecoration: TextDecoration.underline,
-                                      decorationColor: orangeColor),
-                                ),
-                              ),
-                              margin: EdgeInsets.only(
-                                  bottom: 50, left: 16, right: 16),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                            ),
+                          showAnimatedDialog(
+                            context,
+                            phoneNumberDialog(context),
                           );
                         },
                             fontWeight: FontWeight.normal,
@@ -300,53 +280,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             textSize: 14),
                         unExpansionProfileItem(
                             message, Languages.of(context).sendMessage, () {
-                          showCustomDialog(
-                            Center(
-                              child: ListView(
-                                shrinkWrap: true,
-                                children: [
-                                  Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(15),
-                                        color: Colors.white,
-                                        boxShadow: [
-                                          BoxShadow(
-                                              color: Color(0x26e16036),
-                                              offset: Offset(0, 1),
-                                              blurRadius: 6,
-                                              spreadRadius: 0),
-                                        ],
-                                      ),
-                                      margin:
-                                          EdgeInsets.only(right: 20, left: 20),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(20.0),
-                                        child: Material(
-                                          child: Column(
-                                            children: [
-                                              textFiledMessage(context,
-                                                  text: Languages.of(context)
-                                                      .email),
-                                              textFiledMessage(context,
-                                                  text: Languages.of(context)
-                                                      .subject),
-                                              textFiledMessage(context,
-                                                  text: Languages.of(context)
-                                                      .writeAMessage,
-                                                  keyboardType:
-                                                      TextInputType.multiline,
-                                                  lines: 5),
-                                              SizedBox(
-                                                height: 10,
-                                              ),
-                                              submitButton(() {}, context)
-                                            ],
-                                          ),
-                                        ),
-                                      )),
-                                ],
-                              ),
-                            ),
+                          showAnimatedDialog(
+                            context,
+                            sendMessageDialog(context),
                           );
                         },
                             fontWeight: FontWeight.normal,
@@ -354,57 +290,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             textSize: 14),
                         unExpansionProfileItem(
                             message, Languages.of(context).location, () {
-                          showCustomDialog(
-                            Container(
-                              height: 70,
-                              width: MediaQuery.of(context).size.width,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.location_on_rounded,
-                                        size: 14,
-                                      ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      buildText(
-                                        Languages.of(context).address,
-                                        12,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      MapUtils.openMap(
-                                        30.063216,
-                                        31.341721,
-                                      );
-                                    },
-                                    child: buildText(
-                                        Languages.of(context).getLocation, 12,
-                                        color: orangeColor,
-                                        fontWeight: FontWeight.w600,
-                                        textDecoration:
-                                            TextDecoration.underline,
-                                        decorationColor: orangeColor),
-                                  ),
-                                ],
-                              ),
-                              margin: EdgeInsets.only(
-                                  bottom: 50, left: 16, right: 16),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                            ),
+                          showAnimatedDialog(
+                            context,
+                            locationDialog(context),
                           );
                         },
                             fontWeight: FontWeight.normal,
@@ -416,8 +304,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       user,
                       Languages.of(context).aboutUs,
                       () {
-                        showCustomDialog(
-                          aboutUs(context),
+                        showAnimatedDialog(
+                          context,
+                          aboutUsDialog(context),
                         );
                       },
                       drawDivider: false,
@@ -531,222 +420,4 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
-
-  void showCustomDialog(Widget widget) {
-    showGeneralDialog(
-      barrierLabel: "Barrier",
-      barrierDismissible: true,
-      barrierColor: Color(0xffcfcece).withOpacity(0.5),
-      transitionDuration: Duration(milliseconds: 700),
-      context: context,
-      pageBuilder: (_, __, ___) {
-        return Align(alignment: Alignment.center, child: widget);
-      },
-      transitionBuilder: (_, anim, __, child) {
-        return SlideTransition(
-          position: Tween(begin: Offset(0, 1), end: Offset(0, 0)).animate(anim),
-          child: child,
-        );
-      },
-    );
-  }
-}
-
-Widget textFiledMessage(BuildContext context,
-    {String text,
-    TextInputType keyboardType = TextInputType.text,
-    int lines = 1}) {
-  return Column(
-    children: [
-      TextField(
-        minLines: 1,
-        maxLines: lines,
-        keyboardType: keyboardType,
-        enabled: true,
-        decoration: InputDecoration(
-          isDense: true,
-          border: OutlineInputBorder(
-            borderRadius: const BorderRadius.all(
-              const Radius.circular(15.0),
-            ),
-          ),
-          labelText: text,
-        ),
-      ),
-      SizedBox(height: 24)
-    ],
-  );
-}
-
-Widget submitButton(Function _function, BuildContext context) {
-  return FlatButton(
-    onPressed: _function,
-    child: Padding(
-      padding: const EdgeInsets.all(12),
-      child: Text(
-        Languages.of(context).submit,
-        style: TextStyle(
-          fontSize: 17,
-          fontWeight: FontWeight.bold,
-          color: orangeColor,
-        ),
-      ),
-    ),
-    shape: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(25),
-        borderSide: BorderSide(width: 3, color: orangeColor)),
-    highlightColor: orangeColor.withOpacity(0.2),
-    splashColor: orangeColor.withOpacity(0.5),
-  );
-}
-
-Widget aboutUs(BuildContext context) {
-  return Container(
-    padding: EdgeInsetsDirectional.only(
-      top: 16,
-      start: 29,
-      end: 30,
-    ),
-    width: MediaQuery.of(context).size.height * .4,
-    height: MediaQuery.of(context).size.height * .6,
-    margin: EdgeInsets.only(top: 178, left: 27, right: 27, bottom: 178),
-    decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(33),
-        boxShadow: [
-          makeShadow(),
-        ]),
-    child: SingleChildScrollView(
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        buildColumn(Languages.of(context).aboutUs,
-            'Lorem ipsum dolor sit consetetur sadipscing elitr sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet'),
-        SizedBox(height: 18),
-        buildColumn(Languages.of(context).ourGroup,
-            'Lorem ipsum dolor sit consetetur sadipscing elitr sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet'),
-        // SizedBox(height: 15),
-        // buildColumn('Our Group',
-        //     'Lorem ipsum dolor sit consetetur sadipscing elitr sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet'),
-        SizedBox(height: 18),
-        buildText(
-          Languages.of(context).ourGroupCompanies,
-          16,
-          fontWeight: FontWeight.w600,
-          // fontStyle: FontStyle.normal,
-          // letterSpacing: 0.192,
-          // color: Colors.red,
-        ),
-        SizedBox(height: 10),
-        Container(
-          height: 79,
-          decoration: new BoxDecoration(
-            color: Color(0xffffffff),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                  color: Color(0x26e16036),
-                  offset: Offset(0, 0),
-                  blurRadius: 20,
-                  spreadRadius: 0)
-            ],
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.arrow_back_ios,
-                  size: 13,
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 10,
-                    itemBuilder: (context, position) {
-                      return buildListItem(
-                          'snappy Lauch', 'Programming Company', snappyLaunch);
-                    },
-                  ),
-                ),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  size: 13,
-                ),
-              ],
-            ),
-          ),
-        )
-      ]),
-    ),
-  );
-}
-
-Column buildListItem(
-    String textImage, String textLabel, String imageContainer) {
-  return Column(
-    children: [
-      Container(
-          margin: EdgeInsetsDirectional.only(
-            start: 15,
-            top: 8,
-            end: 15,
-          ),
-          width: 48,
-          height: 46,
-          decoration: new BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(imageContainer),
-              fit: BoxFit.fill,
-            ),
-          )),
-      Text(textImage,
-          style: TextStyle(
-            fontFamily: 'SegoeUI',
-            color: Colors.black,
-            fontSize: 7,
-            fontWeight: FontWeight.w600,
-            fontStyle: FontStyle.normal,
-          )),
-      Text(textLabel,
-          style: TextStyle(
-            fontFamily: 'SegoeUI',
-            color: Colors.black,
-            fontSize: 6,
-            fontWeight: FontWeight.w400,
-            fontStyle: FontStyle.normal,
-          ))
-    ],
-  );
-}
-
-Column buildColumn(String title, String subTitle) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(
-        title,
-        style: TextStyle(
-          fontFamily: 'SegoeUI',
-          color: Colors.red,
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
-          fontStyle: FontStyle.normal,
-          letterSpacing: 0.192,
-        ),
-      ),
-      SizedBox(
-        height: 5,
-      ),
-      Text(
-        subTitle,
-        style: TextStyle(
-          fontFamily: 'Arial',
-          color: Color(0xff000000),
-          fontSize: 10,
-          fontWeight: FontWeight.w400,
-          fontStyle: FontStyle.normal,
-        ),
-      ),
-    ],
-  );
 }

@@ -674,6 +674,25 @@ RawMaterialButton iconRound(IconData icon) {
   );
 }
 
+void showAnimatedDialog(BuildContext context, Widget widget) {
+  showGeneralDialog(
+    barrierLabel: "Barrier",
+    barrierDismissible: true,
+    barrierColor: Color(0xffcfcece).withOpacity(0.5),
+    transitionDuration: Duration(milliseconds: 700),
+    context: context,
+    pageBuilder: (_, __, ___) {
+      return Align(alignment: Alignment.center, child: widget);
+    },
+    transitionBuilder: (_, anim, __, child) {
+      return SlideTransition(
+        position: Tween(begin: Offset(0, 1), end: Offset(0, 0)).animate(anim),
+        child: child,
+      );
+    },
+  );
+}
+
 // end Bahaa
 
 // Start Mosdik
