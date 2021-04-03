@@ -38,6 +38,9 @@ dependencies:
   bloc:
   flutter_bloc:
   http:
+  flutter_speed_dial_material_design: ^2.0.0
+  image_picker:
+  file_picker:
 
 dev_dependencies:
   flutter_test:
