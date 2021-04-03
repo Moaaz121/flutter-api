@@ -1,10 +1,13 @@
+import 'package:bawabtalsharq/Repos/ChatRepos/chat_repo.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
-import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:rocket_chat_connector_flutter/models/authentication.dart';
+
+import '../main.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -157,10 +160,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                   borderRadius: BorderRadius.circular(9),
                                 ),
-                                onPressed: () {
+                                onPressed: () async {
                                   // TO DO check login
-                                  Navigator.pushReplacementNamed(
-                                      context, ScreenRoutes.mainScreen);
+                                  Authentication result = await RocketChatApi()
+                                      .loginRocket(
+                                          'asmaatarek93@gmail.com', '12345678');
+                                  if (result.status == "success") {
+                                    rocketUser = result;
+                                    Navigator.pushReplacementNamed(
+                                        context, ScreenRoutes.mainScreen);
+                                  } else {
+                                    print('error');
+                                  }
                                 },
                                 color: Colors.white,
                                 child: Text(
