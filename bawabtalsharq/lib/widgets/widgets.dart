@@ -693,6 +693,77 @@ void showAnimatedDialog(BuildContext context, Widget widget) {
   );
 }
 
+Widget searchTextField({String hint, BuildContext context}) {
+  return Container(
+    margin: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+    width: MediaQuery.of(context).size.width * 0.7,
+    height: MediaQuery.of(context).size.width * 0.10,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(10),
+      color: Colors.white.withOpacity(0.5),
+    ),
+    child: Center(
+      child: TextField(
+        keyboardType: TextInputType.text,
+        autocorrect: true,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          enabledBorder: InputBorder.none,
+          errorBorder: InputBorder.none,
+          disabledBorder: InputBorder.none,
+          hintText: '  $hint Search...',
+          prefixIcon: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(7),
+              color: Colors.white,
+            ),
+            margin: EdgeInsets.all(5),
+            child: Icon(
+              Icons.search,
+              color: orangeColor,
+            ),
+          ),
+          hintStyle: TextStyle(color: Colors.black12),
+          filled: true,
+        ),
+      ),
+    ),
+  );
+}
+
+AppBar appBarSearch({
+  @required String hint,
+  @required Function onBackPressed,
+  @required BuildContext context,
+}) {
+  return AppBar(
+      centerTitle: true,
+      toolbarHeight: 60.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(10),
+          bottomRight: Radius.circular(10),
+        ),
+      ),
+      backgroundColor: defaultOrangeColor,
+      title: searchTextField(hint: hint, context: context),
+      leading: IconButton(
+        onPressed: onBackPressed,
+        icon: CircleAvatar(
+          radius: 12,
+          backgroundColor: Colors.white,
+          child: Icon(
+            LanguageHelper.isEnglish
+                ? Icons.keyboard_arrow_left_outlined
+                : Icons.keyboard_arrow_right_outlined,
+            size: 20,
+            color: defaultOrangeColor,
+          ),
+        ),
+      ));
+}
+
 // end Bahaa
 
 // Start Mosdik
