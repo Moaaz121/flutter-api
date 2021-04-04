@@ -169,6 +169,9 @@ class LanguageEn extends Languages {
   String get signIn => 'Sign In';
   String get ourGroup => 'Our Group';
   String get ourGroupCompanies => 'Our Group Companies';
+  String get searchByCategories => 'Search by categories';
+  String get handmadeCrafts => 'Handmade crafts';
+  String get resentSearch => 'Resent Search';
 
 // end Islam
 }

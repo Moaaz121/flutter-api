@@ -133,6 +133,8 @@ abstract class Languages {
   String get signIn;
   String get ourGroup;
   String get ourGroupCompanies;
-
+  String get searchByCategories;
+  String get resentSearch;
+  String get handmadeCrafts;
 // end Islam
 }

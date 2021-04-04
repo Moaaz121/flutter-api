@@ -43,7 +43,9 @@ class _ListFilterState extends State<ListFilter> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            textTitle(context, Languages.of(context).category, () {}),
+            textTitle(context, Languages.of(context).category, () {
+              Navigator.pushNamed(context, ScreenRoutes.categoriesFilterScreen);
+            }),
             listOfCate(cold_drinks),
             titleText(Languages.of(context).expressShipping),
             listOfCheckBox(),
@@ -77,7 +79,7 @@ class _ListFilterState extends State<ListFilter> {
             buildSizedBox(),
             lineDivider(),
             textTitle(context, Languages.of(context).colors, () {
-              Navigator.pushNamed(context, ScreenRoutes.colorScreen);
+              Navigator.pushNamed(context, ScreenRoutes.colorFilterScreen);
             }),
             buildSizedBox(),
             lineDivider(),
@@ -251,24 +253,32 @@ class _ListFilterState extends State<ListFilter> {
   }
 
   Widget textTitle(BuildContext context, String text, Function onPress) {
-    return GestureDetector(
-      onTap: onPress,
-      child: Padding(
-        padding: const EdgeInsetsDirectional.only(top: 20, start: 30, end: 30),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              text,
-              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+    return Padding(
+      padding: const EdgeInsetsDirectional.only(top: 20, start: 30, end: 30),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            text,
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+          ),
+          GestureDetector(
+            onTap: onPress,
+            child: Row(
+              children: [
+                Text('See All'),
+                SizedBox(
+                  width: 5,
+                ),
+                Icon(
+                  Icons.arrow_forward_rounded,
+                  size: 18,
+                  color: Colors.black.withOpacity(0.7),
+                ),
+              ],
             ),
-            Icon(
-              Icons.navigate_next,
-              size: 25,
-              color: Colors.black.withOpacity(0.7),
-            )
-          ],
-        ),
+          )
+        ],
       ),
     );
   }

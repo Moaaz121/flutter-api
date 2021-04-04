@@ -169,6 +169,9 @@ class LanguageAr extends Languages {
   String get signIn => 'تسجيل الدخول';
   String get ourGroup => 'مجموعتنا';
   String get ourGroupCompanies => 'شركاتنا';
+  String get searchByCategories => 'البحث حسب الفئه';
+  String get resentSearch => 'البحث الأخير ';
+  String get handmadeCrafts => 'يدويا ';
 
 // end Islam
 
