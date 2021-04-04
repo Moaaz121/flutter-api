@@ -72,6 +72,23 @@ class LanguageEn extends Languages {
   String get subject => 'Subject';
   String get writeAMessage => 'Write Your Message';
 
+  String get filter => 'Filter';
+  String get done => 'Done';
+  String get category => 'Category';
+  String get expressShipping => 'Express shipping';
+  String get shippedFrom => 'Shipped from';
+  String get shippedFromAbroad => 'Shipped from abroad';
+  String get rating => 'Rating';
+  String get sellerScore => 'Seller Score';
+  String get brand => 'Brand';
+  String get price => 'Price (EGP)';
+  String get from => 'from';
+  String get to => 'to';
+  String get discount => 'Discount';
+  String get sizes => 'Sizes';
+  String get colors => 'Colors';
+  String get gender => 'Gender';
+
 // end Mosdik
 
 // Start Moaaz

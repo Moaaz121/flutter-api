@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       }, Languages.of(context).requestForQ, requestForQ,
                           orangeColor.withOpacity(0.15)),
                       mainHeaderButton(() {
-                        Navigator.pushNamed(context, ScreenRoutes.listFilter);
+                        Navigator.pushNamed(context, ScreenRoutes.listFliter);
                       }, Languages.of(context).joinUs, joinUs,
                           purpleColor.withOpacity(0.15)),
                     ],
