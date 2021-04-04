@@ -380,11 +380,156 @@ Widget productItem(BuildContext context) {
 }
 
 Widget productItemLandscape(BuildContext context) {
-  return Container(
-    height: MediaQuery.of(context).size.height * 0.2,
-    decoration: BoxDecoration(
-        boxShadow: [makeShadow()],
-        borderRadius: BorderRadius.circular(20),
-        color: Colors.white),
+  return Stack(
+    overflow: Overflow.visible,
+    children: [
+      Container(
+        margin: EdgeInsets.all(10),
+        height: MediaQuery.of(context).size.height * 0.2,
+        decoration: BoxDecoration(
+            boxShadow: [makeShadow()],
+            borderRadius: BorderRadius.circular(20),
+            color: Colors.white),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: EdgeInsetsDirectional.fromSTEB(20, 0, 5, 0),
+                      height: MediaQuery.of(context).size.height * 0.13,
+                      width: MediaQuery.of(context).size.width * 0.35,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(10),
+                          bottomRight: Radius.circular(10),
+                        ),
+                        color: Color(0xfffff2e5),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                          width: 28,
+                          height: 28,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              image: AssetImage(profile_image),
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            RichText(
+                              maxLines: 1,
+                              text: TextSpan(
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 9,
+                                      fontWeight: FontWeight.bold),
+                                  text: 'Bahaa Robert'),
+                            ),
+                            SizedBox(
+                              height: 1,
+                            ),
+                            RichText(
+                              maxLines: 1,
+                              text: TextSpan(
+                                  style: TextStyle(
+                                    color: Colors.grey[400],
+                                    fontSize: 9,
+                                  ),
+                                  text: 'Beauty \& Personal Care'),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      RichText(
+                        maxLines: 3,
+                        text: TextSpan(
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              fontSize: 12,
+                            ),
+                            text: 'Blue Shoes'),
+                      ),
+                      SizedBox(
+                        height: 2,
+                      ),
+                      RichText(
+                        maxLines: 2,
+                        text: TextSpan(
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: orangeColor,
+                              fontSize: 12,
+                            ),
+                            text: '290.00 EGP'),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 10, 0),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.add_to_photos_rounded,
+                    size: 18,
+                    color: Colors.black54,
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Icon(
+                    Icons.bookmark_border_outlined,
+                    size: 18,
+                    color: Colors.black54,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+      Positioned(
+        top: 2,
+        left: MediaQuery.of(context).size.width * 0.18,
+        child: Image(
+          fit: BoxFit.fill,
+          image: AssetImage(dress_image),
+          width: MediaQuery.of(context).size.width * 0.15,
+          height: MediaQuery.of(context).size.height * 0.13,
+        ),
+      ),
+    ],
   );
 }
