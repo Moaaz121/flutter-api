@@ -5,26 +5,24 @@ import 'package:bawabtalsharq/Screens/individual_product_screen.dart';
 import 'package:bawabtalsharq/Screens/intro_screen.dart';
 import 'package:bawabtalsharq/Screens/login_screen.dart';
 import 'package:bawabtalsharq/Screens/request_for_qutation.dart';
-import 'package:bawabtalsharq/Screens/search/search_screen.dart';
 import 'package:bawabtalsharq/Screens/settings_screen.dart';
 import 'package:bawabtalsharq/Screens/splash_screen.dart';
+import 'package:bawabtalsharq/Screens/search/list_filter__screen.dart';
+import 'package:bawabtalsharq/Screens/search/search_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/AppLocalizationDelgate.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
 import 'Screens/main_srceen.dart';
 import 'Screens/notification_screen.dart';
 import 'Screens/profile_screen.dart';
 import 'Screens/request_for_quatation_screen.dart';
 import 'Screens/request_for_qutation.dart';
-import 'Screens/search/categories_filter_screen.dart';
-import 'Screens/search/search_result_screen.dart';
 import 'Utils/Localization/LanguageHelper.dart';
 
 void main() => runApp(
       DevicePreview(
-        enabled: false,
+        enabled: true,
         builder: (context) => BawabtAlsharqApp(), // Wrap your app
       ),
     );
@@ -63,7 +61,8 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.requestForQuotation: (_) => RequestForQScreen(),
         ScreenRoutes.postQuotationRequest: (_) => Requestforqutation(),
         ScreenRoutes.individualProduct: (_) => IndividualProduct(),
-        ScreenRoutes.listFliter: (_) => ListFliter()
+        ScreenRoutes.listFilter: (_) => ListFilter(),
+        ScreenRoutes.searchScreen: (_) => SearchScreen(),
       },
       locale: _locale,
       supportedLocales: supportedLocales,
@@ -128,5 +127,6 @@ class ScreenRoutes {
   static const String requestForQuotation = '/requestForQuotation';
   static const String postQuotationRequest = '/postQuotationRequest';
   static const String individualProduct = '/individual_product_screen';
-  static const String listFliter = '/list_filter__screen';
+  static const String listFilter = '/list_filter__screen';
+  static const String searchScreen = '/search_screen';
 }

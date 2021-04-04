@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       }, Languages.of(context).requestForQ, requestForQ,
                           orangeColor.withOpacity(0.15)),
                       mainHeaderButton(() {
-                        Navigator.pushNamed(context, ScreenRoutes.listFliter);
+                        Navigator.pushNamed(context, ScreenRoutes.listFilter);
                       }, Languages.of(context).joinUs, joinUs,
                           purpleColor.withOpacity(0.15)),
                     ],
@@ -63,7 +63,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [searchButton(context, () {}), chatButton(() {})],
+                  children: [
+                    searchButton(context, () {
+                      Navigator.pushNamed(context, ScreenRoutes.searchScreen);
+                    }),
+                    chatButton(() {})
+                  ],
                 ),
               ],
             ),

@@ -7,12 +7,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-class ListFliter extends StatefulWidget {
+class ListFilter extends StatefulWidget {
   @override
-  _ListFliterState createState() => _ListFliterState();
+  _ListFilterState createState() => _ListFilterState();
 }
 
-class _ListFliterState extends State<ListFliter> {
+class _ListFilterState extends State<ListFilter> {
   // @override
   // void initState() {
   //   super.initState();

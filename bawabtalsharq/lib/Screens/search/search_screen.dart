@@ -2,6 +2,7 @@ import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/widgets.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -21,35 +22,26 @@ class _SearchScreenState extends State<SearchScreen> {
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 35, left: 16),
-              child:
-                  Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                IconButton(
-                  icon: CircleAvatar(
-                    radius: 9,
-                    backgroundColor: Colors.deepOrange,
-                    child: Icon(
-                      LanguageHelper.isEnglish
-                          ? Icons.keyboard_arrow_left_outlined
-                          : Icons.keyboard_arrow_right_outlined,
-                      size: 17,
-                      color: Colors.white,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  IconButton(
+                    icon: CircleAvatar(
+                      radius: 9,
+                      backgroundColor: Colors.deepOrange,
+                      child: Icon(
+                        LanguageHelper.isEnglish
+                            ? Icons.keyboard_arrow_left_outlined
+                            : Icons.keyboard_arrow_right_outlined,
+                        size: 17,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
-                ),
-                Container(
-                  width: height * .3,
-                  height: 35,
-                  decoration: BoxDecoration(
-                    color: Color(0xffefefef),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'search',
-                    ),
-                  ),
-                ),
-              ]),
+                  buildTextField(hint: 'Search', context: context),
+                ],
+              ),
             ),
             SizedBox(
               height: height * .01,
@@ -184,4 +176,29 @@ class _SearchScreenState extends State<SearchScreen> {
       ),
     );
   }
+}
+
+Widget buildTextField({String hint, BuildContext context}) {
+  return Container(
+    width: MediaQuery.of(context).size.width * 0.7,
+    height: MediaQuery.of(context).size.width * 0.10,
+    decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5), color: Colors.grey[100]),
+    child: Center(
+      child: TextField(
+        keyboardType: TextInputType.text,
+        autocorrect: true,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          enabledBorder: InputBorder.none,
+          errorBorder: InputBorder.none,
+          disabledBorder: InputBorder.none,
+          hintText: hint,
+          hintStyle: TextStyle(color: Colors.black12),
+          filled: true,
+        ),
+      ),
+    ),
+  );
 }
