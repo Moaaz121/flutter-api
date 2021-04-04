@@ -41,6 +41,7 @@ const String user = 'assets/images/ic_user.png';
 const String logout = 'assets/images/ic_logout.png';
 const String profile_image = 'assets/images/bahaa_im.png';
 const String shoes_image = 'assets/images/addiddas.png';
+const String dress_image = 'assets/images/dress.png';
 const String medalImage = 'assets/images/ic_medal.png';
 const String certificate = 'assets/images/certificate.jpg';
 

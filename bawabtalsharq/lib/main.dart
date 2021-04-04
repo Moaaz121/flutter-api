@@ -18,11 +18,12 @@ import 'Screens/notification_screen.dart';
 import 'Screens/profile_screen.dart';
 import 'Screens/request_for_quatation_screen.dart';
 import 'Screens/request_for_qutation.dart';
+import 'Screens/search/search_result_screen.dart';
 import 'Utils/Localization/LanguageHelper.dart';
 
 void main() => runApp(
       DevicePreview(
-        enabled: true,
+        enabled: false,
         builder: (context) => BawabtAlsharqApp(), // Wrap your app
       ),
     );
@@ -46,7 +47,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.deepOrange),
-      home: SearchScreen(),
+      home: SplashScreen(),
       routes: {
         ScreenRoutes.splashScreen: (_) => SplashScreen(),
         ScreenRoutes.introScreen: (_) => IntroScreen(),
@@ -61,6 +62,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.requestForQuotation: (_) => RequestForQScreen(),
         ScreenRoutes.postQuotationRequest: (_) => Requestforqutation(),
         ScreenRoutes.individualProduct: (_) => IndividualProduct(),
+        ScreenRoutes.listFliter: (_) => ListFliter()
       },
       locale: _locale,
       supportedLocales: supportedLocales,
@@ -125,4 +127,5 @@ class ScreenRoutes {
   static const String requestForQuotation = '/requestForQuotation';
   static const String postQuotationRequest = '/postQuotationRequest';
   static const String individualProduct = '/individual_product_screen';
+  static const String listFliter = '/list_filter__screen';
 }
