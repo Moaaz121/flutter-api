@@ -4,7 +4,6 @@ import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:flutter/material.dart';
 
-import '../Utils/images.dart';
 import '../widgets/widgets.dart';
 
 class AllCategories extends StatefulWidget {
@@ -101,7 +100,8 @@ class _AllCategoriesState extends State<AllCategories>
                 });
               },
               child: Container(
-                margin: EdgeInsetsDirectional.only(bottom: 15, start: 8, end: 8),
+                margin:
+                    EdgeInsetsDirectional.only(bottom: 15, start: 8, end: 8),
                 child: Row(
                   children: [
                     Container(
@@ -125,7 +125,7 @@ class _AllCategoriesState extends State<AllCategories>
                         ),
                         padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
                         child: Image.asset(
-                          cold_drinks,
+                          categoriesArr[index].icon,
                           height: 45,
                           width: 45,
                         ),
@@ -210,9 +210,10 @@ class _AllCategoriesState extends State<AllCategories>
                               color: Colors.white,
                             ),
                             child: Padding(
-                              padding: const EdgeInsetsDirectional.only(start: 3, top: 3, end: 3, bottom: 3),
+                              padding: const EdgeInsetsDirectional.only(
+                                  start: 3, top: 3, end: 3, bottom: 3),
                               child: Image.asset(
-                                cold_drinks,
+                                categoriesArr[index].icon,
                                 height: 37,
                                 width: 37,
                               ),
@@ -248,7 +249,7 @@ class _AllCategoriesState extends State<AllCategories>
     )..forward();
     _sliderAnimation = Tween<Offset>(
       begin: LanguageHelper.isEnglish ? Offset(1, 0) : Offset(-1, 0),
-        end: const Offset(0.0, 0.0),
+      end: const Offset(0.0, 0.0),
     ).animate(CurvedAnimation(
       parent: _sliderController,
       curve: Curves.easeIn,

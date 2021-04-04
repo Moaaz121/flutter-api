@@ -13,6 +13,7 @@ class LanguageAr extends Languages {
 
 // Start Asmaa
   String get allCategories => 'التصنيفات';
+  String get categories => 'التصنيفات';
 
 // end Asmaa
 
