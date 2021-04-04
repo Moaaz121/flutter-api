@@ -183,7 +183,6 @@ class _ListFilterState extends State<ListFilter> {
 
   Widget listOfCheckBox({List filter}) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.18,
       child: ListView.builder(
         physics: NeverScrollableScrollPhysics(),
         reverse: false,
