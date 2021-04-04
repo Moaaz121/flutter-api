@@ -10,11 +10,6 @@ List<Filter> filterArray = [
   Filter('Bawbet Alsharq Express', false),
 ];
 
-List<Filter> filterArray2 = [
-  Filter('Egypt', false),
-  Filter('Shipped from abroad', false)
-];
-
 List<Filter> filterArray3 = [
   Filter('80% & Up', false),
   Filter('60% & Up', false),

@@ -68,6 +68,23 @@ class LanguageAr extends Languages {
   String get subject => 'الموضوع';
   String get writeAMessage => 'اكتب رسالتك هنا';
 
+  String get filter => 'فلتر';
+  String get done => 'انتهى';
+  String get category => 'الفئة';
+  String get expressShipping => 'الشحن السريع';
+  String get shippedFrom => 'تم الشحن من';
+  String get shippedFromAbroad => 'يشحن من الخارج';
+  String get rating => 'تقييم';
+  String get sellerScore => 'نقاط البائع';
+  String get brand => 'ماركة';
+  String get price => 'السعر (جنية مصري)';
+  String get from => 'من';
+  String get to => 'الي';
+  String get discount => 'خصم';
+  String get sizes => 'الأحجام';
+  String get colors => 'الألوان';
+  String get gender => 'النوع';
+
 // end Mosdik
 
 // Start Moaaz

@@ -66,6 +66,23 @@ abstract class Languages {
   String get subject;
   String get writeAMessage;
 
+  String get filter;
+  String get done;
+  String get category;
+  String get expressShipping;
+  String get shippedFrom;
+  String get shippedFromAbroad;
+  String get rating;
+  String get sellerScore;
+  String get brand;
+  String get price;
+  String get from;
+  String get to;
+  String get discount;
+  String get sizes;
+  String get colors;
+  String get gender;
+
 // end Mosdik
 
 // Start Moaaz
