@@ -2,6 +2,7 @@ import 'package:bawabtalsharq/Model/checkPointFliter.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -31,8 +32,8 @@ class _ListFilterState extends State<ListFilter> {
         ],
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(10),
-            bottomRight: Radius.circular(10),
+            bottomLeft: Radius.circular(15),
+            bottomRight: Radius.circular(15),
           ),
         ),
       ),
@@ -75,7 +76,9 @@ class _ListFilterState extends State<ListFilter> {
             textTitle(context, Languages.of(context).sizes, () {}),
             buildSizedBox(),
             lineDivider(),
-            textTitle(context, Languages.of(context).colors, () {}),
+            textTitle(context, Languages.of(context).colors, () {
+              Navigator.pushNamed(context, ScreenRoutes.colorScreen);
+            }),
             buildSizedBox(),
             lineDivider(),
             textTitle(context, Languages.of(context).gender, () {}),
@@ -248,39 +251,25 @@ class _ListFilterState extends State<ListFilter> {
   }
 
   Widget textTitle(BuildContext context, String text, Function onPress) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding:
-              const EdgeInsetsDirectional.only(top: 20, start: 30, end: 30),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                text,
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
-              ),
-              GestureDetector(
-                onTap: onPress,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: 8,
-                    ),
-                    Icon(
-                      Icons.navigate_next,
-                      size: 25,
-                      color: Colors.black.withOpacity(0.7),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
+    return GestureDetector(
+      onTap: onPress,
+      child: Padding(
+        padding: const EdgeInsetsDirectional.only(top: 20, start: 30, end: 30),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              text,
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+            ),
+            Icon(
+              Icons.navigate_next,
+              size: 25,
+              color: Colors.black.withOpacity(0.7),
+            )
+          ],
         ),
-      ],
+      ),
     );
   }
 
