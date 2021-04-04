@@ -259,7 +259,7 @@ class _ListFliterState extends State<ListFliter> {
             children: [
               Text(
                 text,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
               ),
               GestureDetector(
                 onTap: onPress,
