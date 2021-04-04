@@ -214,6 +214,7 @@ class _ListFilterState extends State<ListFilter> {
         Container(
           height: 50,
           child: ListView.builder(
+            padding: EdgeInsets.all(1),
             physics: AlwaysScrollableScrollPhysics(),
             reverse: false,
             scrollDirection: Axis.horizontal,
