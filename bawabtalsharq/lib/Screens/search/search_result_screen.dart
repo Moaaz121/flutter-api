@@ -18,6 +18,7 @@ class SearchResult extends StatefulWidget {
 class _SearchResultState extends State<SearchResult> {
   List<bool> selections;
   bool _isSearchPressed = false;
+  bool isGrid = true;
 
   @override
   void initState() {
@@ -81,28 +82,46 @@ class _SearchResultState extends State<SearchResult> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.15,
-                        height: MediaQuery.of(context).size.width * 0.07,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(7),
-                          color: Colors.white,
-                        ),
-                        child: Icon(
-                          Icons.widgets_outlined,
-                          size: 20,
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            if (!isGrid) {
+                              isGrid = true;
+                            }
+                          });
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.15,
+                          height: MediaQuery.of(context).size.width * 0.07,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(7),
+                            color: isGrid ? Colors.white : Colors.transparent,
+                          ),
+                          child: Icon(
+                            Icons.widgets_outlined,
+                            size: 20,
+                          ),
                         ),
                       ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.15,
-                        height: MediaQuery.of(context).size.width * 0.07,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(7),
-                          color: Colors.transparent,
-                        ),
-                        child: Icon(
-                          Icons.apps,
-                          size: 20,
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            if (isGrid) {
+                              isGrid = false;
+                            }
+                          });
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.15,
+                          height: MediaQuery.of(context).size.width * 0.07,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(7),
+                            color: isGrid ? Colors.transparent : Colors.white,
+                          ),
+                          child: Icon(
+                            Icons.apps,
+                            size: 20,
+                          ),
                         ),
                       ),
                     ],
@@ -117,7 +136,7 @@ class _SearchResultState extends State<SearchResult> {
               margin: EdgeInsets.only(left: 20, right: 20),
               height: MediaQuery.of(context).size.width * 0.08,
               child: ListView.builder(
-                itemCount: 15,
+                itemCount: 30,
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, position) {
@@ -128,29 +147,30 @@ class _SearchResultState extends State<SearchResult> {
             SizedBox(
               height: 20,
             ),
-            Expanded(
-              child: GridView.builder(
-                shrinkWrap: true,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10),
-                itemCount: 30,
-                itemBuilder: (context, position) {
-                  return productItem(context);
-                },
-              ),
-            ),
-            // Expanded(
-            //   child: ListView.builder(
-            //     shrinkWrap: true,
-            //     scrollDirection: Axis.vertical,
-            //     itemCount: 30,
-            //     itemBuilder: (context, position) {
-            //       return productItemLandscape(context);
-            //     },
-            //   ),
-            // ),
+            isGrid
+                ? Expanded(
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10),
+                      itemCount: 30,
+                      itemBuilder: (context, position) {
+                        return productItem(context);
+                      },
+                    ),
+                  )
+                : Expanded(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      itemCount: 30,
+                      itemBuilder: (context, position) {
+                        return productItemLandscape(context);
+                      },
+                    ),
+                  ),
           ],
         ),
       ),
