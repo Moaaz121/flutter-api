@@ -1,3 +1,5 @@
+import 'package:bawabtalsharq/Model/chat/room_model.dart';
+import 'package:bawabtalsharq/Repos/ChatRepos/chat_repo.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
@@ -6,6 +8,7 @@ import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:rocket_chat_connector_flutter/models/room_messages.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -45,8 +48,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             context, ScreenRoutes.requestForQuotation);
                       }, Languages.of(context).requestForQ, requestForQ,
                           orangeColor.withOpacity(0.15)),
-                      mainHeaderButton(() {}, Languages.of(context).joinUs,
-                          joinUs, purpleColor.withOpacity(0.15)),
+                      mainHeaderButton(() async {
+                        List<Im> directRooms =
+                            await RocketChatApi().getDirectRooms();
+                        print(directRooms[0].id);
+                      }, Languages.of(context).joinUs, joinUs,
+                          purpleColor.withOpacity(0.15)),
                     ],
                   ),
                   ourGoldenSupplier(context),
@@ -62,7 +69,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    searchButton(context, () {}),
+                    searchButton(context, () async {
+                      RoomMessages messages = await RocketChatApi().sendMessage(
+                          'MYPMewkrPgmcebbjqxeeoKxHaZfjym5cjK', 'hello');
+                      print(messages);
+                    }),
                     chatButton(() {
                       Navigator.pushNamed(context, ScreenRoutes.chatsScreen);
                     })

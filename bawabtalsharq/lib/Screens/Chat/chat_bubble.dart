@@ -2,19 +2,13 @@ import 'dart:math';
 
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:rocket_chat_connector_flutter/models/message.dart';
 
 class ChatBubble extends StatefulWidget {
-  final String message, time, username, type, replyText;
+  final Message message;
   final bool isMe;
 
-  ChatBubble({
-    @required this.message,
-    @required this.time,
-    @required this.isMe,
-    @required this.username,
-    @required this.type,
-    @required this.replyText,
-  });
+  ChatBubble({@required this.message, @required this.isMe});
 
   @override
   _ChatBubbleState createState() => _ChatBubbleState();
@@ -55,7 +49,9 @@ class _ChatBubbleState extends State<ChatBubble> {
           margin: const EdgeInsets.all(3.0),
           padding: const EdgeInsets.all(5.0),
           decoration: BoxDecoration(
-            color: widget.type == 'text' ? chatBubbleColor() : Colors.grey[200],
+            color: widget.message.attachments.isEmpty
+                ? chatBubbleColor()
+                : Colors.grey[200],
             borderRadius: radius,
           ),
           constraints: BoxConstraints(
@@ -71,10 +67,11 @@ class _ChatBubbleState extends State<ChatBubble> {
               SizedBox(width: 2.0),
               SizedBox(),
               Padding(
-                padding: EdgeInsets.all(widget.type == "text" ? 5 : 0),
-                child: widget.type == "text"
+                padding:
+                    EdgeInsets.all(widget.message.attachments.isEmpty ? 5 : 0),
+                child: widget.message.attachments.isEmpty
                     ? Text(
-                        widget.message,
+                        widget.message.msg,
                         style: TextStyle(
                           color: widget.isMe ? Colors.white : Colors.orange,
                         ),
@@ -94,7 +91,7 @@ class _ChatBubbleState extends State<ChatBubble> {
               ? EdgeInsets.only(right: 10, bottom: 10.0)
               : EdgeInsets.only(left: 10, bottom: 10.0),
           child: Text(
-            widget.time,
+            widget.message.ts.toString(),
             style: TextStyle(
               color: Theme.of(context).textTheme.headline6.color,
               fontSize: 10.0,

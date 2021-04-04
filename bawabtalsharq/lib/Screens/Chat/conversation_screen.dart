@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:bawabtalsharq/Model/chat_model.dart';
+import 'package:bawabtalsharq/Repos/ChatRepos/chat_repo.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
@@ -9,8 +10,6 @@ import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-
-import 'chat_bubble.dart';
 
 class ConversationScreen extends StatefulWidget {
   @override
@@ -34,10 +33,16 @@ class _ConversationScreenState extends State<ConversationScreen>
 
   @override
   void initState() {
+    super.initState();
     _controller = new AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 300),
     );
+  }
+
+  void getRoomMessages() async {
+    var messages = await RocketChatApi().getChannelMessages();
+    setState(() {});
   }
 
   @override
@@ -210,16 +215,7 @@ class _ConversationScreenState extends State<ConversationScreen>
                 reverse: true,
                 itemBuilder: (BuildContext context, int index) {
                   Map msg = conversation[index];
-                  return ChatBubble(
-                    message: msg['type'] == "text"
-                        ? messages[random.nextInt(10)]
-                        : companyName,
-                    username: msg["username"],
-                    time: msg["time"],
-                    type: msg['type'],
-                    replyText: msg["replyText"],
-                    isMe: msg['isMe'],
-                  );
+                  return Text('hi');
                 },
               ),
             ),

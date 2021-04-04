@@ -167,6 +167,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                           'asmaatarek93@gmail.com', '12345678');
                                   if (result.status == "success") {
                                     rocketUser = result;
+                                    print(rocketUser.data.authToken);
+                                    print(rocketUser.data.userId);
                                     Navigator.pushReplacementNamed(
                                         context, ScreenRoutes.mainScreen);
                                   } else {

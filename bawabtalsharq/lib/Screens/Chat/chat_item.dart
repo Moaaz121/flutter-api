@@ -1,24 +1,13 @@
+import 'package:bawabtalsharq/Model/chat/room_model.dart';
+import 'package:bawabtalsharq/Repos/ChatRepos/chat_repo.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/main.dart';
 import 'package:flutter/material.dart';
 
 class ChatItem extends StatefulWidget {
-  final String dp;
-  final String name;
-  final String time;
-  final String msg;
-  final bool isOnline;
-  final int counter;
-
-  ChatItem({
-    Key key,
-    @required this.dp,
-    @required this.name,
-    @required this.time,
-    @required this.msg,
-    @required this.isOnline,
-    @required this.counter,
-  }) : super(key: key);
+  final Im chatMessage;
+  final int counter = 1;
+  ChatItem(this.chatMessage);
 
   @override
   _ChatItemState createState() => _ChatItemState();
@@ -34,8 +23,8 @@ class _ChatItemState extends State<ChatItem> {
         leading: Stack(
           children: <Widget>[
             CircleAvatar(
-              backgroundImage: AssetImage(
-                "${widget.dp}",
+              backgroundImage: NetworkImage(
+                "http://www.gstatic.com/tv/thumb/persons/171234/171234_v9_bc.jpg",
               ),
               radius: 25,
             ),
@@ -52,7 +41,7 @@ class _ChatItemState extends State<ChatItem> {
                 child: Center(
                   child: Container(
                     decoration: BoxDecoration(
-                      color: widget.isOnline ? Colors.greenAccent : Colors.grey,
+                      color: true ? Colors.greenAccent : Colors.grey,
                       borderRadius: BorderRadius.circular(6),
                     ),
                     height: 7,
@@ -64,14 +53,14 @@ class _ChatItemState extends State<ChatItem> {
           ],
         ),
         title: Text(
-          "${widget.name}",
+          getUserName(),
           maxLines: 1,
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),
         subtitle: Text(
-          "${widget.msg}",
+          "${widget.chatMessage.lastMessage.msg}",
           overflow: TextOverflow.ellipsis,
           maxLines: 2,
         ),
@@ -80,7 +69,7 @@ class _ChatItemState extends State<ChatItem> {
           children: <Widget>[
             SizedBox(height: 10),
             Text(
-              "${widget.time}",
+              "${widget.chatMessage.lastMessage.ts}",
               style: TextStyle(
                 fontWeight: FontWeight.w300,
                 fontSize: 11,
@@ -102,7 +91,7 @@ class _ChatItemState extends State<ChatItem> {
                     child: Padding(
                       padding: EdgeInsets.only(top: 1, left: 5, right: 5),
                       child: Text(
-                        "${widget.counter}",
+                        "${1}",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 10,
@@ -118,5 +107,11 @@ class _ChatItemState extends State<ChatItem> {
         },
       ),
     );
+  }
+
+  String getUserName() {
+    return widget.chatMessage.usernames
+        .where((user) => user != rocketUser.data.me.username)
+        .first;
   }
 }

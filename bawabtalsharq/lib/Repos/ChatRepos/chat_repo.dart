@@ -1,4 +1,8 @@
+import 'dart:convert';
+
+import 'package:bawabtalsharq/Model/chat/room_model.dart';
 import 'package:bawabtalsharq/Utils/apis.dart';
+import 'package:http/http.dart' as http;
 import 'package:rocket_chat_connector_flutter/models/authentication.dart';
 import 'package:rocket_chat_connector_flutter/models/new/channel_new.dart';
 import 'package:rocket_chat_connector_flutter/models/new/message_new.dart';
@@ -49,13 +53,26 @@ class RocketChatApi {
 
   Future<RoomMessages> getChannelMessages() async {
     RoomService roomService = RoomService(_rocketHttpService);
-    RoomMessages roomMessages =
-        await roomService.messages(Room(id: 'general'), rocketUser);
-    print(roomMessages.messages);
+    RoomMessages roomMessages = await roomService.messages(
+        Room(id: 'MYPMewkrPgmcebbjqxeeoKxHaZfjym5cjK'), rocketUser);
     return roomMessages;
   }
 
 //start Asmaa
+
+  Future<List<Im>> getDirectRooms() async {
+    var response = await http.get('${APIS.chatBaseURL}/api/v1/im.list',
+        headers: rocketHeaders);
+    print(response.body.toString());
+    if (response.statusCode == 200) {
+      var responseJSON = jsonDecode(response.body);
+      List<Im> directRooms = RoomModel.fromJson(responseJSON).ims;
+      return directRooms;
+    } else {
+      print(response.statusCode);
+      return null;
+    }
+  }
 
 //end Asmaa
 

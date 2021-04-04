@@ -1,4 +1,5 @@
-import 'package:bawabtalsharq/Model/chat_model.dart';
+import 'package:bawabtalsharq/Model/chat/room_model.dart';
+import 'package:bawabtalsharq/Repos/ChatRepos/chat_repo.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
@@ -13,6 +14,20 @@ class ChatsScreen extends StatefulWidget {
 
 class _ChatsScreenState extends State<ChatsScreen> {
   bool _isSearchPressed = false;
+  List<Im> _chats = [];
+  @override
+  void initState() {
+    super.initState();
+    loadChatRooms();
+  }
+
+  void loadChatRooms() async {
+    List<Im> chatArr = await RocketChatApi().getDirectRooms();
+    setState(() {
+      _chats = chatArr;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,17 +75,9 @@ class _ChatsScreenState extends State<ChatsScreen> {
             ),
           );
         },
-        itemCount: chats.length,
+        itemCount: _chats.length,
         itemBuilder: (BuildContext context, int index) {
-          Map chat = chats[index];
-          return ChatItem(
-            dp: chat['dp'],
-            name: chat['name'],
-            isOnline: chat['isOnline'],
-            counter: chat['counter'],
-            msg: chat['msg'],
-            time: chat['time'],
-          );
+          return ChatItem(_chats[index]);
         },
       ),
     );
