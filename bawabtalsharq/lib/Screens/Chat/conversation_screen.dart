@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:bawabtalsharq/Model/chat_model.dart';
+import 'package:bawabtalsharq/Repos/ChatRepos/chat_repo.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
@@ -9,6 +10,7 @@ import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:image_pickers/image_pickers.dart';
 
 import 'chat_bubble.dart';
 
@@ -286,24 +288,25 @@ class _ConversationScreenState extends State<ConversationScreen>
   }
 
   Future getImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
-    setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
+    List<Media> _listImagePaths = await ImagePickers.pickerPaths(
+        galleryMode: GalleryMode.image,
+        selectCount: 1,
+        showGif: false,
+        showCamera: true,
+        compressSize: 500,
+        uiConfig: UIConfig(uiThemeColor: orangeColor),
+        cropConfig: CropConfig(enableCrop: false, width: 2, height: 1));
+    if (_listImagePaths.first != null) {
+      RocketChatApi().sendFile('GENERAL', _listImagePaths.first.path);
+    }
   }
 
   Future getCamera() async {
     final pickedFile = await picker.getImage(source: ImageSource.camera);
     setState(() {
       if (pickedFile != null) {
-        _image = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
+        RocketChatApi().sendFile('GENERAL', pickedFile.path);
+      } else {}
     });
   }
 
@@ -311,7 +314,7 @@ class _ConversationScreenState extends State<ConversationScreen>
     final pickedFile = await picker.getVideo(source: ImageSource.gallery);
     setState(() {
       if (pickedFile != null) {
-        _image = File(pickedFile.path);
+        RocketChatApi().sendFile('GENERAL', pickedFile.path);
       } else {
         print('No image selected.');
       }
@@ -322,7 +325,8 @@ class _ConversationScreenState extends State<ConversationScreen>
     resultFile = await FilePicker.platform.pickFiles(allowMultiple: false);
     FilePickerResult result = await FilePicker.platform.pickFiles();
     if (result != null) {
-      File file = File(result.files.single.path);
+      // File file = File(result.files.single.path);
+      RocketChatApi().sendFile('GENERAL', File(result.files.single.path).path);
     } else {
       // User canceled the picker0
     }
