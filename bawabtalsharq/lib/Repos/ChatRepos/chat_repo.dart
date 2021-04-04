@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 import 'package:bawabtalsharq/Model/chat/room_model.dart';
-
 import 'package:bawabtalsharq/Utils/apis.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:rocket_chat_connector_flutter/models/authentication.dart';
+import 'package:rocket_chat_connector_flutter/models/message.dart';
 import 'package:rocket_chat_connector_flutter/models/new/channel_new.dart';
 import 'package:rocket_chat_connector_flutter/models/new/message_new.dart';
 import 'package:rocket_chat_connector_flutter/models/response/channel_new_response.dart';
@@ -53,11 +53,11 @@ class RocketChatApi {
     print(channelNewResponse.success);
   }
 
-  Future<RoomMessages> getChannelMessages() async {
+  Future<List<Message>> getRoomMessages(String roomID) async {
     RoomService roomService = RoomService(_rocketHttpService);
-    RoomMessages roomMessages = await roomService.messages(
-        Room(id: 'MYPMewkrPgmcebbjqxeeoKxHaZfjym5cjK'), rocketUser);
-    return roomMessages;
+    RoomMessages roomMessages =
+        await roomService.messages(Room(id: roomID), rocketUser);
+    return roomMessages.messages;
   }
 
 //start Asmaa

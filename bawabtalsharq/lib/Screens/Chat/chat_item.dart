@@ -103,7 +103,11 @@ class _ChatItemState extends State<ChatItem> {
           ],
         ),
         onTap: () {
-          Navigator.pushNamed(context, ScreenRoutes.conversation);
+          Navigator.pushNamed(
+            context,
+            ScreenRoutes.conversation,
+            arguments: {'roomID': widget.chatMessage.id},
+          );
         },
       ),
     );

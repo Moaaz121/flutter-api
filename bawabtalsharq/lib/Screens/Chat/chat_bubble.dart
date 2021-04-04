@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:rocket_chat_connector_flutter/models/message.dart';
@@ -16,8 +14,6 @@ class ChatBubble extends StatefulWidget {
 
 class _ChatBubbleState extends State<ChatBubble> {
   List colors = Colors.primaries;
-  static Random random = Random();
-  int rNum = random.nextInt(18);
 
   Color chatBubbleColor() {
     if (widget.isMe) {
@@ -49,7 +45,7 @@ class _ChatBubbleState extends State<ChatBubble> {
           margin: const EdgeInsets.all(3.0),
           padding: const EdgeInsets.all(5.0),
           decoration: BoxDecoration(
-            color: widget.message.attachments.isEmpty
+            color: widget.message.msg.isNotEmpty
                 ? chatBubbleColor()
                 : Colors.grey[200],
             borderRadius: radius,
@@ -67,9 +63,8 @@ class _ChatBubbleState extends State<ChatBubble> {
               SizedBox(width: 2.0),
               SizedBox(),
               Padding(
-                padding:
-                    EdgeInsets.all(widget.message.attachments.isEmpty ? 5 : 0),
-                child: widget.message.attachments.isEmpty
+                padding: EdgeInsets.all(widget.message.msg.isNotEmpty ? 5 : 0),
+                child: widget.message.msg.isNotEmpty
                     ? Text(
                         widget.message.msg,
                         style: TextStyle(

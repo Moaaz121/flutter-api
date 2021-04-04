@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'dart:math';
 
-import 'package:bawabtalsharq/Model/chat_model.dart';
 import 'package:bawabtalsharq/Repos/ChatRepos/chat_repo.dart';
+import 'package:bawabtalsharq/Screens/Chat/chat_bubble.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
@@ -10,7 +10,8 @@ import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:image_pickers/image_pickers.dart';
+//import 'package:image_pickers/image_pickers.dart';
+import 'package:rocket_chat_connector_flutter/models/message.dart';
 
 class ConversationScreen extends StatefulWidget {
   @override
@@ -24,6 +25,7 @@ class _ConversationScreenState extends State<ConversationScreen>
   File _image;
   final picker = ImagePicker();
   FilePickerResult resultFile;
+  List<Message> _messages;
 
   static const List<IconData> icons = const [
     Icons.insert_drive_file_rounded,
@@ -41,13 +43,30 @@ class _ConversationScreenState extends State<ConversationScreen>
     );
   }
 
-  void getRoomMessages() async {
-    var messages = await RocketChatApi().getChannelMessages();
-    setState(() {});
+  void getRoomMessages(String roomID) async {
+    var messages = await RocketChatApi().getRoomMessages(roomID);
+    setState(() {
+      this._messages = messages;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    Map arguments = ModalRoute.of(context).settings.arguments;
+    String roomID = arguments['roomID'];
+    return FutureBuilder<List<Message>>(
+        future: RocketChatApi().getRoomMessages(roomID),
+        builder: (context, AsyncSnapshot<List<Message>> snapshot) {
+          if (snapshot.hasData) {
+            _messages = snapshot.data;
+            return buildScaffold(roomID);
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        });
+  }
+
+  Scaffold buildScaffold(String roomID) {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: new Column(
@@ -71,16 +90,16 @@ class _ConversationScreenState extends State<ConversationScreen>
                 onPressed: () {
                   switch (index) {
                     case 0:
-                      getFile();
+                      getFile(roomID);
                       break;
                     case 1:
-                      getVideo();
+                      getVideo(roomID);
                       break;
                     case 2:
-                      getImage();
+//  getImage(roomID);
                       break;
                     case 3:
-                      getCamera();
+                      getCamera(roomID);
                       break;
                   }
                 },
@@ -212,11 +231,12 @@ class _ConversationScreenState extends State<ConversationScreen>
             Flexible(
               child: ListView.builder(
                 padding: EdgeInsets.symmetric(horizontal: 10),
-                itemCount: conversation.length,
+                itemCount: _messages.length,
                 reverse: true,
                 itemBuilder: (BuildContext context, int index) {
-                  Map msg = conversation[index];
-                  return Text('hi');
+                  return ChatBubble(
+                      message: _messages[index],
+                      isMe: checkMessageSender(index));
                 },
               ),
             ),
@@ -267,7 +287,9 @@ class _ConversationScreenState extends State<ConversationScreen>
                               Icons.send,
                               color: defaultOrangeColor,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              RocketChatApi().sendMessage(roomID, 'Thanks💃🏻');
+                            },
                           )
                         ],
                       ),
@@ -282,46 +304,49 @@ class _ConversationScreenState extends State<ConversationScreen>
     );
   }
 
-  Future getImage() async {
-    List<Media> _listImagePaths = await ImagePickers.pickerPaths(
-        galleryMode: GalleryMode.image,
-        selectCount: 1,
-        showGif: false,
-        showCamera: true,
-        compressSize: 500,
-        uiConfig: UIConfig(uiThemeColor: orangeColor),
-        cropConfig: CropConfig(enableCrop: false, width: 2, height: 1));
-    if (_listImagePaths.first != null) {
-      RocketChatApi().sendFile('GENERAL', _listImagePaths.first.path);
-    }
+  bool checkMessageSender(int index) {
+    return _messages[index].user.id == rocketUser.data.userId;
   }
+  // Future getImage(String roomID) async {
+  //   List<Media> _listImagePaths = await ImagePickers.pickerPaths(
+  //       galleryMode: GalleryMode.image,
+  //       selectCount: 1,
+  //       showGif: false,
+  //       showCamera: true,
+  //       compressSize: 500,
+  //       uiConfig: UIConfig(uiThemeColor: orangeColor),
+  //       cropConfig: CropConfig(enableCrop: false, width: 2, height: 1));
+  //   if (_listImagePaths.first != null) {
+  //     RocketChatApi().sendFile('_roomID', _listImagePaths.first.path);
+  //   }
+  // }
 
-  Future getCamera() async {
+  Future getCamera(String roomID) async {
     final pickedFile = await picker.getImage(source: ImageSource.camera);
     setState(() {
       if (pickedFile != null) {
-        RocketChatApi().sendFile('GENERAL', pickedFile.path);
+        RocketChatApi().sendFile(roomID, pickedFile.path);
       } else {}
     });
   }
 
-  Future getVideo() async {
+  Future getVideo(String roomID) async {
     final pickedFile = await picker.getVideo(source: ImageSource.gallery);
     setState(() {
       if (pickedFile != null) {
-        RocketChatApi().sendFile('GENERAL', pickedFile.path);
+        RocketChatApi().sendFile(roomID, pickedFile.path);
       } else {
         print('No image selected.');
       }
     });
   }
 
-  Future getFile() async {
+  Future getFile(String roomID) async {
     resultFile = await FilePicker.platform.pickFiles(allowMultiple: false);
     FilePickerResult result = await FilePicker.platform.pickFiles();
     if (result != null) {
       // File file = File(result.files.single.path);
-      RocketChatApi().sendFile('GENERAL', File(result.files.single.path).path);
+      RocketChatApi().sendFile(roomID, File(result.files.single.path).path);
     } else {
       // User canceled the picker0
     }
