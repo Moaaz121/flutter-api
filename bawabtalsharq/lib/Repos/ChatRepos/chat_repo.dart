@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:bawabtalsharq/Model/chat/room_model.dart';
+
 import 'package:bawabtalsharq/Utils/apis.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 import 'package:rocket_chat_connector_flutter/models/authentication.dart';
 import 'package:rocket_chat_connector_flutter/models/new/channel_new.dart';
 import 'package:rocket_chat_connector_flutter/models/new/message_new.dart';
@@ -77,6 +79,18 @@ class RocketChatApi {
 //end Asmaa
 
 //start karem
-
+  Future<dynamic> sendFile(String room, String filePath) async {
+    var request = http.MultipartRequest('POST',
+        Uri.parse('http://digitalxmax.com:3000/api/v1/rooms.upload/' + room));
+    request.files.add(await http.MultipartFile.fromPath('file', filePath,
+        filename: 'Kareem File Name', contentType: MediaType('image', 'jpg')));
+    request.headers.addAll(rocketHeaders);
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
 //end karem
 }
