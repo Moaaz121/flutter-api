@@ -333,4 +333,3 @@ Widget textFiledPrice(BuildContext context, String text) {
     ),
   );
 }
-}
