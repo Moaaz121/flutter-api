@@ -17,8 +17,10 @@ class _SearchCategoriesState extends State<SearchCategories> {
       appBar: _isSearchPressed
           ? appBarSearch(
               hint: Languages.of(context).search,
-              onBackPressed: () {
-                Navigator.pop(context);
+              onCancelPressed: () {
+                setState(() {
+                  _isSearchPressed = false;
+                });
               },
               context: context)
           : appBarBuilder(
@@ -29,7 +31,7 @@ class _SearchCategoriesState extends State<SearchCategories> {
               actions: [
                 appBarSearchButton(() {
                   setState(() {
-                    _isSearchPressed = !_isSearchPressed;
+                    _isSearchPressed = true;
                   });
                 }),
                 SizedBox(
@@ -52,16 +54,21 @@ class _SearchCategoriesState extends State<SearchCategories> {
                 child: Row(
                   children: [
                     SizedBox(
-                      width: 20,
+                      width: 10,
                     ),
                     Checkbox(
                       value: searchCategoriesArr[position].isSelected,
-                      onChanged: (bool newValue) {},
+                      onChanged: (bool newValue) {
+                        setState(() {
+                          searchCategoriesArr[position].isSelected =
+                              !searchCategoriesArr[position].isSelected;
+                        });
+                      },
                       activeColor: defaultOrangeColor,
                       checkColor: Colors.white,
                     ),
                     SizedBox(
-                      width: 20,
+                      width: 10,
                     ),
                     Container(
                       decoration: BoxDecoration(
@@ -72,16 +79,18 @@ class _SearchCategoriesState extends State<SearchCategories> {
                       padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
                       child: Image.asset(
                         searchCategoriesArr[position].icon,
-                        height: 70,
-                        width: 70,
+                        height: 58,
+                        width: 58,
                       ),
                     ),
                     SizedBox(
-                      width: 20,
+                      width: 10,
                     ),
-                    buildText(
-                      searchCategoriesArr[position].name,
-                      20.0,
+                    Expanded(
+                      child: buildText(
+                        searchCategoriesArr[position].name,
+                        16,
+                      ),
                     )
                   ],
                 ),

@@ -133,12 +133,12 @@ List<Category> categoriesArr = [
 ];
 
 List<Category> searchCategoriesArr = [
-  Category('cat1', 0xFFFFFFFF, cold_drinks, []),
-  Category('cat2', 0xFFFFFFFF, cold_drinks, []),
-  Category('cat3', 0xFFFFFFFF, cold_drinks, []),
-  Category('cat4', 0xFFFFFFFF, cold_drinks, []),
-  Category('cat5', 0xFFFFFFFF, cold_drinks, []),
-  Category('cat6', 0xFFFFFFFF, cold_drinks, []),
-  Category('cat7', 0xFFFFFFFF, cold_drinks, []),
-  Category('cat8', 0xFFFFFFFF, cold_drinks, []),
+  Category('Category Name', 0xFFFFFFFF, cold_drinks, []),
+  Category('Category Name', 0xFFFFFFFF, cold_drinks, []),
+  Category('Category Name', 0xFFFFFFFF, cold_drinks, []),
+  Category('Category Name', 0xFFFFFFFF, cold_drinks, []),
+  Category('Category Name', 0xFFFFFFFF, cold_drinks, []),
+  Category('Category Name', 0xFFFFFFFF, cold_drinks, []),
+  Category('Category Name', 0xFFFFFFFF, cold_drinks, []),
+  Category('Category Name', 0xFFFFFFFF, cold_drinks, []),
 ];

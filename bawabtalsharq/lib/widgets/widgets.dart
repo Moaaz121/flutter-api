@@ -534,7 +534,7 @@ AppBar appBarBuilder(
           bottomRight: Radius.circular(10),
         ),
       ),
-      backgroundColor: defaultOrangeColor.withOpacity(0.8),
+      backgroundColor: defaultOrangeColor,
       title: buildText(title, 18.0,
           fontFamily: boldFontFamily,
           color: Colors.white,
@@ -601,16 +601,16 @@ Widget appBarSearchButton(Function onTap) {
   return GestureDetector(
     onTap: onTap,
     child: Container(
-      width: 25,
-      height: 25,
-      margin: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+      padding: EdgeInsets.all(5),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(7),
+        borderRadius: BorderRadius.circular(10),
         color: Colors.white,
       ),
+      margin: EdgeInsets.all(15),
       child: Icon(
         Icons.search,
         color: orangeColor,
+        size: 22,
       ),
     ),
   );
@@ -732,7 +732,7 @@ Widget searchTextField({String hint, BuildContext context}) {
           enabledBorder: InputBorder.none,
           errorBorder: InputBorder.none,
           disabledBorder: InputBorder.none,
-          hintText: '  $hint Search...',
+          hintText: hint,
           prefixIcon: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(7),
@@ -754,34 +754,28 @@ Widget searchTextField({String hint, BuildContext context}) {
 
 AppBar appBarSearch({
   @required String hint,
-  @required Function onBackPressed,
+  @required Function onCancelPressed,
   @required BuildContext context,
 }) {
   return AppBar(
-      centerTitle: true,
-      toolbarHeight: 60.0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(10),
-          bottomRight: Radius.circular(10),
-        ),
+    centerTitle: true,
+    toolbarHeight: 60.0,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        bottomLeft: Radius.circular(10),
+        bottomRight: Radius.circular(10),
       ),
-      backgroundColor: defaultOrangeColor,
-      title: searchTextField(hint: hint, context: context),
-      leading: IconButton(
-        onPressed: onBackPressed,
-        icon: CircleAvatar(
-          radius: 12,
-          backgroundColor: Colors.white,
-          child: Icon(
-            LanguageHelper.isEnglish
-                ? Icons.keyboard_arrow_left_outlined
-                : Icons.keyboard_arrow_right_outlined,
-            size: 20,
-            color: defaultOrangeColor,
-          ),
-        ),
-      ));
+    ),
+    backgroundColor: defaultOrangeColor,
+    title: searchTextField(hint: hint, context: context),
+    actions: [
+      FlatButton(
+        child: buildText(Languages.of(context).cancel, 15.0,
+            color: Colors.white70, fontWeight: FontWeight.w400),
+        onPressed: onCancelPressed,
+      ),
+    ],
+  );
 }
 
 // end Bahaa

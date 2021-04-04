@@ -36,6 +36,8 @@ class LanguageEn extends Languages {
       '21 Mohamed Tawfik Diab St.\nFrom Makram Ebid St. Nasr City,';
   String get getLocation => 'Get Location';
   String get phone => '+2 15453';
+  String get cancel => 'Cancel';
+
 // end Bahaa
 
 // Start Mosdik

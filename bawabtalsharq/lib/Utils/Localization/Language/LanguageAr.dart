@@ -35,6 +35,8 @@ class LanguageAr extends Languages {
   String get address => '۲۱ شارع محمد توفيق دياب\nمتفرع من مكرم عبيد ، نصر';
   String get getLocation => 'احصل على الموقع';
   String get phone => '+۲ ۱۵۴۵۳';
+  String get cancel => 'إلغاء';
+
 // end Bahaa
 
 // Start Mosdik

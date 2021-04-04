@@ -17,6 +17,7 @@ class SearchResult extends StatefulWidget {
 
 class _SearchResultState extends State<SearchResult> {
   List<bool> selections;
+  bool _isSearchPressed = false;
 
   @override
   void initState() {
@@ -26,103 +27,131 @@ class _SearchResultState extends State<SearchResult> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: appBarSearch(
-          context: context,
-          hint: 'Handmade',
-          onBackPressed: () {},
-        ),
-        floatingActionButton:
-            buildFloatingActionBtn(icon: Icons.arrow_upward, onPressed: () {}),
-        body: Padding(
-          padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  sortFilterContainer(
-                      context: context,
-                      text: 'Filter',
-                      icon: Icons.filter_alt_rounded),
-                  sortFilterContainer(
-                      context: context, text: 'Sort', icon: Icons.sort),
-                  Container(
-                    padding: EdgeInsets.only(left: 7, right: 7),
-                    margin: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
-                    width: MediaQuery.of(context).size.width * 0.35,
-                    height: MediaQuery.of(context).size.width * 0.09,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: orangeColor.withOpacity(0.1),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.15,
-                          height: MediaQuery.of(context).size.width * 0.07,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(7),
-                            color: Colors.white,
-                          ),
-                          child: Icon(
-                            Icons.widgets_outlined,
-                            size: 20,
-                          ),
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.15,
-                          height: MediaQuery.of(context).size.width * 0.07,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(7),
-                            color: Colors.transparent,
-                          ),
-                          child: Icon(
-                            Icons.apps,
-                            size: 20,
-                          ),
-                        ),
-                      ],
-                    ),
+    return Scaffold(
+      appBar: _isSearchPressed
+          ? appBarSearch(
+              hint: Languages.of(context).search,
+              onCancelPressed: () {
+                setState(() {
+                  _isSearchPressed = false;
+                });
+              },
+              context: context)
+          : appBarBuilder(
+              title: '',
+              onBackPressed: () {
+                Navigator.pop(context);
+              },
+              actions: [
+                appBarSearchButton(() {
+                  setState(() {
+                    _isSearchPressed = true;
+                  });
+                }),
+                SizedBox(
+                  width: 10,
+                )
+              ],
+            ),
+      floatingActionButton:
+          buildFloatingActionBtn(icon: Icons.arrow_upward, onPressed: () {}),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                sortFilterContainer(
+                    context: context,
+                    text: 'Filter',
+                    icon: Icons.filter_alt_rounded),
+                sortFilterContainer(
+                    context: context, text: 'Sort', icon: Icons.sort),
+                Container(
+                  padding: EdgeInsets.only(left: 7, right: 7),
+                  margin: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                  width: MediaQuery.of(context).size.width * 0.35,
+                  height: MediaQuery.of(context).size.width * 0.09,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: orangeColor.withOpacity(0.1),
                   ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                margin: EdgeInsets.only(left: 20, right: 20),
-                height: MediaQuery.of(context).size.width * 0.08,
-                child: ListView.builder(
-                  itemCount: 15,
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, position) {
-                    return roundText(context);
-                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.15,
+                        height: MediaQuery.of(context).size.width * 0.07,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(7),
+                          color: Colors.white,
+                        ),
+                        child: Icon(
+                          Icons.widgets_outlined,
+                          size: 20,
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.15,
+                        height: MediaQuery.of(context).size.width * 0.07,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(7),
+                          color: Colors.transparent,
+                        ),
+                        child: Icon(
+                          Icons.apps,
+                          size: 20,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
+              ],
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20),
+              height: MediaQuery.of(context).size.width * 0.08,
+              child: ListView.builder(
+                itemCount: 15,
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, position) {
+                  return roundText(context);
+                },
               ),
-              SizedBox(
-                height: 20,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Expanded(
+              child: GridView.builder(
+                shrinkWrap: true,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10),
+                itemCount: 30,
+                itemBuilder: (context, position) {
+                  return productItem(context);
+                },
               ),
-              Expanded(
-                child: GridView.builder(
-                  shrinkWrap: true,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10),
-                  itemCount: 30,
-                  itemBuilder: (context, position) {
-                    return productItem(context);
-                  },
-                ),
-              ),
-            ],
-          ),
+            ),
+            // Expanded(
+            //   child: ListView.builder(
+            //     shrinkWrap: true,
+            //     scrollDirection: Axis.vertical,
+            //     itemCount: 30,
+            //     itemBuilder: (context, position) {
+            //       return productItemLandscape(context);
+            //     },
+            //   ),
+            // ),
+          ],
         ),
       ),
     );
@@ -327,5 +356,15 @@ Widget productItem(BuildContext context) {
         ),
       ],
     ),
+  );
+}
+
+Widget productItemLandscape(BuildContext context) {
+  return Container(
+    height: MediaQuery.of(context).size.height * 0.2,
+    decoration: BoxDecoration(
+        boxShadow: [makeShadow()],
+        borderRadius: BorderRadius.circular(20),
+        color: Colors.white),
   );
 }

@@ -37,6 +37,7 @@ abstract class Languages {
   String get address;
   String get phone;
   String get getLocation;
+  String get cancel;
 // end Bahaa
 
 // Start Mosdik

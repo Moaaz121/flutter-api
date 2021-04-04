@@ -18,6 +18,7 @@ import 'Screens/notification_screen.dart';
 import 'Screens/profile_screen.dart';
 import 'Screens/request_for_quatation_screen.dart';
 import 'Screens/request_for_qutation.dart';
+import 'Screens/search/categories_filter_screen.dart';
 import 'Screens/search/search_result_screen.dart';
 import 'Utils/Localization/LanguageHelper.dart';
 
