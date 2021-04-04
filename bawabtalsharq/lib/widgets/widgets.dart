@@ -1,4 +1,5 @@
 import 'dart:ui';
+
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
@@ -593,6 +594,25 @@ BoxShadow makeShadow({int color = 0xFF727272, double offset = 2}) {
     blurRadius: 6,
     offset: Offset(0, offset),
     spreadRadius: 0,
+  );
+}
+
+Widget appBarSearchButton(Function onTap) {
+  return GestureDetector(
+    onTap: onTap,
+    child: Container(
+      width: 25,
+      height: 25,
+      margin: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(7),
+        color: Colors.white,
+      ),
+      child: Icon(
+        Icons.search,
+        color: orangeColor,
+      ),
+    ),
   );
 }
 // end Asmaa

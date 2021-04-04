@@ -15,6 +15,7 @@ abstract class Languages {
 
 // Start Asmaa
   String get allCategories;
+  String get categories;
 
 // end Asmaa
 

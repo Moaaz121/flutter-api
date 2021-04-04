@@ -13,6 +13,7 @@ class LanguageEn extends Languages {
 
 // Start Asmaa
   String get allCategories => 'All Categories';
+  String get categories => 'Categories';
 
 // end Asmaa
 
