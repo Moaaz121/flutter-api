@@ -66,7 +66,7 @@ class _SearchResultState extends State<SearchResult> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, ScreenRoutes.listFilter);
+                    Navigator.pushNamed(context, ScreenRoutes.filterScreen);
                   },
                   child: sortFilterContainer(
                       context: context,
@@ -75,10 +75,10 @@ class _SearchResultState extends State<SearchResult> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    //   showAnimatedDialog(
-                    //     context,
-                    //     sortDialog(context),
-                    //   );
+                    showAnimatedDialog(
+                      context,
+                      SortScreen(),
+                    );
                   },
                   child: sortFilterContainer(
                       context: context, text: 'Sort', icon: Icons.sort),

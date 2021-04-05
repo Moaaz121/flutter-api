@@ -11,6 +11,7 @@ import 'package:bawabtalsharq/Screens/search/search_result_screen.dart';
 import 'package:bawabtalsharq/Screens/search/search_screen.dart';
 import 'package:bawabtalsharq/Screens/search/categories_filter_screen.dart';
 import 'package:bawabtalsharq/Screens/search/search_sort_dialog.dart';
+import 'package:bawabtalsharq/Screens/search/list_filter_screen.dart';
 import 'package:bawabtalsharq/Screens/settings_screen.dart';
 import 'package:bawabtalsharq/Screens/splash_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/AppLocalizationDelgate.dart';
@@ -67,11 +68,12 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.requestForQuotation: (_) => RequestForQScreen(),
         ScreenRoutes.postQuotationRequest: (_) => Requestforqutation(),
         ScreenRoutes.individualProduct: (_) => IndividualProduct(),
-        ScreenRoutes.listFilter: (_) => ListFilter(),
+        ScreenRoutes.filterScreen: (_) => FilterScreen(),
         ScreenRoutes.searchScreen: (_) => SearchScreen(),
         ScreenRoutes.searchResultScreen: (_) => SearchResult(),
         ScreenRoutes.categoriesFilterScreen: (_) => SearchCategories(),
         ScreenRoutes.colorFilterScreen: (_) => ColorScreen(),
+        ScreenRoutes.FilterListScreen: (_) => ListFilterScreen(),
       },
       locale: _locale,
       supportedLocales: supportedLocales,
@@ -136,9 +138,10 @@ class ScreenRoutes {
   static const String requestForQuotation = '/requestForQuotation';
   static const String postQuotationRequest = '/postQuotationRequest';
   static const String individualProduct = '/individual_product_screen';
-  static const String listFilter = '/search_filter_screen';
+  static const String filterScreen = '/search_filter_screen';
   static const String searchScreen = '/search_screen';
   static const String searchResultScreen = '/search_result_screen';
   static const String categoriesFilterScreen = '/categories_filter_screen';
   static const String colorFilterScreen = '/color_filter_screen';
+  static const String FilterListScreen = '/list_filter_screen';
 }

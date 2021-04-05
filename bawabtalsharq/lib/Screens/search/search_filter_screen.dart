@@ -7,12 +7,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-class ListFilter extends StatefulWidget {
+class FilterScreen extends StatefulWidget {
   @override
-  _ListFilterState createState() => _ListFilterState();
+  _FilterScreenState createState() => _FilterScreenState();
 }
 
-class _ListFilterState extends State<ListFilter> {
+class _FilterScreenState extends State<FilterScreen> {
   bool _checked1 = false;
   bool _checked2 = false;
   @override
@@ -62,7 +62,9 @@ class _ListFilterState extends State<ListFilter> {
             titleText(Languages.of(context).sellerScore),
             list3OfCheckBox(),
             lineDivider(),
-            textTitle(context, Languages.of(context).brand, () {}),
+            textTitle(context, Languages.of(context).brand, () {
+              Navigator.pushNamed(context, ScreenRoutes.FilterListScreen);
+            }),
             listOfCate(starBocks),
             titleText(Languages.of(context).price),
             Row(
@@ -76,7 +78,9 @@ class _ListFilterState extends State<ListFilter> {
             titleText(Languages.of(context).discount),
             list4OfCheckBox(),
             lineDivider(),
-            textTitle(context, Languages.of(context).sizes, () {}),
+            textTitle(context, Languages.of(context).sizes, () {
+              Navigator.pushNamed(context, ScreenRoutes.FilterListScreen);
+            }),
             buildSizedBox(),
             lineDivider(),
             textTitle(context, Languages.of(context).colors, () {
@@ -84,7 +88,9 @@ class _ListFilterState extends State<ListFilter> {
             }),
             buildSizedBox(),
             lineDivider(),
-            textTitle(context, Languages.of(context).gender, () {}),
+            textTitle(context, Languages.of(context).gender, () {
+              Navigator.pushNamed(context, ScreenRoutes.FilterListScreen);
+            }),
           ],
         ),
       ),

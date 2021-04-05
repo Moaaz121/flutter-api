@@ -707,7 +707,7 @@ void showAnimatedDialog(BuildContext context, dynamic widget) {
     transitionBuilder: (_, anim, __, child) {
       return SlideTransition(
         position: Tween(begin: Offset(0, 1), end: Offset(0, 0)).animate(anim),
-        child: child,
+        child: widget,
       );
     },
   );
