@@ -68,8 +68,8 @@ class _ListFilterState extends State<ListFilter> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                textFiledPrice(context, Languages.of(context).from),
-                textFiledPrice(context, Languages.of(context).to),
+                textFiledPrice(context, Languages.of(context).from, 0.4),
+                textFiledPrice(context, Languages.of(context).to, 0.4),
               ],
             ),
             buildSizedBox(),
@@ -320,16 +320,20 @@ class _ListFilterState extends State<ListFilter> {
   }
 }
 
-Widget textFiledPrice(BuildContext context, String text) {
+Widget textFiledPrice(BuildContext context, String text, double width,
+    {IconButton dropIcon, bool isPassword = false}) {
   return SizedBox(
-    width: MediaQuery.of(context).size.width * 0.4,
+    width: MediaQuery.of(context).size.width * width,
     child: TextField(
+      obscureText: isPassword,
       cursorColor: Theme.of(context).bottomAppBarColor,
       decoration: InputDecoration(
+        suffixIcon: dropIcon,
         hintText: text,
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFF858289)),
-        ),
+        labelStyle: TextStyle(
+            fontFamily: 'Roboto-Thin.ttf', fontWeight: FontWeight.w200),
+        focusedBorder:
+            UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
       ),
     ),
   );

@@ -1,9 +1,9 @@
 import 'dart:ui';
 
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
+import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:bawabtalsharq/Utils/styles.dart';
 
 Widget sendMessageDialog(BuildContext context) {
   return Center(
@@ -39,7 +39,7 @@ Widget sendMessageDialog(BuildContext context) {
                     SizedBox(
                       height: 10,
                     ),
-                    submitButton(() {}, context)
+                    submitButton(() {}, context, Languages.of(context).submit)
                   ],
                 ),
               ),
@@ -75,13 +75,13 @@ Widget textFiledMessage(BuildContext context,
   );
 }
 
-Widget submitButton(Function _function, BuildContext context) {
+Widget submitButton(Function _function, BuildContext context, String text) {
   return FlatButton(
     onPressed: _function,
     child: Padding(
       padding: const EdgeInsets.all(12),
       child: Text(
-        Languages.of(context).submit,
+        text,
         style: TextStyle(
           fontSize: 17,
           fontWeight: FontWeight.bold,

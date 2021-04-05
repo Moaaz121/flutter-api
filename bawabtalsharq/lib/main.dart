@@ -22,6 +22,7 @@ import 'Screens/profile_screen.dart';
 import 'Screens/request_for_quatation_screen.dart';
 import 'Screens/request_for_qutation.dart';
 import 'Screens/search/color_filter_screen.dart';
+import 'Screens/signup_screen.dart';
 import 'Utils/Localization/LanguageHelper.dart';
 
 void main() => runApp(
@@ -50,7 +51,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.deepOrange),
-      home: IndividualProduct(),
+      home: SignUpScreen(),
       routes: {
         ScreenRoutes.splashScreen: (_) => SplashScreen(),
         ScreenRoutes.introScreen: (_) => IntroScreen(),
