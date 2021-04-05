@@ -19,6 +19,7 @@ class _ListFilterState extends State<ListFilter> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: BaseOrange,
         title: Text(Languages.of(context).filter),
         toolbarHeight: 70,
         actions: [
@@ -38,7 +39,7 @@ class _ListFilterState extends State<ListFilter> {
         ),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsetsDirectional.only(bottom: 30),
+        padding: EdgeInsetsDirectional.only(bottom: 40),
         physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

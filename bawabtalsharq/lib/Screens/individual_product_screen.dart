@@ -248,7 +248,7 @@ class _IndividualProductState extends State<IndividualProduct>
 
 Padding productFab() {
   return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 10),
+    padding: const EdgeInsets.only(left: 45),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -261,7 +261,7 @@ Padding productFab() {
               color: Colors.white),
           child: Center(
             child: Text(
-              '\$15.00 : \$200.00',
+              '\$200.00',
               style: TextStyle(color: orangeColor, fontWeight: FontWeight.bold),
             ),
           ),
@@ -278,7 +278,7 @@ Padding productFab() {
               color: orangeColor),
           child: Center(
             child: Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10),
+              padding: const EdgeInsets.only(left: 10, right: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -467,7 +467,7 @@ Widget infoCartSupplier(
       Container(
         child: Stack(children: [
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -476,10 +476,10 @@ Widget infoCartSupplier(
               ),
               child: Padding(
                 padding: const EdgeInsetsDirectional.only(
-                    top: 10, start: 30, end: 30, bottom: 10),
+                    top: 10, start: 30, bottom: 10, end: 10),
                 child: Column(
                   children: [
-                    buildText(name, 12.0,
+                    buildText(name, 10.0,
                         color: Colors.black, fontWeight: FontWeight.w700),
                     SizedBox(
                       height: 15,

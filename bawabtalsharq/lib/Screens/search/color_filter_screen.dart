@@ -1,3 +1,5 @@
+import 'package:bawabtalsharq/Model/colorsModle.dart';
+import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -7,40 +9,66 @@ class ColorScreen extends StatefulWidget {
 }
 
 class _ColorScreenState extends State<ColorScreen> {
+  bool _isPressed = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Colors'),
-          toolbarHeight: 70,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(15),
-              bottomRight: Radius.circular(15),
-            ),
-          ),
-        ),
-        body: listOfColors(context, Colors.green));
+      appBar: appBarBuilder(
+        title: 'Color',
+        onBackPressed: () {
+          Navigator.pop(context);
+        },
+      ),
+      body: listOfColors(context),
+    );
   }
-}
 
-Widget listOfColors(BuildContext context, Color color) {
-  return MediaQuery.removePadding(
-    context: context,
-    removeTop: true,
-    child: GridView.builder(
-        padding: EdgeInsets.all(10),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 6,
-          mainAxisSpacing: 20,
-        ),
-        itemCount: 30,
-        itemBuilder: (BuildContext context, int index) {
-          return Container(
-            margin: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50), color: color),
-          );
-        }),
-  );
+  Widget listOfColors(BuildContext context) {
+    return MediaQuery.removePadding(
+      context: context,
+      removeTop: true,
+      child: GridView.builder(
+          padding: EdgeInsets.all(10),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 6,
+            mainAxisSpacing: 20,
+          ),
+          itemCount: colorsArray.length,
+          itemBuilder: (BuildContext context, int index) {
+            return GestureDetector(
+              onTap: () {
+                setState(() {
+                  colorsArray[index].isSelected =
+                      !colorsArray[index].isSelected;
+                });
+              },
+              child: Stack(
+                children: [
+                  Container(
+                    margin: EdgeInsets.all(6),
+                    decoration: BoxDecoration(
+                        boxShadow: [makeShadow()],
+                        borderRadius: BorderRadius.circular(50),
+                        color: colorsArray[index].color),
+                  ),
+                  Positioned(
+                    child: Center(
+                        child: colorsArray[index].isSelected
+                            ? Icon(
+                                Icons.done,
+                                size: MediaQuery.of(context).size.longestSide *
+                                    0.04,
+                                color: colorsArray[index].color == Colors.white
+                                    ? Colors.black
+                                    : Colors.white,
+                              )
+                            : SizedBox()),
+                  )
+                ],
+              ),
+            );
+          }),
+    );
+  }
 }
