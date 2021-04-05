@@ -14,12 +14,33 @@ class SocketChat {
   WebSocketChannel webSocketChannel;
   WebSocketService webSocketService = WebSocketService();
 
-  void connectToSocket() {
+  void connectToSocket(String roomID) {
     webSocketChannel =
         webSocketService.connectToWebSocket(APIS.socketURL, rocketUser);
+  }
+
+  void notifyUser() {
     webSocketService.streamNotifyUserSubscribe(
         webSocketChannel, rocketUser.data.me);
+  }
+
+  void subscribeToRoom(String roomID) {
+    webSocketService.streamRoomMessagesSubscribe(
+        webSocketChannel, Room(id: roomID));
+  }
+
+  void unsubscribeToRoom(String roomID) {
+    webSocketService.streamRoomMessagesUnsubscribe(
+        webSocketChannel, Room(id: roomID));
+  }
+
+  void sendMessage(String room, String message) {
     webSocketService.sendMessageOnRoom(
-        'hi', webSocketChannel, Room(id: 'general'));
+        message, webSocketChannel, Room(id: room));
+  }
+
+  void closeSocket(String roomID) {
+    unsubscribeToRoom(roomID);
+    webSocketChannel.sink.close();
   }
 }

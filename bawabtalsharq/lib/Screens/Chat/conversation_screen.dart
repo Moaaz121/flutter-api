@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:bawabtalsharq/Repos/ChatRepos/chat_repo.dart';
+import 'package:bawabtalsharq/Repos/ChatRepos/socket_chat.dart';
 import 'package:bawabtalsharq/Screens/Chat/chat_bubble.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
@@ -14,14 +15,19 @@ import 'package:image_picker/image_picker.dart';
 import 'package:rocket_chat_connector_flutter/models/message.dart';
 
 class ConversationScreen extends StatefulWidget {
+  final String roomID;
+  ConversationScreen(this.roomID);
+
   @override
   _ConversationScreenState createState() => _ConversationScreenState();
 }
 
 class _ConversationScreenState extends State<ConversationScreen>
     with TickerProviderStateMixin {
-  AnimationController _controller;
+  AnimationController _animationController;
+  TextEditingController _textEditingController = TextEditingController();
 
+  SocketChat _socketChat = SocketChat();
   File _image;
   final picker = ImagePicker();
   FilePickerResult resultFile;
@@ -37,39 +43,35 @@ class _ConversationScreenState extends State<ConversationScreen>
   @override
   void initState() {
     super.initState();
-    _controller = new AnimationController(
+    _socketChat.connectToSocket(widget.roomID);
+    _animationController = new AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 300),
     );
   }
 
-  void getRoomMessages(String roomID) async {
-    var messages = await RocketChatApi().getRoomMessages(roomID);
-    setState(() {
-      this._messages = messages;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    Map arguments = ModalRoute.of(context).settings.arguments;
-    String roomID = arguments['roomID'];
-    return FutureBuilder<List<Message>>(
-        future: RocketChatApi().getRoomMessages(roomID),
+    return FutureBuilder(
+        future: RocketChatApi().getRoomMessages(widget.roomID),
         builder: (context, AsyncSnapshot<List<Message>> snapshot) {
           if (snapshot.hasData) {
             _messages = snapshot.data;
-            return buildScaffold(roomID);
+            return buildScaffold();
           } else {
-            return Center(child: CircularProgressIndicator());
+            return Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
           }
         });
   }
 
-  Scaffold buildScaffold(String roomID) {
+  Scaffold buildScaffold() {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
-      floatingActionButton: new Column(
+      floatingActionButton: Column(
         mainAxisSize: MainAxisSize.min,
         children: new List.generate(icons.length, (int index) {
           Widget child = new Container(
@@ -78,7 +80,7 @@ class _ConversationScreenState extends State<ConversationScreen>
             alignment: FractionalOffset.topCenter,
             child: new ScaleTransition(
               scale: new CurvedAnimation(
-                parent: _controller,
+                parent: _animationController,
                 curve: new Interval(0.0, 1.0 - index / icons.length / 2.0,
                     curve: Curves.linear),
               ),
@@ -90,16 +92,16 @@ class _ConversationScreenState extends State<ConversationScreen>
                 onPressed: () {
                   switch (index) {
                     case 0:
-                      getFile(roomID);
+                      getFile();
                       break;
                     case 1:
-                      getVideo(roomID);
+                      getVideo();
                       break;
                     case 2:
 //  getImage(roomID);
                       break;
                     case 3:
-                      getCamera(roomID);
+                      getCamera();
                       break;
                   }
                 },
@@ -120,14 +122,14 @@ class _ConversationScreenState extends State<ConversationScreen>
                 hoverElevation: 0,
                 heroTag: 'btn',
                 child: new AnimatedBuilder(
-                  animation: _controller,
+                  animation: _animationController,
                   builder: (BuildContext context, Widget child) {
                     return new Transform(
-                      transform:
-                          new Matrix4.rotationZ(_controller.value * 0.5 * pi),
+                      transform: new Matrix4.rotationZ(
+                          _animationController.value * 0.5 * pi),
                       alignment: FractionalOffset.center,
                       child: new Icon(
-                        _controller.isDismissed
+                        _animationController.isDismissed
                             ? Icons.attach_file_rounded
                             : Icons.close,
                         color: orangeColor,
@@ -136,10 +138,10 @@ class _ConversationScreenState extends State<ConversationScreen>
                   },
                 ),
                 onPressed: () {
-                  if (_controller.isDismissed) {
-                    _controller.forward();
+                  if (_animationController.isDismissed) {
+                    _animationController.forward();
                   } else {
-                    _controller.reverse();
+                    _animationController.reverse();
                   }
                 },
               ),
@@ -242,57 +244,53 @@ class _ConversationScreenState extends State<ConversationScreen>
             ),
             Align(
               alignment: Alignment.bottomCenter,
-              child: SizedBox(
-                height: 60,
-                child: BottomAppBar(
-                  elevation: 10,
-                  color: Colors.white,
-                  child: Container(
-                    constraints: BoxConstraints(
-                      maxHeight: 100,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          SizedBox(
-                            width: 50,
-                          ),
-                          Flexible(
-                            child: TextField(
-                              style: TextStyle(
+              child: BottomAppBar(
+                elevation: 10,
+                color: Colors.white,
+                child: Container(
+                  constraints: BoxConstraints(
+                    maxHeight: 100,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 50,
+                        ),
+                        Flexible(
+                          child: TextField(
+                            controller: _textEditingController,
+                            style: TextStyle(
+                              fontSize: 15.0,
+                              color:
+                                  Theme.of(context).textTheme.headline6.color,
+                            ),
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.all(10.0),
+                              border: InputBorder.none,
+                              enabledBorder: InputBorder.none,
+                              hintText: "Write your message...",
+                              hintStyle: TextStyle(
                                 fontSize: 15.0,
                                 color:
                                     Theme.of(context).textTheme.headline6.color,
                               ),
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.all(10.0),
-                                border: InputBorder.none,
-                                enabledBorder: InputBorder.none,
-                                hintText: "Write your message...",
-                                hintStyle: TextStyle(
-                                  fontSize: 15.0,
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .headline6
-                                      .color,
-                                ),
-                              ),
-                              maxLines: null,
                             ),
+                            maxLines: null,
                           ),
-                          IconButton(
-                            icon: Icon(
-                              Icons.send,
-                              color: defaultOrangeColor,
-                            ),
-                            onPressed: () {
-                              RocketChatApi().sendMessage(roomID, 'Thanks💃🏻');
-                            },
-                          )
-                        ],
-                      ),
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            Icons.send,
+                            color: defaultOrangeColor,
+                          ),
+                          onPressed: () {
+                            sendMessage();
+                          },
+                        )
+                      ],
                     ),
                   ),
                 ),
@@ -307,7 +305,7 @@ class _ConversationScreenState extends State<ConversationScreen>
   bool checkMessageSender(int index) {
     return _messages[index].user.id == rocketUser.data.userId;
   }
-  // Future getImage(String roomID) async {
+  // Future getImage() async {
   //   List<Media> _listImagePaths = await ImagePickers.pickerPaths(
   //       galleryMode: GalleryMode.image,
   //       selectCount: 1,
@@ -317,38 +315,46 @@ class _ConversationScreenState extends State<ConversationScreen>
   //       uiConfig: UIConfig(uiThemeColor: orangeColor),
   //       cropConfig: CropConfig(enableCrop: false, width: 2, height: 1));
   //   if (_listImagePaths.first != null) {
-  //     RocketChatApi().sendFile('_roomID', _listImagePaths.first.path);
+  //     RocketChatApi().sendFile(widget.roomID, _listImagePaths.first.path);
   //   }
   // }
 
-  Future getCamera(String roomID) async {
+  Future getCamera() async {
     final pickedFile = await picker.getImage(source: ImageSource.camera);
     setState(() {
       if (pickedFile != null) {
-        RocketChatApi().sendFile(roomID, pickedFile.path);
+        RocketChatApi().sendFile(widget.roomID, pickedFile.path);
       } else {}
     });
   }
 
-  Future getVideo(String roomID) async {
+  Future getVideo() async {
     final pickedFile = await picker.getVideo(source: ImageSource.gallery);
     setState(() {
       if (pickedFile != null) {
-        RocketChatApi().sendFile(roomID, pickedFile.path);
+        RocketChatApi().sendFile(widget.roomID, pickedFile.path);
       } else {
         print('No image selected.');
       }
     });
   }
 
-  Future getFile(String roomID) async {
+  Future getFile() async {
     resultFile = await FilePicker.platform.pickFiles(allowMultiple: false);
     FilePickerResult result = await FilePicker.platform.pickFiles();
     if (result != null) {
       // File file = File(result.files.single.path);
-      RocketChatApi().sendFile(roomID, File(result.files.single.path).path);
+      RocketChatApi()
+          .sendFile(widget.roomID, File(result.files.single.path).path);
     } else {
       // User canceled the picker0
+    }
+  }
+
+  void sendMessage() {
+    if (_textEditingController.text.isNotEmpty) {
+      _socketChat.sendMessage(widget.roomID, _textEditingController.text);
+      _textEditingController.text = '';
     }
   }
 }

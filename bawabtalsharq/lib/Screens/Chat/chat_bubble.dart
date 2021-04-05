@@ -1,3 +1,4 @@
+import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:rocket_chat_connector_flutter/models/message.dart';
@@ -72,7 +73,7 @@ class _ChatBubbleState extends State<ChatBubble> {
                         ),
                       )
                     : Image.asset(
-                        "${widget.message}",
+                        logo,
                         height: 130,
                         width: MediaQuery.of(context).size.width / 1.3,
                         fit: BoxFit.cover,

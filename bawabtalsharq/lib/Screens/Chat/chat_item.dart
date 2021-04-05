@@ -1,7 +1,7 @@
 import 'package:bawabtalsharq/Model/chat/room_model.dart';
 import 'package:bawabtalsharq/Repos/ChatRepos/chat_repo.dart';
+import 'package:bawabtalsharq/Screens/Chat/conversation_screen.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
-import 'package:bawabtalsharq/main.dart';
 import 'package:flutter/material.dart';
 
 class ChatItem extends StatefulWidget {
@@ -103,10 +103,11 @@ class _ChatItemState extends State<ChatItem> {
           ],
         ),
         onTap: () {
-          Navigator.pushNamed(
+          Navigator.push(
             context,
-            ScreenRoutes.conversation,
-            arguments: {'roomID': widget.chatMessage.id},
+            MaterialPageRoute(
+              builder: (context) => ConversationScreen(widget.chatMessage.id),
+            ),
           );
         },
       ),
