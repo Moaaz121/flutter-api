@@ -19,7 +19,7 @@ class SocketChat {
         webSocketService.connectToWebSocket(APIS.socketURL, rocketUser);
   }
 
-  void notifyUser() {
+  Stream notifyUser() {
     webSocketService.streamNotifyUserSubscribe(
         webSocketChannel, rocketUser.data.me);
   }

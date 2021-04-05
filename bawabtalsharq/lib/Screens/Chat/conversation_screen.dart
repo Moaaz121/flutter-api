@@ -11,6 +11,7 @@ import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:image_pickers/image_pickers.dart';
 //import 'package:image_pickers/image_pickers.dart';
 import 'package:rocket_chat_connector_flutter/models/message.dart';
 
@@ -44,6 +45,7 @@ class _ConversationScreenState extends State<ConversationScreen>
   void initState() {
     super.initState();
     _socketChat.connectToSocket(widget.roomID);
+    _socketChat.subscribeToRoom(widget.roomID);
     _animationController = new AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 300),
@@ -52,11 +54,12 @@ class _ConversationScreenState extends State<ConversationScreen>
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: RocketChatApi().getRoomMessages(widget.roomID),
-        builder: (context, AsyncSnapshot<List<Message>> snapshot) {
-          if (snapshot.hasData) {
-            _messages = snapshot.data;
+    return StreamBuilder(
+        stream: _socketChat.webSocketChannel.stream,
+        builder: (context, snapshot) {
+          if (true) {
+            print(snapshot.data);
+            // _messages = snapshot.data;
             return buildScaffold();
           } else {
             return Scaffold(
@@ -98,7 +101,7 @@ class _ConversationScreenState extends State<ConversationScreen>
                       getVideo();
                       break;
                     case 2:
-//  getImage(roomID);
+                      getImage();
                       break;
                     case 3:
                       getCamera();
@@ -231,14 +234,28 @@ class _ConversationScreenState extends State<ConversationScreen>
         child: Column(
           children: <Widget>[
             Flexible(
-              child: ListView.builder(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                itemCount: _messages.length,
-                reverse: true,
-                itemBuilder: (BuildContext context, int index) {
-                  return ChatBubble(
-                      message: _messages[index],
-                      isMe: checkMessageSender(index));
+              child: FutureBuilder(
+                future: RocketChatApi().getRoomMessages(widget.roomID),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    _messages = snapshot.data;
+                    return ListView.builder(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      itemCount: _messages.length,
+                      reverse: true,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ChatBubble(
+                            message: _messages[index],
+                            isMe: checkMessageSender(index));
+                      },
+                    );
+                  } else {
+                    return Scaffold(
+                      body: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  }
                 },
               ),
             ),
@@ -248,6 +265,7 @@ class _ConversationScreenState extends State<ConversationScreen>
                 elevation: 10,
                 color: Colors.white,
                 child: Container(
+                  height: 60,
                   constraints: BoxConstraints(
                     maxHeight: 100,
                   ),
@@ -305,19 +323,20 @@ class _ConversationScreenState extends State<ConversationScreen>
   bool checkMessageSender(int index) {
     return _messages[index].user.id == rocketUser.data.userId;
   }
-  // Future getImage() async {
-  //   List<Media> _listImagePaths = await ImagePickers.pickerPaths(
-  //       galleryMode: GalleryMode.image,
-  //       selectCount: 1,
-  //       showGif: false,
-  //       showCamera: true,
-  //       compressSize: 500,
-  //       uiConfig: UIConfig(uiThemeColor: orangeColor),
-  //       cropConfig: CropConfig(enableCrop: false, width: 2, height: 1));
-  //   if (_listImagePaths.first != null) {
-  //     RocketChatApi().sendFile(widget.roomID, _listImagePaths.first.path);
-  //   }
-  // }
+
+  Future getImage() async {
+    List<Media> _listImagePaths = await ImagePickers.pickerPaths(
+        galleryMode: GalleryMode.image,
+        selectCount: 1,
+        showGif: false,
+        showCamera: true,
+        compressSize: 500,
+        uiConfig: UIConfig(uiThemeColor: orangeColor),
+        cropConfig: CropConfig(enableCrop: false, width: 2, height: 1));
+    if (_listImagePaths.first != null) {
+      RocketChatApi().sendFile(widget.roomID, _listImagePaths.first.path);
+    }
+  }
 
   Future getCamera() async {
     final pickedFile = await picker.getImage(source: ImageSource.camera);
@@ -354,6 +373,7 @@ class _ConversationScreenState extends State<ConversationScreen>
   void sendMessage() {
     if (_textEditingController.text.isNotEmpty) {
       _socketChat.sendMessage(widget.roomID, _textEditingController.text);
+      _messages.add(new Message(msg: _textEditingController.text));
       _textEditingController.text = '';
     }
   }

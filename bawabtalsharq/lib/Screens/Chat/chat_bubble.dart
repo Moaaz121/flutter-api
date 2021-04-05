@@ -1,6 +1,6 @@
-import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_imagenetwork/flutter_imagenetwork.dart';
 import 'package:rocket_chat_connector_flutter/models/message.dart';
 
 class ChatBubble extends StatefulWidget {
@@ -64,21 +64,25 @@ class _ChatBubbleState extends State<ChatBubble> {
               SizedBox(width: 2.0),
               SizedBox(),
               Padding(
-                padding: EdgeInsets.all(widget.message.msg.isNotEmpty ? 5 : 0),
-                child: widget.message.msg.isNotEmpty
-                    ? Text(
-                        widget.message.msg,
-                        style: TextStyle(
-                          color: widget.isMe ? Colors.white : Colors.orange,
-                        ),
-                      )
-                    : Image.asset(
-                        logo,
-                        height: 130,
-                        width: MediaQuery.of(context).size.width / 1.3,
-                        fit: BoxFit.cover,
-                      ),
-              ),
+                  padding:
+                      EdgeInsets.all(widget.message.msg.isNotEmpty ? 5 : 0),
+                  child: widget.message.msg.isNotEmpty
+                      ? Text(
+                          widget.message.msg,
+                          style: TextStyle(
+                            color: widget.isMe ? Colors.white : Colors.orange,
+                          ),
+                        )
+                      : AjanuwImage(
+                          image: AjanuwNetworkImage(
+                              'http://digitalxmax.com:3000' +
+                                  widget.message.attachments.first.titleLink),
+                          fit: BoxFit.cover,
+                          loadingWidget: AjanuwImage.defaultLoadingWidget,
+                          loadingBuilder: AjanuwImage.defaultLoadingBuilder,
+                          errorBuilder: AjanuwImage.defaultErrorBuilder,
+                          color: orangeColor,
+                        )),
             ],
           ),
         ),
