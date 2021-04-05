@@ -1,11 +1,11 @@
+import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
+import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
-import 'package:bawabtalsharq/Utils/styles.dart';
-import 'package:bawabtalsharq/main.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -17,142 +17,153 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     return SafeArea(
-      child: Scaffold(
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(16, 35, 0, 0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  IconButton(
-                    icon: CircleAvatar(
-                      radius: 9,
-                      backgroundColor: orangeColor,
-                      child: Icon(
-                        LanguageHelper.isEnglish
-                            ? Icons.keyboard_arrow_left_outlined
-                            : Icons.keyboard_arrow_right_outlined,
-                        size: 17,
-                        color: Colors.white,
+      bottom: false,
+      child: Stack(
+        children: [
+          Scaffold(
+            resizeToAvoidBottomInset:
+                false, // to keep the size, when opening the keyboard
+
+            body: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(16, 35, 0, 0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      IconButton(
+                        icon: CircleAvatar(
+                          radius: 9,
+                          backgroundColor: orangeColor,
+                          child: Icon(
+                            LanguageHelper.isEnglish
+                                ? Icons.keyboard_arrow_left_outlined
+                                : Icons.keyboard_arrow_right_outlined,
+                            size: 17,
+                            color: Colors.white,
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
                       ),
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
+                      buildTextField(
+                          hint: (Languages.of(context).search),
+                          context: context),
+                    ],
                   ),
-                  buildTextField(
-                      hint: (Languages.of(context).search), context: context),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: height * .01,
-            ),
-            Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(30, 0, 35, 0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Divider(
-                    thickness: .2,
-                    endIndent: 20,
-                    indent: 20,
-                    color: Colors.grey,
-                  ),
-                  buildText((Languages.of(context).searchByCategories), 14,
-                      FontWeight.w600, Colors.black),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.06,
-                    child: ListView.builder(
-                      padding: EdgeInsets.only(top: 2, bottom: 2),
-                      physics: AlwaysScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 11,
-                      itemBuilder: (context, position) {
-                        return Container(
-                          padding: EdgeInsets.all(5),
-                          margin: EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
-                          height: 42,
-                          width: 42,
-                          decoration: new BoxDecoration(
-                            color: Color(0xffffffff),
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Color(0x29000000),
-                                  offset: Offset(0, 1),
-                                  blurRadius: 6,
-                                  spreadRadius: 0)
-                            ],
-                          ),
-                          child: Image.asset(
-                            cold_drinks,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  Divider(
-                    thickness: .2,
-                    indent: 20,
-                    endIndent: 20,
-                    color: Colors.grey,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  buildText((Languages.of(context).resentSearch), 14,
-                      FontWeight.w600, Colors.black),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  SizedBox(
-                    height: height * .5,
-                    child: ListView.builder(
-                      physics: AlwaysScrollableScrollPhysics(),
-                      scrollDirection: Axis.vertical,
-                      itemCount: 20,
-                      itemBuilder: (context, position) {
-                        return Container(
-                          margin: EdgeInsets.only(bottom: 15),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                  child: buildText(
-                                'handmade crafts',
-                                13,
-                                FontWeight.w400,
-                                Color(0xff646464),
-                              )),
-                              CircleAvatar(
-                                radius: 6,
-                                backgroundColor: orangeColor,
-                                child: Icon(
-                                  Icons.close,
-                                  size: 12,
-                                  color: Colors.white,
-                                ),
+                ),
+                SizedBox(
+                  height: height * .01,
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(30, 0, 35, 0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Divider(
+                        thickness: .2,
+                        endIndent: 20,
+                        indent: 20,
+                        color: Colors.grey,
+                      ),
+                      buildText((Languages.of(context).searchByCategories), 14,
+                          FontWeight.w600, Colors.black),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        height: MediaQuery.of(context).size.height * 0.06,
+                        child: ListView.builder(
+                          padding: EdgeInsets.only(top: 2, bottom: 2),
+                          physics: AlwaysScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 11,
+                          itemBuilder: (context, position) {
+                            return Container(
+                              padding: EdgeInsets.all(5),
+                              margin:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
+                              height: 42,
+                              width: 42,
+                              decoration: new BoxDecoration(
+                                color: Color(0xffffffff),
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Color(0x29000000),
+                                      offset: Offset(0, 1),
+                                      blurRadius: 6,
+                                      spreadRadius: 0)
+                                ],
                               ),
-                              SizedBox(
-                                width: 20,
+                              child: Image.asset(
+                                cold_drinks,
                               ),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
+                            );
+                          },
+                        ),
+                      ),
+                      Divider(
+                        thickness: .2,
+                        indent: 20,
+                        endIndent: 20,
+                        color: Colors.grey,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      buildText((Languages.of(context).resentSearch), 14,
+                          FontWeight.w600, Colors.black),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        height: height * 0.5,
+                        child: ListView.builder(
+                          physics: AlwaysScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          itemCount: 44,
+                          itemBuilder: (context, position) {
+                            return Container(
+                              margin: EdgeInsets.only(bottom: 15),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                      child: buildText(
+                                    'handmade crafts',
+                                    13,
+                                    FontWeight.w400,
+                                    Color(0xff646464),
+                                  )),
+                                  CircleAvatar(
+                                    radius: 6,
+                                    backgroundColor: orangeColor,
+                                    child: Icon(
+                                      Icons.close,
+                                      size: 12,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
