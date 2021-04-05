@@ -9,6 +9,8 @@ import 'package:bawabtalsharq/Screens/search/categories_filter_screen.dart';
 import 'package:bawabtalsharq/Screens/search/search_filter_screen.dart';
 import 'package:bawabtalsharq/Screens/search/search_result_screen.dart';
 import 'package:bawabtalsharq/Screens/search/search_screen.dart';
+import 'package:bawabtalsharq/Screens/search/categories_filter_screen.dart';
+import 'package:bawabtalsharq/Screens/search/search_sort_dialog.dart';
 import 'package:bawabtalsharq/Screens/settings_screen.dart';
 import 'package:bawabtalsharq/Screens/splash_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/AppLocalizationDelgate.dart';
@@ -50,7 +52,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.deepOrange),
-      home: IndividualProduct(),
+      home: SplashScreen(),
       routes: {
         ScreenRoutes.splashScreen: (_) => SplashScreen(),
         ScreenRoutes.introScreen: (_) => IntroScreen(),

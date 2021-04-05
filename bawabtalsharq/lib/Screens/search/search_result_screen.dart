@@ -8,6 +8,7 @@ import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
+import 'package:bawabtalsharq/Screens/search/search_sort_dialog.dart';
 
 class SearchResult extends StatefulWidget {
   @override
@@ -72,8 +73,16 @@ class _SearchResultState extends State<SearchResult> {
                       text: 'Filter',
                       icon: Icons.filter_alt_rounded),
                 ),
-                sortFilterContainer(
-                    context: context, text: 'Sort', icon: Icons.sort),
+                GestureDetector(
+                  onTap: () {
+                    //   showAnimatedDialog(
+                    //     context,
+                    //     sortDialog(context),
+                    //   );
+                  },
+                  child: sortFilterContainer(
+                      context: context, text: 'Sort', icon: Icons.sort),
+                ),
                 Container(
                   padding: EdgeInsets.only(left: 7, right: 7),
                   margin: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
