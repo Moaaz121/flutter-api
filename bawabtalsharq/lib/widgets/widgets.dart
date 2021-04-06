@@ -1118,7 +1118,8 @@ Widget textFiledPrice(BuildContext context, String text, double width,
     child: TextField(
       keyboardType: keyboardType,
       enabled: true,
-      autofocus: true,
+      enableSuggestions: true,
+      autofocus: false,
       obscureText: isPassword,
       cursorColor: Theme.of(context).bottomAppBarColor,
       decoration: InputDecoration(

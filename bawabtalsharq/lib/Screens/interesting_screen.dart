@@ -1,6 +1,5 @@
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:flutter/material.dart';
-import 'package:selectable_container/selectable_container.dart';
 
 class Interesting extends StatefulWidget {
   @override

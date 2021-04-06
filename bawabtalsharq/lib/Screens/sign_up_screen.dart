@@ -5,6 +5,7 @@ import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:bawabtalsharq/main.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -75,6 +76,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomPadding: false,
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -91,6 +93,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 makeShadow(),
               ]),
           child: SingleChildScrollView(
+            reverse: true,
             padding: EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -188,7 +191,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    submitButton(() {}, context, Languages.of(context).signUp),
+                    submitButton(() {
+                      Navigator.pushNamed(
+                          context, ScreenRoutes.interestingScreen);
+                    }, context, Languages.of(context).signUp),
                   ],
                 ),
               ],
