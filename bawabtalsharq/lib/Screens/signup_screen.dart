@@ -20,11 +20,12 @@ class Country {
 
   static List<Country> getCompanies() {
     return <Country>[
-      Country(1, 'Egypt'),
-      Country(2, 'Sodan'),
-      Country(3, 'Asa'),
-      Country(4, 'Coura'),
-      Country(5, 'Yaban'),
+      Country(1, 'Country/Region'),
+      Country(2, 'Egypt'),
+      Country(3, 'Sodan'),
+      Country(4, 'Asa'),
+      Country(5, 'Coura'),
+      Country(6, 'Yaban'),
     ];
   }
 }
