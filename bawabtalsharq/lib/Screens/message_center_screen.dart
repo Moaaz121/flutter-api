@@ -99,8 +99,11 @@ class _MessageCenterState extends State<MessageCenter> {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(15),
-              bottomLeft: Radius.circular(15),
+              topLeft: LanguageHelper.isEnglish ? Radius.circular(15) : null,
+              bottomLeft: LanguageHelper.isEnglish ? Radius.circular(15) : null,
+              bottomRight:
+                  LanguageHelper.isEnglish ? null : Radius.circular(15),
+              topRight: LanguageHelper.isEnglish ? null : Radius.circular(15),
             ),
             child: Image(
               image: AssetImage(choose),
