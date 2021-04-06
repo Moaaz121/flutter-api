@@ -63,7 +63,7 @@ class _FilterScreenState extends State<FilterScreen> {
             list3OfCheckBox(),
             lineDivider(),
             textTitle(context, Languages.of(context).brand, () {
-              Navigator.pushNamed(context, ScreenRoutes.FilterListScreen);
+              Navigator.pushNamed(context, ScreenRoutes.listFilter);
             }),
             listOfCate(starBocks),
             titleText(Languages.of(context).price),
@@ -79,7 +79,7 @@ class _FilterScreenState extends State<FilterScreen> {
             list4OfCheckBox(),
             lineDivider(),
             textTitle(context, Languages.of(context).sizes, () {
-              Navigator.pushNamed(context, ScreenRoutes.FilterListScreen);
+              Navigator.pushNamed(context, ScreenRoutes.listFilter);
             }),
             buildSizedBox(),
             lineDivider(),
@@ -89,7 +89,7 @@ class _FilterScreenState extends State<FilterScreen> {
             buildSizedBox(),
             lineDivider(),
             textTitle(context, Languages.of(context).gender, () {
-              Navigator.pushNamed(context, ScreenRoutes.FilterListScreen);
+              Navigator.pushNamed(context, ScreenRoutes.listFilter);
             }),
           ],
         ),

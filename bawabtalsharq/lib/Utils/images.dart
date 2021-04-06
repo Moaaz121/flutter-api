@@ -72,7 +72,12 @@ const String logo1 = 'assets/images/logo1.png';
 const String twitter = 'assets/images/twitter.png';
 const String google = 'assets/images/google.png';
 const String devatchy = 'assets/images/devatchy.png';
-const String devatchys = 'assets/images/devatchys.png';
+const String devachys = 'assets/images/devatchys.png';
 const String snappyLaunch = 'assets/images/snappyLaunch.png';
+const String addiddas = 'assets/images/addiddas.jpg';
+const String nordWood = 'assets/images/nordWood.png';
+const String dominikMarti1 = 'assets/images/dominikMarti1.png';
+const String choose = 'assets/images/choose.png';
+const String chooseRight = 'assets/images/chooseRight.png';
 
 // end Islam

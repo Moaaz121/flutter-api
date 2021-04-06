@@ -9,9 +9,6 @@ import 'package:bawabtalsharq/Screens/search/categories_filter_screen.dart';
 import 'package:bawabtalsharq/Screens/search/search_filter_screen.dart';
 import 'package:bawabtalsharq/Screens/search/search_result_screen.dart';
 import 'package:bawabtalsharq/Screens/search/search_screen.dart';
-import 'package:bawabtalsharq/Screens/search/categories_filter_screen.dart';
-import 'package:bawabtalsharq/Screens/search/search_sort_dialog.dart';
-import 'package:bawabtalsharq/Screens/search/list_filter_screen.dart';
 import 'package:bawabtalsharq/Screens/settings_screen.dart';
 import 'package:bawabtalsharq/Screens/splash_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/AppLocalizationDelgate.dart';
@@ -25,6 +22,7 @@ import 'Screens/profile_screen.dart';
 import 'Screens/request_for_quatation_screen.dart';
 import 'Screens/request_for_qutation.dart';
 import 'Screens/search/color_filter_screen.dart';
+import 'Screens/search/list_filter_screen.dart';
 import 'Utils/Localization/LanguageHelper.dart';
 
 void main() => runApp(
@@ -68,7 +66,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.requestForQuotation: (_) => RequestForQScreen(),
         ScreenRoutes.postQuotationRequest: (_) => Requestforqutation(),
         ScreenRoutes.individualProduct: (_) => IndividualProduct(),
-        ScreenRoutes.FilterListScreen: (_) => ListFilterScreen(),
+        ScreenRoutes.listFilter: (_) => ListFilterScreen(),
         ScreenRoutes.searchScreen: (_) => SearchScreen(),
         ScreenRoutes.searchResultScreen: (_) => SearchResult(),
         ScreenRoutes.categoriesFilterScreen: (_) => SearchCategories(),
@@ -143,5 +141,5 @@ class ScreenRoutes {
   static const String searchResultScreen = '/search_result_screen';
   static const String categoriesFilterScreen = '/categories_filter_screen';
   static const String colorFilterScreen = '/color_filter_screen';
-  static const String FilterListScreen = '/list_filter_screen';
+  static const String listFilter = '/list_filter_screen';
 }

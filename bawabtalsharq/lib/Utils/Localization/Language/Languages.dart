@@ -150,5 +150,6 @@ abstract class Languages {
   String get searchByCategories;
   String get resentSearch;
   String get handmadeCrafts;
+
 // end Islam
 }
