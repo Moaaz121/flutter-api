@@ -37,6 +37,19 @@ class LanguageEn extends Languages {
   String get getLocation => 'Get Location';
   String get phone => '+2 15453';
   String get cancel => 'Cancel';
+  String get arrange => 'Arrange';
+  String get bestRating => 'Best Rating';
+  String get blueShoes => 'Blue Shoes';
+  String get highestPrice => 'Highest Price';
+  String get lowestPrice => 'Lowest Price';
+  String get mostPop => 'Most Popular';
+  String get newIn => 'New In';
+  String get popularity => 'Popularity';
+  String get shoesPrice => '290.00 EGP';
+  String get sort => 'Sort';
+  String get ascending => 'Ascending';
+  String get descending => 'Descending';
+  String get color => 'Colors';
 
 // end Bahaa
 

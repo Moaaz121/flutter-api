@@ -273,7 +273,7 @@ class _FilterScreenState extends State<FilterScreen> {
             onTap: onPress,
             child: Row(
               children: [
-                Text('See All'),
+                Text(Languages.of(context).seeAll),
                 SizedBox(
                   width: 5,
                 ),

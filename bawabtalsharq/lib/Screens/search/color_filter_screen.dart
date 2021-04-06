@@ -2,6 +2,7 @@ import 'package:bawabtalsharq/Model/colorsModle.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 
 class ColorScreen extends StatefulWidget {
   @override
@@ -15,7 +16,7 @@ class _ColorScreenState extends State<ColorScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarBuilder(
-        title: 'Color',
+        title: Languages.of(context).color,
         onBackPressed: () {
           Navigator.pop(context);
         },

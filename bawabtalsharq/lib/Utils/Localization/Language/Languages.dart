@@ -38,6 +38,20 @@ abstract class Languages {
   String get phone;
   String get getLocation;
   String get cancel;
+  String get sort;
+  String get blueShoes;
+  String get shoesPrice;
+  String get arrange;
+  String get ascending;
+  String get descending;
+  String get popularity;
+  String get mostPop;
+  String get newIn;
+  String get bestRating;
+  String get lowestPrice;
+  String get highestPrice;
+  String get color;
+
 // end Bahaa
 
 // Start Mosdik

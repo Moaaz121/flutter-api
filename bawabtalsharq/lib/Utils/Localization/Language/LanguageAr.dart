@@ -36,7 +36,19 @@ class LanguageAr extends Languages {
   String get getLocation => 'احصل على الموقع';
   String get phone => '+۲ ۱۵۴۵۳';
   String get cancel => 'إلغاء';
-
+  String get arrange => 'رتب';
+  String get bestRating => 'أفضل تصنيف';
+  String get blueShoes => 'حذاء ازرق';
+  String get highestPrice => 'اغلى سعر';
+  String get lowestPrice => 'أقل سعر';
+  String get mostPop => 'الأكثر شهرة';
+  String get newIn => 'الجديد';
+  String get popularity => 'شعبية';
+  String get shoesPrice => '۲۹۰.۰۰ ج.م ';
+  String get sort => 'رتب';
+  String get ascending => 'تصاعدي';
+  String get descending => 'تنازلي';
+  String get color => 'الألوان';
 // end Bahaa
 
 // Start Mosdik
