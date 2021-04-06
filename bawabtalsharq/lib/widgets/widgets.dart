@@ -660,11 +660,13 @@ void showLanguagesDialog(BuildContext context) {
 // end Moaaz
 
 // Start Islam
-TextField customTextField(
-    {String label,
-    IconButton rightBtn,
-    IconData leftIcon,
-    bool isPassword = false}) {
+TextField customTextField({
+  String label,
+  IconButton rightBtn,
+  IconData leftIcon,
+  bool isPassword = false,
+  controller: TextEditingController,
+}) {
   return TextField(
     obscureText: isPassword,
     decoration: InputDecoration(
@@ -679,6 +681,7 @@ TextField customTextField(
             fontFamily: 'Roboto-Thin.ttf', fontWeight: FontWeight.w200),
         focusedBorder:
             UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey))),
+    controller: controller,
   );
 }
 

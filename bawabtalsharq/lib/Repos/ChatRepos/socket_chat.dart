@@ -3,6 +3,7 @@
 // import 'package:rocket_chat_connector_flutter/models/channel.dart';
 // import 'package:rocket_chat_connector_flutter/models/room.dart';
 // import 'package:rocket_chat_connector_flutter/models/user.dart';
+
 import 'package:bawabtalsharq/Utils/apis.dart';
 import 'package:rocket_chat_connector_flutter/models/room.dart';
 import 'package:rocket_chat_connector_flutter/web_socket/web_socket_service.dart';
@@ -19,7 +20,7 @@ class SocketChat {
         webSocketService.connectToWebSocket(APIS.socketURL, rocketUser);
   }
 
-  Stream notifyUser() {
+  void notifyUser() {
     webSocketService.streamNotifyUserSubscribe(
         webSocketChannel, rocketUser.data.me);
   }

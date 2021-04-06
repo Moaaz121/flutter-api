@@ -1,3 +1,6 @@
+import 'package:bawabtalsharq/Model/chat/partner_model.dart';
+import 'package:bawabtalsharq/Repos/ChatRepos/jitsi_config.dart';
+import 'package:bawabtalsharq/Utils/apis.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_imagenetwork/flutter_imagenetwork.dart';
@@ -6,14 +9,21 @@ import 'package:rocket_chat_connector_flutter/models/message.dart';
 class ChatBubble extends StatefulWidget {
   final Message message;
   final bool isMe;
+  final String roomID;
+  final PartnerData partnerData;
 
-  ChatBubble({@required this.message, @required this.isMe});
+  ChatBubble(
+      {@required this.message,
+      @required this.isMe,
+      @required this.partnerData,
+      @required this.roomID});
 
   @override
   _ChatBubbleState createState() => _ChatBubbleState();
 }
 
 class _ChatBubbleState extends State<ChatBubble> {
+  JitsiConfig _jitsiConfig = JitsiConfig();
   List colors = Colors.primaries;
 
   Color chatBubbleColor() {
@@ -74,9 +84,8 @@ class _ChatBubbleState extends State<ChatBubble> {
                           ),
                         )
                       : AjanuwImage(
-                          image: AjanuwNetworkImage(
-                              'http://digitalxmax.com:3000' +
-                                  widget.message.attachments.first.titleLink),
+                          image: AjanuwNetworkImage(APIS.chatBaseURL +
+                              widget.message.attachments.first.titleLink),
                           fit: BoxFit.cover,
                           loadingWidget: AjanuwImage.defaultLoadingWidget,
                           loadingBuilder: AjanuwImage.defaultLoadingBuilder,
@@ -101,4 +110,25 @@ class _ChatBubbleState extends State<ChatBubble> {
       ],
     );
   }
+
+  // Widget socketMessage() {
+  //   String messageTxt = '';
+  //   if (widget.message.msg == audioCall) {
+  //     messageTxt = 'Audio call';
+  //     _jitsiConfig.joinMeeting(
+  //         context, false, widget.roomID, widget.partnerData);
+  //   } else if (widget.message.msg == videoCall) {
+  //     messageTxt = 'Video call';
+  //     _jitsiConfig.joinMeeting(
+  //         context, true, widget.roomID, widget.partnerData);
+  //   } else {
+  //     messageTxt = widget.message.msg;
+  //   }
+  //   return Text(
+  //     messageTxt,
+  //     style: TextStyle(
+  //       color: widget.isMe ? Colors.white : Colors.orange,
+  //     ),
+  //   );
+  // }
 }

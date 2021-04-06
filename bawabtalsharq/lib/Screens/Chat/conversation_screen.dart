@@ -1,23 +1,25 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:bawabtalsharq/Model/chat/partner_model.dart';
 import 'package:bawabtalsharq/Repos/ChatRepos/chat_repo.dart';
+import 'package:bawabtalsharq/Repos/ChatRepos/jitsi_config.dart';
 import 'package:bawabtalsharq/Repos/ChatRepos/socket_chat.dart';
 import 'package:bawabtalsharq/Screens/Chat/chat_bubble.dart';
-import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
+import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_pickers/image_pickers.dart';
-//import 'package:image_pickers/image_pickers.dart';
 import 'package:rocket_chat_connector_flutter/models/message.dart';
 
 class ConversationScreen extends StatefulWidget {
   final String roomID;
-  ConversationScreen(this.roomID);
+  final PartnerData partner;
+  ConversationScreen(this.roomID, this.partner);
 
   @override
   _ConversationScreenState createState() => _ConversationScreenState();
@@ -29,7 +31,7 @@ class _ConversationScreenState extends State<ConversationScreen>
   TextEditingController _textEditingController = TextEditingController();
 
   SocketChat _socketChat = SocketChat();
-  File _image;
+  JitsiConfig _jitsiConfig = JitsiConfig();
   final picker = ImagePicker();
   FilePickerResult resultFile;
   List<Message> _messages;
@@ -50,6 +52,13 @@ class _ConversationScreenState extends State<ConversationScreen>
       vsync: this,
       duration: const Duration(milliseconds: 300),
     );
+    _jitsiConfig.jitsiListener();
+  }
+
+  @override
+  void dispose() {
+    _jitsiConfig.closeMeeting();
+    super.dispose();
   }
 
   @override
@@ -57,17 +66,8 @@ class _ConversationScreenState extends State<ConversationScreen>
     return StreamBuilder(
         stream: _socketChat.webSocketChannel.stream,
         builder: (context, snapshot) {
-          if (true) {
-            print(snapshot.data);
-            // _messages = snapshot.data;
-            return buildScaffold();
-          } else {
-            return Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
-          }
+          print(snapshot.data);
+          return buildScaffold();
         });
   }
 
@@ -187,7 +187,7 @@ class _ConversationScreenState extends State<ConversationScreen>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      'Asmaa',
+                      widget.partner.user.name,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 14,
@@ -197,7 +197,7 @@ class _ConversationScreenState extends State<ConversationScreen>
                     Visibility(
                       visible: true,
                       child: Text(
-                        Languages.of(context).online,
+                        widget.partner.user.status,
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 11,
@@ -216,13 +216,21 @@ class _ConversationScreenState extends State<ConversationScreen>
             icon: Icon(
               Icons.call,
             ),
-            onPressed: () {},
+            onPressed: () {
+              _jitsiConfig.joinMeeting(
+                  context, false, widget.roomID, widget.partner);
+              _socketChat.sendMessage(widget.roomID, audioCall);
+            },
           ),
           IconButton(
             icon: Icon(
               Icons.videocam,
             ),
-            onPressed: () {},
+            onPressed: () {
+              _jitsiConfig.joinMeeting(
+                  context, true, widget.roomID, widget.partner);
+              _socketChat.sendMessage(widget.roomID, videoCall);
+            },
           ),
           SizedBox(
             width: 10,
@@ -245,8 +253,11 @@ class _ConversationScreenState extends State<ConversationScreen>
                       reverse: true,
                       itemBuilder: (BuildContext context, int index) {
                         return ChatBubble(
-                            message: _messages[index],
-                            isMe: checkMessageSender(index));
+                          message: _messages[index],
+                          isMe: checkMessageSender(index),
+                          roomID: widget.roomID,
+                          partnerData: widget.partner,
+                        );
                       },
                     );
                   } else {

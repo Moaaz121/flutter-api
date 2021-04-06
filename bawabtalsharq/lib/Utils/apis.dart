@@ -13,6 +13,7 @@ class APIS {
   static const String chatSendMessageURL = '/api/v1/chat.postMessage';
   static const String socketURL = 'ws://digitalxmax.com:3000/websocket';
   static const String baseAvatarURL = '$chatBaseURL/avatar';
+  static const String jitsiURL = 'https://meet.digitalxmax.com/';
 // end Asmaa
 
 // Start Bahaa

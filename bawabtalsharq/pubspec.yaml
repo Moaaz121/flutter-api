@@ -43,7 +43,7 @@ dependencies:
   file_picker:
   image_pickers: ^1.0.8+7
   flutter_imagenetwork:
-
+  jitsi_meet:
 
 dev_dependencies:
   flutter_test:

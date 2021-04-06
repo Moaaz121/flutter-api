@@ -16,6 +16,16 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool obSecureText = true;
+  TextEditingController _userNameController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _userNameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -95,12 +105,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: height * 0.04,
                       ),
                       customTextField(
+                          controller: _userNameController,
                           label: Languages.of(context).userName,
                           leftIcon: Icons.person),
                       SizedBox(
                         height: height * 0.03,
                       ),
                       customTextField(
+                        controller: _passwordController,
                         isPassword: obSecureText,
                         label: (Languages.of(context).password),
                         //'Password',
@@ -160,20 +172,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                   borderRadius: BorderRadius.circular(9),
                                 ),
-                                onPressed: () async {
+                                onPressed: () {
                                   // TO DO check login
-                                  Authentication result = await RocketChatApi()
-                                      .loginRocket(
-                                          'asmaatarek93@gmail.com', '12345678');
-                                  if (result.status == "success") {
-                                    rocketUser = result;
-                                    print(rocketUser.data.authToken);
-                                    print(rocketUser.data.userId);
-                                    Navigator.pushReplacementNamed(
-                                        context, ScreenRoutes.mainScreen);
-                                  } else {
-                                    print('error');
-                                  }
+                                  _loginToRocketChat();
                                 },
                                 color: Colors.white,
                                 child: Text(
@@ -278,5 +279,21 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  _loginToRocketChat() async {
+    if (_userNameController.text.isNotEmpty &&
+        _passwordController.text.isNotEmpty) {
+      Authentication result = await RocketChatApi()
+          .loginRocket(_userNameController.text, _passwordController.text);
+      if (result.status == "success") {
+        rocketUser = result;
+        print(rocketUser.data.authToken);
+        print(rocketUser.data.userId);
+        Navigator.pushReplacementNamed(context, ScreenRoutes.mainScreen);
+      } else {
+        print('error');
+      }
+    }
   }
 }
