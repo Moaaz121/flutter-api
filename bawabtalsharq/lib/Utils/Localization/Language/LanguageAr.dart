@@ -135,6 +135,12 @@ class LanguageAr extends Languages {
 
   String get submit => 'تأكيد';
 
+  String get interesting => 'المفضل لديك';
+
+  String get iconText => 'ثياب';
+
+  String get btnText => 'البدء';
+
   String get paymentTerm => 'شروط الدفع';
 
   String get dropCategory => 'اختر الفئة';

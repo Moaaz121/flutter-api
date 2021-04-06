@@ -143,6 +143,9 @@ abstract class Languages {
   String get leadTime;
   String get check1;
   String get check2;
+  String get interesting;
+  String get btnText;
+  String get iconText;
 // end Moaaz
 
 // Start Islam
