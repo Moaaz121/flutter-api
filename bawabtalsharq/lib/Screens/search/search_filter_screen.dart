@@ -3,6 +3,7 @@ import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/main.dart';
+import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -15,6 +16,7 @@ class FilterScreen extends StatefulWidget {
 class _FilterScreenState extends State<FilterScreen> {
   bool _checked1 = false;
   bool _checked2 = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,8 +72,8 @@ class _FilterScreenState extends State<FilterScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                textFiledPrice(context, Languages.of(context).from),
-                textFiledPrice(context, Languages.of(context).to),
+                textFiledPrice(context, Languages.of(context).from, 0.4),
+                textFiledPrice(context, Languages.of(context).to, 0.4),
               ],
             ),
             buildSizedBox(),
@@ -324,19 +326,4 @@ class _FilterScreenState extends State<FilterScreen> {
       ),
     );
   }
-}
-
-Widget textFiledPrice(BuildContext context, String text) {
-  return SizedBox(
-    width: MediaQuery.of(context).size.width * 0.4,
-    child: TextField(
-      cursorColor: Theme.of(context).bottomAppBarColor,
-      decoration: InputDecoration(
-        hintText: text,
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFF858289)),
-        ),
-      ),
-    ),
-  );
 }
