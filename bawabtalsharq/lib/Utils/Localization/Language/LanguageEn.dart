@@ -76,6 +76,12 @@ class LanguageEn extends Languages {
 
   String get port => 'port';
 
+  String get interesting => 'interesting';
+
+  String get iconText => 'Apparel';
+
+  String get btnText => 'Get Started';
+
   String get paymentTerm => 'payment Term';
 
   String get submit => 'Submit';
