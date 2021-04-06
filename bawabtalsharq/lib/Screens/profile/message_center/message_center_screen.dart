@@ -13,7 +13,6 @@ class MessageCenter extends StatefulWidget {
 class _MessageCenterState extends State<MessageCenter> {
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
     return SafeArea(
       bottom: false,
       child: Stack(children: [
