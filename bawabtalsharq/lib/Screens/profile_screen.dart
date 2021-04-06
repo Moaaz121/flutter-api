@@ -234,7 +234,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       message,
                       Languages.of(context).messageCenter,
                       () {
-                        print('Message Pressed');
+                        Navigator.pushNamed(
+                            context, ScreenRoutes.messageCenter);
                       },
                     ),
                     unExpansionProfileItem(
