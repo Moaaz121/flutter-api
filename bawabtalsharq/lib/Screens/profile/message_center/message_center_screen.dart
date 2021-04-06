@@ -93,46 +93,48 @@ class _MessageCenterState extends State<MessageCenter> {
   Padding imagesProduct() {
     return Padding(
       padding: const EdgeInsets.only(top: 17),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.only(
-              topLeft: LanguageHelper.isEnglish ? Radius.circular(15) : null,
-              bottomLeft: LanguageHelper.isEnglish ? Radius.circular(15) : null,
-              bottomRight:
-                  LanguageHelper.isEnglish ? null : Radius.circular(15),
-              topRight: LanguageHelper.isEnglish ? null : Radius.circular(15),
+      child: Directionality(
+        textDirection: TextDirection.ltr,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15),
+                bottomLeft: Radius.circular(15),
+                bottomRight: Radius.circular(0),
+                topRight: Radius.circular(0),
+              ),
+              child: Image(
+                image: AssetImage(dominikMarti1),
+                width: 69,
+                height: 63,
+              ),
             ),
-            child: Image(
-              image: AssetImage(choose),
+            SizedBox(
+              width: 4,
+            ),
+            Image(
+              image: AssetImage(dominikMarti1),
               width: 69,
               height: 63,
             ),
-          ),
-          SizedBox(
-            width: 4,
-          ),
-          Image(
-            image: AssetImage(dominikMarti1),
-            width: 69,
-            height: 63,
-          ),
-          SizedBox(
-            width: 4,
-          ),
-          ClipRRect(
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(15),
-              bottomRight: Radius.circular(15),
+            SizedBox(
+              width: 4,
             ),
-            child: Image(
-              image: AssetImage(chooseRight),
-              width: 69,
-              height: 63,
+            ClipRRect(
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(15),
+                bottomRight: Radius.circular(15),
+              ),
+              child: Image(
+                image: AssetImage(dominikMarti1),
+                width: 69,
+                height: 63,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
