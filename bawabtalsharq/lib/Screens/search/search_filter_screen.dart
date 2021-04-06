@@ -3,6 +3,7 @@ import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/main.dart';
+import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -15,6 +16,7 @@ class ListFilter extends StatefulWidget {
 class _ListFilterState extends State<ListFilter> {
   bool _checked1 = false;
   bool _checked2 = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -318,23 +320,4 @@ class _ListFilterState extends State<ListFilter> {
       ),
     );
   }
-}
-
-Widget textFiledPrice(BuildContext context, String text, double width,
-    {IconButton dropIcon, bool isPassword = false}) {
-  return SizedBox(
-    width: MediaQuery.of(context).size.width * width,
-    child: TextField(
-      obscureText: isPassword,
-      cursorColor: Theme.of(context).bottomAppBarColor,
-      decoration: InputDecoration(
-        suffixIcon: dropIcon,
-        hintText: text,
-        labelStyle: TextStyle(
-            fontFamily: 'Roboto-Thin.ttf', fontWeight: FontWeight.w200),
-        focusedBorder:
-            UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
-      ),
-    ),
-  );
 }

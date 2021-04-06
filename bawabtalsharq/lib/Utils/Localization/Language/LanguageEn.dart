@@ -89,6 +89,17 @@ class LanguageEn extends Languages {
   String get colors => 'Colors';
   String get gender => 'Gender';
 
+  String get plzSecect => 'Please select trade role';
+  String get buyer => 'Buyer';
+  String get seller => 'Seller';
+  String get both => 'Both';
+  String get fullName => 'Full Name';
+  String get loginPass => 'Login Password';
+  String get confirmPass => 'Confirm Password';
+  String get companyName => 'Company Name';
+  String get tel => 'Tel';
+  String get n => '+02';
+
 // end Mosdik
 
 // Start Moaaz

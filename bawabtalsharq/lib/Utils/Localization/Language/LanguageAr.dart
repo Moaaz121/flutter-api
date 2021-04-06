@@ -88,6 +88,17 @@ class LanguageAr extends Languages {
   String get colors => 'الألوان';
   String get gender => 'النوع';
 
+  String get plzSecect => 'الرجاء تحديد الدور التجاري';
+  String get buyer => 'مشتري';
+  String get seller => 'تاجر';
+  String get both => 'كلاهما';
+  String get fullName => 'الاسم الكامل';
+  String get loginPass => 'كلمة سر الدخول';
+  String get confirmPass => 'تأكيد كلمة المرور';
+  String get companyName => 'اسم الشركة';
+  String get tel => 'هاتف';
+  String get n => '+٠٢';
+
 // end Mosdik
 
 // Start Moaaz
@@ -160,7 +171,7 @@ class LanguageAr extends Languages {
   String get settings => 'الضبط';
   String get requestForQuotation => 'طلب عرض اسعار';
   String get languages => 'اللغه';
-  String get signUp => 'اشتراك';
+  String get signUp => 'تسجيل الدخول';
   String get login => 'تسجيل الدخول';
   String get userName => 'اسم المستخدم';
   String get password => 'كلمه المرور';

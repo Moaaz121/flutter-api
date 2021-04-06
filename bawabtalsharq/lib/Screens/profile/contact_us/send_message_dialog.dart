@@ -63,8 +63,8 @@ Widget textFiledMessage(BuildContext context,
         decoration: InputDecoration(
           isDense: true,
           border: OutlineInputBorder(
-            borderRadius: const BorderRadius.all(
-              const Radius.circular(15.0),
+            borderRadius: BorderRadius.all(
+              Radius.circular(15.0),
             ),
           ),
           labelText: text,

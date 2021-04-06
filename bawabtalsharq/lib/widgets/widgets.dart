@@ -782,6 +782,30 @@ AppBar appBarSearch({
 
 // Start Mosdik
 
+Widget textFiledPrice(BuildContext context, String text, double width,
+    {IconButton dropIcon,
+    bool isPassword = false,
+    TextInputType keyboardType = TextInputType.text}) {
+  return SizedBox(
+    width: MediaQuery.of(context).size.width * width,
+    child: TextField(
+      keyboardType: keyboardType,
+      enabled: true,
+      autofocus: true,
+      obscureText: isPassword,
+      cursorColor: Theme.of(context).bottomAppBarColor,
+      decoration: InputDecoration(
+        isDense: true,
+        suffixIcon: dropIcon,
+        hintText: text,
+        labelStyle: TextStyle(
+            fontFamily: 'Roboto-Thin.ttf', fontWeight: FontWeight.w200),
+        focusedBorder:
+            UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
+      ),
+    ),
+  );
+}
 // end Mosdik
 
 // Start Moaaz

@@ -1,5 +1,5 @@
 import 'package:bawabtalsharq/Screens/profile/contact_us/send_message_dialog.dart';
-import 'package:bawabtalsharq/Screens/search/search_filter_screen.dart';
+import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
@@ -12,13 +12,56 @@ class SignUpScreen extends StatefulWidget {
   _SignUpScreenState createState() => _SignUpScreenState();
 }
 
+class Country {
+  int id;
+  String name;
+
+  Country(this.id, this.name);
+
+  static List<Country> getCompanies() {
+    return <Country>[
+      Country(1, 'Egypt'),
+      Country(2, 'Sodan'),
+      Country(3, 'Asa'),
+      Country(4, 'Coura'),
+      Country(5, 'Yaban'),
+    ];
+  }
+}
+
 class _SignUpScreenState extends State<SignUpScreen> {
   bool obSecureText = true;
   int selectedRadioTile;
+
+  List<Country> _companies = Country.getCompanies();
+  List<DropdownMenuItem<Country>> _dropdownMenuItems;
+  Country _selectedCompany;
+
   @override
   void initState() {
-    super.initState();
+    _dropdownMenuItems = buildDropdownMenuItems(_companies);
+    _selectedCompany = _dropdownMenuItems[0].value;
     selectedRadioTile = 0;
+    super.initState();
+  }
+
+  List<DropdownMenuItem<Country>> buildDropdownMenuItems(List companies) {
+    List<DropdownMenuItem<Country>> items = List();
+    for (Country company in companies) {
+      items.add(
+        DropdownMenuItem(
+          value: company,
+          child: Text(company.name),
+        ),
+      );
+    }
+    return items;
+  }
+
+  onChangeDropdownItem(Country selectedCompany) {
+    setState(() {
+      _selectedCompany = selectedCompany;
+    });
   }
 
   setSelectedRadioTile(int val) {
@@ -29,109 +72,144 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(logo1),
-                fit: BoxFit.fitHeight,
-              ),
-            ),
-            child: Container(
-              margin: EdgeInsets.only(top: 68, left: 26, right: 25, bottom: 68),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(33),
-                  boxShadow: [
-                    makeShadow(),
-                  ]),
-              child: SingleChildScrollView(
-                physics: BouncingScrollPhysics(
-                  parent: AlwaysScrollableScrollPhysics(),
-                ),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        IconButton(
-                          icon: CircleAvatar(
-                            radius: 9,
-                            backgroundColor: orangeColor,
-                            child: Icon(
-                              LanguageHelper.isEnglish
-                                  ? Icons.keyboard_arrow_left_outlined
-                                  : Icons.keyboard_arrow_right_outlined,
-                              size: 17,
-                              color: Colors.white,
-                            ),
-                          ),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                        buildText('Sign Up', 40),
-                        textFiledPrice(context, 'Country/Region', 0.8,
-                            dropIcon: IconButton(
-                                onPressed: () {
-                                  setState(() {});
-                                },
-                                icon: Icon(Icons.keyboard_arrow_down))),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        buildText('Please select trade role', 15),
-                        buildRadioListTile('Buyer', 1),
-                        buildRadioListTile('Seller', 2),
-                        buildRadioListTile('Both', 3),
-                        textFiledPrice(context, 'Email Address', 0.8),
-                        textFiledPrice(
-                          context,
-                          'Login Password',
-                          0.8,
-                          isPassword: obSecureText,
-                          dropIcon: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                obSecureText = !obSecureText;
-                              });
-                            },
-                            icon: Icon(obSecureText
-                                ? Icons.visibility_off
-                                : Icons.visibility),
-                          ),
-                        ),
-                        textFiledPrice(context, 'Company Name', 0.8),
-                        textFiledPrice(context, 'Full Name', 0.8),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            textFiledPrice(context, '+02', 0.1),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            textFiledPrice(context, 'Tel', 0.68),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.only(
-                              start: 220, top: 50),
-                          child: submitButton(() {}, context, 'Sign Up'),
-                        )
-                      ],
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(logo1),
+            fit: BoxFit.fitHeight,
+          ),
+        ),
+        child: Container(
+          margin: EdgeInsets.only(top: 60, left: 25, right: 25, bottom: 60),
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(33),
+              boxShadow: [
+                makeShadow(),
+              ]),
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+            width: MediaQuery.of(context).size.width,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  IconButton(
+                    icon: CircleAvatar(
+                      radius: 9,
+                      backgroundColor: orangeColor,
+                      child: Icon(
+                        LanguageHelper.isEnglish
+                            ? Icons.keyboard_arrow_left_outlined
+                            : Icons.keyboard_arrow_right_outlined,
+                        size: 17,
+                        color: Colors.white,
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  buildText(Languages.of(context).signUp, 40),
+                  buildSizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: DropdownButton(
+                      isExpanded: true,
+                      isDense: false,
+                      value: _selectedCompany,
+                      items: _dropdownMenuItems,
+                      onChanged: onChangeDropdownItem,
                     ),
                   ),
-                ),
+                  buildSizedBox(height: 10),
+                  buildText(Languages.of(context).plzSecect, 15,
+                      fontWeight: FontWeight.w400),
+                  buildSizedBox(
+                      height: 30,
+                      child:
+                          buildRadioListTile(Languages.of(context).buyer, 1)),
+                  buildSizedBox(
+                      height: 30,
+                      child:
+                          buildRadioListTile(Languages.of(context).seller, 2)),
+                  buildRadioListTile(Languages.of(context).both, 3),
+                  textFiledPrice(context, Languages.of(context).fullName, 0.9),
+                  buildSizedBox(height: 20),
+                  textFiledPrice(context, Languages.of(context).email, 0.9),
+                  buildSizedBox(height: 20),
+                  textFiledPrice(
+                    context,
+                    Languages.of(context).loginPass,
+                    0.9,
+                    isPassword: obSecureText,
+                    dropIcon: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          obSecureText = !obSecureText;
+                        });
+                      },
+                      icon: Icon(obSecureText
+                          ? Icons.visibility_off
+                          : Icons.visibility),
+                    ),
+                  ),
+                  buildSizedBox(height: 20),
+                  textFiledPrice(
+                    context,
+                    Languages.of(context).confirmPass,
+                    0.9,
+                    isPassword: obSecureText,
+                    dropIcon: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          obSecureText = !obSecureText;
+                        });
+                      },
+                      icon: Icon(obSecureText
+                          ? Icons.visibility_off
+                          : Icons.visibility),
+                    ),
+                  ),
+                  buildSizedBox(height: 20),
+                  textFiledPrice(
+                      context, Languages.of(context).companyName, 0.9),
+                  buildSizedBox(height: 20),
+                  buildSizedBox(height: 20),
+                  Row(
+                    children: [
+                      Expanded(
+                          child: textFiledPrice(
+                              context, Languages.of(context).n, 0.2)),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      textFiledPrice(context, Languages.of(context).tel, 0.6),
+                    ],
+                  ),
+                  buildSizedBox(height: 15),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      submitButton(
+                          () {}, context, Languages.of(context).signUp),
+                    ],
+                  ),
+                ],
               ),
             ),
           ),
         ),
-      ],
+      ),
+    );
+  }
+
+  SizedBox buildSizedBox({double height, Widget child, double width}) {
+    return SizedBox(
+      height: height,
+      child: child,
+      width: width,
     );
   }
 

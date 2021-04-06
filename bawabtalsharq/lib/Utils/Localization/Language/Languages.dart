@@ -84,6 +84,17 @@ abstract class Languages {
   String get sizes;
   String get colors;
   String get gender;
+  String get signUp;
+  String get plzSecect;
+  String get buyer;
+  String get seller;
+  String get both;
+  String get fullName;
+  String get loginPass;
+  String get confirmPass;
+  String get companyName;
+  String get tel;
+  String get n;
 
 // end Mosdik
 
@@ -124,7 +135,6 @@ abstract class Languages {
   String get settings;
   String get requestForQuotation;
   String get languages;
-  String get signUp;
   String get login;
   String get userName;
   String get password;
