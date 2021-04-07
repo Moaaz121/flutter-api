@@ -16,6 +16,7 @@ abstract class Languages {
   String get allCategories;
   String get chats;
   String get online;
+  String get meetingWith;
 
 // end Asmaa
 

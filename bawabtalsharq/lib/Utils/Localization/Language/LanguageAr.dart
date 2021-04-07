@@ -14,6 +14,7 @@ class LanguageAr extends Languages {
   String get allCategories => 'التصنيفات';
   String get chats => 'الرسائل';
   String get online => 'متصل';
+  String get meetingWith => 'اجتماع مع ';
 
 // end Asmaa
 

@@ -14,6 +14,7 @@ class LanguageEn extends Languages {
   String get allCategories => 'All Categories';
   String get chats => 'Chats';
   String get online => 'Online';
+  String get meetingWith => 'Meeting with ';
 
 // end Asmaa
 
