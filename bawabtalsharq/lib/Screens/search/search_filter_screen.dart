@@ -350,7 +350,7 @@ class _FilterScreenState extends State<FilterScreen> {
         direction: Axis.horizontal,
         allowHalfRating: true,
         itemCount: 5,
-        itemPadding: EdgeInsets.symmetric(horizontal: 5),
+        itemPadding: EdgeInsets.symmetric(horizontal: 3),
         itemBuilder: (context, _) => Icon(
           Icons.star,
           color: Colors.amber,

@@ -74,7 +74,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       resizeToAvoidBottomPadding: false,
       body: Container(
         decoration: BoxDecoration(
@@ -84,7 +84,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
         ),
         child: Container(
-          margin: EdgeInsets.only(top: 60, left: 25, right: 25, bottom: 60),
+          margin: EdgeInsets.only(top: 60, left: 25, right: 25),
           decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(33),
@@ -92,7 +92,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 makeShadow(),
               ]),
           child: SingleChildScrollView(
-            reverse: true,
+            reverse: false,
             padding: EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
