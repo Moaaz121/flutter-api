@@ -49,9 +49,12 @@ class _SearchScreenState extends State<SearchScreen> {
                           Navigator.of(context).pop();
                         },
                       ),
-                      buildTextField(
-                          hint: (Languages.of(context).search),
-                          context: context),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: buildTextField(
+                            hint: (Languages.of(context).search),
+                            context: context),
+                      ),
                     ],
                   ),
                 ),
