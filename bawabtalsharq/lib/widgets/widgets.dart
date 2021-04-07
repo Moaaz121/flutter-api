@@ -1163,4 +1163,31 @@ TextField customTextField(
   );
 }
 
+FlatButton signInFlatButton(
+    BuildContext context, double height, String text, Function onPress) {
+  return FlatButton(
+    padding: EdgeInsetsDirectional.only(
+      start: 35,
+      end: 35,
+      top: 11,
+      bottom: 11,
+    ),
+    splashColor: orangeColor.withOpacity(0.5),
+    highlightColor: orangeColor.withOpacity(0.2),
+    shape: RoundedRectangleBorder(
+      side: BorderSide(
+        color: Colors.red,
+        width: 1,
+      ),
+      borderRadius: BorderRadius.circular(9),
+    ),
+    onPressed: onPress,
+    color: Colors.white,
+    child: Text(
+      text,
+      style: TextStyle(fontSize: height * .015, color: Colors.red),
+    ),
+  );
+}
+
 // end Islam

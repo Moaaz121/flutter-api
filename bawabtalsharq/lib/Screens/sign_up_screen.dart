@@ -1,11 +1,10 @@
-import 'package:bawabtalsharq/Screens/profile/contact_us/send_message_dialog.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:bawabtalsharq/main.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -191,10 +190,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    submitButton(() {
+                    signInFlatButton(
+                        context,
+                        MediaQuery.of(context).size.height,
+                        Languages.of(context).signUp, () {
                       Navigator.pushNamed(
                           context, ScreenRoutes.interestingScreen);
-                    }, context, Languages.of(context).signUp),
+                    }),
                   ],
                 ),
               ],
