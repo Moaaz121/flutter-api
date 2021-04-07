@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   makeShadow(),
                 ]),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: EdgeInsets.symmetric(horizontal: 16),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

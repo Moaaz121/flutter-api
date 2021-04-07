@@ -136,7 +136,7 @@ class _FilterScreenState extends State<FilterScreen> {
       {@required String text,
       @required Function onChanged,
       @required bool value,
-      double size = 14}) {
+      double size = 13}) {
     return Transform.scale(
       scale: 1.1,
       child: SizedBox(

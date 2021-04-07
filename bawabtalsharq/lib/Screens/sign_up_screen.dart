@@ -114,7 +114,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
                 buildSizedBox(height: 20),
-                buildText(Languages.of(context).signUp, 40),
+                buildText(Languages.of(context).signUp, 40,
+                    fontWeight: FontWeight.w700),
                 buildSizedBox(height: 10),
                 buildSizedBox(
                   width: MediaQuery.of(context).size.width,
