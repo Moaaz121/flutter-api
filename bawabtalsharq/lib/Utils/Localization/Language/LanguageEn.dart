@@ -134,7 +134,7 @@ class LanguageEn extends Languages {
 
   String get port => 'port';
 
-  String get interesting => 'interesting';
+  String get interesting => 'Interesting';
 
   String get iconText => 'Apparel';
 

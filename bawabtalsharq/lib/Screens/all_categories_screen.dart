@@ -2,6 +2,7 @@ import 'package:bawabtalsharq/Model/categories_model.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/main.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/widgets.dart';
@@ -197,7 +198,8 @@ class _AllCategoriesState extends State<AllCategories>
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
-                      print('sub pressed');
+                      Navigator.pushNamed(
+                          context, ScreenRoutes.searchResultScreen);
                     },
                     child: Container(
                       margin: EdgeInsetsDirectional.only(
