@@ -22,7 +22,10 @@ class _FilterScreenState extends State<FilterScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: BaseOrange,
-        title: Text(Languages.of(context).filter),
+        title: Center(
+          child: titleText(Languages.of(context).filter,
+              size: 20, color: Colors.white),
+        ),
         toolbarHeight: 70,
         actions: [
           FlatButton(
@@ -48,25 +51,29 @@ class _FilterScreenState extends State<FilterScreen> {
           children: [
             textTitle(context, Languages.of(context).category, () {
               Navigator.pushNamed(context, ScreenRoutes.categoriesFilterScreen);
-            }),
+            }, Languages.of(context).seeAll, Colors.black,
+                icon: Icons.arrow_forward),
             listOfCate(cold_drinks),
             titleText(Languages.of(context).expressShipping),
             listOfCheckBox(),
+            buildSizedBox(10),
             lineDivider(),
             titleText(Languages.of(context).shippedFrom),
             buildCheckbox(1, text: Languages.of(context).egypt),
             buildCheckbox(2, text: Languages.of(context).shippedFromAbroad),
+            buildSizedBox(25),
             lineDivider(),
             titleText(Languages.of(context).rating),
             rating(),
-            buildSizedBox(),
+            buildSizedBox(25),
             lineDivider(),
             titleText(Languages.of(context).sellerScore),
             list3OfCheckBox(),
             lineDivider(),
             textTitle(context, Languages.of(context).brand, () {
               Navigator.pushNamed(context, ScreenRoutes.listFilter);
-            }),
+            }, Languages.of(context).seeAll, Colors.black,
+                icon: Icons.arrow_forward),
             listOfCate(starBocks),
             titleText(Languages.of(context).price),
             Row(
@@ -76,34 +83,41 @@ class _FilterScreenState extends State<FilterScreen> {
                 textFiledPrice(context, Languages.of(context).to, 0.4),
               ],
             ),
-            buildSizedBox(),
+            buildSizedBox(25),
             titleText(Languages.of(context).discount),
             list4OfCheckBox(),
             lineDivider(),
             textTitle(context, Languages.of(context).sizes, () {
               Navigator.pushNamed(context, ScreenRoutes.listFilter);
-            }),
-            buildSizedBox(),
+            }, 'X', Colors.deepOrangeAccent, icon: Icons.arrow_forward_ios),
+            buildSizedBox(25),
             lineDivider(),
             textTitle(context, Languages.of(context).colors, () {
               Navigator.pushNamed(context, ScreenRoutes.colorFilterScreen);
-            }),
-            buildSizedBox(),
+            }, 'Orang', Colors.deepOrange, icon: Icons.arrow_forward_ios),
+            buildSizedBox(25),
             lineDivider(),
             textTitle(context, Languages.of(context).gender, () {
               Navigator.pushNamed(context, ScreenRoutes.listFilter);
-            }),
+            }, 'Male', Colors.deepOrange, icon: Icons.arrow_forward_ios),
           ],
         ),
       ),
     );
   }
 
-  SizedBox buildSizedBox() => SizedBox(height: 25);
+  SizedBox buildSizedBox(double height) => SizedBox(height: height);
 
-  CheckboxListTile buildCheckbox(int pos, {String text = ''}) {
+  CheckboxListTile buildCheckbox(int pos,
+      {String text = '', double size = 14}) {
     return CheckboxListTile(
-      title: Text(text),
+      contentPadding: EdgeInsetsDirectional.only(start: 30),
+      title: Text(
+        text,
+        style: TextStyle(
+          fontSize: size,
+        ),
+      ),
       controlAffinity: ListTileControlAffinity.leading,
       value: pos == 1 ? _checked1 : _checked2,
       onChanged: (bool value) {
@@ -116,7 +130,37 @@ class _FilterScreenState extends State<FilterScreen> {
     );
   }
 
-  Column lineDivider() {
+  Widget checkboxBuilder(
+      {@required String text,
+      @required Function onChanged,
+      @required bool value,
+      double size = 14}) {
+    return Transform.scale(
+      scale: 1.1,
+      child: SizedBox(
+        height: 35,
+        child: Theme(
+          data: ThemeData(toggleableActiveColor: Colors.red),
+          child: CheckboxListTile(
+            contentPadding: EdgeInsetsDirectional.only(start: 40),
+            title: Text(
+              text,
+              style: TextStyle(
+                fontSize: size,
+              ),
+            ),
+            controlAffinity: ListTileControlAffinity.leading,
+            value: value,
+            onChanged: onChanged,
+            activeColor: orangeColor,
+            checkColor: Colors.white,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Column lineDivider({double height = 10}) {
     return Column(
       children: [
         Divider(
@@ -127,23 +171,9 @@ class _FilterScreenState extends State<FilterScreen> {
           color: Colors.black45,
         ),
         SizedBox(
-          height: 10,
+          height: height,
         ),
       ],
-    );
-  }
-
-  CheckboxListTile checkboxBuilder(
-      {@required String text,
-      @required Function onChanged,
-      @required bool value}) {
-    return CheckboxListTile(
-      title: Text(text),
-      controlAffinity: ListTileControlAffinity.leading,
-      value: value,
-      onChanged: onChanged,
-      activeColor: orangeColor,
-      checkColor: Colors.white,
     );
   }
 
@@ -261,7 +291,9 @@ class _FilterScreenState extends State<FilterScreen> {
     );
   }
 
-  Widget textTitle(BuildContext context, String text, Function onPress) {
+  Widget textTitle(BuildContext context, String text, Function onPress,
+      String centerText, Color color,
+      {double size = 15, IconData icon}) {
     return Padding(
       padding: const EdgeInsetsDirectional.only(top: 20, start: 30, end: 30),
       child: Row(
@@ -275,12 +307,15 @@ class _FilterScreenState extends State<FilterScreen> {
             onTap: onPress,
             child: Row(
               children: [
-                Text(Languages.of(context).seeAll),
+                Text(
+                  centerText,
+                  style: TextStyle(color: color, fontSize: size),
+                ),
                 SizedBox(
                   width: 5,
                 ),
                 Icon(
-                  Icons.arrow_forward_rounded,
+                  icon,
                   size: 18,
                   color: Colors.black.withOpacity(0.7),
                 ),
@@ -292,13 +327,14 @@ class _FilterScreenState extends State<FilterScreen> {
     );
   }
 
-  Widget titleText(String text) {
+  Widget titleText(String text,
+      {double size = 15, Color color = Colors.black}) {
     return Padding(
       padding: const EdgeInsetsDirectional.only(start: 25),
       child: Text(text,
           style: TextStyle(
-            color: Colors.black,
-            fontSize: 15,
+            color: color,
+            fontSize: size,
             fontWeight: FontWeight.w600,
             fontStyle: FontStyle.normal,
             letterSpacing: 0.18,
