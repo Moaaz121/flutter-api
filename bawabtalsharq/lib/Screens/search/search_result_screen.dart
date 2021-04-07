@@ -182,6 +182,7 @@ class _SearchResultState extends State<SearchResult> {
                   )
                 : Expanded(
                     child: ListView.builder(
+                      controller: _resultScrollController,
                       shrinkWrap: true,
                       scrollDirection: Axis.vertical,
                       itemCount: 30,
