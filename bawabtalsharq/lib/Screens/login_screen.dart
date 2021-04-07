@@ -140,7 +140,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            signInFlatButton(context, height),
+                            signInFlatButton(
+                                context, height, Languages.of(context).signIn,
+                                () {
+                              Navigator.pushReplacementNamed(
+                                  context, ScreenRoutes.mainScreen);
+                            }),
                           ]),
                     ),
                     SizedBox(
@@ -176,35 +181,6 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  FlatButton signInFlatButton(BuildContext context, double height) {
-    return FlatButton(
-      padding: EdgeInsetsDirectional.only(
-        start: 35,
-        end: 35,
-        top: 11,
-        bottom: 11,
-      ),
-      splashColor: orangeColor.withOpacity(0.5),
-      highlightColor: orangeColor.withOpacity(0.2),
-      shape: RoundedRectangleBorder(
-        side: BorderSide(
-          color: Colors.red,
-          width: 1,
-        ),
-        borderRadius: BorderRadius.circular(9),
-      ),
-      onPressed: () {
-        // TO DO check login
-        Navigator.pushReplacementNamed(context, ScreenRoutes.mainScreen);
-      },
-      color: Colors.white,
-      child: Text(
-        (Languages.of(context).signIn),
-        style: TextStyle(fontSize: height * .015, color: Colors.red),
       ),
     );
   }
