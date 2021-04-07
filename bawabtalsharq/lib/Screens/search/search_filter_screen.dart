@@ -26,7 +26,6 @@ class _FilterScreenState extends State<FilterScreen> {
           child: titleText(Languages.of(context).filter,
               size: 20, color: Colors.white),
         ),
-        toolbarHeight: 70,
         actions: [
           FlatButton(
             onPressed: () {},
