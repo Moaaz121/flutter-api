@@ -16,6 +16,7 @@ class _SearchResultState extends State<SearchResult> {
   List<bool> selections;
   bool _isSearchPressed = false;
   bool isGrid = true;
+  ScrollController _resultScrollController = ScrollController();
 
   @override
   void initState() {
@@ -51,8 +52,13 @@ class _SearchResultState extends State<SearchResult> {
                 )
               ],
             ),
-      floatingActionButton:
-          buildFloatingActionBtn(icon: Icons.arrow_upward, onPressed: () {}),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: buildFloatingActionBtn(
+          icon: Icons.arrow_upward,
+          onPressed: () {
+            _resultScrollController.animateTo(0.0,
+                duration: Duration(seconds: 1), curve: Curves.easeOut);
+          }),
       body: Padding(
         padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
         child: Column(
@@ -162,6 +168,7 @@ class _SearchResultState extends State<SearchResult> {
             isGrid
                 ? Expanded(
                     child: GridView.builder(
+                      controller: _resultScrollController,
                       shrinkWrap: true,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,

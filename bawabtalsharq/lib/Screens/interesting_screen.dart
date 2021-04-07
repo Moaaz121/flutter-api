@@ -1,4 +1,6 @@
+import 'package:bawabtalsharq/Screens/search/color_filter_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Interesting extends StatefulWidget {
@@ -19,6 +21,7 @@ class _InterestingState extends State<Interesting> {
         ),
         child: Center(
           child: Container(
+            padding: EdgeInsets.only(left: 20, right: 20, top: 20),
             width: MediaQuery.of(context).size.width * 0.89,
             height: MediaQuery.of(context).size.height * 0.85,
             decoration: BoxDecoration(
@@ -36,61 +39,63 @@ class _InterestingState extends State<Interesting> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                      top: 20.0, left: 20.0, bottom: 15.0),
-                  child: ClipOval(
-                    child: Material(
-                      color: Colors.deepOrangeAccent.shade100, // button color
-                      child: InkWell(
-                        splashColor: Colors.red, // inkwell color
-                        child: SizedBox(
-                          width: 30,
-                          height: 30,
-                          child: Icon(
-                            Icons.arrow_back_ios_outlined,
-                            color: Colors.white,
-                            size: 20,
-                          ),
+                ClipOval(
+                  child: Material(
+                    color: Colors.deepOrangeAccent.shade100, // button color
+                    child: InkWell(
+                      splashColor: Colors.red, // inkwell color
+                      child: SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: Icon(
+                          Icons.arrow_back_ios_outlined,
+                          color: Colors.white,
+                          size: 14,
                         ),
-                        onTap: () {},
                       ),
+                      onTap: () {},
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0, left: 10.0),
-                  child: Text(
-                    Languages.of(context).interesting,
-                    style: TextStyle(fontWeight: FontWeight.w900, fontSize: 30),
-                  ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  Languages.of(context).interesting,
+                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 26),
+                ),
+                SizedBox(
+                  height: 5,
                 ),
                 Flexible(
                   child: GridView.builder(
                       shrinkWrap: true,
-                      padding: EdgeInsets.only(top: 5, bottom: 50),
+                      padding: EdgeInsets.zero,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3,
                       ),
                       itemCount: 20,
                       itemBuilder: (BuildContext context, int index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(7.0),
-                          child: Card(
-                            color: Colors.deepOrangeAccent.withOpacity(0.7),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  'assets/images/cold_drinks.png',
-                                  fit: BoxFit.fill,
-                                  width: 50,
-                                  height: 50,
-                                ),
-                                Text(Languages.of(context).iconText),
-                              ],
-                            ),
+                        return Container(
+                          height: 60,
+                          width: 60,
+                          margin: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Colors.deepOrange[100],
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/images/cold_drinks.png',
+                                fit: BoxFit.fill,
+                                width: 44,
+                                height: 44,
+                              ),
+                              Text(Languages.of(context).iconText),
+                            ],
                           ),
                         );
                       }),
@@ -100,13 +105,14 @@ class _InterestingState extends State<Interesting> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: RaisedButton(
-                        padding: EdgeInsets.all(15.0),
+                        color: Colors.white,
+                        elevation: 0,
+                        padding: EdgeInsets.all(10),
                         child: Text(
                           Languages.of(context).btnText,
                           style:
-                              TextStyle(fontSize: 19, color: Colors.deepOrange),
+                              TextStyle(fontSize: 16, color: Colors.deepOrange),
                         ),
-                        color: Colors.white,
                         shape: RoundedRectangleBorder(
                           side: BorderSide(color: Colors.deepOrange, width: 1),
                           borderRadius: BorderRadius.circular(12),

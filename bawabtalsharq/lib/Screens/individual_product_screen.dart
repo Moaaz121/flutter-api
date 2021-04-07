@@ -62,9 +62,14 @@ class _IndividualProductState extends State<IndividualProduct>
             controller: scrollController,
             slivers: [
               SliverAppBar(
-                leading: Icon(
-                  Icons.arrow_back_ios_rounded,
-                  size: 16,
+                leading: GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Icon(
+                    Icons.arrow_back_ios_rounded,
+                    size: 16,
+                  ),
                 ),
                 actions: [
                   iconRound(Icons.add_to_photos_rounded),
