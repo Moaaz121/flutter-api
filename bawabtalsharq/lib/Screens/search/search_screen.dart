@@ -17,6 +17,7 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     return SafeArea(
+      top: false,
       bottom: false,
       child: Stack(
         children: [
@@ -27,7 +28,7 @@ class _SearchScreenState extends State<SearchScreen> {
             body: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(16, 35, 0, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(16, 60, 0, 0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
