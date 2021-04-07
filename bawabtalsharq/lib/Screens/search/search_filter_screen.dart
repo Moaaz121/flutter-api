@@ -89,12 +89,12 @@ class _FilterScreenState extends State<FilterScreen> {
             lineDivider(),
             textTitle(context, Languages.of(context).sizes, () {
               Navigator.pushNamed(context, ScreenRoutes.listFilter);
-            }, 'X', Colors.deepOrangeAccent, icon: Icons.arrow_forward_ios),
+            }, 'X, XL', Colors.deepOrangeAccent, icon: Icons.arrow_forward_ios),
             buildSizedBox(25),
             lineDivider(),
             textTitle(context, Languages.of(context).colors, () {
               Navigator.pushNamed(context, ScreenRoutes.colorFilterScreen);
-            }, 'Orang', Colors.deepOrange, icon: Icons.arrow_forward_ios),
+            }, 'Orange', Colors.deepOrange, icon: Icons.arrow_forward_ios),
             buildSizedBox(25),
             lineDivider(),
             textTitle(context, Languages.of(context).gender, () {
@@ -108,25 +108,27 @@ class _FilterScreenState extends State<FilterScreen> {
 
   SizedBox buildSizedBox(double height) => SizedBox(height: height);
 
-  CheckboxListTile buildCheckbox(int pos,
-      {String text = '', double size = 14}) {
-    return CheckboxListTile(
-      contentPadding: EdgeInsetsDirectional.only(start: 30),
-      title: Text(
-        text,
-        style: TextStyle(
-          fontSize: size,
+  SizedBox buildCheckbox(int pos, {String text = '', double size = 14}) {
+    return SizedBox(
+      height: 30,
+      child: CheckboxListTile(
+        contentPadding: EdgeInsetsDirectional.only(start: 30),
+        title: Text(
+          text,
+          style: TextStyle(
+            fontSize: size,
+          ),
         ),
+        controlAffinity: ListTileControlAffinity.leading,
+        value: pos == 1 ? _checked1 : _checked2,
+        onChanged: (bool value) {
+          setState(() {
+            pos == 1 ? _checked1 = value : _checked2 = value;
+          });
+        },
+        activeColor: orangeColor,
+        checkColor: Colors.white,
       ),
-      controlAffinity: ListTileControlAffinity.leading,
-      value: pos == 1 ? _checked1 : _checked2,
-      onChanged: (bool value) {
-        setState(() {
-          pos == 1 ? _checked1 = value : _checked2 = value;
-        });
-      },
-      activeColor: orangeColor,
-      checkColor: Colors.white,
     );
   }
 
@@ -139,22 +141,19 @@ class _FilterScreenState extends State<FilterScreen> {
       scale: 1.1,
       child: SizedBox(
         height: 35,
-        child: Theme(
-          data: ThemeData(toggleableActiveColor: Colors.red),
-          child: CheckboxListTile(
-            contentPadding: EdgeInsetsDirectional.only(start: 40),
-            title: Text(
-              text,
-              style: TextStyle(
-                fontSize: size,
-              ),
+        child: CheckboxListTile(
+          contentPadding: EdgeInsetsDirectional.only(start: 40),
+          title: Text(
+            text,
+            style: TextStyle(
+              fontSize: size,
             ),
-            controlAffinity: ListTileControlAffinity.leading,
-            value: value,
-            onChanged: onChanged,
-            activeColor: orangeColor,
-            checkColor: Colors.white,
           ),
+          controlAffinity: ListTileControlAffinity.leading,
+          value: value,
+          onChanged: onChanged,
+          activeColor: orangeColor,
+          checkColor: Colors.white,
         ),
       ),
     );
