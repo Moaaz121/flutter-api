@@ -26,7 +26,6 @@ class _FilterScreenState extends State<FilterScreen> {
           child: titleText(Languages.of(context).filter,
               size: 20, color: Colors.white),
         ),
-        toolbarHeight: 70,
         actions: [
           FlatButton(
             onPressed: () {},
@@ -136,7 +135,7 @@ class _FilterScreenState extends State<FilterScreen> {
       {@required String text,
       @required Function onChanged,
       @required bool value,
-      double size = 14}) {
+      double size = 13}) {
     return Transform.scale(
       scale: 1.1,
       child: SizedBox(
@@ -350,7 +349,7 @@ class _FilterScreenState extends State<FilterScreen> {
         direction: Axis.horizontal,
         allowHalfRating: true,
         itemCount: 5,
-        itemPadding: EdgeInsets.symmetric(horizontal: 5),
+        itemPadding: EdgeInsets.symmetric(horizontal: 3),
         itemBuilder: (context, _) => Icon(
           Icons.star,
           color: Colors.amber,

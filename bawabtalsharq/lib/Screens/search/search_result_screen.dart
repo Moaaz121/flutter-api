@@ -176,17 +176,30 @@ class _SearchResultState extends State<SearchResult> {
                           mainAxisSpacing: 10),
                       itemCount: 30,
                       itemBuilder: (context, position) {
-                        return productItem(context);
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, ScreenRoutes.individualProduct);
+                          },
+                          child: productItem(context),
+                        );
                       },
                     ),
                   )
                 : Expanded(
                     child: ListView.builder(
+                      controller: _resultScrollController,
                       shrinkWrap: true,
                       scrollDirection: Axis.vertical,
                       itemCount: 30,
                       itemBuilder: (context, position) {
-                        return productItemLandscape(context);
+                        return GestureDetector(
+                          child: productItemLandscape(context),
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, ScreenRoutes.individualProduct);
+                          },
+                        );
                       },
                     ),
                   ),
