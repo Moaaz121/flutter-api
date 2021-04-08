@@ -15,7 +15,8 @@ class LanguageEn extends Languages {
   String get chats => 'Chats';
   String get online => 'Online';
   String get meetingWith => 'Meeting with ';
-
+  String get incomingCall => 'Incoming Call';
+  String get incomingVideoCall => 'Incoming Video Call';
 // end Asmaa
 
 // Start Bahaa
