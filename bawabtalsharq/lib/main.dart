@@ -31,8 +31,9 @@ import 'Utils/Localization/LanguageHelper.dart';
 
 void main() => runApp(
       DevicePreview(
-        enabled: true,
-        builder: (context) => BawabtAlsharqApp(), // Wrap your app
+        enabled: false,
+        builder: (context) => BawabtAlsharqApp(), // Wrap you`
+        // r app
       ),
     );
 
