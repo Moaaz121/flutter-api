@@ -1109,6 +1109,95 @@ Widget productItemLandscape(BuildContext context) {
 
 // Start Mosdik
 
+Widget infoCartSupplier(
+    String name, String years, String country, String category) {
+  return Column(
+    children: [
+      Container(
+        child: Stack(children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(35),
+                boxShadow: [makeShadow(color: (0x29e16036), offset: 3)],
+              ),
+              child: Padding(
+                padding: const EdgeInsetsDirectional.only(
+                    top: 10, start: 30, bottom: 10, end: 10),
+                child: Column(
+                  children: [
+                    buildText(name, 10.0,
+                        color: Colors.black, fontWeight: FontWeight.w700),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.access_time_rounded,
+                              size: 13,
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            buildText(years, 7.0,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w700),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Image(
+                              image: AssetImage(medalImage),
+                              width: 14,
+                              height: 14,
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            buildText(country, 7.0,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w700),
+                          ],
+                        ),
+                        buildText(category, 7.0,
+                            color: Colors.black, fontWeight: FontWeight.w700),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            top: 10,
+            left: 10,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [makeShadow(color: (0x29e16036), offset: 3)],
+              ),
+              child: Image(
+                image: AssetImage(
+                  medalImage,
+                ),
+                height: 45,
+                width: 45,
+              ),
+            ),
+          ),
+        ]),
+      ),
+    ],
+  );
+}
+
 Widget textFiledPrice(BuildContext context, String text, double width,
     {IconButton dropIcon,
     bool isPassword = false,

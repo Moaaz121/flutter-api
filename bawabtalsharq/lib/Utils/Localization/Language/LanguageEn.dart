@@ -202,6 +202,7 @@ class LanguageEn extends Languages {
   String get searchByCategories => 'Search by categories';
   String get handmadeCrafts => 'Handmade crafts';
   String get resentSearch => 'Resent Search';
+  String get quoteDetails => 'Quote Details';
 
 // end Islam
 }

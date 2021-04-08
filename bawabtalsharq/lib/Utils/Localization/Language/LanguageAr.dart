@@ -201,6 +201,7 @@ class LanguageAr extends Languages {
   String get searchByCategories => 'البحث حسب الفئه';
   String get resentSearch => 'البحث الأخير ';
   String get handmadeCrafts => 'يدويا ';
+  String get quoteDetails => 'تفاصيل الاقتباس';
 
 // end Islam
 
