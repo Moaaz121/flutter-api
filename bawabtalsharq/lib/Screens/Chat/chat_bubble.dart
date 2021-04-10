@@ -11,12 +11,14 @@ class ChatBubble extends StatefulWidget {
   final bool isMe;
   final String roomID;
   final PartnerData partnerData;
+  final Key key;
 
   ChatBubble(
       {@required this.message,
       @required this.isMe,
       @required this.partnerData,
-      @required this.roomID});
+      @required this.roomID,
+      this.key});
 
   @override
   _ChatBubbleState createState() => _ChatBubbleState();

@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
 import 'package:bawabtalsharq/Model/chat/partner_model.dart';
+import 'package:bawabtalsharq/Model/chat/socket_message.dart';
 import 'package:bawabtalsharq/Repos/ChatRepos/chat_repo.dart';
 import 'package:bawabtalsharq/Repos/ChatRepos/jitsi_config.dart';
 import 'package:bawabtalsharq/Repos/ChatRepos/socket_chat.dart';
@@ -15,6 +17,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_pickers/image_pickers.dart';
 import 'package:rocket_chat_connector_flutter/models/message.dart';
+import 'package:rocket_chat_connector_flutter/models/user.dart' as UUser;
+
+SocketChat _socketChat = SocketChat();
 
 class ConversationScreen extends StatefulWidget {
   final String roomID;
@@ -30,11 +35,9 @@ class _ConversationScreenState extends State<ConversationScreen>
   AnimationController _animationController;
   TextEditingController _textEditingController = TextEditingController();
 
-  SocketChat _socketChat = SocketChat();
   JitsiConfig _jitsiConfig = JitsiConfig();
   final picker = ImagePicker();
   FilePickerResult resultFile;
-  List<Message> _messages;
 
   static const List<IconData> icons = const [
     Icons.insert_drive_file_rounded,
@@ -42,6 +45,7 @@ class _ConversationScreenState extends State<ConversationScreen>
     Icons.image_rounded,
     Icons.camera_alt_rounded,
   ];
+  List<Message> _messages = new List<Message>();
 
   @override
   void initState() {
@@ -63,11 +67,19 @@ class _ConversationScreenState extends State<ConversationScreen>
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-        stream: _socketChat.webSocketChannel.stream,
+    return FutureBuilder(
+        future: RocketChatApi().getRoomMessages(widget.roomID),
         builder: (context, snapshot) {
-          print(snapshot.data);
-          return buildScaffold();
+          if (snapshot.hasData) {
+            _messages = snapshot.data;
+            return buildScaffold();
+          } else {
+            return Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
         });
   }
 
@@ -242,31 +254,37 @@ class _ConversationScreenState extends State<ConversationScreen>
         child: Column(
           children: <Widget>[
             Flexible(
-              child: FutureBuilder(
-                future: RocketChatApi().getRoomMessages(widget.roomID),
+              child: StreamBuilder(
+                stream: _socketChat.webSocketChannel.stream,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    _messages = snapshot.data;
-                    return ListView.builder(
+                    var responseJSON = jsonDecode(snapshot.data);
+                    if (responseJSON['msg'] == 'changed') {
+                      SocketMessage sMessage =
+                          SocketMessage.fromJson(responseJSON);
+                      _messages.insert(
+                          0,
+                          Message(
+                              user: new UUser.User(
+                                id: sMessage.fields.args.first.u.id,
+                              ),
+                              msg: sMessage.fields.args.first.msg,
+                              ts: DateTime(
+                                  sMessage.fields.args.first.updatedAt.date)));
+                    }
+                  }
+                  return ListView.builder(
                       padding: EdgeInsets.symmetric(horizontal: 10),
                       itemCount: _messages.length,
                       reverse: true,
-                      itemBuilder: (BuildContext context, int index) {
+                      itemBuilder: (context, index) {
                         return ChatBubble(
                           message: _messages[index],
-                          isMe: checkMessageSender(index),
+                          isMe: checkMessageSender(index, _messages[index]),
                           roomID: widget.roomID,
                           partnerData: widget.partner,
                         );
-                      },
-                    );
-                  } else {
-                    return Scaffold(
-                      body: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    );
-                  }
+                      });
                 },
               ),
             ),
@@ -331,10 +349,6 @@ class _ConversationScreenState extends State<ConversationScreen>
     );
   }
 
-  bool checkMessageSender(int index) {
-    return _messages[index].user.id == rocketUser.data.userId;
-  }
-
   Future getImage() async {
     List<Media> _listImagePaths = await ImagePickers.pickerPaths(
         galleryMode: GalleryMode.image,
@@ -388,4 +402,8 @@ class _ConversationScreenState extends State<ConversationScreen>
       _textEditingController.text = '';
     }
   }
+}
+
+bool checkMessageSender(int index, Message _message) {
+  return _message.user.id == rocketUser.data.userId;
 }
