@@ -30,12 +30,12 @@ import 'Screens/suppliers/supplier_profile_screen.dart';
 import 'Utils/Localization/LanguageHelper.dart';
 
 void main() => runApp(
-      DevicePreview(
-        enabled: true,
-        builder: (context) => BawabtAlsharqApp(), // Wrap you`
-        // r app
-      ),
-    );
+  DevicePreview(
+    enabled: true,
+    builder: (context) => BawabtAlsharqApp(), // Wrap you`
+    // r app
+  ),
+);
 
 class BawabtAlsharqApp extends StatefulWidget {
   static void setLocale(BuildContext context, Locale newLocale) {
@@ -107,19 +107,19 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
 
 extension Localization on _BawabtAlsharqAppState {
   Iterable<Locale> get supportedLocales => [
-        Locale('en', ''),
-        Locale('ar', ''),
-      ];
+    Locale('en', ''),
+    Locale('ar', ''),
+  ];
 
   Iterable<LocalizationsDelegate<dynamic>> get localizationsDelegates => [
-        AppLocalizationsDelegate(),
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ];
+    AppLocalizationsDelegate(),
+    GlobalMaterialLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+  ];
 
   LocaleResolutionCallback get localeResolutionCallback =>
-      (locale, supportedLocales) {
+          (locale, supportedLocales) {
         for (var supportedLocale in supportedLocales) {
           if (supportedLocale?.languageCode == locale?.languageCode &&
               supportedLocale?.countryCode == locale?.countryCode) {

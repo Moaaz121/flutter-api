@@ -498,14 +498,14 @@ Widget sliderItem(BuildContext context, String image) {
   );
 }
 
-Widget sliderIndicator(int page, {bool noPadding = false}) {
+Widget sliderIndicator(int page, {bool noPadding = false, int count = 4}) {
   return Padding(
     padding: noPadding
         ? const EdgeInsets.symmetric(vertical: 0, horizontal: 0)
         : const EdgeInsets.symmetric(vertical: 16, horizontal: 55),
     child: AnimatedSmoothIndicator(
       activeIndex: page,
-      count: 4,
+      count: count,
       axisDirection: Axis.horizontal,
       effect: ExpandingDotsEffect(
           spacing: 5.0,
@@ -1104,6 +1104,23 @@ Widget productItemLandscape(BuildContext context) {
         ),
       ),
     ],
+  );
+}
+
+Widget backIconRounded({Function onBackPressed}) {
+  return GestureDetector(
+    onTap: onBackPressed,
+    child: CircleAvatar(
+      radius: 9,
+      backgroundColor: orangeColor,
+      child: Icon(
+        LanguageHelper.isEnglish
+            ? Icons.keyboard_arrow_left_outlined
+            : Icons.keyboard_arrow_right_outlined,
+        size: 17,
+        color: Colors.white,
+      ),
+    ),
   );
 }
 

@@ -1,4 +1,4 @@
-import 'package:bawabtalsharq/Model/categories_model.dart';
+import 'package:bawabtalsharq/Model/category.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
