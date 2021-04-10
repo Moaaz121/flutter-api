@@ -2,6 +2,8 @@ import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bawabtalsharq/main.dart';
+import 'package:bawabtalsharq/widgets/widgets.dart';
+import 'package:bawabtalsharq/Model/interest.dart';
 
 class Interesting extends StatefulWidget {
   @override
@@ -40,24 +42,9 @@ class _InterestingState extends State<Interesting> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ClipOval(
-                    child: Material(
-                      color: Colors.deepOrangeAccent.shade100, // button color
-                      child: InkWell(
-                        splashColor: Colors.red, // inkwell color
-                        child: SizedBox(
-                          width: 24,
-                          height: 24,
-                          child: Icon(
-                            Icons.arrow_back_ios_outlined,
-                            color: Colors.white,
-                            size: 14,
-                          ),
-                        ),
-                        onTap: () {},
-                      ),
-                    ),
-                  ),
+                  backIconRounded(onBackPressed: () {
+                    Navigator.of(context).pop();
+                  }),
                   SizedBox(
                     height: 20,
                   ),
@@ -76,27 +63,39 @@ class _InterestingState extends State<Interesting> {
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 3,
                         ),
-                        itemCount: 20,
+                        itemCount: interestingArray.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return Container(
-                            height: 60,
-                            width: 60,
-                            margin: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: Colors.deepOrange[100],
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  'assets/images/cold_drinks.png',
-                                  fit: BoxFit.fill,
-                                  width: 44,
-                                  height: 44,
-                                ),
-                                Text(Languages.of(context).iconText),
-                              ],
+                          return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                interestingArray[index].isSelected =
+                                    !interestingArray[index].isSelected;
+                              });
+                            },
+                            child: Container(
+                              height: 60,
+                              width: 60,
+                              margin: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: interestingArray[index].isSelected
+                                    ? interestingArray[index].color
+                                    : interestingArray[index]
+                                        .color
+                                        .withOpacity(0.15),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    interestingArray[index].image,
+                                    fit: BoxFit.fill,
+                                    width: 44,
+                                    height: 44,
+                                  ),
+                                  Text(interestingArray[index].text),
+                                ],
+                              ),
                             ),
                           );
                         }),

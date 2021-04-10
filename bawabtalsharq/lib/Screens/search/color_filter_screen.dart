@@ -1,4 +1,4 @@
-import 'package:bawabtalsharq/Model/colorsModle.dart';
+import 'package:bawabtalsharq/Model/color.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +10,6 @@ class ColorScreen extends StatefulWidget {
 }
 
 class _ColorScreenState extends State<ColorScreen> {
-  bool _isPressed = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

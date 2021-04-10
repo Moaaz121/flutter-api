@@ -97,22 +97,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: CircleAvatar(
-                    radius: 9,
-                    backgroundColor: orangeColor,
-                    child: Icon(
-                      LanguageHelper.isEnglish
-                          ? Icons.keyboard_arrow_left_outlined
-                          : Icons.keyboard_arrow_right_outlined,
-                      size: 17,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
+                backIconRounded(onBackPressed: () {
+                  Navigator.of(context).pop();
+                }),
                 buildSizedBox(height: 20),
                 buildText(Languages.of(context).signUp, 40,
                     fontWeight: FontWeight.w700),
