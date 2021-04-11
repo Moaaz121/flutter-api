@@ -257,7 +257,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       quotation,
                       Languages.of(context).messageCenter,
                       () {
-                        print('Message Center');
+                        Navigator.pushNamed(
+                            context, ScreenRoutes.messageCenter);
                       },
                     ),
                     unExpansionProfileItem(

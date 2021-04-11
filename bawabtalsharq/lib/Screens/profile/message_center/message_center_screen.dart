@@ -4,6 +4,7 @@ import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:bawabtalsharq/main.dart';
 
 class MessageCenter extends StatefulWidget {
   @override
@@ -11,82 +12,86 @@ class MessageCenter extends StatefulWidget {
 }
 
 class _MessageCenterState extends State<MessageCenter> {
+  ScrollController _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      bottom: false,
-      child: Stack(children: [
-        Scaffold(
-          resizeToAvoidBottomInset: false,
-          appBar: appBarBuilder(
-            title: Languages.of(context).messageCenter,
-            onBackPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          body: Column(
-            children: [
-              Flexible(
-                child: ListView.builder(
-                    padding: EdgeInsets.only(top: 32, bottom: 2),
-                    physics: AlwaysScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    itemCount: 44,
-                    itemBuilder: (context, position) {
-                      return Container(
-                        margin: EdgeInsets.only(
-                            top: 4, left: 23, right: 23, bottom: 18),
-                        width: 329,
-                        decoration: new BoxDecoration(
-                          color: Color(0xffffffff),
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [makeShadow()],
-                        ),
-                        child: Column(
-                          children: [
-                            imagesProduct(),
-                            buildRichText('Hi Ahmed, you have received'),
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: GestureDetector(
-                                      onTap: () => print('hey'),
-                                      child: Row(
-                                        children: [
-                                          buildText(
-                                            Languages.of(context).seeAll,
-                                            9,
-                                            fontFamily: 'SegoeUI',
-                                            color: Color(0xff6d6d6d),
-                                          ),
-                                          SizedBox(
-                                            width: 5,
-                                          ),
-                                          Icon(
-                                            LanguageHelper.isEnglish
-                                                ? Icons.arrow_forward_rounded
-                                                : Icons.arrow_back_rounded,
-                                            size: 18,
-                                            color:
-                                                Colors.black.withOpacity(0.7),
-                                          ),
-                                        ],
+    return Scaffold(
+      floatingActionButton: buildFloatingActionBtn(
+          icon: Icons.arrow_upward_rounded,
+          onPressed: () {
+            _scrollController.animateTo(0.0,
+                duration: Duration(seconds: 1), curve: Curves.easeOut);
+          }),
+      resizeToAvoidBottomInset: false,
+      appBar: appBarBuilder(
+        title: Languages.of(context).messageCenter,
+        onBackPressed: () {
+          Navigator.pop(context);
+        },
+      ),
+      body: Column(
+        children: [
+          Flexible(
+            child: ListView.builder(
+                controller: _scrollController,
+                padding: EdgeInsets.only(top: 32, bottom: 2),
+                physics: AlwaysScrollableScrollPhysics(),
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                itemCount: 44,
+                itemBuilder: (context, position) {
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, ScreenRoutes.quoteScreen);
+                    },
+                    child: Container(
+                      margin: EdgeInsets.only(
+                          top: 4, left: 23, right: 23, bottom: 18),
+                      width: 329,
+                      decoration: new BoxDecoration(
+                        color: Color(0xffffffff),
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [makeShadow()],
+                      ),
+                      child: Column(
+                        children: [
+                          imagesProduct(),
+                          buildRichText('Hi Ahmed, you have received'),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: [
+                                      buildText(
+                                        Languages.of(context).seeAll,
+                                        9,
+                                        fontFamily: 'SegoeUI',
+                                        color: Color(0xff6d6d6d),
                                       ),
-                                    ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Icon(
+                                        LanguageHelper.isEnglish
+                                            ? Icons.arrow_forward_rounded
+                                            : Icons.arrow_back_rounded,
+                                        size: 18,
+                                        color: Colors.black.withOpacity(0.7),
+                                      ),
+                                    ],
                                   ),
-                                ])
-                          ],
-                        ),
-                      );
-                    }),
-              ),
-            ],
+                                ),
+                              ])
+                        ],
+                      ),
+                    ),
+                  );
+                }),
           ),
-        ),
-      ]),
+        ],
+      ),
     );
   }
 
