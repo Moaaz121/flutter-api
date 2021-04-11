@@ -228,7 +228,10 @@ Widget ourGoldenSupplier(BuildContext context) {
           itemCount: 20,
           itemBuilder: (context, position) {
             return supplierView(
-              onPress: () {},
+              onPress: () {
+                Navigator.pushNamed(
+                    context, ScreenRoutes.supplierProfileScreen);
+              },
               category: LanguageHelper.isEnglish
                   ? position.isOdd
                       ? 'Food & Beverages'

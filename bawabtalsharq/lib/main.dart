@@ -15,8 +15,10 @@ import 'package:bawabtalsharq/Screens/sub_category_screen.dart';
 import 'package:bawabtalsharq/Screens/search/search_screen.dart';
 import 'package:bawabtalsharq/Screens/pricing/pricing_screen.dart';
 import 'package:bawabtalsharq/Screens/settings_screen.dart';
+import 'package:bawabtalsharq/Screens/profile/history/history_screen.dart';
 import 'package:bawabtalsharq/Screens/sign_up_screen.dart';
 import 'package:bawabtalsharq/Screens/splash_screen.dart';
+import 'package:bawabtalsharq/Screens/suppliers/supplier_profile_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/AppLocalizationDelgate.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
@@ -85,6 +87,9 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.interestingScreen: (_) => Interesting(),
         ScreenRoutes.subCategoryScreen: (_) => SubCategoryScreen(),
         ScreenRoutes.savedScreen: (_) => SavedScreen(),
+        ScreenRoutes.quoteScreen: (_) => QuoteDetailsScreen(),
+        ScreenRoutes.supplierProfileScreen: (_) => SupplierProfile(),
+        ScreenRoutes.historyScreen: (_) => HistoryScreen(),
       },
       locale: _locale,
       supportedLocales: supportedLocales,
@@ -160,4 +165,7 @@ class ScreenRoutes {
   static const String interestingScreen = '/interesting_screen';
   static const String subCategoryScreen = '/sub_category_screen';
   static const String savedScreen = '/saved_screen';
+  static const String quoteScreen = '/quote_details_screen';
+  static const String supplierProfileScreen = '/supplier_profile_screen';
+  static const String historyScreen = '/history_screen';
 }

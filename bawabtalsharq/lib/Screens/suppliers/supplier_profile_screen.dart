@@ -100,15 +100,20 @@ class _SupplierProfileState extends State<SupplierProfile> {
                     textDirection: Directionality.of(context),
                     top: 20,
                     start: 10,
-                    child: CircleAvatar(
-                      radius: 9,
-                      backgroundColor: Colors.white,
-                      child: Icon(
-                        LanguageHelper.isEnglish
-                            ? Icons.keyboard_arrow_left_outlined
-                            : Icons.keyboard_arrow_right_outlined,
-                        size: 15,
-                        color: Colors.black,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: CircleAvatar(
+                        radius: 9,
+                        backgroundColor: Colors.white,
+                        child: Icon(
+                          LanguageHelper.isEnglish
+                              ? Icons.keyboard_arrow_left_outlined
+                              : Icons.keyboard_arrow_right_outlined,
+                          size: 15,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                   ),

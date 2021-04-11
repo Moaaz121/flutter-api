@@ -90,6 +90,11 @@ class _IntroScreenState extends State<IntroScreen> {
                             activeIndex: imageIndex,
                             count: 3,
                             effect: ExpandingDotsEffect(
+                                spacing: 5.0,
+                                radius: 8.0,
+                                dotWidth: 8.0,
+                                dotHeight: 8.0,
+                                expansionFactor: 2.7,
                                 activeDotColor: imageIndex == 0
                                     ? Colors.green
                                     : (imageIndex == 1
