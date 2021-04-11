@@ -3,7 +3,7 @@ import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 class LanguageEn extends Languages {
   @override
   String get name => "english name";
-  String get notification => "notification";
+  String get notification => "Notification";
   String get language => 'EN';
 
 // Start Karem
@@ -119,6 +119,7 @@ class LanguageEn extends Languages {
   String get startChat => 'Start chat now!';
   String get allProducts => 'All Products';
   String get info => 'Info';
+  String get superior => 'Superior';
 
 // end Mosdik
 

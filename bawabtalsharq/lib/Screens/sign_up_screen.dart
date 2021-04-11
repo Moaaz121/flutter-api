@@ -74,7 +74,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomPadding: true,
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -83,7 +83,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
         ),
         child: Container(
-          margin: EdgeInsets.only(top: 60, left: 25, right: 25),
+          margin:
+              const EdgeInsets.only(top: 60, left: 25, right: 25, bottom: 20),
           decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(33),
@@ -121,22 +122,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   fontWeight: FontWeight.w400,
                 ),
                 buildSizedBox(
-                    height: 30,
+                    height: 25,
                     child: buildRadioListTile(Languages.of(context).buyer, 1)),
                 buildSizedBox(
-                    height: 30,
+                    height: 25,
                     child: buildRadioListTile(Languages.of(context).seller, 2)),
                 buildRadioListTile(Languages.of(context).both, 3),
                 customTextField(context,
-                    label: Languages.of(context).fullName, width: 1),
-                buildSizedBox(height: 20),
+                    label: Languages.of(context).fullName,
+                    width: 1,
+                    leftIcon: Icons.person),
                 customTextField(context,
-                    label: Languages.of(context).email, width: 1),
-                buildSizedBox(height: 20),
+                    label: Languages.of(context).email,
+                    width: 1,
+                    leftIcon: Icons.email),
                 customTextField(
                   context,
                   width: 1,
                   label: Languages.of(context).loginPass,
+                  leftIcon: Icons.lock,
                   isPassword: obSecureText,
                   rightBtn: IconButton(
                     onPressed: () {
@@ -148,12 +152,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         obSecureText ? Icons.visibility_off : Icons.visibility),
                   ),
                 ),
-                buildSizedBox(height: 20),
                 customTextField(
                   context,
                   width: 1,
                   label: Languages.of(context).confirmPass,
                   isPassword: obSecureText,
+                  leftIcon: Icons.lock,
                   rightBtn: IconButton(
                     onPressed: () {
                       setState(() {
@@ -164,25 +168,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         obSecureText ? Icons.visibility_off : Icons.visibility),
                   ),
                 ),
-                buildSizedBox(height: 20),
                 customTextField(context,
-                    width: 1, label: Languages.of(context).companyName),
-                buildSizedBox(height: 20),
-                buildSizedBox(height: 20),
+                    width: 1,
+                    label: Languages.of(context).companyName,
+                    leftIcon: Icons.home_work),
                 Row(
                   children: [
                     Expanded(
-                      child: customTextField(context,
-                          width: 0.1, label: Languages.of(context).n),
+                      child: customTextField(
+                        context,
+                        width: 0.15,
+                        label: Languages.of(context).n,
+                      ),
                     ),
                     SizedBox(
                       width: 10,
                     ),
                     customTextField(context,
-                        label: Languages.of(context).tel, width: 0.5),
+                        label: Languages.of(context).tel,
+                        width: 0.7,
+                        leftIcon: Icons.phone),
                   ],
                 ),
-                buildSizedBox(height: 15),
+                SizedBox(
+                  height: 20,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
