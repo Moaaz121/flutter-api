@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:bawabtalsharq/Screens/home_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
@@ -402,12 +403,13 @@ Widget searchButton(BuildContext context, Function _function) {
   );
 }
 
-Widget chatButton(Function _function) {
+Widget chatButton(Function _function,
+    {double size = 45, double sizeIcon = 10, double padOfIcon = 16}) {
   return Padding(
-    padding: const EdgeInsets.all(16.0),
+    padding: EdgeInsets.all(padOfIcon),
     child: SizedBox(
-      width: 45,
-      height: 45,
+      width: size,
+      height: size,
       child: Container(
         decoration: BoxDecoration(shape: BoxShape.circle, boxShadow: [
           BoxShadow(color: orangeShadowColor, spreadRadius: 2, blurRadius: 10)
@@ -421,7 +423,7 @@ Widget chatButton(Function _function) {
               splashColor: orangeColor.withOpacity(0.4),
               highlightColor: orangeShadowColor,
               child: Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: EdgeInsets.all(sizeIcon),
                 child: Image.asset(
                   chat,
                   width: 30,
@@ -496,14 +498,14 @@ Widget sliderItem(BuildContext context, String image) {
   );
 }
 
-Widget sliderIndicator(int page, {bool noPadding = false}) {
+Widget sliderIndicator(int page, {bool noPadding = false, int count = 4}) {
   return Padding(
     padding: noPadding
         ? const EdgeInsets.symmetric(vertical: 0, horizontal: 0)
         : const EdgeInsets.symmetric(vertical: 16, horizontal: 55),
     child: AnimatedSmoothIndicator(
       activeIndex: page,
-      count: 4,
+      count: count,
       axisDirection: Axis.horizontal,
       effect: ExpandingDotsEffect(
           spacing: 5.0,
@@ -1105,6 +1107,23 @@ Widget productItemLandscape(BuildContext context) {
   );
 }
 
+Widget backIconRounded({Function onBackPressed}) {
+  return GestureDetector(
+    onTap: onBackPressed,
+    child: CircleAvatar(
+      radius: 9,
+      backgroundColor: orangeColor,
+      child: Icon(
+        LanguageHelper.isEnglish
+            ? Icons.keyboard_arrow_left_outlined
+            : Icons.keyboard_arrow_right_outlined,
+        size: 17,
+        color: Colors.white,
+      ),
+    ),
+  );
+}
+
 // end Bahaa
 
 // Start Mosdik
@@ -1223,6 +1242,54 @@ Widget textFiledPrice(BuildContext context, String text, double width,
     ),
   );
 }
+
+Widget listOfCateWidget() {
+  return ListView.builder(
+    physics: NeverScrollableScrollPhysics(),
+    reverse: false,
+    scrollDirection: Axis.vertical,
+    shrinkWrap: true,
+    itemCount: 5,
+    itemBuilder: (context, position) {
+      return SizedBox(
+          width: MediaQuery.of(context).size.width / 3 - 5,
+          child: mostPopularByCategoryStable(context, () {}));
+    },
+  );
+}
+
+Widget mostPopularByCategoryHeader(BuildContext context) {
+  return Padding(
+    padding: const EdgeInsets.only(top: 20),
+    child: Container(
+      height: 50,
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+          shape: BoxShape.rectangle,
+          gradient: LinearGradient(
+              colors: [
+                Colors.white.withOpacity(1),
+                Colors.black.withOpacity(0.3)
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              tileMode: TileMode.repeated),
+          color: Colors.black12,
+          borderRadius: BorderRadius.horizontal(
+            right: Radius.circular(20),
+            left: Radius.circular(20),
+          )),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 20.0, top: 15.0),
+        child: Text(
+          Languages.of(context).mostPopularByCategories,
+          style: titlesStyle(),
+        ),
+      ),
+    ),
+  );
+}
+
 // end Mosdik
 
 // Start Moaaz

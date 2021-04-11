@@ -53,6 +53,7 @@ const String productImage = 'assets/images/ef.png';
 const String productIcon1 = 'assets/images/Icon of product1.png';
 const String productIcon2 = 'assets/images/Icon bookmark.png';
 const String starBocks = 'assets/images/starbucksLogo.png';
+const String supplierBanner = 'assets/images/SupplierBaner.jpg';
 
 // end Mosdik
 
