@@ -243,11 +243,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     unExpansionProfileItem(
                       Icon(
                         Icons.av_timer,
-                        color: Colors.amber,
+                        color: Colors.black54,
                       ),
                       Languages.of(context).history,
                       () {
-                        print('History');
+                        Navigator.pushNamed(
+                            context, ScreenRoutes.historyScreen);
                       },
                       drawDivider: false,
                     ),
