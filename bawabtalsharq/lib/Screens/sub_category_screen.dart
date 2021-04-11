@@ -11,7 +11,12 @@ class _SubCategoriesScreenState extends State<SubCategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarBuilder(title: 'Handmade Carpets'),
+      appBar: appBarBuilder(
+        title: 'Handmade Carpets',
+        onBackPressed: () {
+          Navigator.of(context).pop();
+        },
+      ),
       body: GridView.builder(
           padding: EdgeInsets.all(10),
           itemCount: 20,
@@ -40,7 +45,7 @@ class _SubCategoriesScreenState extends State<SubCategoryScreen> {
                   ),
                   Image.asset(
                     dress_icon,
-                    width: MediaQuery.of(context).size.width * 0.14,
+                    width: MediaQuery.of(context).size.width * 0.15,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -55,22 +60,25 @@ class _SubCategoriesScreenState extends State<SubCategoryScreen> {
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold),
-                                text: 'Kedo'),
+                                text: 'Category Name'),
                           ),
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.all(22),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(60),
                               bottomRight: Radius.circular(20),
                             ),
                             color: Colors.cyan),
-                        child: Icon(
-                          Icons.arrow_forward_ios,
-                          color: Colors.white,
-                          size: 16,
+                        child: Container(
+                          margin: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                          padding: EdgeInsets.all(14),
+                          child: Icon(
+                            Icons.arrow_forward_ios,
+                            color: Colors.white,
+                            size: 14,
+                          ),
                         ),
                       ),
                     ],
