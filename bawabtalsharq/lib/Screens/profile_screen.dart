@@ -221,21 +221,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Column(
                   children: [
                     unExpansionProfileItem(
-                      quotation,
+                      Icon(
+                        Icons.person,
+                        color: Colors.lightBlueAccent,
+                      ),
                       Languages.of(context).myAccount,
                       () {
                         print('My Account');
                       },
                     ),
                     unExpansionProfileItem(
-                      message,
+                      Icon(
+                        Icons.bookmark_border_outlined,
+                        color: Colors.orange,
+                      ),
                       Languages.of(context).saved,
                       () {
                         Navigator.pushNamed(context, ScreenRoutes.savedScreen);
                       },
                     ),
                     unExpansionProfileItem(
-                      user,
+                      Icon(
+                        Icons.av_timer,
+                        color: Colors.amber,
+                      ),
                       Languages.of(context).history,
                       () {
                         print('History');
@@ -254,7 +263,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Column(
                   children: [
                     unExpansionProfileItem(
-                      quotation,
+                      Icon(
+                        Icons.message,
+                        color: Colors.lightBlueAccent[200],
+                      ),
                       Languages.of(context).messageCenter,
                       () {
                         Navigator.pushNamed(
@@ -262,25 +274,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       },
                     ),
                     unExpansionProfileItem(
-                      quotation,
+                      Icon(
+                        Icons.person,
+                        color: Colors.redAccent[200],
+                      ),
                       Languages.of(context).userGuide,
                       () {
                         print('User Guide');
                       },
                     ),
                     unExpansionProfileItem(
-                      quotation,
+                      Icon(
+                        Icons.question_answer_outlined,
+                        color: Colors.deepPurpleAccent[200],
+                      ),
                       Languages.of(context).faq,
                       () {
                         print('FAQ');
                       },
                     ),
                     unExpansionProfileItem(
-                      quotation,
+                      Icon(
+                        Icons.security,
+                        color: Colors.green[200],
+                      ),
                       Languages.of(context).privacy,
                       () {
                         print('Privacy \& Security');
                       },
+                      drawDivider: false,
                     ),
                     // expansionProfileItem(
                     //   title: Languages.of(context).contactUs,
@@ -329,7 +351,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 margin: EdgeInsets.only(right: 15, left: 15, bottom: 10),
                 decoration: boxDecorationBuilder(10),
                 child: unExpansionProfileItem(
-                  logout,
+                  Icon(
+                    Icons.exit_to_app_rounded,
+                    color: Colors.lightBlueAccent[200],
+                  ),
                   Languages.of(context).signIn,
                   () {
                     print('Sign In');
@@ -381,7 +406,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   //   );
   // }
 
-  Widget unExpansionProfileItem(String image, String title, Function onPressed,
+  Widget unExpansionProfileItem(Icon icon, String title, Function onPressed,
       {bool drawDivider = true,
       bool isParent = false,
       double textSize = 16.0,
@@ -392,16 +417,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
         ),
-        margin: EdgeInsets.only(top: 10, left: 15, right: 15),
+        margin: EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 12),
         child: Column(
           children: [
             Row(
               children: [
-                Image.asset(
-                  image,
-                  width: 40,
-                  height: 40,
-                ),
+                icon,
                 SizedBox(
                   width: 16,
                 ),
