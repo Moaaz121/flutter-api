@@ -44,6 +44,7 @@ const String shoes_image = 'assets/images/addiddas.png';
 const String dress_image = 'assets/images/dress.png';
 const String medalImage = 'assets/images/ic_medal.png';
 const String certificate = 'assets/images/certificate.jpg';
+const String dress_icon = 'assets/images/ic_dress.png';
 
 // end Bahaa
 

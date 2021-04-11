@@ -51,6 +51,8 @@ abstract class Languages {
   String get lowestPrice;
   String get highestPrice;
   String get color;
+  String get faq;
+  String get privacy;
 
 // end Bahaa
 
@@ -169,6 +171,12 @@ abstract class Languages {
   String get resentSearch;
   String get handmadeCrafts;
   String get quoteDetails;
+  String get backToChat;
+  String get minOrder;
+  String get unitPrice;
+  String get shippingTerm;
+  String get paymentTerms;
+  String get productDetails;
 
 // end Islam
 }

@@ -1320,11 +1320,15 @@ Widget customTextField(BuildContext context,
 }
 
 FlatButton signInFlatButton(
-    BuildContext context, double height, String text, Function onPress) {
+  BuildContext context,
+  double height,
+  String text,
+  Function onPress,
+) {
   return FlatButton(
     padding: EdgeInsetsDirectional.only(
-      start: 35,
-      end: 35,
+      start: 25,
+      end: 25,
       top: 11,
       bottom: 11,
     ),

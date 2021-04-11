@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:bawabtalsharq/Model/interest.dart';
+import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 
 class Interesting extends StatefulWidget {
   @override
@@ -93,7 +94,10 @@ class _InterestingState extends State<Interesting> {
                                     width: 44,
                                     height: 44,
                                   ),
-                                  Text(interestingArray[index].text),
+                                  Text(
+                                    interestingArray[index].text,
+                                    style: TextStyle(fontSize: 14),
+                                  ),
                                 ],
                               ),
                             ),
@@ -101,7 +105,9 @@ class _InterestingState extends State<Interesting> {
                         }),
                   ),
                   Align(
-                    alignment: Alignment.bottomRight,
+                    alignment: LanguageHelper.isEnglish
+                        ? Alignment.bottomRight
+                        : Alignment.bottomLeft,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: RaisedButton(

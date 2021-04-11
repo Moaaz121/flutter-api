@@ -5,11 +5,14 @@ import 'package:bawabtalsharq/Screens/individual_product_screen.dart';
 import 'package:bawabtalsharq/Screens/intro_screen.dart';
 import 'package:bawabtalsharq/Screens/login_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/message_center/message_center_screen.dart';
+import 'package:bawabtalsharq/Screens/profile/message_center/qoute_details_screen.dart';
 import 'package:bawabtalsharq/Screens/request_for_qutation.dart';
 import 'package:bawabtalsharq/Screens/search/categories_filter_screen.dart';
 import 'package:bawabtalsharq/Screens/search/search_filter_screen.dart';
 import 'package:bawabtalsharq/Screens/search/search_result_screen.dart';
+import 'package:bawabtalsharq/Screens/sub_category_screen.dart';
 import 'package:bawabtalsharq/Screens/search/search_screen.dart';
+import 'package:bawabtalsharq/Screens/pricing/pricing_screen.dart';
 import 'package:bawabtalsharq/Screens/settings_screen.dart';
 import 'package:bawabtalsharq/Screens/sign_up_screen.dart';
 import 'package:bawabtalsharq/Screens/splash_screen.dart';
@@ -26,16 +29,15 @@ import 'Screens/request_for_quatation_screen.dart';
 import 'Screens/request_for_qutation.dart';
 import 'Screens/search/color_filter_screen.dart';
 import 'Screens/search/list_filter_screen.dart';
-import 'Screens/suppliers/supplier_profile_screen.dart';
 import 'Utils/Localization/LanguageHelper.dart';
 
 void main() => runApp(
-  DevicePreview(
-    enabled: true,
-    builder: (context) => BawabtAlsharqApp(), // Wrap you`
-    // r app
-  ),
-);
+      DevicePreview(
+        enabled: true,
+        builder: (context) => BawabtAlsharqApp(), // Wrap you`
+        // r app
+      ),
+    );
 
 class BawabtAlsharqApp extends StatefulWidget {
   static void setLocale(BuildContext context, Locale newLocale) {
@@ -56,7 +58,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.deepOrange),
-      home: SupplierProfile(),
+      home: Interesting(),
       routes: {
         ScreenRoutes.splashScreen: (_) => SplashScreen(),
         ScreenRoutes.introScreen: (_) => IntroScreen(),
@@ -80,6 +82,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.messageCenter: (_) => MessageCenter(),
         ScreenRoutes.signUpScreen: (_) => SignUpScreen(),
         ScreenRoutes.interestingScreen: (_) => Interesting(),
+        ScreenRoutes.subCategoryScreen: (_) => SubCategoryScreen(),
       },
       locale: _locale,
       supportedLocales: supportedLocales,
@@ -107,19 +110,19 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
 
 extension Localization on _BawabtAlsharqAppState {
   Iterable<Locale> get supportedLocales => [
-    Locale('en', ''),
-    Locale('ar', ''),
-  ];
+        Locale('en', ''),
+        Locale('ar', ''),
+      ];
 
   Iterable<LocalizationsDelegate<dynamic>> get localizationsDelegates => [
-    AppLocalizationsDelegate(),
-    GlobalMaterialLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
-    GlobalCupertinoLocalizations.delegate,
-  ];
+        AppLocalizationsDelegate(),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ];
 
   LocaleResolutionCallback get localeResolutionCallback =>
-          (locale, supportedLocales) {
+      (locale, supportedLocales) {
         for (var supportedLocale in supportedLocales) {
           if (supportedLocale?.languageCode == locale?.languageCode &&
               supportedLocale?.countryCode == locale?.countryCode) {
@@ -153,4 +156,5 @@ class ScreenRoutes {
   static const String messageCenter = '/message_center_screen';
   static const String signUpScreen = '/sign_up_screen';
   static const String interestingScreen = '/interesting_screen';
+  static const String subCategoryScreen = '/sub_category_screen';
 }
