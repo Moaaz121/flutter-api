@@ -199,7 +199,7 @@ class _AllCategoriesState extends State<AllCategories>
                   return GestureDetector(
                     onTap: () {
                       Navigator.pushNamed(
-                          context, ScreenRoutes.searchResultScreen);
+                          context, ScreenRoutes.subCategoryScreen);
                     },
                     child: Container(
                       margin: EdgeInsetsDirectional.only(

@@ -11,6 +11,7 @@ import 'package:bawabtalsharq/Screens/search/categories_filter_screen.dart';
 import 'package:bawabtalsharq/Screens/search/search_filter_screen.dart';
 import 'package:bawabtalsharq/Screens/search/search_result_screen.dart';
 import 'package:bawabtalsharq/Screens/search/search_screen.dart';
+import 'package:bawabtalsharq/Screens/sub_category_screen.dart';
 import 'package:bawabtalsharq/Screens/pricing/pricing_screen.dart';
 import 'package:bawabtalsharq/Screens/settings_screen.dart';
 import 'package:bawabtalsharq/Screens/sign_up_screen.dart';
@@ -81,6 +82,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.messageCenter: (_) => MessageCenter(),
         ScreenRoutes.signUpScreen: (_) => SignUpScreen(),
         ScreenRoutes.interestingScreen: (_) => Interesting(),
+        ScreenRoutes.subCategoryScreen: (_) => SubCategoryScreen(),
       },
       locale: _locale,
       supportedLocales: supportedLocales,
@@ -154,4 +156,5 @@ class ScreenRoutes {
   static const String messageCenter = '/message_center_screen';
   static const String signUpScreen = '/sign_up_screen';
   static const String interestingScreen = '/interesting_screen';
+  static const String subCategoryScreen = '/sub_category_screen';
 }
