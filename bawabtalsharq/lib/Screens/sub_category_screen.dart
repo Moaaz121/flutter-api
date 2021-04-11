@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
+import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
+import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 
 class SubCategoryScreen extends StatefulWidget {
   @override
@@ -60,15 +62,25 @@ class _SubCategoriesScreenState extends State<SubCategoryScreen> {
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold),
-                                text: 'Category Name'),
+                                text: Languages.of(context).categoryName),
                           ),
                         ),
                       ),
                       Container(
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(60),
-                              bottomRight: Radius.circular(20),
+                              topLeft: LanguageHelper.isEnglish
+                                  ? Radius.circular(60)
+                                  : Radius.circular(0),
+                              topRight: LanguageHelper.isEnglish
+                                  ? Radius.circular(0)
+                                  : Radius.circular(60),
+                              bottomRight: LanguageHelper.isEnglish
+                                  ? Radius.circular(20)
+                                  : Radius.circular(0),
+                              bottomLeft: LanguageHelper.isEnglish
+                                  ? Radius.circular(0)
+                                  : Radius.circular(20),
                             ),
                             color: Colors.cyan),
                         child: Container(

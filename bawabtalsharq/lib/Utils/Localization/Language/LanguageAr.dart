@@ -49,6 +49,8 @@ class LanguageAr extends Languages {
   String get ascending => 'تصاعدي';
   String get descending => 'تنازلي';
   String get color => 'الألوان';
+  String get faq => 'التعليمات';
+  String get privacy => 'الخصوصية و أمن';
 // end Bahaa
 
 // Start Mosdik

@@ -50,6 +50,8 @@ class LanguageEn extends Languages {
   String get ascending => 'Ascending';
   String get descending => 'Descending';
   String get color => 'Colors';
+  String get faq => 'FAQ';
+  String get privacy => 'Privacy \& Security';
 
 // end Bahaa
 

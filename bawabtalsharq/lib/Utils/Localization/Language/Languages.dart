@@ -51,6 +51,8 @@ abstract class Languages {
   String get lowestPrice;
   String get highestPrice;
   String get color;
+  String get faq;
+  String get privacy;
 
 // end Bahaa
 
