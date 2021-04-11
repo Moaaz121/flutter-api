@@ -116,6 +116,7 @@ abstract class Languages {
   String get startChat;
   String get allProducts;
   String get info;
+  String get superior;
 
 // end Mosdik
 

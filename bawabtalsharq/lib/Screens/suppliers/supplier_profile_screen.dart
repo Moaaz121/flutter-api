@@ -3,6 +3,7 @@ import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -35,13 +36,14 @@ class _SupplierProfileState extends State<SupplierProfile> {
 
   Map<int, Widget> info(BuildContext context) {
     final Map<int, Widget> info = <int, Widget>{
-      0: Center(child: productItem(context)),
-      1: Center(child: mainSlider()),
+      0: Center(child: listOfCateWidgetSupplier()),
+      1: Center(child: infoList()),
     };
     return info;
   }
 
   int segmentedControlGroupValue = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -282,19 +284,57 @@ class _SupplierProfileState extends State<SupplierProfile> {
       ),
     );
   }
-}
 
-Widget listOfCateWidgetSupplier() {
-  return ListView.builder(
-    physics: AlwaysScrollableScrollPhysics(),
-    reverse: false,
-    scrollDirection: Axis.vertical,
-    shrinkWrap: true,
-    itemCount: 10,
-    itemBuilder: (context, position) {
-      return SizedBox(
-          width: MediaQuery.of(context).size.width / 3 - 5,
-          child: mostPopularByCategoryStable(context, () {}));
-    },
-  );
+  Widget listOfCateWidgetSupplier() {
+    return ListView.builder(
+        physics: AlwaysScrollableScrollPhysics(),
+        reverse: false,
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemCount: 10,
+        itemBuilder: (context, position) {
+          return SizedBox(
+              width: MediaQuery.of(context).size.width / 3 - 5,
+              child: mostPopularByCategoryStable(context, () {
+                setState(() {
+                  Navigator.pushNamed(context, ScreenRoutes.searchResultScreen);
+                });
+              }));
+        });
+  }
+
+  Widget infoList() {
+    return SingleChildScrollView(
+      padding:
+          EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.1),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 30, right: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 20,
+            ),
+            buildText('Member info:', 13, fontWeight: FontWeight.w600),
+            SizedBox(
+              height: 100,
+            ),
+            buildText('Contact Detail:', 13, fontWeight: FontWeight.w600),
+            SizedBox(
+              height: 100,
+            ),
+            buildText('Company Profile', 13, fontWeight: FontWeight.w600),
+            SizedBox(
+              height: 20,
+            ),
+            mainSlider(),
+            buildText(
+                'It is our passion to make people forget their daily stress while indulging in one of our many exclusive pieces...It is our passion to make people forget their daily stress while indulging in one of our many exclusive pieces...It is our passion to make people forget their daily stress while indulging in one of our many exclusive pieces...It is our passion to make people forget their daily stress while indulging in one of our many exclusive piecesIt is our passion to make people forget their daily stress while indulging in one of our many exclusive piecesIt is our passion to make people forget their daily stress while indulging in one of our many exclusive piecesIt is our passion to make people forget their daily stress while indulging in one of our many exclusive piecesIt is our passion to make people forget their daily stress while indulging in one of our many exclusive pieces...',
+                11,
+                fontWeight: FontWeight.w600)
+          ],
+        ),
+      ),
+    );
+  }
 }

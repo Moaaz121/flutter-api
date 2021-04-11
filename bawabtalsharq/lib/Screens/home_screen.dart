@@ -77,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-Widget mostPopularByCategoryStable(BuildContext context, Function onPress()) {
+Widget mostPopularByCategoryStable(BuildContext context, Function onPress) {
   return Column(
     children: [
       Padding(
