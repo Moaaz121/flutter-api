@@ -203,6 +203,12 @@ class LanguageEn extends Languages {
   String get handmadeCrafts => 'Handmade crafts';
   String get resentSearch => 'Resent Search';
   String get quoteDetails => 'Quote Details';
+  String get backToChat => 'Back To Chat';
+  String get minOrder => 'Min. Order:';
+  String get unitPrice => 'Unit Price:';
+  String get shippingTerm => 'Shipping Terms:';
+  String get paymentTerms => 'Payment Terms:';
+  String get productDetails => 'Product Details:';
 
 // end Islam
 }

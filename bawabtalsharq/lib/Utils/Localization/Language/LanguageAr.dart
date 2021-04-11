@@ -202,6 +202,12 @@ class LanguageAr extends Languages {
   String get resentSearch => 'البحث الأخير ';
   String get handmadeCrafts => 'يدويا ';
   String get quoteDetails => 'تفاصيل الاقتباس';
+  String get backToChat => 'الرجوع الي المحادثه';
+  String get unitPrice => 'سعر الوحده';
+  String get paymentTerms => 'شروط الدفع';
+  String get productDetails => 'تفاصيل المنتج';
+  String get shippingTerm => 'شرط الشحن';
+  String get minOrder => 'الحد الادني';
 
 // end Islam
 
