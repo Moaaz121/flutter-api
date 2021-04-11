@@ -231,8 +231,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       message,
                       Languages.of(context).saved,
                       () {
-                        // Navigator.pushNamed(
-                        //     context, ScreenRoutes.messageCenter);
+                        Navigator.pushNamed(context, ScreenRoutes.savedScreen);
                       },
                     ),
                     unExpansionProfileItem(

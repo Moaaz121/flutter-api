@@ -447,6 +447,7 @@ class mainSlider extends StatefulWidget {
 class _mainSliderState extends State<mainSlider> {
   CarouselController control = CarouselController();
   int position = 0;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -717,7 +718,6 @@ void showAnimatedDialog(BuildContext context, dynamic widget) {
 
 Widget searchTextField({String hint, BuildContext context}) {
   return Container(
-    margin: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
     width: MediaQuery.of(context).size.width * 0.7,
     height: MediaQuery.of(context).size.width * 0.10,
     decoration: BoxDecoration(
@@ -780,7 +780,7 @@ AppBar appBarSearch({
   );
 }
 
-Widget productItem(BuildContext context) {
+Widget productItem(BuildContext context, {bool fillSaved = false}) {
   return Padding(
     padding: const EdgeInsets.all(5),
     child: Stack(
@@ -910,19 +910,20 @@ Widget productItem(BuildContext context) {
                         ],
                       ),
                     ),
-                    Icon(
-                      Icons.add_to_photos_rounded,
-                      size: 16,
-                      color: Colors.black54,
-                    ),
                     SizedBox(
                       width: 5,
                     ),
-                    Icon(
-                      Icons.bookmark_border_outlined,
-                      size: 16,
-                      color: Colors.black54,
-                    ),
+                    fillSaved
+                        ? Icon(
+                            Icons.bookmark,
+                            size: 20,
+                            color: orangeColor,
+                          )
+                        : Icon(
+                            Icons.bookmark_border_outlined,
+                            size: 20,
+                            color: Colors.black54,
+                          ),
                   ],
                 ),
               ),

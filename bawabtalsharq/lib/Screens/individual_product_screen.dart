@@ -5,6 +5,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 
 class IndividualProduct extends StatefulWidget {
   @override
@@ -55,146 +56,145 @@ class _IndividualProductState extends State<IndividualProduct>
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: productFab(),
-      body: SafeArea(
-        child: Container(
-          color: Color(0xfff9dfd6),
-          child: CustomScrollView(
-            controller: scrollController,
-            slivers: [
-              SliverAppBar(
-                leading: GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Icon(
-                    Icons.arrow_back_ios_rounded,
-                    size: 16,
-                  ),
+      body: Container(
+        color: Color(0xfff9dfd6),
+        child: CustomScrollView(
+          controller: scrollController,
+          slivers: [
+            SliverAppBar(
+              leading: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Icon(
+                  LanguageHelper.isEnglish
+                      ? Icons.keyboard_arrow_left_outlined
+                      : Icons.keyboard_arrow_right_outlined,
+                  size: 28,
                 ),
-                actions: [
-                  iconRound(Icons.add_to_photos_rounded),
-                  iconRound(Icons.bookmark_border_outlined),
-                ],
-                backgroundColor: Color(0xfff9dfd6),
-                expandedHeight: MediaQuery.of(context).size.height * 0.35,
-                flexibleSpace: FlexibleSpaceBar(
-                  background: Container(
-                    padding: EdgeInsets.only(top: 20, bottom: 10),
-                    height: MediaQuery.of(context).size.height * 0.3,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CarouselSlider.builder(
-                          carouselController: buttonCarouselController,
-                          options: CarouselOptions(
-                            onPageChanged: (index, reason) {
-                              setState(() {
-                                sliderPosition = index;
-                              });
-                            },
-                            autoPlay: false,
-                            viewportFraction: 0.9,
-                            aspectRatio: 2.0,
-                            initialPage: 0,
-                            autoPlayCurve: Curves.fastOutSlowIn,
-                            scrollDirection: Axis.horizontal,
-                          ),
-                          itemCount: 4,
-                          itemBuilder: (context, index, realIndex) => Image(
-                            image: AssetImage(shoes_image),
-                          ),
+              ),
+              actions: [
+                iconRound(Icons.bookmark_border_outlined),
+              ],
+              backgroundColor: Color(0xfff9dfd6),
+              expandedHeight: MediaQuery.of(context).size.height * 0.35,
+              flexibleSpace: FlexibleSpaceBar(
+                background: Container(
+                  padding: EdgeInsets.only(top: 20, bottom: 10),
+                  height: MediaQuery.of(context).size.height * 0.3,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CarouselSlider.builder(
+                        carouselController: buttonCarouselController,
+                        options: CarouselOptions(
+                          onPageChanged: (index, reason) {
+                            setState(() {
+                              sliderPosition = index;
+                            });
+                          },
+                          autoPlay: false,
+                          viewportFraction: 0.9,
+                          aspectRatio: 2.0,
+                          initialPage: 0,
+                          autoPlayCurve: Curves.fastOutSlowIn,
+                          scrollDirection: Axis.horizontal,
                         ),
-                        sliderIndicator(sliderPosition, noPadding: true),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: Expanded(
-                  child: Container(
-                    height: MediaQuery.of(context).size.height,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(40),
-                        topRight: Radius.circular(40),
+                        itemCount: 4,
+                        itemBuilder: (context, index, realIndex) => Image(
+                          image: AssetImage(shoes_image),
+                        ),
                       ),
-                    ),
-                    child: Padding(
-                        padding:
-                            const EdgeInsets.only(left: 40, right: 40, top: 15),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Center(
-                              child: Container(
-                                width: 50,
-                                height: 2.5,
-                                color: Colors.grey[300],
-                              ),
-                            ),
-                            SizedBox(
-                              height: 30,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Flexible(
-                                  child: RichText(
-                                    overflow: TextOverflow.clip,
-                                    strutStyle: StrutStyle(fontSize: 14),
-                                    text: TextSpan(
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold),
-                                        text:
-                                            'Kedo Running Shoes from Addidas Kedo Running Shoes from Addidas'),
-                                  ),
-                                ),
-                                RatingBar.builder(
-                                  itemSize: 18,
-                                  initialRating: 3,
-                                  minRating: 1,
-                                  direction: Axis.horizontal,
-                                  allowHalfRating: true,
-                                  itemCount: 5,
-                                  itemPadding:
-                                      EdgeInsets.symmetric(horizontal: 1),
-                                  itemBuilder: (context, _) => Icon(
-                                    Icons.star,
-                                    color: Colors.amber,
-                                  ),
-                                  onRatingUpdate: (rating) {
-                                    print(rating);
-                                  },
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            productOption(
-                              widgetTitle: 'Product Options',
-                              widgetSubTitle: 'Color',
-                              widget: productColorOption(
-                                price: '50',
-                                counterWidget: productCounter(number: 10),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            infoCartSupplier('Mohamed Mosadik Hassanien',
-                                '3 YRS', 'Egypt', 'Food & Bevereges'),
-                            Expanded(child: detailsTabBar()),
-                          ],
-                        )),
+                      sliderIndicator(sliderPosition, noPadding: true),
+                    ],
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+            SliverToBoxAdapter(
+              child: Expanded(
+                child: Container(
+                  height: MediaQuery.of(context).size.height,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(40),
+                      topRight: Radius.circular(40),
+                    ),
+                  ),
+                  child: Padding(
+                      padding:
+                          const EdgeInsets.only(left: 40, right: 40, top: 15),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Center(
+                            child: Container(
+                              width: 50,
+                              height: 2.5,
+                              color: Colors.grey[300],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Flexible(
+                                child: RichText(
+                                  overflow: TextOverflow.clip,
+                                  strutStyle: StrutStyle(fontSize: 14),
+                                  text: TextSpan(
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                      text:
+                                          'Kedo Running Shoes from Addidas Kedo Running Shoes from Addidas'),
+                                ),
+                              ),
+                              RatingBar.builder(
+                                itemSize: 18,
+                                initialRating: 3,
+                                minRating: 1,
+                                direction: Axis.horizontal,
+                                allowHalfRating: true,
+                                itemCount: 5,
+                                itemPadding:
+                                    EdgeInsets.symmetric(horizontal: 1),
+                                itemBuilder: (context, _) => Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                ),
+                                onRatingUpdate: (rating) {
+                                  print(rating);
+                                },
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          productOption(
+                            widgetTitle: 'Product Options',
+                            widgetSubTitle: 'Color',
+                            widget: productColorOption(
+                              price: '50',
+                              counterWidget: productCounter(number: 10),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          infoCartSupplier('Mohamed Mosadik Hassanien', '3 YRS',
+                              'Egypt', 'Food & Bevereges'),
+                          Expanded(child: detailsTabBar()),
+                        ],
+                      )),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
