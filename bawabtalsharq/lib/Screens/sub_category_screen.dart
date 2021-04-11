@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
+import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 
 class SubCategoryScreen extends StatefulWidget {
@@ -30,72 +31,77 @@ class _SubCategoriesScreenState extends State<SubCategoryScreen> {
             crossAxisSpacing: 10,
           ),
           itemBuilder: (context, position) {
-            return Container(
-              margin: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                boxShadow: [makeShadow()],
-                borderRadius: BorderRadius.all(
-                  Radius.circular(20),
+            return GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, ScreenRoutes.individualProduct);
+              },
+              child: Container(
+                margin: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  boxShadow: [makeShadow()],
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20),
+                  ),
+                  color: Colors.cyan[100],
                 ),
-                color: Colors.cyan[100],
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Image.asset(
-                    dress_icon,
-                    width: MediaQuery.of(context).size.width * 0.15,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Flexible(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: RichText(
-                            maxLines: 2,
-                            strutStyle: StrutStyle(fontSize: 14),
-                            text: TextSpan(
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold),
-                                text: Languages.of(context).categoryName),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                              topLeft: LanguageHelper.isEnglish
-                                  ? Radius.circular(60)
-                                  : Radius.circular(0),
-                              topRight: LanguageHelper.isEnglish
-                                  ? Radius.circular(0)
-                                  : Radius.circular(60),
-                              bottomRight: LanguageHelper.isEnglish
-                                  ? Radius.circular(20)
-                                  : Radius.circular(0),
-                              bottomLeft: LanguageHelper.isEnglish
-                                  ? Radius.circular(0)
-                                  : Radius.circular(20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Image.asset(
+                      dress_icon,
+                      width: MediaQuery.of(context).size.width * 0.15,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: RichText(
+                              maxLines: 2,
+                              strutStyle: StrutStyle(fontSize: 14),
+                              text: TextSpan(
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
+                                  text: Languages.of(context).categoryName),
                             ),
-                            color: Colors.cyan),
-                        child: Container(
-                          margin: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
-                          padding: EdgeInsets.all(14),
-                          child: Icon(
-                            Icons.arrow_forward_ios,
-                            color: Colors.white,
-                            size: 14,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                        Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                topLeft: LanguageHelper.isEnglish
+                                    ? Radius.circular(60)
+                                    : Radius.circular(0),
+                                topRight: LanguageHelper.isEnglish
+                                    ? Radius.circular(0)
+                                    : Radius.circular(60),
+                                bottomRight: LanguageHelper.isEnglish
+                                    ? Radius.circular(20)
+                                    : Radius.circular(0),
+                                bottomLeft: LanguageHelper.isEnglish
+                                    ? Radius.circular(0)
+                                    : Radius.circular(20),
+                              ),
+                              color: Colors.cyan),
+                          child: Container(
+                            margin: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                            padding: EdgeInsets.all(14),
+                            child: Icon(
+                              Icons.arrow_forward_ios,
+                              color: Colors.white,
+                              size: 14,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             );
           }),
