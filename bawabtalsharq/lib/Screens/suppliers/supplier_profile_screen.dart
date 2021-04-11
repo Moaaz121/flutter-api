@@ -1,4 +1,5 @@
 import 'package:bawabtalsharq/Screens/home_screen.dart';
+import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
@@ -11,31 +12,34 @@ class SupplierProfile extends StatefulWidget {
   _SupplierProfileState createState() => _SupplierProfileState();
 }
 
-class _SupplierProfileState extends State<SupplierProfile>
-    with TickerProviderStateMixin {
-  final Map<int, Widget> myTabs = const <int, Widget>{
-    0: Text("All Products",
+class _SupplierProfileState extends State<SupplierProfile> {
+  Map<int, Widget> seqmentBulid(BuildContext context) {
+    final Map<int, Widget> myTabs = <int, Widget>{
+      0: Text(
+        Languages.of(context).allProducts,
         style: TextStyle(
           color: Colors.black,
           fontSize: 16,
           fontWeight: FontWeight.w700,
-        )),
-    1: Text("Info",
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 16,
-          fontWeight: FontWeight.w700,
-        ))
-  };
-  final Map<int, Widget> categorys = <int, Widget>{
-    0: Center(child: listOfCateWidgetSupplier()),
-    1: Center(
-      child: FlutterLogo(
-        textColor: Colors.teal,
-        size: 200.0,
+        ),
       ),
-    ),
-  };
+      1: Text(Languages.of(context).info,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
+          ))
+    };
+    return myTabs;
+  }
+
+  Map<int, Widget> info(BuildContext context) {
+    final Map<int, Widget> info = <int, Widget>{
+      0: Center(child: productItem(context)),
+      1: Center(child: mainSlider()),
+    };
+    return info;
+  }
 
   int segmentedControlGroupValue = 0;
   @override
@@ -46,7 +50,7 @@ class _SupplierProfileState extends State<SupplierProfile>
         child: Column(
           children: [
             SizedBox(
-              height: 240,
+              height: 220,
               child: Stack(
                 children: [
                   Container(
@@ -69,7 +73,7 @@ class _SupplierProfileState extends State<SupplierProfile>
                             color: Colors.white,
                           ),
                           buildText(
-                            'Bawabt Al-Sharq',
+                            Languages.of(context).bawabtAlsharq,
                             30,
                             color: Colors.white,
                             fontWeight: FontWeight.w400,
@@ -81,7 +85,7 @@ class _SupplierProfileState extends State<SupplierProfile>
                             color: Colors.white,
                           ),
                           buildText(
-                            'Furniture & Decor',
+                            Languages.of(context).feature,
                             20,
                             color: Colors.white,
                             fontWeight: FontWeight.w400,
@@ -90,9 +94,10 @@ class _SupplierProfileState extends State<SupplierProfile>
                       ),
                     ),
                   ),
-                  Positioned(
+                  Positioned.directional(
+                    textDirection: Directionality.of(context),
                     top: 20,
-                    left: 10,
+                    start: 10,
                     child: CircleAvatar(
                       radius: 9,
                       backgroundColor: Colors.white,
@@ -105,9 +110,10 @@ class _SupplierProfileState extends State<SupplierProfile>
                       ),
                     ),
                   ),
-                  Positioned(
+                  Positioned.directional(
+                    textDirection: Directionality.of(context),
                     top: 70,
-                    left: 30,
+                    start: 30,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
@@ -158,30 +164,40 @@ class _SupplierProfileState extends State<SupplierProfile>
                       ],
                     ),
                   ),
-                  Positioned(
-                    top: 155,
-                    left: 20,
+                  Positioned.directional(
+                    textDirection: Directionality.of(context),
+                    top: 170,
+                    start: 20,
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        icon(Icons.location_on),
-                        icon(Icons.phone),
-                        icon(Icons.email_outlined),
+                        iconOfSupplier(Icons.location_on, () {}),
                         SizedBox(
-                          width: 150,
+                          width: 30,
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            chatButton(() {},
-                                size: 50, sizeIcon: 8, padOfIcon: 6),
-                            buildText(
-                              'Start chat now!',
-                              11,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ],
+                        iconOfSupplier(Icons.phone, () {}),
+                        SizedBox(
+                          width: 30,
+                        ),
+                        iconOfSupplier(Icons.email_outlined, () {}),
+                      ],
+                    ),
+                  ),
+                  Positioned.directional(
+                    textDirection: Directionality.of(context),
+                    top: 135,
+                    end: 30,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        chatButton(() {},
+                            size: MediaQuery.of(context).size.width * 0.1,
+                            sizeIcon: 8,
+                            padOfIcon: 6),
+                        buildText(
+                          Languages.of(context).startChat,
+                          10,
+                          fontWeight: FontWeight.w700,
                         ),
                       ],
                     ),
@@ -190,7 +206,7 @@ class _SupplierProfileState extends State<SupplierProfile>
               ),
             ),
             Container(
-              height: 65,
+              height: 70,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 borderRadius:
@@ -201,43 +217,47 @@ class _SupplierProfileState extends State<SupplierProfile>
                   ),
                   BoxShadow(
                       color: Colors.white,
-                      spreadRadius: 2.0,
-                      blurRadius: 10.0,
-                      offset: Offset(0, -10)),
+                      spreadRadius: 1.0,
+                      blurRadius: 8.0,
+                      offset: Offset(0, -8)),
                 ],
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 40, vertical: 14),
                 child: detailsSupplierTabBar(),
               ),
             ),
-            Flexible(child: categorys[segmentedControlGroupValue]),
+            Flexible(child: info(context)[segmentedControlGroupValue]),
           ],
         ),
       ),
     );
   }
 
-  Container icon(IconData icon) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 5),
-      width: 30,
-      height: 30,
-      decoration: new BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: [
-          BoxShadow(
-              color: Color(0x297a7a7a),
-              offset: Offset(0, 1),
-              blurRadius: 6,
-              spreadRadius: 0)
-        ],
-      ),
-      child: Icon(
-        icon,
-        color: BaseOrange,
-        size: 20,
+  Widget iconOfSupplier(IconData icon, Function onPress) {
+    return GestureDetector(
+      onTap: onPress,
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 5),
+        width: 30,
+        height: 30,
+        decoration: new BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8),
+          boxShadow: [
+            BoxShadow(
+                color: Color(0x297a7a7a),
+                offset: Offset(0, 1),
+                blurRadius: 6,
+                spreadRadius: 0)
+          ],
+        ),
+        child: Icon(
+          icon,
+          color: BaseOrange,
+          size: 20,
+        ),
       ),
     );
   }
@@ -250,8 +270,8 @@ class _SupplierProfileState extends State<SupplierProfile>
           child: CupertinoSlidingSegmentedControl(
             groupValue: segmentedControlGroupValue,
             backgroundColor: orangeColor.withOpacity(0.15),
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 7),
-            children: myTabs,
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+            children: seqmentBulid(context),
             onValueChanged: (i) {
               setState(() {
                 segmentedControlGroupValue = i;

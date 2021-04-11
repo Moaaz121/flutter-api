@@ -1,5 +1,4 @@
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
-import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/main.dart';
@@ -115,8 +114,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
                 buildSizedBox(height: 10),
-                buildText(Languages.of(context).plzSecect, 15,
-                    color: Colors.grey[500], fontWeight: FontWeight.w400),
+                buildText(
+                  Languages.of(context).plzSecect,
+                  15,
+                  color: Colors.grey[500],
+                  fontWeight: FontWeight.w400,
+                ),
                 buildSizedBox(
                     height: 30,
                     child: buildRadioListTile(Languages.of(context).buyer, 1)),
@@ -124,16 +127,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 30,
                     child: buildRadioListTile(Languages.of(context).seller, 2)),
                 buildRadioListTile(Languages.of(context).both, 3),
-                textFiledPrice(context, Languages.of(context).fullName, 0.9),
+                customTextField(context,
+                    label: Languages.of(context).fullName, width: 1),
                 buildSizedBox(height: 20),
-                textFiledPrice(context, Languages.of(context).email, 0.9),
+                customTextField(context,
+                    label: Languages.of(context).email, width: 1),
                 buildSizedBox(height: 20),
-                textFiledPrice(
+                customTextField(
                   context,
-                  Languages.of(context).loginPass,
-                  0.9,
+                  width: 1,
+                  label: Languages.of(context).loginPass,
                   isPassword: obSecureText,
-                  dropIcon: IconButton(
+                  rightBtn: IconButton(
                     onPressed: () {
                       setState(() {
                         obSecureText = !obSecureText;
@@ -144,12 +149,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
                 buildSizedBox(height: 20),
-                textFiledPrice(
+                customTextField(
                   context,
-                  Languages.of(context).confirmPass,
-                  0.9,
+                  width: 1,
+                  label: Languages.of(context).confirmPass,
                   isPassword: obSecureText,
-                  dropIcon: IconButton(
+                  rightBtn: IconButton(
                     onPressed: () {
                       setState(() {
                         obSecureText = !obSecureText;
@@ -160,18 +165,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
                 buildSizedBox(height: 20),
-                textFiledPrice(context, Languages.of(context).companyName, 0.9),
+                customTextField(context,
+                    width: 1, label: Languages.of(context).companyName),
                 buildSizedBox(height: 20),
                 buildSizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
-                        child: textFiledPrice(
-                            context, Languages.of(context).n, 0.2)),
+                      child: customTextField(context,
+                          width: 0.1, label: Languages.of(context).n),
+                    ),
                     SizedBox(
                       width: 10,
                     ),
-                    textFiledPrice(context, Languages.of(context).tel, 0.6),
+                    customTextField(context,
+                        label: Languages.of(context).tel, width: 0.5),
                   ],
                 ),
                 buildSizedBox(height: 15),

@@ -114,6 +114,11 @@ class LanguageEn extends Languages {
   String get companyName => 'Company Name';
   String get tel => 'Tel';
   String get n => '+02';
+  String get bawabtAlsharq => 'Bawabt Al-Sharq';
+  String get furniture => 'Furniture & Decor';
+  String get startChat => 'Start chat now!';
+  String get allProducts => 'All Products';
+  String get info => 'Info';
 
 // end Mosdik
 
