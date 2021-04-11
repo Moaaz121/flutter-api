@@ -1,15 +1,14 @@
 import 'dart:ui';
 
+import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/size_config.dart';
-import 'package:bawabtalsharq/Utils/strings.dart';
 import 'package:bawabtalsharq/main.dart';
+import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:bawabtalsharq/widgets/widgets.dart';
-import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 
 class IntroScreen extends StatefulWidget {
   @override
@@ -41,7 +40,8 @@ class _IntroScreenState extends State<IntroScreen> {
               Container(
                 width: 70,
                 height: 30,
-                margin: EdgeInsetsDirectional.only(top: 10, bottom: 10, start: 12),
+                margin:
+                    EdgeInsetsDirectional.only(top: 10, bottom: 10, start: 12),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
@@ -51,14 +51,14 @@ class _IntroScreenState extends State<IntroScreen> {
                     showLanguagesDialog(context);
                   },
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
                         Languages.of(context).language,
                         style: TextStyle(color: Colors.black54, fontSize: 18),
                       ),
                       Padding(
-                        padding: const EdgeInsetsDirectional.only(end: 10),
+                        padding: const EdgeInsetsDirectional.only(end: 5),
                         child: Icon(
                           Icons.arrow_drop_down,
                           size: 25,
@@ -82,25 +82,6 @@ class _IntroScreenState extends State<IntroScreen> {
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
-                      PageView(
-                        controller: _pageController,
-                        pageSnapping: true,
-                        scrollDirection: Axis.horizontal,
-                        onPageChanged: (page) {
-                          setState(() {
-                            // print(page);
-                            imageIndex = page;
-                          });
-                        },
-                        children: [
-                          pageBuilder(intro1, Languages.of(context).intro1Title,
-                              Languages.of(context).intro1SubTitle),
-                          pageBuilder(intro2,  Languages.of(context).intro2Title,
-                              Languages.of(context).intro2SubTitle),
-                          pageBuilder(intro3, Languages.of(context).intro3Title,
-                              Languages.of(context).intro3SubTitle)
-                        ],
-                      ),
                       Positioned(
                         top: MediaQuery.of(context).size.height * 0.62 + 10,
                         child: Container(
@@ -122,17 +103,35 @@ class _IntroScreenState extends State<IntroScreen> {
                           ),
                         ),
                       ),
+                      PageView(
+                        controller: _pageController,
+                        pageSnapping: true,
+                        scrollDirection: Axis.horizontal,
+                        onPageChanged: (page) {
+                          setState(() {
+                            // print(page);
+                            imageIndex = page;
+                          });
+                        },
+                        children: [
+                          pageBuilder(intro1, Languages.of(context).intro1Title,
+                              Languages.of(context).intro1SubTitle),
+                          pageBuilder(intro2, Languages.of(context).intro2Title,
+                              Languages.of(context).intro2SubTitle),
+                          pageBuilder(intro3, Languages.of(context).intro3Title,
+                              Languages.of(context).intro3SubTitle)
+                        ],
+                      ),
                       Positioned.directional(
-                        textDirection:Directionality.of(context),
+                        textDirection: Directionality.of(context),
                         end: 30,
                         bottom: 30,
                         child: GestureDetector(
                           onTap: () {
                             imageIndex < 2
-                                ? _pageController
-                                .jumpToPage(imageIndex + 1)
+                                ? _pageController.jumpToPage(imageIndex + 1)
                                 : Navigator.pushReplacementNamed(
-                                context, ScreenRoutes.loginScreen);
+                                    context, ScreenRoutes.loginScreen);
                           },
                           child: Row(
                             children: [
@@ -143,14 +142,12 @@ class _IntroScreenState extends State<IntroScreen> {
                               SizedBox(
                                 width: 5,
                               ),
-
                               Icon(
                                 LanguageHelper.isEnglish
                                     ? Icons.arrow_forward_rounded
                                     : Icons.arrow_back_rounded,
                                 size: 17,
                               )
-
                             ],
                           ),
                         ),

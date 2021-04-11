@@ -110,6 +110,11 @@ class LanguageAr extends Languages {
   String get companyName => 'اسم الشركة';
   String get tel => 'هاتف';
   String get n => '+٠٢';
+  String get bawabtAlsharq => 'بوابة الشرق';
+  String get furniture => 'الأثاث والديكور';
+  String get startChat => 'ابدأ الدردشة الآن!';
+  String get allProducts => 'كل المنتجات';
+  String get info => 'معلومات التاجر';
 
 // end Mosdik
 

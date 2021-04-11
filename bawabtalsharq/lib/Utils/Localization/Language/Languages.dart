@@ -109,6 +109,11 @@ abstract class Languages {
   String get companyName;
   String get tel;
   String get n;
+  String get bawabtAlsharq;
+  String get furniture;
+  String get startChat;
+  String get allProducts;
+  String get info;
 
 // end Mosdik
 

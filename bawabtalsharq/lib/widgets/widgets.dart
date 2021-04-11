@@ -1225,13 +1225,9 @@ Widget textFiledPrice(BuildContext context, String text, double width,
     width: MediaQuery.of(context).size.width * width,
     child: TextField(
       keyboardType: keyboardType,
-      enabled: true,
-      enableSuggestions: true,
-      autofocus: false,
       obscureText: isPassword,
       cursorColor: Theme.of(context).bottomAppBarColor,
       decoration: InputDecoration(
-        isDense: true,
         suffixIcon: dropIcon,
         hintText: text,
         labelStyle: TextStyle(
@@ -1297,25 +1293,29 @@ Widget mostPopularByCategoryHeader(BuildContext context) {
 // end Moaaz
 
 // Start Islam
-TextField customTextField(
+Widget customTextField(BuildContext context,
     {String label,
     IconButton rightBtn,
     IconData leftIcon,
+    double width,
     bool isPassword = false}) {
-  return TextField(
-    obscureText: isPassword,
-    decoration: InputDecoration(
-        //hintText: 'username',
-        prefixIcon: Icon(
-          leftIcon,
-          color: Colors.grey,
-        ),
-        suffixIcon: rightBtn,
-        labelText: label,
-        labelStyle: TextStyle(
-            fontFamily: 'Roboto-Thin.ttf', fontWeight: FontWeight.w200),
-        focusedBorder:
-            UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey))),
+  return SizedBox(
+    width: MediaQuery.of(context).size.width * width,
+    child: TextField(
+      obscureText: isPassword,
+      decoration: InputDecoration(
+          //hintText: 'username',
+          prefixIcon: Icon(
+            leftIcon,
+            color: Colors.grey,
+          ),
+          suffixIcon: rightBtn,
+          labelText: label,
+          labelStyle: TextStyle(
+              fontFamily: 'Roboto-Thin.ttf', fontWeight: FontWeight.w200),
+          focusedBorder:
+              UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey))),
+    ),
   );
 }
 

@@ -90,15 +90,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(
                       height: height * 0.04,
                     ),
-                    customTextField(
+                    customTextField(context,
                         label: Languages.of(context).userName,
+                        width: 1,
                         leftIcon: Icons.person),
                     SizedBox(
                       height: height * 0.03,
                     ),
                     customTextField(
+                      context,
                       isPassword: obSecureText,
-                      label: (Languages.of(context).password),
+                      label: (Languages.of(context).password), width: 1,
                       //'Password',
                       leftIcon: Icons.lock,
                       rightBtn: IconButton(
