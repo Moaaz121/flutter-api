@@ -11,7 +11,6 @@ import 'package:bawabtalsharq/Screens/search/categories_filter_screen.dart';
 import 'package:bawabtalsharq/Screens/search/search_filter_screen.dart';
 import 'package:bawabtalsharq/Screens/search/search_result_screen.dart';
 import 'package:bawabtalsharq/Screens/search/search_screen.dart';
-import 'package:bawabtalsharq/Screens/sub_category_screen.dart';
 import 'package:bawabtalsharq/Screens/pricing/pricing_screen.dart';
 import 'package:bawabtalsharq/Screens/settings_screen.dart';
 import 'package:bawabtalsharq/Screens/sign_up_screen.dart';

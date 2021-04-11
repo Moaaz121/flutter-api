@@ -164,6 +164,12 @@ abstract class Languages {
   String get resentSearch;
   String get handmadeCrafts;
   String get quoteDetails;
+  String get backToChat;
+  String get minOrder;
+  String get unitPrice;
+  String get shippingTerm;
+  String get paymentTerms;
+  String get productDetails;
 
 // end Islam
 }
