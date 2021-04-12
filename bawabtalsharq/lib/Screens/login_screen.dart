@@ -143,7 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             signInFlatButton(
-                                context, height, Languages.of(context).signIn,
+                                context, height, Languages.of(context).login,
                                 () {
                               Navigator.pushReplacementNamed(
                                   context, ScreenRoutes.mainScreen);

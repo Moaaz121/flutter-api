@@ -17,6 +17,7 @@ import 'package:bawabtalsharq/Screens/pricing/pricing_screen.dart';
 import 'package:bawabtalsharq/Screens/settings_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/history/history_screen.dart';
 import 'package:bawabtalsharq/Screens/sign_up_screen.dart';
+import 'package:bawabtalsharq/Screens/forget_password/verfication_password_screen.dart';
 import 'package:bawabtalsharq/Screens/splash_screen.dart';
 import 'package:bawabtalsharq/Screens/suppliers/supplier_profile_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/AppLocalizationDelgate.dart';

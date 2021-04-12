@@ -1317,7 +1317,7 @@ Widget customTextField(BuildContext context,
     {String label,
     IconButton rightBtn,
     IconData leftIcon,
-    double width,
+    double width = 1,
     bool isPassword = false}) {
   return SizedBox(
     width: MediaQuery.of(context).size.width * width,

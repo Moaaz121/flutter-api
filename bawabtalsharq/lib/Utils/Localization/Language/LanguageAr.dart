@@ -216,6 +216,9 @@ class LanguageAr extends Languages {
   String get productDetails => 'تفاصيل المنتج';
   String get shippingTerm => 'شرط الشحن';
   String get minOrder => 'الحد الادني';
+  String get send => 'ارسال';
+  String get createNewPassword => 'إنشاء كلمة مرور جديدة';
+  String get emailAddress => 'عنوان بريديك الإلكتروني ';
 
 // end Islam
 
