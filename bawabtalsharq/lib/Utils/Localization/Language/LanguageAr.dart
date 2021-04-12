@@ -118,6 +118,9 @@ class LanguageAr extends Languages {
   String get allProducts => 'كل المنتجات';
   String get info => 'معلومات التاجر';
   String get superior => 'العملاء المميزين';
+  String get allowing => 'السماح بالوصول';
+  String get allowNotificationFromBawabtAlsharq =>
+      'السماح بإشعار من بوابة الشرق ';
 
 // end Mosdik
 

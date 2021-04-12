@@ -120,6 +120,9 @@ class LanguageEn extends Languages {
   String get allProducts => 'All Products';
   String get info => 'Info';
   String get superior => 'Superior';
+  String get allowing => 'Allowing';
+  String get allowNotificationFromBawabtAlsharq =>
+      'Allow Notification From Bawabt Alsharq';
 
 // end Mosdik
 

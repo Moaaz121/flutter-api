@@ -1,4 +1,5 @@
 import 'dart:ui';
+
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
@@ -6,10 +7,6 @@ import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:bawabtalsharq/Screens/profile/about_us/about_us_dialog.dart';
-import 'package:bawabtalsharq/Screens/profile/contact_us/phone_dialog.dart';
-import 'package:bawabtalsharq/Screens/profile/contact_us/send_message_dialog.dart';
-import 'package:bawabtalsharq/Screens/profile/contact_us/location_dialog.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -408,47 +405,48 @@ class _ProfileScreenState extends State<ProfileScreen> {
   //   );
   // }
 
-  Widget unExpansionProfileItem(Icon icon, String title, Function onPressed,
-      {bool drawDivider = true,
-      bool isParent = false,
-      double textSize = 16.0,
-      FontWeight fontWeight = FontWeight.w600}) {
-    return GestureDetector(
-      onTap: onPressed,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-        ),
-        margin: EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 12),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                icon,
-                SizedBox(
-                  width: 16,
-                ),
-                Expanded(
-                  child: buildText(title, textSize,
-                      fontFamily: semiBoldFontFamily, fontWeight: fontWeight),
-                ),
-                isParent ? SizedBox() : Icon(Icons.navigate_next),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            drawDivider
-                ? Divider(
-                    thickness: 1,
-                    height: 1,
-                  )
-                : SizedBox(
-                    height: 0,
-                  ),
-          ],
-        ),
+}
+
+Widget unExpansionProfileItem(Icon icon, String title, Function onPressed,
+    {bool drawDivider = true,
+    bool isParent = false,
+    double textSize = 16.0,
+    FontWeight fontWeight = FontWeight.w600}) {
+  return GestureDetector(
+    onTap: onPressed,
+    child: Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
       ),
-    );
-  }
+      margin: EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 12),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              icon,
+              SizedBox(
+                width: 16,
+              ),
+              Expanded(
+                child: buildText(title, textSize,
+                    fontFamily: semiBoldFontFamily, fontWeight: fontWeight),
+              ),
+              isParent ? SizedBox() : Icon(Icons.navigate_next),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          drawDivider
+              ? Divider(
+                  thickness: 1,
+                  height: 1,
+                )
+              : SizedBox(
+                  height: 0,
+                ),
+        ],
+      ),
+    ),
+  );
 }

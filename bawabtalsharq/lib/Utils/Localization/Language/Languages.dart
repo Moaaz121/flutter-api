@@ -117,6 +117,8 @@ abstract class Languages {
   String get allProducts;
   String get info;
   String get superior;
+  String get allowing;
+  String get allowNotificationFromBawabtAlsharq;
 
 // end Mosdik
 
