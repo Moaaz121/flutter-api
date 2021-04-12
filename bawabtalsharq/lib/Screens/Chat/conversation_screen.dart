@@ -1,23 +1,27 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:audio_recorder/audio_recorder.dart';
 import 'package:bawabtalsharq/Model/chat/partner_model.dart';
 import 'package:bawabtalsharq/Model/chat/socket_message.dart';
 import 'package:bawabtalsharq/Repos/ChatRepos/chat_repo.dart';
 import 'package:bawabtalsharq/Repos/ChatRepos/jitsi_config.dart';
 import 'package:bawabtalsharq/Repos/ChatRepos/socket_chat.dart';
 import 'package:bawabtalsharq/Screens/Chat/chat_bubble.dart';
-import 'package:bawabtalsharq/Screens/Chat/ringing_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
+import 'package:flutter_sound/flutter_sound.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_pickers/image_pickers.dart';
+import 'package:intl/intl.dart';
+import 'package:mime/mime.dart';
 import 'package:rocket_chat_connector_flutter/models/message.dart';
 import 'package:rocket_chat_connector_flutter/models/user.dart' as UUser;
 
@@ -26,6 +30,10 @@ SocketChat _socketChat = SocketChat();
 class ConversationScreen extends StatefulWidget {
   final String roomID;
   final PartnerData partner;
+
+  Recording _recording;
+  final Random random = new Random();
+
   ConversationScreen(this.roomID, this.partner);
 
   @override
@@ -36,9 +44,13 @@ class _ConversationScreenState extends State<ConversationScreen>
     with TickerProviderStateMixin {
   AnimationController _animationController;
   TextEditingController _textEditingController = TextEditingController();
-
+  FlutterSound flutterSound = FlutterSound();
+  StreamSubscription _recorderSubscription;
+  StreamSubscription _dbPeakSubscription;
+  JitsiConfig _jitsiConfig = JitsiConfig();
   final picker = ImagePicker();
   FilePickerResult resultFile;
+  bool _isRecording = false;
 
   static const List<IconData> icons = const [
     Icons.insert_drive_file_rounded,
@@ -47,6 +59,13 @@ class _ConversationScreenState extends State<ConversationScreen>
     Icons.camera_alt_rounded,
   ];
   List<Message> _messages = new List<Message>();
+  bool _s = false;
+
+  var localFileSystem;
+
+  String _recorderTxt = '00:00:00';
+
+  String _path = '';
 
   @override
   void initState() {
@@ -57,7 +76,19 @@ class _ConversationScreenState extends State<ConversationScreen>
       vsync: this,
       duration: const Duration(milliseconds: 300),
     );
-    JitsiConfig.instance.jitsiListener();
+    _jitsiConfig.jitsiListener();
+
+    _textEditingController.addListener(() {
+      setState(() {
+        _s = false;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _jitsiConfig.closeMeeting();
+    super.dispose();
   }
 
   @override
@@ -81,7 +112,8 @@ class _ConversationScreenState extends State<ConversationScreen>
   Scaffold buildScaffold() {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
-      floatingActionButton: Column(
+      floatingActionButton: !_isRecording
+          ? Column(
         mainAxisSize: MainAxisSize.min,
         children: new List.generate(icons.length, (int index) {
           Widget child = new Container(
@@ -157,7 +189,8 @@ class _ConversationScreenState extends State<ConversationScreen>
               ),
             ),
           ),
-      ),
+      )
+          : null,
       appBar: AppBar(
         backgroundColor: defaultOrangeColor,
         elevation: 3,
@@ -224,15 +257,9 @@ class _ConversationScreenState extends State<ConversationScreen>
               Icons.call,
             ),
             onPressed: () {
-              String callRoom = audioCall +
-                  '_${rocketUser.data.userId}' +
-                  '_${widget.partner.user.id}';
-              JitsiConfig.instance.joinMeeting(
-                  context,
-                  false,
-                  '${rocketUser.data.userId}' + '_${widget.partner.user.id}',
-                  widget.partner);
-              _socketChat.sendMessage(widget.roomID, callRoom);
+              _jitsiConfig.joinMeeting(
+                  context, false, widget.roomID, widget.partner);
+              _socketChat.sendMessage(widget.roomID, audioCall);
             },
           ),
           IconButton(
@@ -240,15 +267,9 @@ class _ConversationScreenState extends State<ConversationScreen>
               Icons.videocam,
             ),
             onPressed: () {
-              String callRoom = videoCall +
-                  '_${rocketUser.data.userId}' +
-                  '_${widget.partner.user.id}';
-              JitsiConfig.instance.joinMeeting(
-                  context,
-                  true,
-                  '${rocketUser.data.userId}' + '_${widget.partner.user.id}',
-                  widget.partner);
-              _socketChat.sendMessage(widget.roomID, callRoom);
+              _jitsiConfig.joinMeeting(
+                  context, true, widget.roomID, widget.partner);
+              _socketChat.sendMessage(widget.roomID, videoCall);
             },
           ),
           SizedBox(
@@ -264,13 +285,11 @@ class _ConversationScreenState extends State<ConversationScreen>
               child: StreamBuilder(
                 stream: _socketChat.webSocketChannel.stream,
                 builder: (context, snapshot) {
-                  if (snapshot != null &&
-                      !snapshot.hasError &&
-                      snapshot.hasData) {
+                  if (snapshot.hasData) {
                     var responseJSON = jsonDecode(snapshot.data);
                     if (responseJSON['msg'] == 'changed') {
                       SocketMessage sMessage =
-                          SocketMessage.fromJson(responseJSON);
+                      SocketMessage.fromJson(responseJSON);
                       _messages.insert(
                           0,
                           Message(
@@ -280,7 +299,6 @@ class _ConversationScreenState extends State<ConversationScreen>
                               msg: sMessage.fields.args.first.msg,
                               ts: DateTime(
                                   sMessage.fields.args.first.updatedAt.date)));
-                      checkSocketMessage(sMessage.fields.args.first.msg);
                     }
                   }
                   return ListView.builder(
@@ -310,43 +328,59 @@ class _ConversationScreenState extends State<ConversationScreen>
                   ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        SizedBox(
-                          width: 50,
-                        ),
-                        Flexible(
-                          child: TextField(
-                            controller: _textEditingController,
-                            style: TextStyle(
-                              fontSize: 15.0,
-                              color:
-                                  Theme.of(context).textTheme.headline6.color,
+                    child: Stack(
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            SizedBox(
+                              width: 50,
                             ),
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.all(10.0),
-                              border: InputBorder.none,
-                              enabledBorder: InputBorder.none,
-                              hintText: "Write your message...",
-                              hintStyle: TextStyle(
-                                fontSize: 15.0,
-                                color:
-                                    Theme.of(context).textTheme.headline6.color,
+                            Flexible(
+                              child: TextField(
+                                controller: _textEditingController,
+                                style: TextStyle(
+                                  fontSize: 15.0,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .headline6
+                                      .color,
+                                ),
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.all(10.0),
+                                  border: InputBorder.none,
+                                  enabledBorder: InputBorder.none,
+                                  hintText: "Write your message...",
+                                  hintStyle: TextStyle(
+                                    fontSize: 15.0,
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .headline6
+                                        .color,
+                                  ),
+                                ),
+                                maxLines: null,
                               ),
                             ),
-                            maxLines: null,
-                          ),
+                            FlatButton(
+                              child: Icon(
+                                !_textEditingController.value.text.isNotEmpty
+                                    ? Icons.keyboard_voice
+                                    : Icons.send,
+                                color: defaultOrangeColor,
+                              ),
+                              onPressed: () {
+                                if (_textEditingController
+                                    .value.text.isNotEmpty) {
+                                  sendMessage();
+                                } else {
+                                  _onRecorderPreesed();
+                                }
+                              },
+                            ),
+                          ],
                         ),
-                        IconButton(
-                          icon: Icon(
-                            Icons.send,
-                            color: defaultOrangeColor,
-                          ),
-                          onPressed: () {
-                            sendMessage();
-                          },
-                        )
+                        _isRecording ? _buildRecordingView() : SizedBox()
                       ],
                     ),
                   ),
@@ -359,6 +393,130 @@ class _ConversationScreenState extends State<ConversationScreen>
     );
   }
 
+  Widget _buildRecordingView() {
+    return Container(
+      width: double.infinity,
+      color: Colors.white,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          FlatButton(
+              child: Text(
+                'Cancel',
+                style: Theme.of(context)
+                    .textTheme
+                    .body2
+                    .copyWith(color: orangeColor),
+              ),
+              onPressed: () {
+                _onRecordCancel();
+              }),
+          Container(
+            child: Text(
+              this._recorderTxt,
+              style: TextStyle(
+                fontSize: 27.0,
+                color: Colors.grey.shade800,
+              ),
+            ),
+          ),
+          _buildMsgBtn(onPreesed: () {
+            _onSendRecord();
+          })
+        ],
+      ),
+    );
+  }
+
+  _buildMsgBtn({Function onPreesed}) {
+    return Material(
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 8.0),
+        child: IconButton(
+          icon: Icon(Icons.send),
+          onPressed: onPreesed,
+          color: orangeColor,
+        ),
+      ),
+      color: Colors.white,
+    );
+  }
+
+  // _stop() async {
+  //   setState(() {
+  //     widget._isRecording = false;
+  //   });
+  //   var recording = await AudioRecorder.stop();
+  //   print("Stop recording: ${recording.path}");
+  //   bool isRecording = await AudioRecorder.isRecording;
+  //   File file = File(recording.path);
+  //   RocketChatApi().sendFile(widget.roomID, file.path);
+  //   print("  File length: ${await file.length()}");
+  // }
+
+  void _onRecorderPreesed() async {
+    try {
+      String result = await flutterSound.startRecorder(
+        codec: t_CODEC.CODEC_AAC,
+      );
+
+      print('startRecorder: $result');
+
+      _recorderSubscription = flutterSound.onRecorderStateChanged.listen((e) {
+        DateTime date =
+        new DateTime.fromMillisecondsSinceEpoch(e.currentPosition.toInt());
+        String txt = DateFormat('mm:ss:SS', 'en_US').format(date);
+        this.setState(() {
+          this._isRecording = true;
+          this._recorderTxt = txt.substring(0, 8);
+          this._path = result;
+        });
+      });
+    } catch (err) {
+      print('startRecorder error: $err');
+      setState(() {
+        this._isRecording = false;
+      });
+    }
+  }
+
+  void stopRecorder() async {
+    try {
+      String result = await flutterSound.stopRecorder();
+      print('stopRecorder: $result');
+
+      if (_recorderSubscription != null) {
+        _recorderSubscription.cancel();
+        _recorderSubscription = null;
+      }
+      if (_dbPeakSubscription != null) {
+        _dbPeakSubscription.cancel();
+        _dbPeakSubscription = null;
+      }
+    } catch (err) {
+      print('stopRecorder error: $err');
+    }
+
+    this.setState(() {
+      this._isRecording = false;
+    });
+  }
+
+  _onRecordCancel() {
+    stopRecorder();
+  }
+
+  _onSendRecord() async {
+    stopRecorder();
+    File recordFile = File(_path);
+    bool isExist = await recordFile.exists();
+    if (isExist) {
+      String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+      RocketChatApi().sendFile(widget.roomID, recordFile.path, _recorderTxt,
+          MediaType('audio', 'mpeg'));
+    }
+  }
+
   Future getImage() async {
     List<Media> _listImagePaths = await ImagePickers.pickerPaths(
         galleryMode: GalleryMode.image,
@@ -369,7 +527,8 @@ class _ConversationScreenState extends State<ConversationScreen>
         uiConfig: UIConfig(uiThemeColor: orangeColor),
         cropConfig: CropConfig(enableCrop: false, width: 2, height: 1));
     if (_listImagePaths.first != null) {
-      RocketChatApi().sendFile(widget.roomID, _listImagePaths.first.path);
+      RocketChatApi().sendFile(widget.roomID, _listImagePaths.first.path,
+          "IMAGE", MediaType('audio', 'mpeg'));
     }
   }
 
@@ -377,7 +536,11 @@ class _ConversationScreenState extends State<ConversationScreen>
     final pickedFile = await picker.getImage(source: ImageSource.camera);
     setState(() {
       if (pickedFile != null) {
-        RocketChatApi().sendFile(widget.roomID, pickedFile.path);
+        var mimeTypeData =
+        lookupMimeType(pickedFile.path, headerBytes: [0xFF, 0xD8])
+            .split('/');
+        RocketChatApi().sendFile(widget.roomID, pickedFile.path, 'IMAGE',
+            MediaType(mimeTypeData[0], mimeTypeData[1]));
       } else {}
     });
   }
@@ -386,7 +549,11 @@ class _ConversationScreenState extends State<ConversationScreen>
     final pickedFile = await picker.getVideo(source: ImageSource.gallery);
     setState(() {
       if (pickedFile != null) {
-        RocketChatApi().sendFile(widget.roomID, pickedFile.path);
+        var mimeTypeData =
+        lookupMimeType(pickedFile.path, headerBytes: [0xFF, 0xD8])
+            .split('/');
+        RocketChatApi().sendFile(widget.roomID, pickedFile.path, 'VIDEO',
+            MediaType(mimeTypeData[0], mimeTypeData[1]));
       } else {
         print('No image selected.');
       }
@@ -398,8 +565,14 @@ class _ConversationScreenState extends State<ConversationScreen>
     FilePickerResult result = await FilePicker.platform.pickFiles();
     if (result != null) {
       // File file = File(result.files.single.path);
-      RocketChatApi()
-          .sendFile(widget.roomID, File(result.files.single.path).path);
+      var mimeTypeData =
+      lookupMimeType(result.files.single.path, headerBytes: [0xFF, 0xD8])
+          .split('/');
+      RocketChatApi().sendFile(
+          widget.roomID,
+          File(result.files.single.path).path,
+          'FILE',
+          MediaType(mimeTypeData[0], mimeTypeData[1]));
     } else {
       // User canceled the picker0
     }
@@ -412,53 +585,8 @@ class _ConversationScreenState extends State<ConversationScreen>
       _textEditingController.text = '';
     }
   }
+}
 
-  bool checkMessageSender(int index, Message _message) {
-    return _message.user.id == rocketUser.data.userId;
-  }
-
-  void checkSocketMessage(String message) {
-    var splitMessage = message.split("_");
-
-    if (splitMessage[0].startsWith('--')) {
-      // if (message == closeMeet) {
-      //   JitsiConfig.instance.closeMeeting(context);
-      //   return;
-      // }
-      if (splitMessage[1] != rocketUser.data.userId) {
-        if (splitMessage[0] == audioCall) {
-          SchedulerBinding.instance.addPostFrameCallback((_) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => RingingScreen(widget.partner, false,
-                      splitMessage[1] + '_' + splitMessage[2])),
-            ).then((value) {
-              setState(() {
-                _socketChat.connectToSocket(widget.roomID);
-                _socketChat.subscribeToRoom(widget.roomID);
-                // _socketChat.sendMessage(widget.roomID, closeMeet);
-              });
-            });
-          });
-        } else if (splitMessage[0] == videoCall) {
-          SchedulerBinding.instance.addPostFrameCallback((_) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => RingingScreen(widget.partner, true,
-                      splitMessage[1] + '_' + splitMessage[2])),
-            ).then((value) {
-              setState(() {
-                _socketChat.connectToSocket(widget.roomID);
-                _socketChat.subscribeToRoom(widget.roomID);
-                //_socketChat.sendMessage(widget.roomID, closeMeet);
-              });
-            });
-          });
-        }
-        _socketChat.closeSocket(widget.roomID);
-      }
-    }
-  }
+bool checkMessageSender(int index, Message _message) {
+  return _message.user.id == rocketUser.data.userId;
 }
