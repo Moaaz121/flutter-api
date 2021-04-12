@@ -10,12 +10,14 @@ import 'package:bawabtalsharq/Repos/ChatRepos/chat_repo.dart';
 import 'package:bawabtalsharq/Repos/ChatRepos/jitsi_config.dart';
 import 'package:bawabtalsharq/Repos/ChatRepos/socket_chat.dart';
 import 'package:bawabtalsharq/Screens/Chat/chat_bubble.dart';
+import 'package:bawabtalsharq/Screens/Chat/ringing_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
@@ -47,7 +49,6 @@ class _ConversationScreenState extends State<ConversationScreen>
   FlutterSound flutterSound = FlutterSound();
   StreamSubscription _recorderSubscription;
   StreamSubscription _dbPeakSubscription;
-  JitsiConfig _jitsiConfig = JitsiConfig();
   final picker = ImagePicker();
   FilePickerResult resultFile;
   bool _isRecording = false;
@@ -76,8 +77,7 @@ class _ConversationScreenState extends State<ConversationScreen>
       vsync: this,
       duration: const Duration(milliseconds: 300),
     );
-    _jitsiConfig.jitsiListener();
-
+    JitsiConfig.instance.jitsiListener();
     _textEditingController.addListener(() {
       setState(() {
         _s = false;
@@ -87,7 +87,6 @@ class _ConversationScreenState extends State<ConversationScreen>
 
   @override
   void dispose() {
-    _jitsiConfig.closeMeeting();
     super.dispose();
   }
 
@@ -114,82 +113,82 @@ class _ConversationScreenState extends State<ConversationScreen>
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: !_isRecording
           ? Column(
-        mainAxisSize: MainAxisSize.min,
-        children: new List.generate(icons.length, (int index) {
-          Widget child = new Container(
-            height: 55.0,
-            width: 56.0,
-            alignment: FractionalOffset.topCenter,
-            child: new ScaleTransition(
-              scale: new CurvedAnimation(
-                parent: _animationController,
-                curve: new Interval(0.0, 1.0 - index / icons.length / 2.0,
-                    curve: Curves.linear),
-              ),
-              child: new FloatingActionButton(
-                mini: true,
-                backgroundColor: backgroundColor,
-                heroTag: 'btn$index',
-                child: new Icon(icons[index], color: orangeColor),
-                onPressed: () {
-                  switch (index) {
-                    case 0:
-                      getFile();
-                      break;
-                    case 1:
-                      getVideo();
-                      break;
-                    case 2:
-                      getImage();
-                      break;
-                    case 3:
-                      getCamera();
-                      break;
-                  }
-                },
-              ),
-            ),
-          );
-          return child;
-        }).toList()
-          ..add(
-            SizedBox(
-              width: 40,
-              height: 40,
-              child: new FloatingActionButton(
-                backgroundColor: Colors.white,
-                elevation: 0,
-                highlightElevation: 0,
-                focusElevation: 0,
-                hoverElevation: 0,
-                heroTag: 'btn',
-                child: new AnimatedBuilder(
-                  animation: _animationController,
-                  builder: (BuildContext context, Widget child) {
-                    return new Transform(
-                      transform: new Matrix4.rotationZ(
-                          _animationController.value * 0.5 * pi),
-                      alignment: FractionalOffset.center,
-                      child: new Icon(
-                        _animationController.isDismissed
-                            ? Icons.attach_file_rounded
-                            : Icons.close,
-                        color: orangeColor,
+              mainAxisSize: MainAxisSize.min,
+              children: new List.generate(icons.length, (int index) {
+                Widget child = new Container(
+                  height: 55.0,
+                  width: 56.0,
+                  alignment: FractionalOffset.topCenter,
+                  child: new ScaleTransition(
+                    scale: new CurvedAnimation(
+                      parent: _animationController,
+                      curve: new Interval(0.0, 1.0 - index / icons.length / 2.0,
+                          curve: Curves.linear),
+                    ),
+                    child: new FloatingActionButton(
+                      mini: true,
+                      backgroundColor: backgroundColor,
+                      heroTag: 'btn$index',
+                      child: new Icon(icons[index], color: orangeColor),
+                      onPressed: () {
+                        switch (index) {
+                          case 0:
+                            getFile();
+                            break;
+                          case 1:
+                            getVideo();
+                            break;
+                          case 2:
+                            getImage();
+                            break;
+                          case 3:
+                            getCamera();
+                            break;
+                        }
+                      },
+                    ),
+                  ),
+                );
+                return child;
+              }).toList()
+                ..add(
+                  SizedBox(
+                    width: 40,
+                    height: 40,
+                    child: new FloatingActionButton(
+                      backgroundColor: Colors.white,
+                      elevation: 0,
+                      highlightElevation: 0,
+                      focusElevation: 0,
+                      hoverElevation: 0,
+                      heroTag: 'btn',
+                      child: new AnimatedBuilder(
+                        animation: _animationController,
+                        builder: (BuildContext context, Widget child) {
+                          return new Transform(
+                            transform: new Matrix4.rotationZ(
+                                _animationController.value * 0.5 * pi),
+                            alignment: FractionalOffset.center,
+                            child: new Icon(
+                              _animationController.isDismissed
+                                  ? Icons.attach_file_rounded
+                                  : Icons.close,
+                              color: orangeColor,
+                            ),
+                          );
+                        },
                       ),
-                    );
-                  },
+                      onPressed: () {
+                        if (_animationController.isDismissed) {
+                          _animationController.forward();
+                        } else {
+                          _animationController.reverse();
+                        }
+                      },
+                    ),
+                  ),
                 ),
-                onPressed: () {
-                  if (_animationController.isDismissed) {
-                    _animationController.forward();
-                  } else {
-                    _animationController.reverse();
-                  }
-                },
-              ),
-            ),
-          ),
-      )
+            )
           : null,
       appBar: AppBar(
         backgroundColor: defaultOrangeColor,
@@ -257,9 +256,15 @@ class _ConversationScreenState extends State<ConversationScreen>
               Icons.call,
             ),
             onPressed: () {
-              _jitsiConfig.joinMeeting(
-                  context, false, widget.roomID, widget.partner);
-              _socketChat.sendMessage(widget.roomID, audioCall);
+              String callRoom = audioCall +
+                  '_${rocketUser.data.userId}' +
+                  '_${widget.partner.user.id}';
+              JitsiConfig.instance.joinMeeting(
+                  context,
+                  false,
+                  '${rocketUser.data.userId}' + '_${widget.partner.user.id}',
+                  widget.partner);
+              _socketChat.sendMessage(widget.roomID, callRoom);
             },
           ),
           IconButton(
@@ -267,9 +272,15 @@ class _ConversationScreenState extends State<ConversationScreen>
               Icons.videocam,
             ),
             onPressed: () {
-              _jitsiConfig.joinMeeting(
-                  context, true, widget.roomID, widget.partner);
-              _socketChat.sendMessage(widget.roomID, videoCall);
+              String callRoom = videoCall +
+                  '_${rocketUser.data.userId}' +
+                  '_${widget.partner.user.id}';
+              JitsiConfig.instance.joinMeeting(
+                  context,
+                  true,
+                  '${rocketUser.data.userId}' + '_${widget.partner.user.id}',
+                  widget.partner);
+              _socketChat.sendMessage(widget.roomID, callRoom);
             },
           ),
           SizedBox(
@@ -289,7 +300,7 @@ class _ConversationScreenState extends State<ConversationScreen>
                     var responseJSON = jsonDecode(snapshot.data);
                     if (responseJSON['msg'] == 'changed') {
                       SocketMessage sMessage =
-                      SocketMessage.fromJson(responseJSON);
+                          SocketMessage.fromJson(responseJSON);
                       _messages.insert(
                           0,
                           Message(
@@ -299,6 +310,7 @@ class _ConversationScreenState extends State<ConversationScreen>
                               msg: sMessage.fields.args.first.msg,
                               ts: DateTime(
                                   sMessage.fields.args.first.updatedAt.date)));
+                      checkSocketMessage(sMessage.fields.args.first.msg);
                     }
                   }
                   return ListView.builder(
@@ -464,7 +476,7 @@ class _ConversationScreenState extends State<ConversationScreen>
 
       _recorderSubscription = flutterSound.onRecorderStateChanged.listen((e) {
         DateTime date =
-        new DateTime.fromMillisecondsSinceEpoch(e.currentPosition.toInt());
+            new DateTime.fromMillisecondsSinceEpoch(e.currentPosition.toInt());
         String txt = DateFormat('mm:ss:SS', 'en_US').format(date);
         this.setState(() {
           this._isRecording = true;
@@ -537,8 +549,8 @@ class _ConversationScreenState extends State<ConversationScreen>
     setState(() {
       if (pickedFile != null) {
         var mimeTypeData =
-        lookupMimeType(pickedFile.path, headerBytes: [0xFF, 0xD8])
-            .split('/');
+            lookupMimeType(pickedFile.path, headerBytes: [0xFF, 0xD8])
+                .split('/');
         RocketChatApi().sendFile(widget.roomID, pickedFile.path, 'IMAGE',
             MediaType(mimeTypeData[0], mimeTypeData[1]));
       } else {}
@@ -550,8 +562,8 @@ class _ConversationScreenState extends State<ConversationScreen>
     setState(() {
       if (pickedFile != null) {
         var mimeTypeData =
-        lookupMimeType(pickedFile.path, headerBytes: [0xFF, 0xD8])
-            .split('/');
+            lookupMimeType(pickedFile.path, headerBytes: [0xFF, 0xD8])
+                .split('/');
         RocketChatApi().sendFile(widget.roomID, pickedFile.path, 'VIDEO',
             MediaType(mimeTypeData[0], mimeTypeData[1]));
       } else {
@@ -566,8 +578,8 @@ class _ConversationScreenState extends State<ConversationScreen>
     if (result != null) {
       // File file = File(result.files.single.path);
       var mimeTypeData =
-      lookupMimeType(result.files.single.path, headerBytes: [0xFF, 0xD8])
-          .split('/');
+          lookupMimeType(result.files.single.path, headerBytes: [0xFF, 0xD8])
+              .split('/');
       RocketChatApi().sendFile(
           widget.roomID,
           File(result.files.single.path).path,
@@ -585,8 +597,53 @@ class _ConversationScreenState extends State<ConversationScreen>
       _textEditingController.text = '';
     }
   }
-}
 
-bool checkMessageSender(int index, Message _message) {
-  return _message.user.id == rocketUser.data.userId;
+  bool checkMessageSender(int index, Message _message) {
+    return _message.user.id == rocketUser.data.userId;
+  }
+
+  void checkSocketMessage(String message) {
+    var splitMessage = message.split("_");
+
+    if (splitMessage[0].startsWith('--')) {
+      // if (message == closeMeet) {
+      //   JitsiConfig.instance.closeMeeting(context);
+      //   return;
+      // }
+      if (splitMessage[1] != rocketUser.data.userId) {
+        if (splitMessage[0] == audioCall) {
+          SchedulerBinding.instance.addPostFrameCallback((_) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => RingingScreen(widget.partner, false,
+                      splitMessage[1] + '_' + splitMessage[2])),
+            ).then((value) {
+              setState(() {
+                _socketChat.connectToSocket(widget.roomID);
+                _socketChat.subscribeToRoom(widget.roomID);
+                // _socketChat.sendMessage(widget.roomID, closeMeet);
+              });
+            });
+          });
+        } else if (splitMessage[0] == videoCall) {
+          SchedulerBinding.instance.addPostFrameCallback((_) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => RingingScreen(widget.partner, true,
+                      splitMessage[1] + '_' + splitMessage[2])),
+            ).then((value) {
+              setState(() {
+                _socketChat.connectToSocket(widget.roomID);
+                _socketChat.subscribeToRoom(widget.roomID);
+                //_socketChat.sendMessage(widget.roomID, closeMeet);
+              });
+            });
+          });
+        }
+        _socketChat.closeSocket(widget.roomID);
+      }
+    }
+  }
 }

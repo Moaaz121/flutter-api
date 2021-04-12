@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bawabtalsharq/Model/chat/partner_model.dart';
-import 'package:bawabtalsharq/Utils/apis.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:flutter/material.dart';
