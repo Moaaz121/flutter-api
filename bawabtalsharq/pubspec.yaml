@@ -44,6 +44,13 @@ dependencies:
   image_pickers: ^1.0.8+7
   flutter_imagenetwork:
   jitsi_meet:
+  audio_recorder: ^1.0.2
+  path_provider: ^1.6.8
+  permission_handler: 5.0.0
+  flutter_sound: ^2.0.4
+  intl:
+  mime:
+
 
 dev_dependencies:
   flutter_test:

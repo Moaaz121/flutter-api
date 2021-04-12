@@ -91,11 +91,13 @@ class RocketChatApi {
 //end Asmaa
 
 //start karem
-  Future<dynamic> sendFile(String room, String filePath) async {
+  Future<dynamic> sendFile(
+      String room, String filePath, String name, MediaType type) async {
     var request = http.MultipartRequest('POST',
         Uri.parse('http://digitalxmax.com:3000/api/v1/rooms.upload/' + room));
+
     request.files.add(await http.MultipartFile.fromPath('file', filePath,
-        filename: 'Kareem File Name', contentType: MediaType('image', 'jpg')));
+        filename: name, contentType: type));
     request.headers.addAll(rocketHeaders);
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
