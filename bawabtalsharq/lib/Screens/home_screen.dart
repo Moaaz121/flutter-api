@@ -16,49 +16,49 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      child: SafeArea(
-        bottom: false,
-        child: Stack(
-          children: [
-            SingleChildScrollView(
-              physics: const BouncingScrollPhysics(
-                  parent: AlwaysScrollableScrollPhysics()),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 75,
-                  ),
-                  mainSlider(),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      mainHeaderButton(() {
-                        Navigator.pushNamed(
-                            context, ScreenRoutes.categoriesScreen);
-                      }, Languages.of(context).allCategories, allCategories,
-                          blueColor.withOpacity(0.15)),
-                      mainHeaderButton(() {
-                        Navigator.pushNamed(
-                            context, ScreenRoutes.requestForQuotation);
-                      }, Languages.of(context).requestForQ, requestForQ,
-                          orangeColor.withOpacity(0.15)),
-                      mainHeaderButton(() {}, Languages.of(context).joinUs,
-                          joinUs, purpleColor.withOpacity(0.15)),
-                    ],
-                  ),
-                  ourGoldenSupplier(context),
-                  mostPopularIn(context),
-                  mostPopularByCategoryHeader(context),
-                  listOfCateWidget()
-                ],
-              ),
-            ),
-            Column(
+      child: Stack(
+        children: [
+          SingleChildScrollView(
+            physics: const BouncingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics()),
+            child: Column(
               children: [
+                SizedBox(
+                  height: 100,
+                ),
+                mainSlider(),
+                SizedBox(
+                  height: 10,
+                ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    mainHeaderButton(() {
+                      Navigator.pushNamed(
+                          context, ScreenRoutes.categoriesScreen);
+                    }, Languages.of(context).allCategories, allCategories,
+                        blueColor.withOpacity(0.15)),
+                    mainHeaderButton(() {
+                      Navigator.pushNamed(
+                          context, ScreenRoutes.requestForQuotation);
+                    }, Languages.of(context).requestForQ, requestForQ,
+                        orangeColor.withOpacity(0.15)),
+                    mainHeaderButton(() {}, Languages.of(context).joinUs,
+                        joinUs, purpleColor.withOpacity(0.15)),
+                  ],
+                ),
+                ourGoldenSupplier(context),
+                mostPopularIn(context),
+                mostPopularByCategoryHeader(context),
+                listOfCateWidget()
+              ],
+            ),
+          ),
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -68,10 +68,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     chatButton(() {})
                   ],
                 ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
