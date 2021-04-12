@@ -1,6 +1,7 @@
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -77,14 +78,18 @@ class _FeatureScreenState extends State<FeatureScreen> {
       child: Column(
         children: [
           Container(
-            height: 250,
+            height: MediaQuery.of(context).size.width * 0.6,
             child: Stack(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(top: 50, left: 20, right: 20),
+                  padding: EdgeInsets.only(
+                    top: 50,
+                    left: 20,
+                    right: 20,
+                  ),
                   child: Container(
                     decoration: new BoxDecoration(
-                      color: Color(0xffffffff),
+                      color: Colors.white,
                       borderRadius: BorderRadius.circular(15),
                       boxShadow: [
                         BoxShadow(
@@ -96,35 +101,58 @@ class _FeatureScreenState extends State<FeatureScreen> {
                     ),
                   ),
                 ),
-                Positioned(
+
+                Positioned.directional(
+                  textDirection: Directionality.of(context),
+                  top: 60,
+                  end: 40,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(
+                          context, ScreenRoutes.supplierProfileScreen);
+                    },
+                    child: Icon(
+                      Icons.arrow_forward,
+                      size: 20,
+                    ),
+                  ),
+                ),
+
+                Positioned.directional(
+                  textDirection: Directionality.of(context),
                   top: 20,
-                  left: 50,
+                  start: 50,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(
-                        width: 86,
-                        height: 86,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          border: Border.all(
-                            color: Colors.white,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, ScreenRoutes.supplierProfileScreen);
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.3,
+                          height: MediaQuery.of(context).size.height * 0.15,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                              color: Colors.white,
+                            ),
+                            shape: BoxShape.rectangle,
+                            image: DecorationImage(
+                              image: AssetImage(mosadaq_img),
+                              fit: BoxFit.fill,
+                            ),
                           ),
-                          shape: BoxShape.rectangle,
-                          image: DecorationImage(
-                            image: AssetImage(mosadaq_img),
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 300, top: 10),
-                          child: Icon(Icons.arrow_forward),
                         ),
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 15,
                       ),
                       buildText('Bahaa Robert', 12),
+                      SizedBox(
+                        height: 5,
+                      ),
                       Row(
                         children: [
                           Icon(
@@ -144,6 +172,9 @@ class _FeatureScreenState extends State<FeatureScreen> {
                           ),
                         ],
                       ),
+                      SizedBox(
+                        height: 5,
+                      ),
                       Row(
                         children: [
                           Icon(
@@ -154,15 +185,20 @@ class _FeatureScreenState extends State<FeatureScreen> {
                           buildText('4.5', 12)
                         ],
                       ),
+                      Row(
+                        children: [],
+                      )
                     ],
                   ),
                 ),
-                Positioned(
-                  top: MediaQuery.of(context).size.width * 0.24,
-                  right: MediaQuery.of(context).size.width * 0.19,
+                //Last image
+                Positioned.directional(
+                  textDirection: Directionality.of(context),
+                  top: MediaQuery.of(context).size.width * 0.28,
+                  end: MediaQuery.of(context).size.width * 0.1,
                   child: Container(
-                    width: 80,
-                    height: 80,
+                    width: MediaQuery.of(context).size.height * 0.10,
+                    height: MediaQuery.of(context).size.width * 0.16,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(
@@ -176,12 +212,14 @@ class _FeatureScreenState extends State<FeatureScreen> {
                     ),
                   ),
                 ),
-                Positioned(
-                  top: MediaQuery.of(context).size.width * 0.22,
-                  right: MediaQuery.of(context).size.width * 0.22,
+                //center image
+                Positioned.directional(
+                  textDirection: Directionality.of(context),
+                  top: MediaQuery.of(context).size.width * 0.25,
+                  end: MediaQuery.of(context).size.width * 0.15,
                   child: Container(
-                    width: 90,
-                    height: 100,
+                    width: MediaQuery.of(context).size.height * 0.11,
+                    height: MediaQuery.of(context).size.width * 0.24,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(
@@ -195,12 +233,14 @@ class _FeatureScreenState extends State<FeatureScreen> {
                     ),
                   ),
                 ),
-                Positioned(
-                  top: MediaQuery.of(context).size.width * 0.2,
-                  right: MediaQuery.of(context).size.width * 0.26,
+                //top image
+                Positioned.directional(
+                  textDirection: Directionality.of(context),
+                  top: MediaQuery.of(context).size.width * 0.23,
+                  end: MediaQuery.of(context).size.width * 0.22,
                   child: Container(
-                    width: 100,
-                    height: 120,
+                    width: MediaQuery.of(context).size.height * 0.12,
+                    height: MediaQuery.of(context).size.width * 0.3,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(

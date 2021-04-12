@@ -51,6 +51,7 @@ class LanguageAr extends Languages {
   String get color => 'الألوان';
   String get faq => 'التعليمات';
   String get privacy => 'الخصوصية و أمن';
+
 // end Bahaa
 
 // Start Mosdik
@@ -117,7 +118,7 @@ class LanguageAr extends Languages {
   String get startChat => 'ابدأ الدردشة الآن!';
   String get allProducts => 'كل المنتجات';
   String get info => 'معلومات التاجر';
-  String get superior => 'متفوق';
+  String get superior => 'العملاء المميزين';
 
 // end Mosdik
 

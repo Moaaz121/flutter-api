@@ -61,7 +61,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     signInFlatButton(
                         context, height, Languages.of(context).send, () {
                       Navigator.pushReplacementNamed(
-                          context, ScreenRoutes.mainScreen);
+                          context, ScreenRoutes.verificationPassword);
                     }),
                   ],
                 ),

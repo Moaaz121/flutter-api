@@ -310,7 +310,7 @@ Widget bottomAppBar(Function(int x) _selectionFunction,
                 title: Padding(
                   padding: const EdgeInsets.only(top: 7),
                   child: Text(
-                    Languages.of(context).feature,
+                    Languages.of(context).superior,
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.height * 0.014,
                     ),
