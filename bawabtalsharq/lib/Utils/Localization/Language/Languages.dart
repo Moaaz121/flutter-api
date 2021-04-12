@@ -178,6 +178,9 @@ abstract class Languages {
   String get shippingTerm;
   String get paymentTerms;
   String get productDetails;
+  String get send;
+  String get createNewPassword;
+  String get emailAddress;
 
 // end Islam
 }
