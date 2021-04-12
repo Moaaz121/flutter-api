@@ -1,20 +1,20 @@
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
-import 'package:flutter/material.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-class PrivacyScreen extends StatefulWidget {
+class FaqScreen extends StatefulWidget {
   @override
-  _PrivacyScreenState createState() => _PrivacyScreenState();
+  _FaqScreenState createState() => _FaqScreenState();
 }
 
-class _PrivacyScreenState extends State<PrivacyScreen> {
+class _FaqScreenState extends State<FaqScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarBuilder(
-        title: Languages.of(context).privacy,
+        title: Languages.of(context).faq,
         onBackPressed: () {
           Navigator.of(context).pop();
         },
@@ -31,7 +31,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
             ),
             child: ExpansionTileCard(
               shadowColor: Colors.transparent,
-              title: Text('Payment Information'),
+              title: Text('Order Placement Information'),
               children: <Widget>[
                 Align(
                   alignment: Alignment.centerLeft,

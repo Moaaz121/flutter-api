@@ -291,7 +291,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       Languages.of(context).faq,
                       () {
-                        print('FAQ');
+                        Navigator.pushNamed(context, ScreenRoutes.faqScreen);
                       },
                     ),
                     unExpansionProfileItem(
@@ -301,7 +301,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       Languages.of(context).privacy,
                       () {
-                        print('Privacy \& Security');
+                        Navigator.pushNamed(
+                            context, ScreenRoutes.privacyScreen);
                       },
                       drawDivider: false,
                     ),

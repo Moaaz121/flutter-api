@@ -36,6 +36,7 @@ dependencies:
   flutter_rating_bar:
   flutter_dropdown: ^0.0.8
   pin_code_fields:
+  expansion_tile_card:
   line_icons:
   url_launcher:
 

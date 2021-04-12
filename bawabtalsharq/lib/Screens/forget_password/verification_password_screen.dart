@@ -78,10 +78,10 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Image(
-                    image: AssetImage(logo),
-                    width: 40,
-                    height: 40,
+                  backIconRounded(
+                    onBackPressed: () {
+                      Navigator.of(context).pop();
+                    },
                   ),
                   SizedBox(
                     height: 40,

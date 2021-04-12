@@ -13,6 +13,7 @@ import 'package:bawabtalsharq/Screens/request_for_qutation.dart';
 import 'package:bawabtalsharq/Screens/search/categories_filter_screen.dart';
 import 'package:bawabtalsharq/Screens/search/search_filter_screen.dart';
 import 'package:bawabtalsharq/Screens/search/search_result_screen.dart';
+import 'package:bawabtalsharq/Screens/profile/privacy/privacy_screen.dart';
 import 'package:bawabtalsharq/Screens/sub_category_screen.dart';
 import 'package:bawabtalsharq/Screens/search/search_screen.dart';
 import 'package:bawabtalsharq/Screens/pricing/pricing_screen.dart';
@@ -21,6 +22,7 @@ import 'package:bawabtalsharq/Screens/profile/history/history_screen.dart';
 import 'package:bawabtalsharq/Screens/sign_up_screen.dart';
 import 'package:bawabtalsharq/Screens/forget_password/verification_password_screen.dart';
 import 'package:bawabtalsharq/Screens/splash_screen.dart';
+import 'package:bawabtalsharq/Screens/profile/faq/faq_screen.dart';
 import 'package:bawabtalsharq/Screens/suppliers/supplier_profile_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/AppLocalizationDelgate.dart';
 import 'package:device_preview/device_preview.dart';
@@ -96,6 +98,8 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.forgetPassword: (_) => ForgetPassword(),
         ScreenRoutes.newPassword: (_) => NewPassword(),
         ScreenRoutes.verificationPassword: (_) => VerificationScreen(),
+        ScreenRoutes.privacyScreen: (_) => PrivacyScreen(),
+        ScreenRoutes.faqScreen: (_) => FaqScreen(),
       },
       locale: _locale,
       supportedLocales: supportedLocales,
@@ -177,4 +181,6 @@ class ScreenRoutes {
   static const String forgetPassword = '/forget_password_screen';
   static const String newPassword = '/new_password_screen';
   static const String verificationPassword = '/verification_password_screen';
+  static const String privacyScreen = '/privacy_screen';
+  static const String faqScreen = '/faq_screen';
 }
