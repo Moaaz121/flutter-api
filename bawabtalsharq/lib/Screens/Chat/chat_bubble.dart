@@ -1,6 +1,6 @@
 import 'package:bawabtalsharq/Model/chat/partner_model.dart';
-import 'package:bawabtalsharq/Repos/ChatRepos/jitsi_config.dart';
 import 'package:bawabtalsharq/Utils/apis.dart';
+import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_imagenetwork/flutter_imagenetwork.dart';
@@ -25,7 +25,6 @@ class ChatBubble extends StatefulWidget {
 }
 
 class _ChatBubbleState extends State<ChatBubble> {
-  JitsiConfig _jitsiConfig = JitsiConfig();
   List colors = Colors.primaries;
 
   Color chatBubbleColor() {
@@ -79,12 +78,7 @@ class _ChatBubbleState extends State<ChatBubble> {
                   padding:
                       EdgeInsets.all(widget.message.msg.isNotEmpty ? 5 : 0),
                   child: widget.message.msg.isNotEmpty
-                      ? Text(
-                          widget.message.msg,
-                          style: TextStyle(
-                            color: widget.isMe ? Colors.white : Colors.orange,
-                          ),
-                        )
+                      ? buildTextMessage()
                       : AjanuwImage(
                           image: AjanuwNetworkImage(APIS.chatBaseURL +
                               widget.message.attachments.first.titleLink),
@@ -113,24 +107,21 @@ class _ChatBubbleState extends State<ChatBubble> {
     );
   }
 
-  // Widget socketMessage() {
-  //   String messageTxt = '';
-  //   if (widget.message.msg == audioCall) {
-  //     messageTxt = 'Audio call';
-  //     _jitsiConfig.joinMeeting(
-  //         context, false, widget.roomID, widget.partnerData);
-  //   } else if (widget.message.msg == videoCall) {
-  //     messageTxt = 'Video call';
-  //     _jitsiConfig.joinMeeting(
-  //         context, true, widget.roomID, widget.partnerData);
-  //   } else {
-  //     messageTxt = widget.message.msg;
-  //   }
-  //   return Text(
-  //     messageTxt,
-  //     style: TextStyle(
-  //       color: widget.isMe ? Colors.white : Colors.orange,
-  //     ),
-  //   );
-  // }
+  Widget buildTextMessage() {
+    var splitedMessage = widget.message.msg.split('_');
+    String messageTxt = '';
+    if (splitedMessage[0] == audioCall) {
+      messageTxt = 'Audio call';
+    } else if (splitedMessage[0] == videoCall) {
+      messageTxt = 'Video call';
+    } else {
+      messageTxt = widget.message.msg;
+    }
+    return Text(
+      messageTxt,
+      style: TextStyle(
+        color: widget.isMe ? Colors.white : Colors.orange,
+      ),
+    );
+  }
 }

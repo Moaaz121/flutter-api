@@ -1,12 +1,17 @@
 import 'package:bawabtalsharq/Model/chat/partner_model.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/apis.dart';
+import 'package:bawabtalsharq/main.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:jitsi_meet/feature_flag/feature_flag.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
 import 'package:jitsi_meet/jitsi_meeting_listener.dart';
 
 class JitsiConfig {
+  JitsiConfig._privateConstructor();
+  static final JitsiConfig instance = JitsiConfig._privateConstructor();
+
   var _options = JitsiMeetingOptions();
 
   void joinMeeting(BuildContext context, bool isVideo, String roomID,
@@ -32,8 +37,8 @@ class JitsiConfig {
     featureFlag.recordingEnabled = false;
     featureFlag.videoShareButtonEnabled = true;
     featureFlag.closeCaptionsEnabled = false;
-    featureFlag.welcomePageEnabled = true;
-    featureFlag.pipEnabled = true;
+    featureFlag.welcomePageEnabled = false;
+    featureFlag.pipEnabled = false;
     featureFlag.callIntegrationEnabled = false;
     featureFlag.iOSRecordingEnabled = false;
     _options.room = roomID; // Required, spaces will be trimmed
@@ -45,7 +50,7 @@ class JitsiConfig {
         'https://pbs.twimg.com/profile_images/1302962150302982146/NTb6iGpC.jpg';
     _options.audioOnly = isVideo ? false : true;
     _options.audioMuted = false;
-    _options.videoMuted = isVideo;
+    _options.videoMuted = !isVideo;
     _options.featureFlag = featureFlag;
   }
 
@@ -57,8 +62,12 @@ class JitsiConfig {
         onError: _onError));
   }
 
-  void closeMeeting() {
+  void closeMeeting(BuildContext context) {
     JitsiMeet.closeMeeting();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      Navigator.popUntil(
+          context, ModalRoute.withName(ScreenRoutes.conversationScreen));
+    });
   }
 
   void _onConferenceWillJoin({message}) {

@@ -1,8 +1,11 @@
 import 'package:bawabtalsharq/Model/chat/partner_model.dart';
+import 'package:bawabtalsharq/Repos/ChatRepos/jitsi_config.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 
 class RingingScreen extends StatefulWidget {
   final PartnerData partnerData;
@@ -15,20 +18,40 @@ class RingingScreen extends StatefulWidget {
 
 class _RingingScreenState extends State<RingingScreen> {
   @override
+  void initState() {
+    super.initState();
+    playRingTone();
+  }
+
+  @override
+  void dispose() {
+    // stopRingTone();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage(splashImage), fit: BoxFit.fill),
-            ),
-            child: Stack(
-              children: [
-                callInfo(),
-                answerButtons(),
-              ],
-            )),
+    return WillPopScope(
+      onWillPop: () async {
+        SchedulerBinding.instance.addPostFrameCallback((_) {
+          Navigator.pop(context);
+        });
+        return true;
+      },
+      child: Scaffold(
+        body: Center(
+          child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(splashImage), fit: BoxFit.fill),
+              ),
+              child: Stack(
+                children: [
+                  callInfo(),
+                  answerButtons(),
+                ],
+              )),
+        ),
       ),
     );
   }
@@ -68,7 +91,11 @@ class _RingingScreenState extends State<RingingScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           RawMaterialButton(
-            onPressed: () {},
+            onPressed: () {
+              stopRingTone();
+              JitsiConfig.instance.joinMeeting(
+                  context, widget.isVideo, widget.roomID, widget.partnerData);
+            },
             fillColor: Colors.white,
             elevation: 2,
             child: Icon(
@@ -80,7 +107,12 @@ class _RingingScreenState extends State<RingingScreen> {
             shape: CircleBorder(),
           ),
           RawMaterialButton(
-            onPressed: () {},
+            onPressed: () {
+              stopRingTone();
+              SchedulerBinding.instance.addPostFrameCallback((_) {
+                Navigator.pop(context);
+              });
+            },
             fillColor: Colors.white,
             elevation: 2,
             child: Icon(
@@ -94,5 +126,19 @@ class _RingingScreenState extends State<RingingScreen> {
         ],
       ),
     );
+  }
+
+  void playRingTone() {
+    FlutterRingtonePlayer.play(
+      android: AndroidSounds.ringtone,
+      ios: IosSounds.horn,
+      looping: true, // Android only - API >= 28
+      volume: 0.1, // Android only - API >= 28
+      asAlarm: false, // Android only - all APIs
+    );
+  }
+
+  void stopRingTone() {
+    FlutterRingtonePlayer.stop();
   }
 }

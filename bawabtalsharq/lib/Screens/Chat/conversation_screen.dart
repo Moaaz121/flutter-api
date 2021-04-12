@@ -8,12 +8,14 @@ import 'package:bawabtalsharq/Repos/ChatRepos/chat_repo.dart';
 import 'package:bawabtalsharq/Repos/ChatRepos/jitsi_config.dart';
 import 'package:bawabtalsharq/Repos/ChatRepos/socket_chat.dart';
 import 'package:bawabtalsharq/Screens/Chat/chat_bubble.dart';
+import 'package:bawabtalsharq/Screens/Chat/ringing_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_pickers/image_pickers.dart';
 import 'package:rocket_chat_connector_flutter/models/message.dart';
@@ -35,7 +37,6 @@ class _ConversationScreenState extends State<ConversationScreen>
   AnimationController _animationController;
   TextEditingController _textEditingController = TextEditingController();
 
-  JitsiConfig _jitsiConfig = JitsiConfig();
   final picker = ImagePicker();
   FilePickerResult resultFile;
 
@@ -56,13 +57,7 @@ class _ConversationScreenState extends State<ConversationScreen>
       vsync: this,
       duration: const Duration(milliseconds: 300),
     );
-    _jitsiConfig.jitsiListener();
-  }
-
-  @override
-  void dispose() {
-    _jitsiConfig.closeMeeting();
-    super.dispose();
+    JitsiConfig.instance.jitsiListener();
   }
 
   @override
@@ -229,9 +224,15 @@ class _ConversationScreenState extends State<ConversationScreen>
               Icons.call,
             ),
             onPressed: () {
-              _jitsiConfig.joinMeeting(
-                  context, false, widget.roomID, widget.partner);
-              _socketChat.sendMessage(widget.roomID, audioCall);
+              String callRoom = audioCall +
+                  '_${rocketUser.data.userId}' +
+                  '_${widget.partner.user.id}';
+              JitsiConfig.instance.joinMeeting(
+                  context,
+                  false,
+                  '${rocketUser.data.userId}' + '_${widget.partner.user.id}',
+                  widget.partner);
+              _socketChat.sendMessage(widget.roomID, callRoom);
             },
           ),
           IconButton(
@@ -239,9 +240,15 @@ class _ConversationScreenState extends State<ConversationScreen>
               Icons.videocam,
             ),
             onPressed: () {
-              _jitsiConfig.joinMeeting(
-                  context, true, widget.roomID, widget.partner);
-              _socketChat.sendMessage(widget.roomID, videoCall);
+              String callRoom = videoCall +
+                  '_${rocketUser.data.userId}' +
+                  '_${widget.partner.user.id}';
+              JitsiConfig.instance.joinMeeting(
+                  context,
+                  true,
+                  '${rocketUser.data.userId}' + '_${widget.partner.user.id}',
+                  widget.partner);
+              _socketChat.sendMessage(widget.roomID, callRoom);
             },
           ),
           SizedBox(
@@ -257,7 +264,9 @@ class _ConversationScreenState extends State<ConversationScreen>
               child: StreamBuilder(
                 stream: _socketChat.webSocketChannel.stream,
                 builder: (context, snapshot) {
-                  if (snapshot.hasData) {
+                  if (snapshot != null &&
+                      !snapshot.hasError &&
+                      snapshot.hasData) {
                     var responseJSON = jsonDecode(snapshot.data);
                     if (responseJSON['msg'] == 'changed') {
                       SocketMessage sMessage =
@@ -271,6 +280,7 @@ class _ConversationScreenState extends State<ConversationScreen>
                               msg: sMessage.fields.args.first.msg,
                               ts: DateTime(
                                   sMessage.fields.args.first.updatedAt.date)));
+                      checkSocketMessage(sMessage.fields.args.first.msg);
                     }
                   }
                   return ListView.builder(
@@ -402,8 +412,53 @@ class _ConversationScreenState extends State<ConversationScreen>
       _textEditingController.text = '';
     }
   }
-}
 
-bool checkMessageSender(int index, Message _message) {
-  return _message.user.id == rocketUser.data.userId;
+  bool checkMessageSender(int index, Message _message) {
+    return _message.user.id == rocketUser.data.userId;
+  }
+
+  void checkSocketMessage(String message) {
+    var splitMessage = message.split("_");
+
+    if (splitMessage[0].startsWith('--')) {
+      // if (message == closeMeet) {
+      //   JitsiConfig.instance.closeMeeting(context);
+      //   return;
+      // }
+      if (splitMessage[1] != rocketUser.data.userId) {
+        if (splitMessage[0] == audioCall) {
+          SchedulerBinding.instance.addPostFrameCallback((_) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => RingingScreen(widget.partner, false,
+                      splitMessage[1] + '_' + splitMessage[2])),
+            ).then((value) {
+              setState(() {
+                _socketChat.connectToSocket(widget.roomID);
+                _socketChat.subscribeToRoom(widget.roomID);
+                // _socketChat.sendMessage(widget.roomID, closeMeet);
+              });
+            });
+          });
+        } else if (splitMessage[0] == videoCall) {
+          SchedulerBinding.instance.addPostFrameCallback((_) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => RingingScreen(widget.partner, true,
+                      splitMessage[1] + '_' + splitMessage[2])),
+            ).then((value) {
+              setState(() {
+                _socketChat.connectToSocket(widget.roomID);
+                _socketChat.subscribeToRoom(widget.roomID);
+                //_socketChat.sendMessage(widget.roomID, closeMeet);
+              });
+            });
+          });
+        }
+        _socketChat.closeSocket(widget.roomID);
+      }
+    }
+  }
 }

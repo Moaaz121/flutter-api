@@ -75,8 +75,10 @@ class Constants {
 // end karem
 
 // Start Asmaa
-String audioCall = '#CALL#';
-String videoCall = '#VIDEO#';
+String audioCall = '--CALL';
+String videoCall = '--VIDEO';
+String closeMeet = '--close--meet--';
+
 // end Asmaa
 
 // Start Bahaa

@@ -123,4 +123,5 @@ class ScreenRoutes {
   static const String requestForQuotation = '/requestForQuotation';
   static const String postQuotationRequest = '/postQuotationRequest';
   static const String chatsScreen = '/chatsScreen';
+  static const String conversationScreen = '/conversation';
 }
