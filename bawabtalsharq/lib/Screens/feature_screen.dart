@@ -1,6 +1,7 @@
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -105,9 +106,15 @@ class _FeatureScreenState extends State<FeatureScreen> {
                   textDirection: Directionality.of(context),
                   top: 60,
                   end: 40,
-                  child: Icon(
-                    Icons.arrow_forward,
-                    size: 20,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(
+                          context, ScreenRoutes.supplierProfileScreen);
+                    },
+                    child: Icon(
+                      Icons.arrow_forward,
+                      size: 20,
+                    ),
                   ),
                 ),
 
@@ -118,18 +125,24 @@ class _FeatureScreenState extends State<FeatureScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.3,
-                        height: MediaQuery.of(context).size.height * 0.15,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          border: Border.all(
-                            color: Colors.white,
-                          ),
-                          shape: BoxShape.rectangle,
-                          image: DecorationImage(
-                            image: AssetImage(mosadaq_img),
-                            fit: BoxFit.fill,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, ScreenRoutes.supplierProfileScreen);
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.3,
+                          height: MediaQuery.of(context).size.height * 0.15,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                              color: Colors.white,
+                            ),
+                            shape: BoxShape.rectangle,
+                            image: DecorationImage(
+                              image: AssetImage(mosadaq_img),
+                              fit: BoxFit.fill,
+                            ),
                           ),
                         ),
                       ),
