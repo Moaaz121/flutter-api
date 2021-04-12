@@ -1,5 +1,7 @@
 import 'package:bawabtalsharq/Screens/all_categories_screen.dart';
 import 'package:bawabtalsharq/Screens/feature_screen.dart';
+import 'package:bawabtalsharq/Screens/forget_password/forget_password_screen.dart';
+import 'package:bawabtalsharq/Screens/forget_password/new_password_screen.dart';
 import 'package:bawabtalsharq/Screens/home_screen.dart';
 import 'package:bawabtalsharq/Screens/individual_product_screen.dart';
 import 'package:bawabtalsharq/Screens/intro_screen.dart';
@@ -17,7 +19,7 @@ import 'package:bawabtalsharq/Screens/pricing/pricing_screen.dart';
 import 'package:bawabtalsharq/Screens/settings_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/history/history_screen.dart';
 import 'package:bawabtalsharq/Screens/sign_up_screen.dart';
-import 'package:bawabtalsharq/Screens/forget_password/verfication_password_screen.dart';
+import 'package:bawabtalsharq/Screens/forget_password/verification_password_screen.dart';
 import 'package:bawabtalsharq/Screens/splash_screen.dart';
 import 'package:bawabtalsharq/Screens/suppliers/supplier_profile_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/AppLocalizationDelgate.dart';
@@ -91,6 +93,9 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.quoteScreen: (_) => QuoteDetailsScreen(),
         ScreenRoutes.supplierProfileScreen: (_) => SupplierProfile(),
         ScreenRoutes.historyScreen: (_) => HistoryScreen(),
+        ScreenRoutes.forgetPassword: (_) => ForgetPassword(),
+        ScreenRoutes.newPassword: (_) => NewPassword(),
+        ScreenRoutes.verificationPassword: (_) => VerificationScreen(),
       },
       locale: _locale,
       supportedLocales: supportedLocales,
@@ -169,4 +174,7 @@ class ScreenRoutes {
   static const String quoteScreen = '/quote_details_screen';
   static const String supplierProfileScreen = '/supplier_profile_screen';
   static const String historyScreen = '/history_screen';
+  static const String forgetPassword = '/forget_password_screen';
+  static const String newPassword = '/new_password_screen';
+  static const String verificationPassword = '/verification_password_screen';
 }

@@ -2,17 +2,18 @@ import 'dart:async';
 
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-class VerficationScreen extends StatefulWidget {
+class VerificationScreen extends StatefulWidget {
   @override
-  _VerficationScreenState createState() => _VerficationScreenState();
+  _VerificationScreenState createState() => _VerificationScreenState();
 }
 
-class _VerficationScreenState extends State<VerficationScreen> {
+class _VerificationScreenState extends State<VerificationScreen> {
   var onTapRecognizer;
 
   TextEditingController textEditingController = TextEditingController();
@@ -182,8 +183,11 @@ class _VerficationScreenState extends State<VerficationScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      signInFlatButton(context,
-                          MediaQuery.of(context).size.height, 'Verify', () {}),
+                      signInFlatButton(
+                          context, MediaQuery.of(context).size.height, 'Verify',
+                          () {
+                        Navigator.pushNamed(context, ScreenRoutes.mainScreen);
+                      }),
                     ],
                   ),
                 ],

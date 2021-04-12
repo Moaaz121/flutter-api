@@ -117,21 +117,27 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(
                       height: height * .003,
                     ),
-                    Padding(
-                      padding:
-                          const EdgeInsetsDirectional.only(start: 15, top: 5),
-                      child: GestureDetector(
-                          onTap: () {},
-                          child: Text(
-                            Languages.of(context).forgetPassword,
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: regularFontFamily,
-                              decoration: TextDecoration.underline,
-                            ),
-                          )),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Padding(
+                        padding:
+                            const EdgeInsetsDirectional.only(start: 10, top: 7),
+                        child: GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, ScreenRoutes.forgetPassword);
+                            },
+                            child: Text(
+                              Languages.of(context).forgetPassword,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.grey,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: regularFontFamily,
+                                decoration: TextDecoration.underline,
+                              ),
+                            )),
+                      ),
                     ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * .05,
