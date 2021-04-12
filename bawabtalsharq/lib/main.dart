@@ -38,14 +38,20 @@ import 'Screens/request_for_qutation.dart';
 import 'Screens/search/color_filter_screen.dart';
 import 'Screens/search/list_filter_screen.dart';
 import 'Utils/Localization/LanguageHelper.dart';
+import 'package:flutter/services.dart';
 
-void main() => runApp(
-      DevicePreview(
-        enabled: true,
-        builder: (context) => BawabtAlsharqApp(), // Wrap you`
-        // r app
-      ),
-    );
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+
+  runApp(
+    DevicePreview(
+      enabled: false,
+      builder: (context) => BawabtAlsharqApp(),
+    ),
+  );
+}
 
 class BawabtAlsharqApp extends StatefulWidget {
   static void setLocale(BuildContext context, Locale newLocale) {
@@ -59,6 +65,7 @@ class BawabtAlsharqApp extends StatefulWidget {
 
 class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
   Locale _locale;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
