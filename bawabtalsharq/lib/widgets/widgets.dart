@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:bawabtalsharq/Screens/home_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
@@ -303,7 +302,7 @@ Widget bottomAppBar(Function(int x) _selectionFunction,
             ),
             BottomNavigationBarItem(
                 icon: Image.asset(
-                  currentPage == 1 ? tabFeatureS : tabFeature,
+                  currentPage == 1 ? superior_fill_icon : superior_icon,
                   width: 23,
                   height: 23,
                 ),
