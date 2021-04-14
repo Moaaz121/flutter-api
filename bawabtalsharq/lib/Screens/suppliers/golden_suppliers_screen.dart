@@ -12,6 +12,7 @@ class GoldenSuppliers extends StatefulWidget {
 class _GoldenSuppliersState extends State<GoldenSuppliers> {
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: appBarBuilder(
@@ -24,18 +25,19 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
           padding: EdgeInsets.only(
             top: 60,
             left: 11,
-            bottom: 44,
+            bottom: 33,
           ),
           physics: AlwaysScrollableScrollPhysics(),
           shrinkWrap: true,
           scrollDirection: Axis.vertical,
           itemCount: 22,
           itemBuilder: (context, position) {
-            return Column(
-              children: [
-                Container(
-                  margin: EdgeInsets.only(left: 12, right: 23, bottom: 32),
-                  width: 354,
+            return Stack(children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: Container(
+                  margin: EdgeInsets.only(left: 12, right: 23, bottom: 15),
+                  // width: 333,
                   height: 190,
                   decoration: new BoxDecoration(
                     color: Color(0xfffbfbfb),
@@ -56,22 +58,37 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
                     ],
                   ),
                 ),
-              ],
-            );
+              ),
+              Positioned.directional(
+                textDirection: Directionality.of(context),
+                top: 5,
+                start: 30,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15.0),
+                  child: Image(
+                    image: AssetImage(kareem_img),
+                    width: 70,
+                  ),
+                ),
+              ),
+            ]);
           }),
     );
   }
 
   Padding thirdRow() {
     return Padding(
-      padding: const EdgeInsets.only(top: 11, left: 15, right: 11),
+      padding: const EdgeInsets.only(top: 16, left: 1, right: 11),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          imagesProduct('Sport Shoes', 'Sport Shoes'),
-          imagesProduct('Sport Shoes', 'Sport Shoes'),
-          imagesProduct('Sport Shoes', 'Sport Shoes')
+          imagesProduct(Languages.of(context).sportShoes,
+              Languages.of(context).sportShoes),
+          imagesProduct(Languages.of(context).sportShoes,
+              Languages.of(context).sportShoes),
+          imagesProduct(Languages.of(context).sportShoes,
+              Languages.of(context).sportShoes)
         ],
       ),
     );
@@ -81,16 +98,17 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
     String text,
     String subText,
   ) {
+    double height = MediaQuery.of(context).size.height;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       // mainAxisAlignment: MainAxisAlignment.start,
       children: [
         ClipRRect(
-          borderRadius: BorderRadius.circular(20.0),
+          borderRadius: BorderRadius.circular(20),
           child: Image(
             image: AssetImage(dominikMarti1),
-            width: 79,
-            height: 83,
+            width: 85,
+            height: 70,
           ),
         ),
         SizedBox(
@@ -115,7 +133,10 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
 
   Padding secondRow() {
     return Padding(
-      padding: const EdgeInsets.only(left: 70, right: 11),
+      padding: const EdgeInsetsDirectional.only(
+        end: 11,
+        start: 90,
+      ),
       child: Row(
         children: [
           Icon(
@@ -123,7 +144,7 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
             size: 15,
           ),
           buildText(
-            'Member since: 2020',
+            Languages.of(context).memberSince,
             7,
             color: Color(0xff646464),
             fontWeight: FontWeight.w400,
@@ -135,18 +156,19 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
 
   Padding firstRow() {
     return Padding(
-      padding: const EdgeInsets.only(top: 4, left: 70, right: 11),
+      padding: const EdgeInsetsDirectional.only(top: 4, start: 90, end: 11),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           buildText(
-            'Alaa Maher',
+            "eslam alaa",
             15,
             fontWeight: FontWeight.w700,
           ),
-          Icon(
-            Icons.widgets,
-            color: Colors.red,
+          Image(
+            image: AssetImage(medalImage),
+            width: 14,
+            height: 14,
           ),
           SizedBox(
             width: 33,

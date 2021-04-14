@@ -181,6 +181,8 @@ abstract class Languages {
   String get send;
   String get createNewPassword;
   String get emailAddress;
+  String get memberSince;
+  String get sportShoes;
 
 // end Islam
 }

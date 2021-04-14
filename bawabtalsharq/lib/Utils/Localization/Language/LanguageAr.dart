@@ -220,6 +220,8 @@ class LanguageAr extends Languages {
   String get send => 'ارسال';
   String get createNewPassword => 'إنشاء كلمة مرور جديدة';
   String get emailAddress => 'عنوان بريديك الإلكتروني ';
+  String get memberSince => 'عضو منذ: ٢٠٢٠ ';
+  String get sportShoes => 'حذاء رياضي ';
 
 // end Islam
 

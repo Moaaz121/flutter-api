@@ -2,31 +2,32 @@ import 'package:bawabtalsharq/Screens/all_categories_screen.dart';
 import 'package:bawabtalsharq/Screens/feature_screen.dart';
 import 'package:bawabtalsharq/Screens/forget_password/forget_password_screen.dart';
 import 'package:bawabtalsharq/Screens/forget_password/new_password_screen.dart';
+import 'package:bawabtalsharq/Screens/forget_password/verification_password_screen.dart';
 import 'package:bawabtalsharq/Screens/home_screen.dart';
 import 'package:bawabtalsharq/Screens/individual_product_screen.dart';
 import 'package:bawabtalsharq/Screens/intro_screen.dart';
 import 'package:bawabtalsharq/Screens/login_screen.dart';
+import 'package:bawabtalsharq/Screens/profile/faq/faq_screen.dart';
+import 'package:bawabtalsharq/Screens/profile/history/history_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/message_center/message_center_screen.dart';
-import 'package:bawabtalsharq/Screens/profile/saved/saved_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/message_center/qoute_details_screen.dart';
+import 'package:bawabtalsharq/Screens/profile/privacy/privacy_screen.dart';
+import 'package:bawabtalsharq/Screens/profile/saved/saved_screen.dart';
 import 'package:bawabtalsharq/Screens/request_for_qutation.dart';
 import 'package:bawabtalsharq/Screens/search/categories_filter_screen.dart';
 import 'package:bawabtalsharq/Screens/search/search_filter_screen.dart';
 import 'package:bawabtalsharq/Screens/search/search_result_screen.dart';
-import 'package:bawabtalsharq/Screens/profile/privacy/privacy_screen.dart';
-import 'package:bawabtalsharq/Screens/sub_category_screen.dart';
 import 'package:bawabtalsharq/Screens/search/search_screen.dart';
-import 'package:bawabtalsharq/Screens/pricing/pricing_screen.dart';
 import 'package:bawabtalsharq/Screens/settings_screen.dart';
-import 'package:bawabtalsharq/Screens/profile/history/history_screen.dart';
 import 'package:bawabtalsharq/Screens/sign_up_screen.dart';
-import 'package:bawabtalsharq/Screens/forget_password/verification_password_screen.dart';
 import 'package:bawabtalsharq/Screens/splash_screen.dart';
-import 'package:bawabtalsharq/Screens/profile/faq/faq_screen.dart';
+import 'package:bawabtalsharq/Screens/sub_category_screen.dart';
+import 'package:bawabtalsharq/Screens/suppliers/golden_suppliers_screen.dart';
 import 'package:bawabtalsharq/Screens/suppliers/supplier_profile_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/AppLocalizationDelgate.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'Screens/interesting_screen.dart';
@@ -38,7 +39,6 @@ import 'Screens/request_for_qutation.dart';
 import 'Screens/search/color_filter_screen.dart';
 import 'Screens/search/list_filter_screen.dart';
 import 'Utils/Localization/LanguageHelper.dart';
-import 'package:flutter/services.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,7 +47,7 @@ void main() {
 
   runApp(
     DevicePreview(
-      enabled: false,
+      enabled: true,
       builder: (context) => BawabtAlsharqApp(),
     ),
   );
@@ -73,7 +73,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.deepOrange),
-      home: SplashScreen(),
+      home: GoldenSuppliers(),
       routes: {
         ScreenRoutes.splashScreen: (_) => SplashScreen(),
         ScreenRoutes.introScreen: (_) => IntroScreen(),

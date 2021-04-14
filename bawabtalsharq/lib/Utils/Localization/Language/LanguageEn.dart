@@ -220,6 +220,8 @@ class LanguageEn extends Languages {
   String get send => 'Send';
   String get createNewPassword => 'Create New Password';
   String get emailAddress => 'Email Address';
+  String get memberSince => 'Member since: 2020';
+  String get sportShoes => 'Sport Shoes';
 
 // end Islam
 }
