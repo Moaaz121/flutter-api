@@ -2,6 +2,9 @@ import 'package:bawabtalsharq/Screens/profile_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
+import 'package:bawabtalsharq/Screens/profile/contact_us/location_dialog.dart';
+import 'package:bawabtalsharq/Screens/profile/contact_us/send_message_dialog.dart';
+import 'package:bawabtalsharq/Screens/profile/contact_us/phone_dialog.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +16,7 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   bool _switchValue = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -164,7 +168,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     color: Colors.blue,
                                   ),
                                   'Phone Number',
-                                  () {},
+                                  () {
+                                    showAnimatedDialog(
+                                      context,
+                                      phoneNumberDialog(context),
+                                    );
+                                  },
                                   textSize: 12,
                                 ),
                                 unExpansionProfileItem(
@@ -174,7 +183,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     color: Colors.deepOrange,
                                   ),
                                   'Send Message',
-                                  () {},
+                                  () {
+                                    showAnimatedDialog(
+                                      context,
+                                      sendMessageDialog(context),
+                                    );
+                                  },
                                   textSize: 12,
                                 ),
                                 unExpansionProfileItem(
@@ -184,7 +198,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     color: Colors.deepPurpleAccent,
                                   ),
                                   'Location',
-                                  () {},
+                                  () {
+                                    showAnimatedDialog(
+                                      context,
+                                      locationDialog(context),
+                                    );
+                                  },
                                   drawDivider: false,
                                   textSize: 12,
                                 ),

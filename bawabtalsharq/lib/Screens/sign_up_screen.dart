@@ -73,142 +73,154 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
-      resizeToAvoidBottomPadding: true,
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(logo1),
-            fit: BoxFit.fitHeight,
-          ),
-        ),
-        child: Container(
-          margin:
-              const EdgeInsets.only(top: 60, left: 25, right: 25, bottom: 20),
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(33),
-              boxShadow: [
-                makeShadow(),
-              ]),
-          child: SingleChildScrollView(
-            reverse: false,
-            padding: EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                backIconRounded(onBackPressed: () {
-                  Navigator.of(context).pop();
-                }),
-                buildSizedBox(height: 20),
-                buildText(Languages.of(context).signUp, 40,
-                    fontWeight: FontWeight.w700),
-                buildSizedBox(height: 10),
-                buildSizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: DropdownButton(
-                    isExpanded: true,
-                    isDense: false,
-                    value: _selectedCountry,
-                    items: _dropdownMenuItems,
-                    onChanged: onChangeDropdownItem,
-                  ),
+      body: Stack(
+        children: [
+          Positioned(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(logo1),
+                  fit: BoxFit.fill,
                 ),
-                buildSizedBox(height: 10),
-                buildText(
-                  Languages.of(context).plzSecect,
-                  15,
-                  color: Colors.grey[500],
-                  fontWeight: FontWeight.w400,
-                ),
-                buildSizedBox(
-                    height: 25,
-                    child: buildRadioListTile(Languages.of(context).buyer, 1)),
-                buildSizedBox(
-                    height: 25,
-                    child: buildRadioListTile(Languages.of(context).seller, 2)),
-                buildRadioListTile(Languages.of(context).both, 3),
-                customTextField(context,
-                    label: Languages.of(context).fullName,
-                    width: 1,
-                    leftIcon: Icons.person),
-                customTextField(context,
-                    label: Languages.of(context).email,
-                    width: 1,
-                    leftIcon: Icons.email),
-                customTextField(
-                  context,
-                  width: 1,
-                  label: Languages.of(context).loginPass,
-                  leftIcon: Icons.lock,
-                  isPassword: obSecureText,
-                  rightBtn: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        obSecureText = !obSecureText;
-                      });
-                    },
-                    icon: Icon(
-                        obSecureText ? Icons.visibility_off : Icons.visibility),
-                  ),
-                ),
-                customTextField(
-                  context,
-                  width: 1,
-                  label: Languages.of(context).confirmPass,
-                  isPassword: obSecureText,
-                  leftIcon: Icons.lock,
-                  rightBtn: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        obSecureText = !obSecureText;
-                      });
-                    },
-                    icon: Icon(
-                        obSecureText ? Icons.visibility_off : Icons.visibility),
-                  ),
-                ),
-                customTextField(context,
-                    width: 1,
-                    label: Languages.of(context).companyName,
-                    leftIcon: Icons.home_work),
-                Row(
-                  children: [
-                    Expanded(
-                      child: customTextField(
-                        context,
-                        width: 0.15,
-                        label: Languages.of(context).n,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    customTextField(context,
-                        label: Languages.of(context).tel,
-                        width: 0.7,
-                        leftIcon: Icons.phone),
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    signInFlatButton(
-                        context,
-                        MediaQuery.of(context).size.height,
-                        Languages.of(context).signUp, () {
-                      Navigator.pushNamed(
-                          context, ScreenRoutes.interestingScreen);
-                    }),
-                  ],
-                ),
-              ],
+              ),
             ),
           ),
-        ),
+          Container(
+            margin:
+                const EdgeInsets.only(top: 60, left: 25, right: 25, bottom: 20),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(33),
+                boxShadow: [
+                  makeShadow(),
+                ]),
+            child: SingleChildScrollView(
+              reverse: false,
+              padding: EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  backIconRounded(onBackPressed: () {
+                    Navigator.of(context).pop();
+                  }),
+                  buildSizedBox(height: 20),
+                  buildText(Languages.of(context).signUp, 40,
+                      fontWeight: FontWeight.w700),
+                  buildSizedBox(height: 10),
+                  buildSizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: DropdownButton(
+                      isExpanded: true,
+                      isDense: false,
+                      value: _selectedCountry,
+                      items: _dropdownMenuItems,
+                      onChanged: onChangeDropdownItem,
+                    ),
+                  ),
+                  buildSizedBox(height: 10),
+                  buildText(
+                    Languages.of(context).plzSecect,
+                    15,
+                    color: Colors.grey[500],
+                    fontWeight: FontWeight.w400,
+                  ),
+                  buildSizedBox(
+                      height: 25,
+                      child:
+                          buildRadioListTile(Languages.of(context).buyer, 1)),
+                  buildSizedBox(
+                      height: 25,
+                      child:
+                          buildRadioListTile(Languages.of(context).seller, 2)),
+                  buildRadioListTile(Languages.of(context).both, 3),
+                  customTextField(context,
+                      label: Languages.of(context).fullName,
+                      width: 1,
+                      leftIcon: Icons.person),
+                  customTextField(context,
+                      label: Languages.of(context).email,
+                      width: 1,
+                      leftIcon: Icons.email),
+                  customTextField(
+                    context,
+                    width: 1,
+                    label: Languages.of(context).loginPass,
+                    leftIcon: Icons.lock,
+                    isPassword: obSecureText,
+                    rightBtn: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          obSecureText = !obSecureText;
+                        });
+                      },
+                      icon: Icon(obSecureText
+                          ? Icons.visibility_off
+                          : Icons.visibility),
+                    ),
+                  ),
+                  customTextField(
+                    context,
+                    width: 1,
+                    label: Languages.of(context).confirmPass,
+                    isPassword: obSecureText,
+                    leftIcon: Icons.lock,
+                    rightBtn: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          obSecureText = !obSecureText;
+                        });
+                      },
+                      icon: Icon(obSecureText
+                          ? Icons.visibility_off
+                          : Icons.visibility),
+                    ),
+                  ),
+                  customTextField(context,
+                      width: 1,
+                      label: Languages.of(context).companyName,
+                      leftIcon: Icons.home_work),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: customTextField(
+                          context,
+                          width: 0.15,
+                          label: Languages.of(context).n,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      customTextField(context,
+                          label: Languages.of(context).tel,
+                          width: 0.7,
+                          leftIcon: Icons.phone),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      signInFlatButton(
+                          context,
+                          MediaQuery.of(context).size.height,
+                          Languages.of(context).signUp, () {
+                        Navigator.pushNamed(
+                            context, ScreenRoutes.interestingScreen);
+                      }),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
