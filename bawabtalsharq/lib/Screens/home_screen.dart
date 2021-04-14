@@ -216,7 +216,12 @@ Widget ourGoldenSupplier(BuildContext context) {
   return Column(
     mainAxisSize: MainAxisSize.min,
     children: [
-      ourGoldenSupplierHeader(context),
+      ourGoldenSupplierHeader(
+        context,
+        onPress: () {
+          Navigator.pushNamed(context, ScreenRoutes.goldenSuppliers);
+        },
+      ),
       SizedBox(
         height: 190,
         child: ListView.builder(

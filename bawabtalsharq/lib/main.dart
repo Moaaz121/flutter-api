@@ -17,6 +17,7 @@ import 'package:bawabtalsharq/Screens/profile/privacy/privacy_screen.dart';
 import 'package:bawabtalsharq/Screens/sub_category_screen.dart';
 import 'package:bawabtalsharq/Screens/search/search_screen.dart';
 import 'package:bawabtalsharq/Screens/pricing/pricing_screen.dart';
+import 'package:bawabtalsharq/Screens/suppliers/golden_suppliers_screen.dart';
 import 'package:bawabtalsharq/Screens/settings_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/history/history_screen.dart';
 import 'package:bawabtalsharq/Screens/sign_up_screen.dart';
@@ -107,6 +108,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.verificationPassword: (_) => VerificationScreen(),
         ScreenRoutes.privacyScreen: (_) => PrivacyScreen(),
         ScreenRoutes.faqScreen: (_) => FaqScreen(),
+        ScreenRoutes.goldenSuppliers: (_) => GoldenSuppliers(),
       },
       locale: _locale,
       supportedLocales: supportedLocales,
@@ -190,4 +192,5 @@ class ScreenRoutes {
   static const String verificationPassword = '/verification_password_screen';
   static const String privacyScreen = '/privacy_screen';
   static const String faqScreen = '/faq_screen';
+  static const String goldenSuppliers = '/golden_suppliers_screen';
 }
