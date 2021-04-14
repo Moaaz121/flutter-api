@@ -22,7 +22,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
   }
 
   void loadChatRooms() async {
-    List<Im> chatArr = await RocketChatApi().getDirectRooms();
+    List<Im> chatArr = await RocketChatApi.instance.getDirectRooms();
     setState(() {
       _chats = chatArr;
     });

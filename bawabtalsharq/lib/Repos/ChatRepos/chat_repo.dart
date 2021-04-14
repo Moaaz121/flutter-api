@@ -29,6 +29,9 @@ final rocketHeaders = {
 };
 
 class RocketChatApi {
+  RocketChatApi._privateConstructor();
+  static final RocketChatApi instance = RocketChatApi._privateConstructor();
+
   final rocket_http_service.HttpService _rocketHttpService =
       rocket_http_service.HttpService(APIS.chatBaseURL);
 

@@ -20,7 +20,7 @@ class _ChatItemState extends State<ChatItem> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<PartnerData>(
-        future: RocketChatApi().getPartnerData(getUPartnerID()),
+        future: RocketChatApi.instance.getPartnerData(getUPartnerID()),
         builder: (context, AsyncSnapshot<PartnerData> snapshot) {
           if (snapshot.hasData) {
             partner = snapshot.data;

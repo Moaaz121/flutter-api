@@ -284,7 +284,7 @@ class _LoginScreenState extends State<LoginScreen> {
   _loginToRocketChat() async {
     if (_userNameController.text.isNotEmpty &&
         _passwordController.text.isNotEmpty) {
-      Authentication result = await RocketChatApi()
+      Authentication result = await RocketChatApi.instance
           .loginRocket(_userNameController.text, _passwordController.text);
       if (result.status == "success") {
         rocketUser = result;

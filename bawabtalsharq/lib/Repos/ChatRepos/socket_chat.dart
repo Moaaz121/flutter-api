@@ -12,6 +12,9 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 import 'chat_repo.dart';
 
 class SocketChat {
+  SocketChat._privateConstructor();
+  static final SocketChat instance = SocketChat._privateConstructor();
+
   WebSocketChannel webSocketChannel;
   WebSocketService webSocketService = WebSocketService();
 

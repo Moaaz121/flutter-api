@@ -27,8 +27,6 @@ import 'package:mime/mime.dart';
 import 'package:rocket_chat_connector_flutter/models/message.dart';
 import 'package:rocket_chat_connector_flutter/models/user.dart' as UUser;
 
-SocketChat _socketChat = SocketChat();
-
 class ConversationScreen extends StatefulWidget {
   final String roomID;
   final PartnerData partner;
@@ -71,8 +69,8 @@ class _ConversationScreenState extends State<ConversationScreen>
   @override
   void initState() {
     super.initState();
-    _socketChat.connectToSocket(widget.roomID);
-    _socketChat.subscribeToRoom(widget.roomID);
+    SocketChat.instance.connectToSocket(widget.roomID);
+    SocketChat.instance.subscribeToRoom(widget.roomID);
     _animationController = new AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 300),
@@ -93,7 +91,7 @@ class _ConversationScreenState extends State<ConversationScreen>
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: RocketChatApi().getRoomMessages(widget.roomID),
+        future: RocketChatApi.instance.getRoomMessages(widget.roomID),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             _messages = snapshot.data;
@@ -264,7 +262,7 @@ class _ConversationScreenState extends State<ConversationScreen>
                   false,
                   '${rocketUser.data.userId}' + '_${widget.partner.user.id}',
                   widget.partner);
-              _socketChat.sendMessage(widget.roomID, callRoom);
+              SocketChat.instance.sendMessage(widget.roomID, callRoom);
             },
           ),
           IconButton(
@@ -280,7 +278,7 @@ class _ConversationScreenState extends State<ConversationScreen>
                   true,
                   '${rocketUser.data.userId}' + '_${widget.partner.user.id}',
                   widget.partner);
-              _socketChat.sendMessage(widget.roomID, callRoom);
+              SocketChat.instance.sendMessage(widget.roomID, callRoom);
             },
           ),
           SizedBox(
@@ -294,7 +292,7 @@ class _ConversationScreenState extends State<ConversationScreen>
           children: <Widget>[
             Flexible(
               child: StreamBuilder(
-                stream: _socketChat.webSocketChannel.stream,
+                stream: SocketChat.instance.webSocketChannel.stream,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     var responseJSON = jsonDecode(snapshot.data);
@@ -524,8 +522,8 @@ class _ConversationScreenState extends State<ConversationScreen>
     bool isExist = await recordFile.exists();
     if (isExist) {
       String fileName = DateTime.now().millisecondsSinceEpoch.toString();
-      RocketChatApi().sendFile(widget.roomID, recordFile.path, _recorderTxt,
-          MediaType('audio', 'mpeg'));
+      RocketChatApi.instance.sendFile(widget.roomID, recordFile.path,
+          _recorderTxt, MediaType('audio', 'mpeg'));
     }
   }
 
@@ -539,7 +537,7 @@ class _ConversationScreenState extends State<ConversationScreen>
         uiConfig: UIConfig(uiThemeColor: orangeColor),
         cropConfig: CropConfig(enableCrop: false, width: 2, height: 1));
     if (_listImagePaths.first != null) {
-      RocketChatApi().sendFile(widget.roomID, _listImagePaths.first.path,
+      RocketChatApi.instance.sendFile(widget.roomID, _listImagePaths.first.path,
           "IMAGE", MediaType('audio', 'mpeg'));
     }
   }
@@ -551,7 +549,7 @@ class _ConversationScreenState extends State<ConversationScreen>
         var mimeTypeData =
             lookupMimeType(pickedFile.path, headerBytes: [0xFF, 0xD8])
                 .split('/');
-        RocketChatApi().sendFile(widget.roomID, pickedFile.path, 'IMAGE',
+        RocketChatApi.instance.sendFile(widget.roomID, pickedFile.path, 'IMAGE',
             MediaType(mimeTypeData[0], mimeTypeData[1]));
       } else {}
     });
@@ -564,7 +562,7 @@ class _ConversationScreenState extends State<ConversationScreen>
         var mimeTypeData =
             lookupMimeType(pickedFile.path, headerBytes: [0xFF, 0xD8])
                 .split('/');
-        RocketChatApi().sendFile(widget.roomID, pickedFile.path, 'VIDEO',
+        RocketChatApi.instance.sendFile(widget.roomID, pickedFile.path, 'VIDEO',
             MediaType(mimeTypeData[0], mimeTypeData[1]));
       } else {
         print('No image selected.');
@@ -580,7 +578,7 @@ class _ConversationScreenState extends State<ConversationScreen>
       var mimeTypeData =
           lookupMimeType(result.files.single.path, headerBytes: [0xFF, 0xD8])
               .split('/');
-      RocketChatApi().sendFile(
+      RocketChatApi.instance.sendFile(
           widget.roomID,
           File(result.files.single.path).path,
           'FILE',
@@ -592,7 +590,8 @@ class _ConversationScreenState extends State<ConversationScreen>
 
   void sendMessage() {
     if (_textEditingController.text.isNotEmpty) {
-      _socketChat.sendMessage(widget.roomID, _textEditingController.text);
+      SocketChat.instance
+          .sendMessage(widget.roomID, _textEditingController.text);
       _messages.add(new Message(msg: _textEditingController.text));
       _textEditingController.text = '';
     }
@@ -620,8 +619,8 @@ class _ConversationScreenState extends State<ConversationScreen>
                       splitMessage[1] + '_' + splitMessage[2])),
             ).then((value) {
               setState(() {
-                _socketChat.connectToSocket(widget.roomID);
-                _socketChat.subscribeToRoom(widget.roomID);
+                SocketChat.instance.connectToSocket(widget.roomID);
+                SocketChat.instance.subscribeToRoom(widget.roomID);
                 // _socketChat.sendMessage(widget.roomID, closeMeet);
               });
             });
@@ -635,14 +634,14 @@ class _ConversationScreenState extends State<ConversationScreen>
                       splitMessage[1] + '_' + splitMessage[2])),
             ).then((value) {
               setState(() {
-                _socketChat.connectToSocket(widget.roomID);
-                _socketChat.subscribeToRoom(widget.roomID);
+                SocketChat.instance.connectToSocket(widget.roomID);
+                SocketChat.instance.subscribeToRoom(widget.roomID);
                 //_socketChat.sendMessage(widget.roomID, closeMeet);
               });
             });
           });
         }
-        _socketChat.closeSocket(widget.roomID);
+        SocketChat.instance.closeSocket(widget.roomID);
       }
     }
   }
