@@ -186,7 +186,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                       signInFlatButton(
                           context, MediaQuery.of(context).size.height, 'Verify',
                           () {
-                        Navigator.pushNamed(context, ScreenRoutes.mainScreen);
+                        Navigator.pushNamed(context, ScreenRoutes.newPassword);
                       }),
                     ],
                   ),

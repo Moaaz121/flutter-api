@@ -16,6 +16,7 @@ import 'package:bawabtalsharq/Screens/search/search_result_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/privacy/privacy_screen.dart';
 import 'package:bawabtalsharq/Screens/sub_category_screen.dart';
 import 'package:bawabtalsharq/Screens/search/search_screen.dart';
+import 'package:bawabtalsharq/Screens/profile/my_account/my_account_screen.dart';
 import 'package:bawabtalsharq/Screens/pricing/pricing_screen.dart';
 import 'package:bawabtalsharq/Screens/suppliers/golden_suppliers_screen.dart';
 import 'package:bawabtalsharq/Screens/settings_screen.dart';
@@ -48,7 +49,7 @@ void main() {
 
   runApp(
     DevicePreview(
-      enabled: false,
+      enabled: true,
       builder: (context) => BawabtAlsharqApp(),
     ),
   );
@@ -109,6 +110,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.privacyScreen: (_) => PrivacyScreen(),
         ScreenRoutes.faqScreen: (_) => FaqScreen(),
         ScreenRoutes.goldenSuppliers: (_) => GoldenSuppliers(),
+        ScreenRoutes.myAccount: (_) => MyAccount(),
       },
       locale: _locale,
       supportedLocales: supportedLocales,
@@ -193,4 +195,5 @@ class ScreenRoutes {
   static const String privacyScreen = '/privacy_screen';
   static const String faqScreen = '/faq_screen';
   static const String goldenSuppliers = '/golden_suppliers_screen';
+  static const String myAccount = '/my_account_screen';
 }

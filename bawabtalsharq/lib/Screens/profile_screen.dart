@@ -224,7 +224,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       Languages.of(context).myAccount,
                       () {
-                        print('My Account');
+                        Navigator.pushNamed(context, ScreenRoutes.myAccount);
                       },
                     ),
                     unExpansionProfileItem(
@@ -269,16 +269,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       () {
                         Navigator.pushNamed(
                             context, ScreenRoutes.messageCenter);
-                      },
-                    ),
-                    unExpansionProfileItem(
-                      Icon(
-                        Icons.person,
-                        color: Colors.redAccent[200],
-                      ),
-                      Languages.of(context).userGuide,
-                      () {
-                        print('User Guide');
                       },
                     ),
                     unExpansionProfileItem(

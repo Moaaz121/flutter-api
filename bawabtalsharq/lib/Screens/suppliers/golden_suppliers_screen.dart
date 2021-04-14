@@ -34,9 +34,8 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
             return Column(
               children: [
                 Container(
+                  padding: EdgeInsets.only(bottom: 20, left: 10, right: 10),
                   margin: EdgeInsets.only(left: 12, right: 23, bottom: 32),
-                  width: 354,
-                  height: 190,
                   decoration: new BoxDecoration(
                     color: Color(0xfffbfbfb),
                     borderRadius: BorderRadius.circular(20),
@@ -62,7 +61,7 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
     );
   }
 
-  Padding thirdRow() {
+  Widget thirdRow() {
     return Padding(
       padding: const EdgeInsets.only(top: 11, left: 15, right: 11),
       child: Row(
@@ -85,13 +84,20 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
       crossAxisAlignment: CrossAxisAlignment.start,
       // mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(20.0),
-          child: Image(
-            image: AssetImage(dominikMarti1),
-            width: 79,
-            height: 83,
+        Container(
+          width: 79,
+          height: 83,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(
+              Radius.circular(20),
+            ),
+            image: DecorationImage(
+              image: AssetImage(dominikMarti1),
+            ),
           ),
+          // child: Image(
+          //   image: AssetImage(dominikMarti1),
+          // ),
         ),
         SizedBox(
           height: 3,

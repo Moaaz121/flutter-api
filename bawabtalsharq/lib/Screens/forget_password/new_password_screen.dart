@@ -99,7 +99,7 @@ class _NewPasswordState extends State<NewPassword> {
                       signInFlatButton(
                           context, height, Languages.of(context).submit, () {
                         Navigator.pushReplacementNamed(
-                            context, ScreenRoutes.mainScreen);
+                            context, ScreenRoutes.loginScreen);
                       }),
                     ],
                   ),
