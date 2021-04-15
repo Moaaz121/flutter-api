@@ -5,6 +5,7 @@ import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:bawabtalsharq/Screens/profile/contact_us/location_dialog.dart';
 import 'package:bawabtalsharq/Screens/profile/contact_us/send_message_dialog.dart';
 import 'package:bawabtalsharq/Screens/profile/contact_us/phone_dialog.dart';
+import 'package:bawabtalsharq/Screens/profile/about_us/about_us_dialog.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: appBarBuilder(
         title: Languages.of(context).settings,
         onBackPressed: () {
@@ -216,14 +218,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                 ),
                 cardSetting(
-                  text: buildText(
-                    'About us',
-                    12,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  icon: Icons.info,
-                  iconColor: Colors.teal,
-                ),
+                    text: buildText(
+                      'About us',
+                      12,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    icon: Icons.info,
+                    iconColor: Colors.teal,
+                    onPress: () {
+                      showAnimatedDialog(
+                        context,
+                        aboutUsDialog(context),
+                      );
+                    }),
               ],
             ),
           ),

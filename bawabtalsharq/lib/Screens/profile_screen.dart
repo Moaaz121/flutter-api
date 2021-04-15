@@ -97,49 +97,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ],
               ),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.only(left: 14, right: 14),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       cardProfile(
-            //         onPressed: () {
-            //           print('Notification');
-            //         },
-            //         text: Languages.of(context).notification,
-            //         subText: '33 ' + Languages.of(context).items,
-            //         icon: Icons.notifications_none,
-            //         colorIcon: Colors.blue[300],
-            //       ),
-            //       cardProfile(
-            //         onPressed: () {
-            //           print('Saved');
-            //         },
-            //         text: Languages.of(context).saved,
-            //         subText: '33 ' + Languages.of(context).items,
-            //         icon: Icons.bookmark_rounded,
-            //         colorIcon: Colors.deepOrange[300],
-            //       ),
-            //       cardProfile(
-            //         onPressed: () {
-            //           print('Compares');
-            //         },
-            //         text: Languages.of(context).compares,
-            //         subText: '33 ' + Languages.of(context).items,
-            //         icon: Icons.add_to_photos_rounded,
-            //         colorIcon: Colors.deepPurpleAccent,
-            //       ),
-            //       cardProfile(
-            //         onPressed: () {
-            //           print('History');
-            //         },
-            //         text: Languages.of(context).history,
-            //         icon: Icons.av_timer_rounded,
-            //         colorIcon: Colors.green[400],
-            //       ),
-            //     ],
-            //   ),
-            // ),
             profileListBuilder(context)
           ],
         ),
@@ -293,48 +250,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       },
                       drawDivider: false,
                     ),
-                    // expansionProfileItem(
-                    //   title: Languages.of(context).contactUs,
-                    //   image: message,
-                    //   onClick: () {},
-                    //   children: [
-                    //     unExpansionProfileItem(
-                    //         message, Languages.of(context).phoneNumber, () {
-                    //       showAnimatedDialog(
-                    //         context,
-                    //         phoneNumberDialog(context),
-                    //       );
-                    //     },
-                    //         fontWeight: FontWeight.normal,
-                    //         drawDivider: false,
-                    //         textSize: 14),
-                    //     unExpansionProfileItem(
-                    //         message, Languages.of(context).sendMessage, () {
-                    //       showAnimatedDialog(
-                    //         context,
-                    //         sendMessageDialog(context),
-                    //       );
-                    //     },
-                    //         fontWeight: FontWeight.normal,
-                    //         drawDivider: false,
-                    //         textSize: 14),
-                    //     unExpansionProfileItem(
-                    //         message, Languages.of(context).location, () {
-                    //       showAnimatedDialog(
-                    //         context,
-                    //         locationDialog(context),
-                    //       );
-                    //     },
-                    //         fontWeight: FontWeight.normal,
-                    //         drawDivider: false,
-                    //         textSize: 14),
-                    //   ],
-                    // ),
                   ],
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: 10,
+              ),
+              Container(
+                margin: EdgeInsets.only(right: 15, left: 15),
+                decoration: boxDecorationBuilder(10),
+                child: unExpansionProfileItem(
+                  Icon(
+                    Icons.move_to_inbox_rounded,
+                    color: Colors.blue[200],
+                  ),
+                  Languages.of(context).updatePackage,
+                  () {
+                    Navigator.pushNamed(context, ScreenRoutes.pricing);
+                  },
+                  drawDivider: false,
+                ),
+              ),
+              SizedBox(
+                height: 10,
               ),
               Container(
                 margin: EdgeInsets.only(right: 15, left: 15, bottom: 10),
@@ -357,44 +295,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
-
-  // GestureDetector expansionProfileItem(
-  //     {@required String title,
-  //     @required String image,
-  //     @required List<Widget> children,
-  //     @required Function onClick}) {
-  //   return GestureDetector(
-  //     onTap: onClick,
-  //     child: Column(
-  //       children: [
-  //         ExpansionTile(
-  //           tilePadding: EdgeInsetsDirectional.fromSTEB(0, 0, 15, 0),
-  //           title: unExpansionProfileItem(image, title, () {
-  //             print('Contact Us');
-  //           }, drawDivider: false, isParent: true),
-  //           children: [
-  //             Container(
-  //               width: MediaQuery.of(context).size.width,
-  //               margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
-  //               decoration: BoxDecoration(
-  //                 color: Colors.blue[100],
-  //                 borderRadius: BorderRadius.circular(10),
-  //               ),
-  //               child: Column(children: children),
-  //             )
-  //           ],
-  //         ),
-  //         Divider(
-  //           indent: 15,
-  //           endIndent: 15,
-  //           thickness: 1,
-  //           height: 1,
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-
 }
 
 Widget unExpansionProfileItem(Icon icon, String title, Function onPressed,

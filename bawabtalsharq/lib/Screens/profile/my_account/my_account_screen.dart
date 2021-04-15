@@ -44,19 +44,20 @@ class _MyAccountState extends State<MyAccount> {
               height: 30,
             ),
             accountCard(
-                text: Text('Update Profile'),
+                text: Text(Languages.of(context).updateProfile),
+                // Languages.of(context).technical
                 icon: Icons.people,
                 iconColor: Colors.blue,
                 onPress: () {
                   // Navigator.pushNamed(context, ScreenRoutes.faqScreen);
                 }),
             accountCard(
-                text: Text('Switch Account'),
+                text: Text(Languages.of(context).switchProfile),
                 icon: Icons.switch_left,
                 iconColor: Colors.redAccent,
                 onPress: () {}),
             accountCard(
-                text: Text('Change Password'),
+                text: Text(Languages.of(context).changePassword),
                 icon: Icons.lock,
                 iconColor: Colors.deepPurpleAccent,
                 onPress: () {}),

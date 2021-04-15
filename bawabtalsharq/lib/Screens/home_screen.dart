@@ -43,8 +43,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           context, ScreenRoutes.requestForQuotation);
                     }, Languages.of(context).requestForQ, requestForQ,
                         orangeColor.withOpacity(0.15)),
-                    mainHeaderButton(() {}, Languages.of(context).joinUs,
-                        joinUs, purpleColor.withOpacity(0.15)),
+                    mainHeaderButton(() {}, Languages.of(context).technical,
+                        technical_icon, purpleColor.withOpacity(0.15)),
                   ],
                 ),
                 ourGoldenSupplier(context),

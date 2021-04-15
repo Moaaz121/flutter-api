@@ -1,5 +1,5 @@
 import 'package:bawabtalsharq/Screens/all_categories_screen.dart';
-import 'package:bawabtalsharq/Screens/feature_screen.dart';
+import 'package:bawabtalsharq/Screens/superior_screen.dart';
 import 'package:bawabtalsharq/Screens/forget_password/forget_password_screen.dart';
 import 'package:bawabtalsharq/Screens/forget_password/new_password_screen.dart';
 import 'package:bawabtalsharq/Screens/home_screen.dart';
@@ -17,7 +17,7 @@ import 'package:bawabtalsharq/Screens/profile/privacy/privacy_screen.dart';
 import 'package:bawabtalsharq/Screens/sub_category_screen.dart';
 import 'package:bawabtalsharq/Screens/search/search_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/my_account/my_account_screen.dart';
-import 'package:bawabtalsharq/Screens/pricing/pricing_screen.dart';
+import 'package:bawabtalsharq/Screens/profile/pricing/pricing_screen.dart';
 import 'package:bawabtalsharq/Screens/suppliers/golden_suppliers_screen.dart';
 import 'package:bawabtalsharq/Screens/settings_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/history/history_screen.dart';
@@ -84,7 +84,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.mainScreen: (_) => MainScreen(),
         ScreenRoutes.notificationScreen: (_) => NotificationScreen(),
         ScreenRoutes.profileScreen: (_) => ProfileScreen(),
-        ScreenRoutes.featureScreen: (_) => FeatureScreen(),
+        ScreenRoutes.featureScreen: (_) => SuperiorScreen(),
         ScreenRoutes.categoriesScreen: (_) => AllCategories(),
         ScreenRoutes.settingsScreen: (_) => SettingsScreen(),
         ScreenRoutes.requestForQuotation: (_) => RequestForQScreen(),
@@ -111,6 +111,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.faqScreen: (_) => FaqScreen(),
         ScreenRoutes.goldenSuppliers: (_) => GoldenSuppliers(),
         ScreenRoutes.myAccount: (_) => MyAccount(),
+        ScreenRoutes.pricing: (_) => PricingScreen(),
       },
       locale: _locale,
       supportedLocales: supportedLocales,
@@ -196,4 +197,5 @@ class ScreenRoutes {
   static const String faqScreen = '/faq_screen';
   static const String goldenSuppliers = '/golden_suppliers_screen';
   static const String myAccount = '/my_account_screen';
+  static const String pricing = '/pricing_screen';
 }

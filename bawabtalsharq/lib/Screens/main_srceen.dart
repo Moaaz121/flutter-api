@@ -3,7 +3,7 @@ import 'package:bawabtalsharq/Screens/profile_screen.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
-import 'feature_screen.dart';
+import 'superior_screen.dart';
 import 'notification_screen.dart';
 
 class MainScreen extends StatefulWidget {
@@ -31,7 +31,7 @@ class _MainScreenState extends State<MainScreen> {
           controller: controller,
           children: [
             HomeScreen(),
-            FeatureScreen(),
+            SuperiorScreen(),
             NotificationScreen(),
             ProfileScreen(),
           ],

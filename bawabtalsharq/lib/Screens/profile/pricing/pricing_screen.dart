@@ -1,5 +1,6 @@
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:flutter/material.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -18,11 +19,12 @@ class _PricingScreenState extends State<PricingScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
           centerTitle: true,
-          title: buildText('Pricing Plan', 22,
+          title: buildText(Languages.of(context).pricingPlan, 22,
               color: orangeColor, fontWeight: FontWeight.bold),
           leading: IconButton(
             icon: CircleAvatar(
@@ -165,7 +167,7 @@ class _PricingScreenState extends State<PricingScreen> {
             ),
           ),
           RaisedButton(
-            child: Text('Select Plan'),
+            child: Text(Languages.of(context).selectPlan),
             onPressed: null,
             padding: EdgeInsets.only(left: 36, right: 36),
             disabledTextColor: Colors.white,

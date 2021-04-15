@@ -53,6 +53,17 @@ abstract class Languages {
   String get color;
   String get faq;
   String get privacy;
+  String get technical;
+  String get updateProfile;
+  String get switchProfile;
+  String get changePassword;
+  String get updatePackage;
+  String get pricingPlan;
+  String get selectPlan;
+  String get verification;
+  String get otpCode;
+  String get resendCode;
+  String get verify;
 
 // end Bahaa
 

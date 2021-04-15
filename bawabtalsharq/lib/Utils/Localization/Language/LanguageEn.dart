@@ -52,6 +52,17 @@ class LanguageEn extends Languages {
   String get color => 'Colors';
   String get faq => 'FAQ';
   String get privacy => 'Privacy \& Security';
+  String get technical => 'Technical Support';
+  String get changePassword => 'Change Password';
+  String get switchProfile => 'Switch Profile';
+  String get updateProfile => 'Update Profile';
+  String get updatePackage => 'Update Package';
+  String get pricingPlan => 'Pricing Plan';
+  String get selectPlan => 'Select Plan';
+  String get otpCode => 'Enter your OTP code';
+  String get resendCode => 'Resend Code in';
+  String get verification => 'Verification';
+  String get verify => 'Verify';
 
 // end Bahaa
 

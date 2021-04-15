@@ -1,7 +1,7 @@
 import 'dart:async';
-
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/gestures.dart';
@@ -87,7 +87,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                     height: 40,
                   ),
                   buildText(
-                    'Verfication',
+                    Languages.of(context).verification,
                     40,
                     color: Color(0xff515151),
                     fontWeight: FontWeight.w700,
@@ -96,7 +96,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                     height: 18,
                   ),
                   buildText(
-                    'Enter your OTP code',
+                    Languages.of(context).otpCode,
                     15,
                     color: Color(0xff515151),
                     fontWeight: FontWeight.w400,
@@ -171,7 +171,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   Row(
                     children: [
                       buildText(
-                        'Resend code in',
+                        Languages.of(context).resendCode,
                         15,
                       ),
                       buildText(' 30 Seconds', 15, color: defaultOrangeColor),
@@ -184,8 +184,9 @@ class _VerificationScreenState extends State<VerificationScreen> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       signInFlatButton(
-                          context, MediaQuery.of(context).size.height, 'Verify',
-                          () {
+                          context,
+                          MediaQuery.of(context).size.height,
+                          Languages.of(context).verify, () {
                         Navigator.pushNamed(context, ScreenRoutes.newPassword);
                       }),
                     ],
