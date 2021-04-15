@@ -62,7 +62,7 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
               Positioned.directional(
                 textDirection: Directionality.of(context),
                 top: 2,
-                start: 40,
+                start: 30,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15.0),
                   child: Image(
@@ -161,18 +161,22 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          buildText(
-            Languages.of(context).eslamAlaa,
-            15,
-            fontWeight: FontWeight.w700,
-          ),
-          Image(
-            image: AssetImage(medalImage),
-            width: 14,
-            height: 14,
-          ),
-          SizedBox(
-            width: 77,
+          Row(
+            children: [
+              buildText(
+                Languages.of(context).eslamAlaa,
+                15,
+                fontWeight: FontWeight.w700,
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Image(
+                image: AssetImage(medalImage),
+                width: 14,
+                height: 14,
+              ),
+            ],
           ),
           Icon(
             Icons.arrow_forward,
