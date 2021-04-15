@@ -5,12 +5,12 @@ import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
-class FeatureScreen extends StatefulWidget {
+class SuperiorScreen extends StatefulWidget {
   @override
-  _FeatureScreenState createState() => _FeatureScreenState();
+  _SuperiorScreenState createState() => _SuperiorScreenState();
 }
 
-class _FeatureScreenState extends State<FeatureScreen> {
+class _SuperiorScreenState extends State<SuperiorScreen> {
   ScrollController _mainScrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
@@ -206,7 +206,7 @@ class _FeatureScreenState extends State<FeatureScreen> {
                       ),
                       shape: BoxShape.rectangle,
                       image: DecorationImage(
-                        image: AssetImage(kareem_img),
+                        image: AssetImage('assets/images/mo3az.jpeg'),
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -227,7 +227,7 @@ class _FeatureScreenState extends State<FeatureScreen> {
                       ),
                       shape: BoxShape.rectangle,
                       image: DecorationImage(
-                        image: AssetImage(kareem_img),
+                        image: AssetImage('assets/images/mo3az.jpeg'),
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -248,7 +248,7 @@ class _FeatureScreenState extends State<FeatureScreen> {
                       ),
                       shape: BoxShape.rectangle,
                       image: DecorationImage(
-                        image: AssetImage(kareem_img),
+                        image: AssetImage('assets/images/mo3az.jpeg'),
                         fit: BoxFit.fill,
                       ),
                     ),

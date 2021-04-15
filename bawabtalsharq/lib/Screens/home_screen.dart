@@ -43,8 +43,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           context, ScreenRoutes.requestForQuotation);
                     }, Languages.of(context).requestForQ, requestForQ,
                         orangeColor.withOpacity(0.15)),
-                    mainHeaderButton(() {}, Languages.of(context).joinUs,
-                        joinUs, purpleColor.withOpacity(0.15)),
+                    mainHeaderButton(() {}, Languages.of(context).technical,
+                        technical_icon, purpleColor.withOpacity(0.15)),
                   ],
                 ),
                 ourGoldenSupplier(context),
@@ -216,7 +216,12 @@ Widget ourGoldenSupplier(BuildContext context) {
   return Column(
     mainAxisSize: MainAxisSize.min,
     children: [
-      ourGoldenSupplierHeader(context),
+      ourGoldenSupplierHeader(
+        context,
+        onPress: () {
+          Navigator.pushNamed(context, ScreenRoutes.goldenSuppliers);
+        },
+      ),
       SizedBox(
         height: 190,
         child: ListView.builder(

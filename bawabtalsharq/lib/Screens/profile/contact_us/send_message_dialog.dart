@@ -39,7 +39,7 @@ Widget sendMessageDialog(BuildContext context) {
                     SizedBox(
                       height: 10,
                     ),
-                    submitButton(() {}, context, Languages.of(context).submit)
+                    submitButton(context, () {}, Languages.of(context).submit)
                   ],
                 ),
               ),
@@ -75,7 +75,8 @@ Widget textFiledMessage(BuildContext context,
   );
 }
 
-Widget submitButton(Function _function, BuildContext context, String text) {
+Widget submitButton(BuildContext context, Function _function, String text,
+    {double paddingOfWidth = 12}) {
   return FlatButton(
     onPressed: _function,
     child: Padding(

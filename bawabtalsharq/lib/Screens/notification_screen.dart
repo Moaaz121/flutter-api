@@ -15,7 +15,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xfff8f8f8),
+      color: Colors.white,
       child: SafeArea(
           bottom: false,
           child: Stack(
@@ -58,6 +58,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   Widget notification(BuildContext context) {
     return Container(
+      color: Colors.white,
       height: MediaQuery.of(context).size.height,
       child: ListView.builder(
         padding:

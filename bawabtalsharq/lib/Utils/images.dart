@@ -45,6 +45,9 @@ const String dress_image = 'assets/images/dress.png';
 const String medalImage = 'assets/images/ic_medal.png';
 const String certificate = 'assets/images/certificate.jpg';
 const String dress_icon = 'assets/images/ic_dress.png';
+const String superior_fill_icon = 'assets/images/superior_fill.png';
+const String superior_icon = 'assets/images/superior.png';
+const String technical_icon = 'assets/images/tech_ic.png';
 
 // end Bahaa
 

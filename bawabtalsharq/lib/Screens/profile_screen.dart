@@ -1,4 +1,5 @@
 import 'dart:ui';
+
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
@@ -6,10 +7,6 @@ import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:bawabtalsharq/Screens/profile/about_us/about_us_dialog.dart';
-import 'package:bawabtalsharq/Screens/profile/contact_us/phone_dialog.dart';
-import 'package:bawabtalsharq/Screens/profile/contact_us/send_message_dialog.dart';
-import 'package:bawabtalsharq/Screens/profile/contact_us/location_dialog.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -100,49 +97,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ],
               ),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.only(left: 14, right: 14),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       cardProfile(
-            //         onPressed: () {
-            //           print('Notification');
-            //         },
-            //         text: Languages.of(context).notification,
-            //         subText: '33 ' + Languages.of(context).items,
-            //         icon: Icons.notifications_none,
-            //         colorIcon: Colors.blue[300],
-            //       ),
-            //       cardProfile(
-            //         onPressed: () {
-            //           print('Saved');
-            //         },
-            //         text: Languages.of(context).saved,
-            //         subText: '33 ' + Languages.of(context).items,
-            //         icon: Icons.bookmark_rounded,
-            //         colorIcon: Colors.deepOrange[300],
-            //       ),
-            //       cardProfile(
-            //         onPressed: () {
-            //           print('Compares');
-            //         },
-            //         text: Languages.of(context).compares,
-            //         subText: '33 ' + Languages.of(context).items,
-            //         icon: Icons.add_to_photos_rounded,
-            //         colorIcon: Colors.deepPurpleAccent,
-            //       ),
-            //       cardProfile(
-            //         onPressed: () {
-            //           print('History');
-            //         },
-            //         text: Languages.of(context).history,
-            //         icon: Icons.av_timer_rounded,
-            //         colorIcon: Colors.green[400],
-            //       ),
-            //     ],
-            //   ),
-            // ),
             profileListBuilder(context)
           ],
         ),
@@ -227,7 +181,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       Languages.of(context).myAccount,
                       () {
-                        print('My Account');
+                        Navigator.pushNamed(context, ScreenRoutes.myAccount);
                       },
                     ),
                     unExpansionProfileItem(
@@ -276,16 +230,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     unExpansionProfileItem(
                       Icon(
-                        Icons.person,
-                        color: Colors.redAccent[200],
-                      ),
-                      Languages.of(context).userGuide,
-                      () {
-                        print('User Guide');
-                      },
-                    ),
-                    unExpansionProfileItem(
-                      Icon(
                         Icons.question_answer_outlined,
                         color: Colors.deepPurpleAccent[200],
                       ),
@@ -306,48 +250,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       },
                       drawDivider: false,
                     ),
-                    // expansionProfileItem(
-                    //   title: Languages.of(context).contactUs,
-                    //   image: message,
-                    //   onClick: () {},
-                    //   children: [
-                    //     unExpansionProfileItem(
-                    //         message, Languages.of(context).phoneNumber, () {
-                    //       showAnimatedDialog(
-                    //         context,
-                    //         phoneNumberDialog(context),
-                    //       );
-                    //     },
-                    //         fontWeight: FontWeight.normal,
-                    //         drawDivider: false,
-                    //         textSize: 14),
-                    //     unExpansionProfileItem(
-                    //         message, Languages.of(context).sendMessage, () {
-                    //       showAnimatedDialog(
-                    //         context,
-                    //         sendMessageDialog(context),
-                    //       );
-                    //     },
-                    //         fontWeight: FontWeight.normal,
-                    //         drawDivider: false,
-                    //         textSize: 14),
-                    //     unExpansionProfileItem(
-                    //         message, Languages.of(context).location, () {
-                    //       showAnimatedDialog(
-                    //         context,
-                    //         locationDialog(context),
-                    //       );
-                    //     },
-                    //         fontWeight: FontWeight.normal,
-                    //         drawDivider: false,
-                    //         textSize: 14),
-                    //   ],
-                    // ),
                   ],
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: 10,
+              ),
+              Container(
+                margin: EdgeInsets.only(right: 15, left: 15),
+                decoration: boxDecorationBuilder(10),
+                child: unExpansionProfileItem(
+                  Icon(
+                    Icons.move_to_inbox_rounded,
+                    color: Colors.blue[200],
+                  ),
+                  Languages.of(context).updatePackage,
+                  () {
+                    Navigator.pushNamed(context, ScreenRoutes.pricing);
+                  },
+                  drawDivider: false,
+                ),
+              ),
+              SizedBox(
+                height: 10,
               ),
               Container(
                 margin: EdgeInsets.only(right: 15, left: 15, bottom: 10),
@@ -370,85 +295,48 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
+}
 
-  // GestureDetector expansionProfileItem(
-  //     {@required String title,
-  //     @required String image,
-  //     @required List<Widget> children,
-  //     @required Function onClick}) {
-  //   return GestureDetector(
-  //     onTap: onClick,
-  //     child: Column(
-  //       children: [
-  //         ExpansionTile(
-  //           tilePadding: EdgeInsetsDirectional.fromSTEB(0, 0, 15, 0),
-  //           title: unExpansionProfileItem(image, title, () {
-  //             print('Contact Us');
-  //           }, drawDivider: false, isParent: true),
-  //           children: [
-  //             Container(
-  //               width: MediaQuery.of(context).size.width,
-  //               margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
-  //               decoration: BoxDecoration(
-  //                 color: Colors.blue[100],
-  //                 borderRadius: BorderRadius.circular(10),
-  //               ),
-  //               child: Column(children: children),
-  //             )
-  //           ],
-  //         ),
-  //         Divider(
-  //           indent: 15,
-  //           endIndent: 15,
-  //           thickness: 1,
-  //           height: 1,
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-
-  Widget unExpansionProfileItem(Icon icon, String title, Function onPressed,
-      {bool drawDivider = true,
-      bool isParent = false,
-      double textSize = 16.0,
-      FontWeight fontWeight = FontWeight.w600}) {
-    return GestureDetector(
-      onTap: onPressed,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-        ),
-        margin: EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 12),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                icon,
-                SizedBox(
-                  width: 16,
-                ),
-                Expanded(
-                  child: buildText(title, textSize,
-                      fontFamily: semiBoldFontFamily, fontWeight: fontWeight),
-                ),
-                isParent ? SizedBox() : Icon(Icons.navigate_next),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            drawDivider
-                ? Divider(
-                    thickness: 1,
-                    height: 1,
-                  )
-                : SizedBox(
-                    height: 0,
-                  ),
-          ],
-        ),
+Widget unExpansionProfileItem(Icon icon, String title, Function onPressed,
+    {bool drawDivider = true,
+    bool isParent = false,
+    double textSize = 16.0,
+    FontWeight fontWeight = FontWeight.w600}) {
+  return GestureDetector(
+    onTap: onPressed,
+    child: Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
       ),
-    );
-  }
+      margin: EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 12),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              icon,
+              SizedBox(
+                width: 16,
+              ),
+              Expanded(
+                child: buildText(title, textSize,
+                    fontFamily: semiBoldFontFamily, fontWeight: fontWeight),
+              ),
+              isParent ? SizedBox() : Icon(Icons.navigate_next),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          drawDivider
+              ? Divider(
+                  thickness: 1,
+                  height: 1,
+                )
+              : SizedBox(
+                  height: 0,
+                ),
+        ],
+      ),
+    ),
+  );
 }

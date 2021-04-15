@@ -51,6 +51,17 @@ class LanguageAr extends Languages {
   String get color => 'الألوان';
   String get faq => 'التعليمات';
   String get privacy => 'الخصوصية و أمن';
+  String get technical => 'دعم فني';
+  String get changePassword => 'تغيير كلمة المرور';
+  String get switchProfile => 'تبديل الملف الشخصي';
+  String get updateProfile => 'تحديث الملف';
+  String get updatePackage => 'تحديث الباقة';
+  String get pricingPlan => 'خطة التسعير';
+  String get selectPlan => 'اختر خطة';
+  String get otpCode => 'أدخل رمز OTP الخاص بك';
+  String get resendCode => 'إعادة إرسال الرمز';
+  String get verification => 'تحقق';
+  String get verify => 'ثبت';
 
 // end Bahaa
 
@@ -119,6 +130,9 @@ class LanguageAr extends Languages {
   String get allProducts => 'كل المنتجات';
   String get info => 'معلومات التاجر';
   String get superior => 'العملاء المميزين';
+  String get allowing => 'السماح بالوصول';
+  String get allowNotificationFromBawabtAlsharq =>
+      'السماح بإشعار من بوابة الشرق ';
 
 // end Mosdik
 
