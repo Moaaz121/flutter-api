@@ -133,6 +133,12 @@ class LanguageAr extends Languages {
   String get allowing => 'السماح بالوصول';
   String get allowNotificationFromBawabtAlsharq =>
       'السماح بإشعار من بوابة الشرق ';
+  String get useThisForm => 'استخدم هذا النموذج لتغيير كلمة المرور الخاصة بك';
+  String get enterOldPass => 'أدخل كلمة المرور القديمة للحصول على إذن';
+  String get oldPassword => 'كلمة سر القديمه';
+  String get newPassword => 'كلمة سر الجديده';
+  String get confirmPassword => 'تأكيد كلمة السر ';
+  String get saveChange => 'حفظ التغيرات';
 
 // end Mosdik
 

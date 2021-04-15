@@ -134,6 +134,12 @@ class LanguageEn extends Languages {
   String get allowing => 'Allowing';
   String get allowNotificationFromBawabtAlsharq =>
       'Allow Notification From Bawabt Alsharq';
+  String get useThisForm => 'Use This form to change your password';
+  String get enterOldPass => 'Enter your old password for authorization';
+  String get oldPassword => 'Old Password';
+  String get newPassword => 'Old Password';
+  String get confirmPassword => 'Old Password';
+  String get saveChange => 'Old Password';
 
 // end Mosdik
 

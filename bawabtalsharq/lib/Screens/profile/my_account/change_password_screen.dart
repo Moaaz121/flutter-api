@@ -18,37 +18,40 @@ class _ChangePasswordState extends State<ChangePassword> {
             Navigator.of(context).pop();
           }),
       body: Padding(
-        padding: const EdgeInsets.only(left: 30, top: 30, right: 20),
+        padding: const EdgeInsetsDirectional.only(start: 30, top: 30, end: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildText('Use This form to change your password', 16,
+            buildText(Languages.of(context).useThisForm, 16,
                 fontWeight: FontWeight.w700),
             SizedBox(
               height: 5,
             ),
             buildText(
-              'Enter your old password for authorization',
+              Languages.of(context).enterOldPass,
               14,
               fontWeight: FontWeight.w400,
             ),
             SizedBox(
               height: 20,
             ),
-            textFiledPrice(context, 'Old Password', 1),
+            textFiledPrice(context, Languages.of(context).oldPassword, 1,
+                isPassword: true),
             SizedBox(
               height: 20,
             ),
-            textFiledPrice(context, 'New Password', 1),
+            textFiledPrice(context, Languages.of(context).newPassword, 1,
+                isPassword: true),
             SizedBox(
               height: 20,
             ),
-            textFiledPrice(context, 'Confirm Password', 1),
+            textFiledPrice(context, Languages.of(context).confirmPass, 1,
+                isPassword: true),
             SizedBox(
               height: 100,
             ),
             signInFlatButton(context, MediaQuery.of(context).size.height,
-                'Save Change', () {},
+                Languages.of(context).saveChange, () {},
                 widthOfBtn: 1),
           ],
         ),
