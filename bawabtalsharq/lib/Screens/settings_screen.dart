@@ -1,11 +1,10 @@
+import 'package:bawabtalsharq/Screens/profile/contact_us/location_dialog.dart';
+import 'package:bawabtalsharq/Screens/profile/contact_us/phone_dialog.dart';
+import 'package:bawabtalsharq/Screens/profile/contact_us/send_message_dialog.dart';
 import 'package:bawabtalsharq/Screens/profile_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
-import 'package:bawabtalsharq/Screens/profile/contact_us/location_dialog.dart';
-import 'package:bawabtalsharq/Screens/profile/contact_us/send_message_dialog.dart';
-import 'package:bawabtalsharq/Screens/profile/contact_us/phone_dialog.dart';
-import 'package:bawabtalsharq/Screens/profile/about_us/about_us_dialog.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +20,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: appBarBuilder(
         title: Languages.of(context).settings,
         onBackPressed: () {
@@ -94,6 +92,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       12,
                       fontWeight: FontWeight.w600,
                     ),
+                    extraText: buildText('Egypt', 10,
+                        fontWeight: FontWeight.w400, color: orangeColor),
                     icon: Icons.flag,
                     iconColor: Colors.blue),
                 cardSetting(
@@ -102,6 +102,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       12,
                       fontWeight: FontWeight.w600,
                     ),
+                    extraText: buildText('English', 10,
+                        fontWeight: FontWeight.w400, color: orangeColor),
                     icon: Icons.language,
                     iconColor: Colors.deepOrange),
                 cardSetting(
@@ -110,18 +112,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     12,
                     fontWeight: FontWeight.w600,
                   ),
+                  extraText: buildText('EGP', 10,
+                      fontWeight: FontWeight.w400, color: orangeColor),
                   icon: Icons.monetization_on,
                   iconColor: Colors.green,
                 ),
-                cardSetting(
-                  text: buildText(
-                    'Change Password',
-                    12,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  icon: Icons.lock,
-                  iconColor: Colors.red,
-                ),
+                // cardSetting(
+                //   text: buildText(
+                //     'Change Password',
+                //     12,
+                //     fontWeight: FontWeight.w600,
+                //   ),
+                //   icon: Icons.lock,
+                //   iconColor: Colors.red,
+                // ),
                 Padding(
                   padding: const EdgeInsets.only(left: 20, top: 50, bottom: 10),
                   child: buildText(
@@ -218,19 +222,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                 ),
                 cardSetting(
-                    text: buildText(
-                      'About us',
-                      12,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    icon: Icons.info,
-                    iconColor: Colors.teal,
-                    onPress: () {
-                      showAnimatedDialog(
-                        context,
-                        aboutUsDialog(context),
-                      );
-                    }),
+                  text: buildText(
+                    'About us',
+                    12,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  icon: Icons.info,
+                  iconColor: Colors.teal,
+                ),
               ],
             ),
           ),
@@ -240,9 +239,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Widget cardSetting(
-      {Widget text, IconData icon, Color iconColor, Function onPress}) {
-    double height = MediaQuery.of(context).size.height;
-
+      {Widget text,
+      IconData icon,
+      Color iconColor,
+      Function onPress,
+      Widget extraText}) {
     return GestureDetector(
       onTap: onPress,
       child: Container(
@@ -261,6 +262,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             SizedBox(width: 20),
             Expanded(child: text),
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: extraText,
+            ),
 
             Icon(
               Icons.navigate_next,

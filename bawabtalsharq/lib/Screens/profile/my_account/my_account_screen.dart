@@ -60,7 +60,9 @@ class _MyAccountState extends State<MyAccount> {
                 text: Text(Languages.of(context).changePassword),
                 icon: Icons.lock,
                 iconColor: Colors.deepPurpleAccent,
-                onPress: () {}),
+                onPress: () {
+                  // Navigator.pushNamed(context, ScreenRoutes.c]);
+                }),
           ],
         ),
       ),
