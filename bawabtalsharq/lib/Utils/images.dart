@@ -84,5 +84,5 @@ const String nordWood = 'assets/images/nordWood.png';
 const String dominikMarti1 = 'assets/images/dominikMarti1.png';
 const String choose = 'assets/images/choose.png';
 const String chooseRight = 'assets/images/chooseRight.png';
-const String eslam1 = 'assets/images/eslam1.png';
+const String eslam = 'assets/images/eslam.png';
 // end Islam

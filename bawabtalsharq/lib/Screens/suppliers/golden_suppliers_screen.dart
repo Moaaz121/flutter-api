@@ -61,13 +61,14 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
               ),
               Positioned.directional(
                 textDirection: Directionality.of(context),
-                top: 5,
-                start: 5,
+                top: 2,
+                start: 40,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15.0),
                   child: Image(
-                    image: AssetImage(kareem_img),
+                    image: AssetImage(eslam),
                     width: 70,
+                    height: 65,
                   ),
                 ),
               ),
@@ -78,7 +79,7 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
 
   Padding thirdRow() {
     return Padding(
-      padding: const EdgeInsets.only(top: 16, left: 1, right: 11),
+      padding: const EdgeInsets.only(top: 25, left: 1, right: 11),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -100,7 +101,7 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
   ) {
     double height = MediaQuery.of(context).size.height;
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       // mainAxisAlignment: MainAxisAlignment.start,
       children: [
         ClipRRect(
@@ -171,9 +172,12 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
             height: 14,
           ),
           SizedBox(
-            width: 33,
+            width: 77,
           ),
-          Icon(Icons.arrow_forward),
+          Icon(
+            Icons.arrow_forward,
+            size: 14,
+          ),
         ],
       ),
     );
