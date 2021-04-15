@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:bawabtalsharq/widgets/widgets.dart';
-import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
+import 'package:bawabtalsharq/Utils/images.dart';
+import 'package:bawabtalsharq/widgets/widgets.dart';
+import 'package:flutter/material.dart';
 
 class MyAccount extends StatefulWidget {
   @override
@@ -47,7 +47,9 @@ class _MyAccountState extends State<MyAccount> {
                 text: Text('Update Profile'),
                 icon: Icons.people,
                 iconColor: Colors.blue,
-                onPress: () {}),
+                onPress: () {
+                  // Navigator.pushNamed(context, ScreenRoutes.faqScreen);
+                }),
             accountCard(
                 text: Text('Switch Account'),
                 icon: Icons.switch_left,

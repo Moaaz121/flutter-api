@@ -1,4 +1,5 @@
 import 'dart:ui';
+
 import 'package:bawabtalsharq/Screens/home_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
@@ -1341,12 +1342,10 @@ Widget customTextField(BuildContext context,
 }
 
 FlatButton signInFlatButton(
-  BuildContext context,
-  double height,
-  String text,
-  Function onPress,
-) {
+    BuildContext context, double height, String text, Function onPress,
+    {double widthOfBtn = 0.1}) {
   return FlatButton(
+    minWidth: MediaQuery.of(context).size.width * widthOfBtn,
     padding: EdgeInsetsDirectional.only(
       start: 25,
       end: 25,
