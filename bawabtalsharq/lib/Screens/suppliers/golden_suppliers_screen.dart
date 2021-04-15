@@ -62,7 +62,7 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
               Positioned.directional(
                 textDirection: Directionality.of(context),
                 top: 5,
-                start: 30,
+                start: 5,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15.0),
                   child: Image(
@@ -161,7 +161,7 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           buildText(
-            "eslam alaa",
+            Languages.of(context).eslamAlaa,
             15,
             fontWeight: FontWeight.w700,
           ),

@@ -222,6 +222,7 @@ class LanguageEn extends Languages {
   String get emailAddress => 'Email Address';
   String get memberSince => 'Member since: 2020';
   String get sportShoes => 'Sport Shoes';
+  String get eslamAlaa => 'Eslam alaa';
 
 // end Islam
 }

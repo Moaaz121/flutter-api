@@ -183,6 +183,7 @@ abstract class Languages {
   String get emailAddress;
   String get memberSince;
   String get sportShoes;
+  String get eslamAlaa;
 
 // end Islam
 }

@@ -222,6 +222,7 @@ class LanguageAr extends Languages {
   String get emailAddress => 'عنوان بريديك الإلكتروني ';
   String get memberSince => 'عضو منذ: ٢٠٢٠ ';
   String get sportShoes => 'حذاء رياضي ';
+  String get eslamAlaa => 'اسلام علاء ';
 
 // end Islam
 
