@@ -24,8 +24,8 @@ class _UpdateProfileState extends State<UpdateProfile> {
 
   @override
   Widget build(BuildContext context) {
-    final String formattedDate = DateFormat.yMd().format(_selectedDateTime);
-    final selectedText = Text('You selected: $formattedDate');
+    // final String formattedDate = DateFormat.yMd().format(_selectedDateTime);
+    // final selectedText = Text('You selected: $formattedDate');
 
     return Scaffold(
         backgroundColor: Colors.white,
@@ -111,13 +111,13 @@ class _UpdateProfileState extends State<UpdateProfile> {
                   SizedBox(
                     height: 20.0,
                   ),
-                  // signInFlatButton(context, MediaQuery.of(context).size.height,
-                  //     'Save Change', () {},
-                  //     widthOfBtn: 1),
-                  CupertinoDateTextBox(
-                      initialValue: DateTime.now(),
-                      onDateChange: onDateChangeCallback,
-                      hintText: 'Hint Text'),
+                  signInFlatButton(context, MediaQuery.of(context).size.height,
+                      'Save Change', () {},
+                      widthOfBtn: 1),
+                  // CupertinoDateTextBox(
+                  //     initialValue: DateTime.now(),
+                  //     onDateChange: onDateChangeCallback,
+                  //     hintText: 'Hint Text'),
                 ])));
   }
 

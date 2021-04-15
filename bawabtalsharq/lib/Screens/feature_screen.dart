@@ -206,7 +206,7 @@ class _FeatureScreenState extends State<FeatureScreen> {
                       ),
                       shape: BoxShape.rectangle,
                       image: DecorationImage(
-                        image: AssetImage(kareem_img),
+                        image: AssetImage('assets/images/mo3az.jpeg'),
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -227,7 +227,7 @@ class _FeatureScreenState extends State<FeatureScreen> {
                       ),
                       shape: BoxShape.rectangle,
                       image: DecorationImage(
-                        image: AssetImage(kareem_img),
+                        image: AssetImage('assets/images/mo3az.jpeg'),
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -248,7 +248,7 @@ class _FeatureScreenState extends State<FeatureScreen> {
                       ),
                       shape: BoxShape.rectangle,
                       image: DecorationImage(
-                        image: AssetImage(kareem_img),
+                        image: AssetImage('assets/images/mo3az.jpeg'),
                         fit: BoxFit.fill,
                       ),
                     ),
