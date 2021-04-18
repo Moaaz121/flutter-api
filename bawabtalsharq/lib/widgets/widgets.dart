@@ -1319,11 +1319,13 @@ Widget customTextField(BuildContext context,
     {String label,
     IconButton rightBtn,
     IconData leftIcon,
+    TextEditingController controller,
     double width = 1,
     bool isPassword = false}) {
   return SizedBox(
     width: MediaQuery.of(context).size.width * width,
     child: TextField(
+      controller: controller,
       obscureText: isPassword,
       decoration: InputDecoration(
           //hintText: 'username',
