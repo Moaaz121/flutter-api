@@ -28,7 +28,8 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
+import 'package:bawabtalsharq/Screens/profile/pricing/pricing_screen.dart';
+import 'package:bawabtalsharq/Screens/profile/my_account/my_account_screen.dart';
 import 'Screens/interesting_screen.dart';
 import 'Screens/main_srceen.dart';
 import 'Screens/notification_screen.dart';
@@ -72,7 +73,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.deepOrange),
-      home: GoldenSuppliers(),
+      home: SplashScreen(),
       routes: {
         ScreenRoutes.splashScreen: (_) => SplashScreen(),
         ScreenRoutes.introScreen: (_) => IntroScreen(),
@@ -105,6 +106,9 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.verificationPassword: (_) => VerificationScreen(),
         ScreenRoutes.privacyScreen: (_) => PrivacyScreen(),
         ScreenRoutes.faqScreen: (_) => FaqScreen(),
+        ScreenRoutes.goldenSuppliers: (_) => GoldenSuppliers(),
+        ScreenRoutes.pricing: (_) => PricingScreen(),
+        ScreenRoutes.myAccount: (_) => MyAccount(),
       },
       locale: _locale,
       supportedLocales: supportedLocales,
