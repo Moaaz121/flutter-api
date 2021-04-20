@@ -1,9 +1,8 @@
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
+import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:bawabtalsharq/Utils/strings.dart';
-import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:flutter_dropdown/flutter_dropdown.dart';
 
 class Requestforqutation extends StatefulWidget {
@@ -259,16 +258,20 @@ class _RequestforqutationState extends State<Requestforqutation> {
                       children: [
                         Padding(
                           padding: const EdgeInsetsDirectional.only(
-                              start: 15, bottom: 20),
+                              start: 15, bottom: 20, end: 40),
                           child: SizedBox(
                             width: MediaQuery.of(context).size.width * 0.3,
                             child: RaisedButton(
+                              splashColor: orangeColor.withOpacity(0.5),
+                              highlightColor: orangeColor.withOpacity(0.2),
                               disabledColor: Colors.transparent,
                               child: Text(
                                 Languages.of(context).submit,
-                                style: TextStyle(color: orangeColor),
+                                style: TextStyle(
+                                  color: orangeColor,
+                                ),
                               ),
-                              onPressed: null,
+                              onPressed: () {},
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20),
                                 side: new BorderSide(
