@@ -22,13 +22,11 @@ class _SearchScreenState extends State<SearchScreen> {
       child: Stack(
         children: [
           Scaffold(
-            resizeToAvoidBottomInset:
-                false, // to keep the size, when opening the keyboard
-
+            resizeToAvoidBottomInset: false,
             body: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(16, 60, 0, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(1, 60, 0, 0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -68,8 +66,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     children: [
                       Divider(
                         thickness: .2,
-                        endIndent: 20,
-                        indent: 20,
+                        endIndent: 10,
                         color: Colors.grey,
                       ),
                       buildText((Languages.of(context).searchByCategories), 14,
@@ -80,7 +77,12 @@ class _SearchScreenState extends State<SearchScreen> {
                       Container(
                         height: MediaQuery.of(context).size.height * 0.06,
                         child: ListView.builder(
-                          padding: EdgeInsets.only(top: 2, bottom: 2),
+                          padding: EdgeInsets.only(
+                            top: 2,
+                            bottom: 2,
+                            right: 6,
+                            left: 6,
+                          ),
                           physics: AlwaysScrollableScrollPhysics(),
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
@@ -112,8 +114,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       ),
                       Divider(
                         thickness: .2,
-                        indent: 20,
-                        endIndent: 20,
+                        endIndent: 10,
                         color: Colors.grey,
                       ),
                       SizedBox(
@@ -122,46 +123,47 @@ class _SearchScreenState extends State<SearchScreen> {
                       buildText((Languages.of(context).resentSearch), 14,
                           FontWeight.w600, Colors.black),
                       SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        height: height * 0.5,
-                        child: ListView.builder(
-                          physics: AlwaysScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          itemCount: 44,
-                          itemBuilder: (context, position) {
-                            return Container(
-                              margin: EdgeInsets.only(bottom: 15),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                      child: buildText(
-                                    'handmade crafts',
-                                    13,
-                                    FontWeight.w400,
-                                    Color(0xff646464),
-                                  )),
-                                  CircleAvatar(
-                                    radius: 6,
-                                    backgroundColor: orangeColor,
-                                    child: Icon(
-                                      Icons.close,
-                                      size: 12,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
+                        height: 7,
                       ),
                     ],
+                  ),
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    physics: AlwaysScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    reverse: false,
+                    scrollDirection: Axis.vertical,
+                    itemCount: 33,
+                    itemBuilder: (context, position) {
+                      return Container(
+                        margin:
+                            EdgeInsets.only(bottom: 15, right: 30, left: 30),
+                        child: Row(
+                          children: [
+                            Expanded(
+                                child: buildText(
+                              'handmade crafts',
+                              13,
+                              FontWeight.w400,
+                              Color(0xff646464),
+                            )),
+                            CircleAvatar(
+                              radius: 6,
+                              backgroundColor: orangeColor,
+                              child: Icon(
+                                Icons.close,
+                                size: 12,
+                                color: Colors.white,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                          ],
+                        ),
+                      );
+                    },
                   ),
                 ),
               ],
@@ -194,9 +196,9 @@ class _SearchScreenState extends State<SearchScreen> {
 Widget buildTextField({String hint, BuildContext context}) {
   return Container(
     width: MediaQuery.of(context).size.width * 0.7,
-    height: MediaQuery.of(context).size.width * 0.10,
+    height: MediaQuery.of(context).size.width * 0.09,
     decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(22), color: Colors.grey[100]),
+        borderRadius: BorderRadius.circular(11), color: Colors.grey[100]),
     child: Center(
       child: TextField(
         onSubmitted: (value) {
