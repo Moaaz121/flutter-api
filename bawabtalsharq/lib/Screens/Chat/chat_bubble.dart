@@ -126,6 +126,11 @@ class _ChatBubbleState extends State<ChatBubble> {
 
   Widget buildTextMessage() {
     var splitedMessage = widget.message.msg.split('_');
+    if (splitedMessage[0] == closeMeet ||
+        splitedMessage[0] == joinAudioMeet ||
+        splitedMessage[0] == joinVideoMeet) {
+      return SizedBox();
+    }
     String messageTxt = '';
     if (splitedMessage[0] == audioCall) {
       messageTxt = 'Audio call';

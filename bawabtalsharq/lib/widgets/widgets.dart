@@ -585,6 +585,36 @@ BoxShadow makeShadow() {
     spreadRadius: 0,
   );
 }
+
+Widget callInfo(
+    BuildContext context, bool isVideo, String partnerName, bool isCaller) {
+  return Container(
+    margin: EdgeInsets.only(top: 100),
+    child: Column(
+      children: [
+        Center(
+          child: buildText(
+              isCaller
+                  ? Languages.of(context).calling
+                  : isVideo
+                      ? Languages.of(context).incomingVideoCall
+                      : Languages.of(context).incomingCall,
+              18.0,
+              color: Colors.black,
+              fontWeight: FontWeight.w500),
+        ),
+        SizedBox(
+          height: 50,
+        ),
+        Center(
+          child: buildText(partnerName, 30.0,
+              color: Colors.black, fontWeight: FontWeight.w800),
+        ),
+      ],
+    ),
+  );
+}
+
 // end Asmaa
 
 // Start Bahaa

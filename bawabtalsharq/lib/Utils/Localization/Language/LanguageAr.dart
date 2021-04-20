@@ -17,6 +17,8 @@ class LanguageAr extends Languages {
   String get meetingWith => 'اجتماع مع ';
   String get incomingCall => 'مكالمة';
   String get incomingVideoCall => 'مكالمة فيديو';
+  String get calling => 'calling';
+
 // end Asmaa
 
 // Start Bahaa

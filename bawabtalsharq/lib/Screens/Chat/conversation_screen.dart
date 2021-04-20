@@ -3,14 +3,15 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
-import 'package:audio_recorder/audio_recorder.dart';
+//import 'package:audio_recorder/audio_recorder.dart';
 import 'package:bawabtalsharq/Model/chat/partner_model.dart';
 import 'package:bawabtalsharq/Model/chat/socket_message.dart';
 import 'package:bawabtalsharq/Repos/ChatRepos/chat_repo.dart';
 import 'package:bawabtalsharq/Repos/ChatRepos/jitsi_config.dart';
 import 'package:bawabtalsharq/Repos/ChatRepos/socket_chat.dart';
 import 'package:bawabtalsharq/Screens/Chat/chat_bubble.dart';
-import 'package:bawabtalsharq/Screens/Chat/ringing_screen.dart';
+import 'package:bawabtalsharq/Screens/Chat/receiver_ringing_screen.dart';
+import 'package:bawabtalsharq/Screens/Chat/sender_ringing_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
@@ -23,6 +24,8 @@ import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_pickers/image_pickers.dart';
 import 'package:intl/intl.dart';
+import 'package:jitsi_meet/jitsi_meet.dart';
+import 'package:jitsi_meet/jitsi_meeting_listener.dart';
 import 'package:mime/mime.dart';
 import 'package:rocket_chat_connector_flutter/models/message.dart';
 import 'package:rocket_chat_connector_flutter/models/user.dart' as UUser;
@@ -31,7 +34,7 @@ class ConversationScreen extends StatefulWidget {
   final String roomID;
   final PartnerData partner;
 
-  Recording _recording;
+  // Recording _recording;
   final Random random = new Random();
 
   ConversationScreen(this.roomID, this.partner);
@@ -65,6 +68,8 @@ class _ConversationScreenState extends State<ConversationScreen>
   String _recorderTxt = '00:00:00';
 
   String _path = '';
+  bool _isVideo;
+  bool _hasMeeting = false;
 
   @override
   void initState() {
@@ -75,16 +80,18 @@ class _ConversationScreenState extends State<ConversationScreen>
       vsync: this,
       duration: const Duration(milliseconds: 300),
     );
-    JitsiConfig.instance.jitsiListener();
-    _textEditingController.addListener(() {
-      setState(() {
-        _s = false;
-      });
-    });
+    jitsiListener();
+    //  _textEditingController.addListener(() {
+    // setState(() {
+    //   _s = false;
+    // });
+    // });
   }
 
   @override
   void dispose() {
+    SocketChat.instance.closeSocket(widget.roomID);
+    JitsiMeet.removeAllListeners();
     super.dispose();
   }
 
@@ -254,15 +261,20 @@ class _ConversationScreenState extends State<ConversationScreen>
               Icons.call,
             ),
             onPressed: () {
+              _isVideo = false;
               String callRoom = audioCall +
                   '_${rocketUser.data.userId}' +
                   '_${widget.partner.user.id}';
-              JitsiConfig.instance.joinMeeting(
-                  context,
-                  false,
-                  '${rocketUser.data.userId}' + '_${widget.partner.user.id}',
-                  widget.partner);
               SocketChat.instance.sendMessage(widget.roomID, callRoom);
+              print('Pressed');
+
+              SchedulerBinding.instance.addPostFrameCallback((_) {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SenderRingingScreen(
+                            widget.partner, false, widget.roomID)));
+              });
             },
           ),
           IconButton(
@@ -270,15 +282,18 @@ class _ConversationScreenState extends State<ConversationScreen>
               Icons.videocam,
             ),
             onPressed: () {
+              _isVideo = true;
               String callRoom = videoCall +
                   '_${rocketUser.data.userId}' +
                   '_${widget.partner.user.id}';
-              JitsiConfig.instance.joinMeeting(
-                  context,
-                  true,
-                  '${rocketUser.data.userId}' + '_${widget.partner.user.id}',
-                  widget.partner);
               SocketChat.instance.sendMessage(widget.roomID, callRoom);
+              SchedulerBinding.instance.addPostFrameCallback((_) {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SenderRingingScreen(
+                            widget.partner, true, widget.roomID)));
+              });
             },
           ),
           SizedBox(
@@ -297,6 +312,7 @@ class _ConversationScreenState extends State<ConversationScreen>
                   if (snapshot.hasData) {
                     var responseJSON = jsonDecode(snapshot.data);
                     if (responseJSON['msg'] == 'changed') {
+                      print(snapshot);
                       SocketMessage sMessage =
                           SocketMessage.fromJson(responseJSON);
                       _messages.insert(
@@ -605,44 +621,81 @@ class _ConversationScreenState extends State<ConversationScreen>
     var splitMessage = message.split("_");
 
     if (splitMessage[0].startsWith('--')) {
-      // if (message == closeMeet) {
-      //   JitsiConfig.instance.closeMeeting(context);
-      //   return;
-      // }
       if (splitMessage[1] != rocketUser.data.userId) {
         if (splitMessage[0] == audioCall) {
           SchedulerBinding.instance.addPostFrameCallback((_) {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => RingingScreen(widget.partner, false,
-                      splitMessage[1] + '_' + splitMessage[2])),
-            ).then((value) {
-              setState(() {
-                SocketChat.instance.connectToSocket(widget.roomID);
-                SocketChat.instance.subscribeToRoom(widget.roomID);
-                // _socketChat.sendMessage(widget.roomID, closeMeet);
-              });
-            });
+                  builder: (context) => ReceiverRingingScreen(widget.partner,
+                      false, splitMessage[1] + '_' + splitMessage[2])),
+            );
           });
         } else if (splitMessage[0] == videoCall) {
           SchedulerBinding.instance.addPostFrameCallback((_) {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => RingingScreen(widget.partner, true,
-                      splitMessage[1] + '_' + splitMessage[2])),
-            ).then((value) {
-              setState(() {
-                SocketChat.instance.connectToSocket(widget.roomID);
-                SocketChat.instance.subscribeToRoom(widget.roomID);
-                //_socketChat.sendMessage(widget.roomID, closeMeet);
-              });
-            });
+                  builder: (context) => ReceiverRingingScreen(widget.partner,
+                      true, splitMessage[1] + '_' + splitMessage[2])),
+            );
           });
         }
-        SocketChat.instance.closeSocket(widget.roomID);
+      } else {
+        if (splitMessage[0] == joinAudioMeet) {
+          JitsiConfig.instance.joinMeeting(context, false,
+              splitMessage[1] + '_' + splitMessage[2], widget.partner);
+        } else if (splitMessage[0] == joinVideoMeet) {
+          JitsiConfig.instance.joinMeeting(context, true,
+              splitMessage[1] + '_' + splitMessage[2], widget.partner);
+        } else if (splitMessage[0] == closeMeet) {
+          if (_hasMeeting) {
+            if (_hasMeeting) {
+              JitsiConfig.instance.closeMeeting(context);
+            }
+          }
+        }
       }
     }
+  }
+
+  void jitsiListener() {
+    JitsiMeet.addListener(JitsiMeetingListener(
+        onConferenceWillJoin: _onConferenceWillJoin,
+        onConferenceJoined: _onConferenceJoined,
+        onConferenceTerminated: _onConferenceTerminated,
+        onError: _onError));
+  }
+
+  void _onConferenceWillJoin({message}) {
+    _hasMeeting = true;
+    SocketChat.instance.sendMessage(
+        widget.roomID,
+        _isVideo
+            ? joinVideoMeet
+            : joinAudioMeet +
+                '_${widget.partner.user.id}' +
+                '_${rocketUser.data.userId}');
+    debugPrint("_onConferenceWillJoin broadcasted with message: $message");
+  }
+
+  void _onConferenceJoined({message}) {
+    debugPrint("_onConferenceJoined broadcasted with message: $message");
+  }
+
+  void _onConferenceTerminated({message}) {
+    debugPrint("_onConferenceTerminated broadcasted with message: $message");
+    if (_hasMeeting) {
+      SocketChat.instance.sendMessage(
+          widget.roomID,
+          closeMeet +
+              '_${widget.partner.user.id}' +
+              '_${rocketUser.data.userId}');
+    }
+    _hasMeeting = false;
+  }
+
+  _onError(error) {
+    debugPrint("_onError broadcasted: $error");
   }
 }

@@ -19,6 +19,7 @@ abstract class Languages {
   String get meetingWith;
   String get incomingCall;
   String get incomingVideoCall;
+  String get calling;
 
 // end Asmaa
 

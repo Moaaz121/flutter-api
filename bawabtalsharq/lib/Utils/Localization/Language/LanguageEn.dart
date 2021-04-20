@@ -17,6 +17,8 @@ class LanguageEn extends Languages {
   String get meetingWith => 'Meeting with ';
   String get incomingCall => 'Incoming Call';
   String get incomingVideoCall => 'Incoming Video Call';
+  String get calling => 'Calling';
+
 // end Asmaa
 
 // Start Bahaa

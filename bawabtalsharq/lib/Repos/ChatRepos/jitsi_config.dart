@@ -6,16 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:jitsi_meet/feature_flag/feature_flag.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
-import 'package:jitsi_meet/jitsi_meeting_listener.dart';
 
 class JitsiConfig {
   JitsiConfig._privateConstructor();
   static final JitsiConfig instance = JitsiConfig._privateConstructor();
 
   var _options = JitsiMeetingOptions();
+  String _roomID;
 
   void joinMeeting(BuildContext context, bool isVideo, String roomID,
       PartnerData partner) async {
+    this._roomID = roomID;
     try {
       _meetingConfiguration(context, isVideo, roomID, partner);
       await JitsiMeet.joinMeeting(_options);
@@ -54,35 +55,11 @@ class JitsiConfig {
     _options.featureFlag = featureFlag;
   }
 
-  void jitsiListener() {
-    JitsiMeet.addListener(JitsiMeetingListener(
-        onConferenceWillJoin: _onConferenceWillJoin,
-        onConferenceJoined: _onConferenceJoined,
-        onConferenceTerminated: _onConferenceTerminated,
-        onError: _onError));
-  }
-
   void closeMeeting(BuildContext context) {
     JitsiMeet.closeMeeting();
     SchedulerBinding.instance.addPostFrameCallback((_) {
       Navigator.popUntil(
           context, ModalRoute.withName(ScreenRoutes.conversationScreen));
     });
-  }
-
-  void _onConferenceWillJoin({message}) {
-    debugPrint("_onConferenceWillJoin broadcasted with message: $message");
-  }
-
-  void _onConferenceJoined({message}) {
-    debugPrint("_onConferenceJoined broadcasted with message: $message");
-  }
-
-  void _onConferenceTerminated({message}) {
-    debugPrint("_onConferenceTerminated broadcasted with message: $message");
-  }
-
-  _onError(error) {
-    debugPrint("_onError broadcasted: $error");
   }
 }

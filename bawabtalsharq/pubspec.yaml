@@ -45,7 +45,7 @@ dependencies:
   flutter_imagenetwork:
   jitsi_meet:
   flutter_ringtone_player:
-  audio_recorder: ^1.0.2
+  #audio_recorder:
   path_provider: ^1.6.8
   permission_handler: 5.0.0
   flutter_sound: ^2.0.4
