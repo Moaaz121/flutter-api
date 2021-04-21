@@ -68,7 +68,7 @@ class _ConversationScreenState extends State<ConversationScreen>
   String _recorderTxt = '00:00:00';
 
   String _path = '';
-  bool _isVideo;
+  bool _isVideo = false;
   bool _hasMeeting = false;
 
   @override
@@ -630,6 +630,13 @@ class _ConversationScreenState extends State<ConversationScreen>
                   builder: (context) => ReceiverRingingScreen(widget.partner,
                       false, splitMessage[1] + '_' + splitMessage[2])),
             );
+            //     .then((value) => {
+            //   SocketChat.instance.sendMessage(
+            //       widget.roomID,
+            //       closeMeet +
+            //           '_${widget.partner.user.id}' +
+            //           '_${rocketUser.data.userId}')
+            // });
           });
         } else if (splitMessage[0] == videoCall) {
           SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -639,13 +646,22 @@ class _ConversationScreenState extends State<ConversationScreen>
                   builder: (context) => ReceiverRingingScreen(widget.partner,
                       true, splitMessage[1] + '_' + splitMessage[2])),
             );
+            //     .then((value) => {
+            //   SocketChat.instance.sendMessage(
+            //       widget.roomID,
+            //       closeMeet +
+            //           '_${widget.partner.user.id}' +
+            //           '_${rocketUser.data.userId}')
+            // });
           });
         }
       } else {
         if (splitMessage[0] == joinAudioMeet) {
+          _isVideo = false;
           JitsiConfig.instance.joinMeeting(context, false,
               splitMessage[1] + '_' + splitMessage[2], widget.partner);
         } else if (splitMessage[0] == joinVideoMeet) {
+          _isVideo = true;
           JitsiConfig.instance.joinMeeting(context, true,
               splitMessage[1] + '_' + splitMessage[2], widget.partner);
         } else if (splitMessage[0] == closeMeet) {

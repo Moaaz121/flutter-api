@@ -91,8 +91,6 @@ class _ReceiverRingingScreenState extends State<ReceiverRingingScreen> {
           ),
           RawMaterialButton(
             onPressed: () {
-              SocketChat.instance.sendMessage(
-                  widget.roomID, closeMeet + '_' + rocketUser.data.userId);
               ChatSound.instance.stopRingTone();
               SchedulerBinding.instance.addPostFrameCallback((_) {
                 Navigator.pop(context);

@@ -5,13 +5,7 @@ class ChatSound {
   static final ChatSound instance = ChatSound._privateConstructor();
 
   void playRingTone(bool isCaller) {
-    FlutterRingtonePlayer.play(
-      android: isCaller ? AndroidSounds.alarm : AndroidSounds.ringtone,
-      ios: isCaller ? IosSounds.horn : IosSounds.triTone,
-      looping: true, // Android only - API >= 28
-      volume: 0.1, // Android only - API >= 28
-      asAlarm: false, // Android only - all APIs
-    );
+    FlutterRingtonePlayer.playRingtone(looping: true);
   }
 
   void stopRingTone() {

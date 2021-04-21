@@ -1,10 +1,7 @@
 import 'dart:async';
 
 import 'package:bawabtalsharq/Model/chat/partner_model.dart';
-import 'package:bawabtalsharq/Repos/ChatRepos/chat_repo.dart';
 import 'package:bawabtalsharq/Repos/ChatRepos/chat_sound.dart';
-import 'package:bawabtalsharq/Repos/ChatRepos/socket_chat.dart';
-import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -68,8 +65,6 @@ class _SenderRingingScreenState extends State<SenderRingingScreen> {
         child: RawMaterialButton(
           onPressed: () {
             ChatSound.instance.stopRingTone();
-            SocketChat.instance.sendMessage(
-                widget.roomID, closeMeet + '_' + rocketUser.data.userId);
             SchedulerBinding.instance.addPostFrameCallback((_) {
               Navigator.pop(context);
             });

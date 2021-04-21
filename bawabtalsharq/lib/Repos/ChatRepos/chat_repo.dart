@@ -47,7 +47,6 @@ class RocketChatApi {
     MessageNewResponse result =
         await messageService.postMessage(message, rocketUser);
     print(result.success);
-    print('kkkkkkkkkkkkkk');
   }
 
   Future<dynamic> createChannel(String channelName) async {
