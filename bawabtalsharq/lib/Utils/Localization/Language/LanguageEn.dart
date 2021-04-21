@@ -212,6 +212,8 @@ class LanguageEn extends Languages {
 
   String get uploadDocument => 'Upload Sourcing Documents';
 
+  String get skipTxt => 'Skip';
+
 // end Moaaz
 
 // Start Islam

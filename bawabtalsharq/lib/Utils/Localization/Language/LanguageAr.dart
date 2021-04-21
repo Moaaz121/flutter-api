@@ -158,6 +158,8 @@ class LanguageAr extends Languages {
 
   String get advanced => 'المتقدمة';
 
+  String get skipTxt => 'تخطي';
+
   String get details => 'تفاصيل';
 
   String get port => 'المنفذ';

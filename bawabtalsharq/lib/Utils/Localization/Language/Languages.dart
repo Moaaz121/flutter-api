@@ -173,6 +173,7 @@ abstract class Languages {
   String get interesting;
   String get btnText;
   String get iconText;
+  String get skipTxt;
 // end Moaaz
 
 // Start Islam

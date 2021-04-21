@@ -58,7 +58,11 @@ class _IntroScreenState extends State<IntroScreen> {
                         style: TextStyle(color: Colors.black54, fontSize: 18),
                       ),
                       Padding(
+<<<<<<< Updated upstream
                         padding: const EdgeInsetsDirectional.only(end: 5),
+=======
+                        padding: const EdgeInsetsDirectional.only(end: 0),
+>>>>>>> Stashed changes
                         child: Icon(
                           Icons.arrow_drop_down,
                           size: 25,
@@ -82,8 +86,30 @@ class _IntroScreenState extends State<IntroScreen> {
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
+<<<<<<< Updated upstream
+=======
+                      PageView(
+                        controller: _pageController,
+                        pageSnapping: true,
+                        scrollDirection: Axis.horizontal,
+                        onPageChanged: (page) {
+                          setState(() {
+                            // print(page);
+                            imageIndex = page;
+                          });
+                        },
+                        children: [
+                          pageBuilder(intro1, Languages.of(context).intro1Title,
+                              Languages.of(context).intro1SubTitle),
+                          pageBuilder(intro2, Languages.of(context).intro2Title,
+                              Languages.of(context).intro2SubTitle),
+                          pageBuilder(intro3, Languages.of(context).intro3Title,
+                              Languages.of(context).intro3SubTitle)
+                        ],
+                      ),
+>>>>>>> Stashed changes
                       Positioned(
-                        top: MediaQuery.of(context).size.height * 0.62 + 10,
+                        top: MediaQuery.of(context).size.height * 0.54 + 10,
                         child: Container(
                           alignment: Alignment.center,
                           child: AnimatedSmoothIndicator(
@@ -129,6 +155,7 @@ class _IntroScreenState extends State<IntroScreen> {
                       ),
                       Positioned.directional(
                         textDirection: Directionality.of(context),
+<<<<<<< Updated upstream
                         end: 30,
                         bottom: 30,
                         child: GestureDetector(
@@ -143,10 +170,65 @@ class _IntroScreenState extends State<IntroScreen> {
                               Text(
                                 Languages.of(context).next,
                                 style: TextStyle(fontSize: 20),
+=======
+                        bottom: 30,
+                        child: Column(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                imageIndex < 2
+                                    ? _pageController.jumpToPage(imageIndex + 1)
+                                    : Navigator.pushReplacementNamed(
+                                        context, ScreenRoutes.loginScreen);
+                              },
+                              child: Container(
+                                width: 150,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                    color: imageIndex == 0
+                                        ? Colors.green
+                                        : (imageIndex == 1
+                                            ? Colors.blueAccent
+                                            : Colors.redAccent),
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: Row(
+                                  // crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      Languages.of(context).next,
+                                      style: TextStyle(
+                                          fontSize: 20, color: Colors.white),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Icon(
+                                      LanguageHelper.isEnglish
+                                          ? Icons.arrow_forward_rounded
+                                          : Icons.arrow_back_rounded,
+                                      color: Colors.white,
+                                      size: 17,
+                                    )
+                                  ],
+                                ),
+>>>>>>> Stashed changes
                               ),
-                              SizedBox(
-                                width: 5,
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pushReplacementNamed(
+                                    context, ScreenRoutes.homeScreen);
+                              },
+                              child: Text(
+                                'Skip',
+                                style: TextStyle(
+                                    decoration: TextDecoration.underline),
                               ),
+<<<<<<< Updated upstream
                               Icon(
                                 LanguageHelper.isEnglish
                                     ? Icons.arrow_forward_rounded
@@ -155,6 +237,10 @@ class _IntroScreenState extends State<IntroScreen> {
                               )
                             ],
                           ),
+=======
+                            ),
+                          ],
+>>>>>>> Stashed changes
                         ),
                       ),
                     ],
