@@ -19,10 +19,13 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   LoginBloc _loginBloc;
   bool isLoading = false;
   bool obSecureText = true;
+  String _emailErrorMessage;
+  String _passwordErrorMessage;
 
   @override
   void dispose() {
@@ -42,6 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      key: _scaffoldKey,
       resizeToAvoidBottomPadding: false,
       body: BlocBuilder<LoginBloc, LoginState>(
         bloc: _loginBloc,
@@ -60,8 +64,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 Navigator.pushNamed(context, ScreenRoutes.mainScreen);
               });
             } else {
-              print('please try different email or password');
-              Navigator.of(context, rootNavigator: true).pop();
+              SchedulerBinding.instance.addPostFrameCallback((_) {
+                _scaffoldKey.currentState.showSnackBar(
+                    new SnackBar(content: new Text(state.userResponse.msg)));
+              });
+              Navigator.pop(context);
             }
           }
           return Container(
@@ -138,6 +145,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: height * 0.04,
                         ),
                         customTextField(context,
+                            errorText: _emailErrorMessage,
                             controller: usernameController,
                             label: Languages.of(context).userName,
                             width: 1,
@@ -147,6 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         customTextField(
                           context,
+                          errorText: _passwordErrorMessage,
                           controller: passwordController,
                           isPassword: obSecureText,
                           label: (Languages.of(context).password),
@@ -203,13 +212,28 @@ class _LoginScreenState extends State<LoginScreen> {
                                   height,
                                   Languages.of(context).login,
                                   () {
-                                    passwordController.text.isEmpty
-                                        ? null
-                                        : _loginBloc.add(
-                                            DoLoginEvent(
-                                                usernameController.text,
-                                                passwordController.text),
-                                          );
+                                    FocusScope.of(context).unfocus();
+                                    _passwordErrorMessage = null;
+                                    _emailErrorMessage = null;
+                                    setState(() {
+                                      if (usernameController.text.isEmpty)
+                                        _emailErrorMessage = 'Empty Field';
+                                      else if (passwordController.text.isEmpty)
+                                        _passwordErrorMessage = 'Empty Field';
+                                      else if (!emailValidator(
+                                          usernameController.text.trim()))
+                                        _emailErrorMessage =
+                                            'please enter correct email address';
+                                      // else if (!passwordValidator(
+                                      //     passwordController.text))
+                                      //   _passwordErrorMessage = 'Weak Password';
+                                      else {
+                                        _loginBloc.add(
+                                          DoLoginEvent(usernameController.text,
+                                              passwordController.text),
+                                        );
+                                      }
+                                    });
                                   },
                                 ),
                               ]),
@@ -312,4 +336,15 @@ class _LoginScreenState extends State<LoginScreen> {
       ],
     );
   }
+}
+
+bool emailValidator(String email) {
+  return RegExp(
+          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+      .hasMatch(email);
+}
+
+bool passwordValidator(String password) {
+  return RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$')
+      .hasMatch(password);
 }

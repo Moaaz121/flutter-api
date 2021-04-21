@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:bawabtalsharq/bloc/loginBloc/login_event.dart';
 import 'package:bawabtalsharq/bloc/loginBloc/login_state.dart';
-import 'package:bawabtalsharq/repo/login_repo.dart';
+import 'package:bawabtalsharq/repo/auth_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
@@ -11,7 +11,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   ) async* {
     if (event is DoLoginEvent) {
       yield LoginLoadingState();
-      var response = await LoginRepo().doLogin(event.userName, event.password);
+      var response = await AuthRepo().doLogin(event.userName, event.password);
 
       yield LoginLoadedState(userResponse: response);
     } else if (event is ResetState) {
