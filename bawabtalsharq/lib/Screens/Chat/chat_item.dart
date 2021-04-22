@@ -2,13 +2,11 @@ import 'package:bawabtalsharq/Model/chat/partner_model.dart';
 import 'package:bawabtalsharq/Model/chat/room_model.dart';
 import 'package:bawabtalsharq/Repos/ChatRepos/chat_repo.dart';
 import 'package:bawabtalsharq/Screens/Chat/conversation_screen.dart';
-import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/main.dart';
 import 'package:flutter/material.dart';
 
 class ChatItem extends StatefulWidget {
   final Im chatMessage;
-  final int counter = 1;
   ChatItem(this.chatMessage);
 
   @override
@@ -86,31 +84,6 @@ class _ChatItemState extends State<ChatItem> {
                       ),
                     ),
                     SizedBox(height: 5),
-                    widget.counter == 0
-                        ? SizedBox()
-                        : Container(
-                            padding: EdgeInsets.all(1),
-                            decoration: BoxDecoration(
-                              color: defaultOrangeColor,
-                              borderRadius: BorderRadius.circular(6),
-                            ),
-                            constraints: BoxConstraints(
-                              minWidth: 11,
-                              minHeight: 11,
-                            ),
-                            child: Padding(
-                              padding:
-                                  EdgeInsets.only(top: 1, left: 5, right: 5),
-                              child: Text(
-                                "${1}",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 10,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
                   ],
                 ),
                 onTap: () {
