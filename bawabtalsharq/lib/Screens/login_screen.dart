@@ -2,6 +2,7 @@ import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/Utils/validator_util.dart';
 import 'package:bawabtalsharq/bloc/loginBloc/login_bloc.dart';
 import 'package:bawabtalsharq/bloc/loginBloc/login_event.dart';
 import 'package:bawabtalsharq/bloc/loginBloc/login_state.dart';
@@ -145,6 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: height * 0.04,
                         ),
                         customTextField(context,
+                            textInputType: TextInputType.emailAddress,
                             errorText: _emailErrorMessage,
                             controller: usernameController,
                             label: Languages.of(context).userName,
@@ -155,6 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         customTextField(
                           context,
+                          textInputType: TextInputType.visiblePassword,
                           errorText: _passwordErrorMessage,
                           controller: passwordController,
                           isPassword: obSecureText,
@@ -336,15 +339,4 @@ class _LoginScreenState extends State<LoginScreen> {
       ],
     );
   }
-}
-
-bool emailValidator(String email) {
-  return RegExp(
-          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-      .hasMatch(email);
-}
-
-bool passwordValidator(String password) {
-  return RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$')
-      .hasMatch(password);
 }

@@ -1,6 +1,7 @@
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/Utils/validator_util.dart';
 import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
@@ -46,6 +47,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  String selectedRadio;
+
+  String _emailErrorMessage;
+  String _passwordErrorMessage;
+  String _phoneErrorMessage;
+  String _nameErrorMessage;
+
   bool isLoading = false;
   RegisterBloc _registerBloc;
 
@@ -86,6 +94,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
   setSelectedRadioTile(int val) {
     setState(() {
       selectedRadioTile = val;
+      switch (val) {
+        case 1:
+          selectedRadio = 'Buyer';
+          break;
+        case 2:
+          selectedRadio = 'Seller';
+          break;
+        case 3:
+          selectedRadio = 'Both';
+          break;
+      }
     });
   }
 
@@ -109,7 +128,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Navigator.pushNamed(context, ScreenRoutes.interestingScreen);
             });
           } else {
-            print('please try different email or password');
+            SchedulerBinding.instance.addPostFrameCallback((_) {
+              Scaffold.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.userResponse.msg),
+                ),
+              );
+            });
+            Navigator.pop(context);
           }
         }
         return Stack(
@@ -177,17 +203,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             Languages.of(context).seller, 2)),
                     buildRadioListTile(Languages.of(context).both, 3),
                     customTextField(context,
+                        textInputType: TextInputType.name,
+                        errorText: _nameErrorMessage,
                         controller: nameController,
                         label: Languages.of(context).fullName,
                         width: 1,
                         leftIcon: Icons.person),
                     customTextField(context,
+                        textInputType: TextInputType.emailAddress,
+                        errorText: _emailErrorMessage,
                         controller: emailController,
                         label: Languages.of(context).email,
                         width: 1,
                         leftIcon: Icons.email),
                     customTextField(
                       context,
+                      textInputType: TextInputType.visiblePassword,
+                      errorText: _passwordErrorMessage,
                       controller: passwordController,
                       width: 1,
                       label: Languages.of(context).loginPass,
@@ -238,6 +270,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           width: 10,
                         ),
                         customTextField(context,
+                            textInputType: TextInputType.phone,
+                            errorText: _phoneErrorMessage,
                             controller: phoneController,
                             label: Languages.of(context).tel,
                             width: 0.7,
@@ -254,16 +288,49 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             context,
                             MediaQuery.of(context).size.height,
                             Languages.of(context).signUp, () {
-                          phoneController.text.isEmpty
-                              ? null
-                              : _registerBloc.add(
-                                  DoRegisterEvent(
-                                    phoneController.text,
-                                    emailController.text,
-                                    nameController.text,
-                                    passwordController.text,
-                                  ),
-                                );
+                          FocusScope.of(context).unfocus();
+                          _passwordErrorMessage = null;
+                          _emailErrorMessage = null;
+                          _phoneErrorMessage = null;
+                          _nameErrorMessage = null;
+                          setState(() {
+                            if (nameController.text.isEmpty)
+                              _nameErrorMessage = 'Empty Field';
+                            else if (passwordController.text.isEmpty)
+                              _passwordErrorMessage = 'Empty Field';
+                            else if (phoneController.text.isEmpty)
+                              _phoneErrorMessage = 'Empty Field';
+                            else if (emailController.text.isEmpty)
+                              _emailErrorMessage = 'Empty Field';
+                            else if (selectedRadio == null)
+                              Scaffold.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('user type not selected'),
+                                ),
+                              );
+                            else if (!emailValidator(
+                                emailController.text.trim()))
+                              _emailErrorMessage =
+                                  'please enter correct email address';
+                            else if (!phoneValidator(
+                                phoneController.text.trim()))
+                              _phoneErrorMessage =
+                                  'please enter correct Phone Number';
+                            else if (!passwordValidator(
+                                passwordController.text))
+                              _passwordErrorMessage = 'Weak Password';
+                            else {
+                              _registerBloc.add(
+                                DoRegisterEvent(
+                                  phoneController.text,
+                                  emailController.text,
+                                  nameController.text,
+                                  passwordController.text,
+                                  selectedRadio,
+                                ),
+                              );
+                            }
+                          });
                         }),
                       ],
                     ),

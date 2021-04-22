@@ -11,8 +11,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   ) async* {
     if (event is DoRegisterEvent) {
       yield RegisterLoadingState();
-      var response = await AuthRepo()
-          .doRegister(event.phone, event.email, event.password, event.name);
+      var response = await AuthRepo().doRegister(
+          event.phone, event.email, event.password, event.name, event.userType);
 
       yield RegisterLoadedState(userResponse: response);
     } else if (event is ResetState) {

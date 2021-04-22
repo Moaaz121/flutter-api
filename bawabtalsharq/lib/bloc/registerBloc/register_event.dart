@@ -5,7 +5,9 @@ class DoRegisterEvent extends RegisterEvent {
   String email;
   String password;
   String name;
-  DoRegisterEvent(this.phone, this.email, this.name, this.password);
+  String userType;
+  DoRegisterEvent(
+      this.phone, this.email, this.name, this.password, this.userType);
 }
 
 class ResetState extends RegisterEvent {}
