@@ -32,11 +32,11 @@ class Country {
 class _SignUpScreenState extends State<SignUpScreen> {
   bool obSecureText = true;
   int selectedRadioTile;
+  bool isBuyer = true;
 
   List<Country> _countries = Country.getCountries();
   List<DropdownMenuItem<Country>> _dropdownMenuItems;
   Country _selectedCountry;
-
   @override
   void initState() {
     _dropdownMenuItems = buildDropdownMenuItems(_countries);
@@ -64,11 +64,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
     });
   }
 
-  setSelectedRadioTile(int val) {
-    setState(() {
-      selectedRadioTile = val;
-    });
-  }
+  // setSelectedRadioTile(int val) {
+  //   setState(() {
+  //     selectedRadioTile = val;
+  //     setState(() {
+  //       isBuyer = val == 1 ? true : false;
+  //     });
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -183,23 +186,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       width: 1,
                       label: Languages.of(context).companyName,
                       leftIcon: Icons.home_work),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: customTextField(
-                          context,
-                          width: 0.15,
-                          label: Languages.of(context).n,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      customTextField(context,
-                          label: Languages.of(context).tel,
-                          width: 0.7,
-                          leftIcon: Icons.phone),
-                    ],
+                  customTextField(context,
+                      label: Languages.of(context).tel,
+                      width: 1,
+                      leftIcon: Icons.phone),
+                  Visibility(
+                    visible: isBuyer ? false : true,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        customTextField(context,
+                            label: Languages.of(context).plan,
+                            width: 1,
+                            leftIcon: Icons.add_chart),
+                        customTextField(context,
+                            label: Languages.of(context).companySite,
+                            width: 1,
+                            leftIcon: Icons.language),
+                      ],
+                    ),
                   ),
                   SizedBox(
                     height: 20,
@@ -240,8 +245,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
       value: value,
       dense: true,
       onChanged: (val) {
+        setState(() {
+          selectedRadioTile = val;
+          isBuyer = val == 1 ? true : false;
+        });
         print("Radio Tile pressed $val");
-        setSelectedRadioTile(val);
+
+        // setSelectedRadioTile(val);
       },
       activeColor: OrangeColor,
     );

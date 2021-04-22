@@ -97,6 +97,9 @@ class LanguageAr extends Languages {
   String get subject => 'الموضوع';
   String get writeAMessage => 'اكتب رسالتك هنا';
 
+  String get plan => 'التخطيط';
+  String get companySite => 'مسار المنصة الالكترونيه';
+
   String get filter => 'فلتر';
   String get done => 'انتهى';
   String get category => 'الفئة';

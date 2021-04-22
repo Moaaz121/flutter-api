@@ -117,6 +117,8 @@ abstract class Languages {
   String get seller;
   String get both;
   String get fullName;
+  String get plan;
+  String get companySite;
   String get loginPass;
   String get confirmPass;
   String get companyName;
