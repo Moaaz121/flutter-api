@@ -16,6 +16,7 @@ class APIS {
 // end Bahaa
 
 // Start Mosdik
+  static const String Category_API = "get_categories&lang=en";
 
 // end Mosdik
 

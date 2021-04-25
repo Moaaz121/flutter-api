@@ -134,11 +134,6 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
                           width: MediaQuery.of(context).size.width * 0.3,
                           height: MediaQuery.of(context).size.height * 0.15,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16),
-                            border: Border.all(
-                              color: Colors.white,
-                            ),
-                            shape: BoxShape.rectangle,
                             image: DecorationImage(
                               image: AssetImage(mosadaq_img),
                               fit: BoxFit.fill,
@@ -185,9 +180,6 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
                           buildText('4.5', 12)
                         ],
                       ),
-                      Row(
-                        children: [],
-                      )
                     ],
                   ),
                 ),
@@ -196,68 +188,39 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
                   textDirection: Directionality.of(context),
                   top: MediaQuery.of(context).size.width * 0.28,
                   end: MediaQuery.of(context).size.width * 0.1,
-                  child: Container(
-                    width: MediaQuery.of(context).size.height * 0.10,
-                    height: MediaQuery.of(context).size.width * 0.16,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        color: Colors.white,
-                      ),
-                      shape: BoxShape.rectangle,
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/mo3az.jpeg'),
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                  ),
+                  child: productImage(0.10, 0.16),
                 ),
                 //center image
                 Positioned.directional(
                   textDirection: Directionality.of(context),
                   top: MediaQuery.of(context).size.width * 0.25,
                   end: MediaQuery.of(context).size.width * 0.15,
-                  child: Container(
-                    width: MediaQuery.of(context).size.height * 0.11,
-                    height: MediaQuery.of(context).size.width * 0.24,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        color: Colors.white,
-                      ),
-                      shape: BoxShape.rectangle,
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/mo3az.jpeg'),
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                  ),
+                  child: productImage(0.11, 0.24),
                 ),
                 //top image
                 Positioned.directional(
                   textDirection: Directionality.of(context),
                   top: MediaQuery.of(context).size.width * 0.23,
                   end: MediaQuery.of(context).size.width * 0.22,
-                  child: Container(
-                    width: MediaQuery.of(context).size.height * 0.12,
-                    height: MediaQuery.of(context).size.width * 0.3,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        color: Colors.white,
-                      ),
-                      shape: BoxShape.rectangle,
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/mo3az.jpeg'),
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                  ),
+                  child: productImage(0.12, 0.3),
                 )
               ],
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Container productImage(double width, double height) {
+    return Container(
+      width: MediaQuery.of(context).size.height * width,
+      height: MediaQuery.of(context).size.width * height,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(kareem_img),
+          fit: BoxFit.fill,
+        ),
       ),
     );
   }
