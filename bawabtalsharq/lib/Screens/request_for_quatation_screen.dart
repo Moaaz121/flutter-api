@@ -110,7 +110,7 @@ class _RequestForQScreenState extends State<RequestForQScreen> {
 
   Widget requestForQuotationSliderIndicator(int page) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 55),
+      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 55),
       child: AnimatedSmoothIndicator(
         activeIndex: page,
         count: 3,

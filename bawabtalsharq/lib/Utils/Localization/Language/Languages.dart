@@ -203,6 +203,9 @@ abstract class Languages {
   String get memberSince;
   String get sportShoes;
   String get eslamAlaa;
+  String get firstName;
+  String get lasttNam;
+  String get birthDay;
 
 // end Islam
 }

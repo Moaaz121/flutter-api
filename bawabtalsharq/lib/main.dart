@@ -10,6 +10,8 @@ import 'package:bawabtalsharq/Screens/profile/faq/faq_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/history/history_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/message_center/message_center_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/message_center/qoute_details_screen.dart';
+import 'package:bawabtalsharq/Screens/profile/my_account/my_account_screen.dart';
+import 'package:bawabtalsharq/Screens/profile/pricing/pricing_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/privacy/privacy_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/saved/saved_screen.dart';
 import 'package:bawabtalsharq/Screens/request_for_qutation.dart';
@@ -28,11 +30,12 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:bawabtalsharq/Screens/profile/pricing/pricing_screen.dart';
-import 'package:bawabtalsharq/Screens/profile/my_account/my_account_screen.dart';
+
 import 'Screens/interesting_screen.dart';
 import 'Screens/main_srceen.dart';
 import 'Screens/notification_screen.dart';
+import 'Screens/profile/my_account/change_password_screen.dart';
+import 'Screens/profile/my_account/update_profile_screen.dart';
 import 'Screens/profile_screen.dart';
 import 'Screens/request_for_quatation_screen.dart';
 import 'Screens/request_for_qutation.dart';
@@ -109,6 +112,8 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.goldenSuppliers: (_) => GoldenSuppliers(),
         ScreenRoutes.pricing: (_) => PricingScreen(),
         ScreenRoutes.myAccount: (_) => MyAccount(),
+        ScreenRoutes.updateProfile: (_) => UpdateProfile(),
+        ScreenRoutes.changePassword: (_) => ChangePassword(),
       },
       locale: _locale,
       supportedLocales: supportedLocales,
@@ -195,4 +200,6 @@ class ScreenRoutes {
   static const String goldenSuppliers = '/golden_suppliers_screen';
   static const String myAccount = '/my_account_screen';
   static const String pricing = '/pricing_screen';
+  static const String updateProfile = '/update_profile_screen';
+  static const String changePassword = '/change_password_screen';
 }

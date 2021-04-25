@@ -567,9 +567,6 @@ Widget mainMostPopularProduct(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Icon(Icons.add_to_photos,
-                        size: MediaQuery.of(context).size.height * 0.020,
-                        color: Colors.black54),
                     Icon(
                       Icons.bookmark_border,
                       size: MediaQuery.of(context).size.height * 0.020,
@@ -659,14 +656,6 @@ Widget subMostPopularProduct(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Icon(
-                    Icons.add_to_photos_rounded,
-                    size: MediaQuery.of(context).size.height * 0.020,
-                    color: Colors.black54,
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
                   Icon(
                     Icons.bookmark_border_rounded,
                     size: MediaQuery.of(context).size.height * 0.020,
@@ -874,13 +863,8 @@ Widget mostPopularCateg(
                           width:
                               1.1 * MediaQuery.of(context).size.width * 0.020,
                         ),
-                        Icon(
-                          Icons.add_to_photos,
-                          size: MediaQuery.of(context).size.height * 0.020,
-                          color: Colors.black54,
-                        ),
                         SizedBox(
-                          width: 3,
+                          width: 15,
                         ),
                         Icon(
                           Icons.bookmark_border,

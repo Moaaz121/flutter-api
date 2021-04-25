@@ -243,6 +243,9 @@ class LanguageAr extends Languages {
   String get memberSince => 'عضو منذ: ٢٠٢٠ ';
   String get sportShoes => 'حذاء رياضي ';
   String get eslamAlaa => 'اسلام علاء ';
+  String get firstName => 'الاسم الاول ';
+  String get lasttNam => 'الاسم الاخير ';
+  String get birthDay => 'المولد ';
 
 // end Islam
 

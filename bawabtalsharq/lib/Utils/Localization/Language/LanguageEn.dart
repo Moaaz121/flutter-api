@@ -137,9 +137,10 @@ class LanguageEn extends Languages {
   String get useThisForm => 'Use This form to change your password';
   String get enterOldPass => 'Enter your old password for authorization';
   String get oldPassword => 'Old Password';
-  String get newPassword => 'Old Password';
+  String get newPassword => 'New Password';
   String get confirmPassword => 'Old Password';
   String get saveChange => 'Old Password';
+  String get lastName => 'Last Name';
 
 // end Mosdik
 
@@ -243,6 +244,9 @@ class LanguageEn extends Languages {
   String get memberSince => 'Member since: 2020';
   String get sportShoes => 'Sport Shoes';
   String get eslamAlaa => 'Eslam alaa';
+  String get firstName => 'First Name';
+  String get lasttNam => 'Last Name';
+  String get birthDay => 'Birth day';
 
 // end Islam
 }
