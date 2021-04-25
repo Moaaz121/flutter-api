@@ -34,7 +34,6 @@ class _AllCategoriesState extends State<AllCategories>
   @override
   void initState() {
     _categoryBloc = CategoryBloc();
-    // _categoryBloc = BlocProvider.of<CategoryBloc>(context);
     _categoryBloc.add(DoCategoryEvent());
     super.initState();
   }
@@ -42,6 +41,8 @@ class _AllCategoriesState extends State<AllCategories>
   @override
   void dispose() {
     super.dispose();
+    _mainScrollController.dispose();
+    _subScrollController.dispose();
   }
 
   @override
@@ -55,27 +56,26 @@ class _AllCategoriesState extends State<AllCategories>
           if (state is CategoryLoadingState) {
             showLoadingDialog(context);
           } else if (state is CategoryLoadedState) {
-            // print(state.cateResponse);
             listOfCategory = state.cateResponse;
             _stackWidgets.add(getMainCategoriesList(context));
-            //showLoadingDialog(context);
             Navigator.pop(context);
           } else if (state is CategoryErrorState) {
+            print('handle Error UI'); //TODO error
           } else if (state is CategoryPressState) {
             listOfCategory.forEach((element) {
               element.isSelected = false;
             });
             _stackWidgets = [
               getMainCategoriesList(context),
-              getSubCategoriesList(context, state.index, listOfCategory,
-                  Color(0xFFFFFFFF).withOpacity(0.15))
+              getSubCategoriesList(
+                  context,
+                  state.index,
+                  listOfCategory,
+                  Color(int.parse(listOfCategory[state.index].color))
+                      .withOpacity(0.15)) //TODO put subcategory arr
             ];
             _isPressed = true;
-            print(_appBarTitle);
             _appBarTitle = listOfCategory[state.index].category;
-            print('//////');
-            print(_appBarTitle);
-
             listOfCategory[state.index].isSelected = true;
           } else if (state is SubCategoryDismissState) {
             _appBarTitle = Languages.of(context).allCategories;
@@ -144,8 +144,8 @@ class _AllCategoriesState extends State<AllCategories>
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            // color: Color(listOfCategory[index].color)
-                            //     .withOpacity(0.15),
+                            color: Color(int.parse(listOfCategory[index].color))
+                                .withOpacity(0.15),
                           ),
                           padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
                           child: Image.asset(
