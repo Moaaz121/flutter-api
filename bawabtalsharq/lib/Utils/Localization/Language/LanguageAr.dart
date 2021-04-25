@@ -13,6 +13,12 @@ class LanguageAr extends Languages {
 
 // Start Asmaa
   String get allCategories => 'التصنيفات';
+  String get chats => 'الرسائل';
+  String get online => 'متصل';
+  String get meetingWith => 'اجتماع مع ';
+  String get incomingCall => 'مكالمة';
+  String get incomingVideoCall => 'مكالمة فيديو';
+  String get calling => 'calling';
   String get categories => 'التصنيفات';
 
 // end Asmaa

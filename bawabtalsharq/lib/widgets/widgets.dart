@@ -524,7 +524,7 @@ Widget sliderIndicator(int page, {bool noPadding = false, int count = 4}) {
 
 // Start Asmaa
 AppBar appBarBuilder(
-    {@required String title,
+    {@required Widget titleWidget,
     @required Function onBackPressed,
     List<Widget> actions}) {
   return AppBar(
@@ -538,10 +538,7 @@ AppBar appBarBuilder(
         ),
       ),
       backgroundColor: defaultOrangeColor,
-      title: buildText(title, 18.0,
-          fontFamily: boldFontFamily,
-          color: Colors.white,
-          fontWeight: FontWeight.bold),
+      title: titleWidget,
       leading: IconButton(
         onPressed: onBackPressed,
         icon: CircleAvatar(
@@ -620,6 +617,36 @@ Widget appBarSearchButton(Function onTap) {
     ),
   );
 }
+
+Widget callInfo(
+    BuildContext context, bool isVideo, String partnerName, bool isCaller) {
+  return Container(
+    margin: EdgeInsets.only(top: 100),
+    child: Column(
+      children: [
+        Center(
+          child: buildText(
+              isCaller
+                  ? Languages.of(context).calling
+                  : isVideo
+                      ? Languages.of(context).incomingVideoCall
+                      : Languages.of(context).incomingCall,
+              18.0,
+              color: Colors.black,
+              fontWeight: FontWeight.w500),
+        ),
+        SizedBox(
+          height: 50,
+        ),
+        Center(
+          child: buildText(partnerName, 30.0,
+              color: Colors.black, fontWeight: FontWeight.w800),
+        ),
+      ],
+    ),
+  );
+}
+
 // end Asmaa
 
 // Start Bahaa

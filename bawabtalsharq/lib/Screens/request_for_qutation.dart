@@ -1,9 +1,8 @@
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
+import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:bawabtalsharq/Utils/strings.dart';
-import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:flutter_dropdown/flutter_dropdown.dart';
 
 class Requestforqutation extends StatefulWidget {
@@ -24,7 +23,11 @@ class _RequestforqutationState extends State<Requestforqutation> {
       child: Scaffold(
         backgroundColor: Colors.white54.withOpacity(0.92),
         appBar: appBarBuilder(
-            title: Languages.of(context).requestForQuotation,
+            titleWidget: buildText(
+                Languages.of(context).requestForQuotation, 18.0,
+                fontFamily: boldFontFamily,
+                color: Colors.white,
+                fontWeight: FontWeight.bold),
             onBackPressed: () {
               Navigator.pop(context);
             }),

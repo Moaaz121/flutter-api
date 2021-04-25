@@ -14,6 +14,12 @@ class LanguageEn extends Languages {
 // Start Asmaa
   String get allCategories => 'All Categories';
   String get categories => 'Categories';
+  String get chats => 'Chats';
+  String get online => 'Online';
+  String get meetingWith => 'Meeting with ';
+  String get incomingCall => 'Incoming Call';
+  String get incomingVideoCall => 'Incoming Video Call';
+  String get calling => 'Calling';
 
 // end Asmaa
 

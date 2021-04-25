@@ -1,3 +1,4 @@
+import 'package:bawabtalsharq/Repos/ChatRepos/chat_repo.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
@@ -11,6 +12,9 @@ import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:rocket_chat_connector_flutter/models/authentication.dart';
+
+import '../main.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -339,4 +343,20 @@ class _LoginScreenState extends State<LoginScreen> {
       ],
     );
   }
+
+  // _loginToRocketChat() async {
+  //   if (_userNameController.text.isNotEmpty &&
+  //       _passwordController.text.isNotEmpty) {
+  //     Authentication result = await RocketChatApi.instance
+  //         .loginRocket(_userNameController.text, _passwordController.text);
+  //     if (result.status == "success") {
+  //       rocketUser = result;
+  //       print(rocketUser.data.authToken);
+  //       print(rocketUser.data.userId);
+  //       Navigator.pushReplacementNamed(context, ScreenRoutes.mainScreen);
+  //     } else {
+  //       print('error');
+  //     }
+  //   }
+  // }
 }

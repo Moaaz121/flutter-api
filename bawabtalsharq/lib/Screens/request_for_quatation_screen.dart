@@ -22,7 +22,11 @@ class _RequestForQScreenState extends State<RequestForQScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarBuilder(
-          title: Languages.of(context).requestForQutation,
+          titleWidget: buildText(
+              Languages.of(context).requestForQuotation, 18.0,
+              fontFamily: boldFontFamily,
+              color: Colors.white,
+              fontWeight: FontWeight.bold),
           onBackPressed: () {
             Navigator.pop(context);
           }),

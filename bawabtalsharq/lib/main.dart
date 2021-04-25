@@ -1,3 +1,4 @@
+import 'package:bawabtalsharq/Screens/Chat/chat_screen.dart';
 import 'package:bawabtalsharq/Screens/all_categories_screen.dart';
 import 'package:bawabtalsharq/Screens/forget_password/forget_password_screen.dart';
 import 'package:bawabtalsharq/Screens/forget_password/new_password_screen.dart';
@@ -110,6 +111,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.goldenSuppliers: (_) => GoldenSuppliers(),
         ScreenRoutes.pricing: (_) => PricingScreen(),
         ScreenRoutes.myAccount: (_) => MyAccount(),
+        ScreenRoutes.chatsScreen: (_) => ChatsScreen(),
       },
       locale: _locale,
       supportedLocales: supportedLocales,
@@ -196,4 +198,6 @@ class ScreenRoutes {
   static const String goldenSuppliers = '/golden_suppliers_screen';
   static const String myAccount = '/my_account_screen';
   static const String pricing = '/pricing_screen';
+  static const String chatsScreen = '/chatsScreen';
+  static const String conversationScreen = '/conversation';
 }
