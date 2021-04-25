@@ -115,6 +115,9 @@ class LanguageEn extends Languages {
   String get colors => 'Colors';
   String get gender => 'Gender';
 
+  String get plan => 'Plan';
+  String get companySite => 'Company Sites';
+
   String get plzSecect => 'Please select trade role';
   String get buyer => 'Buyer';
   String get seller => 'Seller';
@@ -212,6 +215,8 @@ class LanguageEn extends Languages {
   String get tradeTerms => 'Trade Terms';
 
   String get uploadDocument => 'Upload Sourcing Documents';
+
+  String get skipTxt => 'Skip';
 
 // end Moaaz
 

@@ -117,6 +117,8 @@ abstract class Languages {
   String get seller;
   String get both;
   String get fullName;
+  String get plan;
+  String get companySite;
   String get loginPass;
   String get confirmPass;
   String get companyName;
@@ -173,6 +175,7 @@ abstract class Languages {
   String get interesting;
   String get btnText;
   String get iconText;
+  String get skipTxt;
 // end Moaaz
 
 // Start Islam
