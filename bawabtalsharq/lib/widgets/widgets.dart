@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:bawabtalsharq/Model/home_model.dart';
 import 'package:bawabtalsharq/Screens/home_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
@@ -396,7 +397,7 @@ Widget searchButton(BuildContext context, Function _function) {
               Icon(
                 Icons.search,
                 color: orangeColor,
-              )
+              ),
             ],
           )),
     ),
@@ -440,6 +441,9 @@ Widget chatButton(Function _function,
 }
 
 class mainSlider extends StatefulWidget {
+  final List<String> imgs;
+
+  const mainSlider({Key key, this.imgs}) : super(key: key);
   @override
   _mainSliderState createState() => _mainSliderState();
 }
@@ -455,12 +459,9 @@ class _mainSliderState extends State<mainSlider> {
       children: [
         CarouselSlider(
             carouselController: control,
-            items: [
-              sliderItem(context, slider1),
-              sliderItem(context, slider2),
-              sliderItem(context, slider3),
-              sliderItem(context, slider2),
-            ],
+            items: widget.imgs
+                .map((String img) => sliderItem(context, img))
+                .toList(),
             options: CarouselOptions(
               onPageChanged: (int page, CarouselPageChangedReason reason) {
                 setState(() {
@@ -483,7 +484,7 @@ class _mainSliderState extends State<mainSlider> {
               enlargeCenterPage: true,
               scrollDirection: Axis.horizontal,
             )),
-        sliderIndicator(position)
+        sliderIndicator(position, count: widget.imgs.length)
       ],
     );
   }
@@ -492,7 +493,7 @@ class _mainSliderState extends State<mainSlider> {
 Widget sliderItem(BuildContext context, String image) {
   return ClipRRect(
     borderRadius: BorderRadius.all(Radius.circular(15)),
-    child: Image.asset(
+    child: Image.network(
       image,
       fit: BoxFit.fill,
     ),
@@ -1261,17 +1262,17 @@ Widget textFiledPrice(BuildContext context, String text, double width,
   );
 }
 
-Widget listOfCateWidget() {
+Widget listOfCateWidget(List<CategoryElement> cats) {
   return ListView.builder(
     physics: NeverScrollableScrollPhysics(),
     reverse: false,
     scrollDirection: Axis.vertical,
     shrinkWrap: true,
-    itemCount: 5,
+    itemCount: cats.first.data.length,
     itemBuilder: (context, position) {
       return SizedBox(
           width: MediaQuery.of(context).size.width / 3 - 5,
-          child: mostPopularByCategoryStable(context, () {}));
+          child: mostPopularByCategoryStable(context, () {}, cats[position]));
     },
   );
 }

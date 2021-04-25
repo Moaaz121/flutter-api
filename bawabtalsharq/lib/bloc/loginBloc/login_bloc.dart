@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:bawabtalsharq/bloc/loginBloc/login_event.dart';
 import 'package:bawabtalsharq/bloc/loginBloc/login_state.dart';
 import 'package:bawabtalsharq/repo/auth_repo.dart';
@@ -20,6 +21,5 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   @override
-  // TODO: implement initialState
   LoginState get initialState => LoginInitial();
 }

@@ -10,6 +10,8 @@ import 'package:bawabtalsharq/Screens/profile/faq/faq_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/history/history_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/message_center/message_center_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/message_center/qoute_details_screen.dart';
+import 'package:bawabtalsharq/Screens/profile/my_account/my_account_screen.dart';
+import 'package:bawabtalsharq/Screens/profile/pricing/pricing_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/privacy/privacy_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/saved/saved_screen.dart';
 import 'package:bawabtalsharq/Screens/request_for_qutation.dart';
@@ -28,8 +30,7 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:bawabtalsharq/Screens/profile/pricing/pricing_screen.dart';
-import 'package:bawabtalsharq/Screens/profile/my_account/my_account_screen.dart';
+
 import 'Screens/interesting_screen.dart';
 import 'Screens/main_srceen.dart';
 import 'Screens/notification_screen.dart';
