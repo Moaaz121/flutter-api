@@ -1321,14 +1321,18 @@ Widget customTextField(BuildContext context,
     IconData leftIcon,
     TextEditingController controller,
     double width = 1,
+    TextInputType textInputType,
+    errorText,
     bool isPassword = false}) {
   return SizedBox(
     width: MediaQuery.of(context).size.width * width,
     child: TextField(
+      keyboardType: textInputType,
       controller: controller,
       obscureText: isPassword,
       decoration: InputDecoration(
           //hintText: 'username',
+          errorText: errorText,
           prefixIcon: Icon(
             leftIcon,
             color: Colors.grey,
