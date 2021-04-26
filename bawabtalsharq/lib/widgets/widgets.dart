@@ -1268,11 +1268,12 @@ Widget listOfCateWidget(List<CategoryElement> cats) {
     reverse: false,
     scrollDirection: Axis.vertical,
     shrinkWrap: true,
-    itemCount: cats.first.data.length,
+    itemCount: cats.length - 1,
     itemBuilder: (context, position) {
       return SizedBox(
           width: MediaQuery.of(context).size.width / 3 - 5,
-          child: mostPopularByCategoryStable(context, () {}, cats[position]));
+          child:
+              mostPopularByCategoryStable(context, () {}, cats[position + 1]));
     },
   );
 }

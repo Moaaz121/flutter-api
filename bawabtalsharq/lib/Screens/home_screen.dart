@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bawabtalsharq/Model/home_model.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
@@ -130,7 +131,7 @@ Widget mostPopularByCategoryStable(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              Languages.of(context).allCategories,
+              category.name,
               style: titlesStyle(),
             ),
             GestureDetector(
@@ -576,6 +577,7 @@ Widget mainMostPopularProduct(
   return GestureDetector(
     onTap: onPress,
     child: Container(
+      height: 170,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15.0),
         color: Colors.white,
@@ -600,7 +602,7 @@ Widget mainMostPopularProduct(
                     width: 120,
                   )),
               Align(
-                alignment: Alignment.centerRight,
+                alignment: Alignment.topRight,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Icon(
@@ -616,11 +618,16 @@ Widget mainMostPopularProduct(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    AutoSizeText(
                       nameProduct,
                       style: TextStyle(
-                          fontSize: MediaQuery.of(context).textScaleFactor * 17,
-                          fontWeight: FontWeight.bold),
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      minFontSize: 10,
+                      stepGranularity: 10,
+                      maxLines: 2,
+                      overflow: TextOverflow.fade,
                     ),
                     SizedBox(
                       height: 5.0,
@@ -668,6 +675,7 @@ Widget subMostPopularProduct(
   return GestureDetector(
     onTap: onPress,
     child: Container(
+      height: 80,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15.0),
         color: backgroundColor,
@@ -679,12 +687,12 @@ Widget subMostPopularProduct(
         child: Stack(
           children: [
             PositionedDirectional(
-                bottom: -50,
-                end: -50,
+                bottom: -5,
+                end: -5,
                 child: Image.network(
                   img,
-                  height: 130,
-                  width: 130,
+                  height: 55,
+                  width: 55,
                 )),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -704,20 +712,32 @@ Widget subMostPopularProduct(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    nameProduct,
-                    style: TextStyle(
-                        fontSize: MediaQuery.of(context).textScaleFactor * 13,
-                        fontWeight: FontWeight.bold),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.35,
+                    child: AutoSizeText(
+                      nameProduct,
+                      minFontSize: 10,
+                      stepGranularity: 10,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style:
+                          TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
+                    ),
                   ),
                   SizedBox(
                     height: 5.0,
                   ),
-                  Text(
-                    nameCategory,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: MediaQuery.of(context).textScaleFactor * 13),
+                  SizedBox(
+                    width: 50,
+                    child: AutoSizeText(
+                      nameCategory,
+                      minFontSize: 10,
+                      stepGranularity: 10,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style:
+                          TextStyle(fontWeight: FontWeight.w400, fontSize: 13),
+                    ),
                   ),
                   SizedBox(
                     height: 5.0,
@@ -759,9 +779,7 @@ Widget mainMostPopularCategory(CategoryElement category) {
             backgroundColor: position == 2
                 ? redColor
                 : (position == 1 ? orangeColor : blueColor),
-            nameProduct: LanguageHelper.isEnglish
-                ? category.data[position].name
-                : category.data[position].name,
+            nameProduct: category.data[position].name,
             productImg: category.data[position].image,
             price: category.data[position].price,
           ),
@@ -850,12 +868,13 @@ Widget mostPopularCateg(
                 ),
               ),
               PositionedDirectional(
-                  start: position == 2 ? -20 : null,
-                  end: position == 0 ? -20 : null,
+                  top: 7,
+                  start: position == 2 ? -5 : null,
+                  end: position == 0 ? -5 : null,
                   child: SizedBox(
-                    width: 100,
-                    height: 100,
-                    child: Image.network(productImage),
+                    width: 70,
+                    height: 60,
+                    child: Image.network(productImg),
                   )),
               Padding(
                 padding:
