@@ -7,8 +7,6 @@ part 'chat_event.dart';
 part 'chat_state.dart';
 
 class ChatBloc extends Bloc<ChatEvent, ChatState> {
-  ChatBloc(ChatState initialState) : super(initialState);
-
   @override
   Stream<ChatState> mapEventToState(
     ChatEvent event,

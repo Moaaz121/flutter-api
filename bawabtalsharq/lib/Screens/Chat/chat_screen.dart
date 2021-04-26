@@ -31,7 +31,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarBuilder(
+      appBar: appBarBuilderWithWidget(
         titleWidget: _isSearchPressed
             ? TextField(
                 decoration: InputDecoration.collapsed(

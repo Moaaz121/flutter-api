@@ -523,7 +523,43 @@ Widget sliderIndicator(int page, {bool noPadding = false, int count = 4}) {
 // end karem
 
 // Start Asmaa
+
 AppBar appBarBuilder(
+    {@required String title,
+    @required Function onBackPressed,
+    List<Widget> actions}) {
+  return AppBar(
+      centerTitle: true,
+      actions: actions,
+      toolbarHeight: 60.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(10),
+          bottomRight: Radius.circular(10),
+        ),
+      ),
+      backgroundColor: defaultOrangeColor,
+      title: buildText(title, 18.0,
+          fontFamily: boldFontFamily,
+          color: Colors.white,
+          fontWeight: FontWeight.bold),
+      leading: IconButton(
+        onPressed: onBackPressed,
+        icon: CircleAvatar(
+          radius: 12,
+          backgroundColor: Colors.white,
+          child: Icon(
+            LanguageHelper.isEnglish
+                ? Icons.keyboard_arrow_left_outlined
+                : Icons.keyboard_arrow_right_outlined,
+            size: 20,
+            color: defaultOrangeColor,
+          ),
+        ),
+      ));
+}
+
+AppBar appBarBuilderWithWidget(
     {@required Widget titleWidget,
     @required Function onBackPressed,
     List<Widget> actions}) {

@@ -21,7 +21,7 @@ class _RequestForQScreenState extends State<RequestForQScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarBuilder(
+      appBar: appBarBuilderWithWidget(
           titleWidget: buildText(
               Languages.of(context).requestForQuotation, 18.0,
               fontFamily: boldFontFamily,

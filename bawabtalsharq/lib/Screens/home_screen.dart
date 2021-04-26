@@ -44,10 +44,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     }, Languages.of(context).requestForQ, requestForQ,
                         orangeColor.withOpacity(0.15)),
                     mainHeaderButton(
-                          () async {},
-                          Languages.of(context).technical,
+                        () async {},
+                        Languages.of(context).technical,
                         technical_icon,
-                          purpleColor.withOpacity(0.15)),
+                        purpleColor.withOpacity(0.15)),
                   ],
                 ),
                 ourGoldenSupplier(context),
@@ -69,8 +69,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       Navigator.pushNamed(context, ScreenRoutes.searchScreen);
                     }),
                     chatButton(() {
-    Navigator.pushNamed(context, ScreenRoutes.chatsScreen);
-  })
+                      Navigator.pushNamed(context, ScreenRoutes.chatsScreen);
+                    })
                   ],
                 ),
               ),

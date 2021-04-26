@@ -22,7 +22,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
       top: false,
       child: Scaffold(
         backgroundColor: Colors.white54.withOpacity(0.92),
-        appBar: appBarBuilder(
+        appBar: appBarBuilderWithWidget(
             titleWidget: buildText(
                 Languages.of(context).requestForQuotation, 18.0,
                 fontFamily: boldFontFamily,

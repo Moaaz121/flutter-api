@@ -85,7 +85,7 @@ class _AllCategoriesState extends State<AllCategories>
           }
           return Scaffold(
               backgroundColor: Colors.white,
-              appBar: appBarBuilder(
+              appBar: appBarBuilderWithWidget(
                 actions: [Container()],
                 titleWidget: buildText(_appBarTitle, 18.0,
                     fontFamily: boldFontFamily,
