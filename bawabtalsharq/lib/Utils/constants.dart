@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 
 enum languages { English, Arabic, Indian }
 
@@ -67,6 +68,15 @@ class Constants {
 
   TextStyle labelStyle({Color color, double fontSize}) {
     return TextStyle(color: color ?? Colors.black, fontSize: fontSize ?? 14);
+  }
+
+  static String getLanguage() {
+    String lang;
+    if (LanguageHelper.isEnglish)
+      lang = 'en';
+    else
+      lang = 'ar';
+    return lang;
   }
 }
 
