@@ -114,7 +114,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                       ],
                     ),
                     SizedBox(
-                      height: 11.0,
+                      height: 30,
                     ),
                     signInFlatButton(
                         context,

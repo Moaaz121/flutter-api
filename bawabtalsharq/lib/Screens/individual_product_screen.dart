@@ -1,3 +1,4 @@
+import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
@@ -5,7 +6,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 
 class IndividualProduct extends StatefulWidget {
   @override
@@ -253,7 +253,7 @@ class _IndividualProductState extends State<IndividualProduct>
 
 Padding productFab() {
   return Padding(
-    padding: const EdgeInsets.only(left: 45),
+    padding: const EdgeInsets.only(left: 25),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -367,7 +367,7 @@ Widget productColorOption({String price, Widget counterWidget}) {
               color: Colors.blue,
             ),
             SizedBox(
-              width: 10,
+              width: 8,
             ),
             Text('$price \$'),
             SizedBox(

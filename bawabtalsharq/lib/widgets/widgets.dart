@@ -1150,7 +1150,7 @@ Widget infoCartSupplier(
               ),
               child: Padding(
                 padding: const EdgeInsetsDirectional.only(
-                    top: 10, start: 30, bottom: 10, end: 10),
+                    top: 10, start: 10, bottom: 10, end: 10),
                 child: Column(
                   children: [
                     buildText(name, 10.0,
@@ -1200,8 +1200,8 @@ Widget infoCartSupplier(
             ),
           ),
           Positioned(
-            top: 10,
-            left: 10,
+            top: 1,
+            left: 3,
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -1212,8 +1212,8 @@ Widget infoCartSupplier(
                 image: AssetImage(
                   medalImage,
                 ),
-                height: 45,
-                width: 45,
+                height: 40,
+                width: 40,
               ),
             ),
           ),
