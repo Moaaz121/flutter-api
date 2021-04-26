@@ -130,12 +130,16 @@ abstract class Languages {
   String get superior;
   String get allowing;
   String get allowNotificationFromBawabtAlsharq;
+  String get country;
+  String get currency;
   String get useThisForm;
   String get enterOldPass;
   String get oldPassword;
   String get newPassword;
   String get confirmPassword;
   String get saveChange;
+  String get help;
+  String get main;
 
 // end Mosdik
 

@@ -30,10 +30,11 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:bawabtalsharq/repo/profile_repo.dart';
+
 import 'Screens/interesting_screen.dart';
 import 'Screens/main_srceen.dart';
 import 'Screens/notification_screen.dart';
+import 'Screens/profile/about_us/aboutUs_screen.dart';
 import 'Screens/profile_screen.dart';
 import 'Screens/request_for_quatation_screen.dart';
 import 'Screens/request_for_qutation.dart';
@@ -111,6 +112,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.goldenSuppliers: (_) => GoldenSuppliers(),
         ScreenRoutes.pricing: (_) => PricingScreen(),
         ScreenRoutes.myAccount: (_) => MyAccount(),
+        ScreenRoutes.aboutUs: (_) => AboutUsScreen(),
       },
       locale: _locale,
       supportedLocales: supportedLocales,
@@ -197,4 +199,5 @@ class ScreenRoutes {
   static const String goldenSuppliers = '/golden_suppliers_screen';
   static const String myAccount = '/my_account_screen';
   static const String pricing = '/pricing_screen';
+  static const String aboutUs = '/aboutUs_screen';
 }
