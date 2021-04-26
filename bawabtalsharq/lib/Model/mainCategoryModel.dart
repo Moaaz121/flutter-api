@@ -1,17 +1,17 @@
 class MainCategory {
   int code;
   String status;
-  List<CategoryModel> data;
+  List<CategoryModel> categoryData;
 
-  MainCategory({this.code, this.status, this.data});
+  MainCategory({this.code, this.status, this.categoryData});
 
   MainCategory.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     status = json['status'];
     if (json['data'] != null) {
-      data = new List<CategoryModel>();
+      categoryData = new List<CategoryModel>();
       json['data'].forEach((v) {
-        data.add(new CategoryModel.fromJson(v));
+        categoryData.add(new CategoryModel.fromJson(v));
       });
     }
   }
@@ -20,8 +20,8 @@ class MainCategory {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['code'] = this.code;
     data['status'] = this.status;
-    if (this.data != null) {
-      data['data'] = this.data.map((v) => v.toJson()).toList();
+    if (this.categoryData != null) {
+      data['data'] = this.categoryData.map((v) => v.toJson()).toList();
     }
     return data;
   }

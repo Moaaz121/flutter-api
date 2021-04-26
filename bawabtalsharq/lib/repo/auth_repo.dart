@@ -36,7 +36,7 @@ class AuthRepo {
       "plan": '',
     };
     var response = await http.post(
-      Uri.encodeFull(APIS.serverURL + APIS.Register_API),
+      Uri.encodeFull(APIS.serverURL + APIS.REGISTER_API),
       body: params,
     );
 
