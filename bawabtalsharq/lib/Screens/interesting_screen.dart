@@ -1,12 +1,9 @@
-import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
-import 'package:bawabtalsharq/Utils/styles.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:selectable_container/selectable_container.dart';
-import 'package:flutter/material.dart';
-import 'package:bawabtalsharq/main.dart';
-import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:bawabtalsharq/Model/interest.dart';
+import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
+import 'package:bawabtalsharq/main.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class Interesting extends StatefulWidget {
   @override
@@ -45,9 +42,6 @@ class _InterestingState extends State<Interesting> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  backIconRounded(onBackPressed: () {
-                    Navigator.of(context).pop();
-                  }),
                   SizedBox(
                     height: 20,
                   ),
