@@ -1,8 +1,8 @@
 import 'dart:convert';
+
 import 'package:bawabtalsharq/Model/user_model.dart';
 import 'package:bawabtalsharq/Utils/apis.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthRepo {
   Future<UserModel> doLogin(String email, String password) async {
@@ -36,14 +36,13 @@ class AuthRepo {
       "plan": '',
     };
     var response = await http.post(
-      Uri.encodeFull(APIS.serverURL + APIS.Register_API),
+      Uri.encodeFull(APIS.serverURL + APIS.REGISTER_API),
       body: params,
     );
 
     var decodedResponse = json.decode(response.body);
     print('login response .. ${response.body}');
     UserModel modelResponse = UserModel.fromJson(decodedResponse);
-
     return modelResponse;
   }
 }

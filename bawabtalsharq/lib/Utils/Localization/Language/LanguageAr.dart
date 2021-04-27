@@ -145,6 +145,10 @@ class LanguageAr extends Languages {
   String get newPassword => 'كلمة سر الجديده';
   String get confirmPassword => 'تأكيد كلمة السر ';
   String get saveChange => 'حفظ التغيرات';
+  String get country => 'البلد';
+  String get currency => 'العملة';
+  String get help => 'المساعدة';
+  String get main => 'الرئيسية';
 
 // end Mosdik
 

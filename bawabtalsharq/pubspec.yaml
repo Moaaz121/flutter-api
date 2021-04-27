@@ -40,6 +40,7 @@ dependencies:
   pin_code_fields:
   expansion_tile_card:
   line_icons:
+  flutter_html:
   url_launcher:
   rocket_chat_connector_flutter: ^0.0.18
   bloc:
@@ -57,6 +58,7 @@ dependencies:
   intl:
   mime:
 
+  auto_size_text: ^2.1.0
 
 dev_dependencies:
   flutter_test:

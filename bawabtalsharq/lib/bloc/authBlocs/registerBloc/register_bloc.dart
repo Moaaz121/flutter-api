@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'package:bawabtalsharq/bloc/registerBloc/register_event.dart';
-import 'package:bawabtalsharq/bloc/registerBloc/register_state.dart';
+import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_event.dart';
+import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_state.dart';
 import 'package:bawabtalsharq/repo/auth_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -35,6 +35,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'Screens/interesting_screen.dart';
 import 'Screens/main_srceen.dart';
 import 'Screens/notification_screen.dart';
+import 'Screens/profile/about_us/aboutUs_screen.dart';
 import 'Screens/profile_screen.dart';
 import 'Screens/request_for_quatation_screen.dart';
 import 'Screens/request_for_qutation.dart';
@@ -112,6 +113,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.pricing: (_) => PricingScreen(),
         ScreenRoutes.myAccount: (_) => MyAccount(),
         ScreenRoutes.chatsScreen: (_) => ChatsScreen(),
+        ScreenRoutes.aboutUs: (_) => AboutUsScreen(),
       },
       locale: _locale,
       supportedLocales: supportedLocales,
@@ -200,4 +202,5 @@ class ScreenRoutes {
   static const String pricing = '/pricing_screen';
   static const String chatsScreen = '/chatsScreen';
   static const String conversationScreen = '/conversation';
+  static const String aboutUs = '/aboutUs_screen';
 }

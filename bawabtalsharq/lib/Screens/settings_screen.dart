@@ -4,6 +4,7 @@ import 'package:bawabtalsharq/Screens/profile/contact_us/send_message_dialog.dar
 import 'package:bawabtalsharq/Screens/profile_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/cupertino.dart';
@@ -84,14 +85,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 Padding(
                   padding: const EdgeInsets.only(left: 20, top: 40, bottom: 10),
                   child: buildText(
-                    'Main',
+                    Languages.of(context).main,
                     16,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 cardSetting(
                     text: buildText(
-                      'Country',
+                      Languages.of(context).country,
                       12,
                       fontWeight: FontWeight.w600,
                     ),
@@ -101,7 +102,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     iconColor: Colors.blue),
                 cardSetting(
                     text: buildText(
-                      'Language',
+                      Languages.of(context).language,
                       12,
                       fontWeight: FontWeight.w600,
                     ),
@@ -111,7 +112,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     iconColor: Colors.deepOrange),
                 cardSetting(
                   text: buildText(
-                    'Currency',
+                    Languages.of(context).currency,
                     12,
                     fontWeight: FontWeight.w600,
                   ),
@@ -132,7 +133,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 Padding(
                   padding: const EdgeInsets.only(left: 20, top: 50, bottom: 10),
                   child: buildText(
-                    'Help',
+                    Languages.of(context).help,
                     16,
                     fontWeight: FontWeight.w600,
                   ),
@@ -150,7 +151,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       color: Colors.blue,
                     ),
                     title: Text(
-                      'Contact us',
+                      Languages.of(context).contactUs,
                       style:
                           TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
                     ),
@@ -176,7 +177,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     size: 20,
                                     color: Colors.blue,
                                   ),
-                                  'Phone Number',
+                                  Languages.of(context).phoneNumber,
                                   () {
                                     showAnimatedDialog(
                                       context,
@@ -191,7 +192,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     size: 20,
                                     color: Colors.deepOrange,
                                   ),
-                                  'Send Message',
+                                  Languages.of(context).sendMessage,
                                   () {
                                     showAnimatedDialog(
                                       context,
@@ -206,7 +207,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     size: 20,
                                     color: Colors.deepPurpleAccent,
                                   ),
-                                  'Location',
+                                  Languages.of(context).location,
                                   () {
                                     showAnimatedDialog(
                                       context,
@@ -225,14 +226,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                 ),
                 cardSetting(
-                  text: buildText(
-                    'About us',
-                    12,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  icon: Icons.info,
-                  iconColor: Colors.teal,
-                ),
+                    text: buildText(
+                      Languages.of(context).aboutUs,
+                      12,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    icon: Icons.info,
+                    iconColor: Colors.teal,
+                    onPress: () {
+                      Navigator.pushNamed(context, ScreenRoutes.aboutUs);
+                    }),
               ],
             ),
           ),

@@ -1,29 +1,28 @@
+import 'package:bawabtalsharq/Model/aboutUs_model.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
-import 'package:bawabtalsharq/bloc/profileBlocs/privacyBloc/privacy_bloc.dart';
-import 'package:bawabtalsharq/bloc/profileBlocs/privacyBloc/privacy_state.dart';
-import 'package:bawabtalsharq/bloc/profileBlocs/privacyBloc/privacy_event.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:bawabtalsharq/bloc/profileBlocs/aboutUsBloc/aboutUs_bloc.dart';
+import 'package:bawabtalsharq/bloc/profileBlocs/aboutUsBloc/aboutUs_event.dart';
+import 'package:bawabtalsharq/bloc/profileBlocs/aboutUsBloc/aboutUs_state.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:bawabtalsharq/Model/privacy_model.dart';
-import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 
-class PrivacyScreen extends StatefulWidget {
+class AboutUsScreen extends StatefulWidget {
   @override
-  _PrivacyScreenState createState() => _PrivacyScreenState();
+  _AboutUsScreenState createState() => _AboutUsScreenState();
 }
 
-class _PrivacyScreenState extends State<PrivacyScreen> {
-  PrivacyBloc _privacyBloc;
-  List<PrivacyData> privacyList;
+class _AboutUsScreenState extends State<AboutUsScreen> {
+  AboutUsBloc _aboutUsBloc;
+  List<AboutData> aboutUsList;
   bool isDataLoaded = false;
 
   @override
   void initState() {
-    _privacyBloc = PrivacyBloc();
-    _privacyBloc.add(GetPrivacyEvent());
+    _aboutUsBloc = AboutUsBloc();
+    _aboutUsBloc.add(GetAboutUsEvent());
     super.initState();
   }
 
@@ -31,31 +30,31 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarBuilder(
-        title: Languages.of(context).privacy,
+        title: Languages.of(context).aboutUs,
         onBackPressed: () {
           Navigator.of(context).pop();
         },
       ),
-      body: BlocBuilder<PrivacyBloc, PrivacyState>(
-        bloc: _privacyBloc,
+      body: BlocBuilder<AboutUsBloc, AboutUsState>(
+        bloc: _aboutUsBloc,
         builder: (context, state) {
-          if (state is PrivacyLoadingState) {
+          if (state is AboutUsLoadingState) {
             showLoadingDialog(context);
-          } else if (state is PrivacyLoadedState) {
+          } else if (state is AboutUsLoadedState) {
             print('loaded');
-            privacyList = state.privacyResponse;
+            aboutUsList = state.aboutUsResponse;
             isDataLoaded = true;
-            _privacyBloc.add(ResetState());
+            _aboutUsBloc.add(ResetState());
             Navigator.pop(context);
           }
           return isDataLoaded
               ? ListView.builder(
-                  itemCount: privacyList.length,
+                  itemCount: aboutUsList.length,
                   itemBuilder: (BuildContext context, int index) {
                     return Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Html(
-                        data: privacyList[index].description,
+                        data: aboutUsList[index].description,
                       ),
                     );
                   },
