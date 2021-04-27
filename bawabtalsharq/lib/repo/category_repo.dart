@@ -1,8 +1,8 @@
 import 'dart:convert';
-import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
-import 'package:bawabtalsharq/Utils/constants.dart';
+
 import 'package:bawabtalsharq/Model/mainCategoryModel.dart';
 import 'package:bawabtalsharq/Utils/apis.dart';
+import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:http/http.dart' as http;
 
 class CategoryRepo {
@@ -13,8 +13,7 @@ class CategoryRepo {
       var data = json.decode(response.body);
       //print(data.toString());
 
-      List<CategoryModel> returnData =
-          MainCategory.fromJson(data).categoryData.toList();
+      List<CategoryModel> returnData = MainCategory.fromJson(data).data;
       // print(data.toString());
 
       return returnData;
