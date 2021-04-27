@@ -103,6 +103,9 @@ class LanguageAr extends Languages {
   String get subject => 'الموضوع';
   String get writeAMessage => 'اكتب رسالتك هنا';
 
+  String get plan => 'التخطيط';
+  String get companySite => 'مسار المنصة الالكترونيه';
+
   String get filter => 'فلتر';
   String get done => 'انتهى';
   String get category => 'الفئة';
@@ -167,6 +170,8 @@ class LanguageAr extends Languages {
   String get destination => 'وجهة';
 
   String get advanced => 'المتقدمة';
+
+  String get skipTxt => 'تخطي';
 
   String get details => 'تفاصيل';
 
@@ -253,6 +258,9 @@ class LanguageAr extends Languages {
   String get memberSince => 'عضو منذ: ٢٠٢٠ ';
   String get sportShoes => 'حذاء رياضي ';
   String get eslamAlaa => 'اسلام علاء ';
+  String get firstName => 'الاسم الاول ';
+  String get lasttNam => 'الاسم الاخير ';
+  String get birthDay => 'المولد ';
 
 // end Islam
 

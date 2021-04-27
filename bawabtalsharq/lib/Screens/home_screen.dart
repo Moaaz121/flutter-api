@@ -910,13 +910,20 @@ Widget mostPopularCateg(
                                   color: Colors.deepOrangeAccent),
                             ),
                           ),
-                          Icon(
-                            Icons.bookmark_border,
-                            size: MediaQuery.of(context).size.height * 0.020,
-                            color: Colors.black54,
-                          ),
-                        ],
-                      ),
+                        ),
+                        SizedBox(
+                          width:
+                              1.1 * MediaQuery.of(context).size.width * 0.020,
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Icon(
+                          Icons.bookmark_border,
+                          size: MediaQuery.of(context).size.height * 0.020,
+                          color: Colors.black54,
+                        ),
+                      ],
                     )
                   ],
                 ),

@@ -39,6 +39,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
                 context,
                 text: Languages.of(context).productName,
                 inputText: Languages.of(context).inputProduct,
+                maxLines: 1,
               ),
 
               buildColumnDrop(context,
@@ -106,6 +107,8 @@ class _RequestforqutationState extends State<Requestforqutation> {
                 text: Languages.of(context).details,
                 inputText: Languages.of(context).inputDetails,
                 height: 0.3,
+                minLines: 1,
+                maxLines: null,
               ),
 
               Padding(
@@ -113,7 +116,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
                 child: Center(
                   child: Container(
                     width: MediaQuery.of(context).size.width * 0.8,
-                    height: MediaQuery.of(context).size.height * 0.2,
+                    height: MediaQuery.of(context).size.height * 0.23,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       color: defaultPrimaryBackgroundColor.withOpacity(0.3),
@@ -123,7 +126,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
                         Icon(
                           Icons.backup_rounded,
                           color: Colors.deepOrangeAccent.withOpacity(0.5),
-                          size: MediaQuery.of(context).size.width * 0.3,
+                          size: MediaQuery.of(context).size.width * 0.30,
                         ),
                         Text(
                           Languages.of(context).uploadDocument,
@@ -262,16 +265,21 @@ class _RequestforqutationState extends State<Requestforqutation> {
                       children: [
                         Padding(
                           padding: const EdgeInsetsDirectional.only(
-                              start: 15, bottom: 20),
+                              start: 15, bottom: 20, end: 40),
                           child: SizedBox(
                             width: MediaQuery.of(context).size.width * 0.3,
                             child: RaisedButton(
+                              splashColor: orangeColor.withOpacity(0.5),
+                              highlightColor: orangeColor.withOpacity(0.2),
                               disabledColor: Colors.transparent,
+                              color: Colors.white,
                               child: Text(
                                 Languages.of(context).submit,
-                                style: TextStyle(color: orangeColor),
+                                style: TextStyle(
+                                  color: orangeColor,
+                                ),
                               ),
-                              onPressed: null,
+                              onPressed: () {},
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20),
                                 side: new BorderSide(
@@ -359,15 +367,20 @@ class _RequestforqutationState extends State<Requestforqutation> {
     );
   }
 
-  Padding buildColumnText(BuildContext context,
-      {String text,
-      String inputText,
-      double margin = 0,
-      double height = 0.055}) {
+  Padding buildColumnText(
+    BuildContext context, {
+    String text,
+    String inputText,
+    double margin = 5,
+    double height = 0.07,
+    int minLines,
+    int maxLines,
+  }) {
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(18, 18, 18, 18),
+      padding: const EdgeInsetsDirectional.fromSTEB(18, 20, 18, 18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
         children: [
           Text(
             text,
@@ -376,7 +389,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
           ),
           Center(
             child: Container(
-              padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+              padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
               margin: EdgeInsetsDirectional.only(
                   top: 10, end: margin, start: margin),
               height: MediaQuery.of(context).size.height * height,
@@ -387,8 +400,10 @@ class _RequestforqutationState extends State<Requestforqutation> {
                 ),
               ),
               child: TextField(
-                minLines: 1,
-                maxLines: 10,
+                maxLines: maxLines,
+                keyboardType: maxLines == null
+                    ? TextInputType.multiline
+                    : TextInputType.text,
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: inputText,

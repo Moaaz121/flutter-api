@@ -1036,72 +1036,31 @@ Widget productItemLandscape(BuildContext context) {
                     children: [
                       Container(
                         margin: EdgeInsetsDirectional.fromSTEB(20, 0, 5, 0),
-                        height: MediaQuery.of(context).size.height * 0.13,
+                        height: MediaQuery.of(context).size.height * 0.16,
                         width: MediaQuery.of(context).size.width * 0.35,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(10),
+                            bottomLeft: Radius.circular(16),
+                            bottomRight: Radius.circular(16),
                           ),
                           color: Color(0xfffff2e5),
                         ),
                       ),
                       SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            margin: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
-                            width: 28,
-                            height: 28,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                image: AssetImage(profile_image),
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              RichText(
-                                maxLines: 1,
-                                text: TextSpan(
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 9,
-                                        fontWeight: FontWeight.bold),
-                                    text: 'Bahaa Robert'),
-                              ),
-                              SizedBox(
-                                height: 1,
-                              ),
-                              RichText(
-                                maxLines: 1,
-                                text: TextSpan(
-                                    style: TextStyle(
-                                      color: Colors.grey[400],
-                                      fontSize: 9,
-                                    ),
-                                    text: 'Beauty \& Personal Care'),
-                              ),
-                            ],
-                          ),
-                        ],
+                        height: 8,
                       ),
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.only(
+                      top: 12,
+                      left: 10,
+                      right: 10,
+                      bottom: 20,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         RichText(
                           maxLines: 3,
@@ -1113,9 +1072,9 @@ Widget productItemLandscape(BuildContext context) {
                               ),
                               text: Languages.of(context).blueShoes),
                         ),
-                        SizedBox(
-                          height: 2,
-                        ),
+                        // SizedBox(
+                        //   height: MediaQuery.of(context).size.height * .02,
+                        // ),
                         RichText(
                           maxLines: 2,
                           text: TextSpan(
@@ -1126,30 +1085,43 @@ Widget productItemLandscape(BuildContext context) {
                               ),
                               text: Languages.of(context).shoesPrice),
                         ),
+                        // SizedBox(
+                        //   height: MediaQuery.of(context).size.height * .03,
+                        // ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              margin:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                              width: 20,
+                              height: 20,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image: AssetImage(profile_image),
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 4,
+                            ),
+                            RichText(
+                              maxLines: 1,
+                              text: TextSpan(
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 7,
+                                      fontWeight: FontWeight.w400),
+                                  text: 'Bahaa Robert'),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),
                 ],
-              ),
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 10, 0),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.add_to_photos_rounded,
-                      size: 18,
-                      color: Colors.black54,
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Icon(
-                      Icons.bookmark_border_outlined,
-                      size: 18,
-                      color: Colors.black54,
-                    ),
-                  ],
-                ),
               ),
             ],
           ),
@@ -1167,7 +1139,19 @@ Widget productItemLandscape(BuildContext context) {
           fit: BoxFit.fill,
           image: AssetImage(dress_image),
           width: MediaQuery.of(context).size.width * 0.15,
-          height: MediaQuery.of(context).size.height * 0.13,
+          height: MediaQuery.of(context).size.height * 0.16,
+        ),
+      ),
+      Positioned.directional(
+        textDirection: Directionality.of(context),
+        end: 20,
+        bottom: MediaQuery.of(context).size.height * 0.03,
+        child: Icon(
+          LanguageHelper.isEnglish
+              ? Icons.arrow_forward_rounded
+              : Icons.arrow_back_rounded,
+          size: 15,
+          color: Colors.black.withOpacity(0.7),
         ),
       ),
     ],
@@ -1230,7 +1214,7 @@ Widget infoCartSupplier(
               ),
               child: Padding(
                 padding: const EdgeInsetsDirectional.only(
-                    top: 10, start: 30, bottom: 10, end: 10),
+                    top: 10, start: 10, bottom: 10, end: 10),
                 child: Column(
                   children: [
                     buildText(name, 10.0,
@@ -1280,8 +1264,8 @@ Widget infoCartSupplier(
             ),
           ),
           Positioned(
-            top: 10,
-            left: 10,
+            top: 1,
+            left: 3,
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -1292,8 +1276,8 @@ Widget infoCartSupplier(
                 image: AssetImage(
                   medalImage,
                 ),
-                height: 45,
-                width: 45,
+                height: 40,
+                width: 40,
               ),
             ),
           ),
