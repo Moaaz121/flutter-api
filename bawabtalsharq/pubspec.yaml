@@ -50,7 +50,7 @@ dependencies:
   image_pickers: ^1.0.8+7
   flutter_imagenetwork:
   jitsi_meet:
-  flutter_ringtone_player:
+  #flutter_ringtone_player:
   #audio_recorder:
   path_provider: ^1.6.8
   permission_handler: 5.0.0

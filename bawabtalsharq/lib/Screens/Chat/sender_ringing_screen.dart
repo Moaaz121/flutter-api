@@ -21,7 +21,7 @@ class _SenderRingingScreenState extends State<SenderRingingScreen> {
   void initState() {
     super.initState();
     startTime();
-    ChatSound.instance.playRingTone(true);
+    //   ChatSound.instance.playRingTone(true);
   }
 
   startTime() async {
@@ -64,7 +64,7 @@ class _SenderRingingScreenState extends State<SenderRingingScreen> {
       child: Center(
         child: RawMaterialButton(
           onPressed: () {
-            ChatSound.instance.stopRingTone();
+            //  ChatSound.instance.stopRingTone();
             SchedulerBinding.instance.addPostFrameCallback((_) {
               Navigator.pop(context);
             });

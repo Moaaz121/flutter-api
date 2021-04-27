@@ -100,7 +100,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             Navigator.pushNamed(
                                 context, ScreenRoutes.searchScreen);
                           }),
-                          chatButton(() {})
+                          chatButton(() {
+                            Navigator.pushNamed(
+                                context, ScreenRoutes.chatsScreen);
+                          })
                         ],
                       ),
                     ),

@@ -25,7 +25,7 @@ class _ReceiverRingingScreenState extends State<ReceiverRingingScreen> {
   void initState() {
     super.initState();
     startTime();
-    ChatSound.instance.playRingTone(false);
+    // ChatSound.instance.playRingTone(false);
   }
 
   @override
@@ -75,7 +75,7 @@ class _ReceiverRingingScreenState extends State<ReceiverRingingScreen> {
         children: [
           RawMaterialButton(
             onPressed: () {
-              ChatSound.instance.stopRingTone();
+              //   ChatSound.instance.stopRingTone();
               JitsiConfig.instance.joinMeeting(
                   context, widget.isVideo, widget.roomID, widget.partnerData);
             },
@@ -91,7 +91,7 @@ class _ReceiverRingingScreenState extends State<ReceiverRingingScreen> {
           ),
           RawMaterialButton(
             onPressed: () {
-              ChatSound.instance.stopRingTone();
+              //ChatSound.instance.stopRingTone();
               SchedulerBinding.instance.addPostFrameCallback((_) {
                 Navigator.pop(context);
               });
