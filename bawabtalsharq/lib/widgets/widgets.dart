@@ -826,6 +826,7 @@ AppBar appBarSearch({
   @required BuildContext context,
 }) {
   return AppBar(
+    leading: SizedBox(),
     centerTitle: true,
     toolbarHeight: 60.0,
     shape: RoundedRectangleBorder(

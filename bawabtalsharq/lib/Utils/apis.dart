@@ -25,6 +25,8 @@ class APIS {
   static const String ABOUTUs_API = "get_about_us&lang=";
   static const String FAQ_API = "get_faq&lang=";
   static const String Lang_API = "get_languages";
+  static const String CONTACT_MESSAGE_API = "contact_us_message";
+  static const String CONTACT_LOCATION_API = "get_contact_us_location&lang=";
 // end Bahaa
 
 // Start Mosdik
