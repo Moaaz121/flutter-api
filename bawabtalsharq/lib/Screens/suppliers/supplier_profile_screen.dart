@@ -1,9 +1,7 @@
-import 'package:bawabtalsharq/Screens/home_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
-import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -299,12 +297,13 @@ class _SupplierProfileState extends State<SupplierProfile> {
         itemCount: 10,
         itemBuilder: (context, position) {
           return SizedBox(
-              width: MediaQuery.of(context).size.width / 3 - 5,
-              child: mostPopularByCategoryStable(context, () {
-                setState(() {
-                  Navigator.pushNamed(context, ScreenRoutes.searchResultScreen);
-                });
-              }));
+            width: MediaQuery.of(context).size.width / 3 - 5,
+            // child: mostPopularByCategoryStable(context, () {
+            //   setState(() {
+            //     Navigator.pushNamed(context, ScreenRoutes.searchResultScreen);
+            //   });
+            // })
+          );
         });
   }
 

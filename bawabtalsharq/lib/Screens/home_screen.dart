@@ -1,11 +1,19 @@
+import 'dart:math';
+
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:bawabtalsharq/Model/home_model.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/bloc/homeBloc/home_bloc.dart';
+import 'package:bawabtalsharq/bloc/homeBloc/home_event.dart';
+import 'package:bawabtalsharq/bloc/homeBloc/home_state.dart';
 import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -13,71 +21,107 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  HomeBloc _homeBloc = HomeBloc();
+
+  @override
+  void initState() {
+    super.initState();
+    _homeBloc.add(GetHomeData());
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      child: Stack(
-        children: [
-          SingleChildScrollView(
-            physics: const BouncingScrollPhysics(
-                parent: AlwaysScrollableScrollPhysics()),
-            child: Column(
+      child: BlocBuilder<HomeBloc, HomeState>(
+        bloc: _homeBloc,
+        builder: (context, state) {
+          print(state);
+          if (state is HomeLoadingState) {
+            print('Loading');
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (state is HomeLoadedState) {
+            print(state.homeResponse.data);
+            return Stack(
               children: [
-                SizedBox(
-                  height: 100,
+                SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics()),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 100,
+                      ),
+                      mainSlider(
+                        imgs: state.homeResponse.data.slider,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          mainHeaderButton(() {
+                            Navigator.pushNamed(
+                                context, ScreenRoutes.categoriesScreen);
+                          }, Languages.of(context).allCategories, allCategories,
+                              blueColor.withOpacity(0.15)),
+                          mainHeaderButton(() {
+                            Navigator.pushNamed(
+                                context, ScreenRoutes.requestForQuotation);
+                          }, Languages.of(context).requestForQ, requestForQ,
+                              orangeColor.withOpacity(0.15)),
+                          mainHeaderButton(
+                              () {},
+                              Languages.of(context).technical,
+                              technical_icon,
+                              purpleColor.withOpacity(0.15)),
+                        ],
+                      ),
+                      ourGoldenSupplier(
+                          context, state.homeResponse.data.suppliers),
+                      mostPopularIn(
+                          context, state.homeResponse.data.categories.first),
+                      mostPopularByCategoryHeader(context),
+                      listOfCateWidget(state.homeResponse.data.categories)
+                    ],
+                  ),
                 ),
-                mainSlider(),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                Column(
                   children: [
-                    mainHeaderButton(() {
-                      Navigator.pushNamed(
-                          context, ScreenRoutes.categoriesScreen);
-                    }, Languages.of(context).allCategories, allCategories,
-                        blueColor.withOpacity(0.15)),
-                    mainHeaderButton(() {
-                      Navigator.pushNamed(
-                          context, ScreenRoutes.requestForQuotation);
-                    }, Languages.of(context).requestForQ, requestForQ,
-                        orangeColor.withOpacity(0.15)),
-                    mainHeaderButton(() {}, Languages.of(context).technical,
-                        technical_icon, purpleColor.withOpacity(0.15)),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          searchButton(context, () {
+                            Navigator.pushNamed(
+                                context, ScreenRoutes.searchScreen);
+                          }),
+                          chatButton(() {})
+                        ],
+                      ),
+                    ),
                   ],
                 ),
-                ourGoldenSupplier(context),
-                mostPopularIn(context),
-                mostPopularByCategoryHeader(context),
-                listOfCateWidget()
               ],
-            ),
-          ),
-          Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    searchButton(context, () {
-                      Navigator.pushNamed(context, ScreenRoutes.searchScreen);
-                    }),
-                    chatButton(() {})
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ],
+            );
+          } else {
+            print(state);
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
       ),
     );
   }
 }
 
-Widget mostPopularByCategoryStable(BuildContext context, Function onPress) {
+Widget mostPopularByCategoryStable(
+    BuildContext context, Function onPress, CategoryElement category) {
   return Column(
     children: [
       Padding(
@@ -87,7 +131,7 @@ Widget mostPopularByCategoryStable(BuildContext context, Function onPress) {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              Languages.of(context).allCategories,
+              category.name,
               style: titlesStyle(),
             ),
             GestureDetector(
@@ -156,7 +200,7 @@ Widget mostPopularByCategoryStable(BuildContext context, Function onPress) {
                 ),
               ),
             ),
-            Positioned(left: 5, child: mainMostPopularCategory()),
+            Positioned(left: 5, child: mainMostPopularCategory(category)),
           ],
         ),
       ),
@@ -212,7 +256,7 @@ Widget mainHeaderButton(
   );
 }
 
-Widget ourGoldenSupplier(BuildContext context) {
+Widget ourGoldenSupplier(BuildContext context, List<Supplier> suppliers) {
   return Column(
     mainAxisSize: MainAxisSize.min,
     children: [
@@ -230,7 +274,7 @@ Widget ourGoldenSupplier(BuildContext context) {
           padding: EdgeInsets.symmetric(horizontal: 12),
           reverse: false,
           scrollDirection: Axis.horizontal,
-          itemCount: 20,
+          itemCount: suppliers.length,
           itemBuilder: (context, position) {
             return supplierView(
               onPress: () {
@@ -238,28 +282,13 @@ Widget ourGoldenSupplier(BuildContext context) {
                     context, ScreenRoutes.supplierProfileScreen);
               },
               category: LanguageHelper.isEnglish
-                  ? position.isOdd
-                      ? 'Food & Beverages'
-                      : 'Agriculture Crops'
-                  : position.isOdd
-                      ? 'المحاصيل الزارعية'
-                      : 'الخضروات والفاكهة',
+                  ? suppliers[position].articipate
+                  : suppliers[position].articipate,
               nameSupplier: LanguageHelper.isEnglish
-                  ? position.isOdd
-                      ? 'Kareem Hassanien'
-                      : 'Mohamed Mosadik'
-                  : position.isOdd
-                      ? 'كريم حسانين'
-                      : 'محمد مصدق',
-              supplierImg:
-                  AssetImage(position.isOdd ? kareem_img : mosadaq_img),
-              years: LanguageHelper.isEnglish
-                  ? position.isOdd
-                      ? '3'
-                      : '5'
-                  : position.isOdd
-                      ? '٣'
-                      : '٥',
+                  ? suppliers[position].title
+                  : suppliers[position].title,
+              supplierImg: suppliers[position].image,
+              years: LanguageHelper.isEnglish ? '3' : '٥',
             );
           },
         ),
@@ -306,7 +335,16 @@ Widget ourGoldenSupplierHeader(BuildContext context, {Function onPress()}) {
   );
 }
 
-Widget mostPopularIn(BuildContext context) {
+Widget mostPopularIn(BuildContext context, CategoryElement category) {
+  List<List<Datum>> _cates = new List<List<Datum>>();
+  for (int x = 1; x < category.data.length / 2; x++) {
+    List<Datum> _listSingle = List<Datum>();
+    _listSingle.add(category.data[x * 2]);
+    if (category.data.length >= x * 2 + 2) {
+      _listSingle.add(category.data[x * 2 + 1]);
+    }
+    _cates.add(_listSingle);
+  }
   return Column(
     children: [
       mostPopularInHeader(context),
@@ -319,12 +357,12 @@ Widget mostPopularIn(BuildContext context) {
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: CarouselSlider(
-                    items: [
-                      popularSlider(context, 0),
-                      popularSlider(context, 1),
-                      popularSlider(context, 0),
-                      popularSlider(context, 1),
-                    ],
+                    items: _cates
+                        .map(
+                          (List<Datum> datums) => popularSlider(
+                              context, Random().nextInt(2), datums),
+                        )
+                        .toList(),
                     options: CarouselOptions(
                       aspectRatio: 16 / 9,
                       viewportFraction: 0.45,
@@ -344,14 +382,14 @@ Widget mostPopularIn(BuildContext context) {
               ),
             ),
             mainMostPopularProduct(
-                productImg: AssetImage(productImage),
+                img: category.data[0].image,
                 backgroundColor: yellowColor.withOpacity(.3),
                 onPress: () {
                   Navigator.pushNamed(context, ScreenRoutes.individualProduct);
                 },
-                nameProduct: LanguageHelper.isEnglish ? 'Pasta' : 'بيتزا',
-                nameCategory: LanguageHelper.isEnglish ? 'Food' : 'الطعام',
-                price: LanguageHelper.isEnglish ? '\$\265.0' : ' ٢٥٦ ج.م',
+                nameProduct: category.data[0].name,
+                nameCategory: category.data[0].category.index.toString(),
+                price: category.data[0].price,
                 context: context),
           ],
         ),
@@ -360,29 +398,29 @@ Widget mostPopularIn(BuildContext context) {
   );
 }
 
-Widget popularSlider(BuildContext context, int pos) {
+Widget popularSlider(BuildContext context, int pos, List<Datum> datums) {
   return SizedBox(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         subMostPopularProduct(
-            productImg: AssetImage(productImage),
+            img: datums[0].image,
             backgroundColor:
                 pos == 0 ? redColor.withOpacity(.3) : blueColor.withOpacity(.3),
             onPress: () {},
-            nameProduct: LanguageHelper.isEnglish ? 'Pasta' : 'بيتزا',
-            nameCategory: LanguageHelper.isEnglish ? 'Food' : 'الطعام',
-            price: LanguageHelper.isEnglish ? '\$\265.0' : ' ٢٥٦ ج.م',
+            nameProduct: datums[0].name,
+            nameCategory: datums[0].category.index.toString(),
+            price: datums[0].price,
             context: context),
         subMostPopularProduct(
-            productImg: AssetImage(productImage),
+            img: datums[0].image,
             backgroundColor: pos == 0
                 ? orangeColor.withOpacity(.3)
                 : purpleColor.withOpacity(.3),
             onPress: () {},
-            nameProduct: LanguageHelper.isEnglish ? 'Pasta' : 'بيتزا',
-            nameCategory: LanguageHelper.isEnglish ? 'Food' : 'الطعام',
-            price: LanguageHelper.isEnglish ? '\$\265.0' : ' ٢٥٦ ج.م',
+            nameProduct: datums[1].name,
+            nameCategory: datums[1].category.index.toString(),
+            price: datums[1].price,
             context: context),
       ],
     ),
@@ -455,7 +493,7 @@ Widget supplierView(
     String nameSupplier,
     String category,
     String years,
-    AssetImage supplierImg}) {
+    String supplierImg}) {
   return GestureDetector(
     onTap: onPress,
     child: Padding(
@@ -471,8 +509,8 @@ Widget supplierView(
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20.0),
-                child: Image(
-                  image: supplierImg,
+                child: Image.network(
+                  supplierImg,
                   width: double.infinity,
                   height: 80,
                   fit: BoxFit.cover,
@@ -531,7 +569,7 @@ Widget supplierView(
 Widget mainMostPopularProduct(
     {Function onPress,
     Color backgroundColor,
-    AssetImage productImg,
+    String img,
     String nameProduct,
     String nameCategory,
     String price,
@@ -539,6 +577,7 @@ Widget mainMostPopularProduct(
   return GestureDetector(
     onTap: onPress,
     child: Container(
+      height: 170,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15.0),
         color: Colors.white,
@@ -557,25 +596,20 @@ Widget mainMostPopularProduct(
               PositionedDirectional(
                   top: -40,
                   start: -50,
-                  child: Image(
-                    image: AssetImage(productImage),
+                  child: Image.network(
+                    img,
                     height: 120,
                     width: 120,
                   )),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Icon(Icons.add_to_photos,
-                        size: MediaQuery.of(context).size.height * 0.020,
-                        color: Colors.black54),
-                    Icon(
-                      Icons.bookmark_border,
-                      size: MediaQuery.of(context).size.height * 0.020,
-                      color: Colors.black54,
-                    )
-                  ],
+              Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(
+                    Icons.bookmark_border,
+                    size: MediaQuery.of(context).size.height * 0.020,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
               Padding(
@@ -584,11 +618,16 @@ Widget mainMostPopularProduct(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    AutoSizeText(
                       nameProduct,
                       style: TextStyle(
-                          fontSize: MediaQuery.of(context).textScaleFactor * 17,
-                          fontWeight: FontWeight.bold),
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      minFontSize: 10,
+                      stepGranularity: 10,
+                      maxLines: 2,
+                      overflow: TextOverflow.fade,
                     ),
                     SizedBox(
                       height: 5.0,
@@ -609,7 +648,7 @@ Widget mainMostPopularProduct(
                         price,
                         style: TextStyle(
                           color: orangeColor,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w500,
                           fontSize: MediaQuery.of(context).textScaleFactor * 15,
                         ),
                       ),
@@ -628,7 +667,7 @@ Widget mainMostPopularProduct(
 Widget subMostPopularProduct(
     {Function onPress,
     Color backgroundColor,
-    AssetImage productImg,
+    String img,
     String nameProduct,
     String nameCategory,
     String price,
@@ -636,6 +675,7 @@ Widget subMostPopularProduct(
   return GestureDetector(
     onTap: onPress,
     child: Container(
+      height: 80,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15.0),
         color: backgroundColor,
@@ -647,26 +687,18 @@ Widget subMostPopularProduct(
         child: Stack(
           children: [
             PositionedDirectional(
-                bottom: -50,
-                end: -50,
-                child: Image(
-                  image: AssetImage(productImage),
-                  height: 130,
-                  width: 130,
+                bottom: -5,
+                end: -5,
+                child: Image.network(
+                  img,
+                  height: 55,
+                  width: 55,
                 )),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Icon(
-                    Icons.add_to_photos_rounded,
-                    size: MediaQuery.of(context).size.height * 0.020,
-                    color: Colors.black54,
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
                   Icon(
                     Icons.bookmark_border_rounded,
                     size: MediaQuery.of(context).size.height * 0.020,
@@ -680,20 +712,32 @@ Widget subMostPopularProduct(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    nameProduct,
-                    style: TextStyle(
-                        fontSize: MediaQuery.of(context).textScaleFactor * 13,
-                        fontWeight: FontWeight.bold),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.35,
+                    child: AutoSizeText(
+                      nameProduct,
+                      minFontSize: 10,
+                      stepGranularity: 10,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style:
+                          TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
+                    ),
                   ),
                   SizedBox(
                     height: 5.0,
                   ),
-                  Text(
-                    nameCategory,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: MediaQuery.of(context).textScaleFactor * 13),
+                  SizedBox(
+                    width: 50,
+                    child: AutoSizeText(
+                      nameCategory,
+                      minFontSize: 10,
+                      stepGranularity: 10,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style:
+                          TextStyle(fontWeight: FontWeight.w400, fontSize: 13),
+                    ),
                   ),
                   SizedBox(
                     height: 5.0,
@@ -702,7 +746,7 @@ Widget subMostPopularProduct(
                     price,
                     style: TextStyle(
                       color: Colors.deepOrangeAccent,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w500,
                       fontSize: MediaQuery.of(context).textScaleFactor * 13,
                     ),
                   )
@@ -716,7 +760,7 @@ Widget subMostPopularProduct(
   );
 }
 
-Widget mainMostPopularCategory() {
+Widget mainMostPopularCategory(CategoryElement category) {
   return SizedBox(
     height: 170,
     child: ListView.builder(
@@ -735,16 +779,9 @@ Widget mainMostPopularCategory() {
             backgroundColor: position == 2
                 ? redColor
                 : (position == 1 ? orangeColor : blueColor),
-            nameProduct: LanguageHelper.isEnglish
-                ? position.isOdd
-                    ? 'Negrsgo'
-                    : 'koshary'
-                : position.isOdd
-                    ? 'نجرسكو'
-                    : 'كشري',
-            productImg:
-                AssetImage(position.isOdd ? productImage : productImage),
-            price: LanguageHelper.isEnglish ? '80.00' : '٨٠',
+            nameProduct: category.data[position].name,
+            productImg: category.data[position].image,
+            price: category.data[position].price,
           ),
         );
       },
@@ -756,7 +793,7 @@ Widget mostPopularCateg(
     {Function onPress,
     int position,
     Color backgroundColor,
-    AssetImage productImg,
+    String productImg,
     String nameProduct,
     String price,
     BuildContext context}) {
@@ -831,12 +868,13 @@ Widget mostPopularCateg(
                 ),
               ),
               PositionedDirectional(
-                  start: position == 2 ? -20 : null,
-                  end: position == 0 ? -20 : null,
+                  top: 7,
+                  start: position == 2 ? -5 : null,
+                  end: position == 0 ? -5 : null,
                   child: SizedBox(
-                    width: 100,
-                    height: 100,
-                    child: Image(image: AssetImage(productImage)),
+                    width: 70,
+                    height: 60,
+                    child: Image.network(productImg),
                   )),
               Padding(
                 padding:
@@ -847,47 +885,35 @@ Widget mostPopularCateg(
                     Text(
                       nameProduct,
                       style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 12,
                           fontWeight: FontWeight.bold,
                           color: Colors.black),
                     ),
                     SizedBox(
                       height: 5,
                     ),
-                    Row(
-                      children: [
-                        Flexible(
-                          child: Container(
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
                             child: Text(
-                              LanguageHelper.isEnglish
-                                  ? '$price\EGP'
-                                  : '$price \ج.م',
+                              LanguageHelper.isEnglish ? '$price' : '$price',
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                  fontWeight: FontWeight.w600,
+                                  fontWeight: FontWeight.w700,
                                   fontSize: 10,
                                   color: Colors.deepOrangeAccent),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          width:
-                              1.1 * MediaQuery.of(context).size.width * 0.020,
-                        ),
-                        Icon(
-                          Icons.add_to_photos,
-                          size: MediaQuery.of(context).size.height * 0.020,
-                          color: Colors.black54,
-                        ),
-                        SizedBox(
-                          width: 3,
-                        ),
-                        Icon(
-                          Icons.bookmark_border,
-                          size: MediaQuery.of(context).size.height * 0.020,
-                          color: Colors.black54,
-                        ),
-                      ],
+                          Icon(
+                            Icons.bookmark_border,
+                            size: MediaQuery.of(context).size.height * 0.020,
+                            color: Colors.black54,
+                          ),
+                        ],
+                      ),
                     )
                   ],
                 ),

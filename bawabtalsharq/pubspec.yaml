@@ -33,7 +33,6 @@ dependencies:
   flutter_bloc: ^4.0.1
   cupertino_icons: ^1.0.0
   device_preview:
-  flutter_html: ^0.8.2
   carousel_slider: ^3.0.0
   smooth_page_indicator: ^0.2.1
   flutter_rating_bar:
@@ -41,7 +40,9 @@ dependencies:
   pin_code_fields:
   expansion_tile_card:
   line_icons:
+  flutter_html:
   url_launcher:
+  auto_size_text: ^2.1.0
 
 dev_dependencies:
   flutter_test:

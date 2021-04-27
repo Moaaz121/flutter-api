@@ -20,6 +20,5 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   @override
-  // TODO: implement initialState
   LoginState get initialState => LoginInitial();
 }

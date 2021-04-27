@@ -7,7 +7,7 @@ class APIS {
   static const String REGISTER_API = "register";
 
 // Start Karem
-
+  static const String HOME_API = 'get_home';
 // end karem
 
 // Start Asmaa
