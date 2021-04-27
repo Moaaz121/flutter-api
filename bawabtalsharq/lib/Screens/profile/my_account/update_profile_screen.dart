@@ -12,7 +12,7 @@ class UpdateProfile extends StatefulWidget {
 }
 
 class _UpdateProfileState extends State<UpdateProfile> {
-  DateTime _selectedDateTime = DateTime.now();
+  DateTime _selectedDateTime;
 
   // Future _selectDate() async {
   //   DateTime picked = await showDatePicker(
@@ -99,7 +99,9 @@ class _UpdateProfileState extends State<UpdateProfile> {
                     ),
                     ExpansionTileCard(
                       shadowColor: Colors.transparent,
-                      title: Text(Languages.of(context).birthDay),
+                      title: Text(_selectedDateTime == null
+                          ? Languages.of(context).birthDay
+                          : '${_selectedDateTime.day}/${_selectedDateTime.month}/${_selectedDateTime.year}'),
                       children: <Widget>[
                         Align(
                           alignment: Alignment.centerLeft,
@@ -108,7 +110,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                               horizontal: 16.0,
                               vertical: 8.0,
                             ),
-                            child: SizedBox(height: 200, child: datetime()),
+                            child: SizedBox(height: 150, child: datetime()),
                           ),
                         ),
                       ],
@@ -119,20 +121,23 @@ class _UpdateProfileState extends State<UpdateProfile> {
                     signInFlatButton(
                         context,
                         MediaQuery.of(context).size.height,
-                        'Save Change',
+                        Languages.of(context).saveChange,
                         () {},
                         widthOfBtn: 1),
                   ])),
         ));
   }
-}
 
-Widget datetime() {
-  return CupertinoDatePicker(
-    initialDateTime: DateTime.now(),
-    onDateTimeChanged: (DateTime newDate) {
-      print(newDate);
-    },
-    mode: CupertinoDatePickerMode.date,
-  );
+  Widget datetime() {
+    return CupertinoDatePicker(
+      initialDateTime: DateTime.now(),
+      onDateTimeChanged: (DateTime newDate) {
+        setState(() {
+          _selectedDateTime = newDate;
+          print(newDate);
+        });
+      },
+      mode: CupertinoDatePickerMode.date,
+    );
+  }
 }

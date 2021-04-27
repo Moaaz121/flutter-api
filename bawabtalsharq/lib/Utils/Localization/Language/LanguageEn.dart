@@ -148,8 +148,8 @@ class LanguageEn extends Languages {
   String get enterOldPass => 'Enter your old password for authorization';
   String get oldPassword => 'Old Password';
   String get newPassword => 'New Password';
-  String get confirmPassword => 'Old Password';
-  String get saveChange => 'Old Password';
+  String get confirmPassword => 'Confirm Password';
+  String get saveChange => 'Save Change';
   String get lastName => 'Last Name';
   String get country => 'Country';
   String get currency => 'Currency';

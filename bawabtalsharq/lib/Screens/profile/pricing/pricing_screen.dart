@@ -1,10 +1,10 @@
+import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
-import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
-import 'package:flutter/material.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class PricingScreen extends StatefulWidget {
   @override
@@ -17,88 +17,86 @@ class _PricingScreenState extends State<PricingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          centerTitle: true,
-          title: buildText(Languages.of(context).pricingPlan, 22,
-              color: orangeColor, fontWeight: FontWeight.bold),
-          leading: IconButton(
-            icon: CircleAvatar(
-              radius: 9,
-              backgroundColor: orangeColor,
-              child: Icon(
-                LanguageHelper.isEnglish
-                    ? Icons.keyboard_arrow_left_outlined
-                    : Icons.keyboard_arrow_right_outlined,
-                size: 17,
-                color: Colors.white,
-              ),
+        elevation: 0,
+        centerTitle: true,
+        title: buildText(Languages.of(context).pricingPlan, 22,
+            color: orangeColor, fontWeight: FontWeight.bold),
+        leading: IconButton(
+          icon: CircleAvatar(
+            radius: 9,
+            backgroundColor: orangeColor,
+            child: Icon(
+              LanguageHelper.isEnglish
+                  ? Icons.keyboard_arrow_left_outlined
+                  : Icons.keyboard_arrow_right_outlined,
+              size: 17,
+              color: Colors.white,
             ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
           ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            CarouselSlider(
-              carouselController: buttonCarouselController,
-              items: [
-                pricingItem(
-                    context: context,
-                    text: 'Free',
-                    price: '0',
-                    color: Colors.blue[300]),
-                pricingItem(
-                    context: context,
-                    text: 'Bronze',
-                    price: '600',
-                    color: Colors.brown[400]),
-                pricingItem(
-                    context: context,
-                    text: 'Silver',
-                    price: '1000',
-                    color: Colors.black26),
-                pricingItem(
-                    context: context,
-                    text: 'Gold',
-                    price: '1500',
-                    color: Colors.orange[400]),
-                pricingItem(
-                    context: context,
-                    text: 'Vip',
-                    price: '3000',
-                    color: orangeColor),
-              ],
-              options: CarouselOptions(
-                onPageChanged: (index, reason) {
-                  setState(() {
-                    sliderPosition = index;
-                  });
-                },
-                autoPlay: false,
-                height: MediaQuery.of(context).size.height * 0.75,
-                autoPlayCurve: Curves.fastOutSlowIn,
-                scrollDirection: Axis.horizontal,
-                aspectRatio: 16 / 9,
-                viewportFraction: 0.8,
-                pauseAutoPlayInFiniteScroll: true,
-                pauseAutoPlayOnTouch: true,
-                initialPage: 0,
-                disableCenter: true,
-                enableInfiniteScroll: false,
-                reverse: false,
-                enlargeCenterPage: true,
-              ),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          CarouselSlider(
+            carouselController: buttonCarouselController,
+            items: [
+              pricingItem(
+                  context: context,
+                  text: 'Free',
+                  price: '0',
+                  color: Colors.blue[300]),
+              pricingItem(
+                  context: context,
+                  text: 'Bronze',
+                  price: '600',
+                  color: Colors.brown[400]),
+              pricingItem(
+                  context: context,
+                  text: 'Silver',
+                  price: '1000',
+                  color: Colors.black26),
+              pricingItem(
+                  context: context,
+                  text: 'Gold',
+                  price: '1500',
+                  color: Colors.orange[400]),
+              pricingItem(
+                  context: context,
+                  text: 'Vip',
+                  price: '3000',
+                  color: orangeColor),
+            ],
+            options: CarouselOptions(
+              onPageChanged: (index, reason) {
+                setState(() {
+                  sliderPosition = index;
+                });
+              },
+              autoPlay: false,
+              height: MediaQuery.of(context).size.height * 0.75,
+              autoPlayCurve: Curves.fastOutSlowIn,
+              scrollDirection: Axis.horizontal,
+              aspectRatio: 16 / 9,
+              viewportFraction: 0.8,
+              pauseAutoPlayInFiniteScroll: true,
+              pauseAutoPlayOnTouch: true,
+              initialPage: 0,
+              disableCenter: true,
+              enableInfiniteScroll: false,
+              reverse: false,
+              enlargeCenterPage: true,
             ),
-            sliderIndicator(sliderPosition, noPadding: true, count: 5),
-          ],
-        ),
+          ),
+          sliderIndicator(sliderPosition, noPadding: true, count: 5),
+        ],
       ),
     );
   }

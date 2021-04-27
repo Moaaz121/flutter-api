@@ -260,7 +260,7 @@ class LanguageAr extends Languages {
   String get eslamAlaa => 'اسلام علاء ';
   String get firstName => 'الاسم الاول ';
   String get lasttNam => 'الاسم الاخير ';
-  String get birthDay => 'المولد ';
+  String get birthDay => 'تاريخ الميلاد ';
 
 // end Islam
 
