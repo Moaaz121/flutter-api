@@ -1,8 +1,14 @@
+import 'package:bawabtalsharq/Model/faq_model.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
+import 'package:bawabtalsharq/bloc/profileBlocs/faqBloc/faq_bloc.dart';
+import 'package:bawabtalsharq/bloc/profileBlocs/faqBloc/faq_event.dart';
+import 'package:bawabtalsharq/bloc/profileBlocs/faqBloc/faq_state.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 class FaqScreen extends StatefulWidget {
   @override
@@ -10,6 +16,17 @@ class FaqScreen extends StatefulWidget {
 }
 
 class _FaqScreenState extends State<FaqScreen> {
+  FaqBloc _faqBloc;
+  bool isLoading = false;
+  List<FaqData> listOfFaq;
+
+  @override
+  void initState() {
+    _faqBloc = FaqBloc();
+    _faqBloc.add(GetFaqEvent());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,36 +36,51 @@ class _FaqScreenState extends State<FaqScreen> {
           Navigator.of(context).pop();
         },
       ),
-      body: ListView.builder(
-        itemCount: 10,
-        itemBuilder: (BuildContext context, int index) {
-          return Container(
-            margin: EdgeInsets.only(top: 14, left: 20, right: 20),
-            decoration: BoxDecoration(
-              boxShadow: [makeShadow()],
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: ExpansionTileCard(
-              shadowColor: Colors.transparent,
-              title: Text('Order Placement Information'),
-              children: <Widget>[
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0,
-                      vertical: 8.0,
-                    ),
-                    child: Text(
-                        'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'),
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
+      body: BlocBuilder<FaqBloc, FaqState>(
+          bloc: _faqBloc,
+          builder: (context, state) {
+            if (state is FaqLoadingState) {
+              showLoadingDialog(context);
+            } else if (state is FaqLoadedState) {
+              listOfFaq = state.faqResponse;
+              isLoading = true;
+              _faqBloc.add(ResetState());
+              Navigator.pop(context);
+            }
+            return isLoading
+                ? ListView.builder(
+                    itemCount: listOfFaq.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Container(
+                        margin: EdgeInsets.only(top: 14, left: 20, right: 20),
+                        decoration: BoxDecoration(
+                          boxShadow: [makeShadow()],
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: ExpansionTileCard(
+                          shadowColor: Colors.transparent,
+                          title: Text(listOfFaq[index].page),
+                          children: <Widget>[
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16.0,
+                                  vertical: 8.0,
+                                ),
+                                child: Html(
+                                  data: listOfFaq[index].description,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  )
+                : Container();
+          }),
     );
   }
 }

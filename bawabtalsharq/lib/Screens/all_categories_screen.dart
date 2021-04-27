@@ -70,7 +70,7 @@ class _AllCategoriesState extends State<AllCategories>
               getSubCategoriesList(
                   context,
                   state.index,
-                  listOfCategory,
+                  listOfCategory[state.index].subCatregory,
                   Color(int.parse(listOfCategory[state.index].color))
                       .withOpacity(0.15)) //TODO put subcategory arr
             ];
@@ -178,7 +178,7 @@ class _AllCategoriesState extends State<AllCategories>
   }
 
   Positioned getSubCategoriesList(BuildContext context, int categoryIndex,
-      List<CategoryModel> subCategoryArr, Color color) {
+      List<SubCategory> subCategoryArr, Color color) {
     //sub catetgory model
     setupAnimation();
     return Positioned.directional(
