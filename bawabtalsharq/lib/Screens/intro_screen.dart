@@ -186,7 +186,7 @@ class _IntroScreenState extends State<IntroScreen> {
                               GestureDetector(
                                 onTap: () {
                                   Navigator.pushReplacementNamed(
-                                      context, ScreenRoutes.homeScreen);
+                                      context, ScreenRoutes.mainScreen);
                                 },
                                 child: Text(
                                   'Skip',

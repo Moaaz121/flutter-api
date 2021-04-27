@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rocket_chat_connector_flutter/models/authentication.dart';
+import 'package:bawabtalsharq/Repos/ChatRepos/chat_repo.dart';
 
 import '../main.dart';
 
@@ -234,6 +235,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       //     passwordController.text))
                                       //   _passwordErrorMessage = 'Weak Password';
                                       else {
+                                        _loginToRocketChat();
                                         _loginBloc.add(
                                           DoLoginEvent(usernameController.text,
                                               passwordController.text),
@@ -343,19 +345,19 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  // _loginToRocketChat() async {
-  //   if (_userNameController.text.isNotEmpty &&
-  //       _passwordController.text.isNotEmpty) {
-  //     Authentication result = await RocketChatApi.instance
-  //         .loginRocket(_userNameController.text, _passwordController.text);
-  //     if (result.status == "success") {
-  //       rocketUser = result;
-  //       print(rocketUser.data.authToken);
-  //       print(rocketUser.data.userId);
-  //       Navigator.pushReplacementNamed(context, ScreenRoutes.mainScreen);
-  //     } else {
-  //       print('error');
-  //     }
-  //   }
-  // }
+  _loginToRocketChat() async {
+    if (usernameController.text.isNotEmpty &&
+        passwordController.text.isNotEmpty) {
+      Authentication result =
+          await RocketChatApi.instance.loginRocket('RocketAdmin', 'Ab@123456');
+      if (result.status == "success") {
+        rocketUser = result;
+        print(rocketUser.data.authToken);
+        print(rocketUser.data.userId);
+        Navigator.pushReplacementNamed(context, ScreenRoutes.mainScreen);
+      } else {
+        print('error');
+      }
+    }
+  }
 }
