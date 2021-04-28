@@ -3,6 +3,7 @@ import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:bawabtalsharq/bloc/updateProfileBlocs/changePassword/change_password_bloc.dart';
 import 'package:bawabtalsharq/bloc/updateProfileBlocs/changePassword/change_password_event.dart';
 import 'package:bawabtalsharq/bloc/updateProfileBlocs/changePassword/change_password_state.dart';
+import 'package:bawabtalsharq/Utils/validator_util.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bawabtalsharq/main.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,6 +19,11 @@ class _ChangePasswordState extends State<ChangePassword> {
   TextEditingController oldPasswordController = TextEditingController();
   TextEditingController newPasswordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+
+  String oldPasswordError;
+  String newPasswordError;
+  String confirmPasswordError;
+
   bool isLoading = false;
   bool obSecureText = true;
   ChangePasswordBloc _changePasswordBloc;
@@ -76,25 +82,53 @@ class _ChangePasswordState extends State<ChangePassword> {
                     height: 20,
                   ),
                   textFiledPrice(context, Languages.of(context).oldPassword, 1,
-                      isPassword: true, controller: oldPasswordController),
+                      isPassword: true,
+                      controller: oldPasswordController,
+                      errorMessage: oldPasswordError),
                   SizedBox(
                     height: 20,
                   ),
                   textFiledPrice(context, Languages.of(context).newPassword, 1,
-                      isPassword: true, controller: newPasswordController),
+                      isPassword: true,
+                      controller: newPasswordController,
+                      errorMessage: newPasswordError),
                   SizedBox(
                     height: 20,
                   ),
                   textFiledPrice(context, Languages.of(context).confirmPass, 1,
-                      isPassword: true, controller: confirmPasswordController),
+                      isPassword: true,
+                      controller: confirmPasswordController,
+                      errorMessage: confirmPasswordError),
                   SizedBox(
                     height: 100,
                   ),
                   signInFlatButton(context, MediaQuery.of(context).size.height,
                       Languages.of(context).saveChange, () {
                     FocusScope.of(context).unfocus();
-                    _changePasswordBloc.add(PasswordChangeEvent(
-                        '1', '1619614894', 'Bahaa1234', 'Bahaa12345'));
+                    confirmPasswordError = null;
+                    newPasswordError = null;
+                    oldPasswordError = null;
+                    setState(() {
+                      if (oldPasswordController.text.isEmpty)
+                        oldPasswordError = 'Empty Field';
+                      else if (newPasswordController.text.isEmpty)
+                        newPasswordError = 'Empty Field';
+                      else if (confirmPasswordController.text.isEmpty)
+                        confirmPasswordError = 'Empty Field';
+                      else if (!passwordValidator(
+                          newPasswordController.text.trim()))
+                        newPasswordError = 'Weak Password';
+                      else if (newPasswordController.text !=
+                          confirmPasswordController.text)
+                        confirmPasswordError = 'Different password';
+                      // else if (!passwordValidator(
+                      //     passwordController.text))
+                      //   _passwordErrorMessage = 'Weak Password';
+                      else {
+                        _changePasswordBloc.add(PasswordChangeEvent(
+                            '1', '1619614894', 'Bahaa1234', 'Bahaa12345'));
+                      }
+                    });
                   }, widthOfBtn: 1),
                 ],
               ),
