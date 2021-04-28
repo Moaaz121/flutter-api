@@ -1,5 +1,3 @@
-import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
-
 class APIS {
   static const String serverURL =
       "https://bawabtalsharq.com/api_1/api.php?api_action=";
@@ -8,6 +6,7 @@ class APIS {
 
 // Start Karem
   static const String HOME_API = 'get_home';
+  static const String SEND_MESSAGE_API = 'contact_us_message';
 // end karem
 
 // Start Asmaa
