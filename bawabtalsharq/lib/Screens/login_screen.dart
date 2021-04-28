@@ -354,7 +354,6 @@ class _LoginScreenState extends State<LoginScreen> {
         rocketUser = result;
         print(rocketUser.data.authToken);
         print(rocketUser.data.userId);
-        Navigator.pushReplacementNamed(context, ScreenRoutes.mainScreen);
       } else {
         print('error');
       }
