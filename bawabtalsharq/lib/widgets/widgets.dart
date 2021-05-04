@@ -1311,15 +1311,19 @@ Widget infoCartSupplier(
 
 Widget textFiledPrice(BuildContext context, String text, double width,
     {IconButton dropIcon,
+    TextEditingController controller,
     bool isPassword = false,
+    String errorMessage,
     TextInputType keyboardType = TextInputType.text}) {
   return SizedBox(
     width: MediaQuery.of(context).size.width * width,
     child: TextField(
+      controller: controller,
       keyboardType: keyboardType,
       obscureText: isPassword,
       cursorColor: Theme.of(context).bottomAppBarColor,
       decoration: InputDecoration(
+        errorText: errorMessage,
         suffixIcon: dropIcon,
         hintText: text,
         labelStyle: TextStyle(

@@ -2,7 +2,7 @@ class UserModel {
   int code;
   String status;
   String msg;
-  Data data;
+  User data;
 
   UserModel({this.code, this.status, this.msg, this.data});
 
@@ -10,7 +10,7 @@ class UserModel {
     code = json['code'];
     status = json['status'];
     msg = json['msg'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? new User.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -25,7 +25,7 @@ class UserModel {
   }
 }
 
-class Data {
+class User {
   String userId;
   String status;
   String userType;
@@ -36,7 +36,7 @@ class Data {
   String phone;
   String apiKey;
 
-  Data(
+  User(
       {this.userId,
       this.status,
       this.userType,
@@ -47,7 +47,7 @@ class Data {
       this.phone,
       this.apiKey});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  User.fromJson(Map<String, dynamic> json) {
     userId = json['user_id'];
     status = json['status'];
     userType = json['user_type'];
