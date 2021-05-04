@@ -1,13 +1,13 @@
 import 'dart:ui';
 
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
+import 'package:bawabtalsharq/Utils/map_util.dart';
+import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:bawabtalsharq/Utils/map_util.dart';
-import 'package:bawabtalsharq/Utils/styles.dart';
 
-Widget locationDialog(BuildContext context) {
+Widget locationDialog(BuildContext context, String location) {
   return Center(
     child: Container(
       height: 70,
@@ -26,7 +26,7 @@ Widget locationDialog(BuildContext context) {
                 width: 5,
               ),
               buildText(
-                Languages.of(context).address,
+                location,
                 12,
                 fontWeight: FontWeight.w600,
               ),

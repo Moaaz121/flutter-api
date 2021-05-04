@@ -700,7 +700,10 @@ RawMaterialButton iconRound(IconData icon) {
   );
 }
 
-void showAnimatedDialog(BuildContext context, dynamic widget) {
+void showAnimatedDialog(
+  BuildContext context,
+  dynamic widget,
+) {
   showGeneralDialog(
     barrierLabel: "Barrier",
     barrierDismissible: true,
