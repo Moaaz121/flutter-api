@@ -25,10 +25,15 @@ Widget locationDialog(BuildContext context, String location) {
               SizedBox(
                 width: 5,
               ),
-              buildText(
-                location,
-                12,
-                fontWeight: FontWeight.w600,
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 20),
+                  child: buildText(
+                    location,
+                    12,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
             ],
           ),
