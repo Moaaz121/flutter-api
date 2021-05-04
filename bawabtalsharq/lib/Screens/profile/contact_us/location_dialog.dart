@@ -26,8 +26,7 @@ Widget locationDialog(BuildContext context, String location) {
                 width: 5,
               ),
               Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 20),
+                child: Center(
                   child: buildText(
                     location,
                     12,
