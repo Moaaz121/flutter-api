@@ -18,22 +18,25 @@ Widget locationDialog(BuildContext context, String location) {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.location_on_rounded,
-                    size: 14,
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  buildText(
-                    location,
-                    12,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ],
+              child: Flexible(
+                child: Flex(
+                  direction: Axis.horizontal,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.location_on_rounded,
+                      size: 14,
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    buildText(
+                      location,
+                      12,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
