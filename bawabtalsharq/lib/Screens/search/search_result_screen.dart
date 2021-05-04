@@ -1,11 +1,12 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'dart:ui';
+
+import 'package:bawabtalsharq/Screens/search/search_sort_dialog.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
-import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:bawabtalsharq/main.dart';
-import 'package:bawabtalsharq/Screens/search/search_sort_dialog.dart';
+import 'package:bawabtalsharq/widgets/widgets.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class SearchResult extends StatefulWidget {
   @override

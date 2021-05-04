@@ -9,10 +9,12 @@ class ChangePassword extends StatefulWidget {
 }
 
 class _ChangePasswordState extends State<ChangePassword> {
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController usernameController = TextEditingController();
+  TextEditingController oldPasswordController = TextEditingController();
+  TextEditingController newPasswordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
   bool isLoading = false;
   bool obSecureText = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,18 +35,58 @@ class _ChangePasswordState extends State<ChangePassword> {
               SizedBox(
                 height: 20,
               ),
-              textFiledPrice(context, Languages.of(context).oldPassword, 1,
-                  isPassword: true),
+              textFiledPrice(
+                context,
+                Languages.of(context).oldPassword,
+                1,
+                isPassword: true,
+                // rightBtn: IconButton(
+                //   onPressed: () {
+                //     setState(() {
+                //       obSecureText = !obSecureText;
+                //     });
+                //   },
+                //   icon: Icon(
+                //       obSecureText ? Icons.visibility_off : Icons.visibility),
+                // ),
+              ),
               SizedBox(
                 height: 20,
               ),
-              textFiledPrice(context, Languages.of(context).newPassword, 1,
-                  isPassword: true),
+              textFiledPrice(
+                context,
+                Languages.of(context).newPassword,
+                1,
+                isPassword: true,
+                keyboardType: TextInputType.emailAddress,
+                // rightBtn: IconButton(
+                //   onPressed: () {
+                //     setState(() {
+                //       obSecureText = !obSecureText;
+                //     });
+                //   },
+                //   icon: Icon(
+                //       obSecureText ? Icons.visibility_off : Icons.visibility),
+                // ),
+              ),
               SizedBox(
                 height: 20,
               ),
-              textFiledPrice(context, Languages.of(context).confirmPass, 1,
-                  isPassword: true),
+              textFiledPrice(
+                context,
+                Languages.of(context).confirmPass,
+                1,
+                isPassword: true,
+                // rightBtn: IconButton(
+                //   onPressed: () {
+                //     setState(() {
+                //       obSecureText = !obSecureText;
+                //     });
+                //   },
+                //   icon: Icon(
+                //       obSecureText ? Icons.visibility_off : Icons.visibility),
+                // ),
+              ),
               SizedBox(
                 height: 100,
               ),
