@@ -1,6 +1,7 @@
 import 'dart:convert';
-import 'package:bawabtalsharq/Model/contactUs_model.dart';
+
 import 'package:bawabtalsharq/Model/base_model.dart';
+import 'package:bawabtalsharq/Model/contactUs_model.dart';
 import 'package:bawabtalsharq/Utils/apis.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:http/http.dart' as http;
@@ -23,7 +24,6 @@ class ContactRepo {
     var decodedResponse = json.decode(response.body);
     print('Contact response .. ${response.body}');
     BaseModel modelResponse = BaseModel.fromJson(decodedResponse);
-
     return modelResponse;
   }
 

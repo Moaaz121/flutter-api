@@ -7,11 +7,15 @@ import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/bloc/langBloc/lang_bloc.dart';
+import 'package:bawabtalsharq/bloc/langBloc/lang_event.dart';
+import 'package:bawabtalsharq/bloc/langBloc/lang_state.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Widgets {
@@ -689,60 +693,77 @@ Widget callInfo(
 // Start Bahaa
 void showLanguagesDialog(BuildContext context) {
   int selectedLanguageIndex = LanguageHelper.isEnglish ? 0 : 1;
+  LangBloc _bloc = LangBloc();
+  _bloc.add(GetLangData());
   showDialog(
     context: context,
     builder: (BuildContext context) {
       return Center(
-        child: Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20), color: Colors.white),
-          width: MediaQuery.of(context).size.width * 0.9,
-          child: ListView.separated(
-            shrinkWrap: true,
-            itemCount: languagesArr.length,
-            itemBuilder: (context, index) {
-              return GestureDetector(
-                onTap: () {
-                  LanguageHelper.changeLanguage(
-                      context, index == 0 ? 'en' : 'ar');
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  height: 60,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      SizedBox(
-                        width: 20,
+        child: BlocBuilder<LangBloc, LangState>(
+            bloc: _bloc,
+            builder: (context, state) {
+              if (state is LangLoadingState) {
+                return CircularProgressIndicator();
+              } else if (state is LangLoadedState &&
+                  state.langResponse != null) {
+                return Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white),
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    itemCount: state.langResponse.langData.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          LanguageHelper.changeLanguage(context,
+                              state.langResponse.langData[index].langCode);
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          height: 60,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Expanded(
+                                  child: buildText(
+                                      state.langResponse.langData[index].name,
+                                      15,
+                                      fontFamily: mediumFontFamily,
+                                      fontWeight: FontWeight.w600)),
+                              selectedLanguageIndex == index
+                                  ? Image.asset(
+                                      checkBox,
+                                      width: 40,
+                                      height: 40,
+                                    )
+                                  : Text(''),
+                              SizedBox(
+                                width: 10,
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) =>
+                        Padding(
+                      padding: const EdgeInsets.only(right: 20, left: 20),
+                      child: Divider(
+                        height: 1,
+                        thickness: 1,
                       ),
-                      Expanded(
-                          child: buildText(languagesArr[index], 15,
-                              fontFamily: mediumFontFamily,
-                              fontWeight: FontWeight.w600)),
-                      selectedLanguageIndex == index
-                          ? Image.asset(
-                              checkBox,
-                              width: 40,
-                              height: 40,
-                            )
-                          : Text(''),
-                      SizedBox(
-                        width: 10,
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-              );
-            },
-            separatorBuilder: (BuildContext context, int index) => Padding(
-              padding: const EdgeInsets.only(right: 20, left: 20),
-              child: Divider(
-                height: 1,
-                thickness: 1,
-              ),
-            ),
-          ),
-        ),
+                );
+              } else {
+                return CircularProgressIndicator();
+              }
+            }),
       );
     },
   );
