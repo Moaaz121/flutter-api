@@ -3,6 +3,8 @@ import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
+import '../../../main.dart';
+
 class MyAccount extends StatefulWidget {
   @override
   _MyAccountState createState() => _MyAccountState();
@@ -49,7 +51,7 @@ class _MyAccountState extends State<MyAccount> {
                 icon: Icons.people,
                 iconColor: Colors.blue,
                 onPress: () {
-                  // Navigator.pushNamed(context, ScreenRoutes.faqScreen);
+                  Navigator.pushNamed(context, ScreenRoutes.updateProfile);
                 }),
             accountCard(
                 text: Text(Languages.of(context).switchProfile),
@@ -61,7 +63,7 @@ class _MyAccountState extends State<MyAccount> {
                 icon: Icons.lock,
                 iconColor: Colors.deepPurpleAccent,
                 onPress: () {
-                  // Navigator.pushNamed(context, ScreenRoutes.c]);
+                  Navigator.pushNamed(context, ScreenRoutes.changePassword);
                 }),
           ],
         ),
@@ -93,6 +95,7 @@ class _MyAccountState extends State<MyAccount> {
             Icon(
               Icons.navigate_next,
             ),
+
             //Icon(Icons.ac_unit),
           ],
         ),

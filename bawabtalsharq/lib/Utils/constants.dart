@@ -85,6 +85,11 @@ class Constants {
 // end karem
 
 // Start Asmaa
+String audioCall = '--CALL';
+String videoCall = '--VIDEO';
+String closeMeet = '--close';
+String joinAudioMeet = '--JOIN-AUDIO';
+String joinVideoMeet = '--JOIN-VIDEO';
 
 // end Asmaa
 

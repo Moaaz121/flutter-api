@@ -1,10 +1,11 @@
 import 'dart:ui';
+
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
+import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
+import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
-import 'package:bawabtalsharq/Utils/styles.dart';
 
 enum ArrangeCharacter { ascending, descending }
 enum PopularityCharacter {
@@ -51,8 +52,17 @@ class _SortScreenState extends State<SortScreen> {
                   child: Padding(
                     padding: const EdgeInsets.only(
                         top: 30, left: 30, right: 30, bottom: 10),
-                    child: buildText(Languages.of(context).done, 14,
-                        color: defaultOrangeColor, fontWeight: FontWeight.bold),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: buildText(
+                        Languages.of(context).done,
+                        14,
+                        color: defaultOrangeColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
                 Padding(

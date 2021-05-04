@@ -41,5 +41,13 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+    <key>NSCameraUsageDescription</key>
+    <string>Bawbat Alsharq needs access to your camera for meetings.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Bawbat Alsharq needs access to your microphone for meetings.</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>Bawbat Alsharq needs access Photos to upload images</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Bawbat Alsharq needs access Photos to upload images</string>
 </dict>
 </plist>

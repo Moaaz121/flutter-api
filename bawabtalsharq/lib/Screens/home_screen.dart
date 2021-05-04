@@ -100,7 +100,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             Navigator.pushNamed(
                                 context, ScreenRoutes.searchScreen);
                           }),
-                          chatButton(() {})
+                          chatButton(() {
+                            Navigator.pushNamed(
+                                context, ScreenRoutes.chatsScreen);
+                          })
                         ],
                       ),
                     ),
@@ -798,126 +801,133 @@ Widget mostPopularCateg(
     String price,
     BuildContext context}) {
   return GestureDetector(
-      onTap: onPress,
-      child: Container(
-        child: Stack(
-            alignment: position == 2
-                ? AlignmentDirectional.topEnd
-                : (position == 1
-                    ? AlignmentDirectional.topCenter
-                    : AlignmentDirectional.topStart),
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: 5, bottom: 15, right: 5, top: 30),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(15),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 4,
-                          spreadRadius: 0.1,
-                          offset: Offset(1, 3))
-                    ],
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: Stack(
-                        alignment: position == 2
-                            ? AlignmentDirectional.centerEnd
-                            : (position == 1
-                                ? AlignmentDirectional.center
-                                : AlignmentDirectional.centerStart),
-                        children: [
-                          PositionedDirectional(
-                            top: -50,
-                            start: position == 2 ? -50 : null,
-                            end: position == 0 ? -50 : null,
-                            child: SizedBox(
-                                height: 115,
-                                width: 115,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      gradient: LinearGradient(
-                                          colors: [
-                                            backgroundColor.withOpacity(0.5),
-                                            backgroundColor.withOpacity(0.0)
-                                          ],
-                                          begin: position == 2
-                                              ? AlignmentDirectional.topStart
-                                              : (position == 1
-                                                  ? Alignment.topCenter
-                                                  : AlignmentDirectional
-                                                      .topEnd),
-                                          end: position == 2
-                                              ? AlignmentDirectional.bottomEnd
-                                              : (position == 1
-                                                  ? Alignment.bottomCenter
-                                                  : AlignmentDirectional
-                                                      .bottomStart),
-                                          tileMode: TileMode.clamp)),
-                                )),
-                          ),
-                        ]),
-                  ),
-                ),
-              ),
-              PositionedDirectional(
-                  top: 7,
-                  start: position == 2 ? -5 : null,
-                  end: position == 0 ? -5 : null,
-                  child: SizedBox(
-                    width: 70,
-                    height: 60,
-                    child: Image.network(productImg),
-                  )),
-              Padding(
-                padding:
-                    const EdgeInsetsDirectional.only(start: 12.0, top: 110.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      nameProduct,
-                      style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            child: Text(
-                              LanguageHelper.isEnglish ? '$price' : '$price',
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 10,
-                                  color: Colors.deepOrangeAccent),
-                            ),
-                          ),
-                          Icon(
-                            Icons.bookmark_border,
-                            size: MediaQuery.of(context).size.height * 0.020,
-                            color: Colors.black54,
-                          ),
-                        ],
-                      ),
-                    )
+    onTap: onPress,
+    child: Container(
+      child: Stack(
+          alignment: position == 2
+              ? AlignmentDirectional.topEnd
+              : (position == 1
+                  ? AlignmentDirectional.topCenter
+                  : AlignmentDirectional.topStart),
+          children: [
+            Padding(
+              padding:
+                  const EdgeInsets.only(left: 5, bottom: 15, right: 5, top: 30),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 4,
+                        spreadRadius: 0.1,
+                        offset: Offset(1, 3))
                   ],
                 ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: Stack(
+                      alignment: position == 2
+                          ? AlignmentDirectional.centerEnd
+                          : (position == 1
+                              ? AlignmentDirectional.center
+                              : AlignmentDirectional.centerStart),
+                      children: [
+                        PositionedDirectional(
+                          top: -50,
+                          start: position == 2 ? -50 : null,
+                          end: position == 0 ? -50 : null,
+                          child: SizedBox(
+                              height: 115,
+                              width: 115,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    gradient: LinearGradient(
+                                        colors: [
+                                          backgroundColor.withOpacity(0.5),
+                                          backgroundColor.withOpacity(0.0)
+                                        ],
+                                        begin: position == 2
+                                            ? AlignmentDirectional.topStart
+                                            : (position == 1
+                                                ? Alignment.topCenter
+                                                : AlignmentDirectional.topEnd),
+                                        end: position == 2
+                                            ? AlignmentDirectional.bottomEnd
+                                            : (position == 1
+                                                ? Alignment.bottomCenter
+                                                : AlignmentDirectional
+                                                    .bottomStart),
+                                        tileMode: TileMode.clamp)),
+                              )),
+                        ),
+                      ]),
+                ),
               ),
-            ]),
-      ));
+            ),
+            PositionedDirectional(
+                top: 7,
+                start: position == 2 ? -5 : null,
+                end: position == 0 ? -5 : null,
+                child: SizedBox(
+                  width: 70,
+                  height: 60,
+                  child: Image.network(productImg),
+                )),
+            Padding(
+              padding:
+                  const EdgeInsetsDirectional.only(start: 12.0, top: 110.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    nameProduct,
+                    style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          child: Text(
+                            LanguageHelper.isEnglish ? '$price' : '$price',
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 10,
+                                color: Colors.deepOrangeAccent),
+                          ),
+                        ),
+                        SizedBox(
+                          width:
+                              1.1 * MediaQuery.of(context).size.width * 0.020,
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Icon(
+                          Icons.bookmark_border,
+                          size: MediaQuery.of(context).size.height * 0.020,
+                          color: Colors.black54,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ]),
+    ),
+  );
 }

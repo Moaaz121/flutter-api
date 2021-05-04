@@ -40,9 +40,26 @@ dependencies:
   pin_code_fields:
   expansion_tile_card:
   line_icons:
-  flutter_html:
   url_launcher:
+  rocket_chat_connector_flutter:
+  bloc:
+  flutter_speed_dial_material_design: ^2.0.0
+  image_picker:
+  file_picker:
+  image_pickers: ^1.0.8+7
+  flutter_imagenetwork:
+  jitsi_meet:
+  #flutter_ringtone_player:
+  #audio_recorder:
+  path_provider: ^1.6.8
+  permission_handler: 5.0.0
+  flutter_sound: ^2.0.4
+  intl:
+  mime:
   auto_size_text: ^2.1.0
+  flutter_html:
+
+
 
 dev_dependencies:
   flutter_test:

@@ -35,8 +35,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarBuilder(
-        title: Languages.of(context).settings,
+      appBar: appBarBuilderWithWidget(
+        titleWidget: buildText(Languages.of(context).settings, 18.0,
+            fontFamily: boldFontFamily,
+            color: Colors.white,
+            fontWeight: FontWeight.bold),
         onBackPressed: () {
           Navigator.pop(context);
         },

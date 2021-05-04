@@ -16,6 +16,12 @@ abstract class Languages {
 // Start Asmaa
   String get allCategories;
   String get categories;
+  String get chats;
+  String get online;
+  String get meetingWith;
+  String get incomingCall;
+  String get incomingVideoCall;
+  String get calling;
 
 // end Asmaa
 
@@ -117,6 +123,8 @@ abstract class Languages {
   String get seller;
   String get both;
   String get fullName;
+  String get plan;
+  String get companySite;
   String get loginPass;
   String get confirmPass;
   String get companyName;
@@ -177,6 +185,7 @@ abstract class Languages {
   String get interesting;
   String get btnText;
   String get iconText;
+  String get skipTxt;
 // end Moaaz
 
 // Start Islam
@@ -207,6 +216,9 @@ abstract class Languages {
   String get memberSince;
   String get sportShoes;
   String get eslamAlaa;
+  String get firstName;
+  String get lasttNam;
+  String get birthDay;
 
 // end Islam
 }

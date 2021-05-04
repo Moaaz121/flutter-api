@@ -13,6 +13,12 @@ class LanguageAr extends Languages {
 
 // Start Asmaa
   String get allCategories => 'التصنيفات';
+  String get chats => 'الرسائل';
+  String get online => 'متصل';
+  String get meetingWith => 'اجتماع مع ';
+  String get incomingCall => 'مكالمة';
+  String get incomingVideoCall => 'مكالمة فيديو';
+  String get calling => 'calling';
   String get categories => 'التصنيفات';
 
 // end Asmaa
@@ -97,6 +103,9 @@ class LanguageAr extends Languages {
   String get subject => 'الموضوع';
   String get writeAMessage => 'اكتب رسالتك هنا';
 
+  String get plan => 'التخطيط';
+  String get companySite => 'مسار المنصة الالكترونيه';
+
   String get filter => 'فلتر';
   String get done => 'انتهى';
   String get category => 'الفئة';
@@ -161,6 +170,8 @@ class LanguageAr extends Languages {
   String get destination => 'وجهة';
 
   String get advanced => 'المتقدمة';
+
+  String get skipTxt => 'تخطي';
 
   String get details => 'تفاصيل';
 
@@ -247,6 +258,9 @@ class LanguageAr extends Languages {
   String get memberSince => 'عضو منذ: ٢٠٢٠ ';
   String get sportShoes => 'حذاء رياضي ';
   String get eslamAlaa => 'اسلام علاء ';
+  String get firstName => 'الاسم الاول ';
+  String get lasttNam => 'الاسم الاخير ';
+  String get birthDay => 'تاريخ الميلاد ';
 
 // end Islam
 

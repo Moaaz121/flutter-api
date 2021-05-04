@@ -1,12 +1,11 @@
+import 'package:bawabtalsharq/Model/privacy_model.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/bloc/profileBlocs/privacyBloc/privacy_bloc.dart';
-import 'package:bawabtalsharq/bloc/profileBlocs/privacyBloc/privacy_state.dart';
 import 'package:bawabtalsharq/bloc/profileBlocs/privacyBloc/privacy_event.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:bawabtalsharq/bloc/profileBlocs/privacyBloc/privacy_state.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:bawabtalsharq/Model/privacy_model.dart';
-import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 

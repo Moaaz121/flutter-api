@@ -125,7 +125,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           isLoading = false;
           if (state.userResponse.code == 200) {
             SchedulerBinding.instance.addPostFrameCallback((_) {
-              Navigator.pushNamed(context, ScreenRoutes.interestingScreen);
+              Navigator.pushReplacementNamed(
+                  context, ScreenRoutes.interestingScreen);
             });
           } else {
             SchedulerBinding.instance.addPostFrameCallback((_) {

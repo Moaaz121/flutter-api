@@ -85,9 +85,12 @@ class _AllCategoriesState extends State<AllCategories>
           }
           return Scaffold(
               backgroundColor: Colors.white,
-              appBar: appBarBuilder(
+              appBar: appBarBuilderWithWidget(
                 actions: [Container()],
-                title: _appBarTitle,
+                titleWidget: buildText(_appBarTitle, 18.0,
+                    fontFamily: boldFontFamily,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
                 onBackPressed: () {
                   Navigator.pop(context);
                 },

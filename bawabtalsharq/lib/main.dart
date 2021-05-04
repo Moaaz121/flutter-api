@@ -1,3 +1,4 @@
+import 'package:bawabtalsharq/Screens/Chat/chat_screen.dart';
 import 'package:bawabtalsharq/Screens/all_categories_screen.dart';
 import 'package:bawabtalsharq/Screens/forget_password/forget_password_screen.dart';
 import 'package:bawabtalsharq/Screens/forget_password/new_password_screen.dart';
@@ -26,6 +27,8 @@ import 'package:bawabtalsharq/Screens/sub_category_screen.dart';
 import 'package:bawabtalsharq/Screens/suppliers/golden_suppliers_screen.dart';
 import 'package:bawabtalsharq/Screens/suppliers/supplier_profile_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/AppLocalizationDelgate.dart';
+import 'package:bawabtalsharq/repo/contact_repo.dart';
+import 'package:bawabtalsharq/repo/update_profile_repo.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -35,15 +38,17 @@ import 'Screens/interesting_screen.dart';
 import 'Screens/main_srceen.dart';
 import 'Screens/notification_screen.dart';
 import 'Screens/profile/about_us/aboutUs_screen.dart';
+import 'Screens/profile/my_account/change_password_screen.dart';
+import 'Screens/profile/my_account/update_profile_screen.dart';
 import 'Screens/profile_screen.dart';
 import 'Screens/request_for_quatation_screen.dart';
 import 'Screens/request_for_qutation.dart';
 import 'Screens/search/color_filter_screen.dart';
 import 'Screens/search/list_filter_screen.dart';
 import 'Utils/Localization/LanguageHelper.dart';
+import 'package:bawabtalsharq/Model/user_model.dart';
 
 void main() {
-  //ProfileRepo.getLanguages();
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
@@ -76,7 +81,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.deepOrange),
-      home: MainScreen(),
+      home: SplashScreen(),
       routes: {
         ScreenRoutes.splashScreen: (_) => SplashScreen(),
         ScreenRoutes.introScreen: (_) => IntroScreen(),
@@ -112,7 +117,10 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.goldenSuppliers: (_) => GoldenSuppliers(),
         ScreenRoutes.pricing: (_) => PricingScreen(),
         ScreenRoutes.myAccount: (_) => MyAccount(),
+        ScreenRoutes.chatsScreen: (_) => ChatsScreen(),
         ScreenRoutes.aboutUs: (_) => AboutUsScreen(),
+        ScreenRoutes.updateProfile: (_) => UpdateProfile(),
+        ScreenRoutes.changePassword: (_) => ChangePassword(),
       },
       locale: _locale,
       supportedLocales: supportedLocales,
@@ -199,5 +207,9 @@ class ScreenRoutes {
   static const String goldenSuppliers = '/golden_suppliers_screen';
   static const String myAccount = '/my_account_screen';
   static const String pricing = '/pricing_screen';
+  static const String updateProfile = '/update_profile_screen';
+  static const String changePassword = '/change_password_screen';
+  static const String chatsScreen = '/chatsScreen';
+  static const String conversationScreen = '/conversation';
   static const String aboutUs = '/aboutUs_screen';
 }

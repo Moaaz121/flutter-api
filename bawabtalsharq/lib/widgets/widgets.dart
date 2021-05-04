@@ -7,11 +7,15 @@ import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/bloc/langBloc/lang_bloc.dart';
+import 'package:bawabtalsharq/bloc/langBloc/lang_event.dart';
+import 'package:bawabtalsharq/bloc/langBloc/lang_state.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Widgets {
@@ -524,6 +528,7 @@ Widget sliderIndicator(int page, {bool noPadding = false, int count = 4}) {
 // end karem
 
 // Start Asmaa
+
 AppBar appBarBuilder(
     {@required String title,
     @required Function onBackPressed,
@@ -543,6 +548,38 @@ AppBar appBarBuilder(
           fontFamily: boldFontFamily,
           color: Colors.white,
           fontWeight: FontWeight.bold),
+      leading: IconButton(
+        onPressed: onBackPressed,
+        icon: CircleAvatar(
+          radius: 12,
+          backgroundColor: Colors.white,
+          child: Icon(
+            LanguageHelper.isEnglish
+                ? Icons.keyboard_arrow_left_outlined
+                : Icons.keyboard_arrow_right_outlined,
+            size: 20,
+            color: defaultOrangeColor,
+          ),
+        ),
+      ));
+}
+
+AppBar appBarBuilderWithWidget(
+    {@required Widget titleWidget,
+    @required Function onBackPressed,
+    List<Widget> actions}) {
+  return AppBar(
+      centerTitle: true,
+      actions: actions,
+      toolbarHeight: 60.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(10),
+          bottomRight: Radius.circular(10),
+        ),
+      ),
+      backgroundColor: defaultOrangeColor,
+      title: titleWidget,
       leading: IconButton(
         onPressed: onBackPressed,
         icon: CircleAvatar(
@@ -621,65 +658,112 @@ Widget appBarSearchButton(Function onTap) {
     ),
   );
 }
+
+Widget callInfo(
+    BuildContext context, bool isVideo, String partnerName, bool isCaller) {
+  return Container(
+    margin: EdgeInsets.only(top: 100),
+    child: Column(
+      children: [
+        Center(
+          child: buildText(
+              isCaller
+                  ? Languages.of(context).calling
+                  : isVideo
+                      ? Languages.of(context).incomingVideoCall
+                      : Languages.of(context).incomingCall,
+              18.0,
+              color: Colors.black,
+              fontWeight: FontWeight.w500),
+        ),
+        SizedBox(
+          height: 50,
+        ),
+        Center(
+          child: buildText(partnerName, 30.0,
+              color: Colors.black, fontWeight: FontWeight.w800),
+        ),
+      ],
+    ),
+  );
+}
+
 // end Asmaa
 
 // Start Bahaa
 void showLanguagesDialog(BuildContext context) {
   int selectedLanguageIndex = LanguageHelper.isEnglish ? 0 : 1;
+  LangBloc _bloc = LangBloc();
+  _bloc.add(GetLangData());
   showDialog(
     context: context,
     builder: (BuildContext context) {
       return Center(
-        child: Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20), color: Colors.white),
-          width: MediaQuery.of(context).size.width * 0.9,
-          child: ListView.separated(
-            shrinkWrap: true,
-            itemCount: languagesArr.length,
-            itemBuilder: (context, index) {
-              return GestureDetector(
-                onTap: () {
-                  LanguageHelper.changeLanguage(
-                      context, index == 0 ? 'en' : 'ar');
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  height: 60,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      SizedBox(
-                        width: 20,
+        child: BlocBuilder<LangBloc, LangState>(
+            bloc: _bloc,
+            builder: (context, state) {
+              if (state is LangLoadingState) {
+                return CircularProgressIndicator();
+              } else if (state is LangLoadedState &&
+                  state.langResponse != null) {
+                return Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white),
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    itemCount: state.langResponse.langData.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          LanguageHelper.changeLanguage(context,
+                              state.langResponse.langData[index].langCode);
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          height: 60,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Expanded(
+                                  child: buildText(
+                                      state.langResponse.langData[index].name,
+                                      15,
+                                      fontFamily: mediumFontFamily,
+                                      fontWeight: FontWeight.w600)),
+                              selectedLanguageIndex == index
+                                  ? Image.asset(
+                                      checkBox,
+                                      width: 40,
+                                      height: 40,
+                                    )
+                                  : Text(''),
+                              SizedBox(
+                                width: 10,
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) =>
+                        Padding(
+                      padding: const EdgeInsets.only(right: 20, left: 20),
+                      child: Divider(
+                        height: 1,
+                        thickness: 1,
                       ),
-                      Expanded(
-                          child: buildText(languagesArr[index], 15,
-                              fontFamily: mediumFontFamily,
-                              fontWeight: FontWeight.w600)),
-                      selectedLanguageIndex == index
-                          ? Image.asset(
-                              checkBox,
-                              width: 40,
-                              height: 40,
-                            )
-                          : Text(''),
-                      SizedBox(
-                        width: 10,
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-              );
-            },
-            separatorBuilder: (BuildContext context, int index) => Padding(
-              padding: const EdgeInsets.only(right: 20, left: 20),
-              child: Divider(
-                height: 1,
-                thickness: 1,
-              ),
-            ),
-          ),
-        ),
+                );
+              } else {
+                return CircularProgressIndicator();
+              }
+            }),
       );
     },
   );
@@ -766,6 +850,7 @@ AppBar appBarSearch({
   @required BuildContext context,
 }) {
   return AppBar(
+    leading: SizedBox(),
     centerTitle: true,
     toolbarHeight: 60.0,
     shape: RoundedRectangleBorder(
@@ -976,72 +1061,31 @@ Widget productItemLandscape(BuildContext context) {
                     children: [
                       Container(
                         margin: EdgeInsetsDirectional.fromSTEB(20, 0, 5, 0),
-                        height: MediaQuery.of(context).size.height * 0.13,
+                        height: MediaQuery.of(context).size.height * 0.16,
                         width: MediaQuery.of(context).size.width * 0.35,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(10),
+                            bottomLeft: Radius.circular(16),
+                            bottomRight: Radius.circular(16),
                           ),
                           color: Color(0xfffff2e5),
                         ),
                       ),
                       SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            margin: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
-                            width: 28,
-                            height: 28,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                image: AssetImage(profile_image),
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              RichText(
-                                maxLines: 1,
-                                text: TextSpan(
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 9,
-                                        fontWeight: FontWeight.bold),
-                                    text: 'Bahaa Robert'),
-                              ),
-                              SizedBox(
-                                height: 1,
-                              ),
-                              RichText(
-                                maxLines: 1,
-                                text: TextSpan(
-                                    style: TextStyle(
-                                      color: Colors.grey[400],
-                                      fontSize: 9,
-                                    ),
-                                    text: 'Beauty \& Personal Care'),
-                              ),
-                            ],
-                          ),
-                        ],
+                        height: 8,
                       ),
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.only(
+                      top: 12,
+                      left: 10,
+                      right: 10,
+                      bottom: 20,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         RichText(
                           maxLines: 3,
@@ -1053,9 +1097,9 @@ Widget productItemLandscape(BuildContext context) {
                               ),
                               text: Languages.of(context).blueShoes),
                         ),
-                        SizedBox(
-                          height: 2,
-                        ),
+                        // SizedBox(
+                        //   height: MediaQuery.of(context).size.height * .02,
+                        // ),
                         RichText(
                           maxLines: 2,
                           text: TextSpan(
@@ -1066,30 +1110,43 @@ Widget productItemLandscape(BuildContext context) {
                               ),
                               text: Languages.of(context).shoesPrice),
                         ),
+                        // SizedBox(
+                        //   height: MediaQuery.of(context).size.height * .03,
+                        // ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              margin:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                              width: 20,
+                              height: 20,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image: AssetImage(profile_image),
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 4,
+                            ),
+                            RichText(
+                              maxLines: 1,
+                              text: TextSpan(
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 7,
+                                      fontWeight: FontWeight.w400),
+                                  text: 'Bahaa Robert'),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),
                 ],
-              ),
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 10, 0),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.add_to_photos_rounded,
-                      size: 18,
-                      color: Colors.black54,
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Icon(
-                      Icons.bookmark_border_outlined,
-                      size: 18,
-                      color: Colors.black54,
-                    ),
-                  ],
-                ),
               ),
             ],
           ),
@@ -1107,7 +1164,19 @@ Widget productItemLandscape(BuildContext context) {
           fit: BoxFit.fill,
           image: AssetImage(dress_image),
           width: MediaQuery.of(context).size.width * 0.15,
-          height: MediaQuery.of(context).size.height * 0.13,
+          height: MediaQuery.of(context).size.height * 0.16,
+        ),
+      ),
+      Positioned.directional(
+        textDirection: Directionality.of(context),
+        end: 20,
+        bottom: MediaQuery.of(context).size.height * 0.03,
+        child: Icon(
+          LanguageHelper.isEnglish
+              ? Icons.arrow_forward_rounded
+              : Icons.arrow_back_rounded,
+          size: 15,
+          color: Colors.black.withOpacity(0.7),
         ),
       ),
     ],
@@ -1170,7 +1239,7 @@ Widget infoCartSupplier(
               ),
               child: Padding(
                 padding: const EdgeInsetsDirectional.only(
-                    top: 10, start: 30, bottom: 10, end: 10),
+                    top: 10, start: 10, bottom: 10, end: 10),
                 child: Column(
                   children: [
                     buildText(name, 10.0,
@@ -1220,8 +1289,8 @@ Widget infoCartSupplier(
             ),
           ),
           Positioned(
-            top: 10,
-            left: 10,
+            top: 1,
+            left: 3,
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -1232,8 +1301,8 @@ Widget infoCartSupplier(
                 image: AssetImage(
                   medalImage,
                 ),
-                height: 45,
-                width: 45,
+                height: 40,
+                width: 40,
               ),
             ),
           ),
@@ -1245,15 +1314,19 @@ Widget infoCartSupplier(
 
 Widget textFiledPrice(BuildContext context, String text, double width,
     {IconButton dropIcon,
+    TextEditingController controller,
     bool isPassword = false,
+    String errorMessage,
     TextInputType keyboardType = TextInputType.text}) {
   return SizedBox(
     width: MediaQuery.of(context).size.width * width,
     child: TextField(
+      controller: controller,
       keyboardType: keyboardType,
       obscureText: isPassword,
       cursorColor: Theme.of(context).bottomAppBarColor,
       decoration: InputDecoration(
+        errorText: errorMessage,
         suffixIcon: dropIcon,
         hintText: text,
         labelStyle: TextStyle(

@@ -1,10 +1,9 @@
+import 'package:bawabtalsharq/Model/interest.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
+import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
+import 'package:bawabtalsharq/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:bawabtalsharq/main.dart';
-import 'package:bawabtalsharq/widgets/widgets.dart';
-import 'package:bawabtalsharq/Model/interest.dart';
-import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 
 class Interesting extends StatefulWidget {
   @override
@@ -43,9 +42,6 @@ class _InterestingState extends State<Interesting> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  backIconRounded(onBackPressed: () {
-                    Navigator.of(context).pop();
-                  }),
                   SizedBox(
                     height: 20,
                   ),
@@ -78,12 +74,20 @@ class _InterestingState extends State<Interesting> {
                               width: 60,
                               margin: EdgeInsets.all(10),
                               decoration: BoxDecoration(
-                                color: interestingArray[index].isSelected
-                                    ? interestingArray[index].color
-                                    : interestingArray[index]
-                                        .color
-                                        .withOpacity(0.15),
                                 borderRadius: BorderRadius.circular(10),
+                                border: interestingArray[index].isSelected
+                                    ? Border.all(
+                                        color:
+                                            interestingArray[index].isSelected
+                                                ? interestingArray[index].color
+                                                : interestingArray[index]
+                                                    .color
+                                                    .withOpacity(0.30),
+                                        width: 3)
+                                    : Border.all(color: Colors.transparent),
+                                color: interestingArray[index]
+                                    .color
+                                    .withOpacity(0.1),
                               ),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,

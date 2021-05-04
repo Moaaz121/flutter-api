@@ -21,8 +21,12 @@ class _RequestForQScreenState extends State<RequestForQScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarBuilder(
-          title: Languages.of(context).requestForQutation,
+      appBar: appBarBuilderWithWidget(
+          titleWidget: buildText(
+              Languages.of(context).requestForQuotation, 18.0,
+              fontFamily: boldFontFamily,
+              color: Colors.white,
+              fontWeight: FontWeight.bold),
           onBackPressed: () {
             Navigator.pop(context);
           }),
@@ -110,7 +114,7 @@ class _RequestForQScreenState extends State<RequestForQScreen> {
 
   Widget requestForQuotationSliderIndicator(int page) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 55),
+      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 55),
       child: AnimatedSmoothIndicator(
         activeIndex: page,
         count: 3,
