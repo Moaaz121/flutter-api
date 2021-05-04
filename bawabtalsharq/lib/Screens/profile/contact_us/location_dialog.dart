@@ -15,42 +15,42 @@ Widget locationDialog(BuildContext context, String location) {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.location_on_rounded,
-                size: 14,
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Expanded(
-                child: Center(
-                  child: buildText(
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.location_on_rounded,
+                    size: 14,
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  buildText(
                     location,
                     12,
                     fontWeight: FontWeight.w600,
                   ),
-                ),
+                ],
               ),
-            ],
+            ),
           ),
-          SizedBox(
-            height: 5,
-          ),
-          GestureDetector(
-            onTap: () {
-              MapUtils.openMap(
-                30.063216,
-                31.341721,
-              );
-            },
-            child: buildText(Languages.of(context).getLocation, 12,
-                color: orangeColor,
-                fontWeight: FontWeight.w600,
-                textDecoration: TextDecoration.underline,
-                decorationColor: orangeColor),
+          Expanded(
+            child: GestureDetector(
+              onTap: () {
+                MapUtils.openMap(
+                  30.063216,
+                  31.341721,
+                );
+              },
+              child: buildText(Languages.of(context).getLocation, 12,
+                  color: orangeColor,
+                  fontWeight: FontWeight.w600,
+                  textDecoration: TextDecoration.underline,
+                  decorationColor: orangeColor),
+            ),
           ),
         ],
       ),
