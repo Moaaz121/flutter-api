@@ -125,8 +125,14 @@ class _ChangePasswordState extends State<ChangePassword> {
                       //     passwordController.text))
                       //   _passwordErrorMessage = 'Weak Password';
                       else {
-                        _changePasswordBloc.add(PasswordChangeEvent(
-                            '1', '1619614894', 'Bahaa1234', 'Bahaa12345'));
+                        //get user information rather than static info
+                        _changePasswordBloc.add(
+                          PasswordChangeEvent(
+                              '1',
+                              '1619614894',
+                              oldPasswordController.text,
+                              newPasswordController.text),
+                        );
                       }
                     });
                   }, widthOfBtn: 1),

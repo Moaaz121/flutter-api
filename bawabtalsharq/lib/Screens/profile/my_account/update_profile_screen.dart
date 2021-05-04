@@ -3,8 +3,14 @@ import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
+import 'package:bawabtalsharq/bloc/updateProfileBlocs/updateAccount/update_account_bloc.dart';
+import 'package:bawabtalsharq/bloc/updateProfileBlocs/updateAccount/update_account_event.dart';
+import 'package:bawabtalsharq/bloc/updateProfileBlocs/updateAccount/update_account_state.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:bawabtalsharq/main.dart';
+import 'package:flutter/scheduler.dart';
 
 class UpdateProfile extends StatefulWidget {
   @override
@@ -12,7 +18,22 @@ class UpdateProfile extends StatefulWidget {
 }
 
 class _UpdateProfileState extends State<UpdateProfile> {
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
   DateTime _selectedDateTime;
+
+  String firstNameError;
+  String lastNameError;
+  bool isLoading = false;
+
+  UpdateAccountBloc _updateAccountBloc;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _updateAccountBloc = UpdateAccountBloc();
+    super.initState();
+  }
 
   // Future _selectDate() async {
   //   DateTime picked = await showDatePicker(
@@ -22,7 +43,6 @@ class _UpdateProfileState extends State<UpdateProfile> {
   //       lastDate: new DateTime(2019));
   //   if (picked != null) setState(() => _value = picked.toString());
   // }
-
   @override
   Widget build(BuildContext context) {
     // final String formattedDate = DateFormat.yMd().format(_selectedDateTime);
@@ -89,11 +109,15 @@ class _UpdateProfileState extends State<UpdateProfile> {
                     SizedBox(
                       height: 30,
                     ),
-                    textFiledPrice(context, Languages.of(context).firstName, 1),
+                    textFiledPrice(context, Languages.of(context).firstName, 1,
+                        errorMessage: firstNameError,
+                        controller: firstNameController),
                     SizedBox(
                       height: 30,
                     ),
-                    textFiledPrice(context, Languages.of(context).lasttNam, 1),
+                    textFiledPrice(context, Languages.of(context).lasttNam, 1,
+                        errorMessage: lastNameError,
+                        controller: lastNameController),
                     SizedBox(
                       height: 30,
                     ),
@@ -118,12 +142,59 @@ class _UpdateProfileState extends State<UpdateProfile> {
                     SizedBox(
                       height: 30,
                     ),
-                    signInFlatButton(
-                        context,
-                        MediaQuery.of(context).size.height,
-                        Languages.of(context).saveChange,
-                        () {},
-                        widthOfBtn: 1),
+                    BlocBuilder<UpdateAccountBloc, UpdateAccountState>(
+                      bloc: _updateAccountBloc,
+                      builder: (context, state) {
+                        if (state is UpdateAccountLoadingState) {
+                          if (!isLoading) {
+                            showLoadingDialog(context);
+                            isLoading = true;
+                          }
+                        } else if (state is UpdateAccountLoadedState) {
+                          print('loaded');
+                          _updateAccountBloc.add(ResetState());
+                          isLoading = false;
+                          if (state.response.code == 200) {
+                            SchedulerBinding.instance.addPostFrameCallback((_) {
+                              Navigator.pushReplacementNamed(
+                                  context, ScreenRoutes.mainScreen);
+                            });
+                            Scaffold.of(context).showSnackBar(
+                                SnackBar(content: Text(state.response.msg)));
+                          } else {
+                            SchedulerBinding.instance.addPostFrameCallback((_) {
+                              Scaffold.of(context).showSnackBar(
+                                  SnackBar(content: Text(state.response.msg)));
+                            });
+                            Navigator.pop(context);
+                          }
+                        }
+                        return signInFlatButton(
+                            context,
+                            MediaQuery.of(context).size.height,
+                            Languages.of(context).saveChange, () {
+                          FocusScope.of(context).unfocus();
+                          firstNameError = null;
+                          lastNameError = null;
+                          setState(() {
+                            if (firstNameController.text.isEmpty)
+                              firstNameError = 'Empty Field';
+                            else if (lastNameController.text.isEmpty)
+                              lastNameError = 'Empty Field';
+                            else {
+                              //get user information rather than static info
+                              _updateAccountBloc.add(
+                                UpdateEvent(
+                                    '1',
+                                    '1619614894',
+                                    firstNameController.text,
+                                    lastNameController.text),
+                              );
+                            }
+                          });
+                        }, widthOfBtn: 1);
+                      },
+                    )
                   ])),
         ));
   }

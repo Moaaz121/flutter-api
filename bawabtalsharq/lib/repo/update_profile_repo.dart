@@ -23,4 +23,23 @@ class UpdateProfileRepo {
 
     return modelResponse;
   }
+
+  Future<BaseModel> updateAccount(
+      String userId, String apiKey, String firstName, String lastName) async {
+    Map<String, dynamic> params = {
+      "user_id": userId,
+      "ApiKey": apiKey,
+      "firstname": firstName,
+      "lastname": lastName,
+    };
+    var response = await http.post(
+      Uri.encodeFull(APIS.serverURL + APIS.UPDATE_ACCOUNT_API),
+      body: params,
+    );
+    var decodedResponse = json.decode(response.body);
+    print('Update Profile response .. ${response.body}');
+    BaseModel modelResponse = BaseModel.fromJson(decodedResponse);
+
+    return modelResponse;
+  }
 }
