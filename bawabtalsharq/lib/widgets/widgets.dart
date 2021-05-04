@@ -993,45 +993,48 @@ Widget productItemLandscape(
                       padding: const EdgeInsets.only(
                         top: 12,
                         left: 10,
-                        right: 10,
-                        bottom: 20,
+                        right: 15,
+                        bottom: 18,
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Expanded(
-                            child: RichText(
-                              maxLines: 3,
-                              overflow: TextOverflow.ellipsis,
-                              text: TextSpan(
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                    fontSize: 12,
-                                  ),
-                                  text: ('cxccdcvddchfc ')),
-                              // Languages.of(context).blueShoes),
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                left: 2,
+                                right: 18,
+                              ),
+                              child: RichText(
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,
+                                text: TextSpan(
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      fontSize: 12,
+                                    ),
+                                    text:
+                                        ('cxccdcvdjjjjdchfcbjjbhjgkjbhbjgkjkkkkjjnjbhbhjkvgghhdbcdhbh ')),
+                                // Languages.of(context).blueShoes),
+                              ),
                             ),
                           ),
                           // SizedBox(
-                          //   height: height * .01,
+                          //   height: height * .03,
                           // ),
 
-                          Expanded(
-                            child: RichText(
-                              maxLines: 2,
-                              text: TextSpan(
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: orangeColor,
-                                    fontSize: 12,
-                                  ),
-                                  text: Languages.of(context).shoesPrice),
-                            ),
+                          RichText(
+                            maxLines: 2,
+                            text: TextSpan(
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: orangeColor,
+                                  fontSize: 12,
+                                ),
+                                text: Languages.of(context).shoesPrice),
                           ),
-                          // SizedBox(
-                          //   height: MediaQuery.of(context).size.height * .03,
-                          // ),
+
                           Expanded(
                             child: Row(
                               children: [

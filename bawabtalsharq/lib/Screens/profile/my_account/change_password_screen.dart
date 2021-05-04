@@ -12,8 +12,9 @@ class _ChangePasswordState extends State<ChangePassword> {
   TextEditingController oldPasswordController = TextEditingController();
   TextEditingController newPasswordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
-  bool isLoading = false;
   bool obSecureText = true;
+  bool newSecureText = true;
+  bool confirmSecureText = true;
 
   @override
   Widget build(BuildContext context) {
@@ -39,16 +40,17 @@ class _ChangePasswordState extends State<ChangePassword> {
                 context,
                 Languages.of(context).oldPassword,
                 1,
-                isPassword: true,
-                // rightBtn: IconButton(
-                //   onPressed: () {
-                //     setState(() {
-                //       obSecureText = !obSecureText;
-                //     });
-                //   },
-                //   icon: Icon(
-                //       obSecureText ? Icons.visibility_off : Icons.visibility),
-                // ),
+                controller: oldPasswordController,
+                isPassword: obSecureText,
+                rightBtn: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      obSecureText = !obSecureText;
+                    });
+                  },
+                  icon: Icon(
+                      obSecureText ? Icons.visibility_off : Icons.visibility),
+                ),
               ),
               SizedBox(
                 height: 20,
@@ -57,17 +59,18 @@ class _ChangePasswordState extends State<ChangePassword> {
                 context,
                 Languages.of(context).newPassword,
                 1,
-                isPassword: true,
+                controller: newPasswordController,
+                isPassword: newSecureText,
                 keyboardType: TextInputType.emailAddress,
-                // rightBtn: IconButton(
-                //   onPressed: () {
-                //     setState(() {
-                //       obSecureText = !obSecureText;
-                //     });
-                //   },
-                //   icon: Icon(
-                //       obSecureText ? Icons.visibility_off : Icons.visibility),
-                // ),
+                rightBtn: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      newSecureText = !newSecureText;
+                    });
+                  },
+                  icon: Icon(
+                      newSecureText ? Icons.visibility_off : Icons.visibility),
+                ),
               ),
               SizedBox(
                 height: 20,
@@ -76,16 +79,18 @@ class _ChangePasswordState extends State<ChangePassword> {
                 context,
                 Languages.of(context).confirmPass,
                 1,
-                isPassword: true,
-                // rightBtn: IconButton(
-                //   onPressed: () {
-                //     setState(() {
-                //       obSecureText = !obSecureText;
-                //     });
-                //   },
-                //   icon: Icon(
-                //       obSecureText ? Icons.visibility_off : Icons.visibility),
-                // ),
+                controller: confirmPasswordController,
+                isPassword: confirmSecureText,
+                rightBtn: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      confirmSecureText = !confirmSecureText;
+                    });
+                  },
+                  icon: Icon(confirmSecureText
+                      ? Icons.visibility_off
+                      : Icons.visibility),
+                ),
               ),
               SizedBox(
                 height: 100,
