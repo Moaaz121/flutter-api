@@ -7,6 +7,7 @@ class APIS {
 // Start Karem
   static const String HOME_API = 'get_home';
   static const String SEND_MESSAGE_API = 'contact_us_message';
+  static const String SEARCH_API = 'search';
 // end karem
 
 // Start Asmaa

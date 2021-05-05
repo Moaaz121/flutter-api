@@ -1,8 +1,8 @@
+import 'package:bawabtalsharq/Screens/search/search_result_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
-import 'package:bawabtalsharq/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -13,6 +13,7 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  TextEditingController _searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -191,33 +192,39 @@ class _SearchScreenState extends State<SearchScreen> {
       ),
     );
   }
-}
 
-Widget buildTextField({String hint, BuildContext context}) {
-  return Container(
-    width: MediaQuery.of(context).size.width * 0.7,
-    height: MediaQuery.of(context).size.width * 0.09,
-    decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(11), color: Colors.grey[100]),
-    child: Center(
-      child: TextField(
-        onSubmitted: (value) {
-          Navigator.pushNamed(context, ScreenRoutes.searchResultScreen);
-        },
-        keyboardType: TextInputType.text,
-        autocorrect: true,
-        cursorRadius: Radius.circular(50),
-        decoration: InputDecoration(
-          fillColor: Colors.transparent,
-          focusedBorder: InputBorder.none,
-          enabledBorder: InputBorder.none,
-          errorBorder: InputBorder.none,
-          disabledBorder: InputBorder.none,
-          hintText: hint,
-          hintStyle: TextStyle(color: Colors.black12),
-          filled: true,
+  Widget buildTextField({String hint, BuildContext context}) {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.7,
+      height: MediaQuery.of(context).size.width * 0.09,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(11), color: Colors.grey[100]),
+      child: Center(
+        child: TextField(
+          onSubmitted: (value) {
+            Navigator.push(
+                context,
+                new MaterialPageRoute(
+                  builder: (BuildContext context) => new SearchResult(
+                    q: _searchController.text,
+                  ),
+                ));
+          },
+          keyboardType: TextInputType.text,
+          autocorrect: true,
+          cursorRadius: Radius.circular(50),
+          decoration: InputDecoration(
+            fillColor: Colors.transparent,
+            focusedBorder: InputBorder.none,
+            enabledBorder: InputBorder.none,
+            errorBorder: InputBorder.none,
+            disabledBorder: InputBorder.none,
+            hintText: hint,
+            hintStyle: TextStyle(color: Colors.black12),
+            filled: true,
+          ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }

@@ -868,7 +868,10 @@ AppBar appBarSearch({
   );
 }
 
-Widget productItem(BuildContext context, {bool fillSaved = false}) {
+Widget productItem(
+  BuildContext context, {
+  bool fillSaved = false,
+}) {
   return Padding(
     padding: const EdgeInsets.all(5),
     child: Stack(
