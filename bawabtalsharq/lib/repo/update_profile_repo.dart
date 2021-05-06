@@ -42,4 +42,19 @@ class UpdateProfileRepo {
 
     return modelResponse;
   }
+
+  Future<String> refreshKey(String userId, String apiKey) async {
+    Map<String, dynamic> params = {
+      "user_id": userId,
+      "ApiKey": apiKey,
+    };
+    var response = await http.post(
+      Uri.encodeFull(APIS.serverURL + APIS.REFRESH_KEY_API),
+      body: params,
+    );
+    var decodedResponse = json.decode(response.body);
+    String userKey = UserModel.fromJson(decodedResponse).data.apiKey;
+
+    return userKey;
+  }
 }
