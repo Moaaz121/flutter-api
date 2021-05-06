@@ -1037,32 +1037,33 @@ Widget productItem(BuildContext context, {bool fillSaved = false}) {
   );
 }
 
-Widget productItemLandscape(BuildContext context) {
+Widget productItemLandscape(
+  BuildContext context,
+) {
+  double height = MediaQuery.of(context).size.height;
+  double width = MediaQuery.of(context).size.width;
   return Stack(
     overflow: Overflow.visible,
     children: [
       Container(
         margin: EdgeInsets.all(10),
-        height: MediaQuery.of(context).size.height * 0.2,
+        height: height * 0.2,
         decoration: BoxDecoration(
             boxShadow: [makeShadow()],
             borderRadius: BorderRadius.circular(20),
             color: Colors.white),
-        child: Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Row(
                 children: [
                   Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
                         margin: EdgeInsetsDirectional.fromSTEB(20, 0, 5, 0),
-                        height: MediaQuery.of(context).size.height * 0.16,
-                        width: MediaQuery.of(context).size.width * 0.35,
+                        height: height * 0.16,
+                        width: width * 0.35,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(16),
@@ -1076,106 +1077,127 @@ Widget productItemLandscape(BuildContext context) {
                       ),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 12,
-                      left: 10,
-                      right: 10,
-                      bottom: 20,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        RichText(
-                          maxLines: 3,
-                          text: TextSpan(
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                fontSize: 12,
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        top: 12,
+                        left: 10,
+                        right: 15,
+                        bottom: 18,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                left: 2,
+                                right: 18,
                               ),
-                              text: Languages.of(context).blueShoes),
-                        ),
-                        // SizedBox(
-                        //   height: MediaQuery.of(context).size.height * .02,
-                        // ),
-                        RichText(
-                          maxLines: 2,
-                          text: TextSpan(
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: orangeColor,
-                                fontSize: 12,
-                              ),
-                              text: Languages.of(context).shoesPrice),
-                        ),
-                        // SizedBox(
-                        //   height: MediaQuery.of(context).size.height * .03,
-                        // ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              margin:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                              width: 20,
-                              height: 20,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  image: AssetImage(profile_image),
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 4,
-                            ),
-                            RichText(
-                              maxLines: 1,
-                              text: TextSpan(
-                                  style: TextStyle(
+                              child: RichText(
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,
+                                text: TextSpan(
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
                                       color: Colors.black,
-                                      fontSize: 7,
-                                      fontWeight: FontWeight.w400),
-                                  text: 'Bahaa Robert'),
+                                      fontSize: 12,
+                                    ),
+                                    text:
+                                        ('cxccdcvdjjjjdchfcbjjbhjgkjbhbjgkjkkkkjjnjbhbhjkvgghhdbcdhbh ')),
+                                // Languages.of(context).blueShoes),
+                              ),
                             ),
-                          ],
-                        ),
-                      ],
+                          ),
+                          // SizedBox(
+                          //   height: height * .03,
+                          // ),
+
+                          RichText(
+                            maxLines: 2,
+                            text: TextSpan(
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: orangeColor,
+                                  fontSize: 12,
+                                ),
+                                text: Languages.of(context).shoesPrice),
+                          ),
+
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Container(
+                                  margin: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 0),
+                                  width: 20,
+                                  height: 20,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      image: AssetImage(profile_image),
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 4,
+                                ),
+                                RichText(
+                                  maxLines: 1,
+                                  text: TextSpan(
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 7,
+                                          fontWeight: FontWeight.w400),
+                                      text: 'Bahaa Robert'),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
       Positioned(
         top: 2,
-        left: LanguageHelper.isEnglish
-            ? MediaQuery.of(context).size.width * 0.18
-            : null,
-        right: LanguageHelper.isEnglish
-            ? null
-            : MediaQuery.of(context).size.width * 0.18,
+        left: LanguageHelper.isEnglish ? width * 0.15 : null,
+        right: LanguageHelper.isEnglish ? null : width * 0.18,
         child: Image(
           fit: BoxFit.fill,
           image: AssetImage(dress_image),
-          width: MediaQuery.of(context).size.width * 0.15,
-          height: MediaQuery.of(context).size.height * 0.16,
+          width: width * 0.17,
+          height: height * 0.16,
         ),
       ),
       Positioned.directional(
+          textDirection: Directionality.of(context),
+          top: height * -.11,
+          end: width * .05,
+          bottom: height * 0.03,
+          child: Icon(
+            LanguageHelper.isEnglish
+                ? Icons.bookmark_border
+                : Icons.bookmark_border,
+            size: 25,
+            color: Colors.black.withOpacity(0.7),
+          )),
+      Positioned.directional(
         textDirection: Directionality.of(context),
-        end: 20,
-        bottom: MediaQuery.of(context).size.height * 0.03,
+        top: height * -.11,
+        end: width * .05,
+        bottom: height * 0.03,
         child: Icon(
           LanguageHelper.isEnglish
-              ? Icons.arrow_forward_rounded
-              : Icons.arrow_back_rounded,
-          size: 15,
+              ? Icons.bookmark_border
+              : Icons.bookmark_border,
+          size: 25,
           color: Colors.black.withOpacity(0.7),
         ),
       ),
