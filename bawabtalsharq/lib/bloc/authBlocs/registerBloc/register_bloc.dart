@@ -13,7 +13,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       yield RegisterLoadingState();
       var response = await AuthRepo().doRegister(
           event.phone, event.email, event.password, event.name, event.userType);
-
+      var phoneAuth = await AuthRepo().verifyPhone(event.phone);
       yield RegisterLoadedState(userResponse: response);
     } else if (event is ResetState) {
       yield RegisterInitial();

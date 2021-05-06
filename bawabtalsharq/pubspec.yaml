@@ -58,6 +58,8 @@ dependencies:
   mime:
   auto_size_text: ^2.1.0
   flutter_html:
+  firebase_core: 
+  firebase_auth:
 
 
 

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:bawabtalsharq/Model/user_model.dart';
 import 'package:bawabtalsharq/Utils/apis.dart';
 import 'package:http/http.dart' as http;
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthRepo {
   Future<UserModel> doLogin(String email, String password) async {
@@ -44,5 +45,44 @@ class AuthRepo {
     print('login response .. ${response.body}');
     UserModel modelResponse = UserModel.fromJson(decodedResponse);
     return modelResponse;
+  }
+
+  Future<Map<String, dynamic>> verifyPhone(phone) async {
+    String verficationId;
+    bool codeSent = false;
+
+    final PhoneCodeAutoRetrievalTimeout autoRetrieve = (String verId) {
+      verficationId = verId;
+    };
+    final PhoneCodeSent smsCodeSent = (String verId, [int forceCodeResend]) {
+      verficationId = verId;
+      codeSent = true;
+    };
+    final PhoneVerificationCompleted verifiedSuccess =
+        (AuthCredential authResult) {
+      // AuthService().signIn(authResult);
+      print('verfied');
+    };
+
+    final PhoneVerificationFailed verifiedFailed =
+        (FirebaseAuthException authException) {
+      print('Error ${authException.message}');
+    };
+
+    await FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber: phone,
+      codeSent: smsCodeSent,
+      codeAutoRetrievalTimeout: autoRetrieve,
+      timeout: const Duration(seconds: 5),
+      verificationCompleted: verifiedSuccess,
+      verificationFailed: verifiedFailed,
+    );
+    return {'verficationId': verficationId, 'codeSent': codeSent};
+  }
+
+  signInWithOTP(smsCode, verId) {
+    AuthCredential authCreds =
+        PhoneAuthProvider.credential(smsCode: smsCode, verificationId: verId);
+    FirebaseAuth.instance.signInWithCredential(authCreds);
   }
 }
