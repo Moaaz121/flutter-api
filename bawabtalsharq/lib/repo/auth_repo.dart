@@ -5,22 +5,19 @@ import 'package:bawabtalsharq/Utils/apis.dart';
 import 'package:http/http.dart' as http;
 
 class AuthRepo {
+  // start Bahaa //
   Future<UserModel> doLogin(String email, String password) async {
     Map<String, dynamic> params = {"email": email, "password": password};
     var response = await http.post(
       Uri.encodeFull(APIS.serverURL + APIS.LOGIN_API),
       body: params,
     );
-    var decodedResponse = json.decode(response.body);
-    print('login response .. ${response.body}');
+    if (response.statusCode == 200) {
+      var decodedResponse = json.decode(response.body);
+      UserModel modelResponse = UserModel.fromJson(decodedResponse);
 
-    // SharedPreferences prefs = await SharedPreferences.getInstance();
-    // prefs.setString('mobileNumber', mobileNumber);
-    // prefs.setString('password', password);
-
-    UserModel modelResponse = UserModel.fromJson(decodedResponse);
-
-    return modelResponse;
+      return modelResponse;
+    }
   }
 
   Future<UserModel> doRegister(String phone, String email, String password,
@@ -45,4 +42,9 @@ class AuthRepo {
     UserModel modelResponse = UserModel.fromJson(decodedResponse);
     return modelResponse;
   }
+// End Bahaa //
+
+// Start Asmaa //
+
+// End Asmaa //
 }

@@ -39,6 +39,7 @@ dependencies:
   flutter_dropdown: ^0.0.8
   pin_code_fields:
   expansion_tile_card:
+  shared_preferences:
   line_icons:
   url_launcher:
   rocket_chat_connector_flutter:
