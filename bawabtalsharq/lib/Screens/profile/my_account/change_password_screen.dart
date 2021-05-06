@@ -4,6 +4,8 @@ import 'package:bawabtalsharq/bloc/updateProfileBlocs/changePassword/change_pass
 import 'package:bawabtalsharq/bloc/updateProfileBlocs/changePassword/change_password_event.dart';
 import 'package:bawabtalsharq/bloc/updateProfileBlocs/changePassword/change_password_state.dart';
 import 'package:bawabtalsharq/Utils/validator_util.dart';
+import 'package:bawabtalsharq/Utils/constants.dart';
+import 'package:bawabtalsharq/Model/user_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bawabtalsharq/main.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,6 +22,8 @@ class _ChangePasswordState extends State<ChangePassword> {
   TextEditingController newPasswordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
+  User _currentUser;
+
   String oldPasswordError;
   String newPasswordError;
   String confirmPasswordError;
@@ -31,6 +35,7 @@ class _ChangePasswordState extends State<ChangePassword> {
   @override
   void initState() {
     _changePasswordBloc = ChangePasswordBloc();
+    Constants.getUserInfo().then((value) => _currentUser = value.data);
     super.initState();
   }
 
@@ -128,8 +133,8 @@ class _ChangePasswordState extends State<ChangePassword> {
                         //get user information rather than static info
                         _changePasswordBloc.add(
                           PasswordChangeEvent(
-                              '1',
-                              '1619614894',
+                              _currentUser.userId,
+                              _currentUser.apiKey,
                               oldPasswordController.text,
                               newPasswordController.text),
                         );
