@@ -33,6 +33,7 @@ class APIS {
 
 // Start Mosdik
   static const String Category_API = "get_categories&lang=";
+  static const String Superior_API = "superior_suppliers&lang=";
 
 // end Mosdik
 
