@@ -24,25 +24,27 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 physics: BouncingScrollPhysics(
                   parent: NeverScrollableScrollPhysics(),
                 ),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: EdgeInsetsDirectional.only(start: 15),
-                        child: buildText(
-                          Languages.of(context).notification,
-                          35.0,
-                          fontWeight: FontWeight.bold,
-                          color: orangeColor,
+                child: Center(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: EdgeInsetsDirectional.only(start: 15),
+                          child: buildText(
+                            Languages.of(context).notification,
+                            35.0,
+                            fontWeight: FontWeight.bold,
+                            color: orangeColor,
+                          ),
                         ),
-                      ),
-                      notification(context),
-                    ]),
+                        notification(context),
+                      ]),
+                ),
               ),
               Positioned.directional(
                 textDirection: Directionality.of(context),
                 end: 20,
-                bottom: MediaQuery.of(context).size.height * 0.15,
+                bottom: MediaQuery.of(context).size.height * 0.14,
                 child: buildFloatingActionBtn(
                   icon: Icons.arrow_upward,
                   onPressed: () {
