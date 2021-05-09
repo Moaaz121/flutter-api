@@ -29,6 +29,7 @@ class APIS {
   static const String CHANGE_PASSWORD_API = "change_password";
   static const String UPDATE_ACCOUNT_API = "update_account";
   static const String REFRESH_KEY_API = "refresh_token";
+  static const String History_API = "history";
 // end Bahaa
 
 // Start Mosdik

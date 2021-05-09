@@ -17,6 +17,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:bawabtalsharq/Model/history_model.dart';
 
 class Widgets {
   call() {}
@@ -1037,9 +1038,8 @@ Widget productItem(BuildContext context, {bool fillSaved = false}) {
   );
 }
 
-Widget productItemLandscape(
-  BuildContext context,
-) {
+Widget productItemLandscape(BuildContext context,
+    {List<Product> products, int index}) {
   double height = MediaQuery.of(context).size.height;
   double width = MediaQuery.of(context).size.width;
   return Stack(
@@ -1103,8 +1103,7 @@ Widget productItemLandscape(
                                       color: Colors.black,
                                       fontSize: 12,
                                     ),
-                                    text:
-                                        ('cxccdcvdjjjjdchfcbjjbhjgkjbhbjgkjkkkkjjnjbhbhjkvgghhdbcdhbh ')),
+                                    text: (products[index].product)),
                                 // Languages.of(context).blueShoes),
                               ),
                             ),
@@ -1121,7 +1120,7 @@ Widget productItemLandscape(
                                   color: orangeColor,
                                   fontSize: 12,
                                 ),
-                                text: Languages.of(context).shoesPrice),
+                                text: products[index].price + ' EGP'),
                           ),
 
                           Expanded(
@@ -1171,7 +1170,7 @@ Widget productItemLandscape(
         right: LanguageHelper.isEnglish ? null : width * 0.18,
         child: Image(
           fit: BoxFit.fill,
-          image: AssetImage(dress_image),
+          image: NetworkImage(products[index].imagePath),
           width: width * 0.17,
           height: height * 0.16,
         ),
