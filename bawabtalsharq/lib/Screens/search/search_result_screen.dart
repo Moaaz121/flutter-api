@@ -12,9 +12,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SearchResult extends StatefulWidget {
-  final q;
+  final String q;
+  final List<String> Categories;
 
-  const SearchResult({Key key, this.q}) : super(key: key);
+  const SearchResult({Key key, this.q, this.Categories}) : super(key: key);
   @override
   _SearchResultState createState() => _SearchResultState();
 }
@@ -30,7 +31,8 @@ class _SearchResultState extends State<SearchResult> {
   void initState() {
     selections = [true, false];
     _bloc = new SearchBloc();
-    _bloc.add(DoSearchEvent(widget.q, page: '0'));
+    _bloc
+        .add(DoSearchEvent(widget.q, page: '0', categories: widget.Categories));
     super.initState();
   }
 
@@ -200,7 +202,9 @@ class _SearchResultState extends State<SearchResult> {
                                     Navigator.pushNamed(context,
                                         ScreenRoutes.individualProduct);
                                   },
-                                  child: productItem(context),
+                                  child: productItem(context,
+                                      datum:
+                                          event.searchResponse.data[position]),
                                 );
                               },
                             ),
@@ -213,7 +217,9 @@ class _SearchResultState extends State<SearchResult> {
                               itemCount: event.searchResponse.data.length,
                               itemBuilder: (context, position) {
                                 return GestureDetector(
-                                  child: productItemLandscape(context),
+                                  child: productItemLandscape(context,
+                                      datum:
+                                          event.searchResponse.data[position]),
                                   onTap: () {
                                     Navigator.pushNamed(context,
                                         ScreenRoutes.individualProduct);
