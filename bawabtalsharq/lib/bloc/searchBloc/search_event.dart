@@ -3,7 +3,7 @@ abstract class SearchEvent {}
 class DoSearchEvent extends SearchEvent {
   String q;
   String page;
-  List<int> categories;
+  List<String> categories;
 
   DoSearchEvent(this.q, {this.page, this.categories});
 }

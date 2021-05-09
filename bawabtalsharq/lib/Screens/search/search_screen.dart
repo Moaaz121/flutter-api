@@ -1,8 +1,9 @@
+import 'package:bawabtalsharq/Model/mainCategoryModel.dart';
 import 'package:bawabtalsharq/Screens/search/search_result_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
-import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/repo/category_repo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -14,6 +15,7 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   TextEditingController _searchController = TextEditingController();
+  List<CategoryModel> categories = List<CategoryModel>();
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -77,41 +79,67 @@ class _SearchScreenState extends State<SearchScreen> {
                       ),
                       Container(
                         height: MediaQuery.of(context).size.height * 0.06,
-                        child: ListView.builder(
-                          padding: EdgeInsets.only(
-                            top: 2,
-                            bottom: 2,
-                            right: 6,
-                            left: 6,
-                          ),
-                          physics: AlwaysScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          itemCount: 11,
-                          itemBuilder: (context, position) {
-                            return Container(
-                              padding: EdgeInsets.all(5),
-                              margin:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
-                              height: 42,
-                              width: 42,
-                              decoration: new BoxDecoration(
-                                color: Color(0xffffffff),
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Color(0x29000000),
-                                      offset: Offset(0, 1),
-                                      blurRadius: 6,
-                                      spreadRadius: 0)
-                                ],
-                              ),
-                              child: Image.asset(
-                                cold_drinks,
-                              ),
-                            );
-                          },
-                        ),
+                        child: FutureBuilder(
+                            future: CategoryRepo.getCategory(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                categories = snapshot.data;
+                                return ListView.builder(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 2, horizontal: 8),
+                                  physics: AlwaysScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: categories.length,
+                                  itemBuilder: (context, position) {
+                                    return Container(
+                                      padding: EdgeInsets.all(5),
+                                      margin: EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 20, 0),
+                                      height: 42,
+                                      width: 42,
+                                      decoration: new BoxDecoration(
+                                        color: Color(0xffffffff),
+                                        borderRadius: BorderRadius.circular(10),
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color: Color(0x29000000),
+                                              offset: Offset(0, 1),
+                                              blurRadius: 6,
+                                              spreadRadius: 0)
+                                        ],
+                                      ),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          List<String> selectetList =
+                                              List<String>();
+                                          selectetList.add(
+                                              categories[position].categoryId);
+                                          Navigator.push(
+                                              context,
+                                              new MaterialPageRoute(
+                                                builder:
+                                                    (BuildContext context) =>
+                                                        new SearchResult(
+                                                            q: _searchController
+                                                                .text,
+                                                            Categories:
+                                                                selectetList),
+                                              ));
+                                        },
+                                        child: Image.asset(
+                                          categories[position].color,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
+                              } else {
+                                return Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                            }),
                       ),
                       Divider(
                         thickness: .2,
@@ -212,6 +240,7 @@ class _SearchScreenState extends State<SearchScreen> {
           },
           keyboardType: TextInputType.text,
           autocorrect: true,
+          controller: _searchController,
           cursorRadius: Radius.circular(50),
           decoration: InputDecoration(
             fillColor: Colors.transparent,

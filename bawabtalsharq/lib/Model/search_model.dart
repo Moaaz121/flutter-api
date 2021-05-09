@@ -4,8 +4,7 @@
 
 import 'dart:convert';
 
-SearchModel searchModelFromJson(String str) =>
-    SearchModel.fromJson(json.decode(str));
+SearchModel searchModelFromJson(String str) => SearchModel.fromJson(json.decode(str));
 
 String searchModelToJson(SearchModel data) => json.encode(data.toJson());
 
@@ -21,16 +20,16 @@ class SearchModel {
   List<Datum> data;
 
   factory SearchModel.fromJson(Map<String, dynamic> json) => SearchModel(
-        code: json["code"],
-        status: json["status"],
-        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
-      );
+    code: json["code"],
+    status: json["status"],
+    data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+  );
 
   Map<String, dynamic> toJson() => {
-        "code": code,
-        "status": status,
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
-      };
+    "code": code,
+    "status": status,
+    "data": List<dynamic>.from(data.map((x) => x.toJson())),
+  };
 }
 
 class Datum {
@@ -45,6 +44,7 @@ class Datum {
     this.categoryId,
     this.imagePath,
     this.price,
+    this.company,
   });
 
   String productId;
@@ -57,37 +57,42 @@ class Datum {
   String categoryId;
   String imagePath;
   String price;
+  String company;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-        productId: json["product_id"],
-        product: json["product"],
-        searchWords: json["search_words"],
-        productCode: json["product_code"],
-        minQty: json["min_qty"],
-        maxQty: json["max_qty"],
-        status: statusValues.map[json["status"]],
-        categoryId: json["category_id"],
-        imagePath: json["image_path"],
-        price: json["price"],
-      );
+    productId: json["product_id"],
+    product: json["product"],
+    searchWords: json["search_words"],
+    productCode: json["product_code"],
+    minQty: json["min_qty"],
+    maxQty: json["max_qty"],
+    status: statusValues.map[json["status"]],
+    categoryId: json["category_id"],
+    imagePath: json["image_path"],
+    price: json["price"],
+    company: json["company"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "product_id": productId,
-        "product": product,
-        "search_words": searchWords,
-        "product_code": productCode,
-        "min_qty": minQty,
-        "max_qty": maxQty,
-        "status": statusValues.reverse[status],
-        "category_id": categoryId,
-        "image_path": imagePath,
-        "price": price,
-      };
+    "product_id": productId,
+    "product": product,
+    "search_words": searchWords,
+    "product_code": productCode,
+    "min_qty": minQty,
+    "max_qty": maxQty,
+    "status": statusValues.reverse[status],
+    "category_id": categoryId,
+    "image_path": imagePath,
+    "price": price,
+    "company": company,
+  };
 }
 
 enum Status { A }
 
-final statusValues = EnumValues({"A": Status.A});
+final statusValues = EnumValues({
+  "A": Status.A
+});
 
 class EnumValues<T> {
   Map<String, T> map;

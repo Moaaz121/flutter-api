@@ -53,7 +53,6 @@ const String productimage3 = 'assets/images/productimage3.jpeg';
 // end Bahaa
 
 // Start Mosdik
-
 const String productImage = 'assets/images/ef.png';
 const String productIcon1 = 'assets/images/Icon of product1.png';
 const String productIcon2 = 'assets/images/Icon bookmark.png';
