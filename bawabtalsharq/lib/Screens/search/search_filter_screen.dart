@@ -139,7 +139,7 @@ class _FilterScreenState extends State<FilterScreen> {
     return Transform.scale(
       scale: 1.1,
       child: SizedBox(
-        height: 35,
+        height: 30,
         child: CheckboxListTile(
           contentPadding: EdgeInsetsDirectional.only(start: 40),
           title: Text(
