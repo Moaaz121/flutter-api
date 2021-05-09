@@ -3,6 +3,7 @@ import 'package:bawabtalsharq/Model/privacy_model.dart';
 import 'package:bawabtalsharq/Model/aboutUs_model.dart';
 import 'package:bawabtalsharq/Model/faq_model.dart';
 import 'package:bawabtalsharq/Model/lang_model.dart';
+import 'package:bawabtalsharq/Model/history_model.dart';
 import 'package:bawabtalsharq/Model/contactUs_model.dart';
 import 'package:bawabtalsharq/Utils/apis.dart';
 import 'dart:convert';
@@ -73,5 +74,19 @@ class ProfileRepo {
       return returnData;
     } else
       throw Exception();
+  }
+
+  Future<HistoryModel> getHistory(String userId, String apiKey) async {
+    Map<String, dynamic> params = {"user_id": userId, "ApiKey": apiKey};
+    var response = await http.post(
+      Uri.encodeFull(APIS.serverURL + APIS.History_API),
+      body: params,
+    );
+    if (response.statusCode == 200) {
+      var decodedResponse = json.decode(response.body);
+      HistoryModel modelResponse = HistoryModel.fromJson(decodedResponse);
+
+      return modelResponse;
+    }
   }
 }

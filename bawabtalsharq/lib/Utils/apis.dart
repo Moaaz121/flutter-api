@@ -29,10 +29,13 @@ class APIS {
   static const String CONTACT_LOCATION_API = "get_contact_us_location&lang=";
   static const String CHANGE_PASSWORD_API = "change_password";
   static const String UPDATE_ACCOUNT_API = "update_account";
+  static const String REFRESH_KEY_API = "refresh_token";
+  static const String History_API = "history";
 // end Bahaa
 
 // Start Mosdik
   static const String Category_API = "get_categories&lang=";
+  static const String Superior_API = "superior_suppliers&lang=";
 
 // end Mosdik
 

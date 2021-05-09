@@ -1,5 +1,8 @@
+import 'package:bawabtalsharq/Model/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 enum languages { English, Arabic, Indian }
 
@@ -77,6 +80,23 @@ class Constants {
     else
       lang = 'ar';
     return lang;
+  }
+
+  static Future<UserModel> getUserInfo() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    Map<String, dynamic> userMap;
+    final String userStr = prefs.getString('user');
+    if (userStr != null) {
+      userMap = jsonDecode(userStr) as Map<String, dynamic>;
+    }
+
+    if (userMap != null) {
+      final UserModel user = UserModel.fromJson(userMap);
+      print(user);
+      return user;
+    }
+    return null;
   }
 }
 

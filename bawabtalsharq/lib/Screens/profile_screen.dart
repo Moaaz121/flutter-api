@@ -1,9 +1,11 @@
 import 'dart:ui';
-
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/Model/user_model.dart';
+import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/main.dart';
+import 'package:bawabtalsharq/Screens/profile/history/history_screen.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +16,14 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  UserModel currentUser;
+
+  @override
+  void initState() {
+    Constants.getUserInfo().then((value) => currentUser = value);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -201,8 +211,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       Languages.of(context).history,
                       () {
-                        Navigator.pushNamed(
-                            context, ScreenRoutes.historyScreen);
+                        Navigator.pushNamed(context, ScreenRoutes.historyScreen,
+                            arguments: currentUser);
                       },
                       drawDivider: false,
                     ),

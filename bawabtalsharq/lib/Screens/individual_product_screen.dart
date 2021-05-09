@@ -112,86 +112,83 @@ class _IndividualProductState extends State<IndividualProduct>
               ),
             ),
             SliverToBoxAdapter(
-              child: Expanded(
-                child: Container(
-                  height: MediaQuery.of(context).size.height,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(40),
-                      topRight: Radius.circular(40),
-                    ),
+              child: Container(
+                height: MediaQuery.of(context).size.height / 0.35,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(40),
+                    topRight: Radius.circular(40),
                   ),
-                  child: Padding(
-                      padding:
-                          const EdgeInsets.only(left: 40, right: 40, top: 15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Center(
-                            child: Container(
-                              width: 50,
-                              height: 2.5,
-                              color: Colors.grey[300],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Flexible(
-                                child: RichText(
-                                  overflow: TextOverflow.clip,
-                                  strutStyle: StrutStyle(fontSize: 14),
-                                  text: TextSpan(
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold),
-                                      text:
-                                          'Kedo Running Shoes from Addidas Kedo Running Shoes from Addidas'),
-                                ),
-                              ),
-                              RatingBar.builder(
-                                itemSize: 18,
-                                initialRating: 3,
-                                minRating: 1,
-                                direction: Axis.horizontal,
-                                allowHalfRating: true,
-                                itemCount: 5,
-                                itemPadding:
-                                    EdgeInsets.symmetric(horizontal: 1),
-                                itemBuilder: (context, _) => Icon(
-                                  Icons.star,
-                                  color: Colors.amber,
-                                ),
-                                onRatingUpdate: (rating) {
-                                  print(rating);
-                                },
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          productOption(
-                            widgetTitle: 'Product Options',
-                            widgetSubTitle: 'Color',
-                            widget: productColorOption(
-                              price: '50',
-                              counterWidget: productCounter(number: 10),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          infoCartSupplier('Mohamed Mosadik Hassanien', '3 YRS',
-                              'Egypt', 'Food & Bevereges'),
-                          Expanded(child: detailsTabBar()),
-                        ],
-                      )),
                 ),
+                child: Padding(
+                    padding:
+                        const EdgeInsets.only(left: 40, right: 40, top: 15),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Center(
+                          child: Container(
+                            width: 50,
+                            height: 2.5,
+                            color: Colors.grey[300],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Flexible(
+                              child: RichText(
+                                overflow: TextOverflow.clip,
+                                strutStyle: StrutStyle(fontSize: 14),
+                                text: TextSpan(
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                    text:
+                                        'Kedo Running Shoes from Addidas Kedo Running Shoes from Addidas'),
+                              ),
+                            ),
+                            RatingBar.builder(
+                              itemSize: 18,
+                              initialRating: 3,
+                              minRating: 1,
+                              direction: Axis.horizontal,
+                              allowHalfRating: true,
+                              itemCount: 5,
+                              itemPadding: EdgeInsets.symmetric(horizontal: 1),
+                              itemBuilder: (context, _) => Icon(
+                                Icons.star,
+                                color: Colors.amber,
+                              ),
+                              onRatingUpdate: (rating) {
+                                print(rating);
+                              },
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        productOption(
+                          widgetTitle: 'Product Options',
+                          widgetSubTitle: 'Color',
+                          widget: productColorOption(
+                            price: '50',
+                            counterWidget: productCounter(number: 10),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        infoCartSupplier('Mohamed Mosadik Hassanien', '3 YRS',
+                            'Egypt', 'Food & Bevereges'),
+                        Flexible(child: detailsTabBar())
+                      ],
+                    )),
               ),
             ),
           ],
@@ -204,7 +201,7 @@ class _IndividualProductState extends State<IndividualProduct>
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: TabBar(
-        isScrollable: true,
+        isScrollable: false,
         controller: _controller,
         tabs: myTabs,
         indicatorColor: orangeColor,
@@ -212,30 +209,26 @@ class _IndividualProductState extends State<IndividualProduct>
         labelColor: orangeColor,
       ),
       body: TabBarView(controller: _controller, children: [
-        SingleChildScrollView(
-          padding:
-              EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.1),
-          child: Column(
-            children: [
-              overViewText(),
-              SizedBox(
-                height: 20,
-              ),
-              productFaq(title: 'FAQ:', question: 'Question', answer: 'Answer'),
-              SizedBox(
-                height: 20,
-              ),
-              detailsPictures(),
-              SizedBox(
-                height: 20,
-              ),
-              listOfBackingChipping(),
-              SizedBox(
-                height: 20,
-              ),
-              certificateListView(),
-            ],
-          ),
+        Column(
+          children: [
+            overViewText(),
+            SizedBox(
+              height: 20,
+            ),
+            productFaq(title: 'FAQ:', question: 'Question', answer: 'Answer'),
+            SizedBox(
+              height: 20,
+            ),
+            detailsPictures(),
+            SizedBox(
+              height: 20,
+            ),
+            listOfBackingChipping(),
+            SizedBox(
+              height: 20,
+            ),
+            certificateListView(),
+          ],
         ),
         Container(
           color: Colors.white,
