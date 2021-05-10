@@ -79,7 +79,7 @@ class ProfileRepo {
   Future<HistoryModel> getHistory(String userId, String apiKey) async {
     Map<String, dynamic> params = {"user_id": userId, "ApiKey": apiKey};
     var response = await http.post(
-      Uri.encodeFull(APIS.serverURL + APIS.History_API),
+      Uri.encodeFull(APIS.serverURL + APIS.HISTORY_API),
       body: params,
     );
     if (response.statusCode == 200) {

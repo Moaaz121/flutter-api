@@ -81,7 +81,7 @@ class _HistoryState extends State<HistoryScreen> {
                             Navigator.pushNamed(
                                 context, ScreenRoutes.individualProduct);
                           },
-                          child: productItemLandscape(context,
+                          child: productItemLandscape2(context,
                               products: products, index: position),
                         );
                       },
