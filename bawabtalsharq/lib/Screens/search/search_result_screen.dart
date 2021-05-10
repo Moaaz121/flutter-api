@@ -195,7 +195,7 @@ class _SearchResultState extends State<SearchResult> {
                                       crossAxisCount: 2,
                                       crossAxisSpacing: 10,
                                       mainAxisSpacing: 10),
-                              itemCount: event.searchResponse.data.length,
+                              itemCount: event.searchResponse.products.length,
                               itemBuilder: (context, position) {
                                 return GestureDetector(
                                   onTap: () {
@@ -203,8 +203,8 @@ class _SearchResultState extends State<SearchResult> {
                                         ScreenRoutes.individualProduct);
                                   },
                                   child: productItem(context,
-                                      datum:
-                                          event.searchResponse.data[position]),
+                                      product: event
+                                          .searchResponse.products[position]),
                                 );
                               },
                             ),
@@ -214,12 +214,12 @@ class _SearchResultState extends State<SearchResult> {
                               controller: _resultScrollController,
                               shrinkWrap: true,
                               scrollDirection: Axis.vertical,
-                              itemCount: event.searchResponse.data.length,
+                              itemCount: event.searchResponse.products.length,
                               itemBuilder: (context, position) {
                                 return GestureDetector(
                                   child: productItemLandscape(context,
-                                      datum:
-                                          event.searchResponse.data[position]),
+                                      product: event
+                                          .searchResponse.products[position]),
                                   onTap: () {
                                     Navigator.pushNamed(context,
                                         ScreenRoutes.individualProduct);
