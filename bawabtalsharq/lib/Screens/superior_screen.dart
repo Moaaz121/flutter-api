@@ -211,7 +211,7 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
                             size: 20,
                             color: Colors.yellow,
                           ),
-                          buildText('4.5', 12)
+                          buildText('${listOfSuperior[position].rate}', 12)
                         ],
                       ),
                     ],
@@ -254,6 +254,15 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
       width: MediaQuery.of(context).size.height * width,
       height: MediaQuery.of(context).size.width * height,
       decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(5),
+        boxShadow: [
+          BoxShadow(
+              color: Color(0x29000000),
+              offset: Offset(0, 1),
+              blurRadius: 6,
+              spreadRadius: 0)
+        ],
         image: DecorationImage(
           image: NetworkImage(image),
           fit: BoxFit.fill,
