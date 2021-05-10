@@ -875,7 +875,7 @@ AppBar appBarSearch({
 }
 
 Widget productItem(BuildContext context,
-    {bool fillSaved = false, SearchItem.Datum datum}) {
+    {bool fillSaved = false, SearchItem.Product product}) {
   return Padding(
     padding: const EdgeInsets.all(5),
     child: Stack(
@@ -912,7 +912,7 @@ Widget productItem(BuildContext context,
                                   color: Colors.black,
                                   fontSize: 12,
                                 ),
-                                text: datum.product),
+                                text: product.product),
                           ),
                           SizedBox(
                             height: 2,
@@ -925,7 +925,7 @@ Widget productItem(BuildContext context,
                                   color: orangeColor,
                                   fontSize: 12,
                                 ),
-                                text: '${datum.price} L.E'),
+                                text: '${product.price} L.E'),
                           ),
                         ],
                       ),
@@ -1030,7 +1030,7 @@ Widget productItem(BuildContext context,
           right: LanguageHelper.isEnglish ? 0 : null,
           left: LanguageHelper.isEnglish ? null : 0,
           child: Image.network(
-            datum.imagePath,
+            product.imagePath,
             width: MediaQuery.of(context).size.width * 0.15,
             height: MediaQuery.of(context).size.height * 0.13,
           ),
@@ -1042,7 +1042,7 @@ Widget productItem(BuildContext context,
 
 Widget productItemLandscape(
   BuildContext context, {
-  SearchItem.Datum datum,
+  SearchItem.Product product,
 }) {
   double height = MediaQuery.of(context).size.height;
   double width = MediaQuery.of(context).size.width;
@@ -1107,7 +1107,7 @@ Widget productItemLandscape(
                                       color: Colors.black,
                                       fontSize: 12,
                                     ),
-                                    text: (datum.product)),
+                                    text: (product.product)),
                                 // Languages.of(context).blueShoes),
                               ),
                             ),
@@ -1124,7 +1124,7 @@ Widget productItemLandscape(
                                   color: orangeColor,
                                   fontSize: 12,
                                 ),
-                                text: '${datum.price} L.E'),
+                                text: '${product.price} L.E'),
                           ),
 
                           Expanded(
@@ -1173,7 +1173,7 @@ Widget productItemLandscape(
         left: LanguageHelper.isEnglish ? width * 0.15 : null,
         right: LanguageHelper.isEnglish ? null : width * 0.18,
         child: Image.network(
-          datum.imagePath,
+          product.imagePath,
           fit: BoxFit.fill,
           width: width * 0.17,
           height: height * 0.16,
