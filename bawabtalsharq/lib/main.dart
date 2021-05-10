@@ -31,7 +31,6 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
 import 'Screens/interesting_screen.dart';
 import 'Screens/main_srceen.dart';
 import 'Screens/notification_screen.dart';
@@ -105,7 +104,8 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.savedScreen: (_) => SavedScreen(),
         ScreenRoutes.quoteScreen: (_) => QuoteDetailsScreen(),
         ScreenRoutes.supplierProfileScreen: (_) => SupplierProfile(),
-        ScreenRoutes.historyScreen: (_) => HistoryScreen(),
+        ScreenRoutes.historyScreen: (context) =>
+            HistoryScreen(ModalRoute.of(context).settings.arguments),
         ScreenRoutes.forgetPassword: (_) => ForgetPassword(),
         ScreenRoutes.newPassword: (_) => NewPassword(),
         ScreenRoutes.verificationPassword: (_) => VerificationScreen(),

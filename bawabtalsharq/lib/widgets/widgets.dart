@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:bawabtalsharq/Model/home_model.dart';
+import 'package:bawabtalsharq/Model/search_model.dart' as SearchItem;
 import 'package:bawabtalsharq/Screens/home_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
@@ -871,7 +872,8 @@ AppBar appBarSearch({
   );
 }
 
-Widget productItem(BuildContext context, {bool fillSaved = false}) {
+Widget productItem(BuildContext context,
+    {bool fillSaved = false, SearchItem.Datum datum}) {
   return Padding(
     padding: const EdgeInsets.all(5),
     child: Stack(
@@ -908,7 +910,7 @@ Widget productItem(BuildContext context, {bool fillSaved = false}) {
                                   color: Colors.black,
                                   fontSize: 12,
                                 ),
-                                text: Languages.of(context).blueShoes),
+                                text: datum.product),
                           ),
                           SizedBox(
                             height: 2,
@@ -921,7 +923,7 @@ Widget productItem(BuildContext context, {bool fillSaved = false}) {
                                   color: orangeColor,
                                   fontSize: 12,
                                 ),
-                                text: Languages.of(context).shoesPrice),
+                                text: '${datum.price} L.E'),
                           ),
                         ],
                       ),
@@ -1025,9 +1027,8 @@ Widget productItem(BuildContext context, {bool fillSaved = false}) {
           top: -5,
           right: LanguageHelper.isEnglish ? 0 : null,
           left: LanguageHelper.isEnglish ? null : 0,
-          child: Image(
-            fit: BoxFit.fill,
-            image: AssetImage(dress_image),
+          child: Image.network(
+            datum.imagePath,
             width: MediaQuery.of(context).size.width * 0.15,
             height: MediaQuery.of(context).size.height * 0.13,
           ),
@@ -1037,9 +1038,7 @@ Widget productItem(BuildContext context, {bool fillSaved = false}) {
   );
 }
 
-Widget productItemLandscape(
-  BuildContext context,
-) {
+Widget productItemLandscape(BuildContext context, {SearchItem.Datum datum}) {
   double height = MediaQuery.of(context).size.height;
   double width = MediaQuery.of(context).size.width;
   return Stack(
@@ -1103,8 +1102,7 @@ Widget productItemLandscape(
                                       color: Colors.black,
                                       fontSize: 12,
                                     ),
-                                    text:
-                                        ('cxccdcvdjjjjdchfcbjjbhjgkjbhbjgkjkkkkjjnjbhbhjkvgghhdbcdhbh ')),
+                                    text: (datum.product)),
                                 // Languages.of(context).blueShoes),
                               ),
                             ),
@@ -1121,7 +1119,7 @@ Widget productItemLandscape(
                                   color: orangeColor,
                                   fontSize: 12,
                                 ),
-                                text: Languages.of(context).shoesPrice),
+                                text: '${datum.price} L.E'),
                           ),
 
                           Expanded(
@@ -1169,9 +1167,9 @@ Widget productItemLandscape(
         top: 2,
         left: LanguageHelper.isEnglish ? width * 0.15 : null,
         right: LanguageHelper.isEnglish ? null : width * 0.18,
-        child: Image(
+        child: Image.network(
+          datum.imagePath,
           fit: BoxFit.fill,
-          image: AssetImage(dress_image),
           width: width * 0.17,
           height: height * 0.16,
         ),

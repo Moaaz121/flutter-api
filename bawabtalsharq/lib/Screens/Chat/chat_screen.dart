@@ -18,14 +18,6 @@ class _ChatsScreenState extends State<ChatsScreen> {
   @override
   void initState() {
     super.initState();
-    loadChatRooms();
-  }
-
-  void loadChatRooms() async {
-    List<Im> chatArr = await RocketChatApi.instance.getDirectRooms();
-    setState(() {
-      _chats = chatArr;
-    });
   }
 
   @override
@@ -63,23 +55,34 @@ class _ChatsScreenState extends State<ChatsScreen> {
           ),
         ],
       ),
-      body: ListView.separated(
-        padding: EdgeInsets.all(10),
-        separatorBuilder: (BuildContext context, int index) {
-          return Align(
-            alignment: Alignment.centerRight,
-            child: Container(
-              height: 0.5,
-              width: MediaQuery.of(context).size.width / 1.3,
-              child: Divider(),
-            ),
-          );
-        },
-        itemCount: _chats.length,
-        itemBuilder: (BuildContext context, int index) {
-          return ChatItem(_chats[index]);
-        },
-      ),
+      body: FutureBuilder(
+          future: RocketChatApi.instance.getDirectRooms(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (!snapshot.hasData) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              _chats = snapshot.data;
+              return ListView.separated(
+                padding: EdgeInsets.all(10),
+                separatorBuilder: (BuildContext context, int index) {
+                  return Align(
+                    alignment: Alignment.centerRight,
+                    child: Container(
+                      height: 0.5,
+                      width: MediaQuery.of(context).size.width / 1.3,
+                      child: Divider(),
+                    ),
+                  );
+                },
+                itemCount: _chats.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ChatItem(_chats[index]);
+                },
+              );
+            }
+          }),
     );
   }
 

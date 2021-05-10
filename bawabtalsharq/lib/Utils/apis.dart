@@ -7,6 +7,7 @@ class APIS {
 // Start Karem
   static const String HOME_API = 'get_home';
   static const String SEND_MESSAGE_API = 'contact_us_message';
+  static const String SEARCH_API = 'search';
 // end karem
 
 // Start Asmaa
@@ -29,6 +30,7 @@ class APIS {
   static const String CHANGE_PASSWORD_API = "change_password";
   static const String UPDATE_ACCOUNT_API = "update_account";
   static const String REFRESH_KEY_API = "refresh_token";
+  static const String History_API = "history";
 // end Bahaa
 
 // Start Mosdik

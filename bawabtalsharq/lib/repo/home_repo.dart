@@ -12,7 +12,6 @@ class HomeRepo {
     var decodedResponse = json.decode(response.body);
     print('home response .. ${response.body}');
     HomeModel modelResponse = HomeModel.fromJson(decodedResponse);
-
     return modelResponse;
   }
 }
