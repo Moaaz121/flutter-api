@@ -3,7 +3,9 @@ import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dropdown/flutter_dropdown.dart';
+import 'package:bawabtalsharq/bloc/QuotationBloc/quotation_bloc.dart';
 
 class Requestforqutation extends StatefulWidget {
   @override
@@ -14,6 +16,54 @@ class _RequestforqutationState extends State<Requestforqutation> {
   bool _isPressed = false;
   bool _checked1 = false;
   bool _checked2 = false;
+  TextEditingController productNameCtrl = TextEditingController();
+  TextEditingController quantityCrtl = TextEditingController();
+
+  TextEditingController detailsCrtl = TextEditingController();
+  TextEditingController otherReqCtrl = TextEditingController();
+  TextEditingController portCtrl = TextEditingController();
+  TextEditingController leadTimeForInCtrl = TextEditingController();
+  TextEditingController paymentTermCtrl = TextEditingController();
+
+  List<String> categoryList = ['ahmed', 'moaaz'];
+  List<String> purposeList = ['ahmed', 'moaaz'];
+  List<String> piecesList = [
+    "Apparel",
+    "Electronics",
+    "Other",
+    "sony",
+  ];
+  List<String> tradeTermList = ['ahmed', 'moaaz'];
+  List<String> certList = ['ahmed', 'moaaz'];
+  List<String> shippingMethodList = ['ahmed', 'moaaz'];
+  List<String> destinationList = ['ahmed', 'moaaz'];
+
+  Map<String, dynamic> data;
+
+  QuotationBloc _quotationBloc;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _quotationBloc = QuotationBloc();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _quotationBloc.close();
+
+    productNameCtrl.dispose();
+    quantityCrtl.dispose();
+    detailsCrtl.dispose();
+    otherReqCtrl.dispose();
+    portCtrl.dispose();
+    leadTimeForInCtrl.dispose();
+    paymentTermCtrl.dispose();
+    portCtrl.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,283 +71,301 @@ class _RequestforqutationState extends State<Requestforqutation> {
       bottom: false,
       top: false,
       child: Scaffold(
-        backgroundColor: Colors.white54.withOpacity(0.92),
-        appBar: appBarBuilderWithWidget(
-            titleWidget: buildText(
-                Languages.of(context).requestForQuotation, 18.0,
-                fontFamily: boldFontFamily,
-                color: Colors.white,
-                fontWeight: FontWeight.bold),
-            onBackPressed: () {
-              Navigator.pop(context);
-            }),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              buildColumnText(
-                context,
-                text: Languages.of(context).productName,
-                inputText: Languages.of(context).inputProduct,
-                maxLines: 1,
-              ),
+          backgroundColor: Colors.white54.withOpacity(0.92),
+          appBar: appBarBuilderWithWidget(
+              titleWidget: buildText(
+                  Languages.of(context).requestForQuotation, 18.0,
+                  fontFamily: boldFontFamily,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold),
+              onBackPressed: () {
+                Navigator.pop(context);
+              }),
+          body: BlocProvider(
+            create: (context) => _quotationBloc,
+            child: BlocBuilder<QuotationBloc, QuotationState>(
+              builder: (context, state) {
+                if (state is QuotationInitialState) {
+                  return buildBody();
+                } else if (state is PostingReqQuotationState) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (state is PostedQuotationResponseState) {
+                  SnackBar(
+                    content: Text(state.msg),
+                    action: SnackBarAction(
+                      label: 'Undo',
+                      onPressed: () {
+                        // Some code to undo the change.
+                      },
+                    ),
+                  );
+                }
+                return buildBody();
+              },
+            ),
+          )),
+    );
+  }
 
-              buildColumnDrop(context,
-                  text: Languages.of(context).categoryName,
-                  dropText: Languages.of(context).dropCategory,
-                  dropList: ['ahmed', 'moaaz']),
+  Widget buildBody() {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          buildColumnText(context,
+              text: Languages.of(context).productName,
+              inputText: Languages.of(context).inputProduct,
+              maxLines: 1,
+              controller: productNameCtrl),
 
-              buildColumnDrop(context,
-                  text: Languages.of(context).sourcingPurpose,
-                  dropText: Languages.of(context).dropSourcing,
-                  dropList: ['ahmed', 'moaaz']),
+          buildColumnDrop(context,
+              text: Languages.of(context).categoryName,
+              dropText: Languages.of(context).dropCategory,
+              dropList: categoryList),
 
-              buildColumnText(
-                context,
-                text: Languages.of(context).quantity,
-                inputText: '000000000',
-                margin: 60,
-              ),
+          buildColumnDrop(context,
+              text: Languages.of(context).sourcingPurpose,
+              dropText: Languages.of(context).dropSourcing,
+              dropList: purposeList),
 
-              Center(
+          buildColumnText(context,
+              text: Languages.of(context).quantity,
+              inputText: '000000000',
+              margin: 60,
+              controller: quantityCrtl),
+
+          Center(
+            child: Padding(
+              padding: const EdgeInsetsDirectional.only(top: 8.0),
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.9,
+                height: MediaQuery.of(context).size.height * 0.055,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                ),
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.only(top: 8.0),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    height: MediaQuery.of(context).size.height * 0.055,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10),
+                  padding: const EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                  child: DropDown<String>(
+                    showUnderline: false,
+                    isExpanded: true,
+                    items: piecesList,
+                    hint: Text(
+                      Languages.of(context).dropQuantity,
+                      style: TextStyle(
+                        color: backTabColor.withOpacity(0.8),
+                        decoration: TextDecoration.none,
                       ),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                      child: DropDown<String>(
-                        showUnderline: false,
-                        isExpanded: true,
-                        items: <String>[
-                          "Apparel",
-                          "Electronics",
-                          "Other",
-                          "sony",
-                        ],
-                        hint: Text(
-                          Languages.of(context).dropQuantity,
-                          style: TextStyle(
-                            color: backTabColor.withOpacity(0.8),
-                            decoration: TextDecoration.none,
-                          ),
-                        ),
-                        // onChanged: print,
-                      ),
-                    ),
+                    // onChanged: print,
                   ),
                 ),
               ),
+            ),
+          ),
 
-              buildColumnDrop(context,
-                  text: Languages.of(context).tradeTerms,
-                  dropText: Languages.of(context).dropTrade,
-                  dropList: ['ahmed', 'moaaz']),
+          buildColumnDrop(context,
+              text: Languages.of(context).tradeTerms,
+              dropText: Languages.of(context).dropTrade,
+              dropList: tradeTermList),
 
-              // <----start Details---->
-              buildColumnText(
-                context,
-                text: Languages.of(context).details,
-                inputText: Languages.of(context).inputDetails,
-                height: 0.3,
-                minLines: 1,
-                maxLines: null,
-              ),
+          // <----start Details---->
+          buildColumnText(context,
+              text: Languages.of(context).details,
+              inputText: Languages.of(context).inputDetails,
+              height: 0.3,
+              minLines: 1,
+              maxLines: null,
+              controller: detailsCrtl),
 
-              Padding(
-                padding: const EdgeInsetsDirectional.only(top: 15),
-                child: Center(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    height: MediaQuery.of(context).size.height * 0.23,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: defaultPrimaryBackgroundColor.withOpacity(0.3),
-                    ),
-                    child: Column(
-                      children: [
-                        Icon(
-                          Icons.backup_rounded,
-                          color: Colors.deepOrangeAccent.withOpacity(0.5),
-                          size: MediaQuery.of(context).size.width * 0.30,
-                        ),
-                        Text(
-                          Languages.of(context).uploadDocument,
-                          style: TextStyle(
-                              color: Color(0xFF5E5E5E),
-                              decoration: TextDecoration.underline),
-                        ),
-                      ],
-                    ),
-                  ),
+          Padding(
+            padding: const EdgeInsetsDirectional.only(top: 15),
+            child: Center(
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.8,
+                height: MediaQuery.of(context).size.height * 0.23,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: defaultPrimaryBackgroundColor.withOpacity(0.3),
                 ),
-              ),
-
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _isPressed = !_isPressed;
-                    });
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        Languages.of(context).advanced,
-                        style: TextStyle(
-                            fontSize: 17,
-                            color: orangeColor,
-                            fontWeight: FontWeight.w700),
-                      ),
-                      Expanded(
-                        child: Container(
-                          margin:
-                              EdgeInsetsDirectional.only(start: 10, end: 10),
-                          height: 2,
-                          color: orangeColor.withOpacity(0.3),
-                        ),
-                      ),
-                      _isPressed
-                          ? Icon(Icons.keyboard_arrow_up_rounded,
-                              color: orangeColor)
-                          : Icon(Icons.keyboard_arrow_down_rounded,
-                              color: orangeColor),
-                    ],
-                  ),
-                ),
-              ),
-
-              Visibility(
-                visible: _isPressed,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      child: Padding(
-                        padding: const EdgeInsetsDirectional.only(
-                            start: 20, top: 5, bottom: 5, end: 20),
-                        child: Text(
-                          Languages.of(context).supplierCapability,
-                          style: TextStyle(
-                            fontFamily: 'assets/fonts/Roboto-Light.ttf',
-                            fontSize: 17,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
+                    Icon(
+                      Icons.backup_rounded,
+                      color: Colors.deepOrangeAccent.withOpacity(0.5),
+                      size: MediaQuery.of(context).size.width * 0.30,
                     ),
-                    Padding(
-                      padding: const EdgeInsetsDirectional.only(
-                          top: 10, bottom: 20, end: 20, start: 20),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        height: 2,
-                        color: Colors.black.withOpacity(0.5),
-                      ),
+                    Text(
+                      Languages.of(context).uploadDocument,
+                      style: TextStyle(
+                          color: Color(0xFF5E5E5E),
+                          decoration: TextDecoration.underline),
                     ),
-                    buildColumnDrop(context,
-                        text: Languages.of(context).certifications,
-                        dropText: Languages.of(context).dropCertificate,
-                        dropList: ['ahmed', 'moaaz']),
-                    buildColumnText(
-                      context,
-                      text: Languages.of(context).requirements,
-                      inputText: Languages.of(context).inputRequire,
-                      height: 0.3,
-                    ),
-                    Container(
-                      child: Padding(
-                        padding: const EdgeInsetsDirectional.only(
-                            end: 20, top: 5, bottom: 5, start: 20),
-                        child: Text(
-                          Languages.of(context).shipping,
-                          style: TextStyle(
-                              fontFamily: 'assets/fonts/Roboto-Light.ttf',
-                              fontSize: 17,
-                              fontWeight: FontWeight.w700),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsetsDirectional.only(
-                          top: 10, bottom: 20, end: 20, start: 20),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        height: 2,
-                        color: Colors.black.withOpacity(0.5),
-                      ),
-                    ),
-                    buildColumnDrop(context,
-                        text: Languages.of(context).shippingMethod,
-                        dropText: Languages.of(context).dropShipping,
-                        dropList: ['ahmed', 'moaaz']),
-                    buildColumnDrop(context,
-                        text: Languages.of(context).destination,
-                        dropText: Languages.of(context).dropDestination,
-                        dropList: ['ahmed', 'moaaz']),
-                    buildColumnText(
-                      context,
-                      text: Languages.of(context).port,
-                      inputText: Languages.of(context).port,
-                    ),
-                    buildColumnText(context,
-                        text: Languages.of(context).leadTime,
-                        inputText: '000000000',
-                        margin: 60),
-                    buildColumnText(
-                      context,
-                      text: Languages.of(context).paymentTerm,
-                      inputText: Languages.of(context).paymentTerm,
-                    ),
-                    buildCheckbox(1, text: Languages.of(context).check1),
-                    buildCheckbox(2, text: Languages.of(context).check2),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsetsDirectional.only(
-                              start: 15, bottom: 20, end: 40),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.3,
-                            child: RaisedButton(
-                              splashColor: orangeColor.withOpacity(0.5),
-                              highlightColor: orangeColor.withOpacity(0.2),
-                              disabledColor: Colors.transparent,
-                              color: Colors.white,
-                              child: Text(
-                                Languages.of(context).submit,
-                                style: TextStyle(
-                                  color: orangeColor,
-                                ),
-                              ),
-                              onPressed: () {},
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                                side: new BorderSide(
-                                  color: orangeColor,
-                                  width: 2,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
                   ],
                 ),
               ),
-            ],
+            ),
           ),
-        ),
+
+          Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  _isPressed = !_isPressed;
+                });
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    Languages.of(context).advanced,
+                    style: TextStyle(
+                        fontSize: 17,
+                        color: orangeColor,
+                        fontWeight: FontWeight.w700),
+                  ),
+                  Expanded(
+                    child: Container(
+                      margin: EdgeInsetsDirectional.only(start: 10, end: 10),
+                      height: 2,
+                      color: orangeColor.withOpacity(0.3),
+                    ),
+                  ),
+                  _isPressed
+                      ? Icon(Icons.keyboard_arrow_up_rounded,
+                          color: orangeColor)
+                      : Icon(Icons.keyboard_arrow_down_rounded,
+                          color: orangeColor),
+                ],
+              ),
+            ),
+          ),
+
+          Visibility(
+            visible: _isPressed,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  child: Padding(
+                    padding: const EdgeInsetsDirectional.only(
+                        start: 20, top: 5, bottom: 5, end: 20),
+                    child: Text(
+                      Languages.of(context).supplierCapability,
+                      style: TextStyle(
+                        fontFamily: 'assets/fonts/Roboto-Light.ttf',
+                        fontSize: 17,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.only(
+                      top: 10, bottom: 20, end: 20, start: 20),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    height: 2,
+                    color: Colors.black.withOpacity(0.5),
+                  ),
+                ),
+                buildColumnDrop(context,
+                    text: Languages.of(context).certifications,
+                    dropText: Languages.of(context).dropCertificate,
+                    dropList: certList),
+                buildColumnText(context,
+                    text: Languages.of(context).requirements,
+                    inputText: Languages.of(context).inputRequire,
+                    height: 0.3,
+                    controller: otherReqCtrl),
+                Container(
+                  child: Padding(
+                    padding: const EdgeInsetsDirectional.only(
+                        end: 20, top: 5, bottom: 5, start: 20),
+                    child: Text(
+                      Languages.of(context).shipping,
+                      style: TextStyle(
+                          fontFamily: 'assets/fonts/Roboto-Light.ttf',
+                          fontSize: 17,
+                          fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.only(
+                      top: 10, bottom: 20, end: 20, start: 20),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    height: 2,
+                    color: Colors.black.withOpacity(0.5),
+                  ),
+                ),
+                buildColumnDrop(context,
+                    text: Languages.of(context).shippingMethod,
+                    dropText: Languages.of(context).dropShipping,
+                    dropList: shippingMethodList),
+                buildColumnDrop(context,
+                    text: Languages.of(context).destination,
+                    dropText: Languages.of(context).dropDestination,
+                    dropList: destinationList),
+                buildColumnText(context,
+                    text: Languages.of(context).port,
+                    inputText: Languages.of(context).port,
+                    controller: portCtrl),
+                buildColumnText(context,
+                    text: Languages.of(context).leadTime,
+                    inputText: '000000000',
+                    margin: 60,
+                    controller: leadTimeForInCtrl),
+                buildColumnText(context,
+                    text: Languages.of(context).paymentTerm,
+                    inputText: Languages.of(context).paymentTerm,
+                    controller: paymentTermCtrl),
+                buildCheckbox(1, text: Languages.of(context).check1),
+                buildCheckbox(2, text: Languages.of(context).check2),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsetsDirectional.only(
+                          start: 15, bottom: 20, end: 40),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.3,
+                        child: RaisedButton(
+                          splashColor: orangeColor.withOpacity(0.5),
+                          highlightColor: orangeColor.withOpacity(0.2),
+                          disabledColor: Colors.transparent,
+                          color: Colors.white,
+                          child: Text(
+                            Languages.of(context).submit,
+                            style: TextStyle(
+                              color: orangeColor,
+                            ),
+                          ),
+                          onPressed: () {
+                            _quotationBloc.add(GetReqQuotation(data: data));
+                          },
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            side: new BorderSide(
+                              color: orangeColor,
+                              width: 2,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -357,7 +425,13 @@ class _RequestforqutationState extends State<Requestforqutation> {
                       decoration: TextDecoration.none,
                     ),
                   ),
-                  // onChanged: print,
+                  onChanged: (val) {
+                    String key;
+                    if (dropText == Languages.of(context).productName) {
+                      key = 'product';
+                    }
+                    data = {key: val};
+                  },
                 ),
               ),
             ),
@@ -367,15 +441,14 @@ class _RequestforqutationState extends State<Requestforqutation> {
     );
   }
 
-  Padding buildColumnText(
-    BuildContext context, {
-    String text,
-    String inputText,
-    double margin = 5,
-    double height = 0.07,
-    int minLines,
-    int maxLines,
-  }) {
+  Padding buildColumnText(BuildContext context,
+      {String text,
+      String inputText,
+      double margin = 5,
+      double height = 0.07,
+      int minLines,
+      int maxLines,
+      TextEditingController controller}) {
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(18, 20, 18, 18),
       child: Column(
@@ -400,7 +473,9 @@ class _RequestforqutationState extends State<Requestforqutation> {
                 ),
               ),
               child: TextField(
+                controller: controller,
                 maxLines: maxLines,
+                textInputAction: TextInputAction.next,
                 keyboardType: maxLines == null
                     ? TextInputType.multiline
                     : TextInputType.text,
