@@ -40,6 +40,7 @@ class SuperiorData {
   String url;
   String year;
   String logo;
+  int rate;
   List<Products> products;
 
   SuperiorData(
@@ -55,6 +56,7 @@ class SuperiorData {
       this.url,
       this.year,
       this.logo,
+      this.rate,
       this.products});
 
   SuperiorData.fromJson(Map<String, dynamic> json) {
@@ -70,6 +72,7 @@ class SuperiorData {
     url = json['url'];
     year = json['year'];
     logo = json['logo'];
+    rate = json['rate'];
     if (json['products'] != null) {
       products = new List<Products>();
       json['products'].forEach((v) {
@@ -92,6 +95,7 @@ class SuperiorData {
     data['url'] = this.url;
     data['year'] = this.year;
     data['logo'] = this.logo;
+    data['rate'] = this.rate;
     if (this.products != null) {
       data['products'] = this.products.map((v) => v.toJson()).toList();
     }
