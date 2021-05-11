@@ -7,3 +7,5 @@ class GetReqQuotation extends QuotationEvent {
   Map<String, dynamic> data;
   GetReqQuotation({@required this.data});
 }
+
+class GetCatergoryList extends QuotationEvent {}

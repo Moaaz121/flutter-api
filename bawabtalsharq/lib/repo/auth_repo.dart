@@ -55,35 +55,6 @@ class AuthRepo {
 // End Bahaa //
 
 // Start Asmaa //
-  Future<void> verifyPhone(phone) async {
-    final PhoneCodeAutoRetrievalTimeout autoRetrieve = (String verId) {
-      this.verficationId = verId;
-    };
-    final PhoneCodeSent smsCodeSent = (String verId, [int forceCodeResend]) {
-      this.verficationId = verId;
-      setState(() {
-        this.codeSent = true;
-      });
-    };
-    final PhoneVerificationCompleted verifiedSuccess =
-        (AuthCredential authResult) {
-      AuthService().signIn(authResult);
-      print('verfied');
-    };
 
-    final PhoneVerificationFailed verifiedFailed =
-        (FirebaseAuthException authException) {
-      print('Error ${authException.message}');
-    };
-
-    await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: this.phone,
-      codeSent: smsCodeSent,
-      codeAutoRetrievalTimeout: autoRetrieve,
-      timeout: const Duration(seconds: 5),
-      verificationCompleted: verifiedSuccess,
-      verificationFailed: verifiedFailed,
-    );
-  }
 // End Asmaa //
 }

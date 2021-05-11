@@ -1,8 +1,11 @@
 import 'dart:async';
 
 import 'package:bawabtalsharq/repo/requestQutaion_repo.dart';
+import 'package:bawabtalsharq/repo/category_repo.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:bawabtalsharq/Model/mainCategoryModel.dart';
+import 'package:bawabtalsharq/Model/base_model.dart';
 
 part 'quotation_event.dart';
 part 'quotation_state.dart';
@@ -13,13 +16,19 @@ class QuotationBloc extends Bloc<QuotationEvent, QuotationState> {
     QuotationEvent event,
   ) async* {
     // TODO: implement mapEventToState
-    if (event is GetReqQuotation) {
-      yield PostingReqQuotationState();
-      print('in Bloc');
-      String msg = await RequestQuotationsRepo().postReqQuotation(event.data);
 
-      if (msg != null) {
-        yield PostedQuotationResponseState(msg: msg);
+    if (event is GetCatergoryList) {
+      yield LoadingCategoryListState();
+
+      List<CategoryModel> categoryList = await CategoryRepo.getCategory();
+
+      yield LoadedCategoryListState(categoryList: categoryList);
+    } else if (event is GetReqQuotation) {
+      BaseModel data =
+          await RequestQuotationsRepo().postReqQuotation(event.data);
+
+      if (data != null) {
+        yield PostedQuotationResponseState(msg: data.msg);
       }
     }
   }

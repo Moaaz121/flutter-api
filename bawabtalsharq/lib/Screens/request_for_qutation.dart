@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dropdown/flutter_dropdown.dart';
 import 'package:bawabtalsharq/bloc/QuotationBloc/quotation_bloc.dart';
+import 'package:bawabtalsharq/Model/mainCategoryModel.dart';
 
 class Requestforqutation extends StatefulWidget {
   @override
@@ -25,7 +26,8 @@ class _RequestforqutationState extends State<Requestforqutation> {
   TextEditingController leadTimeForInCtrl = TextEditingController();
   TextEditingController paymentTermCtrl = TextEditingController();
 
-  List<String> categoryList = ['ahmed', 'moaaz'];
+  List<String> categoryList = [];
+  List<String> categoryIdList = [];
   List<String> purposeList = ['ahmed', 'moaaz'];
   List<String> piecesList = [
     "Apparel",
@@ -41,20 +43,21 @@ class _RequestforqutationState extends State<Requestforqutation> {
   Map<String, dynamic> data;
 
   QuotationBloc _quotationBloc;
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _quotationBloc = QuotationBloc();
+
+    _quotationBloc.add(GetCatergoryList());
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    _quotationBloc.close();
 
+    _quotationBloc.close();
     productNameCtrl.dispose();
     quantityCrtl.dispose();
     detailsCrtl.dispose();
@@ -85,7 +88,21 @@ class _RequestforqutationState extends State<Requestforqutation> {
             create: (context) => _quotationBloc,
             child: BlocBuilder<QuotationBloc, QuotationState>(
               builder: (context, state) {
-                if (state is QuotationInitialState) {
+                if (state is LoadingCategoryListState) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (state is LoadedCategoryListState) {
+                  print('InLoaded');
+                  print(state.categoryList.length);
+
+                  List.generate(state.categoryList.length,
+                      (i) => categoryList.add(state.categoryList[i].category));
+                  List.generate(
+                      state.categoryList.length,
+                      (i) =>
+                          categoryIdList.add(state.categoryList[i].categoryId));
+
                   return buildBody();
                 } else if (state is PostingReqQuotationState) {
                   return Center(
@@ -348,7 +365,10 @@ class _RequestforqutationState extends State<Requestforqutation> {
                             ),
                           ),
                           onPressed: () {
-                            _quotationBloc.add(GetReqQuotation(data: data));
+                            data = {'qty': quantityCrtl.text.trim()};
+                            // data = {'category_id': categoryIdList[]};
+                            print(data);
+                            // _quotationBloc.add(GetReqQuotation(data: data));
                           },
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
@@ -430,7 +450,14 @@ class _RequestforqutationState extends State<Requestforqutation> {
                     if (dropText == Languages.of(context).productName) {
                       key = 'product';
                     }
+                    if (dropText == Languages.of(context).quantity) {
+                      key = 'qty';
+                    }
+
                     data = {key: val};
+
+                    print(data['category_id']);
+                    print(data['qty']);
                   },
                 ),
               ),

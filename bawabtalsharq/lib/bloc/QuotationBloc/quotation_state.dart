@@ -12,3 +12,10 @@ class PostedQuotationResponseState extends QuotationState {
 
   PostedQuotationResponseState({this.msg});
 }
+
+class LoadingCategoryListState extends QuotationState {}
+
+class LoadedCategoryListState extends QuotationState {
+  List<CategoryModel> categoryList;
+  LoadedCategoryListState({this.categoryList});
+}
