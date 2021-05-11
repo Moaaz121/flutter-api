@@ -152,6 +152,7 @@ class LanguageAr extends Languages {
   String get currency => 'العملة';
   String get help => 'المساعدة';
   String get main => 'الرئيسية';
+  String get lan => 'العربية';
 
 // end Mosdik
 
@@ -232,7 +233,7 @@ class LanguageAr extends Languages {
 // Start Islam
   String get settings => 'الضبط';
   String get requestForQuotation => 'طلب عرض اسعار';
-  String get languages => 'اللغه';
+  String get languages => 'اللغة';
   String get signUp => 'تسجيل الدخول';
   String get login => 'تسجيل الدخول';
   String get userName => 'اسم المستخدم';

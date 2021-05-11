@@ -120,16 +120,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       icon: Icons.flag,
                       iconColor: Colors.blue),
                   cardSetting(
+                      onPress: () {
+                        showLanguagesDialog(context);
+                      },
                       text: buildText(
-                        Languages.of(context).language,
+                        Languages.of(context).languages,
                         12,
                         fontWeight: FontWeight.w600,
                       ),
-                      extraText: buildText('English', 10,
+                      extraText: buildText(Languages.of(context).lan, 12,
                           fontWeight: FontWeight.w400, color: orangeColor),
                       icon: Icons.language,
                       iconColor: Colors.deepOrange),
                   cardSetting(
+                    onPress: () {
+                      // showLanguagesDialog(context);
+                    },
                     text: buildText(
                       Languages.of(context).currency,
                       12,
@@ -281,10 +287,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Widget cardSetting(
-      {Widget text,
+      {Function onPress,
+      Widget text,
       IconData icon,
       Color iconColor,
-      Function onPress,
       Widget extraText}) {
     return GestureDetector(
       onTap: onPress,

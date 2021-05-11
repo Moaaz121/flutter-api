@@ -52,7 +52,7 @@ void main() {
 
   runApp(
     DevicePreview(
-      enabled: true,
+      enabled: false,
       builder: (context) => BawabtAlsharqApp(),
     ),
   );

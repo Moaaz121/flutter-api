@@ -10,11 +10,12 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class IndividualProduct extends StatefulWidget {
-  final IndividualProductModel product;
-  IndividualProduct(this.product);
+  final String productId;
+  IndividualProduct(this.productId);
   @override
   _IndividualProductState createState() => _IndividualProductState();
 }
@@ -39,7 +40,7 @@ class _IndividualProductState extends State<IndividualProduct>
   @override
   void initState() {
     _productBloc = IndividualProductBloc();
-    _productBloc.add(DoIndividualProductEvent(widget.product.data.productId));
+    _productBloc.add(DoIndividualProductEvent(widget.productId));
     _controller = TabController(vsync: this, length: myTabs.length);
     _controller.addListener(_handleTabSelection);
     super.initState();
@@ -85,7 +86,7 @@ class _IndividualProductState extends State<IndividualProduct>
         }
         return isLoaded
             ? Scaffold(
-                floatingActionButton: productFab(),
+                floatingActionButton: productFab(product.price),
                 body: Container(
                   color: Color(0xfff9dfd6),
                   child: CustomScrollView(
@@ -134,7 +135,7 @@ class _IndividualProductState extends State<IndividualProduct>
                                   itemCount: 4,
                                   itemBuilder: (context, index, realIndex) =>
                                       Image(
-                                    image: AssetImage(shoes_image),
+                                    image: NetworkImage(product.imagePath),
                                   ),
                                 ),
                                 sliderIndicator(sliderPosition,
@@ -189,8 +190,7 @@ class _IndividualProductState extends State<IndividualProduct>
                                                         color: Colors.black,
                                                         fontWeight:
                                                             FontWeight.bold),
-                                                    text:
-                                                        'Kedo Running Shoes from Addidas Kedo Running Shoes from Addidas'),
+                                                    text: product.product),
                                               ),
                                             ),
                                             RatingBar.builder(
@@ -267,7 +267,7 @@ class _IndividualProductState extends State<IndividualProduct>
             Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                overViewText(),
+                overViewText(Html(data: product.fullDescription)),
                 SizedBox(
                   height: 20,
                 ),
@@ -301,7 +301,7 @@ class _IndividualProductState extends State<IndividualProduct>
   }
 }
 
-Padding productFab() {
+Padding productFab(String price) {
   return Padding(
     padding: const EdgeInsets.only(left: 25),
     child: Row(
@@ -316,7 +316,7 @@ Padding productFab() {
               color: Colors.white),
           child: Center(
             child: Text(
-              '\$200.00',
+              price,
               style: TextStyle(color: orangeColor, fontWeight: FontWeight.bold),
             ),
           ),
@@ -515,7 +515,7 @@ Widget productFaq({String title, String question, String answer}) {
   );
 }
 
-Widget overViewText() {
+Widget overViewText(Html html) {
   return Container(
     margin: EdgeInsets.only(top: 15),
     child: Column(
@@ -525,10 +525,7 @@ Widget overViewText() {
         SizedBox(
           height: 5,
         ),
-        buildText(
-            's simply dummy text of the printing and typesetting industry. Lorem Ipsum has s simply dummy text of the printing and of the printing and typesetting industry. Lorem Ipsum has s simply dummy text of the printing and typesetting industry. Lorem Ipsum has s simply dummy text of the printing and typesetting industry. Lorem Ipsum has s simply dummy text of the printing and typesetting industry. Lorem Ipsum has s simply dummy text of the printing and typesetting industry. Lorem Ipsum has ',
-            12,
-            color: Colors.grey)
+        html
       ],
     ),
   );

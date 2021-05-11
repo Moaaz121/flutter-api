@@ -14,7 +14,7 @@ class IndividualProductBloc
       yield IndividualProductLoadingState();
       try {
         ProductDetails data =
-            await IndividualProductRepo.getIndividualProduct();
+            await IndividualProductRepo.getIndividualProduct(event.id);
         yield IndividualProductLoadedState(individualProductResponse: data);
       } catch (e) {
         yield IndividualProductErrorState(message: e.toString());
