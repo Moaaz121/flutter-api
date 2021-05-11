@@ -1,16 +1,15 @@
-class IndividualProduct {
+class IndividualProductModel {
   int code;
   String status;
-  IndividualProData data;
+  ProductDetails data;
 
-  IndividualProduct({this.code, this.status, this.data});
+  IndividualProductModel({this.code, this.status, this.data});
 
-  IndividualProduct.fromJson(Map<String, dynamic> json) {
+  IndividualProductModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     status = json['status'];
-    data = json['data'] != null
-        ? new IndividualProData.fromJson(json['data'])
-        : null;
+    data =
+        json['data'] != null ? new ProductDetails.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -24,7 +23,7 @@ class IndividualProduct {
   }
 }
 
-class IndividualProData {
+class ProductDetails {
   String productId;
   String product;
   String shortDescription;
@@ -40,7 +39,7 @@ class IndividualProData {
   String price;
   String company;
 
-  IndividualProData(
+  ProductDetails(
       {this.productId,
       this.product,
       this.shortDescription,
@@ -56,7 +55,7 @@ class IndividualProData {
       this.price,
       this.company});
 
-  IndividualProData.fromJson(Map<String, dynamic> json) {
+  ProductDetails.fromJson(Map<String, dynamic> json) {
     productId = json['product_id'];
     product = json['product'];
     shortDescription = json['short_description'];

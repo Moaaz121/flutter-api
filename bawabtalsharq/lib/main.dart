@@ -31,6 +31,7 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+
 import 'Screens/interesting_screen.dart';
 import 'Screens/main_srceen.dart';
 import 'Screens/notification_screen.dart';
@@ -51,7 +52,7 @@ void main() {
 
   runApp(
     DevicePreview(
-      enabled: false,
+      enabled: true,
       builder: (context) => BawabtAlsharqApp(),
     ),
   );
@@ -90,7 +91,8 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.settingsScreen: (_) => SettingsScreen(),
         ScreenRoutes.requestForQuotation: (_) => RequestForQScreen(),
         ScreenRoutes.postQuotationRequest: (_) => Requestforqutation(),
-        ScreenRoutes.individualProduct: (_) => IndividualProduct(),
+        ScreenRoutes.individualProduct: (context) =>
+            IndividualProduct(ModalRoute.of(context).settings.arguments),
         ScreenRoutes.listFilter: (_) => ListFilterScreen(),
         ScreenRoutes.searchScreen: (_) => SearchScreen(),
         ScreenRoutes.searchResultScreen: (_) => SearchResult(),
