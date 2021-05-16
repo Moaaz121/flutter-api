@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.10.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -46,7 +46,7 @@ dependencies:
   bloc:
   flutter_speed_dial_material_design: ^2.0.0
   image_picker:
-  file_picker:
+  file_picker: ^2.1.7
   image_pickers: ^1.0.8+7
   flutter_imagenetwork:
   jitsi_meet:

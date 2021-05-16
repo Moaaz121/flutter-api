@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "120155871462",
+    "project_id": "bawabt-alsharq-aff55",
+    "storage_bucket": "bawabt-alsharq-aff55.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:120155871462:android:964e9d87bf9a49e4ef0327",
+        "android_client_info": {
+          "package_name": "com.bawabtalsharq"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "120155871462-tue6babjj19j0f5ra2r8hakrtbonao8a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bawabtalsharq",
+            "certificate_hash": "8ec8309ff5b8251f00cd36ffa6350a7c47f8b32e"
+          }
+        },
+        {
+          "client_id": "120155871462-mma56frgsf03mblgg4o511fnggdkrsqt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCm3N8mI1RZgQb8TK6CVU9dVt4gJkYE5w0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "120155871462-mma56frgsf03mblgg4o511fnggdkrsqt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
