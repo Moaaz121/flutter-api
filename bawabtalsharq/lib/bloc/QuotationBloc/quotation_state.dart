@@ -13,6 +13,12 @@ class PostedQuotationResponseState extends QuotationState {
   PostedQuotationResponseState({this.msg});
 }
 
+class ReqQuotationErrorState extends QuotationState {
+  String msg;
+
+  ReqQuotationErrorState({this.msg});
+}
+
 class LoadingCategoryListState extends QuotationState {}
 
 class LoadedCategoryListState extends QuotationState {
