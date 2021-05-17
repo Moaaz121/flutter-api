@@ -40,10 +40,8 @@ class _RequestforqutationState extends State<Requestforqutation> {
   List<String> shippingMethodList = ['ahmed', 'moaaz'];
   List<String> destinationList = ['ahmed', 'moaaz'];
 
-  Map<String, dynamic> data;
+  Map<String, dynamic> data = {};
   QuotationBloc _quotationBloc;
-
-  int i = 0;
 
   @override
   void initState() {
@@ -89,24 +87,16 @@ class _RequestforqutationState extends State<Requestforqutation> {
             create: (context) => _quotationBloc,
             child: BlocBuilder<QuotationBloc, QuotationState>(
               builder: (context, state) {
-                if (state is LoadingCategoryListState) {
+                if (state is QuotationInitialState) {
+                  _quotationBloc.add(GetCatergoryList());
+                  return buildBody();
+                } else if (state is LoadingCategoryListState) {
                   return Center(
                     child: CircularProgressIndicator(),
                   );
-                } else if (state is QuotationInitialState) {
-                  _quotationBloc.add(GetCatergoryList());
-                  return buildBody();
                 } else if (state is LoadedCategoryListState) {
-                  List.generate(state.categoryList.length,
-                      (i) => categoryList.add(state.categoryList[i].category));
-                  List.generate(
-                      state.categoryList.length,
-                      (i) =>
-                          categoryIdList.add(state.categoryList[i].categoryId));
-                  i = i + 1;
-
-                  print(categoryIdList.length);
-                  print(" $i : ${categoryIdList.length}");
+                  categoryList = List.from(state.categoryNameList);
+                  categoryIdList = List.from(state.categoryIdList);
 
                   return buildBody();
                 } else if (state is PostingReqQuotationState) {
@@ -114,15 +104,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
                     child: CircularProgressIndicator(),
                   );
                 } else if (state is PostedQuotationResponseState) {
-                  SnackBar(
-                    content: Text(state.msg),
-                    action: SnackBarAction(
-                      label: 'Undo',
-                      onPressed: () {
-                        // Some code to undo the change.
-                      },
-                    ),
-                  );
+                  print(state.msg);
                 }
                 return buildBody();
               },
@@ -370,10 +352,9 @@ class _RequestforqutationState extends State<Requestforqutation> {
                             ),
                           ),
                           onPressed: () {
-                            data = {'qty': quantityCrtl.text.trim()};
-                            // data = {'category_id': categoryIdList[]};
-                            print(data);
-                            // _quotationBloc.add(GetReqQuotation(data: data));
+                            data['qty'] = quantityCrtl.text.trim();
+                            data['product'] = productNameCtrl.text.trim();
+                            _quotationBloc.add(GetReqQuotation(data: data));
                           },
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
@@ -452,17 +433,11 @@ class _RequestforqutationState extends State<Requestforqutation> {
                   ),
                   onChanged: (val) {
                     String key;
-                    if (dropText == Languages.of(context).productName) {
-                      key = 'product';
+                    if (Languages.of(context).categoryName == 'Category name') {
+                      key = 'category_id';
                     }
-                    if (dropText == Languages.of(context).quantity) {
-                      key = 'qty';
-                    }
-
-                    data = {key: val};
-
-                    print(data['category_id']);
-                    print(data['qty']);
+                    print(key);
+                    data[key] = categoryIdList[categoryList.indexOf(val)];
                   },
                 ),
               ),

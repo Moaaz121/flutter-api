@@ -16,6 +16,8 @@ class PostedQuotationResponseState extends QuotationState {
 class LoadingCategoryListState extends QuotationState {}
 
 class LoadedCategoryListState extends QuotationState {
-  List<CategoryModel> categoryList;
-  LoadedCategoryListState({this.categoryList});
+  List<String> categoryNameList;
+  List<String> categoryIdList;
+
+  LoadedCategoryListState({this.categoryNameList, this.categoryIdList});
 }

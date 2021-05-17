@@ -11,16 +11,21 @@ part 'quotation_event.dart';
 part 'quotation_state.dart';
 
 class QuotationBloc extends Bloc<QuotationEvent, QuotationState> {
+  List<String> categoryNameList = [];
+  List<String> categoryIdList = [];
   @override
   Stream<QuotationState> mapEventToState(
     QuotationEvent event,
   ) async* {
     if (event is GetCatergoryList) {
       yield LoadingCategoryListState();
-
       List<CategoryModel> categoryList = await CategoryRepo.getCategory();
-
-      yield LoadedCategoryListState(categoryList: categoryList);
+      List.generate(categoryList.length, (i) {
+        categoryNameList.add(categoryList[i].category);
+        categoryIdList.add(categoryList[i].categoryId);
+      });
+      yield LoadedCategoryListState(
+          categoryNameList: categoryNameList, categoryIdList: categoryIdList);
     } else if (event is GetReqQuotation) {
       BaseModel data =
           await RequestQuotationsRepo().postReqQuotation(event.data);

@@ -10,11 +10,8 @@ class RequestQuotationsRepo {
   Future<BaseModel> postReqQuotation(Map<String, dynamic> data) async {
     UserModel _userModel = await Constants.getUserInfo();
 
-    data = {
-      'ApiKey': _userModel.data.apiKey,
-      'user_id': _userModel.data.userId
-    };
-    print('data In Repo: $data');
+    data['ApiKey'] = _userModel.data.apiKey;
+    data['user_id'] = _userModel.data.userId;
 
     BaseModel modelResponse;
     var response = await http.post(
@@ -25,8 +22,10 @@ class RequestQuotationsRepo {
     if (response.statusCode == 200) {
       var decodedResponse = json.decode(response.body);
       BaseModel modelResponse = BaseModel.fromJson(decodedResponse);
-      print("Model Res: $modelResponse");
+
+      return modelResponse;
+    } else {
+      print('Error');
     }
-    return modelResponse;
   }
 }
