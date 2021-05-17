@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dropdown/flutter_dropdown.dart';
 import 'package:bawabtalsharq/bloc/QuotationBloc/quotation_bloc.dart';
-import 'package:bawabtalsharq/Model/mainCategoryModel.dart';
+import 'package:bawabtalsharq/main.dart';
 
 class Requestforqutation extends StatefulWidget {
   @override
@@ -67,12 +67,15 @@ class _RequestforqutationState extends State<Requestforqutation> {
     portCtrl.dispose();
   }
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       bottom: false,
       top: false,
       child: Scaffold(
+          key: _scaffoldKey,
           backgroundColor: Colors.white54.withOpacity(0.92),
           appBar: appBarBuilderWithWidget(
               titleWidget: buildText(
@@ -85,29 +88,41 @@ class _RequestforqutationState extends State<Requestforqutation> {
               }),
           body: BlocProvider(
             create: (context) => _quotationBloc,
-            child: BlocBuilder<QuotationBloc, QuotationState>(
-              builder: (context, state) {
-                if (state is QuotationInitialState) {
-                  _quotationBloc.add(GetCatergoryList());
-                  return buildBody();
-                } else if (state is LoadingCategoryListState) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state is LoadedCategoryListState) {
-                  categoryList = List.from(state.categoryNameList);
-                  categoryIdList = List.from(state.categoryIdList);
-
-                  return buildBody();
-                } else if (state is PostingReqQuotationState) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state is PostedQuotationResponseState) {
-                  print(state.msg);
+            child: BlocListener<QuotationBloc, QuotationState>(
+              listener: (context, state) {
+                if (state is PostedQuotationResponseState) {
+                  _scaffoldKey.currentState
+                      .showSnackBar(new SnackBar(content: new Text(state.msg)));
+                  Navigator.pushReplacementNamed(
+                      context, ScreenRoutes.mainScreen);
                 }
-                return buildBody();
               },
+              child: BlocBuilder<QuotationBloc, QuotationState>(
+                builder: (context, state) {
+                  if (state is QuotationInitialState) {
+                    _quotationBloc.add(GetCatergoryList());
+
+                    return buildBody();
+                  } else if (state is LoadingCategoryListState) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state is LoadedCategoryListState) {
+                    categoryList = List.from(state.categoryNameList);
+                    categoryIdList = List.from(state.categoryIdList);
+
+                    return buildBody();
+                  } else if (state is PostingReqQuotationState) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state is ReqQuotationErrorState) {
+                    _scaffoldKey.currentState.showSnackBar(
+                        new SnackBar(content: new Text(state.msg)));
+                  }
+                  return buildBody();
+                },
+              ),
             ),
           )),
     );
@@ -352,11 +367,28 @@ class _RequestforqutationState extends State<Requestforqutation> {
                             ),
                           ),
                           onPressed: () {
-                            data['qty'] = quantityCrtl.text.trim();
-                            data['product'] = productNameCtrl.text.trim();
-                            data['details'] = detailsCrtl.text.trim();
-
-                            _quotationBloc.add(GetReqQuotation(data: data));
+                            if (productNameCtrl.text.isEmpty ||
+                                quantityCrtl.text.isEmpty ||
+                                data['category_id'] == null) {
+                              _scaffoldKey.currentState.showSnackBar(
+                                new SnackBar(
+                                  content: new Text(
+                                      'Please make sure that the product name, quantity and the catergory are filled'),
+                                  action: SnackBarAction(
+                                    label: 'continue',
+                                    onPressed: () {
+                                      _scaffoldKey.currentState
+                                          .hideCurrentSnackBar();
+                                    },
+                                  ),
+                                ),
+                              );
+                            } else {
+                              data['qty'] = quantityCrtl.text.trim();
+                              data['product'] = productNameCtrl.text.trim();
+                              data['details'] = detailsCrtl.text.trim();
+                              _quotationBloc.add(GetReqQuotation(data: data));
+                            }
                           },
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
@@ -435,7 +467,6 @@ class _RequestforqutationState extends State<Requestforqutation> {
                   ),
                   onChanged: (val) {
                     String key;
-                    print('Drop Text $dropText');
                     if (dropText == 'Select category') {
                       key = 'category_id';
                       data[key] = categoryIdList[categoryList.indexOf(val)];
