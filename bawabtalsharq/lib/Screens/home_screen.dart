@@ -628,14 +628,14 @@ Widget mainMostPopularProduct(
               ),
               Padding(
                 padding:
-                    const EdgeInsetsDirectional.only(top: 70.0, start: 3.0),
+                    const EdgeInsetsDirectional.only(top: 80.0, start: 3.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     AutoSizeText(
                       nameProduct,
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                       minFontSize: 10,
@@ -651,10 +651,10 @@ Widget mainMostPopularProduct(
                       style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize:
-                              MediaQuery.of(context).textScaleFactor * 15),
+                              MediaQuery.of(context).textScaleFactor * 11),
                     ),
                     SizedBox(
-                      height: 16.0,
+                      height: 11.0,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10),
@@ -663,7 +663,7 @@ Widget mainMostPopularProduct(
                         style: TextStyle(
                           color: orangeColor,
                           fontWeight: FontWeight.w500,
-                          fontSize: MediaQuery.of(context).textScaleFactor * 15,
+                          fontSize: MediaQuery.of(context).textScaleFactor * 11,
                         ),
                       ),
                     )
@@ -689,7 +689,7 @@ Widget subMostPopularProduct(
   return GestureDetector(
     onTap: onPress,
     child: Container(
-      height: 80,
+      height: 85,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15.0),
         color: backgroundColor,
@@ -754,14 +754,16 @@ Widget subMostPopularProduct(
                     ),
                   ),
                   SizedBox(
-                    height: 5.0,
+                    height: 4.0,
                   ),
-                  Text(
-                    price,
-                    style: TextStyle(
-                      color: Colors.deepOrangeAccent,
-                      fontWeight: FontWeight.w500,
-                      fontSize: MediaQuery.of(context).textScaleFactor * 13,
+                  Expanded(
+                    child: Text(
+                      price,
+                      style: TextStyle(
+                        color: Colors.deepOrangeAccent,
+                        fontWeight: FontWeight.w500,
+                        fontSize: MediaQuery.of(context).textScaleFactor * 11,
+                      ),
                     ),
                   )
                 ],

@@ -1522,7 +1522,7 @@ Widget textFiledPrice(BuildContext context, String text, double width,
       decoration: InputDecoration(
         errorText: errorMessage,
         suffixIcon: dropIcon,
-        hintText: text,
+        labelText: text,
         labelStyle: TextStyle(
             fontFamily: 'Roboto-Thin.ttf', fontWeight: FontWeight.w200),
         focusedBorder:
