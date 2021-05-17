@@ -26,7 +26,7 @@ class RequestQuotationsRepo {
 
       return modelResponse;
     } else {
-      print('Error');
+      return null;
     }
   }
 }

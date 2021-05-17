@@ -32,6 +32,8 @@ class QuotationBloc extends Bloc<QuotationEvent, QuotationState> {
 
       if (data != null) {
         yield PostedQuotationResponseState(msg: data.msg);
+      } else {
+        ReqQuotationErrorState(msg: 'Connection Error');
       }
     }
   }
