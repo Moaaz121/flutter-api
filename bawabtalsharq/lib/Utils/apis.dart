@@ -50,4 +50,9 @@ class APIS {
 // Start Islam
 
 // end Islam
+
+//start Asmaa
+  static const String Req_Quotation_API = "request_quotation&lang=";
+
+// end Asmaa
 }
