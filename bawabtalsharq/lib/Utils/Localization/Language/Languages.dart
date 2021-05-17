@@ -70,6 +70,7 @@ abstract class Languages {
   String get otpCode;
   String get resendCode;
   String get verify;
+  String get currency1;
 
 // end Bahaa
 

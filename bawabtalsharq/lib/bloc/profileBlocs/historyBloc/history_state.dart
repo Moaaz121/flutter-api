@@ -10,3 +10,8 @@ class HistoryLoadedState extends HistoryState {
   HistoryModel response;
   HistoryLoadedState({this.response});
 }
+
+class HistoryErrorState extends HistoryState {
+  String message;
+  HistoryErrorState({this.message});
+}
