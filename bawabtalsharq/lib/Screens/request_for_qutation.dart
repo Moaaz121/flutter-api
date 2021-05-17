@@ -17,9 +17,9 @@ class _RequestforqutationState extends State<Requestforqutation> {
   bool _isPressed = false;
   bool _checked1 = false;
   bool _checked2 = false;
+
   TextEditingController productNameCtrl = TextEditingController();
   TextEditingController quantityCrtl = TextEditingController();
-
   TextEditingController detailsCrtl = TextEditingController();
   TextEditingController otherReqCtrl = TextEditingController();
   TextEditingController portCtrl = TextEditingController();
@@ -41,15 +41,15 @@ class _RequestforqutationState extends State<Requestforqutation> {
   List<String> destinationList = ['ahmed', 'moaaz'];
 
   Map<String, dynamic> data;
-
   QuotationBloc _quotationBloc;
+
+  int i = 0;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _quotationBloc = QuotationBloc();
-
-    _quotationBloc.add(GetCatergoryList());
   }
 
   @override
@@ -58,6 +58,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
     super.dispose();
 
     _quotationBloc.close();
+
     productNameCtrl.dispose();
     quantityCrtl.dispose();
     detailsCrtl.dispose();
@@ -92,16 +93,20 @@ class _RequestforqutationState extends State<Requestforqutation> {
                   return Center(
                     child: CircularProgressIndicator(),
                   );
+                } else if (state is QuotationInitialState) {
+                  _quotationBloc.add(GetCatergoryList());
+                  return buildBody();
                 } else if (state is LoadedCategoryListState) {
-                  print('InLoaded');
-                  print(state.categoryList.length);
-
                   List.generate(state.categoryList.length,
                       (i) => categoryList.add(state.categoryList[i].category));
                   List.generate(
                       state.categoryList.length,
                       (i) =>
                           categoryIdList.add(state.categoryList[i].categoryId));
+                  i = i + 1;
+
+                  print(categoryIdList.length);
+                  print(" $i : ${categoryIdList.length}");
 
                   return buildBody();
                 } else if (state is PostingReqQuotationState) {

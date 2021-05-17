@@ -15,8 +15,6 @@ class QuotationBloc extends Bloc<QuotationEvent, QuotationState> {
   Stream<QuotationState> mapEventToState(
     QuotationEvent event,
   ) async* {
-    // TODO: implement mapEventToState
-
     if (event is GetCatergoryList) {
       yield LoadingCategoryListState();
 
