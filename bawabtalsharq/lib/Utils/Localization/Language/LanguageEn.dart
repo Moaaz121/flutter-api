@@ -69,6 +69,7 @@ class LanguageEn extends Languages {
   String get resendCode => 'Resend Code in';
   String get verification => 'Verification';
   String get verify => 'Verify';
+  String get currency1 => '\$';
 
 // end Bahaa
 

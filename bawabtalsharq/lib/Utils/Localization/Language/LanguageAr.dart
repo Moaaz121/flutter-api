@@ -68,6 +68,7 @@ class LanguageAr extends Languages {
   String get resendCode => 'إعادة إرسال الرمز';
   String get verification => 'تحقق';
   String get verify => 'ثبت';
+  String get currency1 => 'جنيهًا';
 
 // end Bahaa
 

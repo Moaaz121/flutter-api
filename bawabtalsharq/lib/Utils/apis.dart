@@ -32,6 +32,7 @@ class APIS {
   static const String REFRESH_KEY_API = "refresh_token";
   static const String HISTORY_API = "history";
   static const String GOLDEN_API = "golden_suppliers&lang=";
+  static const String PLAN_API = "get_palns&lang=";
 // end Bahaa
 
 // Start Mosdik
@@ -50,4 +51,9 @@ class APIS {
 // Start Islam
 
 // end Islam
+
+//start Asmaa
+  static const String Req_Quotation_API = "request_quotation&lang=";
+
+// end Asmaa
 }
