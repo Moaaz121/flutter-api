@@ -900,12 +900,15 @@ Widget mostPopularCateg(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    nameProduct,
-                    style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
+                  Expanded(
+                    child: Text(
+                      nameProduct,
+                      maxLines: 1,
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
+                    ),
                   ),
                   SizedBox(
                     height: 5,
