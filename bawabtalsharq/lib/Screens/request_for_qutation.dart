@@ -354,6 +354,8 @@ class _RequestforqutationState extends State<Requestforqutation> {
                           onPressed: () {
                             data['qty'] = quantityCrtl.text.trim();
                             data['product'] = productNameCtrl.text.trim();
+                            data['details'] = detailsCrtl.text.trim();
+
                             _quotationBloc.add(GetReqQuotation(data: data));
                           },
                           shape: RoundedRectangleBorder(
@@ -433,11 +435,19 @@ class _RequestforqutationState extends State<Requestforqutation> {
                   ),
                   onChanged: (val) {
                     String key;
-                    if (Languages.of(context).categoryName == 'Category name') {
+                    print('Drop Text $dropText');
+                    if (dropText == 'Select category') {
                       key = 'category_id';
+                      data[key] = categoryIdList[categoryList.indexOf(val)];
                     }
-                    print(key);
-                    data[key] = categoryIdList[categoryList.indexOf(val)];
+                    if (dropText == 'Sourcing purpose') {
+                      key = 'sourcing';
+                      data[key] = val;
+                    }
+                    if (dropText == 'FCA') {
+                      key = 'trade';
+                      data[key] = val;
+                    }
                   },
                 ),
               ),
