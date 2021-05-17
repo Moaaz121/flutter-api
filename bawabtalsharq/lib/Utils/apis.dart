@@ -39,6 +39,7 @@ class APIS {
   static const String Superior_API = "superior_suppliers&lang=";
   static const String IndividualProduct_API = "product_details&lang=";
   static const String Currency_API = "get_currencies&lang=";
+  static const String Country_API = "get_countries&lang=";
 
 // end Mosdik
 

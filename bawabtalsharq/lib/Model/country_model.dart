@@ -20,13 +20,14 @@ class CountryModel {
   int code;
   String status;
   String msg;
-  List<Datum> data;
+  List<CountryData> data;
 
   factory CountryModel.fromJson(Map<String, dynamic> json) => CountryModel(
         code: json["code"],
         status: json["status"],
         msg: json["msg"],
-        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+        data: List<CountryData>.from(
+            json["data"].map((x) => CountryData.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -37,8 +38,8 @@ class CountryModel {
       };
 }
 
-class Datum {
-  Datum({
+class CountryData {
+  CountryData({
     this.code,
     this.region,
     this.lat,
@@ -52,7 +53,7 @@ class Datum {
   String lon;
   String country;
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory CountryData.fromJson(Map<String, dynamic> json) => CountryData(
         code: json["code"],
         region: regionValues.map[json["region"]],
         lat: json["lat"],

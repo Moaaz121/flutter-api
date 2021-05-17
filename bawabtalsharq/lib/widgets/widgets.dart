@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:bawabtalsharq/Model/country_model.dart';
 import 'package:bawabtalsharq/Model/currency_model.dart';
 import 'package:bawabtalsharq/Model/history_model.dart';
 import 'package:bawabtalsharq/Model/home_model.dart';
@@ -10,6 +11,9 @@ import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/bloc/countryBloc/country_bloc.dart';
+import 'package:bawabtalsharq/bloc/countryBloc/country_event.dart';
+import 'package:bawabtalsharq/bloc/countryBloc/country_state.dart';
 import 'package:bawabtalsharq/bloc/currancyBloc/currency_bloc.dart';
 import 'package:bawabtalsharq/bloc/currancyBloc/currency_event.dart';
 import 'package:bawabtalsharq/bloc/currancyBloc/currency_state.dart';
@@ -1661,21 +1665,21 @@ void showCurrencyDialog(BuildContext context) {
 }
 
 void showCountryDialog(BuildContext context) {
-  CurrencyData currency;
-  String selectedCurrencyIndex = currency.currencyId;
-  CurrencyBloc _bloc = CurrencyBloc();
-  _bloc.add(GetCurrencyData());
+  CountryData Country;
+  String selectedCountryIndex = Country.country;
+  CountryBloc _bloc = CountryBloc();
+  _bloc.add(GetCountryData());
   showDialog(
     context: context,
     builder: (BuildContext context) {
       return Center(
-        child: BlocBuilder<CurrencyBloc, CurrencyState>(
+        child: BlocBuilder<CountryBloc, CountryState>(
             bloc: _bloc,
             builder: (context, state) {
-              if (state is CurrencyLoadingState) {
+              if (state is CountryLoadingState) {
                 return CircularProgressIndicator();
-              } else if (state is CurrencyLoadedState &&
-                  state.currencyResponse != null) {
+              } else if (state is CountryLoadedState &&
+                  state.countryResponse != null) {
                 return Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
@@ -1683,12 +1687,12 @@ void showCountryDialog(BuildContext context) {
                   width: MediaQuery.of(context).size.width * 0.9,
                   child: ListView.separated(
                     shrinkWrap: true,
-                    itemCount: state.currencyResponse.data.length,
+                    itemCount: state.countryResponse.data.length,
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
-                          LanguageHelper.changeLanguage(context,
-                              state.currencyResponse.data[index].currencyCode);
+                          LanguageHelper.changeLanguage(
+                              context, state.countryResponse.data[index].code);
                           Navigator.pop(context);
                         },
                         child: Container(
@@ -1701,12 +1705,11 @@ void showCountryDialog(BuildContext context) {
                               ),
                               Expanded(
                                   child: buildText(
-                                      state.currencyResponse.data[index]
-                                          .description,
+                                      state.countryResponse.data[index].country,
                                       15,
                                       fontFamily: mediumFontFamily,
                                       fontWeight: FontWeight.w600)),
-                              selectedCurrencyIndex == index
+                              selectedCountryIndex == index
                                   ? Image.asset(
                                       checkBox,
                                       width: 40,
