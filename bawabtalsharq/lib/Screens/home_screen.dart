@@ -388,7 +388,8 @@ Widget mostPopularIn(BuildContext context, CategoryElement category) {
                 img: category.data[0].image,
                 backgroundColor: yellowColor.withOpacity(.3),
                 onPress: () {
-                  Navigator.pushNamed(context, ScreenRoutes.individualProduct);
+                  Navigator.pushNamed(context, ScreenRoutes.individualProduct,
+                      arguments: category.data[0].id);
                 },
                 nameProduct: category.data[0].name,
                 nameCategory: category.data[0].category.index.toString(),
@@ -401,7 +402,11 @@ Widget mostPopularIn(BuildContext context, CategoryElement category) {
   );
 }
 
-Widget popularSlider(BuildContext context, int pos, List<Datum> datums) {
+Widget popularSlider(
+  BuildContext context,
+  int pos,
+  List<Datum> datums,
+) {
   return SizedBox(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -410,7 +415,10 @@ Widget popularSlider(BuildContext context, int pos, List<Datum> datums) {
             img: datums[0].image,
             backgroundColor:
                 pos == 0 ? redColor.withOpacity(.3) : blueColor.withOpacity(.3),
-            onPress: () {},
+            onPress: () {
+              Navigator.pushNamed(context, ScreenRoutes.individualProduct,
+                  arguments: datums[pos].id);
+            },
             nameProduct: datums[0].name,
             nameCategory: datums[0].category.index.toString(),
             price: datums[0].price,
@@ -420,7 +428,10 @@ Widget popularSlider(BuildContext context, int pos, List<Datum> datums) {
             backgroundColor: pos == 0
                 ? orangeColor.withOpacity(.3)
                 : purpleColor.withOpacity(.3),
-            onPress: () {},
+            onPress: () {
+              Navigator.pushNamed(context, ScreenRoutes.individualProduct,
+                  arguments: datums[pos].id);
+            },
             nameProduct: datums[1].name,
             nameCategory: datums[1].category.index.toString(),
             price: datums[1].price,
@@ -777,7 +788,10 @@ Widget mainMostPopularCategory(CategoryElement category) {
           width: MediaQuery.of(context).size.width / 3 - 5,
           child: mostPopularCateg(
             context: context,
-            onPress: () {},
+            onPress: () {
+              Navigator.pushNamed(context, ScreenRoutes.individualProduct,
+                  arguments: category.data[position].id);
+            },
             position: position,
             backgroundColor: position == 2
                 ? redColor

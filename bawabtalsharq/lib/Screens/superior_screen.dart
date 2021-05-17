@@ -1,9 +1,13 @@
+import 'package:bawabtalsharq/Model/superior_model.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
-import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/bloc/superiorBlocs/superior_bloc.dart';
+import 'package:bawabtalsharq/bloc/superiorBlocs/superior_event.dart';
+import 'package:bawabtalsharq/bloc/superiorBlocs/superior_state.dart';
 import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SuperiorScreen extends StatefulWidget {
   @override
@@ -11,49 +15,78 @@ class SuperiorScreen extends StatefulWidget {
 }
 
 class _SuperiorScreenState extends State<SuperiorScreen> {
+  SuperiorBloc _superiorBloc;
+  bool isLoading = false;
+  bool isLoaded = false;
+  List<SuperiorData> listOfSuperior;
   ScrollController _mainScrollController = ScrollController();
+
+  @override
+  void initState() {
+    _superiorBloc = SuperiorBloc();
+    _superiorBloc.add(DoSuperiorEvent());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Color(0xfff8f8f8),
-      child: SafeArea(
-        bottom: false,
-        child: Stack(
-          children: [
-            SingleChildScrollView(
-              physics: BouncingScrollPhysics(
-                parent: NeverScrollableScrollPhysics(),
-              ),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: EdgeInsetsDirectional.only(start: 15),
-                      child: buildText(
-                        Languages.of(context).superior,
-                        35.0,
-                        fontWeight: FontWeight.bold,
-                        color: orangeColor,
+    return BlocBuilder<SuperiorBloc, SuperiorState>(
+      bloc: _superiorBloc,
+      builder: (context, state) {
+        if (state is SuperiorLoadingState) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        if (state is SuperiorLoadedState) {
+          isLoaded = true;
+          listOfSuperior = state.superiorResponse;
+        }
+        return isLoaded
+            ? Container(
+                color: Color(0xfff8f8f8),
+                child: SafeArea(
+                  bottom: false,
+                  child: Stack(
+                    children: [
+                      SingleChildScrollView(
+                        physics: BouncingScrollPhysics(
+                          parent: NeverScrollableScrollPhysics(),
+                        ),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: EdgeInsetsDirectional.only(start: 15),
+                                child: buildText(
+                                  Languages.of(context).superior,
+                                  35.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: orangeColor,
+                                ),
+                              ),
+                              rocketList(context)
+                            ]),
                       ),
-                    ),
-                    rocketList(context)
-                  ]),
-            ),
-            Positioned.directional(
-              textDirection: Directionality.of(context),
-              end: 20,
-              bottom: MediaQuery.of(context).size.height * 0.15,
-              child: buildFloatingActionBtn(
-                icon: Icons.arrow_upward,
-                onPressed: () {
-                  _mainScrollController.animateTo(0.0,
-                      duration: Duration(seconds: 1), curve: Curves.easeOut);
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
+                      Positioned.directional(
+                        textDirection: Directionality.of(context),
+                        end: 20,
+                        bottom: MediaQuery.of(context).size.height * 0.15,
+                        child: buildFloatingActionBtn(
+                          icon: Icons.arrow_upward,
+                          onPressed: () {
+                            _mainScrollController.animateTo(0.0,
+                                duration: Duration(seconds: 1),
+                                curve: Curves.easeOut);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            : Container();
+      },
     );
   }
 
@@ -65,15 +98,15 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
             EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.23),
         controller: _mainScrollController,
         scrollDirection: Axis.vertical,
-        itemCount: 15,
+        itemCount: listOfSuperior.length,
         itemBuilder: (context, position) {
-          return supplierItem();
+          return supplierItem(position);
         },
       ),
     );
   }
 
-  Widget supplierItem() {
+  Widget supplierItem(int position) {
     return Container(
       child: Column(
         children: [
@@ -135,7 +168,8 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
                           height: MediaQuery.of(context).size.height * 0.15,
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              image: AssetImage(mosadaq_img),
+                              image:
+                                  NetworkImage(listOfSuperior[position].logo),
                               fit: BoxFit.fill,
                             ),
                           ),
@@ -144,7 +178,7 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
                       SizedBox(
                         height: 15,
                       ),
-                      buildText('Bahaa Robert', 12),
+                      buildText(listOfSuperior[position].name, 12),
                       SizedBox(
                         height: 5,
                       ),
@@ -158,7 +192,7 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
                             width: 5,
                           ),
                           buildText(
-                            'Member since: 2020',
+                            'Member since: ${listOfSuperior[position].year}',
                             8,
                             fontWeight: FontWeight.w400,
                           ),
@@ -177,7 +211,7 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
                             size: 20,
                             color: Colors.yellow,
                           ),
-                          buildText('4.5', 12)
+                          buildText('${listOfSuperior[position].rate}', 12)
                         ],
                       ),
                     ],
@@ -188,21 +222,24 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
                   textDirection: Directionality.of(context),
                   top: MediaQuery.of(context).size.width * 0.28,
                   end: MediaQuery.of(context).size.width * 0.1,
-                  child: productImage(0.10, 0.16),
+                  child: productImage(0.10, 0.16,
+                      listOfSuperior[position].products[0].imagePath),
                 ),
                 //center image
                 Positioned.directional(
                   textDirection: Directionality.of(context),
                   top: MediaQuery.of(context).size.width * 0.25,
                   end: MediaQuery.of(context).size.width * 0.15,
-                  child: productImage(0.11, 0.24),
+                  child: productImage(0.11, 0.24,
+                      listOfSuperior[position].products[1].imagePath),
                 ),
                 //top image
                 Positioned.directional(
                   textDirection: Directionality.of(context),
                   top: MediaQuery.of(context).size.width * 0.23,
                   end: MediaQuery.of(context).size.width * 0.22,
-                  child: productImage(0.12, 0.3),
+                  child: productImage(0.12, 0.3,
+                      listOfSuperior[position].products[2].imagePath),
                 )
               ],
             ),
@@ -212,13 +249,22 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
     );
   }
 
-  Container productImage(double width, double height) {
+  Container productImage(double width, double height, String image) {
     return Container(
       width: MediaQuery.of(context).size.height * width,
       height: MediaQuery.of(context).size.width * height,
       decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(5),
+        boxShadow: [
+          BoxShadow(
+              color: Color(0x29000000),
+              offset: Offset(0, 1),
+              blurRadius: 6,
+              spreadRadius: 0)
+        ],
         image: DecorationImage(
-          image: AssetImage(kareem_img),
+          image: NetworkImage(image),
           fit: BoxFit.fill,
         ),
       ),

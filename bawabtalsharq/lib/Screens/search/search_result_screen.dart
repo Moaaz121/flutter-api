@@ -3,12 +3,19 @@ import 'dart:ui';
 import 'package:bawabtalsharq/Screens/search/search_sort_dialog.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/bloc/searchBloc/search_bloc.dart';
+import 'package:bawabtalsharq/bloc/searchBloc/search_event.dart';
 import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SearchResult extends StatefulWidget {
+  final String q;
+  final List<String> Categories;
+
+  const SearchResult({Key key, this.q, this.Categories}) : super(key: key);
   @override
   _SearchResultState createState() => _SearchResultState();
 }
@@ -18,10 +25,14 @@ class _SearchResultState extends State<SearchResult> {
   bool _isSearchPressed = false;
   bool isGrid = true;
   ScrollController _resultScrollController = ScrollController();
+  SearchBloc _bloc;
 
   @override
   void initState() {
     selections = [true, false];
+    _bloc = new SearchBloc();
+    _bloc
+        .add(DoSearchEvent(widget.q, page: '0', categories: widget.Categories));
     super.initState();
   }
 
@@ -166,44 +177,61 @@ class _SearchResultState extends State<SearchResult> {
             SizedBox(
               height: 20,
             ),
-            isGrid
-                ? Expanded(
-                    child: GridView.builder(
-                      controller: _resultScrollController,
-                      shrinkWrap: true,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10),
-                      itemCount: 30,
-                      itemBuilder: (context, position) {
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(
-                                context, ScreenRoutes.individualProduct);
-                          },
-                          child: productItem(context),
-                        );
-                      },
-                    ),
-                  )
-                : Expanded(
-                    child: ListView.builder(
-                      controller: _resultScrollController,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      itemCount: 30,
-                      itemBuilder: (context, position) {
-                        return GestureDetector(
-                          child: productItemLandscape(context),
-                          onTap: () {
-                            Navigator.pushNamed(
-                                context, ScreenRoutes.individualProduct);
-                          },
-                        );
-                      },
-                    ),
-                  ),
+            BlocBuilder(
+                bloc: _bloc,
+                builder: (context, event) {
+                  if (event is SearchLoadingState) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (event is SearchLoadedState) {
+                    return isGrid
+                        ? Expanded(
+                            child: GridView.builder(
+                              controller: _resultScrollController,
+                              shrinkWrap: true,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      crossAxisSpacing: 10,
+                                      mainAxisSpacing: 10),
+                              itemCount: event.searchResponse.products.length,
+                              itemBuilder: (context, position) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(context,
+                                        ScreenRoutes.individualProduct);
+                                  },
+                                  child: productItem(context,
+                                      product: event
+                                          .searchResponse.products[position]),
+                                );
+                              },
+                            ),
+                          )
+                        : Expanded(
+                            child: ListView.builder(
+                              controller: _resultScrollController,
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              itemCount: event.searchResponse.products.length,
+                              itemBuilder: (context, position) {
+                                return GestureDetector(
+                                  child: productItemLandscape(context,
+                                      product: event
+                                          .searchResponse.products[position]),
+                                  onTap: () {
+                                    Navigator.pushNamed(context,
+                                        ScreenRoutes.individualProduct);
+                                  },
+                                );
+                              },
+                            ),
+                          );
+                  } else {
+                    return SizedBox();
+                  }
+                }),
           ],
         ),
       ),

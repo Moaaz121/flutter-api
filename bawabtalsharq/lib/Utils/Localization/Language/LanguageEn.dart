@@ -155,6 +155,7 @@ class LanguageEn extends Languages {
   String get currency => 'Currency';
   String get help => 'Help';
   String get main => 'Main';
+  String get lan => 'English';
 
 // end Mosdik
 
@@ -257,7 +258,7 @@ class LanguageEn extends Languages {
   String get send => 'Send';
   String get createNewPassword => 'Create New Password';
   String get emailAddress => 'Email Address';
-  String get memberSince => 'Member since: 2020';
+  String get memberSince => 'Member since: ';
   String get sportShoes => 'Sport Shoes';
   String get eslamAlaa => 'Eslam alaa';
   String get firstName => 'First Name';

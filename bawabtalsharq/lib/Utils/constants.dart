@@ -82,17 +82,21 @@ class Constants {
     return lang;
   }
 
-  static saveUser(String userJason) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String user = jsonEncode(userJason);
-    await prefs.setString('user', user);
-  }
+  static Future<UserModel> getUserInfo() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-  static Future<String> getUser() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    Map json = jsonDecode(prefs.getString('user'));
-    // var user = UserModel().data.fromJson();
-    return prefs.getString('apiKey') ?? 0;
+    Map<String, dynamic> userMap;
+    final String userStr = prefs.getString('user');
+    if (userStr != null) {
+      userMap = jsonDecode(userStr) as Map<String, dynamic>;
+    }
+
+    if (userMap != null) {
+      final UserModel user = UserModel.fromJson(userMap);
+      print(user);
+      return user;
+    }
+    return null;
   }
 }
 

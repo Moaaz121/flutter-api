@@ -148,6 +148,7 @@ abstract class Languages {
   String get saveChange;
   String get help;
   String get main;
+  String get lan;
 
 // end Mosdik
 

@@ -7,6 +7,7 @@ class APIS {
 // Start Karem
   static const String HOME_API = 'get_home';
   static const String SEND_MESSAGE_API = 'contact_us_message';
+  static const String SEARCH_API = 'search';
 // end karem
 
 // Start Asmaa
@@ -29,10 +30,15 @@ class APIS {
   static const String CHANGE_PASSWORD_API = "change_password";
   static const String UPDATE_ACCOUNT_API = "update_account";
   static const String REFRESH_KEY_API = "refresh_token";
+  static const String HISTORY_API = "history";
+  static const String GOLDEN_API = "golden_suppliers&lang=";
 // end Bahaa
 
 // Start Mosdik
   static const String Category_API = "get_categories&lang=";
+  static const String Superior_API = "superior_suppliers&lang=";
+  static const String IndividualProduct_API = "product_details&lang=";
+  static const String Currency_API = "get_currencies&lang=";
 
 // end Mosdik
 

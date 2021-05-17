@@ -5,6 +5,9 @@ import 'package:bawabtalsharq/Screens/profile/contact_us/send_message_dialog.dar
 import 'package:bawabtalsharq/Screens/profile_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/bloc/currancyBloc/currency_bloc.dart';
+import 'package:bawabtalsharq/bloc/currancyBloc/currency_event.dart';
+import 'package:bawabtalsharq/bloc/currancyBloc/currency_state.dart';
 import 'package:bawabtalsharq/bloc/profileBlocs/settingBloc/setting_block.dart';
 import 'package:bawabtalsharq/bloc/profileBlocs/settingBloc/setting_event.dart';
 import 'package:bawabtalsharq/bloc/profileBlocs/settingBloc/setting_state.dart';
@@ -23,12 +26,15 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   bool _switchValue = true;
   SettingBloc _settingBloc;
+  CurrencyBloc _currencyBloc;
   ContactModel location;
 
   @override
   void initState() {
     _settingBloc = SettingBloc();
     _settingBloc.add(GetSettingEvent());
+    _currencyBloc = CurrencyBloc();
+    _currencyBloc.add(GetCurrencyData());
     super.initState();
   }
 
@@ -46,7 +52,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       body: MultiBlocProvider(
         providers: [
-          BlocProvider(create: (BuildContext context) => _settingBloc)
+          BlocProvider(create: (BuildContext context) => _settingBloc),
+          BlocProvider(create: (BuildContext context) => _currencyBloc)
         ],
         child: SingleChildScrollView(
           padding:
@@ -120,26 +127,48 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       icon: Icons.flag,
                       iconColor: Colors.blue),
                   cardSetting(
+                      onPress: () {
+                        showLanguagesDialog(context);
+                      },
                       text: buildText(
-                        Languages.of(context).language,
+                        Languages.of(context).languages,
                         12,
                         fontWeight: FontWeight.w600,
                       ),
-                      extraText: buildText('English', 10,
+                      extraText: buildText(Languages.of(context).lan, 12,
                           fontWeight: FontWeight.w400, color: orangeColor),
                       icon: Icons.language,
                       iconColor: Colors.deepOrange),
-                  cardSetting(
-                    text: buildText(
-                      Languages.of(context).currency,
-                      12,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    extraText: buildText('EGP', 10,
-                        fontWeight: FontWeight.w400, color: orangeColor),
-                    icon: Icons.monetization_on,
-                    iconColor: Colors.green,
+
+                  BlocBuilder<CurrencyBloc, CurrencyState>(
+                    bloc: _currencyBloc,
+                    builder: (context, state) {
+                      if (state is CurrencyLoadedState &&
+                          state.currencyResponse != null) {
+                        print(state.currencyResponse.data.length);
+                        return cardSetting(
+                          onPress: () {
+                            showCurrencyDialog(
+                                context, state.currencyResponse.data);
+                          },
+                          text: buildText(
+                            Languages.of(context).currency,
+                            12,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          extraText: buildText('EGP', 10,
+                              fontWeight: FontWeight.w400, color: orangeColor),
+                          icon: Icons.monetization_on,
+                          iconColor: Colors.green,
+                        );
+                      } else if (state is SettingLoadingState) {
+                        return CircularProgressIndicator();
+                      } else {
+                        return CircularProgressIndicator();
+                      }
+                    },
                   ),
+
                   // cardSetting(
                   //   text: buildText(
                   //     'Change Password',
@@ -281,10 +310,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Widget cardSetting(
-      {Widget text,
+      {Function onPress,
+      Widget text,
       IconData icon,
       Color iconColor,
-      Function onPress,
       Widget extraText}) {
     return GestureDetector(
       onTap: onPress,

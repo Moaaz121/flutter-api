@@ -27,8 +27,6 @@ import 'package:bawabtalsharq/Screens/sub_category_screen.dart';
 import 'package:bawabtalsharq/Screens/suppliers/golden_suppliers_screen.dart';
 import 'package:bawabtalsharq/Screens/suppliers/supplier_profile_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/AppLocalizationDelgate.dart';
-import 'package:bawabtalsharq/repo/contact_repo.dart';
-import 'package:bawabtalsharq/repo/update_profile_repo.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -96,7 +94,8 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.settingsScreen: (_) => SettingsScreen(),
         ScreenRoutes.requestForQuotation: (_) => RequestForQScreen(),
         ScreenRoutes.postQuotationRequest: (_) => Requestforqutation(),
-        ScreenRoutes.individualProduct: (_) => IndividualProduct(),
+        ScreenRoutes.individualProduct: (context) =>
+            IndividualProduct(ModalRoute.of(context).settings.arguments),
         ScreenRoutes.listFilter: (_) => ListFilterScreen(),
         ScreenRoutes.searchScreen: (_) => SearchScreen(),
         ScreenRoutes.searchResultScreen: (_) => SearchResult(),
@@ -110,7 +109,8 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.savedScreen: (_) => SavedScreen(),
         ScreenRoutes.quoteScreen: (_) => QuoteDetailsScreen(),
         ScreenRoutes.supplierProfileScreen: (_) => SupplierProfile(),
-        ScreenRoutes.historyScreen: (_) => HistoryScreen(),
+        ScreenRoutes.historyScreen: (context) =>
+            HistoryScreen(ModalRoute.of(context).settings.arguments),
         ScreenRoutes.forgetPassword: (_) => ForgetPassword(),
         ScreenRoutes.newPassword: (_) => NewPassword(),
         ScreenRoutes.verificationPassword: (_) => VerificationScreen(),

@@ -1,12 +1,18 @@
 import 'dart:ui';
 
+import 'package:bawabtalsharq/Model/currency_model.dart';
+import 'package:bawabtalsharq/Model/history_model.dart';
 import 'package:bawabtalsharq/Model/home_model.dart';
+import 'package:bawabtalsharq/Model/search_model.dart' as SearchItem;
 import 'package:bawabtalsharq/Screens/home_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/bloc/currancyBloc/currency_bloc.dart';
+import 'package:bawabtalsharq/bloc/currancyBloc/currency_event.dart';
+import 'package:bawabtalsharq/bloc/currancyBloc/currency_state.dart';
 import 'package:bawabtalsharq/bloc/langBloc/lang_bloc.dart';
 import 'package:bawabtalsharq/bloc/langBloc/lang_event.dart';
 import 'package:bawabtalsharq/bloc/langBloc/lang_state.dart';
@@ -871,7 +877,8 @@ AppBar appBarSearch({
   );
 }
 
-Widget productItem(BuildContext context, {bool fillSaved = false}) {
+Widget productItem(BuildContext context,
+    {bool fillSaved = false, SearchItem.Product product}) {
   return Padding(
     padding: const EdgeInsets.all(5),
     child: Stack(
@@ -908,7 +915,7 @@ Widget productItem(BuildContext context, {bool fillSaved = false}) {
                                   color: Colors.black,
                                   fontSize: 12,
                                 ),
-                                text: Languages.of(context).blueShoes),
+                                text: product.product),
                           ),
                           SizedBox(
                             height: 2,
@@ -921,7 +928,7 @@ Widget productItem(BuildContext context, {bool fillSaved = false}) {
                                   color: orangeColor,
                                   fontSize: 12,
                                 ),
-                                text: Languages.of(context).shoesPrice),
+                                text: '${product.price} L.E'),
                           ),
                         ],
                       ),
@@ -1025,9 +1032,8 @@ Widget productItem(BuildContext context, {bool fillSaved = false}) {
           top: -5,
           right: LanguageHelper.isEnglish ? 0 : null,
           left: LanguageHelper.isEnglish ? null : 0,
-          child: Image(
-            fit: BoxFit.fill,
-            image: AssetImage(dress_image),
+          child: Image.network(
+            product.imagePath,
             width: MediaQuery.of(context).size.width * 0.15,
             height: MediaQuery.of(context).size.height * 0.13,
           ),
@@ -1038,8 +1044,9 @@ Widget productItem(BuildContext context, {bool fillSaved = false}) {
 }
 
 Widget productItemLandscape(
-  BuildContext context,
-) {
+  BuildContext context, {
+  SearchItem.Product product,
+}) {
   double height = MediaQuery.of(context).size.height;
   double width = MediaQuery.of(context).size.width;
   return Stack(
@@ -1103,8 +1110,7 @@ Widget productItemLandscape(
                                       color: Colors.black,
                                       fontSize: 12,
                                     ),
-                                    text:
-                                        ('cxccdcvdjjjjdchfcbjjbhjgkjbhbjgkjkkkkjjnjbhbhjkvgghhdbcdhbh ')),
+                                    text: (product.product)),
                                 // Languages.of(context).blueShoes),
                               ),
                             ),
@@ -1121,7 +1127,7 @@ Widget productItemLandscape(
                                   color: orangeColor,
                                   fontSize: 12,
                                 ),
-                                text: Languages.of(context).shoesPrice),
+                                text: '${product.price} L.E'),
                           ),
 
                           Expanded(
@@ -1169,9 +1175,175 @@ Widget productItemLandscape(
         top: 2,
         left: LanguageHelper.isEnglish ? width * 0.15 : null,
         right: LanguageHelper.isEnglish ? null : width * 0.18,
-        child: Image(
+        child: Image.network(
+          product.imagePath,
           fit: BoxFit.fill,
-          image: AssetImage(dress_image),
+          width: width * 0.17,
+          height: height * 0.16,
+        ),
+      ),
+      Positioned.directional(
+          textDirection: Directionality.of(context),
+          top: height * -.11,
+          end: width * .05,
+          bottom: height * 0.03,
+          child: Icon(
+            LanguageHelper.isEnglish
+                ? Icons.bookmark_border
+                : Icons.bookmark_border,
+            size: 25,
+            color: Colors.black.withOpacity(0.7),
+          )),
+      Positioned.directional(
+        textDirection: Directionality.of(context),
+        top: height * -.11,
+        end: width * .05,
+        bottom: height * 0.03,
+        child: Icon(
+          LanguageHelper.isEnglish
+              ? Icons.bookmark_border
+              : Icons.bookmark_border,
+          size: 25,
+          color: Colors.black.withOpacity(0.7),
+        ),
+      ),
+    ],
+  );
+}
+
+Widget productItemLandscape2(BuildContext context,
+    {List<Product> products, int index}) {
+  double height = MediaQuery.of(context).size.height;
+  double width = MediaQuery.of(context).size.width;
+  return Stack(
+    overflow: Overflow.visible,
+    children: [
+      Container(
+        margin: EdgeInsets.all(10),
+        height: height * 0.2,
+        decoration: BoxDecoration(
+            boxShadow: [makeShadow()],
+            borderRadius: BorderRadius.circular(20),
+            color: Colors.white),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Row(
+                children: [
+                  Column(
+                    children: [
+                      Container(
+                        margin: EdgeInsetsDirectional.fromSTEB(20, 0, 5, 0),
+                        height: height * 0.16,
+                        width: width * 0.35,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(16),
+                            bottomRight: Radius.circular(16),
+                          ),
+                          color: Color(0xfffff2e5),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                    ],
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        top: 12,
+                        left: 10,
+                        right: 15,
+                        bottom: 18,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                left: 2,
+                                right: 18,
+                              ),
+                              child: RichText(
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,
+                                text: TextSpan(
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      fontSize: 12,
+                                    ),
+                                    text: (products[index].product)),
+                                // Languages.of(context).blueShoes),
+                              ),
+                            ),
+                          ),
+                          // SizedBox(
+                          //   height: height * .03,
+                          // ),
+
+                          RichText(
+                            maxLines: 2,
+                            text: TextSpan(
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: orangeColor,
+                                  fontSize: 12,
+                                ),
+                                text: '${products[index].price} L.E'),
+                          ),
+
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Container(
+                                  margin: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 0),
+                                  width: 20,
+                                  height: 20,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      image: AssetImage(profile_image),
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 4,
+                                ),
+                                RichText(
+                                  maxLines: 1,
+                                  text: TextSpan(
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 7,
+                                          fontWeight: FontWeight.w400),
+                                      text: 'Bahaa Robert'),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+      Positioned(
+        top: 2,
+        left: LanguageHelper.isEnglish ? width * 0.15 : null,
+        right: LanguageHelper.isEnglish ? null : width * 0.18,
+        child: Image.network(
+          products[index].imagePath,
+          fit: BoxFit.fill,
           width: width * 0.17,
           height: height * 0.16,
         ),
@@ -1405,6 +1577,84 @@ Widget mostPopularByCategoryHeader(BuildContext context) {
         ),
       ),
     ),
+  );
+}
+
+void showCurrencyDialog(BuildContext context, List<CurrencyData> currencies) {
+  CurrencyBloc _bloc = CurrencyBloc();
+  _bloc.add(GetCurrencyData());
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Center(
+        child: BlocBuilder<CurrencyBloc, CurrencyState>(
+            bloc: _bloc,
+            builder: (context, state) {
+              if (state is CurrencyLoadingState) {
+                return CircularProgressIndicator();
+              } else if (state is CurrencyLoadedState &&
+                  state.currencyResponse != null) {
+                return Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white),
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    itemCount: state.currencyResponse.data.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          LanguageHelper.changeLanguage(context,
+                              state.currencyResponse.data[index].currencyCode);
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          height: 60,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Expanded(
+                                  child: buildText(
+                                      state.currencyResponse.data[index]
+                                          .description,
+                                      15,
+                                      fontFamily: mediumFontFamily,
+                                      fontWeight: FontWeight.w600)),
+                              currencies == index
+                                  ? Image.asset(
+                                      checkBox,
+                                      width: 40,
+                                      height: 40,
+                                    )
+                                  : Text(''),
+                              SizedBox(
+                                width: 10,
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) =>
+                        Padding(
+                      padding: const EdgeInsets.only(right: 20, left: 20),
+                      child: Divider(
+                        height: 1,
+                        thickness: 1,
+                      ),
+                    ),
+                  ),
+                );
+              } else {
+                return CircularProgressIndicator();
+              }
+            }),
+      );
+    },
   );
 }
 

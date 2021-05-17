@@ -1,6 +1,7 @@
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:bawabtalsharq/bloc/updateProfileBlocs/updateAccount/update_account_bloc.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:bawabtalsharq/main.dart';
+import 'package:bawabtalsharq/Model/user_model.dart';
 import 'package:flutter/scheduler.dart';
 
 class UpdateProfile extends StatefulWidget {
@@ -22,6 +24,8 @@ class _UpdateProfileState extends State<UpdateProfile> {
   TextEditingController lastNameController = TextEditingController();
   DateTime _selectedDateTime;
 
+  User _currentUser;
+
   String firstNameError;
   String lastNameError;
   bool isLoading = false;
@@ -32,6 +36,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
   void initState() {
     // TODO: implement initState
     _updateAccountBloc = UpdateAccountBloc();
+    Constants.getUserInfo().then((value) => _currentUser = value.data);
     super.initState();
   }
 
@@ -185,8 +190,8 @@ class _UpdateProfileState extends State<UpdateProfile> {
                               //get user information rather than static info
                               _updateAccountBloc.add(
                                 UpdateEvent(
-                                    '1',
-                                    '1619614894',
+                                    _currentUser.userId,
+                                    _currentUser.apiKey,
                                     firstNameController.text,
                                     lastNameController.text),
                               );
