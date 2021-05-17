@@ -151,7 +151,7 @@ class _IndividualProductState extends State<IndividualProduct>
                           return Column(
                             children: [
                               Container(
-                                height: MediaQuery.of(context).size.height * 3,
+                                height: MediaQuery.of(context).size.height * 4,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.only(

@@ -1,4 +1,5 @@
 import 'package:bawabtalsharq/Model/contactUs_model.dart';
+import 'package:bawabtalsharq/Model/currency_model.dart';
 import 'package:bawabtalsharq/Screens/profile/contact_us/location_dialog.dart';
 import 'package:bawabtalsharq/Screens/profile/contact_us/phone_dialog.dart';
 import 'package:bawabtalsharq/Screens/profile/contact_us/send_message_dialog.dart';
@@ -7,7 +8,6 @@ import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/currancyBloc/currency_bloc.dart';
 import 'package:bawabtalsharq/bloc/currancyBloc/currency_event.dart';
-import 'package:bawabtalsharq/bloc/currancyBloc/currency_state.dart';
 import 'package:bawabtalsharq/bloc/profileBlocs/settingBloc/setting_block.dart';
 import 'package:bawabtalsharq/bloc/profileBlocs/settingBloc/setting_event.dart';
 import 'package:bawabtalsharq/bloc/profileBlocs/settingBloc/setting_state.dart';
@@ -28,6 +28,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   SettingBloc _settingBloc;
   CurrencyBloc _currencyBloc;
   ContactModel location;
+  CurrencyData currencyData;
 
   @override
   void initState() {
@@ -140,33 +141,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       icon: Icons.language,
                       iconColor: Colors.deepOrange),
 
-                  BlocBuilder<CurrencyBloc, CurrencyState>(
-                    bloc: _currencyBloc,
-                    builder: (context, state) {
-                      if (state is CurrencyLoadedState &&
-                          state.currencyResponse != null) {
-                        print(state.currencyResponse.data.length);
-                        return cardSetting(
-                          onPress: () {
-                            showCurrencyDialog(
-                                context, state.currencyResponse.data);
-                          },
-                          text: buildText(
-                            Languages.of(context).currency,
-                            12,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          extraText: buildText('EGP', 10,
-                              fontWeight: FontWeight.w400, color: orangeColor),
-                          icon: Icons.monetization_on,
-                          iconColor: Colors.green,
-                        );
-                      } else if (state is SettingLoadingState) {
-                        return CircularProgressIndicator();
-                      } else {
-                        return CircularProgressIndicator();
-                      }
+                  cardSetting(
+                    onPress: () {
+                      showCurrencyDialog(context);
                     },
+                    text: buildText(
+                      Languages.of(context).currency,
+                      12,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    extraText: buildText('EGP', 10,
+                        fontWeight: FontWeight.w400, color: orangeColor),
+                    icon: Icons.monetization_on,
+                    iconColor: Colors.green,
                   ),
 
                   // cardSetting(

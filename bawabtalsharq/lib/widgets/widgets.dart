@@ -1580,7 +1580,9 @@ Widget mostPopularByCategoryHeader(BuildContext context) {
   );
 }
 
-void showCurrencyDialog(BuildContext context, List<CurrencyData> currencies) {
+void showCurrencyDialog(BuildContext context) {
+  CurrencyData currency;
+  String selectedCurrencyIndex = currency.currencyId;
   CurrencyBloc _bloc = CurrencyBloc();
   _bloc.add(GetCurrencyData());
   showDialog(
@@ -1624,7 +1626,87 @@ void showCurrencyDialog(BuildContext context, List<CurrencyData> currencies) {
                                       15,
                                       fontFamily: mediumFontFamily,
                                       fontWeight: FontWeight.w600)),
-                              currencies == index
+                              selectedCurrencyIndex == index
+                                  ? Image.asset(
+                                      checkBox,
+                                      width: 40,
+                                      height: 40,
+                                    )
+                                  : Text(''),
+                              SizedBox(
+                                width: 10,
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) =>
+                        Padding(
+                      padding: const EdgeInsets.only(right: 20, left: 20),
+                      child: Divider(
+                        height: 1,
+                        thickness: 1,
+                      ),
+                    ),
+                  ),
+                );
+              } else {
+                return CircularProgressIndicator();
+              }
+            }),
+      );
+    },
+  );
+}
+
+void showCountryDialog(BuildContext context) {
+  CurrencyData currency;
+  String selectedCurrencyIndex = currency.currencyId;
+  CurrencyBloc _bloc = CurrencyBloc();
+  _bloc.add(GetCurrencyData());
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Center(
+        child: BlocBuilder<CurrencyBloc, CurrencyState>(
+            bloc: _bloc,
+            builder: (context, state) {
+              if (state is CurrencyLoadingState) {
+                return CircularProgressIndicator();
+              } else if (state is CurrencyLoadedState &&
+                  state.currencyResponse != null) {
+                return Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white),
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    itemCount: state.currencyResponse.data.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          LanguageHelper.changeLanguage(context,
+                              state.currencyResponse.data[index].currencyCode);
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          height: 60,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Expanded(
+                                  child: buildText(
+                                      state.currencyResponse.data[index]
+                                          .description,
+                                      15,
+                                      fontFamily: mediumFontFamily,
+                                      fontWeight: FontWeight.w600)),
+                              selectedCurrencyIndex == index
                                   ? Image.asset(
                                       checkBox,
                                       width: 40,
