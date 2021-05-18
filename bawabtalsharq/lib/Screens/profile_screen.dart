@@ -16,11 +16,10 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  UserModel currentUser;
+  UserModel currentUser = Constants.getUserInfo2();
 
   @override
   void initState() {
-    Constants.getUserInfo().then((value) => currentUser = value);
     super.initState();
   }
 
@@ -191,7 +190,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       Languages.of(context).myAccount,
                       () {
-                        Navigator.pushNamed(context, ScreenRoutes.myAccount);
+                        if (currentUser == null)
+                          Navigator.pushNamed(
+                              context, ScreenRoutes.loginScreen);
+                        else
+                          Navigator.pushNamed(context, ScreenRoutes.myAccount);
                       },
                     ),
                     unExpansionProfileItem(
@@ -211,8 +214,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       Languages.of(context).history,
                       () {
-                        Navigator.pushNamed(context, ScreenRoutes.historyScreen,
-                            arguments: currentUser);
+                        if (currentUser == null)
+                          Navigator.pushNamed(context, ScreenRoutes.loginScreen,
+                              arguments: currentUser);
+                        else
+                          Navigator.pushNamed(
+                              context, ScreenRoutes.historyScreen,
+                              arguments: currentUser);
                       },
                       drawDivider: false,
                     ),
@@ -234,8 +242,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       Languages.of(context).messageCenter,
                       () {
-                        Navigator.pushNamed(
-                            context, ScreenRoutes.messageCenter);
+                        if (currentUser == null)
+                          Navigator.pushNamed(
+                              context, ScreenRoutes.loginScreen);
+                        else
+                          Navigator.pushNamed(
+                              context, ScreenRoutes.messageCenter);
                       },
                     ),
                     unExpansionProfileItem(
@@ -276,7 +288,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   Languages.of(context).updatePackage,
                   () {
-                    Navigator.pushNamed(context, ScreenRoutes.pricing);
+                    if (currentUser == null)
+                      Navigator.pushNamed(context, ScreenRoutes.loginScreen);
+                    else
+                      Navigator.pushNamed(context, ScreenRoutes.pricing);
                   },
                   drawDivider: false,
                 ),
@@ -292,9 +307,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Icons.exit_to_app_rounded,
                     color: Colors.lightBlueAccent[200],
                   ),
-                  Languages.of(context).signIn,
+                  currentUser == null
+                      ? Languages.of(context).signIn
+                      : Languages.of(context).logOut,
                   () {
-                    print('Sign In');
+                    if (currentUser == null)
+                      Navigator.pushNamed(context, ScreenRoutes.loginScreen);
+                    else {
+                      Constants.removeDate(key: 'user');
+                      Navigator.pushNamed(context, ScreenRoutes.mainScreen);
+                    }
+
+                    // handling api
                   },
                   drawDivider: false,
                 ),

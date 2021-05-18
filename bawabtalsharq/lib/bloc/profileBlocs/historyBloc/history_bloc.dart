@@ -11,9 +11,13 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
   ) async* {
     if (event is GetHistoryEvent) {
       yield HistoryLoadingState();
-      var response = await ProfileRepo().getHistory(event.userId, event.apiKey);
-
-      yield HistoryLoadedState(response: response);
+      try {
+        var response =
+            await ProfileRepo().getHistory(event.userId, event.apiKey);
+        yield HistoryLoadedState(response: response);
+      } catch (e) {
+        yield HistoryErrorState(message: e.toString());
+      }
     } else if (event is ResetState) {
       yield HistoryInitial();
     }

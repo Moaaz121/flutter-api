@@ -44,9 +44,13 @@ import 'Screens/request_for_qutation.dart';
 import 'Screens/search/color_filter_screen.dart';
 import 'Screens/search/list_filter_screen.dart';
 import 'Utils/Localization/LanguageHelper.dart';
+import 'package:bawabtalsharq/Utils/constants.dart';
+import 'package:bawabtalsharq/main.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Constants.initSharedPref();
+
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 

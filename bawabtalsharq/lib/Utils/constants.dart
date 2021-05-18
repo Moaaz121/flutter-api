@@ -10,6 +10,23 @@ class Constants {
   static String appName = "Login App";
   static int isActive = 0;
   static int userType = 0;
+  static SharedPreferences sharedPreferences;
+
+  static initSharedPref() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+  }
+
+  static dynamic getDate({@required String key}) {
+    return sharedPreferences.get(key);
+  }
+
+  static dynamic removeDate({@required String key}) {
+    return sharedPreferences.remove(key);
+  }
+
+  static void saveCurrency({@required String currency}) {
+    sharedPreferences.setString('currency', currency);
+  }
 
   static languages languageId = languages.English;
   static TextDirection textDirection = Constants.languageId == languages.Arabic
@@ -73,6 +90,7 @@ class Constants {
     return TextStyle(color: color ?? Colors.black, fontSize: fontSize ?? 14);
   }
 
+// Start Bahaa
   static String getLanguage() {
     String lang;
     if (LanguageHelper.isEnglish)
@@ -98,6 +116,23 @@ class Constants {
     }
     return null;
   }
+
+  static UserModel getUserInfo2() {
+    Map<String, dynamic> userMap;
+    final String userStr = sharedPreferences.getString('user');
+    if (userStr != null) {
+      userMap = jsonDecode(userStr) as Map<String, dynamic>;
+    }
+
+    if (userMap != null) {
+      final UserModel user = UserModel.fromJson(userMap);
+      print(user);
+      return user;
+    }
+    return null;
+  }
+
+  // end Bahaa
 }
 
 // Start Karem

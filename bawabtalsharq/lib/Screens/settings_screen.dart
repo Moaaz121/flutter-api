@@ -118,6 +118,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                   ),
                   cardSetting(
+                      onPress: () {
+                        showCountryDialog(context);
+                      },
                       text: buildText(
                         Languages.of(context).country,
                         12,

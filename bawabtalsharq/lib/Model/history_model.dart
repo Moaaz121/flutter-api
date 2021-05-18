@@ -1,13 +1,15 @@
 class HistoryModel {
   int code;
   String status;
+  String msg;
   List<Product> product;
 
-  HistoryModel({this.code, this.status, this.product});
+  HistoryModel({this.code, this.status, this.msg, this.product});
 
   HistoryModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     status = json['status'];
+    msg = json['msg'];
     if (json['data'] != null) {
       product = new List<Product>();
       json['data'].forEach((v) {
@@ -20,6 +22,7 @@ class HistoryModel {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['code'] = this.code;
     data['status'] = this.status;
+    data['msg'] = this.msg;
     if (this.product != null) {
       data['data'] = this.product.map((v) => v.toJson()).toList();
     }
