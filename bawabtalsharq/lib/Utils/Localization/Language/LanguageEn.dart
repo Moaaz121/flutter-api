@@ -243,7 +243,7 @@ class LanguageEn extends Languages {
   String get password => 'Password';
   String get forgetPassword => 'Forget Password?';
   String get alreadyHaveAccount => 'Already have an account ?';
-  String get signIn => 'Log In';
+  String get signIn => 'Sign In';
   String get ourGroup => 'Our Group';
   String get ourGroupCompanies => 'Our Group Companies';
   String get searchByCategories => 'Search by categories';

@@ -14,7 +14,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   Timer _timer;
   int t;
-  bool onBoarding = Constants.getDate(key: 'onBoarding');
+  bool onBoarding;
 
   startTime() async {
     var _duration = new Duration(seconds: 3);
@@ -28,7 +28,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    if (onBoarding == null) onBoarding = false;
+    if (Constants.getDate(key: 'onBoarding') == null)
+      onBoarding = false;
+    else
+      onBoarding = true;
     super.initState();
     print(onBoarding);
     startTime();
