@@ -12,6 +12,7 @@ class ForgetPassword extends StatefulWidget {
 }
 
 class _ForgetPasswordState extends State<ForgetPassword> {
+  double height = 100.0;
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -53,7 +54,35 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     label: Languages.of(context).emailAddress,
                     width: 1),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * .11,
+                  height: 11,
+                ),
+                Expanded(
+                  child: Column(
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        textBaseline: TextBaseline.alphabetic,
+                        children: [
+                          Text(
+                            '180',
+                            style: TextStyle(
+                              fontSize: 22,
+                            ),
+                          ),
+                          Text('Cm'),
+                        ],
+                      ),
+                      Slider(
+                          value: height,
+                          max: 230.0,
+                          min: 80.0,
+                          onChanged: (value) {
+                            setState(() {
+                              height = value;
+                            });
+                          }),
+                    ],
+                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,

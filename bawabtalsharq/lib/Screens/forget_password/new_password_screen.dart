@@ -12,6 +12,7 @@ class NewPassword extends StatefulWidget {
 }
 
 class _NewPasswordState extends State<NewPassword> {
+  double height = 220.0;
   bool obSecureText = true;
   @override
   Widget build(BuildContext context) {
@@ -90,6 +91,17 @@ class _NewPasswordState extends State<NewPassword> {
                           : Icons.visibility),
                     ),
                   ),
+                  Text('height'),
+                  Slider(
+                      value: height,
+                      max: 230,
+                      min: 80.0,
+                      onChanged: (value) {
+                        setState(() {
+                          height = value;
+                        });
+                        print(value.round());
+                      }),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * .11,
                   ),

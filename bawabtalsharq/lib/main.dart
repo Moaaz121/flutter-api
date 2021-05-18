@@ -76,7 +76,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.deepOrange),
-      home: ChangePassword(),
+      home: ForgetPassword(),
       routes: {
         ScreenRoutes.splashScreen: (_) => SplashScreen(),
         ScreenRoutes.introScreen: (_) => IntroScreen(),
