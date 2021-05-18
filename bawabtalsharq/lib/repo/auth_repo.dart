@@ -58,6 +58,8 @@ class AuthRepo {
 // Start Asmaa //
 
   Future<Map<String, dynamic>> verifyPhone(phone) async {
+    print('In Verify Phone');
+
     String verficationId;
     bool codeSent = false;
 
@@ -67,11 +69,13 @@ class AuthRepo {
     final PhoneCodeSent smsCodeSent = (String verId, [int forceCodeResend]) {
       verficationId = verId;
       codeSent = true;
+      print('codesaent $codeSent');
+      print('verficationId $verficationId');
     };
     final PhoneVerificationCompleted verifiedSuccess =
         (AuthCredential authResult) {
       // AuthService().signIn(authResult);
-      print('verfied');
+      print('verfied Success');
     };
 
     final PhoneVerificationFailed verifiedFailed =
@@ -87,6 +91,7 @@ class AuthRepo {
       verificationCompleted: verifiedSuccess,
       verificationFailed: verifiedFailed,
     );
+
     return {'verficationId': verficationId, 'codeSent': codeSent};
   }
 
