@@ -12,8 +12,6 @@ class RegisterLoadedState extends RegisterState {
   RegisterLoadedState({this.userResponse});
 }
 
-class VerifyingPhoneState extends RegisterState {}
-
 class EnterSMSCodeState extends RegisterState {
   String verId;
 

@@ -15,13 +15,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
           event.phone, event.email, event.password, event.name, event.userType);
       yield RegisterLoadedState(userResponse: response);
     } else if (event is VerifyPhone) {
-      yield VerifyingPhoneState();
-      print('phone in Bloc: ${event.phone}');
-      var phoneAuth = await AuthRepo().verifyPhone(event.phone);
-
-      await AuthRepo().verifyPhone(event.phone).whenComplete(() {});
-      if (phoneAuth['codeSent'])
-        yield EnterSMSCodeState(verId: phoneAuth['verficationId']);
+      yield EnterSMSCodeState(verId: await AuthRepo().verifyPhone(event.phone));
     } else if (event is SignWithOTP) {
       AuthRepo().signInWithOTP(event.smsCode, event.verId);
       yield ResumeRegisterState();

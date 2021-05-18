@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:bawabtalsharq/Model/user_model.dart';
 import 'package:bawabtalsharq/Utils/apis.dart';
-import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -57,9 +56,7 @@ class AuthRepo {
 
 // Start Asmaa //
 
-  Future<Map<String, dynamic>> verifyPhone(phone) async {
-    print('In Verify Phone');
-
+  Future<String> verifyPhone(phone) async {
     String verficationId;
     bool codeSent = false;
 
@@ -69,8 +66,6 @@ class AuthRepo {
     final PhoneCodeSent smsCodeSent = (String verId, [int forceCodeResend]) {
       verficationId = verId;
       codeSent = true;
-      print('codesaent $codeSent');
-      print('verficationId $verficationId');
     };
     final PhoneVerificationCompleted verifiedSuccess =
         (AuthCredential authResult) {
@@ -92,7 +87,10 @@ class AuthRepo {
       verificationFailed: verifiedFailed,
     );
 
-    return {'verficationId': verficationId, 'codeSent': codeSent};
+    if (codeSent) {
+      print(verficationId);
+      return verficationId;
+    }
   }
 
   signInWithOTP(smsCode, verId) {

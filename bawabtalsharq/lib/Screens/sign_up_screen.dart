@@ -1,5 +1,4 @@
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
-import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/Utils/validator_util.dart';
@@ -48,7 +47,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  TextEditingController _smsCodeController = TextEditingController();
   String selectedRadio;
 
   String _emailErrorMessage;
@@ -118,10 +116,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
       child: BlocListener<RegisterBloc, RegisterState>(
         listener: (context, state) {
           if (state is EnterSMSCodeState) {
-            return showVerifyDialog(state.verId);
-          } else if (state is ResumeRegisterState) {
-            return showResumeDialog();
+            print(state.verId);
+            Navigator.pushNamed(context, ScreenRoutes.otpScreen,
+                arguments: state.verId);
           }
+          //  else if (state is ResumeRegisterState) {
+          //   return showResumeDialog();
+          // }
         },
         child: BlocBuilder<RegisterBloc, RegisterState>(
           bloc: _registerBloc,
@@ -132,7 +133,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 isLoading = true;
               }
             } else if (state is RegisterLoadedState) {
-              print('loaded');
               _registerBloc.add(ResetState());
               isLoading = false;
               if (state.userResponse.code == 200) {
@@ -150,8 +150,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 });
                 Navigator.pop(context);
               }
-            } else if (state is VerifyingPhoneState) {
-              return Center(child: CircularProgressIndicator());
+            } else if (state is ResumeRegisterState) {
+              _registerBloc.add(
+                DoRegisterEvent(
+                  phoneController.text,
+                  emailController.text,
+                  nameController.text,
+                  passwordController.text,
+                  selectedRadio,
+                ),
+              );
             }
             return Stack(
               children: [
@@ -375,68 +383,5 @@ class _SignUpScreenState extends State<SignUpScreen> {
       },
       activeColor: OrangeColor,
     );
-  }
-
-  Future showVerifyDialog(String verId) async {
-    return await showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) => AlertDialog(
-              title: Text("Enter SMS Code"),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  TextField(
-                    controller: _smsCodeController,
-                  ),
-                ],
-              ),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text("Verify"),
-                  textColor: Colors.white,
-                  color: Colors.redAccent,
-                  onPressed: () {
-                    _registerBloc.add(SignWithOTP(
-                        smsCode: _smsCodeController.text.trim(), verId: verId));
-                  },
-                )
-              ],
-            ));
-  }
-
-  Future showResumeDialog() async {
-    return await showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) => AlertDialog(
-              title: Text("Resume Register"),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  TextField(
-                    controller: _smsCodeController,
-                  ),
-                ],
-              ),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text("Resume"),
-                  textColor: Colors.white,
-                  color: Colors.redAccent,
-                  onPressed: () {
-                    _registerBloc.add(
-                      DoRegisterEvent(
-                        phoneController.text,
-                        emailController.text,
-                        nameController.text,
-                        passwordController.text,
-                        selectedRadio,
-                      ),
-                    );
-                  },
-                )
-              ],
-            ));
   }
 }
