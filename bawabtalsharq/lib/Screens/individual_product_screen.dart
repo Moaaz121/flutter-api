@@ -148,95 +148,89 @@ class _IndividualProductState extends State<IndividualProduct>
                       SliverList(
                         delegate: SliverChildBuilderDelegate(
                             (BuildContext context, int index) {
-                          return Column(
-                            children: [
-                              Container(
-                                height: MediaQuery.of(context).size.height * 4,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(40),
-                                    topRight: Radius.circular(40),
-                                  ),
-                                ),
-                                child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 40, right: 40, top: 15),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Center(
-                                          child: Container(
-                                            width: 50,
-                                            height: 2.5,
-                                            color: Colors.grey[300],
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 30,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Flexible(
-                                              child: RichText(
-                                                overflow: TextOverflow.clip,
-                                                strutStyle:
-                                                    StrutStyle(fontSize: 14),
-                                                text: TextSpan(
-                                                    style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                    text: product.product),
-                                              ),
-                                            ),
-                                            RatingBar.builder(
-                                              itemSize: 18,
-                                              initialRating: 3,
-                                              minRating: 1,
-                                              direction: Axis.horizontal,
-                                              allowHalfRating: true,
-                                              itemCount: 5,
-                                              itemPadding: EdgeInsets.symmetric(
-                                                  horizontal: 1),
-                                              itemBuilder: (context, _) => Icon(
-                                                Icons.star,
-                                                color: Colors.amber,
-                                              ),
-                                              onRatingUpdate: (rating) {
-                                                print(rating);
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 20,
-                                        ),
-                                        productOption(
-                                          widgetTitle: 'Product Options',
-                                          widgetSubTitle: 'Color',
-                                          widget: productColorOption(
-                                            price: '50',
-                                            counterWidget:
-                                                productCounter(number: 10),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 20,
-                                        ),
-                                        infoCartSupplier(
-                                            'Mohamed Mosadik Hassanien',
-                                            '3 YRS',
-                                            'Egypt',
-                                            'Food & Bevereges'),
-                                        Flexible(child: detailsTabBar())
-                                      ],
-                                    )),
+                          return Container(
+                            height: MediaQuery.of(context).size.height,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(40),
+                                topRight: Radius.circular(40),
                               ),
-                            ],
+                            ),
+                            child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 40, right: 40, top: 15),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Center(
+                                      child: Container(
+                                        width: 50,
+                                        height: 2.5,
+                                        color: Colors.grey[300],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 30,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Flexible(
+                                          child: RichText(
+                                            overflow: TextOverflow.clip,
+                                            strutStyle:
+                                                StrutStyle(fontSize: 14),
+                                            text: TextSpan(
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                                text: product.product),
+                                          ),
+                                        ),
+                                        RatingBar.builder(
+                                          itemSize: 18,
+                                          initialRating:
+                                              double.parse(product.rating),
+                                          ignoreGestures: true,
+                                          direction: Axis.horizontal,
+                                          allowHalfRating: true,
+                                          itemCount: 5,
+                                          itemPadding: EdgeInsets.symmetric(
+                                              horizontal: 1),
+                                          itemBuilder: (context, _) => Icon(
+                                            Icons.star,
+                                            color: Colors.amber,
+                                          ),
+                                          onRatingUpdate: (rating) {},
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    productOption(
+                                      widgetTitle: 'Product Options',
+                                      widgetSubTitle: 'Color',
+                                      widget: productColorOption(
+                                        price: '50',
+                                        counterWidget:
+                                            productCounter(number: 10),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    infoCartSupplier(
+                                        '${product.company}',
+                                        '3 YRS',
+                                        'Egypt',
+                                        '${product.category}'),
+                                    Flexible(child: detailsTabBar())
+                                  ],
+                                )),
                           );
                         }, childCount: 1),
                       ),
@@ -260,43 +254,39 @@ class _IndividualProductState extends State<IndividualProduct>
         indicatorSize: TabBarIndicatorSize.label,
         labelColor: orangeColor,
       ),
-      body: TabBarView(
-          controller: _controller,
-          physics: NeverScrollableScrollPhysics(),
+      body: TabBarView(controller: _controller, children: [
+        Column(
+          mainAxisSize: MainAxisSize.max,
           children: [
-            Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                overViewText(Html(data: product.fullDescription)),
-                SizedBox(
-                  height: 20,
-                ),
-                productFaq(
-                    title: 'FAQ:', question: 'Question', answer: 'Answer'),
-                SizedBox(
-                  height: 20,
-                ),
-                detailsPictures(),
-                SizedBox(
-                  height: 20,
-                ),
-                listOfBackingChipping(),
-                SizedBox(
-                  height: 20,
-                ),
-                certificateListView(),
-              ],
+            overViewText(Html(data: product.fullDescription)),
+            SizedBox(
+              height: 20,
             ),
-            Container(
-              color: Colors.white,
-              child: Center(
-                child: Text(
-                  'Match',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
+            productFaq(title: 'FAQ:', question: 'Question', answer: 'Answer'),
+            SizedBox(
+              height: 20,
             ),
-          ]),
+            detailsPictures(),
+            SizedBox(
+              height: 20,
+            ),
+            listOfBackingChipping(),
+            SizedBox(
+              height: 20,
+            ),
+            certificateListView(),
+          ],
+        ),
+        Container(
+          color: Colors.white,
+          child: Center(
+            child: Text(
+              'Match',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        ),
+      ]),
     );
   }
 }
