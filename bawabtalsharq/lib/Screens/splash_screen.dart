@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/main.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:bawabtalsharq/Utils/constants.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -12,6 +14,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   Timer _timer;
   int t;
+  bool onBoarding = Constants.getDate(key: 'onBoarding');
 
   startTime() async {
     var _duration = new Duration(seconds: 3);
@@ -19,12 +22,15 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void navigationPage() async {
-    Navigator.pushReplacementNamed(context, ScreenRoutes.introScreen);
+    Navigator.pushReplacementNamed(context,
+        onBoarding ? ScreenRoutes.mainScreen : ScreenRoutes.introScreen);
   }
 
   @override
   void initState() {
+    if (onBoarding == null) onBoarding = false;
     super.initState();
+    print(onBoarding);
     startTime();
   }
 

@@ -294,7 +294,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   Languages.of(context).signIn,
                   () {
-                    print('Sign In');
+                    Navigator.pushNamed(context, ScreenRoutes.loginScreen);
                   },
                   drawDivider: false,
                 ),

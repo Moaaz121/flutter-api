@@ -10,6 +10,15 @@ class Constants {
   static String appName = "Login App";
   static int isActive = 0;
   static int userType = 0;
+  static SharedPreferences sharedPreferences;
+
+  static initSharedPref() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+  }
+
+  static dynamic getDate({@required String key}) {
+    return sharedPreferences.get(key);
+  }
 
   static languages languageId = languages.English;
   static TextDirection textDirection = Constants.languageId == languages.Arabic
