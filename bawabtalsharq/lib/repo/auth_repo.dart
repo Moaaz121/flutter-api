@@ -7,6 +7,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthRepo {
+  String verficationId;
+  bool codeSent = false;
+
   // start Bahaa //
   Future<UserModel> doLogin(String email, String password) async {
     Map<String, dynamic> params = {"email": email, "password": password};
@@ -57,16 +60,18 @@ class AuthRepo {
 // Start Asmaa //
 
   Future<String> verifyPhone(phone) async {
-    String verficationId;
-    bool codeSent = false;
-
+    print('verfy phoneeee');
     final PhoneCodeAutoRetrievalTimeout autoRetrieve = (String verId) {
       verficationId = verId;
+      print('Phone Code TimeOut');
     };
+
     final PhoneCodeSent smsCodeSent = (String verId, [int forceCodeResend]) {
-      verficationId = verId;
-      codeSent = true;
+      this.verficationId = verId;
+      this.codeSent = true;
+      print('Verfication id' + verficationId);
     };
+
     final PhoneVerificationCompleted verifiedSuccess =
         (AuthCredential authResult) {
       // AuthService().signIn(authResult);
@@ -86,18 +91,13 @@ class AuthRepo {
       verificationCompleted: verifiedSuccess,
       verificationFailed: verifiedFailed,
     );
-
-    if (codeSent) {
-      print(verficationId);
-      return verficationId;
-    }
   }
 
-  signInWithOTP(smsCode, verId) {
-    AuthCredential authCreds =
-        PhoneAuthProvider.credential(smsCode: smsCode, verificationId: verId);
-    FirebaseAuth.instance.signInWithCredential(authCreds);
-  }
+  // signInWithOTP(smsCode, verId) {
+  //   AuthCredential authCreds =
+  //       PhoneAuthProvider.credential(smsCode: smsCode, verificationId: verId);
+  //   FirebaseAuth.instance.signInWithCredential(authCreds);
+  // }
 
 // End Asmaa //
 }

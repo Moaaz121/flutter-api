@@ -28,6 +28,8 @@ import 'package:bawabtalsharq/Screens/sub_category_screen.dart';
 import 'package:bawabtalsharq/Screens/suppliers/golden_suppliers_screen.dart';
 import 'package:bawabtalsharq/Screens/suppliers/supplier_profile_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/AppLocalizationDelgate.dart';
+import 'package:bawabtalsharq/repo/auth_repo.dart';
+import 'package:bawabtalsharq/repo/auth_repo.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -51,6 +53,9 @@ import 'package:firebase_core/firebase_core.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  AuthRepo().verifyPhone('+201148743177');
+
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
