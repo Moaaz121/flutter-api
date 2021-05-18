@@ -12,8 +12,9 @@ class SearchRepo {
       "search_text": q,
     };
     if (categories != null) {
-      params['categories'] = '[' + categories.first + ']';
+      params['categories'] = '[' + categories[0] + ',]';
     }
+    print(categories[0]);
     if (page != null) {
       params['page'] = page;
     }
