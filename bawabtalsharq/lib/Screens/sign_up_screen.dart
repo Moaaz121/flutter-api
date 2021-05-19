@@ -2,7 +2,6 @@ import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/Utils/validator_util.dart';
-import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:bawabtalsharq/Screens/forget_password/verification_OTP_screen.dart';
@@ -11,7 +10,6 @@ import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_state.dart';
 import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter/scheduler.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
