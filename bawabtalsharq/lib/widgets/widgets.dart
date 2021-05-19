@@ -1,7 +1,5 @@
 import 'dart:ui';
 
-import 'package:bawabtalsharq/Model/country_model.dart';
-import 'package:bawabtalsharq/Model/currency_model.dart';
 import 'package:bawabtalsharq/Model/history_model.dart';
 import 'package:bawabtalsharq/Model/home_model.dart';
 import 'package:bawabtalsharq/Model/search_model.dart' as SearchItem;
@@ -1585,8 +1583,6 @@ Widget mostPopularByCategoryHeader(BuildContext context) {
 }
 
 void showCurrencyDialog(BuildContext context) {
-  CurrencyData currency;
-  String selectedCurrencyIndex = currency.currencyId;
   CurrencyBloc _bloc = CurrencyBloc();
   _bloc.add(GetCurrencyData());
   showDialog(
@@ -1611,8 +1607,10 @@ void showCurrencyDialog(BuildContext context) {
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
-                          LanguageHelper.changeLanguage(context,
-                              state.currencyResponse.data[index].currencyCode);
+                          state.currencyResponse.data[index].isSelected = true;
+                          Constants.saveCurrency(
+                              currency: state
+                                  .currencyResponse.data[index].currencyId);
                           Navigator.pop(context);
                         },
                         child: Container(
@@ -1630,13 +1628,13 @@ void showCurrencyDialog(BuildContext context) {
                                       15,
                                       fontFamily: mediumFontFamily,
                                       fontWeight: FontWeight.w600)),
-                              selectedCurrencyIndex == index
+                              state.currencyResponse.data[index].isSelected
                                   ? Image.asset(
                                       checkBox,
                                       width: 40,
                                       height: 40,
                                     )
-                                  : Text(''),
+                                  : SizedBox(),
                               SizedBox(
                                 width: 10,
                               ),
@@ -1665,8 +1663,6 @@ void showCurrencyDialog(BuildContext context) {
 }
 
 void showCountryDialog(BuildContext context) {
-  CountryData Country;
-  String selectedCountryIndex = Country.country;
   CountryBloc _bloc = CountryBloc();
   _bloc.add(GetCountryData());
   showDialog(
@@ -1690,11 +1686,7 @@ void showCountryDialog(BuildContext context) {
                     itemCount: state.countryResponse.data.length,
                     itemBuilder: (context, index) {
                       return GestureDetector(
-                        onTap: () {
-                          LanguageHelper.changeLanguage(
-                              context, state.countryResponse.data[index].code);
-                          Navigator.pop(context);
-                        },
+                        onTap: () {},
                         child: Container(
                           height: 60,
                           child: Row(
@@ -1709,13 +1701,11 @@ void showCountryDialog(BuildContext context) {
                                       15,
                                       fontFamily: mediumFontFamily,
                                       fontWeight: FontWeight.w600)),
-                              selectedCountryIndex == index
-                                  ? Image.asset(
-                                      checkBox,
-                                      width: 40,
-                                      height: 40,
-                                    )
-                                  : Text(''),
+                              Image.asset(
+                                checkBox,
+                                width: 40,
+                                height: 40,
+                              ),
                               SizedBox(
                                 width: 10,
                               ),

@@ -149,7 +149,9 @@ class _IndividualProductState extends State<IndividualProduct>
                         delegate: SliverChildBuilderDelegate(
                             (BuildContext context, int index) {
                           return Container(
-                            height: MediaQuery.of(context).size.height,
+                            height: WidgetsBinding
+                                    .instance.window.physicalSize.height *
+                                1.2,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.only(
@@ -282,7 +284,7 @@ class _IndividualProductState extends State<IndividualProduct>
           child: Center(
             child: Text(
               'Match',
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.black),
             ),
           ),
         ),
