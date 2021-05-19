@@ -1,19 +1,15 @@
 import 'dart:convert';
 
 import 'package:bawabtalsharq/Model/notification_model.dart';
-import 'package:bawabtalsharq/Model/user_model.dart';
 import 'package:bawabtalsharq/Utils/apis.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:http/http.dart' as http;
 
 class NotificationRepo {
   Future<NotificationsModel> getNotifications() async {
-    User _user;
-    await Constants.getUserInfo().then((value) => _user = value.data);
-
     Map<String, dynamic> params = {
-      "user_id": '1',
-      "ApiKey": '1621364870 ',
+      "user_id": Constants.getUserInfo2().data.userId,
+      "ApiKey": Constants.getUserInfo2().data.apiKey,
     };
     var response = await http.post(
       Uri.encodeFull(APIS.serverURL +
