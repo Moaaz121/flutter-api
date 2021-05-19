@@ -36,13 +36,15 @@ class CurrencyData {
   String symbol;
   String coefficient;
   String description;
+  bool isSelected = false;
 
   CurrencyData(
       {this.currencyId,
       this.currencyCode,
       this.symbol,
       this.coefficient,
-      this.description});
+      this.description,
+      this.isSelected});
 
   CurrencyData.fromJson(Map<String, dynamic> json) {
     currencyId = json['currency_id'];
