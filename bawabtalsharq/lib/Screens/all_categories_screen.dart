@@ -1,4 +1,5 @@
 import 'package:bawabtalsharq/Model/mainCategoryModel.dart';
+import 'package:bawabtalsharq/Screens/search/search_result_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
@@ -219,8 +220,13 @@ class _AllCategoriesState extends State<AllCategories>
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(
-                          context, ScreenRoutes.subCategoryScreen);
+                      Navigator.push(
+                          context,
+                          new MaterialPageRoute(
+                            builder: (BuildContext context) => new SearchResult(
+                              Categories: [subCategoryArr[index].categoryId],
+                            ),
+                          ));
                     },
                     child: Container(
                       margin: EdgeInsetsDirectional.only(

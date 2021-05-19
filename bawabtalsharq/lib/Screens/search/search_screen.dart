@@ -128,7 +128,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                               ));
                                         },
                                         child: Image.asset(
-                                          categories[position].color,
+                                          categories[position].image,
                                         ),
                                       ),
                                     );

@@ -12,17 +12,17 @@ class SearchRepo {
       "search_text": q,
     };
     if (categories != null) {
-      params['categories'] = '[' + categories.first + ']';
+      params['categories'] = '[' + categories[0] + ']';
     }
     if (page != null) {
       params['page'] = page;
     }
     var response = await http.post(
       Uri.encodeFull(
-          APIS.serverURL + APIS.SEARCH_API + Constants.getLanguage()),
+          APIS.serverURL + APIS.SEARCH_API),
       body: params,
     );
-    print(response.request);
+    print(response.body);
     var decodedResponse = json.decode(response.body);
     print('response .. ${response.body}');
     SearchModel modelResponse = SearchModel.fromJson(decodedResponse);
