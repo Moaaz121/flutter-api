@@ -225,6 +225,7 @@ class _AllCategoriesState extends State<AllCategories>
                           new MaterialPageRoute(
                             builder: (BuildContext context) => new SearchResult(
                               Categories: [subCategoryArr[index].categoryId],
+                              q: '',
                             ),
                           ));
                     },
