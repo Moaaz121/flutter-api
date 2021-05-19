@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:bawabtalsharq/Model/user_model.dart';
@@ -59,8 +60,8 @@ class AuthRepo {
 
 // Start Asmaa //
 
-  Future<String> verifyPhone(phone) async {
-    print('verfy phoneeee');
+  Future<dynamic> verifyPhone(phone) async {
+    var complete = Completer();
     final PhoneCodeAutoRetrievalTimeout autoRetrieve = (String verId) {
       verficationId = verId;
       print('Phone Code TimeOut');
@@ -69,7 +70,8 @@ class AuthRepo {
     final PhoneCodeSent smsCodeSent = (String verId, [int forceCodeResend]) {
       this.verficationId = verId;
       this.codeSent = true;
-      print('Verfication id' + verficationId);
+
+      complete.complete({'verId': this.verficationId});
     };
 
     final PhoneVerificationCompleted verifiedSuccess =
@@ -80,24 +82,37 @@ class AuthRepo {
 
     final PhoneVerificationFailed verifiedFailed =
         (FirebaseAuthException authException) {
-      print('Error ${authException.message}');
+      complete.complete({'e': authException.message});
     };
 
-    await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: phone,
-      codeSent: smsCodeSent,
-      codeAutoRetrievalTimeout: autoRetrieve,
-      timeout: const Duration(seconds: 5),
-      verificationCompleted: verifiedSuccess,
-      verificationFailed: verifiedFailed,
-    );
+    try {
+      await FirebaseAuth.instance.verifyPhoneNumber(
+        phoneNumber: phone,
+        codeSent: smsCodeSent,
+        codeAutoRetrievalTimeout: autoRetrieve,
+        timeout: const Duration(seconds: 5),
+        verificationCompleted: verifiedSuccess,
+        verificationFailed: verifiedFailed,
+      );
+    } on FirebaseAuthException catch (e) {
+      complete.complete({'e': e.toString()});
+    }
+
+    return complete.future;
   }
 
-  // signInWithOTP(smsCode, verId) {
-  //   AuthCredential authCreds =
-  //       PhoneAuthProvider.credential(smsCode: smsCode, verificationId: verId);
-  //   FirebaseAuth.instance.signInWithCredential(authCreds);
-  // }
+  String signInWithOTP(smsCode, verId) {
+    String op;
+    try {
+      AuthCredential authCreds =
+          PhoneAuthProvider.credential(smsCode: smsCode, verificationId: verId);
+      FirebaseAuth.instance.signInWithCredential(authCreds);
+      op = 'Verified Succefully';
+    } on FirebaseAuthException catch (e) {
+      op = e.toString();
+    }
+    return op;
+  }
 
 // End Asmaa //
 }

@@ -13,7 +13,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OTPScreen extends StatefulWidget {
   final String verId;
-  OTPScreen(this.verId);
+  final Map data;
+  OTPScreen({@required this.verId, @required this.data});
   @override
   _OTPScreenState createState() => _OTPScreenState();
 }
@@ -44,12 +45,36 @@ class _OTPScreenState extends State<OTPScreen> {
         create: (context) => _registerBloc,
         child: BlocListener<RegisterBloc, RegisterState>(
           listener: (context, state) {
-            if (state is ResumeRegisterState) {
-              Navigator.popAndPushNamed(context, ScreenRoutes.signUpScreen);
+            if (state is RegisterLoadedState) {
+              print('inHEre');
+              print('response ${state.userResponse.status}');
+              if (state.userResponse.code == 200) {
+                Navigator.pushReplacementNamed(
+                    context, ScreenRoutes.interestingScreen);
+              } else {
+                Scaffold.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(state.userResponse.msg),
+                  ),
+                );
+                Navigator.pop(context);
+              }
             }
           },
           child: BlocBuilder<RegisterBloc, RegisterState>(
             builder: (context, state) {
+              if (state is ResumeRegisterState) {
+                _registerBloc.add(DoRegisterEvent(
+                    widget.data['phone'],
+                    widget.data['email'],
+                    widget.data['password'],
+                    widget.data['name'],
+                    widget.data['userType']));
+              } else if (state is RegisterLoadingState) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
               return Stack(
                 children: [
                   Positioned(
@@ -92,11 +117,10 @@ class _OTPScreenState extends State<OTPScreen> {
                             textColor: Colors.white,
                             color: Colors.redAccent,
                             onPressed: () {
-                              print(_smsCodeController.text);
-                              print(widget.verId);
-                              // _registerBloc.add(SignWithOTP(
-                              //     smsCode: _smsCodeController.text.trim(),
-                              //     verId: verId));
+                              print(widget.data);
+                              _registerBloc.add(SignWithOTP(
+                                  smsCode: _smsCodeController.text.trim(),
+                                  verId: widget.verId));
                             },
                           )
                         ],

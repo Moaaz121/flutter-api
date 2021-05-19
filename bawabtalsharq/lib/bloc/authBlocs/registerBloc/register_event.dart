@@ -15,9 +15,9 @@ class DoRegisterEvent extends RegisterEvent {
 class ResetState extends RegisterEvent {}
 
 class VerifyPhone extends RegisterEvent {
-  String phone;
+  Map data;
 
-  VerifyPhone({@required this.phone});
+  VerifyPhone({@required this.data});
 }
 
 class SignWithOTP extends RegisterEvent {
