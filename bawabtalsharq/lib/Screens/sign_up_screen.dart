@@ -371,7 +371,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
       value: value,
       dense: true,
       onChanged: (val) {
-        print("Radio Tile pressed $val");
         setSelectedRadioTile(val);
       },
       activeColor: OrangeColor,

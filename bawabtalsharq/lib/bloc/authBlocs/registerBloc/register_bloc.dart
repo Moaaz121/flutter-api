@@ -11,11 +11,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   ) async* {
     if (event is DoRegisterEvent) {
       yield RegisterLoadingState();
-      print(event.email);
-      print(event.name);
-      print(event.password);
-      print(event.phone);
-      print(event.userType);
+
       var response = await AuthRepo().doRegister(
           event.phone, event.email, event.password, event.name, event.userType);
       yield RegisterLoadedState(userResponse: response);
@@ -26,9 +22,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
       if (verId['e'] != null) {
         yield FirebaseExceptionState(msg: verId['e']);
-        print(verId['e']);
       } else {
-        print('Ver Id is Sent : ${verId['verId']}');
         yield EnterSMSCodeState(verId: verId['verId'], data: event.data);
       }
     } else if (event is SignWithOTP) {

@@ -71,7 +71,6 @@ class AuthRepo {
       this.verficationId = verId;
       this.codeSent = true;
 
-      print('codeSent');
       complete.complete({'verId': this.verficationId});
     };
 
@@ -83,7 +82,6 @@ class AuthRepo {
 
     final PhoneVerificationFailed verifiedFailed =
         (FirebaseAuthException authException) {
-      print('Error ${authException.message}');
       complete.complete({'e': authException.message});
     };
 
