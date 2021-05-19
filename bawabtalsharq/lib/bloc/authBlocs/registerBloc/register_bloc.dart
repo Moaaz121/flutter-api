@@ -13,8 +13,12 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       yield RegisterLoadingState();
       var response = await AuthRepo().doRegister(
           event.phone, event.email, event.password, event.name, event.userType);
-
       yield RegisterLoadedState(userResponse: response);
+    } else if (event is VerifyPhone) {
+      yield EnterSMSCodeState(verId: await AuthRepo().verifyPhone(event.phone));
+    } else if (event is SignWithOTP) {
+      // AuthRepo().signInWithOTP(event.smsCode, event.verId);
+      yield ResumeRegisterState();
     } else if (event is ResetState) {
       yield RegisterInitial();
     }
