@@ -2,7 +2,6 @@ import 'package:bawabtalsharq/Screens/Chat/chat_screen.dart';
 import 'package:bawabtalsharq/Screens/all_categories_screen.dart';
 import 'package:bawabtalsharq/Screens/forget_password/forget_password_screen.dart';
 import 'package:bawabtalsharq/Screens/forget_password/new_password_screen.dart';
-import 'package:bawabtalsharq/Screens/forget_password/verification_password_screen.dart';
 import 'package:bawabtalsharq/Screens/home_screen.dart';
 import 'package:bawabtalsharq/Screens/individual_product_screen.dart';
 import 'package:bawabtalsharq/Screens/intro_screen.dart';
@@ -22,14 +21,11 @@ import 'package:bawabtalsharq/Screens/search/search_result_screen.dart';
 import 'package:bawabtalsharq/Screens/search/search_screen.dart';
 import 'package:bawabtalsharq/Screens/settings_screen.dart';
 import 'package:bawabtalsharq/Screens/sign_up_screen.dart';
-import 'package:bawabtalsharq/Screens/otpScreen.dart';
 import 'package:bawabtalsharq/Screens/splash_screen.dart';
 import 'package:bawabtalsharq/Screens/sub_category_screen.dart';
 import 'package:bawabtalsharq/Screens/suppliers/golden_suppliers_screen.dart';
 import 'package:bawabtalsharq/Screens/suppliers/supplier_profile_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/AppLocalizationDelgate.dart';
-import 'package:bawabtalsharq/repo/auth_repo.dart';
-import 'package:bawabtalsharq/repo/auth_repo.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -53,8 +49,6 @@ import 'package:firebase_core/firebase_core.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
-  AuthRepo().verifyPhone('+201148743177');
 
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
@@ -119,7 +113,6 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
             HistoryScreen(ModalRoute.of(context).settings.arguments),
         ScreenRoutes.forgetPassword: (_) => ForgetPassword(),
         ScreenRoutes.newPassword: (_) => NewPassword(),
-        ScreenRoutes.verificationPassword: (_) => VerificationScreen(),
         ScreenRoutes.privacyScreen: (_) => PrivacyScreen(),
         ScreenRoutes.faqScreen: (_) => FaqScreen(),
         ScreenRoutes.goldenSuppliers: (_) => GoldenSuppliers(),
@@ -129,8 +122,6 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.aboutUs: (_) => AboutUsScreen(),
         ScreenRoutes.updateProfile: (_) => UpdateProfile(),
         ScreenRoutes.changePassword: (_) => ChangePassword(),
-        ScreenRoutes.otpScreen: (context) =>
-            OTPScreen(ModalRoute.of(context).settings.arguments),
       },
       locale: _locale,
       supportedLocales: supportedLocales,
@@ -211,7 +202,6 @@ class ScreenRoutes {
   static const String historyScreen = '/history_screen';
   static const String forgetPassword = '/forget_password_screen';
   static const String newPassword = '/new_password_screen';
-  static const String verificationPassword = '/verification_password_screen';
   static const String privacyScreen = '/privacy_screen';
   static const String faqScreen = '/faq_screen';
   static const String goldenSuppliers = '/golden_suppliers_screen';
@@ -222,5 +212,4 @@ class ScreenRoutes {
   static const String chatsScreen = '/chatsScreen';
   static const String conversationScreen = '/conversation';
   static const String aboutUs = '/aboutUs_screen';
-  static const String otpScreen = '/otp_screen';
 }
