@@ -1508,10 +1508,12 @@ Widget infoCartSupplier(
   );
 }
 
-Widget textFiledPrice(BuildContext context, String text, double width,
-    {IconButton dropIcon,
+Widget textFiledPrice(BuildContext context, String text,
+    {double width = 1,
+    IconButton dropIcon,
     TextEditingController controller,
     bool isPassword = false,
+    errorText,
     String errorMessage,
     TextInputType keyboardType = TextInputType.text}) {
   return SizedBox(
