@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 abstract class RegisterEvent {}
 
 class DoRegisterEvent extends RegisterEvent {
@@ -11,3 +13,15 @@ class DoRegisterEvent extends RegisterEvent {
 }
 
 class ResetState extends RegisterEvent {}
+
+class VerifyPhone extends RegisterEvent {
+  Map data;
+
+  VerifyPhone({@required this.data});
+}
+
+class SignWithOTP extends RegisterEvent {
+  String verId, smsCode;
+
+  SignWithOTP({@required this.verId, @required this.smsCode});
+}
