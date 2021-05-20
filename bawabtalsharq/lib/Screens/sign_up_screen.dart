@@ -37,7 +37,7 @@ class Country {
 class _SignUpScreenState extends State<SignUpScreen> {
   bool obSecureText = true;
   int selectedRadioTile;
-  bool userTypeBool = true;
+  bool companyTypeBool = true;
 
   List<Country> _countries = Country.getCountries();
   List<DropdownMenuItem<Country>> _dropdownMenuItems;
@@ -111,9 +111,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
           break;
       }
       if (selectedRadio == 'Seller') {
-        userTypeBool = false;
+        companyTypeBool = false;
       } else {
-        userTypeBool = true;
+        companyTypeBool = true;
       }
     });
   }
@@ -208,13 +208,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   color: Colors.grey[500],
                   fontWeight: FontWeight.w400,
                 ),
-                buildSizedBox(
-                    height: 25,
-                    child: buildRadioListTile(Languages.of(context).buyer, 1)),
-                buildSizedBox(
-                    height: 25,
-                    child: buildRadioListTile(Languages.of(context).seller, 2)),
-                buildRadioListTile(Languages.of(context).both, 3),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    buildRadioListTile(Languages.of(context).buyer, 1),
+                    buildRadioListTile(Languages.of(context).seller, 2),
+                    buildRadioListTile(Languages.of(context).both, 3),
+                  ],
+                ),
                 Row(
                   children: [
                     Expanded(
@@ -285,22 +287,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     errorText: _phoneErrorMessage,
                     controller: phoneController,
                     label: Languages.of(context).tel,
-                    width: 0.7,
                     leftIcon: Icons.phone),
                 SizedBox(
-                  height: 25,
+                  height: 10,
                 ),
                 Visibility(
-                  visible: userTypeBool,
-                  child: buildSizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: DropdownButton(
-                      isExpanded: true,
-                      isDense: false,
-                      value: _selectedCountry,
-                      items: _dropdownMenuItems,
-                      onChanged: onChangeDropdownItem,
-                    ),
+                  visible: companyTypeBool,
+                  child: customTextField(context,
+                      width: 1,
+                      label: Languages.of(context).companyName,
+                      leftIcon: Icons.home_work),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                buildSizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: DropdownButton(
+                    isExpanded: true,
+                    isDense: false,
+                    value: _selectedCountry,
+                    items: _dropdownMenuItems,
+                    onChanged: onChangeDropdownItem,
                   ),
                 ),
                 SizedBox(
@@ -375,16 +383,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  RadioListTile<int> buildRadioListTile(String text, int value) {
-    return RadioListTile(
-      title: Text(text),
-      groupValue: selectedRadioTile,
-      value: value,
-      dense: true,
-      onChanged: (val) {
-        setSelectedRadioTile(val);
-      },
-      activeColor: OrangeColor,
+  Widget buildRadioListTile(String text, int value) {
+    return Row(
+      children: [
+        Radio(
+          groupValue: selectedRadioTile,
+          value: value,
+          onChanged: (val) {
+            setSelectedRadioTile(val);
+          },
+          activeColor: OrangeColor,
+        ),
+        buildText(text, 12)
+      ],
     );
   }
 }
