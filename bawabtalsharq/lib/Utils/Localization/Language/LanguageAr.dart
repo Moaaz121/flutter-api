@@ -154,6 +154,8 @@ class LanguageAr extends Languages {
   String get help => 'المساعدة';
   String get main => 'الرئيسية';
   String get lan => 'العربية';
+  String get year => 'سنة';
+  String get overView => 'نظرة عامة';
 
 // end Mosdik
 

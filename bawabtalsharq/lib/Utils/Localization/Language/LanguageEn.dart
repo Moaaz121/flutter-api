@@ -157,6 +157,8 @@ class LanguageEn extends Languages {
   String get help => 'Help';
   String get main => 'Main';
   String get lan => 'English';
+  String get year => 'YRS';
+  String get overView => 'OverView';
 
 // end Mosdik
 
