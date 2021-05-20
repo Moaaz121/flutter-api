@@ -18,6 +18,7 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
   SuperiorBloc _superiorBloc;
   bool isLoading = false;
   bool isLoaded = false;
+  String errorMessage = '';
   List<SuperiorData> listOfSuperior;
   ScrollController _mainScrollController = ScrollController();
 
@@ -34,14 +35,23 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
       bloc: _superiorBloc,
       builder: (context, state) {
         if (state is SuperiorLoadingState) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
+          if (!isLoading) {
+            isLoading = true;
+            return Container(
+              color: Colors.white,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
         }
         if (state is SuperiorLoadedState) {
           isLoaded = true;
+          isLoading = true;
           listOfSuperior = state.superiorResponse;
         }
+        if (state is SuperiorErrorState)
+          errorMessage = 'No Internet Connection';
         return isLoaded
             ? Container(
                 color: Color(0xfff8f8f8),
@@ -71,7 +81,7 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
                       Positioned.directional(
                         textDirection: Directionality.of(context),
                         end: 20,
-                        bottom: MediaQuery.of(context).size.height * 0.15,
+                        bottom: MediaQuery.of(context).size.height * 0.13,
                         child: buildFloatingActionBtn(
                           icon: Icons.arrow_upward,
                           onPressed: () {
@@ -85,7 +95,7 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
                   ),
                 ),
               )
-            : Container();
+            : Center(child: Text(errorMessage));
       },
     );
   }
@@ -107,144 +117,149 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
   }
 
   Widget supplierItem(int position) {
-    return Container(
-      child: Column(
-        children: [
-          Container(
-            height: MediaQuery.of(context).size.width * 0.6,
-            child: Stack(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: 50,
-                    left: 20,
-                    right: 20,
-                  ),
-                  child: Container(
-                    decoration: new BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Color(0x29000000),
-                            offset: Offset(0, 1),
-                            blurRadius: 6,
-                            spreadRadius: 0)
-                      ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, ScreenRoutes.supplierProfileScreen);
+      },
+      child: Container(
+        child: Column(
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.width * 0.6,
+              child: Stack(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: 50,
+                      left: 20,
+                      right: 20,
+                    ),
+                    child: Container(
+                      decoration: new BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(15),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Color(0x29000000),
+                              offset: Offset(0, 1),
+                              blurRadius: 6,
+                              spreadRadius: 0)
+                        ],
+                      ),
                     ),
                   ),
-                ),
 
-                Positioned.directional(
-                  textDirection: Directionality.of(context),
-                  top: 60,
-                  end: 40,
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(
-                          context, ScreenRoutes.supplierProfileScreen);
-                    },
-                    child: Icon(
-                      Icons.arrow_forward,
-                      size: 20,
+                  Positioned.directional(
+                    textDirection: Directionality.of(context),
+                    top: 60,
+                    end: 40,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(
+                            context, ScreenRoutes.supplierProfileScreen);
+                      },
+                      child: Icon(
+                        Icons.arrow_forward,
+                        size: 20,
+                      ),
                     ),
                   ),
-                ),
 
-                Positioned.directional(
-                  textDirection: Directionality.of(context),
-                  top: 20,
-                  start: 50,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context, ScreenRoutes.supplierProfileScreen);
-                        },
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.3,
-                          height: MediaQuery.of(context).size.height * 0.15,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image:
-                                  NetworkImage(listOfSuperior[position].logo),
-                              fit: BoxFit.fill,
+                  Positioned.directional(
+                    textDirection: Directionality.of(context),
+                    top: 20,
+                    start: 50,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, ScreenRoutes.supplierProfileScreen);
+                          },
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.3,
+                            height: MediaQuery.of(context).size.height * 0.15,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image:
+                                    NetworkImage(listOfSuperior[position].logo),
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      buildText(listOfSuperior[position].name, 12),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.access_time_rounded,
-                            size: 12,
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          buildText(
-                            'Member since: ${listOfSuperior[position].year}',
-                            8,
-                            fontWeight: FontWeight.w400,
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.star,
-                            size: 20,
-                            color: Colors.yellow,
-                          ),
-                          buildText('${listOfSuperior[position].rate}', 12)
-                        ],
-                      ),
-                    ],
+                        SizedBox(
+                          height: 15,
+                        ),
+                        buildText(listOfSuperior[position].name, 12),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.access_time_rounded,
+                              size: 12,
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            buildText(
+                              'Member since: ${listOfSuperior[position].year}',
+                              8,
+                              fontWeight: FontWeight.w400,
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.star,
+                              size: 20,
+                              color: Colors.yellow,
+                            ),
+                            buildText('${listOfSuperior[position].rate}', 12)
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                //Last image
-                Positioned.directional(
-                  textDirection: Directionality.of(context),
-                  top: MediaQuery.of(context).size.width * 0.28,
-                  end: MediaQuery.of(context).size.width * 0.1,
-                  child: productImage(0.10, 0.16,
-                      listOfSuperior[position].products[0].imagePath),
-                ),
-                //center image
-                Positioned.directional(
-                  textDirection: Directionality.of(context),
-                  top: MediaQuery.of(context).size.width * 0.25,
-                  end: MediaQuery.of(context).size.width * 0.15,
-                  child: productImage(0.11, 0.24,
-                      listOfSuperior[position].products[1].imagePath),
-                ),
-                //top image
-                Positioned.directional(
-                  textDirection: Directionality.of(context),
-                  top: MediaQuery.of(context).size.width * 0.23,
-                  end: MediaQuery.of(context).size.width * 0.22,
-                  child: productImage(0.12, 0.3,
-                      listOfSuperior[position].products[2].imagePath),
-                )
-              ],
+                  //Last image
+                  Positioned.directional(
+                    textDirection: Directionality.of(context),
+                    top: MediaQuery.of(context).size.width * 0.28,
+                    end: MediaQuery.of(context).size.width * 0.1,
+                    child: productImage(0.10, 0.16,
+                        listOfSuperior[position].products[0].imagePath),
+                  ),
+                  //center image
+                  Positioned.directional(
+                    textDirection: Directionality.of(context),
+                    top: MediaQuery.of(context).size.width * 0.25,
+                    end: MediaQuery.of(context).size.width * 0.15,
+                    child: productImage(0.11, 0.24,
+                        listOfSuperior[position].products[1].imagePath),
+                  ),
+                  //top image
+                  Positioned.directional(
+                    textDirection: Directionality.of(context),
+                    top: MediaQuery.of(context).size.width * 0.23,
+                    end: MediaQuery.of(context).size.width * 0.22,
+                    child: productImage(0.12, 0.3,
+                        listOfSuperior[position].products[2].imagePath),
+                  )
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
