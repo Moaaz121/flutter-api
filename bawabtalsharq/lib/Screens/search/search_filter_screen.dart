@@ -78,8 +78,8 @@ class _FilterScreenState extends State<FilterScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                textFiledPrice(context, Languages.of(context).from, 0.4),
-                textFiledPrice(context, Languages.of(context).to, 0.4),
+                textFiledPrice(context, Languages.of(context).from, width: 0.4),
+                textFiledPrice(context, Languages.of(context).to, width: 0.4),
               ],
             ),
             buildSizedBox(25),
