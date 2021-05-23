@@ -82,7 +82,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
-                        image: AssetImage(profile_image),
+                        image: AssetImage(companyName),
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -111,7 +111,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           : Text(''),
                     ],
                   ),
-                  currentUser == null ? Text('SignUp / Login') : Text(''),
+                  currentUser == null
+                      ? GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, ScreenRoutes.loginScreen);
+                          },
+                          child: Text('SignUp / Login'),
+                        )
+                      : Text(''),
                 ],
               ),
             ),

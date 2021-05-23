@@ -4,6 +4,7 @@ import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Model/user_model.dart';
 import 'package:bawabtalsharq/Model/history_model.dart';
+import 'package:bawabtalsharq/Screens/individual_product_screen.dart';
 import 'package:bawabtalsharq/bloc/profileBlocs/historyBloc/history_bloc.dart';
 import 'package:bawabtalsharq/bloc/profileBlocs/historyBloc/history_event.dart';
 import 'package:bawabtalsharq/bloc/profileBlocs/historyBloc/history_state.dart';
@@ -88,8 +89,13 @@ class _HistoryState extends State<HistoryScreen> {
                         itemBuilder: (context, position) {
                           return GestureDetector(
                             onTap: () {
-                              Navigator.pushNamed(
-                                  context, ScreenRoutes.individualProduct);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => IndividualProduct(
+                                      products[position].productId),
+                                ),
+                              );
                             },
                             child: productItemLandscape2(context,
                                 products: products, index: position),
