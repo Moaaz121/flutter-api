@@ -51,6 +51,10 @@ void main() async {
   Firebase.initializeApp();
   await Constants.initSharedPref();
 
+  if (Constants.getDate(key: 'currency') == null) {
+    Constants.saveCurrency(currency: '1');
+  }
+
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 

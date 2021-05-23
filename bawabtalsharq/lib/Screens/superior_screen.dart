@@ -70,7 +70,7 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
                                 margin: EdgeInsetsDirectional.only(start: 15),
                                 child: buildText(
                                   Languages.of(context).superior,
-                                  35.0,
+                                  32,
                                   fontWeight: FontWeight.bold,
                                   color: orangeColor,
                                 ),
@@ -181,6 +181,7 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
                             width: MediaQuery.of(context).size.width * 0.3,
                             height: MediaQuery.of(context).size.height * 0.15,
                             decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
                               image: DecorationImage(
                                 image:
                                     NetworkImage(listOfSuperior[position].logo),
@@ -192,7 +193,8 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
                         SizedBox(
                           height: 15,
                         ),
-                        buildText(listOfSuperior[position].name, 12),
+                        buildText(listOfSuperior[position].name, 14,
+                            fontWeight: FontWeight.bold),
                         SizedBox(
                           height: 5,
                         ),
@@ -207,7 +209,7 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
                             ),
                             buildText(
                               'Member since: ${listOfSuperior[position].year}',
-                              8,
+                              9,
                               fontWeight: FontWeight.w400,
                             ),
                             SizedBox(
@@ -222,10 +224,10 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
                           children: [
                             Icon(
                               Icons.star,
-                              size: 20,
+                              size: 16,
                               color: Colors.yellow,
                             ),
-                            buildText('${listOfSuperior[position].rate}', 12)
+                            buildText('${listOfSuperior[position].rate}', 9)
                           ],
                         ),
                       ],
