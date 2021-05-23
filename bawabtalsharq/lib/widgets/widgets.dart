@@ -372,16 +372,17 @@ Widget searchButton(BuildContext context, Function _function) {
     height: 35,
     child: Container(
       decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius:
-              BorderRadiusDirectional.horizontal(end: Radius.circular(15)),
-          boxShadow: [
-            BoxShadow(
-              color: orangeShadowColor,
-              blurRadius: 5,
-              spreadRadius: 2,
-            )
-          ]),
+        borderRadius:
+            BorderRadiusDirectional.horizontal(end: Radius.circular(10)),
+        color: const Color(0xffffffff),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0x2ee16036),
+            offset: Offset(0, 1),
+            blurRadius: 6,
+          ),
+        ],
+      ),
       child: FlatButton(
           splashColor: orangeColor.withOpacity(0.4),
           highlightColor: orangeShadowColor,
@@ -400,8 +401,14 @@ Widget searchButton(BuildContext context, Function _function) {
               Text(
                 Languages.of(context).search,
                 style: TextStyle(
+                  fontFamily: 'Segoe UI',
+                  fontSize: 15,
                   color: orangeColor,
+                  letterSpacing: 0.192,
                 ),
+                textHeightBehavior:
+                    TextHeightBehavior(applyHeightToFirstAscent: false),
+                textAlign: TextAlign.left,
               ),
               SizedBox(
                 width: 5,
@@ -424,9 +431,16 @@ Widget chatButton(Function _function,
       width: size,
       height: size,
       child: Container(
-        decoration: BoxDecoration(shape: BoxShape.circle, boxShadow: [
-          BoxShadow(color: orangeShadowColor, spreadRadius: 2, blurRadius: 10)
-        ]),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0x2ee16036),
+              offset: Offset(0, 1),
+              blurRadius: 6,
+            ),
+          ],
+        ),
         child: ClipOval(
           child: Material(
             shadowColor: orangeShadowColor,
@@ -480,9 +494,9 @@ class _mainSliderState extends State<mainSlider> {
                   position = page;
                 });
               },
-              height: 170,
-              aspectRatio: 16 / 9,
-              viewportFraction: 0.8,
+              height: MediaQuery.of(context).size.width * .48,
+              aspectRatio: 16 / 14,
+              viewportFraction: 0.83,
               pauseAutoPlayInFiniteScroll: true,
               pauseAutoPlayOnTouch: true,
               initialPage: 0,
@@ -503,11 +517,42 @@ class _mainSliderState extends State<mainSlider> {
 }
 
 Widget sliderItem(BuildContext context, String image) {
-  return ClipRRect(
-    borderRadius: BorderRadius.all(Radius.circular(15)),
-    child: Image.network(
-      image,
-      fit: BoxFit.fill,
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 10),
+    child: Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15.0),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0x336e6e6e),
+            offset: Offset(0, 3),
+            blurRadius: 6,
+          ),
+        ],
+      ),
+      child: ClipRRect(
+          borderRadius: BorderRadius.circular(15.0),
+          child: Image.network(
+            image,
+            fit: BoxFit.fill,
+            loadingBuilder: (BuildContext ctx, Widget child,
+                ImageChunkEvent loadingProgress) {
+              if (loadingProgress == null) {
+                return child;
+              } else {
+                return Container(
+                  color: backgroundColor,
+                  child: Center(
+                    child: Image.asset(
+                      placeHolder,
+                      height: 72,
+                      width: 72,
+                    ),
+                  ),
+                );
+              }
+            },
+          )),
     ),
   );
 }
@@ -516,7 +561,7 @@ Widget sliderIndicator(int page, {bool noPadding = false, int count = 4}) {
   return Padding(
     padding: noPadding
         ? const EdgeInsets.symmetric(vertical: 0, horizontal: 0)
-        : const EdgeInsets.symmetric(vertical: 16, horizontal: 55),
+        : const EdgeInsetsDirectional.only(top: 5, bottom: 20, start: 50),
     child: AnimatedSmoothIndicator(
       activeIndex: page,
       count: count,
@@ -524,8 +569,8 @@ Widget sliderIndicator(int page, {bool noPadding = false, int count = 4}) {
       effect: ExpandingDotsEffect(
           spacing: 5.0,
           radius: 8.0,
-          dotWidth: 8.0,
-          dotHeight: 8.0,
+          dotWidth: 6.5,
+          dotHeight: 6.5,
           expansionFactor: 2.7,
           dotColor: orangeShadowColor,
           activeDotColor: orangeColor),
@@ -533,6 +578,12 @@ Widget sliderIndicator(int page, {bool noPadding = false, int count = 4}) {
   );
 }
 
+Widget progressBar(){
+  return CircularProgressIndicator(
+    strokeWidth: 1.5,
+    valueColor: new AlwaysStoppedAnimation<Color>(orangeColor),
+  );
+}
 // end karem
 
 // Start Asmaa
@@ -1557,22 +1608,20 @@ Widget mostPopularByCategoryHeader(BuildContext context) {
       height: 50,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-          shape: BoxShape.rectangle,
-          gradient: LinearGradient(
-              colors: [
-                Colors.white.withOpacity(1),
-                Colors.black.withOpacity(0.3)
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              tileMode: TileMode.repeated),
-          color: Colors.black12,
-          borderRadius: BorderRadius.horizontal(
-            right: Radius.circular(20),
-            left: Radius.circular(20),
-          )),
+        borderRadius: BorderRadius.vertical(bottom: Radius.circular(25)),
+        boxShadow: [
+          BoxShadow(
+            color: orangeShadowColor.withOpacity(0.1),
+          ),
+          BoxShadow(
+              color: Colors.white,
+              spreadRadius: 1.0,
+              blurRadius: 8.0,
+              offset: Offset(0, -8)),
+        ],
+      ),
       child: Padding(
-        padding: const EdgeInsets.only(left: 20.0, top: 15.0),
+        padding: const EdgeInsets.only(left: 20.0, top: 15.0, right: 20),
         child: Text(
           Languages.of(context).mostPopularByCategories,
           style: titlesStyle(),

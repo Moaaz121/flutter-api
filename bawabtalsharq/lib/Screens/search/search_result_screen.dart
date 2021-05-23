@@ -149,7 +149,7 @@ class _SearchResultState extends State<SearchResult> {
                             color: isGrid ? Colors.transparent : Colors.white,
                           ),
                           child: Icon(
-                            Icons.apps,
+                            Icons.menu_rounded,
                             size: 20,
                           ),
                         ),
@@ -274,8 +274,13 @@ Container roundText(BuildContext context) {
     ),
     child: Center(
       child: Text(
-        'Hand Made',
-        style: TextStyle(),
+        'hand made',
+        style: TextStyle(
+          fontFamily: 'Segoe UI',
+          fontSize: 14.0,
+          color: Colors.white,
+          letterSpacing: 0.168,
+        ),
       ),
     ),
   );
