@@ -16,7 +16,7 @@ class PlanBloc extends Bloc<PlanEvent, PlanState> {
     if (event is GetPlanEvent) {
       yield PlanLoadingState();
       try {
-        PlanModel data = await ProfileRepo.getPlan();
+        PlanModel data = await ProfileRepo.getPlans();
         yield PlanLoadedState(planResponse: data);
       } catch (e) {
         yield PlanErrorState(message: e.toString());

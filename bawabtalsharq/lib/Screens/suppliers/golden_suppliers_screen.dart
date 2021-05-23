@@ -128,22 +128,34 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          imagesProduct(
-              products[0].product, products[0].category, products[0].imagePath),
-          imagesProduct(
-              products[1].product, products[1].category, products[1].imagePath),
-          imagesProduct(
-              products[2].product, products[2].category, products[2].imagePath),
+          products.isNotEmpty
+              ? imagesProduct(
+                  text: products[0].product,
+                  subText: products[0].category,
+                  imagePath: products[0].imagePath)
+              : imagesProduct(isEmpty: true),
+          products.isNotEmpty
+              ? imagesProduct(
+                  text: products[1].product,
+                  subText: products[1].category,
+                  imagePath: products[1].imagePath)
+              : imagesProduct(isEmpty: true),
+          products.isNotEmpty
+              ? imagesProduct(
+                  text: products[2].product,
+                  subText: products[2].category,
+                  imagePath: products[2].imagePath)
+              : imagesProduct(isEmpty: true),
         ],
       ),
     );
   }
 
   Column imagesProduct(
-    String text,
-    String subText,
-    String imagePath,
-  ) {
+      {String text = '',
+      String subText = '',
+      String imagePath = '',
+      bool isEmpty = false}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       // mainAxisAlignment: MainAxisAlignment.start,
@@ -151,7 +163,7 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
         ClipRRect(
           borderRadius: BorderRadius.circular(20),
           child: Image(
-            image: NetworkImage(imagePath),
+            image: isEmpty ? AssetImage(logo) : NetworkImage(imagePath),
             width: 85,
             height: 70,
           ),

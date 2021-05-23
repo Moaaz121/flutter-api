@@ -4,6 +4,7 @@ import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/superiorBlocs/superior_bloc.dart';
 import 'package:bawabtalsharq/bloc/superiorBlocs/superior_event.dart';
 import 'package:bawabtalsharq/bloc/superiorBlocs/superior_state.dart';
+import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -248,24 +249,33 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
                     textDirection: Directionality.of(context),
                     top: MediaQuery.of(context).size.width * 0.28,
                     end: MediaQuery.of(context).size.width * 0.1,
-                    child: productImage(0.10, 0.16,
-                        listOfSuperior[position].products[0].imagePath),
+                    child: listOfSuperior[position].products.isNotEmpty
+                        ? productImage(0.10, 0.16,
+                            image:
+                                listOfSuperior[position].products[0].imagePath)
+                        : productImage(0.10, 0.16, isEmpty: true),
                   ),
                   //center image
                   Positioned.directional(
                     textDirection: Directionality.of(context),
                     top: MediaQuery.of(context).size.width * 0.25,
                     end: MediaQuery.of(context).size.width * 0.15,
-                    child: productImage(0.11, 0.24,
-                        listOfSuperior[position].products[1].imagePath),
+                    child: listOfSuperior[position].products.isNotEmpty
+                        ? productImage(0.11, 0.24,
+                            image:
+                                listOfSuperior[position].products[1].imagePath)
+                        : productImage(0.10, 0.16, isEmpty: true),
                   ),
                   //top image
                   Positioned.directional(
                     textDirection: Directionality.of(context),
                     top: MediaQuery.of(context).size.width * 0.23,
                     end: MediaQuery.of(context).size.width * 0.22,
-                    child: productImage(0.12, 0.3,
-                        listOfSuperior[position].products[2].imagePath),
+                    child: listOfSuperior[position].products.isNotEmpty
+                        ? productImage(0.12, 0.3,
+                            image:
+                                listOfSuperior[position].products[2].imagePath)
+                        : productImage(0.10, 0.16, isEmpty: true),
                   )
                 ],
               ),
@@ -276,7 +286,8 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
     );
   }
 
-  Container productImage(double width, double height, String image) {
+  Container productImage(double width, double height,
+      {String image, bool isEmpty = false}) {
     return Container(
       width: MediaQuery.of(context).size.height * width,
       height: MediaQuery.of(context).size.width * height,
@@ -291,7 +302,7 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
               spreadRadius: 0)
         ],
         image: DecorationImage(
-          image: NetworkImage(image),
+          image: isEmpty ? AssetImage(logo) : NetworkImage(image),
           fit: BoxFit.fill,
         ),
       ),

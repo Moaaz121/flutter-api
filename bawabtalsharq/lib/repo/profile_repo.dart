@@ -91,11 +91,28 @@ class ProfileRepo {
     }
   }
 
-  static Future<PlanModel> getPlan() async {
+  static Future<PlanModel> getPlans() async {
     var response = await http.get(Uri.encodeFull(APIS.serverURL +
         APIS.PLAN_API +
         Constants.getLanguage() +
         Constants.getCurrency()));
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      PlanModel returnData = PlanModel.fromJson(data);
+
+      return returnData;
+    } else
+      throw Exception();
+  }
+
+  static Future<PlanModel> getPlanById(String planId) async {
+    Map<String, dynamic> params = {"package_id": planId};
+    var response = await http.post(
+        Uri.encodeFull(APIS.serverURL +
+            APIS.PLAN_BY_ID_API +
+            Constants.getLanguage() +
+            Constants.getCurrency()),
+        body: params);
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
       PlanModel returnData = PlanModel.fromJson(data);

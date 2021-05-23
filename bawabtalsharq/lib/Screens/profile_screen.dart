@@ -94,15 +94,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      buildText('Bahaa Robert', 16,
-                          fontWeight: FontWeight.w600),
+                      currentUser != null
+                          ? buildText(
+                              currentUser.data.firstname +
+                                  ' ' +
+                                  currentUser.data.lastname,
+                              16,
+                              fontWeight: FontWeight.w600)
+                          : Text(''),
                       SizedBox(
                         height: 2,
                       ),
-                      buildText('Beauty & Personal Care', 14,
-                          color: Colors.grey[500]),
+                      currentUser != null
+                          ? buildText(currentUser.data.company, 14,
+                              color: Colors.grey[500])
+                          : Text(''),
                     ],
-                  )
+                  ),
+                  currentUser == null ? Text('SignUp / Login') : Text(''),
                 ],
               ),
             ),

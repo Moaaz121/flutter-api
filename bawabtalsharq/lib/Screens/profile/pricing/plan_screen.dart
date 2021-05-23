@@ -3,24 +3,28 @@ import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:bawabtalsharq/Screens/profile/pricing/plan_screen.dart';
 import 'package:bawabtalsharq/Model/plan_model.dart';
-import 'package:bawabtalsharq/bloc/planBloc/plan_bloc.dart';
-import 'package:bawabtalsharq/bloc/planBloc/plan_event.dart';
-import 'package:bawabtalsharq/bloc/planBloc/plan_state.dart';
+import 'package:bawabtalsharq/bloc/planByIdBloc/plan_by_id_state.dart';
+import 'package:bawabtalsharq/bloc/planByIdBloc/plan_by_id_bloc.dart';
+import 'package:bawabtalsharq/bloc/planByIdBloc/plan_by_id_event.dart';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class PricingScreen extends StatefulWidget {
+class PlanScreen extends StatefulWidget {
+  final String packageId;
+
+  PlanScreen(this.packageId);
+
   @override
-  _PricingScreenState createState() => _PricingScreenState();
+  _PlanScreenState createState() => _PlanScreenState();
 }
 
-class _PricingScreenState extends State<PricingScreen> {
+class _PlanScreenState extends State<PlanScreen> {
   CarouselController buttonCarouselController = CarouselController();
   int sliderPosition = 0;
-  PlanBloc _planBloc;
+  PlanByIdBloc _planByIdBloc;
 
   List<Plan> planList;
 
@@ -29,8 +33,8 @@ class _PricingScreenState extends State<PricingScreen> {
 
   @override
   void initState() {
-    _planBloc = PlanBloc();
-    _planBloc.add(GetPlanEvent());
+    _planByIdBloc = PlanByIdBloc();
+    _planByIdBloc.add(GetPlanByIdEvent(widget.packageId));
     super.initState();
   }
 
@@ -61,10 +65,10 @@ class _PricingScreenState extends State<PricingScreen> {
           },
         ),
       ),
-      body: BlocBuilder<PlanBloc, PlanState>(
-        bloc: _planBloc,
+      body: BlocBuilder<PlanByIdBloc, PlanByIdState>(
+        bloc: _planByIdBloc,
         builder: (context, state) {
-          if (state is PlanLoadingState) {
+          if (state is PlanByIdLoadingState) {
             if (!isLoading) {
               isLoading = true;
               return Container(
@@ -74,7 +78,7 @@ class _PricingScreenState extends State<PricingScreen> {
                 ),
               );
             }
-          } else if (state is PlanLoadedState) {
+          } else if (state is PlanByIdLoadedState) {
             print('loaded');
             planList = state.planResponse.plan;
             isLoading = true;
@@ -208,25 +212,6 @@ class _PricingScreenState extends State<PricingScreen> {
                           : false,
                 );
               },
-            ),
-          ),
-          RaisedButton(
-            child: Text(Languages.of(context).selectPlan),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => PlanScreen(planList[index].packageId),
-                ),
-              );
-            },
-            padding: EdgeInsets.only(left: 36, right: 36),
-            disabledTextColor: Colors.white,
-            textColor: Colors.white,
-            disabledColor: color,
-            color: color,
-            shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(30.0),
             ),
           ),
         ],
