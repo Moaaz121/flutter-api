@@ -65,11 +65,13 @@ class _OTPScreenState extends State<OTPScreen> {
             builder: (context, state) {
               if (state is ResumeRegisterState) {
                 _registerBloc.add(DoRegisterEvent(
-                    widget.data['phone'],
-                    widget.data['email'],
-                    widget.data['password'],
-                    widget.data['name'],
-                    widget.data['userType']));
+                    phone: widget.data['phone'],
+                    email: widget.data['email'],
+                    password: widget.data['password'],
+                    firstname: widget.data['firstname'],
+                    lastname: widget.data['lastname'],
+                    userType: widget.data['userType'],
+                    company: widget.data['company']));
               } else if (state is RegisterLoadingState) {
                 return Center(
                   child: CircularProgressIndicator(),
