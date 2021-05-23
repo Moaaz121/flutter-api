@@ -55,7 +55,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
               Positioned.directional(
                 textDirection: Directionality.of(context),
                 end: 20,
-                bottom: MediaQuery.of(context).size.height * 0.14,
+                bottom: MediaQuery.of(context).size.height * 0.13,
                 child: buildFloatingActionBtn(
                   icon: Icons.arrow_upward,
                   onPressed: () {

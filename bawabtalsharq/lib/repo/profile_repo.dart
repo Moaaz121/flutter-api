@@ -92,12 +92,13 @@ class ProfileRepo {
   }
 
   static Future<PlanModel> getPlan() async {
-    var response = await http.get(Uri.encodeFull(
-        APIS.serverURL + APIS.PLAN_API + Constants.getLanguage()));
+    var response = await http.get(Uri.encodeFull(APIS.serverURL +
+        APIS.PLAN_API +
+        Constants.getLanguage() +
+        Constants.getCurrency()));
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
       PlanModel returnData = PlanModel.fromJson(data);
-      print(returnData.toString());
 
       return returnData;
     } else
