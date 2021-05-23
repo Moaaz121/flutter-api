@@ -1528,7 +1528,8 @@ Widget textFiledPrice(BuildContext context, String text,
         suffixIcon: dropIcon,
         labelText: text,
         labelStyle: TextStyle(
-            fontFamily: 'Roboto-Thin.ttf', fontWeight: FontWeight.w200),
+          fontSize: 12,
+        ),
         focusedBorder:
             UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
       ),
@@ -1767,7 +1768,8 @@ Widget customTextField(BuildContext context,
           suffixIcon: rightBtn,
           labelText: label,
           labelStyle: TextStyle(
-              fontFamily: 'Roboto-Thin.ttf', fontWeight: FontWeight.w200),
+            fontSize: 12,
+          ),
           focusedBorder:
               UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey))),
     ),

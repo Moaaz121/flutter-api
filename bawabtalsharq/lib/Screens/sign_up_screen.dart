@@ -1,13 +1,13 @@
+import 'package:bawabtalsharq/Screens/forget_password/verification_OTP_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/Utils/validator_util.dart';
+import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_bloc.dart';
+import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_event.dart';
+import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_state.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:bawabtalsharq/Screens/forget_password/verification_OTP_screen.dart';
-import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_bloc.dart';
-import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_state.dart';
-import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -37,11 +37,13 @@ class Country {
 class _SignUpScreenState extends State<SignUpScreen> {
   bool obSecureText = true;
   int selectedRadioTile;
+  bool companyTypeBool = true;
 
   List<Country> _countries = Country.getCountries();
   List<DropdownMenuItem<Country>> _dropdownMenuItems;
   Country _selectedCountry;
-
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController nameController = TextEditingController();
@@ -52,6 +54,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String _passwordErrorMessage;
   String _phoneErrorMessage;
   String _nameErrorMessage;
+  String firstNameError;
+  String lastNameError;
 
   bool isLoading = false;
   RegisterBloc _registerBloc;
@@ -105,6 +109,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
         case 3:
           selectedRadio = 'Both';
           break;
+      }
+      if (selectedRadio == 'Seller') {
+        companyTypeBool = false;
+      } else {
+        companyTypeBool = true;
       }
     });
   }
@@ -192,16 +201,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 buildText(Languages.of(context).signUp, 40,
                     fontWeight: FontWeight.w700),
                 buildSizedBox(height: 10),
-                buildSizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: DropdownButton(
-                    isExpanded: true,
-                    isDense: false,
-                    value: _selectedCountry,
-                    items: _dropdownMenuItems,
-                    onChanged: onChangeDropdownItem,
-                  ),
-                ),
                 buildSizedBox(height: 10),
                 buildText(
                   Languages.of(context).plzSecect,
@@ -209,20 +208,38 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   color: Colors.grey[500],
                   fontWeight: FontWeight.w400,
                 ),
-                buildSizedBox(
-                    height: 25,
-                    child: buildRadioListTile(Languages.of(context).buyer, 1)),
-                buildSizedBox(
-                    height: 25,
-                    child: buildRadioListTile(Languages.of(context).seller, 2)),
-                buildRadioListTile(Languages.of(context).both, 3),
-                customTextField(context,
-                    textInputType: TextInputType.name,
-                    errorText: _nameErrorMessage,
-                    controller: nameController,
-                    label: Languages.of(context).fullName,
-                    width: 1,
-                    leftIcon: Icons.person),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    buildRadioListTile(Languages.of(context).buyer, 1),
+                    buildRadioListTile(Languages.of(context).seller, 2),
+                    buildRadioListTile(Languages.of(context).both, 3),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: textFiledPrice(
+                        context,
+                        Languages.of(context).firstName,
+                        width: .50,
+                        errorMessage: firstNameError,
+                        controller: firstNameController,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    Expanded(
+                      child: textFiledPrice(
+                          context, Languages.of(context).lasttNam,
+                          width: .50,
+                          errorMessage: lastNameError,
+                          controller: lastNameController),
+                    ),
+                  ],
+                ),
                 customTextField(context,
                     textInputType: TextInputType.emailAddress,
                     errorText: _emailErrorMessage,
@@ -266,29 +283,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
                 customTextField(context,
-                    width: 1,
-                    label: Languages.of(context).companyName,
-                    leftIcon: Icons.home_work),
-                Row(
-                  children: [
-                    Expanded(
-                      child: customTextField(
-                        context,
-                        width: 0.15,
-                        label: Languages.of(context).n,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    customTextField(context,
-                        textInputType: TextInputType.phone,
-                        errorText: _phoneErrorMessage,
-                        controller: phoneController,
-                        label: Languages.of(context).tel,
-                        width: 0.7,
-                        leftIcon: Icons.phone),
-                  ],
+                    textInputType: TextInputType.phone,
+                    errorText: _phoneErrorMessage,
+                    controller: phoneController,
+                    label: Languages.of(context).tel,
+                    leftIcon: Icons.phone),
+                SizedBox(
+                  height: 10,
+                ),
+                Visibility(
+                  visible: companyTypeBool,
+                  child: customTextField(context,
+                      width: 1,
+                      label: Languages.of(context).companyName,
+                      leftIcon: Icons.home_work),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                buildSizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: DropdownButton(
+                    isExpanded: true,
+                    isDense: false,
+                    value: _selectedCountry,
+                    items: _dropdownMenuItems,
+                    onChanged: onChangeDropdownItem,
+                  ),
                 ),
                 SizedBox(
                   height: 20,
@@ -362,16 +383,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  RadioListTile<int> buildRadioListTile(String text, int value) {
-    return RadioListTile(
-      title: Text(text),
-      groupValue: selectedRadioTile,
-      value: value,
-      dense: true,
-      onChanged: (val) {
-        setSelectedRadioTile(val);
-      },
-      activeColor: OrangeColor,
+  Widget buildRadioListTile(String text, int value) {
+    return Row(
+      children: [
+        Radio(
+          groupValue: selectedRadioTile,
+          value: value,
+          onChanged: (val) {
+            setSelectedRadioTile(val);
+          },
+          activeColor: OrangeColor,
+        ),
+        buildText(text, 12)
+      ],
     );
   }
 }
