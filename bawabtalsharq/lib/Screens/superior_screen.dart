@@ -179,13 +179,20 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
                           },
                           child: Container(
                             width: MediaQuery.of(context).size.width * 0.3,
-                            height: MediaQuery.of(context).size.height * 0.15,
+                            height: MediaQuery.of(context).size.height * 0.13,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey[100],
+                                  offset: Offset(0.0, 1.0), //(x,y)
+                                  blurRadius: 6.0,
+                                ),
+                              ],
                               image: DecorationImage(
                                 image:
                                     NetworkImage(listOfSuperior[position].logo),
-                                fit: BoxFit.fill,
+                                fit: BoxFit.contain,
                               ),
                             ),
                           ),
@@ -193,8 +200,11 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
                         SizedBox(
                           height: 15,
                         ),
-                        buildText(listOfSuperior[position].name, 14,
-                            fontWeight: FontWeight.bold),
+                        SizedBox(
+                          width: 65,
+                          child: buildText(listOfSuperior[position].name, 14,
+                              maxLine: 1, fontWeight: FontWeight.bold),
+                        ),
                         SizedBox(
                           height: 5,
                         ),

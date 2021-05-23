@@ -17,7 +17,9 @@ class GoldenSuppliers extends StatefulWidget {
 class _GoldenSuppliersState extends State<GoldenSuppliers> {
   GoldenBloc _goldenBloc;
   bool isLoading = false;
+  bool isLoaded = false;
   List<Suppliers> suppliers;
+  String errorMessage = '';
 
   @override
   void initState() {
@@ -41,12 +43,21 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
           bloc: _goldenBloc,
           builder: (context, state) {
             if (state is GoldenLoadingState) {
-              showLoadingDialog(context);
+              if (!isLoading) {
+                isLoading = true;
+                return Container(
+                  color: Colors.white,
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              }
             } else if (state is GoldenLoadedState) {
               suppliers = state.suppliers;
               isLoading = true;
-              _goldenBloc.add(ResetState());
-              Navigator.pop(context);
+              isLoaded = true;
+            } else if (state is GoldenErrorState) {
+              errorMessage = 'No Internet Connection';
             }
             return isLoading
                 ? ListView.builder(
@@ -103,7 +114,7 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
                         ),
                       ]);
                     })
-                : Container();
+                : Center(child: Text(errorMessage));
           },
         ));
   }
@@ -198,13 +209,14 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
         children: [
           Row(
             children: [
-              buildText(
-                supplierName,
-                15,
-                fontWeight: FontWeight.w700,
-              ),
               SizedBox(
-                width: 5,
+                width: 75,
+                child: buildText(
+                  supplierName,
+                  15,
+                  maxLine: 1,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
               Image(
                 image: AssetImage(medalImage),

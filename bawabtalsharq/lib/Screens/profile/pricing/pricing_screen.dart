@@ -84,40 +84,25 @@ class _PricingScreenState extends State<PricingScreen> {
               ? Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    CarouselSlider(
+                    CarouselSlider.builder(
+                      itemCount: planList.length,
                       carouselController: buttonCarouselController,
-                      items: [
-                        pricingItem(
+                      itemBuilder: (BuildContext context, int index, int idx) {
+                        return pricingItem(
                             context: context,
-                            text: planList[0].packageName,
-                            price: planList[0].packagePrice,
-                            index: 0,
-                            color: Colors.blue[300]),
-                        pricingItem(
-                            context: context,
-                            text: planList[1].packageName,
-                            price: planList[1].packagePrice,
-                            index: 1,
-                            color: Colors.brown[400]),
-                        pricingItem(
-                            context: context,
-                            text: planList[2].packageName,
-                            price: planList[2].packagePrice,
-                            index: 2,
-                            color: Colors.black26),
-                        pricingItem(
-                            context: context,
-                            text: planList[3].packageName,
-                            price: planList[3].packagePrice,
-                            index: 3,
-                            color: Colors.orange[400]),
-                        pricingItem(
-                            context: context,
-                            text: planList[4].packageName,
-                            price: planList[4].packagePrice,
-                            index: 4,
-                            color: orangeColor),
-                      ],
+                            text: planList[index].packageName,
+                            price: planList[index].packagePrice,
+                            index: index,
+                            color: Colors.blue[300]);
+                      },
+                      // items: [
+                      //   pricingItem(
+                      //       context: context,
+                      //       text: planList[0].packageName,
+                      //       price: planList[0].packagePrice,
+                      //       index: 0,
+                      //       color: Colors.blue[300]),
+                      // ],
                       options: CarouselOptions(
                         onPageChanged: (index, reason) {
                           setState(() {
@@ -139,7 +124,8 @@ class _PricingScreenState extends State<PricingScreen> {
                         enlargeCenterPage: true,
                       ),
                     ),
-                    sliderIndicator(sliderPosition, noPadding: true, count: 5),
+                    sliderIndicator(sliderPosition,
+                        noPadding: true, count: planList.length),
                   ],
                 )
               : Center(
@@ -188,174 +174,40 @@ class _PricingScreenState extends State<PricingScreen> {
               children: [
                 buildText(text, 22,
                     color: Colors.white, fontWeight: FontWeight.w600),
-                buildText('\$' + price, 26,
+                buildText(price, 26,
                     color: Colors.white, fontWeight: FontWeight.w600),
               ],
             ),
           ),
           Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  planItem(
-                      color: color,
-                      text: 'Post Product',
-                      isText: true,
-                      leftText: planList[index].postProducts),
-                  planItem(
-                    color: color,
-                    text: 'Main Category',
-                    isText: false,
-                    isTrue: planList[index].mainCategory == '0' ? false : true,
-                  ),
-                  planItem(
-                    color: color,
-                    text: 'Superior Suplayer',
-                    isText: false,
-                    isTrue:
-                        planList[index].superiorSuplayer == '0' ? false : true,
-                  ),
-                  planItem(
-                    color: color,
-                    text: 'Admin Account',
-                    isText: false,
-                    isTrue: planList[index].adminAccount == '0' ? false : true,
-                  ),
-                  planItem(
-                    color: color,
-                    text: 'Minisite Creation',
-                    isText: false,
-                    isTrue:
-                        planList[index].minisiteCreation == '0' ? false : true,
-                  ),
-                  planItem(
-                    color: color,
-                    text: 'Request For Quotation',
-                    isText: false,
-                    isTrue: planList[index].requestForQuotation == '0'
-                        ? false
-                        : true,
-                  ),
-                  planItem(
-                    color: color,
-                    text: 'Recommendation Products',
-                    isText: false,
-                    isTrue: planList[index].recommendationProducts == '0'
-                        ? false
-                        : true,
-                  ),
-                  planItem(
-                    color: color,
-                    text: 'Export Manager',
-                    isText: false,
-                    isTrue: planList[index].exportManager == '0' ? false : true,
-                  ),
-                  planItem(
-                      color: color,
-                      text: 'Product Report',
-                      isText: true,
-                      leftText: planList[index].productReport),
-                  planItem(
-                    color: color,
-                    text: 'Account Manager',
-                    isText: false,
-                    isTrue:
-                        planList[index].accountManager == '0' ? false : true,
-                  ),
-                  planItem(
-                    color: color,
-                    text: 'Website Ads',
-                    isText: false,
-                    isTrue: planList[index].websiteAds == '0' ? false : true,
-                  ),
-                  planItem(
-                    color: color,
-                    text: 'Mobile App Ads',
-                    isText: false,
-                    isTrue: planList[index].mobileAppAds == '0' ? false : true,
-                  ),
-                  planItem(
-                    color: color,
-                    text: 'Live Chat',
-                    isText: false,
-                    isTrue: planList[index].liveChat == '0' ? false : true,
-                  ),
-                  planItem(
-                    color: color,
-                    text: 'Video_Chat',
-                    isText: false,
-                    isTrue: planList[index].videoChat == '0' ? false : true,
-                  ),
-                  planItem(
-                    color: color,
-                    text: 'Audio Chat',
-                    isText: false,
-                    isTrue: planList[index].audioChat == '0' ? false : true,
-                  ),
-                  planItem(
-                    color: color,
-                    text: 'Social Media Campagin',
-                    isText: false,
-                    isTrue: planList[index].socialMediaCampagin == '0'
-                        ? false
-                        : true,
-                  ),
-                  planItem(
-                    color: color,
-                    text: 'Hosting and Creation Website',
-                    isText: false,
-                    isTrue: planList[index].hostingAndCreationWebsite == '0'
-                        ? false
-                        : true,
-                  ),
-                  planItem(
-                    color: color,
-                    text: 'Official Email',
-                    isText: false,
-                    isTrue: planList[index].officialEmail == '0' ? false : true,
-                  ),
-                  planItem(
-                    color: color,
-                    text: 'Online support',
-                    isText: false,
-                    isTrue: planList[index].onlineSupport == '0' ? false : true,
-                  ),
-                  planItem(
-                    color: color,
-                    text: 'Onland Verification',
-                    isText: false,
-                    isTrue: planList[index].onlandVerification == '0'
-                        ? false
-                        : true,
-                  ),
-                ],
-              ),
+            child: ListView.builder(
+              shrinkWrap: true,
+              scrollDirection: Axis.vertical,
+              itemCount: planList[index].details.length,
+              padding: EdgeInsets.only(top: 10, left: 20, right: 20),
+              itemBuilder: (context, position) {
+                return planItem(
+                  color: color,
+                  text: planList[index].details[position].attributeName,
+                  isText: planList[index].details[position].attributeValue ==
+                              '0' ||
+                          planList[index].details[position].attributeValue ==
+                              '1'
+                      ? false
+                      : true,
+                  leftText: planList[index].details[position].attributeValue ==
+                              '0' ||
+                          planList[index].details[position].attributeValue ==
+                              '1'
+                      ? ''
+                      : planList[index].details[position].attributeValue,
+                  isTrue:
+                      planList[index].details[position].attributeValue == '1'
+                          ? true
+                          : false,
+                );
+              },
             ),
-            // child: ListView.builder(
-            //   shrinkWrap: true,
-            //   scrollDirection: Axis.vertical,
-            //   itemCount: 12,
-            //   padding: EdgeInsets.only(top: 10, left: 20, right: 20),
-            //   itemBuilder: (context, position) {
-            //     return Padding(
-            //       padding: const EdgeInsets.all(6),
-            //       child: Row(
-            //         children: [
-            //           Icon(
-            //             position.isOdd ? Icons.check : Icons.close,
-            //             size: 16,
-            //             color: color,
-            //           ),
-            //           SizedBox(
-            //             width: 20,
-            //           ),
-            //           buildText(
-            //               position.isOdd ? 'Video Chat' : 'Online Support', 14),
-            //         ],
-            //       ),
-            //     );
-            //   },
-            // ),
           ),
           RaisedButton(
             child: Text(Languages.of(context).selectPlan),
@@ -383,7 +235,7 @@ class _PricingScreenState extends State<PricingScreen> {
       child: Row(
         children: [
           isText
-              ? buildText(leftText, 12, color: color)
+              ? Flexible(child: buildText(leftText, 12, color: color))
               : Icon(
                   isTrue ? Icons.check : Icons.close,
                   size: 16,
@@ -392,7 +244,7 @@ class _PricingScreenState extends State<PricingScreen> {
           SizedBox(
             width: 10,
           ),
-          buildText(text, 14),
+          Flexible(child: buildText(text, 14)),
         ],
       ),
     );
