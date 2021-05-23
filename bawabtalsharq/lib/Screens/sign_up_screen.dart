@@ -26,10 +26,10 @@ class Country {
     return <Country>[
       Country(1, 'Country/Region'),
       Country(2, 'Egypt'),
-      Country(3, 'Sodan'),
-      Country(4, 'Asa'),
-      Country(5, 'Coura'),
-      Country(6, 'Yaban'),
+      Country(3, 'Sudan'),
+      Country(4, 'Asia'),
+      Country(5, 'Korea'),
+      Country(6, 'Japan'),
     ];
   }
 }
@@ -38,6 +38,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool obSecureText = true;
   int selectedRadioTile;
   bool companyTypeBool = true;
+  Map data;
 
   List<Country> _countries = Country.getCountries();
   List<DropdownMenuItem<Country>> _dropdownMenuItems;
@@ -46,8 +47,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController lastNameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  TextEditingController nameController = TextEditingController();
+
   TextEditingController passwordController = TextEditingController();
+  TextEditingController companyController = TextEditingController();
+
   String selectedRadio;
 
   String _emailErrorMessage;
@@ -295,6 +298,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   visible: companyTypeBool,
                   child: customTextField(context,
                       width: 1,
+                      controller: companyController,
                       label: Languages.of(context).companyName,
                       leftIcon: Icons.home_work),
                 ),
@@ -327,7 +331,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       _phoneErrorMessage = null;
                       _nameErrorMessage = null;
                       setState(() {
-                        if (nameController.text.isEmpty)
+                        if (firstNameController.text.isEmpty)
+                          _nameErrorMessage = 'Empty Field';
+                        else if (lastNameController.text.isEmpty)
                           _nameErrorMessage = 'Empty Field';
                         else if (passwordController.text.isEmpty)
                           _passwordErrorMessage = 'Empty Field';
@@ -349,18 +355,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               'please enter correct Phone Number';
                         else if (!passwordValidator(passwordController.text))
                           _passwordErrorMessage = 'Weak Password';
-                        else {
-                          setState(() {
-                            isLoading = true;
-                          });
+                        else if (companyTypeBool) {
+                          if (companyController.text.isEmpty)
+                            _nameErrorMessage = 'Empty Field';
+                        } else {
+                          isLoading = true;
+                          print('Verifying phone');
+                          data = {
+                            'phone': '+2${phoneController.text.trim()}',
+                            'email': emailController.text.trim(),
+                            'firstname': firstNameController.text.trim(),
+                            'lastname': lastNameController.text.trim(),
+                            'password': passwordController.text.trim(),
+                            'userType': selectedRadio,
+                            'company': companyController.text.trim()
+                          };
+
                           _registerBloc.add(VerifyPhone(
-                            data: {
-                              'phone': '+2${phoneController.text.trim()}',
-                              'email': emailController.text,
-                              'name': nameController.text,
-                              'password': passwordController.text,
-                              'userType': selectedRadio
-                            },
+                            data: data,
                           ));
                         }
                       });
