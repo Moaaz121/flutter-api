@@ -9,6 +9,7 @@ import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class IntroScreen extends StatefulWidget {
   @override
@@ -18,6 +19,7 @@ class IntroScreen extends StatefulWidget {
 class _IntroScreenState extends State<IntroScreen> {
   int imageIndex = 0;
   PageController _pageController = PageController();
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -145,8 +147,7 @@ class _IntroScreenState extends State<IntroScreen> {
                                   imageIndex < 2
                                       ? _pageController
                                           .jumpToPage(imageIndex + 1)
-                                      : Navigator.pushReplacementNamed(
-                                          context, ScreenRoutes.loginScreen);
+                                      : submit();
                                 },
                                 child: Container(
                                   width: 150,
@@ -185,8 +186,7 @@ class _IntroScreenState extends State<IntroScreen> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.pushReplacementNamed(
-                                      context, ScreenRoutes.mainScreen);
+                                  submit();
                                 },
                                 child: Text(
                                   'Skip',
@@ -245,5 +245,13 @@ class _IntroScreenState extends State<IntroScreen> {
         ],
       ),
     );
+  }
+
+  void submit() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('onBoarding', true).then((value) => {
+          if (value)
+            {Navigator.pushReplacementNamed(context, ScreenRoutes.mainScreen)}
+        });
   }
 }

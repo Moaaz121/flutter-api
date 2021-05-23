@@ -1,7 +1,7 @@
 import 'package:bawabtalsharq/Model/mainCategoryModel.dart';
+import 'package:bawabtalsharq/Screens/search/search_result_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
-import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/categoryBloc/category_bloc.dart';
 import 'package:bawabtalsharq/bloc/categoryBloc/category_event.dart';
@@ -151,8 +151,9 @@ class _AllCategoriesState extends State<AllCategories>
                                 .withOpacity(0.15),
                           ),
                           padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
-                          child: Image.asset(
-                            cold_drinks, //listOfCategory[index].icon network image
+                          child: Image.network(
+                            listOfCategory[index]
+                                .image, //listOfCategory[index].icon network image
                             height: 45,
                             width: 45,
                           ),
@@ -178,7 +179,7 @@ class _AllCategoriesState extends State<AllCategories>
   }
 
   Positioned getSubCategoriesList(BuildContext context, int categoryIndex,
-      List<SubCategory> subCategoryArr, Color color) {
+      List<SubCatregory> subCategoryArr, Color color) {
     //sub catetgory model
     setupAnimation();
     return Positioned.directional(
@@ -219,8 +220,14 @@ class _AllCategoriesState extends State<AllCategories>
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(
-                          context, ScreenRoutes.subCategoryScreen);
+                      Navigator.push(
+                          context,
+                          new MaterialPageRoute(
+                            builder: (BuildContext context) => new SearchResult(
+                              Categories: [subCategoryArr[index].categoryId],
+                              q: '',
+                            ),
+                          ));
                     },
                     child: Container(
                       margin: EdgeInsetsDirectional.only(
@@ -235,8 +242,8 @@ class _AllCategoriesState extends State<AllCategories>
                             child: Padding(
                               padding: const EdgeInsetsDirectional.only(
                                   start: 3, top: 3, end: 3, bottom: 3),
-                              child: Image.asset(
-                                cold_drinks,
+                              child: Image.network(
+                                subCategoryArr[index].image,
                                 // categoriesArr[index].icon network image
                                 height: 37,
                                 width: 37,

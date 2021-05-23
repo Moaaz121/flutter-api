@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
+import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/main.dart';
-import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
+import 'package:bawabtalsharq/widgets/widgets.dart';
+import 'package:flutter/material.dart';
 
 class SubCategoryScreen extends StatefulWidget {
   @override
@@ -50,7 +50,7 @@ class _SubCategoriesScreenState extends State<SubCategoryScreen> {
                     SizedBox(
                       height: 5,
                     ),
-                    Image.asset(
+                    Image.network(
                       dress_icon,
                       width: MediaQuery.of(context).size.width * 0.15,
                     ),

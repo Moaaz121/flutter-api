@@ -4,6 +4,7 @@ import 'package:bawabtalsharq/Model/aboutUs_model.dart';
 import 'package:bawabtalsharq/Model/faq_model.dart';
 import 'package:bawabtalsharq/Model/lang_model.dart';
 import 'package:bawabtalsharq/Model/history_model.dart';
+import 'package:bawabtalsharq/Model/plan_model.dart';
 import 'package:bawabtalsharq/Model/contactUs_model.dart';
 import 'package:bawabtalsharq/Utils/apis.dart';
 import 'dart:convert';
@@ -88,5 +89,19 @@ class ProfileRepo {
 
       return modelResponse;
     }
+  }
+
+  static Future<PlanModel> getPlan() async {
+    var response = await http.get(Uri.encodeFull(APIS.serverURL +
+        APIS.PLAN_API +
+        Constants.getLanguage() +
+        Constants.getCurrency()));
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      PlanModel returnData = PlanModel.fromJson(data);
+
+      return returnData;
+    } else
+      throw Exception();
   }
 }

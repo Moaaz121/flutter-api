@@ -18,6 +18,7 @@ class FaqScreen extends StatefulWidget {
 class _FaqScreenState extends State<FaqScreen> {
   FaqBloc _faqBloc;
   bool isLoading = false;
+  bool isLoaded = false;
   List<FaqData> listOfFaq;
 
   @override
@@ -40,14 +41,21 @@ class _FaqScreenState extends State<FaqScreen> {
           bloc: _faqBloc,
           builder: (context, state) {
             if (state is FaqLoadingState) {
-              showLoadingDialog(context);
+              if (!isLoading) {
+                isLoading = true;
+                return Container(
+                  color: Colors.white,
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              }
             } else if (state is FaqLoadedState) {
               listOfFaq = state.faqResponse;
               isLoading = true;
-              _faqBloc.add(ResetState());
-              Navigator.pop(context);
+              isLoaded = true;
             }
-            return isLoading
+            return isLoaded
                 ? ListView.builder(
                     itemCount: listOfFaq.length,
                     itemBuilder: (BuildContext context, int index) {
@@ -79,7 +87,11 @@ class _FaqScreenState extends State<FaqScreen> {
                       );
                     },
                   )
-                : Container();
+                : Center(
+                    child: Container(
+                    color: Colors.white,
+                    child: Text('No Internet Connection'),
+                  ));
           }),
     );
   }

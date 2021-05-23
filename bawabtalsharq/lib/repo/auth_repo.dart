@@ -31,15 +31,22 @@ class AuthRepo {
     }
   }
 
-  Future<UserModel> doRegister(String phone, String email, String password,
-      String name, String userType) async {
+  Future<UserModel> doRegister(
+      String phone,
+      String email,
+      String password,
+      String firstname,
+      String lastname,
+      String userType,
+      String company) async {
     Map<String, dynamic> params = {
       "phone": phone,
       "email": email,
-      "name": name,
+      "firstname": firstname,
+      "lastname": lastname,
       "password": password,
       "user_type": userType,
-      "company": '',
+      "company": company,
       "website": '',
       "plan": '',
     };

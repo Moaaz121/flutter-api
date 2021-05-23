@@ -33,6 +33,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
   bool hasError = false;
   String currentText = "";
   String smsCode = "";
+  String companyName = '';
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
   RegisterBloc _registerBloc;
@@ -85,12 +86,19 @@ class _VerificationScreenState extends State<VerificationScreen> {
             child: BlocBuilder<RegisterBloc, RegisterState>(
               builder: (context, state) {
                 if (state is ResumeRegisterState) {
+                  if (widget.data['company'] != null) {
+                    companyName = '';
+                  } else {
+                    companyName = widget.data['company'];
+                  }
                   _registerBloc.add(DoRegisterEvent(
-                      widget.data['phone'],
-                      widget.data['email'],
-                      widget.data['password'],
-                      widget.data['name'],
-                      widget.data['userType']));
+                      phone: widget.data['phone'],
+                      email: widget.data['email'],
+                      password: widget.data['password'],
+                      firstname: widget.data['firstname'],
+                      lastname: widget.data['lastname'],
+                      userType: widget.data['userType'],
+                      company: companyName));
                 } else if (state is RegisterLoadingState) {
                   return Center(
                     child: CircularProgressIndicator(),

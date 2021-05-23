@@ -68,6 +68,7 @@ class LanguageAr extends Languages {
   String get resendCode => 'إعادة إرسال الرمز';
   String get verification => 'تحقق';
   String get verify => 'ثبت';
+  String get currency1 => 'جنيهًا';
 
 // end Bahaa
 
@@ -153,6 +154,8 @@ class LanguageAr extends Languages {
   String get help => 'المساعدة';
   String get main => 'الرئيسية';
   String get lan => 'العربية';
+  String get year => 'سنة';
+  String get overView => 'نظرة عامة';
 
 // end Mosdik
 

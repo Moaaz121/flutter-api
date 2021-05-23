@@ -1,18 +1,17 @@
+import 'package:bawabtalsharq/Model/user_model.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
+import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
-import 'package:bawabtalsharq/Utils/constants.dart';
-import 'package:bawabtalsharq/widgets/widgets.dart';
-import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:bawabtalsharq/bloc/updateProfileBlocs/updateAccount/update_account_bloc.dart';
 import 'package:bawabtalsharq/bloc/updateProfileBlocs/updateAccount/update_account_event.dart';
 import 'package:bawabtalsharq/bloc/updateProfileBlocs/updateAccount/update_account_state.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter/material.dart';
 import 'package:bawabtalsharq/main.dart';
-import 'package:bawabtalsharq/Model/user_model.dart';
+import 'package:bawabtalsharq/widgets/widgets.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class UpdateProfile extends StatefulWidget {
   @override
@@ -22,6 +21,8 @@ class UpdateProfile extends StatefulWidget {
 class _UpdateProfileState extends State<UpdateProfile> {
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  String _phoneErrorMessage;
   DateTime _selectedDateTime;
 
   UserLocal _currentUser;
@@ -112,38 +113,62 @@ class _UpdateProfileState extends State<UpdateProfile> {
                       ),
                     ),
                     SizedBox(
-                      height: 30,
+                      height: 35,
                     ),
-                    textFiledPrice(context, Languages.of(context).firstName, 1,
-                        errorMessage: firstNameError,
-                        controller: firstNameController),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    textFiledPrice(context, Languages.of(context).lasttNam, 1,
-                        errorMessage: lastNameError,
-                        controller: lastNameController),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    ExpansionTileCard(
-                      shadowColor: Colors.transparent,
-                      title: Text(_selectedDateTime == null
-                          ? Languages.of(context).birthDay
-                          : '${_selectedDateTime.day}/${_selectedDateTime.month}/${_selectedDateTime.year}'),
-                      children: <Widget>[
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0,
-                              vertical: 8.0,
-                            ),
-                            child: SizedBox(height: 150, child: datetime()),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: textFiledPrice(
+                            context,
+                            Languages.of(context).firstName,
+                            width: .50,
+                            errorMessage: firstNameError,
+                            controller: firstNameController,
                           ),
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Expanded(
+                          child: textFiledPrice(
+                              context, Languages.of(context).lasttNam,
+                              width: .50,
+                              errorMessage: lastNameError,
+                              controller: lastNameController),
                         ),
                       ],
                     ),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    textFiledPrice(
+                      context,
+                      Languages.of(context).tel,
+                      width: 1,
+                      errorMessage: _phoneErrorMessage,
+                      controller: phoneController,
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    // ExpansionTileCard(
+                    //   shadowColor: Colors.transparent,
+                    //   title: Text(_selectedDateTime == null
+                    //       ? Languages.of(context).birthDay
+                    //       : '${_selectedDateTime.day}/${_selectedDateTime.month}/${_selectedDateTime.year}'),
+                    //   children: <Widget>[
+                    //     Align(
+                    //       alignment: Alignment.centerLeft,
+                    //       child: Padding(
+                    //         padding: const EdgeInsets.symmetric(
+                    //           horizontal: 16.0,
+                    //           vertical: 8.0,
+                    //         ),
+                    //         // child: SizedBox(height: 150, child: datetime()),
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
                     SizedBox(
                       height: 30,
                     ),
@@ -204,16 +229,16 @@ class _UpdateProfileState extends State<UpdateProfile> {
         ));
   }
 
-  Widget datetime() {
-    return CupertinoDatePicker(
-      initialDateTime: DateTime.now(),
-      onDateTimeChanged: (DateTime newDate) {
-        setState(() {
-          _selectedDateTime = newDate;
-          print(newDate);
-        });
-      },
-      mode: CupertinoDatePickerMode.date,
-    );
-  }
+//   Widget datetime() {
+//     return CupertinoDatePicker(
+//       initialDateTime: DateTime.now(),
+//       onDateTimeChanged: (DateTime newDate) {
+//         setState(() {
+//           _selectedDateTime = newDate;
+//           print(newDate);
+//         });
+//       },
+//       mode: CupertinoDatePickerMode.date,
+//     );
+//   }
 }

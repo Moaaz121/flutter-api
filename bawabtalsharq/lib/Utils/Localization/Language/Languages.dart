@@ -70,6 +70,7 @@ abstract class Languages {
   String get otpCode;
   String get resendCode;
   String get verify;
+  String get currency1;
 
 // end Bahaa
 
@@ -149,6 +150,8 @@ abstract class Languages {
   String get help;
   String get main;
   String get lan;
+  String get year;
+  String get overView;
 
 // end Mosdik
 

@@ -69,6 +69,7 @@ class LanguageEn extends Languages {
   String get resendCode => 'Resend Code in';
   String get verification => 'Verification';
   String get verify => 'Verify';
+  String get currency1 => '\$';
 
 // end Bahaa
 
@@ -156,6 +157,8 @@ class LanguageEn extends Languages {
   String get help => 'Help';
   String get main => 'Main';
   String get lan => 'English';
+  String get year => 'YRS';
+  String get overView => 'OverView';
 
 // end Mosdik
 
@@ -220,7 +223,7 @@ class LanguageEn extends Languages {
 
   String get shippingMethod => ' Shipping Method';
 
-  String get sourcingPurpose => ' sourcingPurpose ';
+  String get sourcingPurpose => ' Sourcing purpose ';
 
   String get supplierCapability => 'Supplier Capability';
 

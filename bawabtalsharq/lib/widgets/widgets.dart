@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:bawabtalsharq/Model/currency_model.dart';
 import 'package:bawabtalsharq/Model/history_model.dart';
 import 'package:bawabtalsharq/Model/home_model.dart';
 import 'package:bawabtalsharq/Model/search_model.dart' as SearchItem;
@@ -10,6 +9,9 @@ import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/bloc/countryBloc/country_bloc.dart';
+import 'package:bawabtalsharq/bloc/countryBloc/country_event.dart';
+import 'package:bawabtalsharq/bloc/countryBloc/country_state.dart';
 import 'package:bawabtalsharq/bloc/currancyBloc/currency_bloc.dart';
 import 'package:bawabtalsharq/bloc/currancyBloc/currency_event.dart';
 import 'package:bawabtalsharq/bloc/currancyBloc/currency_state.dart';
@@ -619,12 +621,14 @@ Text buildText(String text, double fontSize,
     textAlign = TextAlign.start,
     fontWeight = FontWeight.normal,
     fontStyle = FontStyle.normal,
+    int maxLine,
     String fontFamily,
     TextDecoration textDecoration = TextDecoration.none,
     Color decorationColor}) {
   return Text(
     text,
     textAlign: textAlign,
+    maxLines: maxLine,
     style: TextStyle(
       decoration: textDecoration,
       decorationColor: decorationColor,
@@ -971,7 +975,7 @@ Widget productItem(BuildContext context,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
-                          image: AssetImage(profile_image),
+                          image: NetworkImage(product.companyImg),
                           fit: BoxFit.fill,
                         ),
                       ),
@@ -991,7 +995,7 @@ Widget productItem(BuildContext context,
                                     color: Colors.black,
                                     fontSize: 9,
                                     fontWeight: FontWeight.bold),
-                                text: 'Bahaa Robert'),
+                                text: product.company),
                           ),
                           SizedBox(
                             height: 1,
@@ -1003,7 +1007,7 @@ Widget productItem(BuildContext context,
                                   color: Colors.grey[400],
                                   fontSize: 9,
                                 ),
-                                text: 'Beauty \& Personal Care'),
+                                text: product.shortDescription),
                           ),
                         ],
                       ),
@@ -1506,10 +1510,12 @@ Widget infoCartSupplier(
   );
 }
 
-Widget textFiledPrice(BuildContext context, String text, double width,
-    {IconButton dropIcon,
+Widget textFiledPrice(BuildContext context, String text,
+    {double width = 1,
+    IconButton dropIcon,
     TextEditingController controller,
     bool isPassword = false,
+    errorText,
     String errorMessage,
     TextInputType keyboardType = TextInputType.text}) {
   return SizedBox(
@@ -1522,9 +1528,10 @@ Widget textFiledPrice(BuildContext context, String text, double width,
       decoration: InputDecoration(
         errorText: errorMessage,
         suffixIcon: dropIcon,
-        hintText: text,
+        labelText: text,
         labelStyle: TextStyle(
-            fontFamily: 'Roboto-Thin.ttf', fontWeight: FontWeight.w200),
+          fontSize: 12,
+        ),
         focusedBorder:
             UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
       ),
@@ -1580,7 +1587,7 @@ Widget mostPopularByCategoryHeader(BuildContext context) {
   );
 }
 
-void showCurrencyDialog(BuildContext context, List<CurrencyData> currencies) {
+void showCurrencyDialog(BuildContext context) {
   CurrencyBloc _bloc = CurrencyBloc();
   _bloc.add(GetCurrencyData());
   showDialog(
@@ -1605,8 +1612,10 @@ void showCurrencyDialog(BuildContext context, List<CurrencyData> currencies) {
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
-                          LanguageHelper.changeLanguage(context,
-                              state.currencyResponse.data[index].currencyCode);
+                          state.currencyResponse.data[index].isSelected = true;
+                          Constants.saveCurrency(
+                              currency: state
+                                  .currencyResponse.data[index].currencyId);
                           Navigator.pop(context);
                         },
                         child: Container(
@@ -1624,13 +1633,84 @@ void showCurrencyDialog(BuildContext context, List<CurrencyData> currencies) {
                                       15,
                                       fontFamily: mediumFontFamily,
                                       fontWeight: FontWeight.w600)),
-                              currencies == index
+                              state.currencyResponse.data[index].isSelected
                                   ? Image.asset(
                                       checkBox,
                                       width: 40,
                                       height: 40,
                                     )
-                                  : Text(''),
+                                  : SizedBox(),
+                              SizedBox(
+                                width: 10,
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) =>
+                        Padding(
+                      padding: const EdgeInsets.only(right: 20, left: 20),
+                      child: Divider(
+                        height: 1,
+                        thickness: 1,
+                      ),
+                    ),
+                  ),
+                );
+              } else {
+                return CircularProgressIndicator();
+              }
+            }),
+      );
+    },
+  );
+}
+
+void showCountryDialog(BuildContext context) {
+  CountryBloc _bloc = CountryBloc();
+  _bloc.add(GetCountryData());
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Center(
+        child: BlocBuilder<CountryBloc, CountryState>(
+            bloc: _bloc,
+            builder: (context, state) {
+              if (state is CountryLoadingState) {
+                return CircularProgressIndicator();
+              } else if (state is CountryLoadedState &&
+                  state.countryResponse != null) {
+                return Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white),
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    itemCount: state.countryResponse.data.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          height: 60,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Expanded(
+                                  child: buildText(
+                                      state.countryResponse.data[index].country,
+                                      15,
+                                      fontFamily: mediumFontFamily,
+                                      fontWeight: FontWeight.w600)),
+                              Image.asset(
+                                checkBox,
+                                width: 40,
+                                height: 40,
+                              ),
                               SizedBox(
                                 width: 10,
                               ),
@@ -1690,7 +1770,8 @@ Widget customTextField(BuildContext context,
           suffixIcon: rightBtn,
           labelText: label,
           labelStyle: TextStyle(
-              fontFamily: 'Roboto-Thin.ttf', fontWeight: FontWeight.w200),
+            fontSize: 12,
+          ),
           focusedBorder:
               UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey))),
     ),

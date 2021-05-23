@@ -3,7 +3,6 @@ import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
-import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/validator_util.dart';
 import 'package:bawabtalsharq/bloc/authBlocs/loginBloc/login_bloc.dart';
 import 'package:bawabtalsharq/bloc/authBlocs/loginBloc/login_event.dart';
@@ -14,7 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rocket_chat_connector_flutter/models/authentication.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../main.dart';
 

@@ -17,7 +17,8 @@ class PrivacyScreen extends StatefulWidget {
 class _PrivacyScreenState extends State<PrivacyScreen> {
   PrivacyBloc _privacyBloc;
   List<PrivacyData> privacyList;
-  bool isDataLoaded = false;
+  bool isLoading = false;
+  bool isLoaded = false;
 
   @override
   void initState() {
@@ -39,15 +40,22 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
         bloc: _privacyBloc,
         builder: (context, state) {
           if (state is PrivacyLoadingState) {
-            showLoadingDialog(context);
+            if (!isLoading) {
+              isLoading = true;
+              return Container(
+                color: Colors.white,
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            }
           } else if (state is PrivacyLoadedState) {
             print('loaded');
             privacyList = state.privacyResponse;
-            isDataLoaded = true;
-            _privacyBloc.add(ResetState());
-            Navigator.pop(context);
+            isLoading = true;
+            isLoaded = true;
           }
-          return isDataLoaded
+          return isLoaded
               ? ListView.builder(
                   itemCount: privacyList.length,
                   itemBuilder: (BuildContext context, int index) {
@@ -59,7 +67,11 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
                     );
                   },
                 )
-              : Container();
+              : Center(
+                  child: Container(
+                  color: Colors.white,
+                  child: Text('No Internet Connection'),
+                ));
         },
       ),
     );
