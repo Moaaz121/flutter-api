@@ -341,8 +341,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           _phoneErrorMessage = 'Empty Field';
                         else if (emailController.text.isEmpty)
                           _emailErrorMessage = 'Empty Field';
-                        else if (companyController.text.isEmpty)
-                          _nameErrorMessage = 'Empty Field';
                         else if (selectedRadio == null)
                           Scaffold.of(context).showSnackBar(
                             SnackBar(
@@ -357,7 +355,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               'please enter correct Phone Number';
                         else if (!passwordValidator(passwordController.text))
                           _passwordErrorMessage = 'Weak Password';
-                        else {
+                        else if (companyTypeBool) {
+                          if (companyController.text.isEmpty)
+                            _nameErrorMessage = 'Empty Field';
+                        } else {
                           isLoading = true;
                           print('Verifying phone');
                           data = {
