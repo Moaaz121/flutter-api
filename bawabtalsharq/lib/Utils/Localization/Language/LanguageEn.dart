@@ -223,7 +223,7 @@ class LanguageEn extends Languages {
 
   String get shippingMethod => ' Shipping Method';
 
-  String get sourcingPurpose => ' sourcingPurpose ';
+  String get sourcingPurpose => ' Sourcing purpose ';
 
   String get supplierCapability => 'Supplier Capability';
 
