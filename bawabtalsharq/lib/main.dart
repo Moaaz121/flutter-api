@@ -43,7 +43,7 @@ import 'Screens/request_for_qutation.dart';
 import 'Screens/search/color_filter_screen.dart';
 import 'Screens/search/list_filter_screen.dart';
 import 'Utils/Localization/LanguageHelper.dart';
-import 'package:bawabtalsharq/Model/user_model.dart';
+import 'package:bawabtalsharq/Services/AnalyticsService.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
@@ -82,6 +82,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.deepOrange),
       home: SplashScreen(),
+      navigatorObservers: [AnalyticsService().getAnalyticsOberver()],
       routes: {
         ScreenRoutes.splashScreen: (_) => SplashScreen(),
         ScreenRoutes.introScreen: (_) => IntroScreen(),

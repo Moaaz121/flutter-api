@@ -24,7 +24,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
   TextEditingController lastNameController = TextEditingController();
   DateTime _selectedDateTime;
 
-  User _currentUser;
+  UserLocal _currentUser;
 
   String firstNameError;
   String lastNameError;

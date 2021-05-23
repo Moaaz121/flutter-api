@@ -61,6 +61,7 @@ dependencies:
   flutter_html:
   firebase_core: 
   firebase_auth:
+  firebase_analytics:
 
 
 
