@@ -6,6 +6,7 @@ import 'package:bawabtalsharq/Utils/apis.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:bawabtalsharq/Services/AnalyticsService.dart';
 
 class AuthRepo {
   String verficationId;
@@ -29,15 +30,22 @@ class AuthRepo {
     }
   }
 
-  Future<UserModel> doRegister(String phone, String email, String password,
-      String name, String userType) async {
+  Future<UserModel> doRegister(
+      String phone,
+      String email,
+      String password,
+      String firstname,
+      String lastname,
+      String userType,
+      String company) async {
     Map<String, dynamic> params = {
       "phone": phone,
       "email": email,
-      "name": name,
+      "firstname": firstname,
+      "lastname": lastname,
       "password": password,
       "user_type": userType,
-      "company": '',
+      "company": company,
       "website": '',
       "plan": '',
     };
@@ -102,11 +110,18 @@ class AuthRepo {
   }
 
   String signInWithOTP(smsCode, verId) {
+    final AnalyticsService _analyticsService = AnalyticsService();
     String op;
     try {
       AuthCredential authCreds =
           PhoneAuthProvider.credential(smsCode: smsCode, verificationId: verId);
-      FirebaseAuth.instance.signInWithCredential(authCreds);
+      FirebaseAuth.instance.signInWithCredential(authCreds).then((value) async {
+        User user = FirebaseAuth.instance.currentUser;
+        await _analyticsService.setUserProperties(
+          userId: user.uid,
+        );
+      });
+
       op = 'Verified Succefully';
     } on FirebaseAuthException catch (e) {
       op = e.toString();

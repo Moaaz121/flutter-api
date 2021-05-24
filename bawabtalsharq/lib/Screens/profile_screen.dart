@@ -9,6 +9,7 @@ import 'package:bawabtalsharq/Screens/profile/history/history_screen.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -82,7 +83,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
-                        image: AssetImage(profile_image),
+                        image: AssetImage(companyName),
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -94,15 +95,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      buildText('Bahaa Robert', 16,
-                          fontWeight: FontWeight.w600),
+                      currentUser != null
+                          ? buildText(
+                              currentUser.data.firstname +
+                                  ' ' +
+                                  currentUser.data.lastname,
+                              16,
+                              fontWeight: FontWeight.w600)
+                          : Text(''),
                       SizedBox(
                         height: 2,
                       ),
-                      buildText('Beauty & Personal Care', 14,
-                          color: Colors.grey[500]),
+                      currentUser != null
+                          ? buildText(currentUser.data.company, 14,
+                              color: Colors.grey[500])
+                          : Text(''),
                     ],
-                  )
+                  ),
+                  currentUser == null
+                      ? GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, ScreenRoutes.loginScreen);
+                          },
+                          child: Text('SignUp / Login'),
+                        )
+                      : Text(''),
                 ],
               ),
             ),

@@ -20,6 +20,10 @@ class Constants {
     return sharedPreferences.get(key);
   }
 
+  static String getCurrency() {
+    return '&currency_id=' + sharedPreferences.get('currency');
+  }
+
   static dynamic removeDate({@required String key}) {
     return sharedPreferences.remove(key);
   }

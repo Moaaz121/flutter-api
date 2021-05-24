@@ -621,12 +621,14 @@ Text buildText(String text, double fontSize,
     textAlign = TextAlign.start,
     fontWeight = FontWeight.normal,
     fontStyle = FontStyle.normal,
+    int maxLine,
     String fontFamily,
     TextDecoration textDecoration = TextDecoration.none,
     Color decorationColor}) {
   return Text(
     text,
     textAlign: textAlign,
+    maxLines: maxLine,
     style: TextStyle(
       decoration: textDecoration,
       decorationColor: decorationColor,
