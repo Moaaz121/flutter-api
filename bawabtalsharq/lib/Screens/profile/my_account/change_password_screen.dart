@@ -22,7 +22,7 @@ class _ChangePasswordState extends State<ChangePassword> {
   TextEditingController newPasswordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
-  User _currentUser;
+  UserLocal _currentUser;
 
   String oldPasswordError;
   String newPasswordError;

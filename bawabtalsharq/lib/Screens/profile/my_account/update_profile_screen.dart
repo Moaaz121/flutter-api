@@ -25,7 +25,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
   String _phoneErrorMessage;
   DateTime _selectedDateTime;
 
-  User _currentUser;
+  UserLocal _currentUser;
 
   String firstNameError;
   String lastNameError;

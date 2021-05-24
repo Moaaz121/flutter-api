@@ -45,6 +45,9 @@ import 'Screens/request_for_qutation.dart';
 import 'Screens/search/color_filter_screen.dart';
 import 'Screens/search/list_filter_screen.dart';
 import 'Utils/Localization/LanguageHelper.dart';
+import 'package:bawabtalsharq/Services/AnalyticsService.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -58,6 +61,7 @@ void main() async {
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   runApp(
     DevicePreview(
       enabled: false,
@@ -80,6 +84,13 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
   Locale _locale;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // FirebaseCrashlytics.instance.crash();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       // locale: DevicePreview.locale(context),
@@ -87,6 +98,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.deepOrange),
       home: SplashScreen(),
+      navigatorObservers: [AnalyticsService().getAnalyticsOberver()],
       routes: {
         ScreenRoutes.splashScreen: (_) => SplashScreen(),
         ScreenRoutes.introScreen: (_) => IntroScreen(),
