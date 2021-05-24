@@ -330,11 +330,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       _emailErrorMessage = null;
                       _phoneErrorMessage = null;
                       _nameErrorMessage = null;
+                      firstNameError = null;
+                      lastNameError = null;
                       setState(() {
                         if (firstNameController.text.isEmpty)
-                          _nameErrorMessage = 'Empty Field';
+                          firstNameError = 'Empty Field';
                         else if (lastNameController.text.isEmpty)
-                          _nameErrorMessage = 'Empty Field';
+                          lastNameError = 'Empty Field';
                         else if (passwordController.text.isEmpty)
                           _passwordErrorMessage = 'Empty Field';
                         else if (phoneController.text.isEmpty)
