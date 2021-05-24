@@ -9,6 +9,7 @@ import 'package:bawabtalsharq/Screens/profile/history/history_screen.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
