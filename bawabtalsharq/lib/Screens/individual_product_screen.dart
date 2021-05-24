@@ -10,6 +10,7 @@ import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -23,12 +24,12 @@ class IndividualProduct extends StatefulWidget {
 
 class _IndividualProductState extends State<IndividualProduct>
     with TickerProviderStateMixin {
+  ScrollController _controller;
   IndividualProductBloc _productBloc;
   bool isLoading = false;
   bool isLoaded = false;
   ProductDetails product;
-
-  TabController _controller;
+  TabController _controllerTab;
   final scrollController = ScrollController();
   final List<String> _tabs = <String>[
     "Product Details",
@@ -37,34 +38,47 @@ class _IndividualProductState extends State<IndividualProduct>
 
   CarouselController buttonCarouselController = CarouselController();
   int sliderPosition = 0;
+  bool sliverPersistentHeader = false;
 
   @override
   void initState() {
     _productBloc = IndividualProductBloc();
     _productBloc.add(DoIndividualProductEvent(widget.productId));
-    _controller = TabController(vsync: this, length: _tabs.length);
-    _controller.addListener(_handleTabSelection);
+    _controllerTab = TabController(vsync: this, length: _tabs.length);
+    // _controllerTab.addListener(_handleTabSelection);
+    _controller = ScrollController();
+    _controllerTab.addListener(() {
+      if (_controller.position.userScrollDirection == ScrollDirection.reverse) {
+        setState(() {
+          sliverPersistentHeader = false;
+        });
+      } else {
+        setState(() {
+          sliverPersistentHeader = true;
+        });
+      }
+    });
     super.initState();
   }
 
-  void _handleTabSelection() {
-    if (_controller.indexIsChanging) {
-      switch (_controller.index) {
-        case 0:
-          Scaffold.of(context).showSnackBar(SnackBar(
-            content: Text('Page 1 tapped.'),
-            duration: Duration(milliseconds: 500),
-          ));
-          break;
-        case 1:
-          Scaffold.of(context).showSnackBar(SnackBar(
-            content: Text('Page 2 tapped.'),
-            duration: Duration(milliseconds: 500),
-          ));
-          break;
-      }
-    }
-  }
+  // void _handleTabSelection() {
+  //   if (_controller.indexIsChanging) {
+  //     switch (_controller.index) {
+  //       case 0:
+  //         Scaffold.of(context).showSnackBar(SnackBar(
+  //           content: Text('Page 1 tapped.'),
+  //           duration: Duration(milliseconds: 500),
+  //         ));
+  //         break;
+  //       case 1:
+  //         Scaffold.of(context).showSnackBar(SnackBar(
+  //           content: Text('Page 2 tapped.'),
+  //           duration: Duration(milliseconds: 500),
+  //         ));
+  //         break;
+  //     }
+  //   }
+  // }
 
   int selectedIndex = 0;
 
@@ -85,309 +99,699 @@ class _IndividualProductState extends State<IndividualProduct>
             isLoaded = true;
             product = state.individualProductResponse;
           }
-          return Material(
-            child: Scaffold(
-              body: DefaultTabController(
-                length: _tabs.length,
-                child: NestedScrollView(
-                  headerSliverBuilder:
-                      (BuildContext context, bool innerBoxIsScrolled) {
-                    return <Widget>[
-                      SliverOverlapAbsorber(
-                        handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
-                            context),
-                        sliver: SliverSafeArea(
-                          top: false,
-                          bottom: false,
-                          sliver: SliverAppBar(
-                            leading: GestureDetector(
-                              onTap: () {
-                                Navigator.pop(context);
-                              },
-                              child: Container(
-                                margin: EdgeInsets.all(14),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                  color: orangeColor,
-                                ),
-                                child: Icon(
-                                  LanguageHelper.isEnglish
-                                      ? Icons.keyboard_arrow_left_outlined
-                                      : Icons.keyboard_arrow_right_outlined,
-                                  size: 28,
-                                ),
-                              ),
-                            ),
-                            actions: [
-                              Container(
-                                  margin: EdgeInsets.all(8),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    color: orangeColor,
-                                  ),
-                                  child: Icon(Icons.bookmark_border_outlined)),
-                            ],
-                            expandedHeight:
-                                MediaQuery.of(context).size.height * 0.75,
-                            flexibleSpace: FlexibleSpaceBar(
-                                background: Container(
-                                    decoration: BoxDecoration(
-                                      color: Color(0xfff9dfd6),
-                                      borderRadius: BorderRadius.only(
-                                        bottomRight: Radius.circular(40),
-                                        bottomLeft: Radius.circular(40),
-                                      ),
-                                    ),
-                                    padding: EdgeInsets.only(top: 20),
-                                    child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          CarouselSlider.builder(
-                                            carouselController:
-                                                buttonCarouselController,
-                                            options: CarouselOptions(
-                                              onPageChanged: (index, reason) {
-                                                setState(() {
-                                                  sliderPosition = index;
-                                                });
-                                              },
-                                              autoPlay: false,
-                                              viewportFraction: 0.9,
-                                              aspectRatio: 1.4,
-                                              initialPage: 0,
-                                              autoPlayCurve:
-                                                  Curves.fastOutSlowIn,
-                                              scrollDirection: Axis.horizontal,
-                                            ),
-                                            itemCount: 4,
-                                            itemBuilder:
-                                                (context, index, realIndex) =>
-                                                    Image(
-                                              image: NetworkImage(
-                                                  product.imagePath),
-                                            ),
-                                          ),
-                                          sliderIndicator(sliderPosition,
-                                              noPadding: false),
-                                          Container(
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(40),
-                                                  topRight: Radius.circular(40),
-                                                ),
-                                              ),
-                                              // height: 200,
-                                              child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 20),
-                                                  child: Column(children: [
-                                                    Center(
-                                                      child: Container(
-                                                        width: 50,
-                                                        height: 2.5,
-                                                        color: Colors.grey[300],
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                left: 40,
-                                                                right: 40,
-                                                                top: 15),
-                                                        child: Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceBetween,
-                                                                children: [
-                                                                  Flexible(
-                                                                    child:
-                                                                        RichText(
-                                                                      overflow:
-                                                                          TextOverflow
-                                                                              .clip,
-                                                                      strutStyle:
-                                                                          StrutStyle(
-                                                                              fontSize: 14),
-                                                                      text: TextSpan(
-                                                                          style: TextStyle(
-                                                                              color: Colors.black,
-                                                                              fontWeight: FontWeight.bold),
-                                                                          text: product.product),
-                                                                    ),
-                                                                  ),
-                                                                  RatingBar
-                                                                      .builder(
-                                                                    itemSize:
-                                                                        18,
-                                                                    initialRating:
-                                                                        double.parse(
-                                                                            product.rating),
-                                                                    ignoreGestures:
-                                                                        true,
-                                                                    direction: Axis
-                                                                        .horizontal,
-                                                                    allowHalfRating:
-                                                                        true,
-                                                                    itemCount:
-                                                                        5,
-                                                                    itemPadding:
-                                                                        EdgeInsets.symmetric(
-                                                                            horizontal:
-                                                                                1),
-                                                                    itemBuilder:
-                                                                        (context,
-                                                                                _) =>
-                                                                            Icon(
-                                                                      Icons
-                                                                          .star,
-                                                                      color: Colors
-                                                                          .amber,
-                                                                    ),
-                                                                    onRatingUpdate:
-                                                                        (rating) {},
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              SizedBox(
-                                                                height: 20,
-                                                              ),
-                                                              productOption(
-                                                                widgetTitle:
-                                                                    'Product Options',
-                                                                widgetSubTitle:
-                                                                    'Color',
-                                                                widget:
-                                                                    productColorOption(
-                                                                  price: '50',
-                                                                  counterWidget:
-                                                                      productCounter(
-                                                                          number:
-                                                                              10),
-                                                                ),
-                                                              ),
-                                                              SizedBox(
-                                                                height: 20,
-                                                              ),
-                                                              infoCartSupplier(
-                                                                  '${product.company}',
-                                                                  '${product.year}' +
-                                                                      ' ${Languages.of(context).year}',
-                                                                  '${product.countryName}',
-                                                                  '${product.category}'),
-                                                            ])),
-                                                  ])))
-                                        ]))),
-                            floating: true,
-                            // pinned: true,
-                            snap: true,
-                            forceElevated: innerBoxIsScrolled,
-                          ),
+          return MaterialApp(
+            home: Scaffold(
+              body: CustomScrollView(
+                slivers: <Widget>[
+                  SliverAppBar(
+                      leading: GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Icon(
+                          LanguageHelper.isEnglish
+                              ? Icons.keyboard_arrow_left_outlined
+                              : Icons.keyboard_arrow_right_outlined,
+                          size: 28,
                         ),
                       ),
-                      SliverAppBar(
-                        pinned: true,
-                        title: TabBar(
-                          tabs: _tabs
-                              .map((String name) => Tab(text: name))
-                              .toList(),
-                        ),
-                      )
-                    ];
-                  },
-                  body: TabBarView(
-                    children: _tabs.map((String name) {
-                      return Builder(
-                        builder: (BuildContext context) {
-                          return NotificationListener<ScrollNotification>(
-                            onNotification: (scrollNotification) {
-                              return true;
-                            },
-                            child: CustomScrollView(
-                              key: PageStorageKey<String>(_tabs.first),
-                              slivers: <Widget>[
-                                SliverOverlapInjector(
-                                  handle: NestedScrollView
-                                      .sliverOverlapAbsorberHandleFor(context),
-                                ),
-                                SliverPadding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  sliver: SliverList(
-                                    delegate: SliverChildBuilderDelegate(
-                                      (BuildContext context, int index) {
-                                        return Container(
-                                            padding: EdgeInsets.only(
-                                                bottom: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.1),
-                                            child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  overViewText(
-                                                      Html(
-                                                          data: product
-                                                              .fullDescription),
-                                                      context),
-                                                  SizedBox(
-                                                    height: 20,
-                                                  ),
-                                                  // product.faq.isEmpty
-                                                  //     ? SizedBox()
-                                                  //     :
-                                                  productFaq(
-                                                      title: 'FAQ:',
-                                                      question: 'Question',
-                                                      answer: 'Answer'),
-                                                  SizedBox(
-                                                    height: 20,
-                                                  ),
-                                                  // product.detailedPictures
-                                                  //     .isEmpty
-                                                  // ? SizedBox()
-                                                  // :
-                                                  detailsPictures(),
-                                                  SizedBox(
-                                                    height: 20,
-                                                  ),
-                                                  // product.packingShipping
-                                                  //         .isEmpty
-                                                  //     ? SizedBox()
-                                                  //     :
-                                                  listOfBackingChipping(),
-                                                  SizedBox(
-                                                    height: 20,
-                                                  ),
-                                                  // product.certificates.isEmpty
-                                                  //     ? SizedBox()
-                                                  //     :
-                                                  certificateListView(),
-                                                ]));
-                                      },
-                                      childCount: 1,
-                                    ),
+                      actions: [
+                        tabBar(),
+                        iconRound(Icons.bookmark_border_outlined),
+                      ],
+                      expandedHeight: MediaQuery.of(context).size.height * 0.3,
+                      floating: true,
+                      pinned: true,
+                      snap: true,
+                      elevation: 50,
+                      backgroundColor: Color(0xfff9dfd6),
+                      flexibleSpace: FlexibleSpaceBar(
+                        // title: tabBar(),
+                        centerTitle: true,
+                        background: Container(
+                            padding: EdgeInsets.only(top: 20, bottom: 50),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                CarouselSlider.builder(
+                                  carouselController: buttonCarouselController,
+                                  options: CarouselOptions(
+                                    onPageChanged: (index, reason) {
+                                      setState(() {
+                                        sliderPosition = index;
+                                      });
+                                    },
+                                    autoPlay: false,
+                                    viewportFraction: 0.9,
+                                    aspectRatio: 2,
+                                    initialPage: 0,
+                                    autoPlayCurve: Curves.fastOutSlowIn,
+                                    scrollDirection: Axis.horizontal,
+                                  ),
+                                  itemCount: 4,
+                                  itemBuilder: (context, index, realIndex) =>
+                                      Image(
+                                    image: AssetImage(shoes_image),
                                   ),
                                 ),
+                                sliderIndicator(sliderPosition,
+                                    noPadding: true),
+                                //
+                                // Container(
+                                //     height: MediaQuery.of(context).size.height *
+                                //         0.15,
+                                //     decoration: BoxDecoration(
+                                //       color: Colors.white,
+                                //       borderRadius: BorderRadius.only(
+                                //         topLeft: Radius.circular(40),
+                                //         topRight: Radius.circular(40),
+                                //       ),
+                                //     ),
+                                //     child: Padding(
+                                //         padding: const EdgeInsets.only(
+                                //             left: 40, right: 40, top: 15),
+                                //         child: Column(
+                                //             crossAxisAlignment:
+                                //                 CrossAxisAlignment.start,
+                                //             children: [
+                                //               Center(
+                                //                 child: Container(
+                                //                   width: 50,
+                                //                   height: 2.5,
+                                //                   color: Colors.grey[300],
+                                //                 ),
+                                //               ),
+                                //               Flexible(
+                                //                 child: RichText(
+                                //                   overflow: TextOverflow.clip,
+                                //                   strutStyle:
+                                //                       StrutStyle(fontSize: 14),
+                                //                   text: TextSpan(
+                                //                       style: TextStyle(
+                                //                           color: Colors.black,
+                                //                           fontWeight:
+                                //                               FontWeight.bold),
+                                //                       text:
+                                //                           'Kedo Running Shoes from Addidas Kedo Running Shoes from Addidas'),
+                                //                 ),
+                                //               ),
+                                //               RatingBar.builder(
+                                //                 itemSize: 18,
+                                //                 initialRating: 3,
+                                //                 minRating: 1,
+                                //                 direction: Axis.horizontal,
+                                //                 allowHalfRating: true,
+                                //                 itemCount: 5,
+                                //                 itemPadding:
+                                //                     EdgeInsets.symmetric(
+                                //                         horizontal: 1),
+                                //                 itemBuilder: (context, _) =>
+                                //                     Icon(
+                                //                   Icons.star,
+                                //                   color: Colors.amber,
+                                //                 ),
+                                //                 onRatingUpdate: (rating) {
+                                //                   print(rating);
+                                //                 },
+                                //               ),
+                                //             ])))
                               ],
-                            ),
-                          );
-                        },
-                      );
-                    }).toList(),
-                  ),
-                ),
+                            )),
+                        // title: Container(
+                        //     height: MediaQuery.of(context).size.height * 0.1,
+                        //     decoration: BoxDecoration(
+                        //       color: Colors.white,
+                        //       borderRadius: BorderRadius.only(
+                        //         topLeft: Radius.circular(40),
+                        //         topRight: Radius.circular(40),
+                        //       ),
+                        //     ),
+                        //     child: Padding(
+                        //         padding: const EdgeInsets.only(
+                        //             left: 40, right: 40, top: 15),
+                        //         child: Column(
+                        //           crossAxisAlignment:
+                        //               CrossAxisAlignment.start,
+                        //           children: [
+                        //             Center(
+                        //               child: Container(
+                        //                 width: 50,
+                        //                 height: 2.5,
+                        //                 color: Colors.grey[300],
+                        //               ),
+                        //             ),
+                        //             TabBar(
+                        //               isScrollable: true,
+                        //               controller: _controllerTab,
+                        //               tabs: _tabs
+                        //                   .map((String name) =>
+                        //                       Tab(text: name))
+                        //                   .toList(),
+                        //               indicatorColor: orangeColor,
+                        //               indicatorSize:
+                        //                   TabBarIndicatorSize.label,
+                        //               labelColor: orangeColor,
+                        //             ),
+                        //           ],
+                        //         )))
+                        // title: TabBar(
+                        //   isScrollable: true,
+                        //   controller: _controllerTab,
+                        //   tabs: _tabs
+                        //       .map((String name) => Tab(text: name))
+                        //       .toList(),
+                        //   indicatorColor: orangeColor,
+                        //   indicatorSize: TabBarIndicatorSize.label,
+                        //   labelColor: orangeColor,
+                        // ),
+                      )),
+                  // SliverAppBar(
+                  //   pinned: true,
+                  //   title: TabBar(
+                  //     isScrollable: true,
+                  //     controller: _controllerTab,
+                  //     tabs:
+                  //         _tabs.map((String name) => Tab(text: name)).toList(),
+                  //     indicatorColor: orangeColor,
+                  //     indicatorSize: TabBarIndicatorSize.label,
+                  //     labelColor: orangeColor,
+                  //   ),
+                  // ),
+                  new SliverList(
+                      delegate: new SliverChildListDelegate(_buildList(50))),
+                ],
               ),
             ),
           );
         });
+  }
+
+  List _buildList(int count) {
+    List<Widget> listItems = List();
+
+    listItems.add(Column(
+      children: [
+        Container(
+            height: MediaQuery.of(context).size.height * 0.3,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(40),
+                topRight: Radius.circular(40),
+              ),
+            ),
+            child: Padding(
+                padding: const EdgeInsets.only(left: 40, right: 40, top: 15),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: Container(
+                          width: 50,
+                          height: 2.5,
+                          color: Colors.grey[300],
+                        ),
+                      ),
+                      Flexible(
+                        child: RichText(
+                          overflow: TextOverflow.clip,
+                          strutStyle: StrutStyle(fontSize: 14),
+                          text: TextSpan(
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                              text:
+                                  'Kedo Running Shoes from Addidas Kedo Running Shoes from Addidas'),
+                        ),
+                      ),
+                      RatingBar.builder(
+                        itemSize: 18,
+                        initialRating: 3,
+                        minRating: 1,
+                        direction: Axis.horizontal,
+                        allowHalfRating: true,
+                        itemCount: 5,
+                        itemPadding: EdgeInsets.symmetric(horizontal: 1),
+                        itemBuilder: (context, _) => Icon(
+                          Icons.star,
+                          color: Colors.amber,
+                        ),
+                        onRatingUpdate: (rating) {
+                          print(rating);
+                        },
+                      ),
+                      product.color.isEmpty
+                          ? SizedBox()
+                          : productOption(
+                              widgetTitle: 'Product Options',
+                              widgetSubTitle: 'Color',
+                              widget: productColorOption(
+                                price: '50',
+                                counterWidget: productCounter(number: 10),
+                              ),
+                            ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      infoCartSupplier(
+                          '${product.company}',
+                          '${product.year}' + ' ${Languages.of(context).year}',
+                          '${product.countryName}',
+                          '${product.category}'),
+                      tabBar(),
+                    ]))),
+        Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Container(
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height * 0.1),
+              child: Column(mainAxisSize: MainAxisSize.max, children: [
+                overViewText(Html(data: product.fullDescription), context),
+                SizedBox(
+                  height: 20,
+                ),
+
+                // product.faq.isEmpty
+                //     ? SizedBox()
+                //     :
+                productFaq(
+                    title: 'FAQ:', question: 'Question', answer: 'Answer'),
+                SizedBox(
+                  height: 20,
+                ),
+                // product.detailedPictures
+                //     .isEmpty
+                // ? SizedBox()
+                // :
+                detailsPictures(),
+                SizedBox(
+                  height: 20,
+                ),
+                // product.packingShipping
+                //         .isEmpty
+                //     ? SizedBox()
+                //     :
+                listOfBackingChipping(),
+                SizedBox(
+                  height: 20,
+                ),
+                // product.certificates.isEmpty
+                //     ? SizedBox()
+                //     :
+                certificateListView(),
+              ])),
+        ),
+      ],
+    ));
+
+    return listItems;
+  }
+
+//           return Scaffold(
+//             body: CustomScrollView(
+//               controller: _controller,
+//               slivers: <Widget>[
+//                 SliverAppBar(
+//                   floating: true,
+//                   pinned: true,
+//                   expandedHeight: 200.0,
+//                   flexibleSpace: FlexibleSpaceBar(
+//                     centerTitle: true,
+//                     title: Text('App Title'),
+//                   ),
+//                 ),
+//                 SliverPersistentHeader(
+// // The SliverPersisitentHeader checks the boolean value and either pins or unpins the the Header
+//                   pinned: sliverPersistentHeader ? true : false,
+//                   delegate: CustomSliver(
+//                     expandedHeight: 150.0,
+//                   ),
+//                 ),
+//                 SliverList(
+//                   delegate: SliverChildBuilderDelegate(
+//                     (_, index) => Padding(
+//                       padding: EdgeInsets.symmetric(vertical: 10.0),
+//                       child: Container(
+//                         height: 50.0,
+//                         color: Colors.amber,
+//                       ),
+//                     ),
+//                   ),
+//                 ),
+//               ],
+//             ),
+//             bottomNavigationBar: BottomNavigationBar(
+//               items: [
+//                 BottomNavigationBarItem(
+//                   icon: Icon(Icons.home),
+//                   title: Text('Tab1'),
+//                 ),
+//                 BottomNavigationBarItem(
+//                   icon: Icon(Icons.home),
+//                   title: Text('Tab2'),
+//                 ),
+//                 BottomNavigationBarItem(
+//                     icon: Icon(Icons.home), title: Text('Tab3'))
+//               ],
+//               currentIndex: 0,
+//             ),
+//           );
+
+// return Material(
+//   child: Scaffold(
+//     body: NestedScrollView(
+//       headerSliverBuilder:
+//           (BuildContext context, bool innerBoxIsScrolled) {
+//         return [
+//           SliverOverlapAbsorber(
+//             handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+//                 context),
+//             sliver: SliverSafeArea(
+//               top: false,
+//               bottom: false,
+//               sliver: SliverAppBar(
+//                 leading: GestureDetector(
+//                   onTap: () {
+//                     Navigator.pop(context);
+//                   },
+//                   child: Container(
+//                     margin: EdgeInsets.all(14),
+//                     decoration: BoxDecoration(
+//                       borderRadius: BorderRadius.circular(20.0),
+//                       color: orangeColor,
+//                     ),
+//                     child: Icon(
+//                       LanguageHelper.isEnglish
+//                           ? Icons.keyboard_arrow_left_outlined
+//                           : Icons.keyboard_arrow_right_outlined,
+//                       size: 28,
+//                     ),
+//                   ),
+//                 ),
+//                 actions: [
+//                   Container(
+//                       margin: EdgeInsets.all(8),
+//                       decoration: BoxDecoration(
+//                         borderRadius: BorderRadius.circular(5.0),
+//                         color: orangeColor,
+//                       ),
+//                       child: Icon(Icons.bookmark_border_outlined)),
+//                 ],
+//                 expandedHeight:
+//                     MediaQuery.of(context).size.height * 0.74,
+//                 flexibleSpace: FlexibleSpaceBar(
+//                     background: Container(
+//                         decoration: BoxDecoration(
+//                           color: Color(0xfff9dfd6),
+//                           borderRadius: BorderRadius.only(
+//                             bottomRight: Radius.circular(40),
+//                             bottomLeft: Radius.circular(40),
+//                           ),
+//                         ),
+//                         padding: EdgeInsets.only(top: 20),
+//                         child: SingleChildScrollView(
+//                           child: Column(
+//                               mainAxisAlignment:
+//                                   MainAxisAlignment.start,
+//                               children: [
+//                                 CarouselSlider.builder(
+//                                   carouselController:
+//                                       buttonCarouselController,
+//                                   options: CarouselOptions(
+//                                     onPageChanged: (index, reason) {
+//                                       setState(() {
+//                                         sliderPosition = index;
+//                                       });
+//                                     },
+//                                     autoPlay: false,
+//                                     viewportFraction: 0.9,
+//                                     aspectRatio: 1.4,
+//                                     initialPage: 0,
+//                                     autoPlayCurve:
+//                                         Curves.fastOutSlowIn,
+//                                     scrollDirection: Axis.horizontal,
+//                                   ),
+//                                   itemCount: 4,
+//                                   itemBuilder:
+//                                       (context, index, realIndex) =>
+//                                           Image(
+//                                     image: NetworkImage(
+//                                         product.imagePath),
+//                                   ),
+//                                 ),
+//                                 sliderIndicator(sliderPosition,
+//                                     noPadding: false),
+//                                 Container(
+//                                     decoration: BoxDecoration(
+//                                       color: Colors.white,
+//                                       borderRadius: BorderRadius.only(
+//                                         topLeft: Radius.circular(40),
+//                                         topRight: Radius.circular(40),
+//                                       ),
+//                                     ),
+//                                     // height: 200,
+//                                     child: Padding(
+//                                         padding:
+//                                             const EdgeInsets.only(
+//                                                 top: 20),
+//                                         child: Column(children: [
+//                                           Center(
+//                                             child: Container(
+//                                               width: 50,
+//                                               height: 2.5,
+//                                               color: Colors.grey[300],
+//                                             ),
+//                                           ),
+//                                           Padding(
+//                                               padding:
+//                                                   const EdgeInsets
+//                                                           .only(
+//                                                       left: 40,
+//                                                       right: 40,
+//                                                       top: 15),
+//                                               child: Column(
+//                                                   crossAxisAlignment:
+//                                                       CrossAxisAlignment
+//                                                           .start,
+//                                                   children: [
+//                                                     Row(
+//                                                       mainAxisAlignment:
+//                                                           MainAxisAlignment
+//                                                               .spaceBetween,
+//                                                       children: [
+//                                                         Flexible(
+//                                                           child:
+//                                                               RichText(
+//                                                             overflow:
+//                                                                 TextOverflow
+//                                                                     .clip,
+//                                                             strutStyle:
+//                                                                 StrutStyle(
+//                                                                     fontSize: 14),
+//                                                             text: TextSpan(
+//                                                                 style: TextStyle(
+//                                                                     color: Colors.black,
+//                                                                     fontWeight: FontWeight.bold),
+//                                                                 text: product.product),
+//                                                           ),
+//                                                         ),
+//                                                         RatingBar
+//                                                             .builder(
+//                                                           itemSize:
+//                                                               18,
+//                                                           initialRating:
+//                                                               double.parse(
+//                                                                   product.rating),
+//                                                           ignoreGestures:
+//                                                               true,
+//                                                           direction: Axis
+//                                                               .horizontal,
+//                                                           allowHalfRating:
+//                                                               true,
+//                                                           itemCount:
+//                                                               5,
+//                                                           itemPadding:
+//                                                               EdgeInsets.symmetric(
+//                                                                   horizontal:
+//                                                                       1),
+//                                                           itemBuilder:
+//                                                               (context,
+//                                                                       _) =>
+//                                                                   Icon(
+//                                                             Icons
+//                                                                 .star,
+//                                                             color: Colors
+//                                                                 .amber,
+//                                                           ),
+//                                                           onRatingUpdate:
+//                                                               (rating) {},
+//                                                         ),
+//                                                       ],
+//                                                     ),
+//                                                     SizedBox(
+//                                                       height: 20,
+//                                                     ),
+//                                                     product.color
+//                                                             .isEmpty
+//                                                         ? SizedBox()
+//                                                         : productOption(
+//                                                             widgetTitle:
+//                                                                 'Product Options',
+//                                                             widgetSubTitle:
+//                                                                 'Color',
+//                                                             widget:
+//                                                                 productColorOption(
+//                                                               price:
+//                                                                   '50',
+//                                                               counterWidget:
+//                                                                   productCounter(number: 10),
+//                                                             ),
+//                                                           ),
+//                                                     SizedBox(
+//                                                       height: 20,
+//                                                     ),
+//                                                     infoCartSupplier(
+//                                                         '${product.company}',
+//                                                         '${product.year}' +
+//                                                             ' ${Languages.of(context).year}',
+//                                                         '${product.countryName}',
+//                                                         '${product.category}'),
+//                                                     TabBar(
+//                                                       isScrollable:
+//                                                           true,
+//                                                       controller:
+//                                                           _controller,
+//                                                       tabs: _tabs
+//                                                           .map((String
+//                                                                   name) =>
+//                                                               Tab(
+//                                                                   text:
+//                                                                       name))
+//                                                           .toList(),
+//                                                       indicatorColor:
+//                                                           orangeColor,
+//                                                       indicatorSize:
+//                                                           TabBarIndicatorSize
+//                                                               .label,
+//                                                       labelColor:
+//                                                           orangeColor,
+//                                                     ),
+//                                                   ])),
+//                                         ])))
+//                               ]),
+//                         ))),
+//                 floating: true,
+//                 pinned: true,
+//                 snap: true,
+//                 forceElevated: innerBoxIsScrolled,
+//               ),
+//             ),
+//           ),
+//         ];
+//       },
+//       body: TabBarView(
+//         children: _tabs.map((String name) {
+//           return Builder(
+//             builder: (BuildContext context) {
+//               return SliverList(
+//                 delegate: SliverChildBuilderDelegate(
+//                   (BuildContext context, int index) {
+//                     return Container(
+//                         padding: EdgeInsets.only(
+//                             bottom:
+//                                 MediaQuery.of(context).size.height *
+//                                     0.1),
+//                         child: Column(
+//                             mainAxisSize: MainAxisSize.max,
+//                             children: [
+//                               overViewText(
+//                                   Html(data: product.fullDescription),
+//                                   context),
+//                               SizedBox(
+//                                 height: 20,
+//                               ),
+//                               // product.faq.isEmpty
+//                               //     ? SizedBox()
+//                               //     :
+//                               productFaq(
+//                                   title: 'FAQ:',
+//                                   question: 'Question',
+//                                   answer: 'Answer'),
+//                               SizedBox(
+//                                 height: 20,
+//                               ),
+//                               // product.detailedPictures
+//                               //     .isEmpty
+//                               // ? SizedBox()
+//                               // :
+//                               detailsPictures(),
+//                               SizedBox(
+//                                 height: 20,
+//                               ),
+//                               // product.packingShipping
+//                               //         .isEmpty
+//                               //     ? SizedBox()
+//                               //     :
+//                               listOfBackingChipping(),
+//                               SizedBox(
+//                                 height: 20,
+//                               ),
+//                               // product.certificates.isEmpty
+//                               //     ? SizedBox()
+//                               //     :
+//                               certificateListView(),
+//                             ]));
+//                   },
+//                   childCount: 1,
+//                 ),
+//               );
+//             },
+//           );
+//         }).toList(),
+//       ),
+//     ),
+//   ),
+// );
+
+// class CustomSliver extends SliverPersistentHeaderDelegate {
+//   final double expandedHeight;
+//
+//   CustomSliver({@required this.expandedHeight});
+//
+//   @override
+//   Widget build(
+//       BuildContext context, double shrinkOffset, bool overlapsContent) {
+//     return TabBar(
+//       isScrollable: true,
+//       controller: _controllerTab,
+//       tabs: _tabs.map((String name) => Tab(text: name)).toList(),
+//       indicatorColor: orangeColor,
+//       indicatorSize: TabBarIndicatorSize.label,
+//       labelColor: orangeColor,
+//     );
+//   }
+//
+//   @override
+//   double get maxExtent => expandedHeight;
+//
+//   @override
+//   double get minExtent => 150.0;
+//
+//   @override
+//   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
+//     return true;
+//   }
+// }
+
+  Widget tabBar() {
+    return TabBar(
+      isScrollable: true,
+      controller: _controllerTab,
+      tabs: _tabs.map((String name) => Tab(text: name)).toList(),
+      indicatorColor: orangeColor,
+      indicatorSize: TabBarIndicatorSize.label,
+      labelColor: orangeColor,
+    );
   }
 }
 
