@@ -94,6 +94,7 @@ class _IndividualProductState extends State<IndividualProduct>
           return DefaultTabController(
             length: _tabs.length,
             child: Scaffold(
+              bottomNavigationBar: productFab(product.price),
               // appBar: AppBar(
               //   title: Text(_tabs[_controllerTab.index]),
               //   bottom: TabBar(
@@ -340,7 +341,7 @@ class _IndividualProductState extends State<IndividualProduct>
 
 Padding productFab(String price) {
   return Padding(
-    padding: const EdgeInsets.only(left: 25),
+    padding: const EdgeInsets.only(left: 25, bottom: 30),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
