@@ -6,7 +6,6 @@ import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/categoryBloc/category_bloc.dart';
 import 'package:bawabtalsharq/bloc/categoryBloc/category_event.dart';
 import 'package:bawabtalsharq/bloc/categoryBloc/category_state.dart';
-import 'package:bawabtalsharq/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,6 +20,8 @@ class _AllCategoriesState extends State<AllCategories>
     with TickerProviderStateMixin {
   CategoryBloc _categoryBloc;
   bool isLoading = false;
+  bool isLoaded = false;
+  String errorMessage = '';
   AnimationController _sliderController;
   Animation<Offset> _sliderAnimation;
   ScrollController _mainScrollController = ScrollController();
@@ -54,13 +55,21 @@ class _AllCategoriesState extends State<AllCategories>
         bloc: _categoryBloc,
         builder: (context, state) {
           if (state is CategoryLoadingState) {
-            showLoadingDialog(context);
+            if (!isLoading) {
+              isLoading = true;
+              return Container(
+                color: Colors.white,
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            }
           } else if (state is CategoryLoadedState) {
+            isLoaded = true;
+            isLoading = true;
             listOfCategory = state.cateResponse;
             _stackWidgets.add(getMainCategoriesList(context));
-            Navigator.pop(context);
-          } else if (state is CategoryErrorState) {
-            print('handle Error UI'); //TODO error
+            // Navigator.pop(context);
           } else if (state is CategoryPressState) {
             listOfCategory.forEach((element) {
               element.isSelected = false;
@@ -82,7 +91,9 @@ class _AllCategoriesState extends State<AllCategories>
             _isPressed = false;
             listOfCategory[state.index].isSelected = false;
             _stackWidgets = [getMainCategoriesList(context)];
-          }
+          } else if (state is CategoryErrorState)
+            errorMessage = 'No Internet Connection';
+
           return Scaffold(
               backgroundColor: Colors.white,
               appBar: appBarBuilderWithWidget(
@@ -109,7 +120,11 @@ class _AllCategoriesState extends State<AllCategories>
                   }
                 },
               ),
-              body: Stack(children: _stackWidgets));
+              body: isLoaded
+                  ? Stack(children: _stackWidgets)
+                  : SizedBox(
+                      child: Center(child: Text(errorMessage)),
+                    ));
         });
   }
 
