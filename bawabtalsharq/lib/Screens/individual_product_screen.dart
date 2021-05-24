@@ -125,7 +125,7 @@ class _IndividualProductState extends State<IndividualProduct>
                         // tabBar(),
                         iconRound(Icons.bookmark_border_outlined),
                       ],
-                      expandedHeight: MediaQuery.of(context).size.height * 0.4,
+                      expandedHeight: MediaQuery.of(context).size.height * 0.5,
                       floating: true,
                       // pinned: true,
                       snap: false,
@@ -166,80 +166,65 @@ class _IndividualProductState extends State<IndividualProduct>
                                         noPadding: true),
                                     Flexible(
                                       child: Container(
-                                          // height: MediaQuery.of(context)
-                                          //         .size
-                                          //         .height *
-                                          //     0.15,
+                                          margin: EdgeInsets.only(
+                                              top: 40,
+                                              bottom: 50,
+                                              left: 50,
+                                              right: 50),
                                           decoration: BoxDecoration(
                                             color: Color(0xfff9dfd6),
-                                            borderRadius: BorderRadius.only(
-                                                // topLeft: Radius.circular(40),
-                                                // topRight: Radius.circular(40),
-                                                ),
                                           ),
-                                          child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 40,
-                                                  right: 40,
-                                                  top: 20,
-                                                  bottom: 20),
-                                              child: Row(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceAround,
+                                          child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Flexible(
+                                                  child: RichText(
+                                                    maxLines: 2,
+                                                    overflow: TextOverflow.clip,
+                                                    strutStyle: StrutStyle(
+                                                        fontSize: 14),
+                                                    text: TextSpan(
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                        text: product.product),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Row(
                                                   children: [
-                                                    Flexible(
-                                                      child: RichText(
-                                                        maxLines: 2,
-                                                        overflow:
-                                                            TextOverflow.clip,
-                                                        strutStyle: StrutStyle(
-                                                            fontSize: 14),
-                                                        text: TextSpan(
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                            text: product
-                                                                .product),
+                                                    RatingBar.builder(
+                                                      itemSize: 18,
+                                                      initialRating: 3,
+                                                      minRating: 1,
+                                                      direction:
+                                                          Axis.horizontal,
+                                                      allowHalfRating: true,
+                                                      itemCount: 1,
+                                                      itemPadding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 1),
+                                                      itemBuilder:
+                                                          (context, _) => Icon(
+                                                        Icons.star,
+                                                        color: Colors.amber,
                                                       ),
+                                                      onRatingUpdate: (rating) {
+                                                        print(rating);
+                                                      },
                                                     ),
-                                                    SizedBox(
-                                                      height: 10,
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        RatingBar.builder(
-                                                          itemSize: 18,
-                                                          initialRating: 3,
-                                                          minRating: 1,
-                                                          direction:
-                                                              Axis.horizontal,
-                                                          allowHalfRating: true,
-                                                          itemCount: 1,
-                                                          itemPadding: EdgeInsets
-                                                              .symmetric(
-                                                                  horizontal:
-                                                                      1),
-                                                          itemBuilder:
-                                                              (context, _) =>
-                                                                  Icon(
-                                                            Icons.star,
-                                                            color: Colors.amber,
-                                                          ),
-                                                          onRatingUpdate:
-                                                              (rating) {
-                                                            print(rating);
-                                                          },
-                                                        ),
-                                                        Text(product.rating)
-                                                      ],
-                                                    ),
-                                                  ]))),
+                                                    Text(product.rating)
+                                                  ],
+                                                ),
+                                              ])),
                                     )
                                   ]))),
                       // bottom: tabBar(),
@@ -257,74 +242,81 @@ class _IndividualProductState extends State<IndividualProduct>
                   ];
                 },
                 body: TabBarView(controller: _controllerTab, children: [
-                  SingleChildScrollView(
-                      padding: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).size.height * 0.1),
-                      child: Column(
-                        children: [
-                          Container(
-                              margin: EdgeInsets.all(20),
-                              color: Colors.white,
-                              padding: EdgeInsets.only(
-                                  bottom:
-                                      MediaQuery.of(context).size.height * 0.1),
-                              child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    product.color.isEmpty
-                                        ? SizedBox()
-                                        : Center(
-                                            child: productOption(
-                                              widgetTitle: 'Product Options',
-                                              widgetSubTitle: 'Color',
-                                              widget: productColorOption(
-                                                price: '50',
-                                                counterWidget:
-                                                    productCounter(number: 10),
+                  Container(
+                    color: Colors.white,
+                    child: SingleChildScrollView(
+                        padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).size.height * 0.1),
+                        child: Column(
+                          children: [
+                            Container(
+                                margin: EdgeInsets.all(20),
+                                color: Colors.white,
+                                padding: EdgeInsets.only(
+                                    bottom: MediaQuery.of(context).size.height *
+                                        0.1),
+                                child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      product.color.isEmpty
+                                          ? SizedBox()
+                                          : Center(
+                                              child: productOption(
+                                                widgetTitle: 'Product Options',
+                                                widgetSubTitle: 'Color',
+                                                widget: productColorOption(
+                                                  price: '50',
+                                                  counterWidget: productCounter(
+                                                      number: 10),
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                    overViewText(
-                                        Html(data: product.fullDescription),
-                                        context),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    product.faq.isEmpty
-                                        ? SizedBox()
-                                        : productFaq(
-                                            title: 'FAQ:',
-                                            question: 'Question',
-                                            answer: 'Answer'),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    product.detailedPictures.isEmpty
-                                        ? SizedBox()
-                                        : detailsPictures(),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    product.packingShipping.isEmpty
-                                        ? SizedBox()
-                                        : listOfBackingChipping(),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    product.certificates.isEmpty
-                                        ? SizedBox()
-                                        : certificateListView(),
-                                  ])),
-                        ],
-                      )),
-                  SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 30, left: 10),
-                      child: infoCartSupplier(
-                          '${product.company}',
-                          '${product.year}' + ' ${Languages.of(context).year}',
-                          '${product.countryName}',
-                          '${product.category}'),
+                                      overViewText(
+                                          Html(data: product.fullDescription),
+                                          context),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      product.faq.isEmpty
+                                          ? SizedBox()
+                                          : productFaq(
+                                              title: 'FAQ:',
+                                              question: 'Question',
+                                              answer: 'Answer'),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      product.detailedPictures.isEmpty
+                                          ? SizedBox()
+                                          : detailsPictures(),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      product.packingShipping.isEmpty
+                                          ? SizedBox()
+                                          : listOfBackingChipping(),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      product.certificates.isEmpty
+                                          ? SizedBox()
+                                          : certificateListView(),
+                                    ])),
+                          ],
+                        )),
+                  ),
+                  Container(
+                    color: Colors.white,
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 30, left: 10),
+                        child: infoCartSupplier(
+                            '${product.company}',
+                            '${product.year}' +
+                                ' ${Languages.of(context).year}',
+                            '${product.countryName}',
+                            '${product.category}'),
+                      ),
                     ),
                   ),
                 ]),
