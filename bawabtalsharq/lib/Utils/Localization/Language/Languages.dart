@@ -152,6 +152,8 @@ abstract class Languages {
   String get lan;
   String get year;
   String get overView;
+  String get chatSupplier;
+  String get buyNow;
 
 // end Mosdik
 
