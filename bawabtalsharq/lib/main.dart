@@ -55,7 +55,7 @@ void main() async {
   await Constants.initSharedPref();
 
   if (Constants.getDate(key: 'currency') == null) {
-    Constants.saveCurrency(currency: '1');
+    Constants.saveCurrencyId(currency: '1');
   }
 
   SystemChrome.setPreferredOrientations(

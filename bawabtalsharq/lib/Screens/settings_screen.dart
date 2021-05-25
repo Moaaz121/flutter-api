@@ -6,6 +6,7 @@ import 'package:bawabtalsharq/Screens/profile/contact_us/send_message_dialog.dar
 import 'package:bawabtalsharq/Screens/profile_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/bloc/currancyBloc/currency_bloc.dart';
 import 'package:bawabtalsharq/bloc/currancyBloc/currency_event.dart';
 import 'package:bawabtalsharq/bloc/profileBlocs/settingBloc/setting_block.dart';
@@ -153,8 +154,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       12,
                       fontWeight: FontWeight.w600,
                     ),
-                    extraText: buildText('EGP', 10,
-                        fontWeight: FontWeight.w400, color: orangeColor),
+                    extraText: buildText(
+                        Constants.getCurrency2() == '4'
+                            ? Languages.of(context).egp
+                            : Languages.of(context).usd,
+                        10,
+                        fontWeight: FontWeight.w400,
+                        color: orangeColor),
                     icon: Icons.monetization_on,
                     iconColor: Colors.green,
                   ),

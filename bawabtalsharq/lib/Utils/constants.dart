@@ -12,26 +12,6 @@ class Constants {
   static int userType = 0;
   static SharedPreferences sharedPreferences;
 
-  static initSharedPref() async {
-    sharedPreferences = await SharedPreferences.getInstance();
-  }
-
-  static dynamic getDate({@required String key}) {
-    return sharedPreferences.get(key);
-  }
-
-  static String getCurrency() {
-    return '&currency_id=' + sharedPreferences.get('currency');
-  }
-
-  static dynamic removeDate({@required String key}) {
-    return sharedPreferences.remove(key);
-  }
-
-  static void saveCurrency({@required String currency}) {
-    sharedPreferences.setString('currency', currency);
-  }
-
   static languages languageId = languages.English;
   static TextDirection textDirection = Constants.languageId == languages.Arabic
       ? TextDirection.rtl
@@ -136,7 +116,30 @@ class Constants {
     return null;
   }
 
-  // end Bahaa
+  static initSharedPref() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+  }
+
+  static dynamic getDate({@required String key}) {
+    return sharedPreferences.get(key);
+  }
+
+  static String getCurrency() {
+    return '&currency_id=' + sharedPreferences.get('currency');
+  }
+
+  static dynamic removeDate({@required String key}) {
+    return sharedPreferences.remove(key);
+  }
+
+  static void saveCurrencyId({@required String currency}) {
+    sharedPreferences.setString('currency', currency);
+  }
+
+  static String getCurrency2() {
+    return sharedPreferences.get('currency');
+  }
+// end Bahaa
 }
 
 // Start Karem

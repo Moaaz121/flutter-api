@@ -69,6 +69,8 @@ class LanguageAr extends Languages {
   String get verification => 'تحقق';
   String get verify => 'ثبت';
   String get currency1 => 'جنيهًا';
+  String get egp => 'جنيه مصري';
+  String get usd => 'دولار أمريكي';
 
 // end Bahaa
 

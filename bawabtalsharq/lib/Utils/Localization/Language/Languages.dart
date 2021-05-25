@@ -71,6 +71,8 @@ abstract class Languages {
   String get resendCode;
   String get verify;
   String get currency1;
+  String get egp;
+  String get usd;
 
 // end Bahaa
 

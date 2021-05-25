@@ -70,6 +70,8 @@ class LanguageEn extends Languages {
   String get verification => 'Verification';
   String get verify => 'Verify';
   String get currency1 => '\$';
+  String get egp => 'EGP';
+  String get usd => 'USD';
 
 // end Bahaa
 

@@ -9,6 +9,7 @@ import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/bloc/countryBloc/country_bloc.dart';
 import 'package:bawabtalsharq/bloc/countryBloc/country_event.dart';
 import 'package:bawabtalsharq/bloc/countryBloc/country_state.dart';
@@ -1613,10 +1614,11 @@ void showCurrencyDialog(BuildContext context) {
                       return GestureDetector(
                         onTap: () {
                           state.currencyResponse.data[index].isSelected = true;
-                          Constants.saveCurrency(
+                          Constants.saveCurrencyId(
                               currency: state
                                   .currencyResponse.data[index].currencyId);
-                          Navigator.pop(context);
+                          Navigator.popAndPushNamed(
+                              context, ScreenRoutes.mainScreen);
                         },
                         child: Container(
                           height: 60,
@@ -1633,7 +1635,8 @@ void showCurrencyDialog(BuildContext context) {
                                       15,
                                       fontFamily: mediumFontFamily,
                                       fontWeight: FontWeight.w600)),
-                              state.currencyResponse.data[index].isSelected
+                              state.currencyResponse.data[index].currencyId ==
+                                      Constants.getCurrency2()
                                   ? Image.asset(
                                       checkBox,
                                       width: 40,
