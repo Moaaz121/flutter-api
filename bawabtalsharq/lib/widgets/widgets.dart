@@ -25,6 +25,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:bawabtalsharq/Utils/validator_util.dart';
 
 class Widgets {
   call() {}
@@ -1810,5 +1811,54 @@ FlatButton signInFlatButton(
 // end Islam
 
 //Start Asmaa
+
+Widget customTextFormField(
+  BuildContext context, {
+  String label,
+  IconButton rightBtn,
+  IconData leftIcon,
+  TextEditingController controller,
+  double width = 1,
+  TextInputType textInputType,
+  errorText,
+  bool isPassword = false,
+}) {
+  return SizedBox(
+    width: MediaQuery.of(context).size.width * width,
+    child: TextFormField(
+      keyboardType: textInputType,
+      controller: controller,
+      obscureText: isPassword,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter some text';
+        } else if (label == 'E-mail' &&
+            !emailValidator(controller.text.trim())) {
+          return 'please enter correct email address';
+        } else if (label == 'Tel' && !phoneValidator(controller.text.trim())) {
+          return 'please enter correct Phone Number';
+        } else if (label == 'Login Password' &&
+            !passwordValidator(controller.text.trim())) {
+          return 'Weak Password';
+        }
+        return null;
+      },
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+          //hintText: 'username',
+          prefixIcon: Icon(
+            leftIcon,
+            color: Colors.grey,
+          ),
+          suffixIcon: rightBtn,
+          labelText: label,
+          labelStyle: TextStyle(
+            fontSize: 12,
+          ),
+          focusedBorder:
+              UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey))),
+    ),
+  );
+}
 
 //End Asmaa

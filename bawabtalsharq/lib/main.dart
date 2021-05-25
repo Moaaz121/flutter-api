@@ -6,6 +6,7 @@ import 'package:bawabtalsharq/Screens/home_screen.dart';
 import 'package:bawabtalsharq/Screens/individual_product_screen.dart';
 import 'package:bawabtalsharq/Screens/intro_screen.dart';
 import 'package:bawabtalsharq/Screens/login_screen.dart';
+import 'package:bawabtalsharq/Screens/forget_password/verification_OTP_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/faq/faq_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/history/history_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/message_center/message_center_screen.dart';
@@ -46,7 +47,6 @@ import 'Screens/search/color_filter_screen.dart';
 import 'Screens/search/list_filter_screen.dart';
 import 'Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Services/AnalyticsService.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 void main() async {
@@ -97,7 +97,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.deepOrange),
-      home: SplashScreen(),
+      home: VerificationScreen(),
       navigatorObservers: [AnalyticsService().getAnalyticsOberver()],
       routes: {
         ScreenRoutes.splashScreen: (_) => SplashScreen(),
