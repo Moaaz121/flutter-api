@@ -63,7 +63,7 @@ class _HistoryState extends State<HistoryScreen> {
                 return Container(
                   color: Colors.white,
                   child: Center(
-                    child: CircularProgressIndicator(),
+                    child: progressBar(),
                   ),
                 );
               }
@@ -77,7 +77,7 @@ class _HistoryState extends State<HistoryScreen> {
               if (state.response.code == 501) errorMessage = 'Invalid Api Key';
             }
             if (state is HistoryErrorState)
-              errorMessage = 'No Internet Connection';
+              errorMessage = Languages.of(context).noNetwork;
             return isLoaded
                 ? Column(children: [
                     Flexible(

@@ -61,7 +61,7 @@ class _AllCategoriesState extends State<AllCategories>
               return Container(
                 color: Colors.white,
                 child: Center(
-                  child: CircularProgressIndicator(),
+                  child: progressBar(),
                 ),
               );
             }
@@ -93,7 +93,7 @@ class _AllCategoriesState extends State<AllCategories>
             listOfCategory[state.index].isSelected = false;
             _stackWidgets = [getMainCategoriesList(context)];
           } else if (state is CategoryErrorState)
-            errorMessage = 'No Internet Connection';
+            errorMessage = Languages.of(context).noNetwork;
 
           return Scaffold(
               backgroundColor: Colors.white,

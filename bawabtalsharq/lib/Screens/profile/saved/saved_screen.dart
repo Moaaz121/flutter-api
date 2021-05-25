@@ -44,7 +44,7 @@ class _SavedScreenState extends State<SavedScreen> {
                 );
               },
             )
-          : Center(child: Text('No Saved Item')),
+          : Center(child: Text(Languages.of(context).noItem)),
     );
   }
 }

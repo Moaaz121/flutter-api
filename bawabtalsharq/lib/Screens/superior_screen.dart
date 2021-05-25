@@ -41,7 +41,7 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
             return Container(
               color: Colors.white,
               child: Center(
-                child: CircularProgressIndicator(),
+                child: progressBar(),
               ),
             );
           }
@@ -69,11 +69,23 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
                             children: [
                               Container(
                                 margin: EdgeInsetsDirectional.only(start: 15),
-                                child: buildText(
+                                child: Text(
                                   Languages.of(context).superior,
-                                  32,
-                                  fontWeight: FontWeight.bold,
-                                  color: orangeColor,
+                                  style: TextStyle(
+                                    fontFamily: 'Segoe UI',
+                                    fontSize: 29.0,
+                                    color: orangeColor,
+                                    letterSpacing: 0.34800000000000003,
+                                    fontWeight: FontWeight.w700,
+                                    shadows: [
+                                      Shadow(
+                                        color: const Color(0xFF7D7D7D)
+                                            .withOpacity(0.16),
+                                        offset: Offset(0, 3.0),
+                                        blurRadius: 6.0,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                               rocketList(context)
@@ -141,10 +153,10 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
                         borderRadius: BorderRadius.circular(15),
                         boxShadow: [
                           BoxShadow(
-                              color: Color(0x29000000),
-                              offset: Offset(0, 1),
-                              blurRadius: 6,
-                              spreadRadius: 0)
+                            color: Color(0xFFE16036).withOpacity(0.1),
+                            offset: Offset(0, 1.0),
+                            blurRadius: 16.0,
+                          ),
                         ],
                       ),
                     ),

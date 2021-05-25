@@ -8,6 +8,7 @@ import 'package:bawabtalsharq/Model/golden_suppliers_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bawabtalsharq/main.dart';
 
 class GoldenSuppliers extends StatefulWidget {
   @override
@@ -70,49 +71,55 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
                     scrollDirection: Axis.vertical,
                     itemCount: suppliers.length,
                     itemBuilder: (context, position) {
-                      return Stack(children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 20),
-                          child: Container(
-                            margin: EdgeInsets.only(left: 12, right: 12),
-                            // width: 333,
-                            height: 190,
-                            decoration: new BoxDecoration(
-                              color: Color(0xfffbfbfb),
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Color(0x29000000),
-                                    offset: Offset(0, 1),
-                                    blurRadius: 6,
-                                    spreadRadius: 0)
-                              ],
-                            ),
-                            child: Column(
-                              children: [
-                                firstRow(
-                                    supplierName: suppliers[position].name),
-                                secondRow(year: suppliers[position].year),
-                                thirdRow(
-                                    products: suppliers[position].products),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Positioned.directional(
-                          textDirection: Directionality.of(context),
-                          top: 2,
-                          start: 30,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(15.0),
-                            child: Image(
-                              image: NetworkImage(suppliers[position].logo),
-                              width: 70,
-                              height: 65,
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, ScreenRoutes.supplierProfileScreen);
+                        },
+                        child: Stack(children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 20),
+                            child: Container(
+                              margin: EdgeInsets.only(left: 12, right: 12),
+                              // width: 333,
+                              height: 190,
+                              decoration: new BoxDecoration(
+                                color: Color(0xfffbfbfb),
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Color(0xFFE16036).withOpacity(0.1),
+                                    offset: Offset(0, 1.0),
+                                    blurRadius: 16.0,
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                children: [
+                                  firstRow(
+                                      supplierName: suppliers[position].name),
+                                  secondRow(year: suppliers[position].year),
+                                  thirdRow(
+                                      products: suppliers[position].products),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ]);
+                          Positioned.directional(
+                            textDirection: Directionality.of(context),
+                            top: 2,
+                            start: 30,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(15.0),
+                              child: Image(
+                                image: NetworkImage(suppliers[position].logo),
+                                width: 70,
+                                height: 65,
+                              ),
+                            ),
+                          ),
+                        ]),
+                      );
                     })
                 : Center(child: Text(errorMessage));
           },

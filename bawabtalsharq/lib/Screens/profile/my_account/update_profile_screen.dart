@@ -179,7 +179,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                       builder: (context, state) {
                         if (state is UpdateAccountLoadingState) {
                           if (!isLoading) {
-                            showLoadingDialog(context);
+                            progressBar();
                             isLoading = true;
                           }
                         } else if (state is UpdateAccountLoadedState) {
