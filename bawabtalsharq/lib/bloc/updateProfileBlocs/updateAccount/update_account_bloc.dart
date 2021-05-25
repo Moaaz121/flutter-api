@@ -14,8 +14,8 @@ class UpdateAccountBloc extends Bloc<UpdateAccountEvent, UpdateAccountState> {
     if (event is UpdateEvent) {
       yield UpdateAccountLoadingState();
       try {
-        BaseModel data = await UpdateProfileRepo().updateAccount(
-            event.userId, event.apiKey, event.firstName, event.lastName);
+        BaseModel data =
+            await UpdateProfileRepo().updateAccount(event.currentUser);
         yield UpdateAccountLoadedState(response: data);
       } catch (e) {
         yield UpdateAccountErrorState(message: e.toString());

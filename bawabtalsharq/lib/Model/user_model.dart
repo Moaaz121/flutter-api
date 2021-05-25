@@ -35,6 +35,7 @@ class UserLocal {
   String email;
   String phone;
   String apiKey;
+  String country;
 
   UserLocal(
       {this.userId,
@@ -45,7 +46,8 @@ class UserLocal {
       this.company,
       this.email,
       this.phone,
-      this.apiKey});
+      this.apiKey,
+      this.country});
 
   UserLocal.fromJson(Map<String, dynamic> json) {
     userId = json['user_id'];
@@ -57,6 +59,7 @@ class UserLocal {
     email = json['email'];
     phone = json['phone'];
     apiKey = json['ApiKey'];
+    country = json['b_country'];
   }
 
   Map<String, dynamic> toJson() {
@@ -70,6 +73,7 @@ class UserLocal {
     data['email'] = this.email;
     data['phone'] = this.phone;
     data['ApiKey'] = this.apiKey;
+    data['b_country'] = this.country;
     return data;
   }
 }
