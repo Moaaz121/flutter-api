@@ -3,16 +3,16 @@ import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 
 class AnalyticsService {
-  final FirebaseAnalytics _anylytics = new FirebaseAnalytics();
+  final FirebaseAnalytics _analytics = new FirebaseAnalytics();
   FirebaseAnalyticsObserver getAnalyticsOberver() =>
-      FirebaseAnalyticsObserver(analytics: _anylytics);
+      FirebaseAnalyticsObserver(analytics: _analytics);
 
   Future setUserProperties({@required String userId}) async {
-    await _anylytics.setUserId(userId);
+    await _analytics.setUserId(userId);
   }
 
   setScreenName({@required String name}) async {
-    await _anylytics
+    await _analytics
         .setCurrentScreen(screenName: name)
         .then((value) => print('Name is $name'));
   }
