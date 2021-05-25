@@ -39,19 +39,20 @@ class CountryModel {
 }
 
 class CountryData {
-  CountryData({
-    this.code,
-    this.region,
-    this.lat,
-    this.lon,
-    this.country,
-  });
+  CountryData(
+      {this.code,
+      this.region,
+      this.lat,
+      this.lon,
+      this.country,
+      this.isSelected});
 
   String code;
   Region region;
   String lat;
   String lon;
   String country;
+  bool isSelected = false;
 
   factory CountryData.fromJson(Map<String, dynamic> json) => CountryData(
         code: json["code"],

@@ -1,8 +1,9 @@
-import 'package:bawabtalsharq/Model/user_model.dart';
-import 'package:flutter/material.dart';
-import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
+
+import 'package:bawabtalsharq/Model/user_model.dart';
+import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 enum languages { English, Arabic, Indian }
 
@@ -128,6 +129,14 @@ class Constants {
     return '&currency_id=' + sharedPreferences.get('currency');
   }
 
+  static String getCountry() {
+    return '&country=' + sharedPreferences.get('country');
+  }
+
+  static String getCountryCode() {
+    return '&code=' + sharedPreferences.get('country');
+  }
+
   static dynamic removeDate({@required String key}) {
     return sharedPreferences.remove(key);
   }
@@ -136,8 +145,16 @@ class Constants {
     sharedPreferences.setString('currency', currency);
   }
 
+  static void saveCountryCode({@required String country}) {
+    sharedPreferences.setString('country', country);
+  }
+
   static String getCurrency2() {
     return sharedPreferences.get('currency');
+  }
+
+  static String getCountry2() {
+    return sharedPreferences.get('country');
   }
 // end Bahaa
 }
