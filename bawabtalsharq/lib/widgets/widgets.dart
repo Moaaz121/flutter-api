@@ -9,7 +9,6 @@ import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
-import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/bloc/countryBloc/country_bloc.dart';
 import 'package:bawabtalsharq/bloc/countryBloc/country_event.dart';
 import 'package:bawabtalsharq/bloc/countryBloc/country_state.dart';
@@ -19,6 +18,7 @@ import 'package:bawabtalsharq/bloc/currancyBloc/currency_state.dart';
 import 'package:bawabtalsharq/bloc/langBloc/lang_bloc.dart';
 import 'package:bawabtalsharq/bloc/langBloc/lang_event.dart';
 import 'package:bawabtalsharq/bloc/langBloc/lang_state.dart';
+import 'package:bawabtalsharq/main.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -1684,6 +1684,7 @@ void showCountryDialog(BuildContext context) {
                 return CircularProgressIndicator();
               } else if (state is CountryLoadedState &&
                   state.countryResponse != null) {
+                // print(state.countryResponse.data[0].country);
                 return Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
@@ -1694,7 +1695,14 @@ void showCountryDialog(BuildContext context) {
                     itemCount: state.countryResponse.data.length,
                     itemBuilder: (context, index) {
                       return GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          state.countryResponse.data[index].isSelected = true;
+                          Constants.saveCountryCode(
+                              country:
+                                  state.countryResponse.data[index].country);
+                          Navigator.popAndPushNamed(
+                              context, ScreenRoutes.mainScreen);
+                        },
                         child: Container(
                           height: 60,
                           child: Row(
@@ -1709,11 +1717,14 @@ void showCountryDialog(BuildContext context) {
                                       15,
                                       fontFamily: mediumFontFamily,
                                       fontWeight: FontWeight.w600)),
-                              Image.asset(
-                                checkBox,
-                                width: 40,
-                                height: 40,
-                              ),
+                              state.countryResponse.data[index].country ==
+                                      Constants.getCountry2()
+                                  ? Image.asset(
+                                      checkBox,
+                                      width: 40,
+                                      height: 40,
+                                    )
+                                  : SizedBox(),
                               SizedBox(
                                 width: 10,
                               ),
