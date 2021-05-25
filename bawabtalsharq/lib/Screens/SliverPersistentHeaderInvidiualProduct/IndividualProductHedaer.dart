@@ -20,7 +20,7 @@ class SliverPersistentHeaderDelegateImpl
   }
 
   @override
-  double get maxExtent => tabBar.preferredSize.height * 1;
+  double get maxExtent => tabBar.preferredSize.height;
 
   @override
   double get minExtent => tabBar.preferredSize.height;

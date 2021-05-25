@@ -1,7 +1,6 @@
 import 'package:bawabtalsharq/Model/individualProduct_model.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
-import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/individualProductBloc/individualProduct_bloc.dart';
 import 'package:bawabtalsharq/bloc/individualProductBloc/individualProduct_event.dart';
@@ -93,237 +92,250 @@ class _IndividualProductState extends State<IndividualProduct>
           }
           return DefaultTabController(
             length: _tabs.length,
-            child: Scaffold(
-              floatingActionButton: productFab(product.price),
+            child: SafeArea(
+              bottom: false,
+              child: Scaffold(
+                floatingActionButton: productFab(product.price),
 
-              // appBar: AppBar(
-              //   title: Text(_tabs[_controllerTab.index]),
-              //   bottom: TabBar(
-              //     isScrollable: true,
-              //     controller: _controllerTab,
-              //     tabs: _tabs.map((String name) => Tab(text: name)).toList(),
-              //     indicatorColor: orangeColor,
-              //     indicatorSize: TabBarIndicatorSize.label,
-              //     labelColor: orangeColor,
-              //   ),
-              // ),
-              body: NestedScrollView(
-                headerSliverBuilder:
-                    (BuildContext context, bool innerBoxScrolled) {
-                  return <Widget>[
-                    SliverAppBar(
-                      leading: GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Icon(
-                          LanguageHelper.isEnglish
-                              ? Icons.keyboard_arrow_left_outlined
-                              : Icons.keyboard_arrow_right_outlined,
-                          size: 28,
+                // appBar: AppBar(
+                //   title: Text(_tabs[_controllerTab.index]),
+                //   bottom: TabBar(
+                //     isScrollable: true,
+                //     controller: _controllerTab,
+                //     tabs: _tabs.map((String name) => Tab(text: name)).toList(),
+                //     indicatorColor: orangeColor,
+                //     indicatorSize: TabBarIndicatorSize.label,
+                //     labelColor: orangeColor,
+                //   ),
+                // ),
+                body: NestedScrollView(
+                  headerSliverBuilder:
+                      (BuildContext context, bool innerBoxScrolled) {
+                    return <Widget>[
+                      SliverAppBar(
+                        leading: GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Icon(
+                            LanguageHelper.isEnglish
+                                ? Icons.keyboard_arrow_left_outlined
+                                : Icons.keyboard_arrow_right_outlined,
+                            size: 28,
+                          ),
+                        ),
+                        actions: [
+                          // tabBar(),
+                          iconRound(Icons.bookmark_border_outlined),
+                        ],
+                        expandedHeight:
+                            MediaQuery.of(context).size.height * 0.5,
+                        floating: true,
+                        // pinned: true,
+                        snap: false,
+                        elevation: 50,
+                        backgroundColor: Color(0xfff9dfd6),
+                        flexibleSpace: FlexibleSpaceBar(
+                            // title: Text('product'),
+                            // centerTitle: true,
+                            background: Container(
+                                padding: EdgeInsets.only(top: 20),
+                                child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      CarouselSlider.builder(
+                                        carouselController:
+                                            buttonCarouselController,
+                                        options: CarouselOptions(
+                                          onPageChanged: (index, reason) {
+                                            setState(() {
+                                              sliderPosition = index;
+                                            });
+                                          },
+                                          autoPlay: false,
+                                          viewportFraction: 0.9,
+                                          aspectRatio: 2,
+                                          initialPage: 0,
+                                          autoPlayCurve: Curves.fastOutSlowIn,
+                                          scrollDirection: Axis.horizontal,
+                                        ),
+                                        itemCount: 4,
+                                        itemBuilder:
+                                            (context, index, realIndex) =>
+                                                Image(
+                                          image: AssetImage(product.imagePath),
+                                        ),
+                                      ),
+                                      sliderIndicator(sliderPosition,
+                                          noPadding: true),
+                                      Flexible(
+                                        child: Container(
+                                            margin: EdgeInsets.only(
+                                                top: 40,
+                                                bottom: 30,
+                                                left: 50,
+                                                right: 50),
+                                            decoration: BoxDecoration(
+                                              color: Color(0xfff9dfd6),
+                                            ),
+                                            child: Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Flexible(
+                                                    child: RichText(
+                                                      maxLines: 2,
+                                                      overflow:
+                                                          TextOverflow.clip,
+                                                      strutStyle: StrutStyle(
+                                                          fontSize: 14),
+                                                      text: TextSpan(
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                          text:
+                                                              product.product),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      RatingBar.builder(
+                                                        itemSize: 18,
+                                                        initialRating: 3,
+                                                        minRating: 1,
+                                                        direction:
+                                                            Axis.horizontal,
+                                                        allowHalfRating: true,
+                                                        itemCount: 1,
+                                                        itemPadding: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal: 1),
+                                                        itemBuilder:
+                                                            (context, _) =>
+                                                                Icon(
+                                                          Icons.star,
+                                                          color: Colors.amber,
+                                                        ),
+                                                        onRatingUpdate:
+                                                            (rating) {
+                                                          print(rating);
+                                                        },
+                                                      ),
+                                                      Text(product.rating)
+                                                    ],
+                                                  ),
+                                                ])),
+                                      )
+                                    ]))),
+                        // bottom: tabBar(),
+                      ),
+
+                      // bottom: false,
+                      SliverPersistentHeader(
+                        pinned: true,
+                        floating: true,
+                        delegate: SliverPersistentHeaderDelegateImpl(
+                          color: Colors.white,
+                          tabBar: tabBar(),
                         ),
                       ),
-                      actions: [
-                        // tabBar(),
-                        iconRound(Icons.bookmark_border_outlined),
-                      ],
-                      expandedHeight: MediaQuery.of(context).size.height * 0.5,
-                      floating: true,
-                      // pinned: true,
-                      snap: false,
-                      elevation: 50,
-                      backgroundColor: Color(0xfff9dfd6),
-                      flexibleSpace: FlexibleSpaceBar(
-                          // title: Text('product'),
-                          // centerTitle: true,
-                          background: Container(
-                              padding: EdgeInsets.only(top: 20),
-                              child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    CarouselSlider.builder(
-                                      carouselController:
-                                          buttonCarouselController,
-                                      options: CarouselOptions(
-                                        onPageChanged: (index, reason) {
-                                          setState(() {
-                                            sliderPosition = index;
-                                          });
-                                        },
-                                        autoPlay: false,
-                                        viewportFraction: 0.9,
-                                        aspectRatio: 2,
-                                        initialPage: 0,
-                                        autoPlayCurve: Curves.fastOutSlowIn,
-                                        scrollDirection: Axis.horizontal,
-                                      ),
-                                      itemCount: 4,
-                                      itemBuilder:
-                                          (context, index, realIndex) => Image(
-                                        image: AssetImage(shoes_image),
-                                      ),
-                                    ),
-                                    sliderIndicator(sliderPosition,
-                                        noPadding: true),
-                                    Flexible(
-                                      child: Container(
-                                          margin: EdgeInsets.only(
-                                              top: 40,
-                                              bottom: 50,
-                                              left: 50,
-                                              right: 50),
-                                          decoration: BoxDecoration(
-                                            color: Color(0xfff9dfd6),
-                                          ),
-                                          child: Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Flexible(
-                                                  child: RichText(
-                                                    maxLines: 2,
-                                                    overflow: TextOverflow.clip,
-                                                    strutStyle: StrutStyle(
-                                                        fontSize: 14),
-                                                    text: TextSpan(
-                                                        style: TextStyle(
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                        text: product.product),
+                    ];
+                  },
+                  body: TabBarView(controller: _controllerTab, children: [
+                    Container(
+                      color: Colors.white,
+                      child: SingleChildScrollView(
+                          padding: EdgeInsets.only(
+                              bottom: MediaQuery.of(context).size.height * 0.1),
+                          child: Column(
+                            children: [
+                              Container(
+                                  margin: EdgeInsets.all(20),
+                                  color: Colors.white,
+                                  padding: EdgeInsets.only(
+                                      bottom:
+                                          MediaQuery.of(context).size.height *
+                                              0.1),
+                                  child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        product.color.isEmpty
+                                            ? SizedBox()
+                                            : Center(
+                                                child: productOption(
+                                                  widgetTitle:
+                                                      'Product Options',
+                                                  widgetSubTitle: 'Color',
+                                                  widget: productColorOption(
+                                                    price: '50',
+                                                    counterWidget:
+                                                        productCounter(
+                                                            number: 10),
                                                   ),
                                                 ),
-                                                SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    RatingBar.builder(
-                                                      itemSize: 18,
-                                                      initialRating: 3,
-                                                      minRating: 1,
-                                                      direction:
-                                                          Axis.horizontal,
-                                                      allowHalfRating: true,
-                                                      itemCount: 1,
-                                                      itemPadding:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal: 1),
-                                                      itemBuilder:
-                                                          (context, _) => Icon(
-                                                        Icons.star,
-                                                        color: Colors.amber,
-                                                      ),
-                                                      onRatingUpdate: (rating) {
-                                                        print(rating);
-                                                      },
-                                                    ),
-                                                    Text(product.rating)
-                                                  ],
-                                                ),
-                                              ])),
-                                    )
-                                  ]))),
-                      // bottom: tabBar(),
-                    ),
-
-                    // bottom: false,
-                    SliverPersistentHeader(
-                      pinned: true,
-                      floating: true,
-                      delegate: SliverPersistentHeaderDelegateImpl(
-                        color: Colors.white,
-                        tabBar: tabBar(),
-                      ),
-                    ),
-                  ];
-                },
-                body: TabBarView(controller: _controllerTab, children: [
-                  Container(
-                    color: Colors.white,
-                    child: SingleChildScrollView(
-                        padding: EdgeInsets.only(
-                            bottom: MediaQuery.of(context).size.height * 0.1),
-                        child: Column(
-                          children: [
-                            Container(
-                                margin: EdgeInsets.all(20),
-                                color: Colors.white,
-                                padding: EdgeInsets.only(
-                                    bottom: MediaQuery.of(context).size.height *
-                                        0.1),
-                                child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      product.color.isEmpty
-                                          ? SizedBox()
-                                          : Center(
-                                              child: productOption(
-                                                widgetTitle: 'Product Options',
-                                                widgetSubTitle: 'Color',
-                                                widget: productColorOption(
-                                                  price: '50',
-                                                  counterWidget: productCounter(
-                                                      number: 10),
-                                                ),
                                               ),
-                                            ),
-                                      overViewText(
-                                          Html(data: product.fullDescription),
-                                          context),
-                                      SizedBox(
-                                        height: 20,
-                                      ),
-                                      product.faq.isEmpty
-                                          ? SizedBox()
-                                          : productFaq(
-                                              title: 'FAQ:',
-                                            ),
-                                      SizedBox(
-                                        height: 20,
-                                      ),
-                                      // product.detailedPictures.isEmpty
-                                      //     ? SizedBox()
-                                      //     :
-                                      detailsPictures(),
-                                      SizedBox(
-                                        height: 20,
-                                      ),
-                                      // product.packingShipping.isEmpty
-                                      //     ? SizedBox()
-                                      //     :
+                                        overViewText(
+                                            Html(data: product.fullDescription),
+                                            context),
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                        product.faq.isEmpty
+                                            ? SizedBox()
+                                            : productFaq(
+                                                title: 'FAQ:',
+                                              ),
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                        // product.detailedPictures.isEmpty
+                                        //     ? SizedBox()
+                                        //     :
+                                        detailsPictures(),
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                        // product.packingShipping.isEmpty
+                                        //     ? SizedBox()
+                                        //     :
 
-                                      listOfBackingChipping(),
-                                      SizedBox(
-                                        height: 20,
-                                      ),
-                                      product.certificates.isEmpty
-                                          ? SizedBox()
-                                          : certificateListView(),
-                                    ])),
-                          ],
-                        )),
-                  ),
-                  Container(
-                    color: Colors.white,
-                    child: SingleChildScrollView(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 30, left: 10),
-                        child: infoCartSupplier(
-                            '${product.company}',
-                            '${product.year}' +
-                                ' ${Languages.of(context).year}',
-                            '${product.countryName}',
-                            '${product.category}'),
+                                        listOfBackingChipping(),
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                        product.certificates.isEmpty
+                                            ? SizedBox()
+                                            : certificateListView(),
+                                      ])),
+                            ],
+                          )),
+                    ),
+                    Container(
+                      color: Colors.white,
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 30, left: 10),
+                          child: infoCartSupplier(
+                              '${product.company}',
+                              '${product.year}' +
+                                  ' ${Languages.of(context).year}',
+                              '${product.countryName}',
+                              '${product.category}'),
+                        ),
                       ),
                     ),
-                  ),
-                ]),
+                  ]),
+                ),
               ),
             ),
           );
@@ -598,7 +610,7 @@ class _IndividualProductState extends State<IndividualProduct>
                       height: MediaQuery.of(context).size.height * .15,
                       decoration: new BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage(
+                          image: NetworkImage(
                               product.packingShipping[position].image),
                           fit: BoxFit.fill,
                         ),
@@ -639,7 +651,7 @@ class _IndividualProductState extends State<IndividualProduct>
                   borderRadius: BorderRadius.circular(16),
                   color: Colors.white,
                 ),
-                child: Image.asset(product.certificates[position]),
+                child: Image.network(product.certificates[position]),
               );
             },
           ),
@@ -669,7 +681,7 @@ class _IndividualProductState extends State<IndividualProduct>
               child: Card(
                   color: Colors.white,
                   child: Center(
-                    child: Image.asset(product.detailedPictures[index]),
+                    child: Image.network(product.detailedPictures[index]),
                   )),
             );
           }),
