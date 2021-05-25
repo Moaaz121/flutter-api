@@ -45,9 +45,6 @@ import 'Screens/request_for_qutation.dart';
 import 'Screens/search/color_filter_screen.dart';
 import 'Screens/search/list_filter_screen.dart';
 import 'Utils/Localization/LanguageHelper.dart';
-import 'package:bawabtalsharq/Services/AnalyticsService.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -56,6 +53,9 @@ void main() async {
 
   if (Constants.getDate(key: 'currency') == null) {
     Constants.saveCurrencyId(currency: '1');
+  }
+  if (Constants.getDate(key: 'country') == null) {
+    Constants.saveCountryCode(country: 'Egypt');
   }
 
   SystemChrome.setPreferredOrientations(
