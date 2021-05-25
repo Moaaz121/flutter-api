@@ -37,6 +37,7 @@ class AuthRepo {
       String firstname,
       String lastname,
       String userType,
+      String country,
       String company) async {
     Map<String, dynamic> params = {
       "phone": phone,
@@ -48,6 +49,7 @@ class AuthRepo {
       "company": company,
       "website": '',
       "plan": '',
+      'country': country
     };
     var response = await http.post(
       Uri.encodeFull(APIS.serverURL + APIS.REGISTER_API),

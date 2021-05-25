@@ -9,6 +9,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   Stream<RegisterState> mapEventToState(
     RegisterEvent event,
   ) async* {
+    Map verId;
     if (event is DoRegisterEvent) {
       yield RegisterLoadingState();
 
@@ -19,6 +20,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
           event.firstname,
           event.lastname,
           event.userType,
+          event.country,
           event.company);
       yield RegisterLoadedState(userResponse: response);
     } else if (event is VerifyPhone) {

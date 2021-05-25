@@ -9,6 +9,7 @@ class DoRegisterEvent extends RegisterEvent {
   String firstname;
   String lastname;
   String userType;
+  String country;
   String company;
   DoRegisterEvent(
       {@required this.phone,
@@ -17,6 +18,7 @@ class DoRegisterEvent extends RegisterEvent {
       @required this.lastname,
       @required this.password,
       @required this.userType,
+      @required this.country,
       @required this.company});
 }
 
