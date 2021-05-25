@@ -139,7 +139,7 @@ class _IndividualProductState extends State<IndividualProduct>
                             // title: Text('product'),
                             // centerTitle: true,
                             background: Container(
-                                padding: EdgeInsets.only(top: 20),
+                                padding: EdgeInsets.only(top: 40),
                                 child: Column(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -244,7 +244,7 @@ class _IndividualProductState extends State<IndividualProduct>
                       // bottom: false,
                       SliverPersistentHeader(
                         pinned: true,
-                        floating: true,
+                        floating: false,
                         delegate: SliverPersistentHeaderDelegateImpl(
                           color: Colors.white,
                           tabBar: tabBar(),
@@ -257,7 +257,8 @@ class _IndividualProductState extends State<IndividualProduct>
                       color: Colors.white,
                       child: SingleChildScrollView(
                           padding: EdgeInsets.only(
-                              bottom: MediaQuery.of(context).size.height * 0.1),
+                              bottom: MediaQuery.of(context).size.height * 0.05,
+                              top: 10),
                           child: Column(
                             children: [
                               Container(
