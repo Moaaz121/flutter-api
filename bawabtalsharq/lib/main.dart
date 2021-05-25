@@ -6,6 +6,7 @@ import 'package:bawabtalsharq/Screens/home_screen.dart';
 import 'package:bawabtalsharq/Screens/individual_product_screen.dart';
 import 'package:bawabtalsharq/Screens/intro_screen.dart';
 import 'package:bawabtalsharq/Screens/login_screen.dart';
+import 'package:bawabtalsharq/Screens/forget_password/verification_OTP_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/faq/faq_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/history/history_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/message_center/message_center_screen.dart';
@@ -16,7 +17,6 @@ import 'package:bawabtalsharq/Screens/profile/privacy/privacy_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/saved/saved_screen.dart';
 import 'package:bawabtalsharq/Screens/request_for_qutation.dart';
 import 'package:bawabtalsharq/Screens/search/categories_filter_screen.dart';
-import 'package:bawabtalsharq/Screens/search/search_filter_screen.dart';
 import 'package:bawabtalsharq/Screens/search/search_result_screen.dart';
 import 'package:bawabtalsharq/Screens/search/search_screen.dart';
 import 'package:bawabtalsharq/Screens/settings_screen.dart';
@@ -64,7 +64,7 @@ void main() async {
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   runApp(
     DevicePreview(
-      enabled: false,
+      enabled: true,
       builder: (context) => BawabtAlsharqApp(),
     ),
   );
@@ -97,7 +97,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.deepOrange),
-      home: SplashScreen(),
+      home: VerificationScreen(),
       navigatorObservers: [AnalyticsService().getAnalyticsOberver()],
       routes: {
         ScreenRoutes.splashScreen: (_) => SplashScreen(),

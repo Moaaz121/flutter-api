@@ -1,11 +1,11 @@
+import 'package:bawabtalsharq/Model/search_quary.dart';
+
 abstract class SearchEvent {}
 
 class DoSearchEvent extends SearchEvent {
-  String q;
-  String page;
-  List<String> categories;
+  SearchQueryModel searchQueryModel;
 
-  DoSearchEvent(this.q, {this.page, this.categories});
+  DoSearchEvent(this.searchQueryModel);
 }
 
 class ResetState extends SearchEvent {}

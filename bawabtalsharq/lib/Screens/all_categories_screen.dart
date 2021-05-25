@@ -1,4 +1,5 @@
 import 'package:bawabtalsharq/Model/mainCategoryModel.dart';
+import 'package:bawabtalsharq/Model/search_quary.dart';
 import 'package:bawabtalsharq/Screens/search/search_result_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
@@ -240,7 +241,7 @@ class _AllCategoriesState extends State<AllCategories>
                           new MaterialPageRoute(
                             builder: (BuildContext context) => new SearchResult(
                               Categories: [subCategoryArr[index].categoryId],
-                              q: '',
+                              searchQuery: new SearchQueryModel(''),
                             ),
                           ));
                     },

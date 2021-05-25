@@ -1,25 +1,45 @@
 import 'dart:convert';
 
 import 'package:bawabtalsharq/Model/search_model.dart';
+import 'package:bawabtalsharq/Model/search_quary.dart';
 import 'package:bawabtalsharq/Utils/apis.dart';
-import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:http/http.dart' as http;
 
 class SearchRepo {
-  Future<SearchModel> getSearch(String q,
-      {String page, List<String> categories}) async {
+  Future<SearchModel> getSearch(SearchQueryModel searchQueryModel) async {
     Map<String, dynamic> params = {
-      "search_text": q,
+      "search_text": searchQueryModel.q,
     };
-    if (categories != null) {
-      params['categories'] = '[' + categories[0] + ']';
+    if (searchQueryModel.Categories != null) {
+      params['categories'] = '[' + searchQueryModel.Categories[0] + ']';
     }
-    if (page != null) {
-      params['page'] = page;
+    if (searchQueryModel.page != null) {
+      params['page'] = searchQueryModel.page;
     }
+    if (searchQueryModel.gender != null) {
+      params['gender'] = searchQueryModel.gender;
+    }
+    if (searchQueryModel.brand != null) {
+      params['brand'] = searchQueryModel.brand;
+    }
+    if (searchQueryModel.sizes != null) {
+      params['sizes'] = searchQueryModel.sizes;
+    }
+    if (searchQueryModel.colors != null) {
+      params['colors'] = searchQueryModel.colors;
+    }
+    if (searchQueryModel.sort != null) {
+      params['sort'] = searchQueryModel.sort;
+    }
+    if (searchQueryModel.sortBy != null) {
+      params['sort_by'] = searchQueryModel.sortBy;
+    }
+    if (searchQueryModel.countryCode != null) {
+      params['country_code'] = searchQueryModel.countryCode;
+    }
+
     var response = await http.post(
-      Uri.encodeFull(
-          APIS.serverURL + APIS.SEARCH_API),
+      Uri.encodeFull(APIS.serverURL + APIS.SEARCH_API),
       body: params,
     );
     print(response.body);

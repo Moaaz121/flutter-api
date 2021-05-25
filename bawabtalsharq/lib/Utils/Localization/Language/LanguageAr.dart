@@ -46,7 +46,7 @@ class LanguageAr extends Languages {
   String get bestRating => 'أفضل تصنيف';
   String get blueShoes => 'حذاء ازرق';
   String get highestPrice => 'اغلى سعر';
-  String get lowestPrice => 'أقل سعر';
+  String get lowestPrice => 'السعر';
   String get mostPop => 'الأكثر شهرة';
   String get newIn => 'الجديد';
   String get popularity => 'شعبية';

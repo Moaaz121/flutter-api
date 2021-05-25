@@ -3,8 +3,8 @@ import 'dart:convert';
 
 import 'package:bawabtalsharq/Model/user_model.dart';
 import 'package:bawabtalsharq/Utils/apis.dart';
-import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:bawabtalsharq/Services/AnalyticsService.dart';
 
@@ -37,6 +37,7 @@ class AuthRepo {
       String firstname,
       String lastname,
       String userType,
+      String country,
       String company) async {
     Map<String, dynamic> params = {
       "phone": phone,
@@ -48,6 +49,7 @@ class AuthRepo {
       "company": company,
       "website": '',
       "plan": '',
+      'country': country
     };
     var response = await http.post(
       Uri.encodeFull(APIS.serverURL + APIS.REGISTER_API),

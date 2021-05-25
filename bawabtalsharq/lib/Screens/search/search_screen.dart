@@ -1,9 +1,11 @@
 import 'package:bawabtalsharq/Model/mainCategoryModel.dart';
+import 'package:bawabtalsharq/Model/search_quary.dart';
 import 'package:bawabtalsharq/Screens/search/search_result_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/repo/category_repo.dart';
+import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -62,132 +64,162 @@ class _SearchScreenState extends State<SearchScreen> {
                 SizedBox(
                   height: height * .01,
                 ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(30, 0, 35, 0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Divider(
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsetsDirectional.only(start: 20),
+                      child: Divider(
                         thickness: .2,
                         endIndent: 10,
                         color: Colors.grey,
                       ),
-                      buildText((Languages.of(context).searchByCategories), 14,
-                          FontWeight.w600, Colors.black),
-                      SizedBox(
-                        height: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.only(start: 20),
+                      child: Text(
+                        Languages.of(context).searchByCategories,
+                        style: TextStyle(
+                          fontFamily: 'Segoe UI',
+                          fontSize: 13.0,
+                          color: Color(0xff303030),
+                          letterSpacing: 0.156,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                      Container(
-                        height: MediaQuery.of(context).size.height * 0.06,
-                        child: FutureBuilder(
-                            future: CategoryRepo.getCategory(),
-                            builder: (context, snapshot) {
-                              if (snapshot.hasData) {
-                                categories = snapshot.data;
-                                return ListView.builder(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 2, horizontal: 8),
-                                  physics: AlwaysScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: categories.length,
-                                  itemBuilder: (context, position) {
-                                    return Container(
-                                      padding: EdgeInsets.all(5),
-                                      margin: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 20, 0),
-                                      height: 42,
-                                      width: 42,
-                                      decoration: new BoxDecoration(
-                                        color: Color(0xffffffff),
-                                        borderRadius: BorderRadius.circular(10),
-                                        boxShadow: [
-                                          BoxShadow(
-                                              color: Color(0x29000000),
-                                              offset: Offset(0, 1),
-                                              blurRadius: 6,
-                                              spreadRadius: 0)
-                                        ],
-                                      ),
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          List<String> selectetList =
-                                              List<String>();
-                                          selectetList.add(
-                                              categories[position].categoryId);
-                                          Navigator.push(
-                                              context,
-                                              new MaterialPageRoute(
-                                                builder:
-                                                    (BuildContext context) =>
-                                                        new SearchResult(
-                                                            q: _searchController
-                                                                .text,
-                                                            Categories:
-                                                                selectetList),
-                                              ));
-                                        },
-                                        child: Image.asset(
-                                          categories[position].image,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(
+                      height: 55,
+                      child: FutureBuilder(
+                          future: CategoryRepo.getCategory(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              categories = snapshot.data;
+                              return ListView.builder(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 9, horizontal: 20),
+                                physics: const BouncingScrollPhysics(
+                                    parent: AlwaysScrollableScrollPhysics()),
+                                scrollDirection: Axis.horizontal,
+                                itemCount: categories.length,
+                                itemBuilder: (context, position) {
+                                  return Container(
+                                    width: 38.0,
+                                    height: 37.0,
+                                    padding: EdgeInsets.all(5),
+                                    margin: EdgeInsetsDirectional.fromSTEB(
+                                        0, 0, 10, 0),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.16),
+                                          offset: Offset(0, 1.0),
+                                          blurRadius: 6.0,
                                         ),
+                                      ],
+                                    ),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        List<String> selectetList =
+                                            List<String>();
+                                        selectetList.add(
+                                            categories[position].categoryId);
+                                        SearchQueryModel queryModel =
+                                            SearchQueryModel(
+                                                _searchController.text,
+                                                Categories: selectetList);
+                                        Navigator.push(
+                                            context,
+                                            new MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  new SearchResult(
+                                                searchQuery: queryModel,
+                                              ),
+                                            ));
+                                      },
+                                      child: Image.asset(
+                                        categories[position].image,
                                       ),
-                                    );
-                                  },
-                                );
-                              } else {
-                                return Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              }
-                            }),
-                      ),
-                      Divider(
+                                    ),
+                                  );
+                                },
+                              );
+                            } else {
+                              return Center(
+                                child: progressBar(),
+                              );
+                            }
+                          }),
+                    ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.only(start: 20),
+                      child: Divider(
                         thickness: .2,
                         endIndent: 10,
                         color: Colors.grey,
                       ),
-                      SizedBox(
-                        height: 10,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.only(start: 20),
+                      child: Text(
+                        Languages.of(context).resentSearch,
+                        style: TextStyle(
+                          fontFamily: 'Segoe UI',
+                          fontSize: 13.0,
+                          color: Color(0xff303030),
+                          letterSpacing: 0.156,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                      buildText((Languages.of(context).resentSearch), 14,
-                          FontWeight.w600, Colors.black),
-                      SizedBox(
-                        height: 7,
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
                 Expanded(
                   child: ListView.builder(
-                    physics: AlwaysScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    reverse: false,
+                    physics: const BouncingScrollPhysics(
+                        parent: AlwaysScrollableScrollPhysics()),
                     scrollDirection: Axis.vertical,
+                    padding: EdgeInsets.symmetric(vertical: 12),
                     itemCount: 33,
                     itemBuilder: (context, position) {
-                      return Container(
-                        margin:
-                            EdgeInsets.only(bottom: 15, right: 30, left: 30),
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 12, horizontal: 20),
                         child: Row(
                           children: [
                             Expanded(
-                                child: buildText(
-                              'handmade crafts',
-                              13,
-                              FontWeight.w400,
-                              Color(0xff646464),
-                            )),
-                            CircleAvatar(
-                              radius: 6,
-                              backgroundColor: orangeColor,
-                              child: Icon(
-                                Icons.close,
-                                size: 12,
-                                color: Colors.white,
+                              child: Text(
+                                'handmade crafts',
+                                style: TextStyle(
+                                  fontFamily: 'Segoe UI',
+                                  fontSize: 14.0,
+                                  color: Color(0xff646464),
+                                  letterSpacing: 0.168,
+                                ),
                               ),
                             ),
                             SizedBox(
-                              width: 20,
+                              width: 15,
+                              height: 15,
+                              child: CircleAvatar(
+                                radius: 6,
+                                backgroundColor: orangeColor,
+                                child: Center(
+                                  child: Icon(
+                                    Icons.close,
+                                    size: 12,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -223,34 +255,48 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Widget buildTextField({String hint, BuildContext context}) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.7,
-      height: MediaQuery.of(context).size.width * 0.09,
+      width: MediaQuery.of(context).size.width * 0.75,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(11), color: Colors.grey[100]),
       child: Center(
-        child: TextField(
-          onSubmitted: (value) {
-            Navigator.push(
-                context,
-                new MaterialPageRoute(
-                  builder: (BuildContext context) => new SearchResult(
-                    q: _searchController.text,
-                  ),
-                ));
-          },
-          keyboardType: TextInputType.text,
-          autocorrect: true,
-          controller: _searchController,
-          cursorRadius: Radius.circular(50),
-          decoration: InputDecoration(
-            fillColor: Colors.transparent,
-            focusedBorder: InputBorder.none,
-            enabledBorder: InputBorder.none,
-            errorBorder: InputBorder.none,
-            disabledBorder: InputBorder.none,
-            hintText: hint,
-            hintStyle: TextStyle(color: Colors.black12),
-            filled: true,
+        child: SizedBox(
+          height: 35,
+          child: TextField(
+            onSubmitted: (value) {
+              Navigator.push(
+                  context,
+                  new MaterialPageRoute(
+                    builder: (BuildContext context) => new SearchResult(
+                      searchQuery: new SearchQueryModel(_searchController.text),
+                    ),
+                  ));
+            },
+            keyboardType: TextInputType.text,
+            autocorrect: true,
+            maxLines: 1,
+            textAlign: TextAlign.start,
+            controller: _searchController,
+            cursorRadius: Radius.circular(50),
+            cursorColor: orangeColor,
+            decoration: InputDecoration(
+              fillColor: Colors.transparent,
+              focusedBorder: InputBorder.none,
+              enabledBorder: InputBorder.none,
+              contentPadding: EdgeInsets.only(
+                left: 16,
+                right: 16,
+                bottom: 10, // HERE THE IMPORTANT PART
+              ),
+              errorBorder: InputBorder.none,
+              disabledBorder: InputBorder.none,
+              hintText: hint,
+              hintStyle: TextStyle(
+                fontFamily: 'Segoe UI',
+                fontSize: 13.0,
+                color: const Color(0xFFB7B7B7).withOpacity(0.5),
+              ),
+              filled: true,
+            ),
           ),
         ),
       ),

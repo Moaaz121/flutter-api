@@ -3,10 +3,10 @@ import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/notificationsBloc/notifications_bloc.dart';
-import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NotificationScreen extends StatefulWidget {
   @override
@@ -41,11 +41,23 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       children: [
                         Container(
                           margin: EdgeInsetsDirectional.only(start: 15),
-                          child: buildText(
+                          child: Text(
                             Languages.of(context).notification,
-                            35.0,
-                            fontWeight: FontWeight.bold,
-                            color: orangeColor,
+                            style: TextStyle(
+                              fontFamily: 'Segoe UI',
+                              fontSize: 29.0,
+                              color: orangeColor,
+                              letterSpacing: 0.34800000000000003,
+                              fontWeight: FontWeight.w700,
+                              shadows: [
+                                Shadow(
+                                  color:
+                                      const Color(0xFF7D7D7D).withOpacity(0.16),
+                                  offset: Offset(0, 3.0),
+                                  blurRadius: 6.0,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         notification(context),
@@ -55,13 +67,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
               Positioned.directional(
                 textDirection: Directionality.of(context),
                 end: 20,
-                bottom: MediaQuery.of(context).size.height * 0.13,
-                child: buildFloatingActionBtn(
-                  icon: Icons.arrow_upward,
-                  onPressed: () {
-                    _mainScrollController.animateTo(0.0,
-                        duration: Duration(seconds: 1), curve: Curves.easeOut);
-                  },
+                bottom: MediaQuery.of(context).size.height * 0.16,
+                child: FloatingActionButton(
+                  mini: true,
+                  child: Icon(
+                    Icons.arrow_upward,
+                    color: defaultOrangeColor,
+                  ),
+                  backgroundColor: Colors.white,
                 ),
               ),
             ],
@@ -89,13 +102,19 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 itemCount: snapshot.messageResponse.data.length,
                 itemBuilder: (context, position) {
                   return Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: [makeShadow()],
-                      color: Colors.white,
-                    ),
                     margin: EdgeInsetsDirectional.only(
                         top: 10, start: 14, end: 14, bottom: 10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20.0),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: orangeColor.withOpacity(0.1),
+                          offset: Offset(0, 1.0),
+                          blurRadius: 5.0,
+                        ),
+                      ],
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: notificationItems(
@@ -131,12 +150,25 @@ class _NotificationScreenState extends State<NotificationScreen> {
               child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              buildText(
+              Text(
                 datum.title,
-                14,
-                fontWeight: FontWeight.w500,
+                style: TextStyle(
+                  fontFamily: 'Segoe UI',
+                  fontSize: 13.0,
+                  color: Color(0xff303030),
+                  letterSpacing: 0.14400000000000002,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
-              Html(data: datum.message),
+              Html(
+                  data: datum.message,
+                  onLinkTap: (link) {
+                    if (canLaunch(link) != null) {
+                      launch(link);
+                    } else {
+                      throw "Could not launch $link";
+                    }
+                  }),
             ],
           )),
           datum.actionUrl.isNotEmpty

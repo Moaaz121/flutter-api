@@ -47,7 +47,7 @@ class LanguageEn extends Languages {
   String get bestRating => 'Best Rating';
   String get blueShoes => 'Blue Shoes';
   String get highestPrice => 'Highest Price';
-  String get lowestPrice => 'Lowest Price';
+  String get lowestPrice => 'Price';
   String get mostPop => 'Most Popular';
   String get newIn => 'New In';
   String get popularity => 'Popularity';
