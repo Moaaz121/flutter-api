@@ -72,6 +72,8 @@ class LanguageEn extends Languages {
   String get currency1 => '\$';
   String get egp => 'EGP';
   String get usd => 'USD';
+  String get noNetwork => 'No Internet Connection';
+  String get noItem => 'No Saved Item';
 
 // end Bahaa
 

@@ -276,9 +276,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           textSize: 12,
                                         );
                                       } else if (state is SettingLoadingState) {
-                                        return CircularProgressIndicator();
+                                        return progressBar();
                                       } else {
-                                        return CircularProgressIndicator();
+                                        return progressBar();
                                       }
                                     },
                                   ),
