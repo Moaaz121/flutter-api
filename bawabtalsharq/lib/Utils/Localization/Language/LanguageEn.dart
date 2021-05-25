@@ -47,7 +47,7 @@ class LanguageEn extends Languages {
   String get bestRating => 'Best Rating';
   String get blueShoes => 'Blue Shoes';
   String get highestPrice => 'Highest Price';
-  String get lowestPrice => 'Lowest Price';
+  String get lowestPrice => 'Price';
   String get mostPop => 'Most Popular';
   String get newIn => 'New In';
   String get popularity => 'Popularity';
@@ -157,6 +157,8 @@ class LanguageEn extends Languages {
   String get help => 'Help';
   String get main => 'Main';
   String get lan => 'English';
+  String get year => 'YRS';
+  String get overView => 'OverView';
 
 // end Mosdik
 
@@ -221,7 +223,7 @@ class LanguageEn extends Languages {
 
   String get shippingMethod => ' Shipping Method';
 
-  String get sourcingPurpose => ' sourcingPurpose ';
+  String get sourcingPurpose => ' Sourcing purpose ';
 
   String get supplierCapability => 'Supplier Capability';
 

@@ -34,76 +34,20 @@ class Plan {
   String packageId;
   String packageName;
   String packagePrice;
-  String postProducts;
-  String mainCategory;
-  String superiorSuplayer;
-  String adminAccount;
-  String minisiteCreation;
-  String requestForQuotation;
-  String recommendationProducts;
-  String productReport;
-  String exportManager;
-  String accountManager;
-  String websiteAds;
-  String mobileAppAds;
-  String liveChat;
-  String videoChat;
-  String audioChat;
-  String socialMediaCampagin;
-  String hostingAndCreationWebsite;
-  String officialEmail;
-  String onlineSupport;
-  String onlandVerification;
+  List<Details> details;
 
-  Plan(
-      {this.packageId,
-      this.packageName,
-      this.packagePrice,
-      this.postProducts,
-      this.mainCategory,
-      this.superiorSuplayer,
-      this.adminAccount,
-      this.minisiteCreation,
-      this.requestForQuotation,
-      this.recommendationProducts,
-      this.productReport,
-      this.exportManager,
-      this.accountManager,
-      this.websiteAds,
-      this.mobileAppAds,
-      this.liveChat,
-      this.videoChat,
-      this.audioChat,
-      this.socialMediaCampagin,
-      this.hostingAndCreationWebsite,
-      this.officialEmail,
-      this.onlineSupport,
-      this.onlandVerification});
+  Plan({this.packageId, this.packageName, this.packagePrice, this.details});
 
   Plan.fromJson(Map<String, dynamic> json) {
     packageId = json['package_id'];
     packageName = json['package_name'];
     packagePrice = json['package_price'];
-    postProducts = json['Post_products'];
-    mainCategory = json['Main_Category'];
-    superiorSuplayer = json['Superior_Suplayer'];
-    adminAccount = json['Admin_Account'];
-    minisiteCreation = json['Minisite_Creation'];
-    requestForQuotation = json['Request_For_Quotation'];
-    recommendationProducts = json['Recommendation_Products'];
-    productReport = json['Product_Report'];
-    exportManager = json['Export_Manager'];
-    accountManager = json['Account_Manager'];
-    websiteAds = json['Website_Ads'];
-    mobileAppAds = json['Mobile_App_Ads'];
-    liveChat = json['Live_Chat'];
-    videoChat = json['Video_Chat'];
-    audioChat = json['Audio_Chat'];
-    socialMediaCampagin = json['Social_Media_Campagin'];
-    hostingAndCreationWebsite = json['Hosting_and_Creation_Website'];
-    officialEmail = json['Official_Email'];
-    onlineSupport = json['Online_support'];
-    onlandVerification = json['Onland_Verification'];
+    if (json['details'] != null) {
+      details = new List<Details>();
+      json['details'].forEach((v) {
+        details.add(new Details.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -111,26 +55,28 @@ class Plan {
     data['package_id'] = this.packageId;
     data['package_name'] = this.packageName;
     data['package_price'] = this.packagePrice;
-    data['Post_products'] = this.postProducts;
-    data['Main_Category'] = this.mainCategory;
-    data['Superior_Suplayer'] = this.superiorSuplayer;
-    data['Admin_Account'] = this.adminAccount;
-    data['Minisite_Creation'] = this.minisiteCreation;
-    data['Request_For_Quotation'] = this.requestForQuotation;
-    data['Recommendation_Products'] = this.recommendationProducts;
-    data['Product_Report'] = this.productReport;
-    data['Export_Manager'] = this.exportManager;
-    data['Account_Manager'] = this.accountManager;
-    data['Website_Ads'] = this.websiteAds;
-    data['Mobile_App_Ads'] = this.mobileAppAds;
-    data['Live_Chat'] = this.liveChat;
-    data['Video_Chat'] = this.videoChat;
-    data['Audio_Chat'] = this.audioChat;
-    data['Social_Media_Campagin'] = this.socialMediaCampagin;
-    data['Hosting_and_Creation_Website'] = this.hostingAndCreationWebsite;
-    data['Official_Email'] = this.officialEmail;
-    data['Online_support'] = this.onlineSupport;
-    data['Onland_Verification'] = this.onlandVerification;
+    if (this.details != null) {
+      data['details'] = this.details.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class Details {
+  String attributeName;
+  String attributeValue;
+
+  Details({this.attributeName, this.attributeValue});
+
+  Details.fromJson(Map<String, dynamic> json) {
+    attributeName = json['attribute_name'];
+    attributeValue = json['attribute_value'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['attribute_name'] = this.attributeName;
+    data['attribute_value'] = this.attributeValue;
     return data;
   }
 }

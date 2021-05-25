@@ -1,4 +1,5 @@
 import 'package:bawabtalsharq/Model/mainCategoryModel.dart';
+import 'package:bawabtalsharq/Model/search_quary.dart';
 import 'package:bawabtalsharq/Screens/search/search_result_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
@@ -128,13 +129,17 @@ class _SearchScreenState extends State<SearchScreen> {
                                             List<String>();
                                         selectetList.add(
                                             categories[position].categoryId);
+                                        SearchQueryModel queryModel =
+                                            SearchQueryModel(
+                                                _searchController.text,
+                                                Categories: selectetList);
                                         Navigator.push(
                                             context,
                                             new MaterialPageRoute(
                                               builder: (BuildContext context) =>
                                                   new SearchResult(
-                                                      q: _searchController.text,
-                                                      Categories: selectetList),
+                                                searchQuery: queryModel,
+                                              ),
                                             ));
                                       },
                                       child: Image.asset(
@@ -262,7 +267,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   context,
                   new MaterialPageRoute(
                     builder: (BuildContext context) => new SearchResult(
-                      q: _searchController.text,
+                      searchQuery: new SearchQueryModel(_searchController.text),
                     ),
                   ));
             },

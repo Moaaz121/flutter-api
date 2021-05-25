@@ -17,7 +17,9 @@ class GoldenSuppliers extends StatefulWidget {
 class _GoldenSuppliersState extends State<GoldenSuppliers> {
   GoldenBloc _goldenBloc;
   bool isLoading = false;
+  bool isLoaded = false;
   List<Suppliers> suppliers;
+  String errorMessage = '';
 
   @override
   void initState() {
@@ -41,19 +43,27 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
           bloc: _goldenBloc,
           builder: (context, state) {
             if (state is GoldenLoadingState) {
-              showLoadingDialog(context);
+              if (!isLoading) {
+                isLoading = true;
+                return Container(
+                  color: Colors.white,
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              }
             } else if (state is GoldenLoadedState) {
               suppliers = state.suppliers;
               isLoading = true;
-              _goldenBloc.add(ResetState());
-              Navigator.pop(context);
+              isLoaded = true;
+            } else if (state is GoldenErrorState) {
+              errorMessage = 'No Internet Connection';
             }
             return isLoading
                 ? ListView.builder(
                     padding: EdgeInsets.only(
-                      top: 60,
+                      top: 20,
                       left: 11,
-                      bottom: 33,
                     ),
                     physics: AlwaysScrollableScrollPhysics(),
                     shrinkWrap: true,
@@ -64,8 +74,7 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 20),
                           child: Container(
-                            margin: EdgeInsets.only(
-                                left: 12, right: 23, bottom: 15),
+                            margin: EdgeInsets.only(left: 12, right: 12),
                             // width: 333,
                             height: 190,
                             decoration: new BoxDecoration(
@@ -105,7 +114,7 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
                         ),
                       ]);
                     })
-                : Container();
+                : Center(child: Text(errorMessage));
           },
         ));
   }
@@ -119,22 +128,34 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          imagesProduct(
-              products[0].product, products[0].category, products[0].imagePath),
-          imagesProduct(
-              products[1].product, products[1].category, products[1].imagePath),
-          imagesProduct(
-              products[2].product, products[2].category, products[2].imagePath),
+          products.isNotEmpty
+              ? imagesProduct(
+                  text: products[0].product,
+                  subText: products[0].category,
+                  imagePath: products[0].imagePath)
+              : imagesProduct(isEmpty: true),
+          products.isNotEmpty
+              ? imagesProduct(
+                  text: products[1].product,
+                  subText: products[1].category,
+                  imagePath: products[1].imagePath)
+              : imagesProduct(isEmpty: true),
+          products.isNotEmpty
+              ? imagesProduct(
+                  text: products[2].product,
+                  subText: products[2].category,
+                  imagePath: products[2].imagePath)
+              : imagesProduct(isEmpty: true),
         ],
       ),
     );
   }
 
   Column imagesProduct(
-    String text,
-    String subText,
-    String imagePath,
-  ) {
+      {String text = '',
+      String subText = '',
+      String imagePath = '',
+      bool isEmpty = false}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       // mainAxisAlignment: MainAxisAlignment.start,
@@ -142,7 +163,7 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
         ClipRRect(
           borderRadius: BorderRadius.circular(20),
           child: Image(
-            image: NetworkImage(imagePath),
+            image: isEmpty ? AssetImage(logo) : NetworkImage(imagePath),
             width: 85,
             height: 70,
           ),
@@ -173,7 +194,7 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
     return Padding(
       padding: const EdgeInsetsDirectional.only(
         end: 11,
-        start: 90,
+        start: 95,
       ),
       child: Row(
         children: [
@@ -194,19 +215,20 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
 
   Padding firstRow({@required String supplierName}) {
     return Padding(
-      padding: const EdgeInsetsDirectional.only(top: 4, start: 90, end: 11),
+      padding: const EdgeInsetsDirectional.only(top: 4, start: 95, end: 11),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
             children: [
-              buildText(
-                supplierName,
-                15,
-                fontWeight: FontWeight.w700,
-              ),
               SizedBox(
-                width: 5,
+                width: 75,
+                child: buildText(
+                  supplierName,
+                  15,
+                  maxLine: 1,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
               Image(
                 image: AssetImage(medalImage),

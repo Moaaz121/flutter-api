@@ -1,16 +1,16 @@
+import 'package:bawabtalsharq/Model/user_model.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
-import 'package:bawabtalsharq/widgets/widgets.dart';
+import 'package:bawabtalsharq/Utils/constants.dart';
+import 'package:bawabtalsharq/Utils/validator_util.dart';
 import 'package:bawabtalsharq/bloc/updateProfileBlocs/changePassword/change_password_bloc.dart';
 import 'package:bawabtalsharq/bloc/updateProfileBlocs/changePassword/change_password_event.dart';
 import 'package:bawabtalsharq/bloc/updateProfileBlocs/changePassword/change_password_state.dart';
-import 'package:bawabtalsharq/Utils/validator_util.dart';
-import 'package:bawabtalsharq/Utils/constants.dart';
-import 'package:bawabtalsharq/Model/user_model.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bawabtalsharq/main.dart';
+import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ChangePassword extends StatefulWidget {
   @override
@@ -86,21 +86,24 @@ class _ChangePasswordState extends State<ChangePassword> {
                   SizedBox(
                     height: 20,
                   ),
-                  textFiledPrice(context, Languages.of(context).oldPassword, 1,
+                  textFiledPrice(context, Languages.of(context).oldPassword,
+                      width: 1,
                       isPassword: true,
                       controller: oldPasswordController,
                       errorMessage: oldPasswordError),
                   SizedBox(
                     height: 20,
                   ),
-                  textFiledPrice(context, Languages.of(context).newPassword, 1,
+                  textFiledPrice(context, Languages.of(context).newPassword,
+                      width: 1,
                       isPassword: true,
                       controller: newPasswordController,
                       errorMessage: newPasswordError),
                   SizedBox(
                     height: 20,
                   ),
-                  textFiledPrice(context, Languages.of(context).confirmPass, 1,
+                  textFiledPrice(context, Languages.of(context).confirmPass,
+                      width: 1,
                       isPassword: true,
                       controller: confirmPasswordController,
                       errorMessage: confirmPasswordError),

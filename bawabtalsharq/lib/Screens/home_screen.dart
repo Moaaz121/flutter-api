@@ -1030,9 +1030,9 @@ Widget mostPopularCateg(
                               : AlignmentDirectional.centerStart),
                       children: [
                         PositionedDirectional(
-                          top: -50,
-                          start: position == 2 ? -50 : null,
-                          end: position == 0 ? -50 : null,
+                          top: -40,
+                          start: position == 2 ? -40 : null,
+                          end: position == 0 ? -40 : null,
                           child: SizedBox(
                               height: 115,
                               width: 115,

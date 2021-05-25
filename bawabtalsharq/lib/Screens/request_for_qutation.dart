@@ -134,25 +134,25 @@ class _RequestforqutationState extends State<Requestforqutation> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           buildColumnText(context,
-              text: Languages.of(context).productName,
+              text: Languages.of(context).productName + ' *',
               inputText: Languages.of(context).inputProduct,
               maxLines: 1,
               controller: productNameCtrl),
 
           buildColumnDrop(context,
-              text: Languages.of(context).categoryName,
+              text: Languages.of(context).categoryName + ' *',
               dropText: Languages.of(context).dropCategory,
               dropList: categoryList),
 
           buildColumnDrop(context,
-              text: Languages.of(context).sourcingPurpose,
+              text: Languages.of(context).sourcingPurpose + ' *',
               dropText: Languages.of(context).dropSourcing,
               dropList: purposeList),
 
           buildColumnText(context,
               text: Languages.of(context).quantity,
               inputText: '000000000',
-              margin: 60,
+              // margin: 60,
               controller: quantityCrtl),
 
           Center(
@@ -188,13 +188,13 @@ class _RequestforqutationState extends State<Requestforqutation> {
           ),
 
           buildColumnDrop(context,
-              text: Languages.of(context).tradeTerms,
+              text: Languages.of(context).tradeTerms + ' *',
               dropText: Languages.of(context).dropTrade,
               dropList: tradeTermList),
 
           // <----start Details---->
           buildColumnText(context,
-              text: Languages.of(context).details,
+              text: Languages.of(context).details + ' *',
               inputText: Languages.of(context).inputDetails,
               height: 0.3,
               minLines: 1,
@@ -294,11 +294,11 @@ class _RequestforqutationState extends State<Requestforqutation> {
                   ),
                 ),
                 buildColumnDrop(context,
-                    text: Languages.of(context).certifications,
+                    text: Languages.of(context).certifications + ' *',
                     dropText: Languages.of(context).dropCertificate,
                     dropList: certList),
                 buildColumnText(context,
-                    text: Languages.of(context).requirements,
+                    text: Languages.of(context).requirements + ' *',
                     inputText: Languages.of(context).inputRequire,
                     height: 0.3,
                     controller: otherReqCtrl),
@@ -325,24 +325,24 @@ class _RequestforqutationState extends State<Requestforqutation> {
                   ),
                 ),
                 buildColumnDrop(context,
-                    text: Languages.of(context).shippingMethod,
+                    text: Languages.of(context).shippingMethod + ' *',
                     dropText: Languages.of(context).dropShipping,
                     dropList: shippingMethodList),
                 buildColumnDrop(context,
-                    text: Languages.of(context).destination,
+                    text: Languages.of(context).destination + ' *',
                     dropText: Languages.of(context).dropDestination,
                     dropList: destinationList),
                 buildColumnText(context,
-                    text: Languages.of(context).port,
+                    text: Languages.of(context).port + ' *',
                     inputText: Languages.of(context).port,
                     controller: portCtrl),
                 buildColumnText(context,
-                    text: Languages.of(context).leadTime,
+                    text: Languages.of(context).leadTime + ' *',
                     inputText: '000000000',
-                    margin: 60,
+                    // margin: 60,
                     controller: leadTimeForInCtrl),
                 buildColumnText(context,
-                    text: Languages.of(context).paymentTerm,
+                    text: Languages.of(context).paymentTerm + ' *',
                     inputText: Languages.of(context).paymentTerm,
                     controller: paymentTermCtrl),
                 buildCheckbox(1, text: Languages.of(context).check1),
@@ -369,11 +369,21 @@ class _RequestforqutationState extends State<Requestforqutation> {
                           onPressed: () {
                             if (productNameCtrl.text.isEmpty ||
                                 quantityCrtl.text.isEmpty ||
-                                data['category_id'] == null) {
+                                detailsCrtl.text.isEmpty ||
+                                otherReqCtrl.text.isEmpty ||
+                                portCtrl.text.isEmpty ||
+                                leadTimeForInCtrl.text.isEmpty ||
+                                paymentTermCtrl.text.isEmpty ||
+                                data['category_id'] == null ||
+                                data['sourcing'] == null ||
+                                data['tradeTerms'] == null ||
+                                data['certificates'] == null ||
+                                data['Shipping'] == null ||
+                                data['Destination'] == null) {
                               _scaffoldKey.currentState.showSnackBar(
                                 new SnackBar(
                                   content: new Text(
-                                      'Please make sure that the product name, quantity and the catergory are filled'),
+                                      'Please make sure that all the required fields are filled'),
                                   action: SnackBarAction(
                                     label: 'continue',
                                     onPressed: () {
@@ -387,6 +397,10 @@ class _RequestforqutationState extends State<Requestforqutation> {
                               data['qty'] = quantityCrtl.text.trim();
                               data['product'] = productNameCtrl.text.trim();
                               data['details'] = detailsCrtl.text.trim();
+                              data['otherReq'] = otherReqCtrl.text.trim();
+                              data['port'] = portCtrl.text.trim();
+                              data['leadTime'] = leadTimeForInCtrl.text.trim();
+                              data['paymentTerm'] = quantityCrtl.text.trim();
                               _quotationBloc.add(GetReqQuotation(data: data));
                             }
                           },
@@ -470,13 +484,20 @@ class _RequestforqutationState extends State<Requestforqutation> {
                     if (dropText == 'Select category') {
                       key = 'category_id';
                       data[key] = categoryIdList[categoryList.indexOf(val)];
-                    }
-                    if (dropText == 'Sourcing purpose') {
+                    } else if (dropText == 'Sourcing purpose') {
                       key = 'sourcing';
                       data[key] = val;
-                    }
-                    if (dropText == 'FCA') {
-                      key = 'trade';
+                    } else if (dropText == 'FCA') {
+                      key = 'tradeTerms';
+                      data[key] = val;
+                    } else if (dropText == 'Select certificates') {
+                      key = 'certificates';
+                      data[key] = val;
+                    } else if (dropText == 'Shipping') {
+                      key = 'Shipping';
+                      data[key] = val;
+                    } else if (dropText == 'Select Destination') {
+                      key = 'Destination';
                       data[key] = val;
                     }
                   },
@@ -497,6 +518,8 @@ class _RequestforqutationState extends State<Requestforqutation> {
       int minLines,
       int maxLines,
       TextEditingController controller}) {
+    print(controller.text.trim());
+
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(18, 20, 18, 18),
       child: Column(

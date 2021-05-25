@@ -1,4 +1,5 @@
 import 'package:bawabtalsharq/Model/mainCategoryModel.dart';
+import 'package:bawabtalsharq/Model/search_quary.dart';
 import 'package:bawabtalsharq/Screens/search/search_result_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
@@ -6,7 +7,6 @@ import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/categoryBloc/category_bloc.dart';
 import 'package:bawabtalsharq/bloc/categoryBloc/category_event.dart';
 import 'package:bawabtalsharq/bloc/categoryBloc/category_state.dart';
-import 'package:bawabtalsharq/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -225,7 +225,7 @@ class _AllCategoriesState extends State<AllCategories>
                           new MaterialPageRoute(
                             builder: (BuildContext context) => new SearchResult(
                               Categories: [subCategoryArr[index].categoryId],
-                              q: '',
+                              searchQuery: new SearchQueryModel(''),
                             ),
                           ));
                     },

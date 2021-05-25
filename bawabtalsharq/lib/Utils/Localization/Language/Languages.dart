@@ -150,6 +150,8 @@ abstract class Languages {
   String get help;
   String get main;
   String get lan;
+  String get year;
+  String get overView;
 
 // end Mosdik
 

@@ -59,10 +59,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     signInFlatButton(
-                        context, height, Languages.of(context).send, () {
-                      Navigator.pushReplacementNamed(
-                          context, ScreenRoutes.verificationPassword);
-                    }),
+                        context, height, Languages.of(context).send, () {}),
                   ],
                 ),
               ],

@@ -15,8 +15,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   ) async* {
     if (event is DoSearchEvent) {
       yield SearchLoadingState();
-      var response = await SearchRepo()
-          .getSearch(event.q, categories: event.categories, page: event.page);
+      var response = await SearchRepo().getSearch(event.searchQueryModel);
 
       yield SearchLoadedState(searchResponse: response);
     } else if (event is ResetState) {

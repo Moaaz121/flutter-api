@@ -578,7 +578,7 @@ Widget sliderIndicator(int page, {bool noPadding = false, int count = 4}) {
   );
 }
 
-Widget progressBar(){
+Widget progressBar() {
   return CircularProgressIndicator(
     strokeWidth: 1.5,
     valueColor: new AlwaysStoppedAnimation<Color>(orangeColor),
@@ -672,12 +672,14 @@ Text buildText(String text, double fontSize,
     textAlign = TextAlign.start,
     fontWeight = FontWeight.normal,
     fontStyle = FontStyle.normal,
+    int maxLine,
     String fontFamily,
     TextDecoration textDecoration = TextDecoration.none,
     Color decorationColor}) {
   return Text(
     text,
     textAlign: textAlign,
+    maxLines: maxLine,
     style: TextStyle(
       decoration: textDecoration,
       decorationColor: decorationColor,
@@ -938,8 +940,7 @@ Widget productItem(BuildContext context,
       overflow: Overflow.visible,
       children: [
         Container(
-          height: MediaQuery.of(context).size.height * 0.22,
-          width: MediaQuery.of(context).size.width * 0.45,
+          height: (MediaQuery.of(context).size.width / 2) - 35 * 1.36,
           decoration: BoxDecoration(
               boxShadow: [makeShadow()],
               borderRadius: BorderRadius.circular(20),
@@ -964,22 +965,33 @@ Widget productItem(BuildContext context,
                             maxLines: 3,
                             text: TextSpan(
                                 style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                  fontSize: 12,
+                                  fontFamily: 'Segoe UI',
+                                  fontSize: 10.0,
+                                  color: Color(0xff303030),
+                                  letterSpacing: 0.12,
+                                  fontWeight: FontWeight.w700,
+                                  shadows: [
+                                    Shadow(
+                                      color: Colors.black.withOpacity(0.16),
+                                      offset: Offset(0, 1.0),
+                                      blurRadius: 6.0,
+                                    ),
+                                  ],
                                 ),
                                 text: product.product),
                           ),
                           SizedBox(
-                            height: 2,
+                            height: 5,
                           ),
                           RichText(
                             maxLines: 2,
                             text: TextSpan(
                                 style: TextStyle(
-                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Segoe UI',
+                                  fontSize: 10.0,
                                   color: orangeColor,
-                                  fontSize: 12,
+                                  letterSpacing: 0.108,
+                                  fontWeight: FontWeight.w600,
                                 ),
                                 text: '${product.price} L.E'),
                           ),
@@ -987,19 +999,13 @@ Widget productItem(BuildContext context,
                       ),
                     ),
                   ),
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.13,
-                    width: MediaQuery.of(context).size.width * 0.20,
-                    decoration: BoxDecoration(
-                      color: Color(0xfffff2e5),
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: LanguageHelper.isEnglish
-                            ? Radius.circular(80)
-                            : Radius.circular(0),
-                        bottomRight: LanguageHelper.isEnglish
-                            ? Radius.circular(0)
-                            : Radius.circular(80),
-                      ),
+                  Expanded(
+                    child: Container(
+                      height: MediaQuery.of(context).size.width * 0.22,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage(searchShadow),
+                              fit: BoxFit.fill)),
                     ),
                   ),
                 ],
@@ -1019,8 +1025,8 @@ Widget productItem(BuildContext context,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
-                      width: 28,
-                      height: 28,
+                      width: 17,
+                      height: 17,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
@@ -1035,15 +1041,17 @@ Widget productItem(BuildContext context,
                     Flexible(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           RichText(
                             maxLines: 1,
                             text: TextSpan(
                                 style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 9,
-                                    fontWeight: FontWeight.bold),
+                                  fontFamily: 'Segoe UI',
+                                  fontSize: 9.0,
+                                  color: Color(0xff303030),
+                                  letterSpacing: 0.084,
+                                ),
                                 text: product.company),
                           ),
                           SizedBox(
@@ -1053,8 +1061,11 @@ Widget productItem(BuildContext context,
                             maxLines: 1,
                             text: TextSpan(
                                 style: TextStyle(
-                                  color: Colors.grey[400],
-                                  fontSize: 9,
+                                  fontFamily: 'Segoe UI',
+                                  fontSize: 9.0,
+                                  color: Color(0xff303030),
+                                  letterSpacing: 0.084,
+                                  fontWeight: FontWeight.w600,
                                 ),
                                 text: product.shortDescription),
                           ),
@@ -1082,13 +1093,14 @@ Widget productItem(BuildContext context,
           ),
         ),
         Positioned(
-          top: -5,
-          right: LanguageHelper.isEnglish ? 0 : null,
-          left: LanguageHelper.isEnglish ? null : 0,
+          top: -10,
+          right: LanguageHelper.isEnglish ? -10 : null,
+          left: LanguageHelper.isEnglish ? null : -10,
           child: Image.network(
             product.imagePath,
-            width: MediaQuery.of(context).size.width * 0.15,
-            height: MediaQuery.of(context).size.height * 0.13,
+            width: MediaQuery.of(context).size.width * 0.1,
+            height: MediaQuery.of(context).size.height * 0.1,
+            fit: BoxFit.cover,
           ),
         ),
       ],
@@ -1559,10 +1571,12 @@ Widget infoCartSupplier(
   );
 }
 
-Widget textFiledPrice(BuildContext context, String text, double width,
-    {IconButton dropIcon,
+Widget textFiledPrice(BuildContext context, String text,
+    {double width = 1,
+    IconButton dropIcon,
     TextEditingController controller,
     bool isPassword = false,
+    errorText,
     String errorMessage,
     TextInputType keyboardType = TextInputType.text}) {
   return SizedBox(
@@ -1577,7 +1591,8 @@ Widget textFiledPrice(BuildContext context, String text, double width,
         suffixIcon: dropIcon,
         labelText: text,
         labelStyle: TextStyle(
-            fontFamily: 'Roboto-Thin.ttf', fontWeight: FontWeight.w200),
+          fontSize: 12,
+        ),
         focusedBorder:
             UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
       ),
@@ -1814,7 +1829,8 @@ Widget customTextField(BuildContext context,
           suffixIcon: rightBtn,
           labelText: label,
           labelStyle: TextStyle(
-              fontFamily: 'Roboto-Thin.ttf', fontWeight: FontWeight.w200),
+            fontSize: 12,
+          ),
           focusedBorder:
               UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey))),
     ),
@@ -1851,3 +1867,7 @@ FlatButton signInFlatButton(
 }
 
 // end Islam
+
+//Start Asmaa
+
+//End Asmaa

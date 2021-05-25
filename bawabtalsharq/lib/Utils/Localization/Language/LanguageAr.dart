@@ -46,7 +46,7 @@ class LanguageAr extends Languages {
   String get bestRating => 'أفضل تصنيف';
   String get blueShoes => 'حذاء ازرق';
   String get highestPrice => 'اغلى سعر';
-  String get lowestPrice => 'أقل سعر';
+  String get lowestPrice => 'السعر';
   String get mostPop => 'الأكثر شهرة';
   String get newIn => 'الجديد';
   String get popularity => 'شعبية';
@@ -154,6 +154,8 @@ class LanguageAr extends Languages {
   String get help => 'المساعدة';
   String get main => 'الرئيسية';
   String get lan => 'العربية';
+  String get year => 'سنة';
+  String get overView => 'نظرة عامة';
 
 // end Mosdik
 
