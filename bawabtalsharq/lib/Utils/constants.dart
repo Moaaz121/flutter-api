@@ -1,8 +1,9 @@
-import 'package:bawabtalsharq/Model/user_model.dart';
-import 'package:flutter/material.dart';
-import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
+
+import 'package:bawabtalsharq/Model/user_model.dart';
+import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 enum languages { English, Arabic, Indian }
 
@@ -11,26 +12,6 @@ class Constants {
   static int isActive = 0;
   static int userType = 0;
   static SharedPreferences sharedPreferences;
-
-  static initSharedPref() async {
-    sharedPreferences = await SharedPreferences.getInstance();
-  }
-
-  static dynamic getDate({@required String key}) {
-    return sharedPreferences.get(key);
-  }
-
-  static String getCurrency() {
-    return '&currency_id=' + sharedPreferences.get('currency');
-  }
-
-  static dynamic removeDate({@required String key}) {
-    return sharedPreferences.remove(key);
-  }
-
-  static void saveCurrency({@required String currency}) {
-    sharedPreferences.setString('currency', currency);
-  }
 
   static languages languageId = languages.English;
   static TextDirection textDirection = Constants.languageId == languages.Arabic
@@ -136,7 +117,46 @@ class Constants {
     return null;
   }
 
-  // end Bahaa
+  static initSharedPref() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+  }
+
+  static dynamic getDate({@required String key}) {
+    return sharedPreferences.get(key);
+  }
+
+  static String getCurrency() {
+    return '&currency_id=' + sharedPreferences.get('currency');
+  }
+
+  static String getCountry() {
+    return '&country=' + sharedPreferences.get('country');
+  }
+
+  static String getCountryCode() {
+    return '&code=' + sharedPreferences.get('country');
+  }
+
+  static dynamic removeDate({@required String key}) {
+    return sharedPreferences.remove(key);
+  }
+
+  static void saveCurrencyId({@required String currency}) {
+    sharedPreferences.setString('currency', currency);
+  }
+
+  static void saveCountryCode({@required String country}) {
+    sharedPreferences.setString('country', country);
+  }
+
+  static String getCurrency2() {
+    return sharedPreferences.get('currency');
+  }
+
+  static String getCountry2() {
+    return sharedPreferences.get('country');
+  }
+// end Bahaa
 }
 
 // Start Karem

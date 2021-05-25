@@ -61,6 +61,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         key: _scaffoldKey,
+        resizeToAvoidBottomPadding: false,
         body: BlocProvider(
           create: (context) => _registerBloc,
           child: BlocListener<RegisterBloc, RegisterState>(
@@ -98,6 +99,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                       firstname: widget.data['firstname'],
                       lastname: widget.data['lastname'],
                       userType: widget.data['userType'],
+                      country: widget.data['country'],
                       company: companyName));
                 } else if (state is RegisterLoadingState) {
                   return Center(
@@ -173,70 +175,68 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   fontWeight: FontWeight.w400,
                 ),
                 SizedBox(height: 40),
-                Flexible(
-                  child: PinCodeTextField(
-                    backgroundColor: Colors.white,
-                    appContext: context,
-                    length: 6,
-                    obscureText: false,
-                    obscuringCharacter: '*',
-                    animationType: AnimationType.fade,
-                    validator: (v) {
-                      if (v.length < 6) {
-                        return "I'm from validator";
-                      } else {
-                        return null;
-                      }
-                    },
-                    pinTheme: PinTheme(
-                      shape: PinCodeFieldShape.box,
-                      borderRadius: BorderRadius.circular(10),
-                      fieldHeight: 54,
-                      fieldWidth: 54,
-                      selectedColor: orangeColor,
-                      borderWidth: 2,
-                      inactiveColor: Colors.transparent,
-                      disabledColor: Colors.transparent,
-                      selectedFillColor: Colors.white,
-                      activeColor: Colors.green,
-                      activeFillColor: Colors.white,
-                      inactiveFillColor: Colors.white,
-                    ),
-                    cursorColor: OrangeColor,
-                    animationDuration: Duration(milliseconds: 300),
-                    textStyle: TextStyle(fontSize: 20, height: 1.6),
-                    enableActiveFill: true,
-                    errorAnimationController: errorController,
-                    controller: textEditingController,
-                    keyboardType: TextInputType.number,
-                    boxShadows: [
-                      BoxShadow(
-                        offset: Offset(0, 1),
-                        color: Colors.black12,
-                        blurRadius: 10,
-                      )
-                    ],
-                    onCompleted: (v) {
-                      print("Completed");
-                      smsCode = currentText;
-                      print(smsCode);
-                    },
-                    // onTap: () {
-                    //   print("Pressed");
-                    // },
-                    onChanged: (value) {
-                      print(value);
-                      setState(() {
-                        currentText = value;
-                      });
-                    },
-                    beforeTextPaste: (text) {
-                      print("Allowing to paste $text");
-                      //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
-                      //but you can show anything you want here, like your pop up saying wrong paste format or etc
-                      return true;
-                    },
+                PinCodeTextField(
+                  backgroundColor: Colors.white,
+                  appContext: context,
+                  length: 6,
+                  obscureText: false,
+                  obscuringCharacter: '*',
+                  animationType: AnimationType.fade,
+                  validator: (v) {
+                    if (v.length < 6) {
+                      return "Please enter the code form sms ";
+                    } else {
+                      return null;
+                    }
+                  },
+                  pinTheme: PinTheme(
+                    shape: PinCodeFieldShape.box,
+                    borderRadius: BorderRadius.circular(10),
+                    fieldHeight: MediaQuery.of(context).size.height * .06,
+                    fieldWidth: MediaQuery.of(context).size.width * .1,
+                    selectedColor: orangeColor,
+                    borderWidth: 2,
+                    inactiveColor: Colors.transparent,
+                    disabledColor: Colors.transparent,
+                    selectedFillColor: Colors.white,
+                    activeColor: Colors.green,
+                    activeFillColor: Colors.white,
+                    inactiveFillColor: Colors.white,
                   ),
+                  cursorColor: OrangeColor,
+                  animationDuration: Duration(milliseconds: 300),
+                  textStyle: TextStyle(fontSize: 20, height: 1.6),
+                  enableActiveFill: true,
+                  errorAnimationController: errorController,
+                  controller: textEditingController,
+                  keyboardType: TextInputType.number,
+                  boxShadows: [
+                    BoxShadow(
+                      offset: Offset(0, 1),
+                      color: Colors.grey[300],
+                      blurRadius: 7,
+                    )
+                  ],
+                  onCompleted: (v) {
+                    print("Completed");
+                    smsCode = currentText;
+                    print(smsCode);
+                  },
+                  // onTap: () {
+                  //   print("Pressed");
+                  // },
+                  onChanged: (value) {
+                    print(value);
+                    setState(() {
+                      currentText = value;
+                    });
+                  },
+                  beforeTextPaste: (text) {
+                    print("Allowing to paste $text");
+                    //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
+                    //but you can show anything you want here, like your pop up saying wrong paste format or etc
+                    return true;
+                  },
                 ),
                 SizedBox(
                   height: 15,

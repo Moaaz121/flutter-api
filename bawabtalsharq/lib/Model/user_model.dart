@@ -2,7 +2,7 @@ class UserModel {
   int code;
   String status;
   String msg;
-  User data;
+  UserLocal data;
 
   UserModel({this.code, this.status, this.msg, this.data});
 
@@ -10,7 +10,7 @@ class UserModel {
     code = json['code'];
     status = json['status'];
     msg = json['msg'];
-    data = json['data'] != null ? new User.fromJson(json['data']) : null;
+    data = json['data'] != null ? new UserLocal.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -25,7 +25,7 @@ class UserModel {
   }
 }
 
-class User {
+class UserLocal {
   String userId;
   String status;
   String userType;
@@ -35,8 +35,9 @@ class User {
   String email;
   String phone;
   String apiKey;
+  String country;
 
-  User(
+  UserLocal(
       {this.userId,
       this.status,
       this.userType,
@@ -45,9 +46,10 @@ class User {
       this.company,
       this.email,
       this.phone,
-      this.apiKey});
+      this.apiKey,
+      this.country});
 
-  User.fromJson(Map<String, dynamic> json) {
+  UserLocal.fromJson(Map<String, dynamic> json) {
     userId = json['user_id'];
     status = json['status'];
     userType = json['user_type'];
@@ -57,6 +59,7 @@ class User {
     email = json['email'];
     phone = json['phone'];
     apiKey = json['ApiKey'];
+    country = json['b_country'];
   }
 
   Map<String, dynamic> toJson() {
@@ -70,6 +73,7 @@ class User {
     data['email'] = this.email;
     data['phone'] = this.phone;
     data['ApiKey'] = this.apiKey;
+    data['b_country'] = this.country;
     return data;
   }
 }

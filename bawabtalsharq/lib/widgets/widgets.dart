@@ -18,6 +18,7 @@ import 'package:bawabtalsharq/bloc/currancyBloc/currency_state.dart';
 import 'package:bawabtalsharq/bloc/langBloc/lang_bloc.dart';
 import 'package:bawabtalsharq/bloc/langBloc/lang_event.dart';
 import 'package:bawabtalsharq/bloc/langBloc/lang_state.dart';
+import 'package:bawabtalsharq/main.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -25,6 +26,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:bawabtalsharq/Utils/validator_util.dart';
 
 class Widgets {
   call() {}
@@ -1672,10 +1674,11 @@ void showCurrencyDialog(BuildContext context) {
                       return GestureDetector(
                         onTap: () {
                           state.currencyResponse.data[index].isSelected = true;
-                          Constants.saveCurrency(
+                          Constants.saveCurrencyId(
                               currency: state
                                   .currencyResponse.data[index].currencyId);
-                          Navigator.pop(context);
+                          Navigator.popAndPushNamed(
+                              context, ScreenRoutes.mainScreen);
                         },
                         child: Container(
                           height: 60,
@@ -1692,7 +1695,8 @@ void showCurrencyDialog(BuildContext context) {
                                       15,
                                       fontFamily: mediumFontFamily,
                                       fontWeight: FontWeight.w600)),
-                              state.currencyResponse.data[index].isSelected
+                              state.currencyResponse.data[index].currencyId ==
+                                      Constants.getCurrency2()
                                   ? Image.asset(
                                       checkBox,
                                       width: 40,
@@ -1740,6 +1744,7 @@ void showCountryDialog(BuildContext context) {
                 return CircularProgressIndicator();
               } else if (state is CountryLoadedState &&
                   state.countryResponse != null) {
+                // print(state.countryResponse.data[0].country);
                 return Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
@@ -1750,7 +1755,14 @@ void showCountryDialog(BuildContext context) {
                     itemCount: state.countryResponse.data.length,
                     itemBuilder: (context, index) {
                       return GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          state.countryResponse.data[index].isSelected = true;
+                          Constants.saveCountryCode(
+                              country:
+                                  state.countryResponse.data[index].country);
+                          Navigator.popAndPushNamed(
+                              context, ScreenRoutes.mainScreen);
+                        },
                         child: Container(
                           height: 60,
                           child: Row(
@@ -1765,11 +1777,14 @@ void showCountryDialog(BuildContext context) {
                                       15,
                                       fontFamily: mediumFontFamily,
                                       fontWeight: FontWeight.w600)),
-                              Image.asset(
-                                checkBox,
-                                width: 40,
-                                height: 40,
-                              ),
+                              state.countryResponse.data[index].country ==
+                                      Constants.getCountry2()
+                                  ? Image.asset(
+                                      checkBox,
+                                      width: 40,
+                                      height: 40,
+                                    )
+                                  : SizedBox(),
                               SizedBox(
                                 width: 10,
                               ),
@@ -1869,5 +1884,54 @@ FlatButton signInFlatButton(
 // end Islam
 
 //Start Asmaa
+
+Widget customTextFormField(
+  BuildContext context, {
+  String label,
+  IconButton rightBtn,
+  IconData leftIcon,
+  TextEditingController controller,
+  double width = 1,
+  TextInputType textInputType,
+  errorText,
+  bool isPassword = false,
+}) {
+  return SizedBox(
+    width: MediaQuery.of(context).size.width * width,
+    child: TextFormField(
+      keyboardType: textInputType,
+      controller: controller,
+      obscureText: isPassword,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter some text';
+        } else if (label == 'E-mail' &&
+            !emailValidator(controller.text.trim())) {
+          return 'please enter correct email address';
+        } else if (label == 'Tel' && !phoneValidator(controller.text.trim())) {
+          return 'please enter correct Phone Number';
+        } else if (label == 'Login Password' &&
+            !passwordValidator(controller.text.trim())) {
+          return 'Weak Password';
+        }
+        return null;
+      },
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+          //hintText: 'username',
+          prefixIcon: Icon(
+            leftIcon,
+            color: Colors.grey,
+          ),
+          suffixIcon: rightBtn,
+          labelText: label,
+          labelStyle: TextStyle(
+            fontSize: 12,
+          ),
+          focusedBorder:
+              UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey))),
+    ),
+  );
+}
 
 //End Asmaa

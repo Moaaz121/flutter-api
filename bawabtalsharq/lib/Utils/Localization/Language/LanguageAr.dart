@@ -69,6 +69,8 @@ class LanguageAr extends Languages {
   String get verification => 'تحقق';
   String get verify => 'ثبت';
   String get currency1 => 'جنيهًا';
+  String get egp => 'جنيه مصري';
+  String get usd => 'دولار أمريكي';
 
 // end Bahaa
 
@@ -156,6 +158,8 @@ class LanguageAr extends Languages {
   String get lan => 'العربية';
   String get year => 'سنة';
   String get overView => 'نظرة عامة';
+  String get chatSupplier => 'شات المورد';
+  String get buyNow => 'اشتري الآن';
 
 // end Mosdik
 

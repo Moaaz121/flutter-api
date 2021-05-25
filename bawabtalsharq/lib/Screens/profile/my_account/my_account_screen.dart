@@ -2,6 +2,7 @@ import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:bawabtalsharq/Utils/constants.dart';
 
 import '../../../main.dart';
 
@@ -32,7 +33,7 @@ class _MyAccountState extends State<MyAccount> {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
-                    image: AssetImage(profile_image),
+                    image: AssetImage(logo),
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -41,7 +42,12 @@ class _MyAccountState extends State<MyAccount> {
             SizedBox(
               height: 10,
             ),
-            buildText('Bahaa Robert', 18, fontWeight: FontWeight.bold),
+            buildText(
+                Constants.getUserInfo2().data.firstname +
+                    ' ' +
+                    Constants.getUserInfo2().data.lastname,
+                18,
+                fontWeight: FontWeight.bold),
             SizedBox(
               height: 30,
             ),

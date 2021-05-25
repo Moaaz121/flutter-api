@@ -70,6 +70,8 @@ class LanguageEn extends Languages {
   String get verification => 'Verification';
   String get verify => 'Verify';
   String get currency1 => '\$';
+  String get egp => 'EGP';
+  String get usd => 'USD';
 
 // end Bahaa
 
@@ -159,6 +161,8 @@ class LanguageEn extends Languages {
   String get lan => 'English';
   String get year => 'YRS';
   String get overView => 'OverView';
+  String get chatSupplier => 'Supplier Chat';
+  String get buyNow => 'Buy Now';
 
 // end Mosdik
 

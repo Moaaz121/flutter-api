@@ -49,21 +49,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController emailController = TextEditingController();
 
   TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmpasswordController = TextEditingController();
   TextEditingController companyController = TextEditingController();
 
   String selectedRadio;
 
-  String _emailErrorMessage;
-  String _passwordErrorMessage;
-  String _phoneErrorMessage;
-  String _nameErrorMessage;
-  String firstNameError;
-  String lastNameError;
+  bool _passwordErrorMessage;
 
   bool isLoading = false;
   RegisterBloc _registerBloc;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -72,12 +69,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
     selectedRadioTile = 0;
     _registerBloc = RegisterBloc();
     super.initState();
+    _passwordErrorMessage = false;
   }
 
   @override
   void dispose() {
     super.dispose();
+    firstNameController.dispose();
+    lastNameController.dispose();
     phoneController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmpasswordController.dispose();
+    companyController.dispose();
   }
 
   List<DropdownMenuItem<Country>> buildDropdownMenuItems(List Countries) {
@@ -125,41 +129,44 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         key: _scaffoldKey,
-        body: BlocProvider(
-          create: (context) => _registerBloc,
-          child: BlocListener<RegisterBloc, RegisterState>(
-            listener: (context, state) {
-              if (state is EnterSMSCodeState) {
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => VerificationScreen(
-                          verId: state.verId, data: state.data),
-                    ));
-              } else if (state is FirebaseExceptionState) {
-                setState(() {
-                  isLoading = false;
-                });
-                Navigator.pop(context);
-                _scaffoldKey.currentState.showSnackBar(
-                  SnackBar(
-                    content: Text(state.msg),
-                  ),
-                );
-              }
-            },
-            child: BlocBuilder<RegisterBloc, RegisterState>(
-              bloc: _registerBloc,
-              builder: (context, state) {
-                if (state is VerifyingPhoneLoadingState) {
-                  if (isLoading) {
-                    showLoadingDialog(context);
+        body: Form(
+          key: _formKey,
+          child: BlocProvider(
+            create: (context) => _registerBloc,
+            child: BlocListener<RegisterBloc, RegisterState>(
+              listener: (context, state) {
+                if (state is EnterSMSCodeState) {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => VerificationScreen(
+                            verId: state.verId, data: state.data),
+                      ));
+                } else if (state is FirebaseExceptionState) {
+                  setState(() {
                     isLoading = false;
-                  }
+                  });
+                  Navigator.pop(context);
+                  _scaffoldKey.currentState.showSnackBar(
+                    SnackBar(
+                      content: Text(state.msg),
+                    ),
+                  );
                 }
-
-                return _buildMain();
               },
+              child: BlocBuilder<RegisterBloc, RegisterState>(
+                bloc: _registerBloc,
+                builder: (context, state) {
+                  if (state is VerifyingPhoneLoadingState) {
+                    if (isLoading) {
+                      showLoadingDialog(context);
+                      isLoading = false;
+                    }
+                  }
+
+                  return _buildMain();
+                },
+              ),
             ),
           ),
         ));
@@ -223,37 +230,35 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Row(
                   children: [
                     Expanded(
-                      child: textFiledPrice(
+                      child: customTextFormField(
                         context,
-                        Languages.of(context).firstName,
-                        width: .50,
-                        errorMessage: firstNameError,
+                        textInputType: TextInputType.emailAddress,
                         controller: firstNameController,
+                        label: Languages.of(context).firstName,
+                        width: .50,
                       ),
                     ),
                     SizedBox(
                       width: 15,
                     ),
                     Expanded(
-                      child: textFiledPrice(
-                          context, Languages.of(context).lasttNam,
+                      child: customTextFormField(context,
+                          textInputType: TextInputType.emailAddress,
+                          label: Languages.of(context).lasttNam,
                           width: .50,
-                          errorMessage: lastNameError,
                           controller: lastNameController),
                     ),
                   ],
                 ),
-                customTextField(context,
+                customTextFormField(context,
                     textInputType: TextInputType.emailAddress,
-                    errorText: _emailErrorMessage,
                     controller: emailController,
                     label: Languages.of(context).email,
                     width: 1,
                     leftIcon: Icons.email),
-                customTextField(
+                customTextFormField(
                   context,
                   textInputType: TextInputType.visiblePassword,
-                  errorText: _passwordErrorMessage,
                   controller: passwordController,
                   width: 1,
                   label: Languages.of(context).loginPass,
@@ -269,11 +274,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         obSecureText ? Icons.visibility_off : Icons.visibility),
                   ),
                 ),
-                customTextField(
+                customTextFormField(
                   context,
                   width: 1,
                   label: Languages.of(context).confirmPass,
+                  textInputType: TextInputType.visiblePassword,
                   isPassword: obSecureText,
+                  controller: confirmpasswordController,
                   leftIcon: Icons.lock,
                   rightBtn: IconButton(
                     onPressed: () {
@@ -285,9 +292,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         obSecureText ? Icons.visibility_off : Icons.visibility),
                   ),
                 ),
-                customTextField(context,
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Visibility(
+                    visible: _passwordErrorMessage,
+                    child: Text(
+                      'Password and confirm password does not match',
+                      style: TextStyle(color: Colors.red, fontSize: 10),
+                    ),
+                  ),
+                ),
+                customTextFormField(context,
                     textInputType: TextInputType.phone,
-                    errorText: _phoneErrorMessage,
                     controller: phoneController,
                     label: Languages.of(context).tel,
                     leftIcon: Icons.phone),
@@ -296,7 +312,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 Visibility(
                   visible: companyTypeBool,
-                  child: customTextField(context,
+                  child: customTextFormField(context,
                       width: 1,
                       controller: companyController,
                       label: Languages.of(context).companyName,
@@ -326,41 +342,36 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         MediaQuery.of(context).size.height,
                         Languages.of(context).signUp, () {
                       FocusScope.of(context).unfocus();
-                      _passwordErrorMessage = null;
-                      _emailErrorMessage = null;
-                      _phoneErrorMessage = null;
-                      _nameErrorMessage = null;
-                      setState(() {
-                        if (firstNameController.text.isEmpty)
-                          _nameErrorMessage = 'Empty Field';
-                        else if (lastNameController.text.isEmpty)
-                          _nameErrorMessage = 'Empty Field';
-                        else if (passwordController.text.isEmpty)
-                          _passwordErrorMessage = 'Empty Field';
-                        else if (phoneController.text.isEmpty)
-                          _phoneErrorMessage = 'Empty Field';
-                        else if (emailController.text.isEmpty)
-                          _emailErrorMessage = 'Empty Field';
-                        else if (selectedRadio == null)
-                          Scaffold.of(context).showSnackBar(
+
+                      if (_formKey.currentState.validate()) {
+                        if (selectedRadio == null) {
+                          _scaffoldKey.currentState.showSnackBar(
                             SnackBar(
-                              content: Text('user type not selected'),
+                              content: Text(
+                                'User type is not selected',
+                                style: TextStyle(color: Colors.red),
+                              ),
                             ),
                           );
-                        else if (!emailValidator(emailController.text.trim()))
-                          _emailErrorMessage =
-                              'please enter correct email address';
-                        else if (!phoneValidator(phoneController.text.trim()))
-                          _phoneErrorMessage =
-                              'please enter correct Phone Number';
-                        else if (!passwordValidator(passwordController.text))
-                          _passwordErrorMessage = 'Weak Password';
-                        else if (companyTypeBool) {
-                          if (companyController.text.isEmpty)
-                            _nameErrorMessage = 'Empty Field';
+                        } else if (_selectedCountry.name == 'Country/Region') {
+                          _scaffoldKey.currentState.showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'Country is not selected',
+                                style: TextStyle(color: Colors.red),
+                              ),
+                            ),
+                          );
+                        } else if (passwordController.text.trim() !=
+                            confirmpasswordController.text.trim()) {
+                          setState(() {
+                            _passwordErrorMessage = true;
+                          });
                         } else {
+                          _passwordErrorMessage = false;
                           isLoading = true;
                           print('Verifying phone');
+                          print('country ${_selectedCountry.name}');
                           data = {
                             'phone': '+2${phoneController.text.trim()}',
                             'email': emailController.text.trim(),
@@ -368,14 +379,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             'lastname': lastNameController.text.trim(),
                             'password': passwordController.text.trim(),
                             'userType': selectedRadio,
-                            'company': companyController.text.trim()
+                            'company': companyController.text.trim(),
+                            'country': _selectedCountry.name
                           };
 
                           _registerBloc.add(VerifyPhone(
                             data: data,
                           ));
                         }
-                      });
+                      }
                     }),
                   ],
                 ),

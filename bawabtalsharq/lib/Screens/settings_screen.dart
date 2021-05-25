@@ -5,6 +5,7 @@ import 'package:bawabtalsharq/Screens/profile/contact_us/phone_dialog.dart';
 import 'package:bawabtalsharq/Screens/profile/contact_us/send_message_dialog.dart';
 import 'package:bawabtalsharq/Screens/profile_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
+import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/currancyBloc/currency_bloc.dart';
 import 'package:bawabtalsharq/bloc/currancyBloc/currency_event.dart';
@@ -126,8 +127,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         12,
                         fontWeight: FontWeight.w600,
                       ),
-                      extraText: buildText('Egypt', 10,
-                          fontWeight: FontWeight.w400, color: orangeColor),
+                      extraText: buildText(
+                          Constants.getCountry2() == 'Egypt'
+                              ? Languages.of(context).egypt
+                              : Constants.getCountry2(),
+                          10,
+                          fontWeight: FontWeight.w400,
+                          color: orangeColor),
                       icon: Icons.flag,
                       iconColor: Colors.blue),
                   cardSetting(
@@ -153,8 +159,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       12,
                       fontWeight: FontWeight.w600,
                     ),
-                    extraText: buildText('EGP', 10,
-                        fontWeight: FontWeight.w400, color: orangeColor),
+                    extraText: buildText(
+                        Constants.getCurrency2() == '4'
+                            ? Languages.of(context).egp
+                            : Languages.of(context).usd,
+                        10,
+                        fontWeight: FontWeight.w400,
+                        color: orangeColor),
                     icon: Icons.monetization_on,
                     iconColor: Colors.green,
                   ),

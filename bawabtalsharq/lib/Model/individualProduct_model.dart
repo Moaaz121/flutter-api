@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final individualProductModel = individualProductModelFromJson(jsonString);
+
 import 'dart:convert';
 
 IndividualProductModel individualProductModelFromJson(String str) =>
@@ -82,11 +86,11 @@ class ProductDetails {
   String imagePath;
   String price;
   String rating;
-  List<dynamic> color;
-  List<dynamic> faq;
-  List<dynamic> detailedPictures;
-  List<dynamic> packingShipping;
-  List<dynamic> certificates;
+  List<String> color;
+  List<Faq> faq;
+  List<String> detailedPictures;
+  List<PackingShipping> packingShipping;
+  List<String> certificates;
   String supplier;
   String year;
   String countryName;
@@ -110,13 +114,13 @@ class ProductDetails {
         imagePath: json["image_path"],
         price: json["price"],
         rating: json["rating"],
-        color: List<dynamic>.from(json["color"].map((x) => x)),
-        faq: List<dynamic>.from(json["faq"].map((x) => x)),
+        color: List<String>.from(json["color"].map((x) => x)),
+        faq: List<Faq>.from(json["faq"].map((x) => Faq.fromJson(x))),
         detailedPictures:
-            List<dynamic>.from(json["detailed_pictures"].map((x) => x)),
-        packingShipping:
-            List<dynamic>.from(json["packing_shipping"].map((x) => x)),
-        certificates: List<dynamic>.from(json["certificates"].map((x) => x)),
+            List<String>.from(json["detailed_pictures"].map((x) => x)),
+        packingShipping: List<PackingShipping>.from(
+            json["packing_shipping"].map((x) => PackingShipping.fromJson(x))),
+        certificates: List<String>.from(json["certificates"].map((x) => x)),
         supplier: json["supplier"],
         year: json["year"],
         countryName: json["country_name"],
@@ -142,13 +146,55 @@ class ProductDetails {
         "price": price,
         "rating": rating,
         "color": List<dynamic>.from(color.map((x) => x)),
-        "faq": List<dynamic>.from(faq.map((x) => x)),
+        "faq": List<dynamic>.from(faq.map((x) => x.toJson())),
         "detailed_pictures": List<dynamic>.from(detailedPictures.map((x) => x)),
-        "packing_shipping": List<dynamic>.from(packingShipping.map((x) => x)),
+        "packing_shipping":
+            List<dynamic>.from(packingShipping.map((x) => x.toJson())),
         "certificates": List<dynamic>.from(certificates.map((x) => x)),
         "supplier": supplier,
         "year": year,
         "country_name": countryName,
         "country_image": countryImage,
+      };
+}
+
+class Faq {
+  Faq({
+    this.question,
+    this.answer,
+  });
+
+  String question;
+  String answer;
+
+  factory Faq.fromJson(Map<String, dynamic> json) => Faq(
+        question: json["question"],
+        answer: json["answer"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "question": question,
+        "answer": answer,
+      };
+}
+
+class PackingShipping {
+  PackingShipping({
+    this.image,
+    this.description,
+  });
+
+  String image;
+  String description;
+
+  factory PackingShipping.fromJson(Map<String, dynamic> json) =>
+      PackingShipping(
+        image: json["image"],
+        description: json["description"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "image": image,
+        "description": description,
       };
 }

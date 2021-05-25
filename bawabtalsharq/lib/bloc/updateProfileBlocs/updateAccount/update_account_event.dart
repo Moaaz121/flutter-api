@@ -1,11 +1,10 @@
+import 'package:bawabtalsharq/Model/user_model.dart';
+
 abstract class UpdateAccountEvent {}
 
 class UpdateEvent extends UpdateAccountEvent {
-  String userId;
-  String apiKey;
-  String firstName;
-  String lastName;
-  UpdateEvent(this.userId, this.apiKey, this.firstName, this.lastName);
+  UserLocal currentUser;
+  UpdateEvent(this.currentUser);
 }
 
 class ResetState extends UpdateAccountEvent {}

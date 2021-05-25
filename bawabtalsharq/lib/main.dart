@@ -6,6 +6,7 @@ import 'package:bawabtalsharq/Screens/home_screen.dart';
 import 'package:bawabtalsharq/Screens/individual_product_screen.dart';
 import 'package:bawabtalsharq/Screens/intro_screen.dart';
 import 'package:bawabtalsharq/Screens/login_screen.dart';
+import 'package:bawabtalsharq/Screens/forget_password/verification_OTP_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/faq/faq_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/history/history_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/message_center/message_center_screen.dart';
@@ -44,6 +45,8 @@ import 'Screens/request_for_qutation.dart';
 import 'Screens/search/color_filter_screen.dart';
 import 'Screens/search/list_filter_screen.dart';
 import 'Utils/Localization/LanguageHelper.dart';
+import 'package:bawabtalsharq/Services/AnalyticsService.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,12 +54,13 @@ void main() async {
   await Constants.initSharedPref();
 
   if (Constants.getDate(key: 'currency') == null) {
-    Constants.saveCurrency(currency: '1');
+    Constants.saveCurrencyId(currency: '1');
   }
 
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   runApp(
     DevicePreview(
       enabled: true,
@@ -79,13 +83,21 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
   Locale _locale;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // FirebaseCrashlytics.instance.crash();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       // locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.deepOrange),
-      home: SplashScreen(),
+      home: VerificationScreen(),
+      navigatorObservers: [AnalyticsService().getAnalyticsOberver()],
       routes: {
         ScreenRoutes.splashScreen: (_) => SplashScreen(),
         ScreenRoutes.introScreen: (_) => IntroScreen(),
