@@ -81,7 +81,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
-                                    image: AssetImage(profile_image),
+                                    image: AssetImage(logo),
                                     fit: BoxFit.fill,
                                   ),
                                 ),
