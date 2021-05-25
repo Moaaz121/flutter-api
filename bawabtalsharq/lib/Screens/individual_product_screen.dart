@@ -164,7 +164,8 @@ class _IndividualProductState extends State<IndividualProduct>
                                         itemBuilder:
                                             (context, index, realIndex) =>
                                                 Image(
-                                          image: AssetImage(product.imagePath),
+                                          image:
+                                              NetworkImage(product.imagePath),
                                         ),
                                       ),
                                       sliderIndicator(sliderPosition,
