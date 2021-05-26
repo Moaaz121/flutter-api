@@ -1,16 +1,18 @@
 import 'dart:ui';
 
 import 'package:bawabtalsharq/Model/checkPointFliter.dart';
+import 'package:bawabtalsharq/Model/filter_model.dart';
 import 'package:bawabtalsharq/Model/mainCategoryModel.dart';
 import 'package:bawabtalsharq/Model/search_quary.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/bloc/filterBloc/filter_bloc.dart';
+import 'package:bawabtalsharq/bloc/notificationsBloc/notifications_bloc.dart';
 import 'package:bawabtalsharq/bloc/searchBloc/search_bloc.dart';
 import 'package:bawabtalsharq/bloc/searchBloc/search_event.dart';
 import 'package:bawabtalsharq/main.dart';
-import 'package:bawabtalsharq/repo/category_repo.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -219,51 +221,69 @@ class _SearchResultState extends State<SearchResult> {
                       ),
                     );
                   } else if (event is SearchLoadedState) {
-                    return isGrid
-                        ? Expanded(
-                            child: GridView.builder(
-                              physics: const BouncingScrollPhysics(
-                                  parent: AlwaysScrollableScrollPhysics()),
-                              controller: _resultScrollController,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      crossAxisSpacing: 10,
-                                      mainAxisSpacing: 0),
-                              itemCount: event.searchResponse.products.length,
-                              itemBuilder: (context, position) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    Navigator.pushNamed(context,
-                                        ScreenRoutes.individualProduct);
-                                  },
-                                  child: productItem(context,
-                                      product: event
-                                          .searchResponse.products[position]),
-                                );
-                              },
+                    if (event.searchResponse.code != 200) {
+                      return Expanded(
+                        child: Center(
+                          child: Text(
+                            event.searchResponse.msg,
+                            style: TextStyle(
+                              fontFamily: 'Segoe UI',
+                              fontSize: 15.0,
+                              color: Color(0xff303030),
+                              letterSpacing: 0.18,
+                              fontWeight: FontWeight.w600,
+                              height: 0.07,
                             ),
-                          )
-                        : Expanded(
-                            child: ListView.builder(
-                              physics: const BouncingScrollPhysics(
-                                  parent: AlwaysScrollableScrollPhysics()),
-                              controller: _resultScrollController,
-                              scrollDirection: Axis.vertical,
-                              itemCount: event.searchResponse.products.length,
-                              itemBuilder: (context, position) {
-                                return GestureDetector(
-                                  child: productItemLandscape(context,
-                                      product: event
-                                          .searchResponse.products[position]),
-                                  onTap: () {
-                                    Navigator.pushNamed(context,
-                                        ScreenRoutes.individualProduct);
-                                  },
-                                );
-                              },
-                            ),
-                          );
+                          ),
+                        ),
+                      );
+                    } else {
+                      return isGrid
+                          ? Expanded(
+                              child: GridView.builder(
+                                physics: const BouncingScrollPhysics(
+                                    parent: AlwaysScrollableScrollPhysics()),
+                                controller: _resultScrollController,
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        crossAxisSpacing: 10,
+                                        mainAxisSpacing: 0),
+                                itemCount: event.searchResponse.products.length,
+                                itemBuilder: (context, position) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Navigator.pushNamed(context,
+                                          ScreenRoutes.individualProduct);
+                                    },
+                                    child: productItem(context,
+                                        product: event
+                                            .searchResponse.products[position]),
+                                  );
+                                },
+                              ),
+                            )
+                          : Expanded(
+                              child: ListView.builder(
+                                physics: const BouncingScrollPhysics(
+                                    parent: AlwaysScrollableScrollPhysics()),
+                                controller: _resultScrollController,
+                                scrollDirection: Axis.vertical,
+                                itemCount: event.searchResponse.products.length,
+                                itemBuilder: (context, position) {
+                                  return GestureDetector(
+                                    child: productItemLandscape(context,
+                                        product: event
+                                            .searchResponse.products[position]),
+                                    onTap: () {
+                                      Navigator.pushNamed(context,
+                                          ScreenRoutes.individualProduct);
+                                    },
+                                  );
+                                },
+                              ),
+                            );
+                    }
                   } else {
                     return SizedBox();
                   }
@@ -514,6 +534,13 @@ class FilterScreen extends StatefulWidget {
 class _FilterScreenState extends State<FilterScreen> {
   bool _checked1 = false;
   bool _checked2 = false;
+  FilterBloc _bloc = FilterBloc();
+
+  @override
+  void initState() {
+    super.initState();
+    _bloc.add(DoFilterEvent());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -543,71 +570,146 @@ class _FilterScreenState extends State<FilterScreen> {
       body: SingleChildScrollView(
         padding: EdgeInsetsDirectional.only(bottom: 40),
         physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            textTitle(context, Languages.of(context).category, () {
-              Navigator.pushNamed(context, ScreenRoutes.categoriesFilterScreen);
-            }, Languages.of(context).seeAll, Colors.black,
-                icon: Icons.arrow_forward),
-            listOfCate(cold_drinks),
-            titleText(Languages.of(context).expressShipping),
-            listOfCheckBox(),
-            buildSizedBox(10),
-            lineDivider(),
-            titleText(Languages.of(context).shippedFrom),
-            Row(
-              children: [
-                Expanded(
-                    flex: 1,
-                    child: buildCheckbox(1, text: Languages.of(context).egypt)),
-                Expanded(
-                    flex: 2,
-                    child: buildCheckbox(2,
-                        text: Languages.of(context).shippedFromAbroad)),
-              ],
-            ),
-            buildSizedBox(25),
-            lineDivider(),
-            titleText(Languages.of(context).rating),
-            rating(),
-            buildSizedBox(25),
-            lineDivider(),
-            titleText(Languages.of(context).sellerScore),
-            list3OfCheckBox(),
-            lineDivider(),
-            textTitle(context, Languages.of(context).brand, () {
-              Navigator.pushNamed(context, ScreenRoutes.listFilter);
-            }, Languages.of(context).seeAll, Colors.black,
-                icon: Icons.arrow_forward),
-            listOfCate(starBocks),
-            titleText(Languages.of(context).price),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                textFiledPrice(context, Languages.of(context).from, width: 0.4),
-                textFiledPrice(context, Languages.of(context).to, width: 0.4),
-              ],
-            ),
-            buildSizedBox(25),
-            titleText(Languages.of(context).discount),
-            list4OfCheckBox(),
-            lineDivider(),
-            textTitle(context, Languages.of(context).sizes, () {
-              Navigator.pushNamed(context, ScreenRoutes.listFilter);
-            }, 'X, XL', Colors.deepOrangeAccent, icon: Icons.arrow_forward_ios),
-            buildSizedBox(25),
-            lineDivider(),
-            textTitle(context, Languages.of(context).colors, () {
-              Navigator.pushNamed(context, ScreenRoutes.colorFilterScreen);
-            }, 'Orange', Colors.deepOrange, icon: Icons.arrow_forward_ios),
-            buildSizedBox(25),
-            lineDivider(),
-            textTitle(context, Languages.of(context).gender, () {
-              Navigator.pushNamed(context, ScreenRoutes.listFilter);
-            }, 'Male', Colors.deepOrange, icon: Icons.arrow_forward_ios),
-          ],
-        ),
+        child: BlocBuilder<FilterBloc, FilterState>(
+            bloc: _bloc,
+            builder: (context, snapshot) {
+              var errorMessage = '';
+              if (snapshot is LoadingState) {
+                return SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  child: Center(
+                    child: progressBar(),
+                  ),
+                );
+              } else if (snapshot is FilterErrorState) {
+                errorMessage = snapshot.message;
+                return SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  child: Center(
+                    child: Text(
+                      errorMessage,
+                      style: TextStyle(
+                        fontFamily: 'Segoe UI',
+                        fontSize: 15.0,
+                        color: Color(0xff303030),
+                        letterSpacing: 0.18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                );
+              } else if (snapshot is FilterLoadedState) {
+                if (snapshot.filterResponse.code != 200) {
+                  errorMessage = snapshot.filterResponse.msg;
+                  return SizedBox(
+                    height: MediaQuery.of(context).size.height,
+                    child: Center(
+                      child: Text(
+                        errorMessage,
+                        style: TextStyle(
+                          fontFamily: 'Segoe UI',
+                          fontSize: 15.0,
+                          color: Color(0xff303030),
+                          letterSpacing: 0.18,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  );
+                } else {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      textTitle(context, Languages.of(context).category, () {
+                        Navigator.pushNamed(
+                            context, ScreenRoutes.categoriesFilterScreen);
+                      }, Languages.of(context).seeAll, Colors.black,
+                          icon: Icons.arrow_forward),
+                      listOfCate(snapshot.filterResponse.data.categories),
+                      titleText(Languages.of(context).expressShipping),
+                      listOfCheckBox(),
+                      buildSizedBox(10),
+                      lineDivider(),
+                      titleText(Languages.of(context).shippedFrom),
+                      Row(
+                        children: [
+                          Expanded(
+                              flex: 1,
+                              child: buildCheckbox(1,
+                                  text: Languages.of(context).egypt)),
+                          Expanded(
+                              flex: 2,
+                              child: buildCheckbox(2,
+                                  text:
+                                      Languages.of(context).shippedFromAbroad)),
+                        ],
+                      ),
+                      buildSizedBox(25),
+                      lineDivider(),
+                      titleText(Languages.of(context).rating),
+                      rating(),
+                      buildSizedBox(25),
+                      lineDivider(),
+                      titleText(Languages.of(context).sellerScore),
+                      list3OfCheckBox(),
+                      lineDivider(),
+                      textTitle(context, Languages.of(context).brand, () {
+                        Navigator.pushNamed(context, ScreenRoutes.listFilter);
+                      }, Languages.of(context).seeAll, Colors.black,
+                          icon: Icons.arrow_forward),
+                      listOfBrands(snapshot.filterResponse.data.suppliers),
+                      titleText(Languages.of(context).price),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          textFiledPrice(context, Languages.of(context).from,
+                              width: 0.4),
+                          textFiledPrice(context, Languages.of(context).to,
+                              width: 0.4),
+                        ],
+                      ),
+                      buildSizedBox(25),
+                      titleText(Languages.of(context).discount),
+                      list4OfCheckBox(),
+                      lineDivider(),
+                      textTitle(context, Languages.of(context).sizes, () {
+                        Navigator.pushNamed(context, ScreenRoutes.listFilter);
+                      }, 'X, XL', Colors.deepOrangeAccent,
+                          icon: Icons.arrow_forward_ios),
+                      buildSizedBox(25),
+                      lineDivider(),
+                      textTitle(context, Languages.of(context).colors, () {
+                        Navigator.pushNamed(
+                            context, ScreenRoutes.colorFilterScreen);
+                      }, 'Orange', Colors.deepOrange,
+                          icon: Icons.arrow_forward_ios),
+                      buildSizedBox(25),
+                      lineDivider(),
+                      textTitle(context, Languages.of(context).gender, () {
+                        Navigator.pushNamed(context, ScreenRoutes.listFilter);
+                      }, 'Male', Colors.deepOrange,
+                          icon: Icons.arrow_forward_ios),
+                    ],
+                  );
+                }
+              } else {
+                return SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  child: Center(
+                    child: Text(
+                      errorMessage,
+                      style: TextStyle(
+                        fontFamily: 'Segoe UI',
+                        fontSize: 15.0,
+                        color: Color(0xff303030),
+                        letterSpacing: 0.18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                );
+              }
+            }),
       ),
     );
   }
@@ -755,8 +857,7 @@ class _FilterScreenState extends State<FilterScreen> {
     );
   }
 
-  Widget listOfCate(String image) {
-    List<CategoryModel> categories = List<CategoryModel>();
+  Widget listOfCate(List<Category> categries) {
     return Column(
       children: [
         SizedBox(
@@ -764,49 +865,117 @@ class _FilterScreenState extends State<FilterScreen> {
         ),
         SizedBox(
           height: 55,
-          child: FutureBuilder(
-              future: CategoryRepo.getCategory(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  categories = snapshot.data;
-                  return ListView.builder(
-                    padding: EdgeInsets.symmetric(vertical: 9, horizontal: 35),
-                    physics: const BouncingScrollPhysics(
-                        parent: AlwaysScrollableScrollPhysics()),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: categories.length,
-                    itemBuilder: (context, position) {
-                      return Container(
-                        width: 38.0,
-                        height: 37.0,
-                        padding: EdgeInsets.all(5),
-                        margin: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.0),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.16),
-                              offset: Offset(0, 1.0),
-                              blurRadius: 6.0,
+          child: ListView.builder(
+            padding: EdgeInsets.symmetric(vertical: 9, horizontal: 35),
+            physics: const BouncingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics()),
+            scrollDirection: Axis.horizontal,
+            itemCount: categries.length,
+            itemBuilder: (context, position) {
+              return Container(
+                width: 38.0,
+                height: 37.0,
+                padding: EdgeInsets.all(5),
+                margin: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.16),
+                      offset: Offset(0, 1.0),
+                      blurRadius: 6.0,
+                    ),
+                  ],
+                ),
+                child: GestureDetector(
+                    onTap: () {},
+                    child: Image.network(
+                      categries[position].image,
+                      height: 48,
+                      width: 48,
+                      loadingBuilder: (BuildContext ctx, Widget child,
+                          ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child;
+                        } else {
+                          return Container(
+                            color: backgroundColor,
+                            child: Padding(
+                              padding: const EdgeInsets.all(5),
+                              child: Image.asset(placeHolder),
                             ),
-                          ],
-                        ),
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: Image.asset(
-                            categories[position].image,
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                } else {
-                  return Center(
-                    child: progressBar(),
-                  );
-                }
-              }),
+                          );
+                        }
+                      },
+                    )),
+              );
+            },
+          ),
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        lineDivider(),
+      ],
+    );
+  }
+
+  Widget listOfBrands(List<Supplier> brands) {
+    return Column(
+      children: [
+        SizedBox(
+          height: 15,
+        ),
+        SizedBox(
+          height: 55,
+          child: ListView.builder(
+            padding: EdgeInsets.symmetric(vertical: 9, horizontal: 35),
+            physics: const BouncingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics()),
+            scrollDirection: Axis.horizontal,
+            itemCount: brands.length,
+            itemBuilder: (context, position) {
+              return Container(
+                width: 38.0,
+                height: 37.0,
+                padding: EdgeInsets.all(5),
+                margin: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.16),
+                      offset: Offset(0, 1.0),
+                      blurRadius: 6.0,
+                    ),
+                  ],
+                ),
+                child: GestureDetector(
+                    onTap: () {},
+                    child: Image.network(
+                      brands[position].logo,
+                      height: 48,
+                      width: 48,
+                      loadingBuilder: (BuildContext ctx, Widget child,
+                          ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child;
+                        } else {
+                          return Container(
+                            color: backgroundColor,
+                            child: Padding(
+                              padding: const EdgeInsets.all(5),
+                              child: Image.asset(placeHolder),
+                            ),
+                          );
+                        }
+                      },
+                    )),
+              );
+            },
+          ),
         ),
         SizedBox(
           height: 15,
