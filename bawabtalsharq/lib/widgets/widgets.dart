@@ -1531,7 +1531,7 @@ Widget infoCartSupplier(String name, String years, String country,
                         Row(
                           children: [
                             Image(
-                              image: AssetImage(imagFlag),
+                              image: NetworkImage(imagFlag),
                               width: 14,
                               height: 14,
                             ),
