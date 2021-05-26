@@ -11,10 +11,13 @@ import 'package:bawabtalsharq/Services/AnalyticsService.dart';
 class AuthRepo {
   String verficationId;
   bool codeSent = false;
+  final AnalyticsService _analyticsService = AnalyticsService();
 
   // start Bahaa //
   Future<UserModel> doLogin(String email, String password) async {
     Map<String, dynamic> params = {"email": email, "password": password};
+    await _analyticsService.sendAnalyticsEvent(name: 'Logging', params: params);
+
     var response = await http.post(
       Uri.encodeFull(APIS.serverURL + APIS.LOGIN_API),
       body: params,
@@ -55,12 +58,12 @@ class AuthRepo {
     );
 
     if (response.statusCode == 200) {
+      await _analyticsService.logLoggin(method: 'Email_Phone');
       var decodedResponse = json.decode(response.body);
       UserModel modelResponse = UserModel.fromJson(decodedResponse);
 
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('user', jsonEncode(modelResponse));
-
       return modelResponse;
     }
   }
@@ -110,16 +113,13 @@ class AuthRepo {
   }
 
   String signInWithOTP(smsCode, verId) {
-    final AnalyticsService _analyticsService = AnalyticsService();
     String op;
     try {
       AuthCredential authCreds =
           PhoneAuthProvider.credential(smsCode: smsCode, verificationId: verId);
       FirebaseAuth.instance.signInWithCredential(authCreds).then((value) async {
         User user = FirebaseAuth.instance.currentUser;
-        await _analyticsService.setUserProperties(
-          userId: user.uid,
-        );
+        await _analyticsService.setUserId(userId: user.uid);
       });
 
       op = 'Verified Succefully';
