@@ -1,4 +1,4 @@
-import 'package:bawabtalsharq/Model/base_model.dart';
+import 'package:bawabtalsharq/Model/user_model.dart';
 import 'package:bawabtalsharq/bloc/updateProfileBlocs/changePassword/change_password_event.dart';
 import 'package:bawabtalsharq/bloc/updateProfileBlocs/changePassword/change_password_state.dart';
 import 'package:bawabtalsharq/repo/update_profile_repo.dart';
@@ -16,7 +16,7 @@ class ChangePasswordBloc
     if (event is PasswordChangeEvent) {
       yield PasswordChangeLoadingState();
       try {
-        BaseModel data = await UpdateProfileRepo().changePassword(
+        UserModel data = await UpdateProfileRepo().changePassword(
             event.userId, event.apiKey, event.newPassword, event.oldPassword);
         yield PasswordChangeLoadedState(response: data);
       } catch (e) {

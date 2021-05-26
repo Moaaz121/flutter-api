@@ -353,10 +353,10 @@ Widget ourGoldenSupplier(BuildContext context, List<Supplier> suppliers) {
           itemBuilder: (context, position) {
             return supplierView(
               onPress: () {
-                Navigator.pushNamed(
-                    context, ScreenRoutes.supplierProfileScreen);
+                // Navigator.pushNamed(
+                //     context, ScreenRoutes.supplierProfileScreen);
               },
-              category: 'Food & Bevereges',
+              category: suppliers[position].category,
               nameSupplier: LanguageHelper.isEnglish
                   ? suppliers[position].title
                   : suppliers[position].title,
@@ -671,7 +671,7 @@ Widget supplierView(
             SizedBox(
               height: 5.0,
             ),
-            Text(
+            AutoSizeText(
               category,
               style: TextStyle(
                 fontFamily: 'Segoe UI',
@@ -679,7 +679,10 @@ Widget supplierView(
                 color: const Color(0xff848484),
                 fontWeight: FontWeight.w600,
               ),
-              textAlign: TextAlign.left,
+              minFontSize: 8.5,
+              stepGranularity: 8.5,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
             SizedBox(
               height: 5.0,
@@ -689,10 +692,10 @@ Widget supplierView(
               children: [
                 Icon(
                   Icons.access_time_rounded,
-                  size: 13,
+                  size: 10,
                 ),
                 SizedBox(
-                  width: 5.0,
+                  width: 2.0,
                 ),
                 Text(
                   LanguageHelper.isEnglish

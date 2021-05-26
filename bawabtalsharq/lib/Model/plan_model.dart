@@ -34,14 +34,21 @@ class Plan {
   String packageId;
   String packageName;
   String packagePrice;
+  String color;
   List<Details> details;
 
-  Plan({this.packageId, this.packageName, this.packagePrice, this.details});
+  Plan(
+      {this.packageId,
+      this.packageName,
+      this.packagePrice,
+      this.details,
+      this.color});
 
   Plan.fromJson(Map<String, dynamic> json) {
     packageId = json['package_id'];
     packageName = json['package_name'];
     packagePrice = json['package_price'];
+    color = json['color'];
     if (json['details'] != null) {
       details = new List<Details>();
       json['details'].forEach((v) {
@@ -55,6 +62,7 @@ class Plan {
     data['package_id'] = this.packageId;
     data['package_name'] = this.packageName;
     data['package_price'] = this.packagePrice;
+    data['color'] = this.color;
     if (this.details != null) {
       data['details'] = this.details.map((v) => v.toJson()).toList();
     }

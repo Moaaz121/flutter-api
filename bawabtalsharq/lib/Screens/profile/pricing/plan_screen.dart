@@ -98,7 +98,7 @@ class _PlanScreenState extends State<PlanScreen> {
                             text: planList[index].packageName,
                             price: planList[index].packagePrice,
                             index: index,
-                            color: Colors.blue[300]);
+                            color: Color(int.parse(planList[index].color)));
                       },
                       // items: [
                       //   pricingItem(

@@ -1,4 +1,4 @@
-import 'package:bawabtalsharq/Model/base_model.dart';
+import 'package:bawabtalsharq/Model/user_model.dart';
 
 abstract class UpdateAccountState {}
 
@@ -7,7 +7,7 @@ class UpdateAccountInitial extends UpdateAccountState {}
 class UpdateAccountLoadingState extends UpdateAccountState {}
 
 class UpdateAccountLoadedState extends UpdateAccountState {
-  BaseModel response;
+  UserModel response;
   UpdateAccountLoadedState({this.response});
 }
 
