@@ -899,7 +899,13 @@ class _FilterScreenState extends State<FilterScreen> {
                         builder: (image) {
                           return Center(child: Image.file(image));
                         },
-                        placeHolder: LinearProgressIndicator(),
+                        placeHolder: Padding(
+                          padding: EdgeInsets.all(5),
+                          child: Container(
+                            child: Image.asset(placeHolder),
+                            color: Colors.white,
+                          ),
+                        ),
                         errorWidget: Image.asset(errorImage),
                       ),
                     )),
@@ -954,7 +960,13 @@ class _FilterScreenState extends State<FilterScreen> {
                       builder: (image) {
                         return Center(child: Image.file(image));
                       },
-                      placeHolder: LinearProgressIndicator(),
+                      placeHolder: Padding(
+                        padding: EdgeInsets.all(5),
+                        child: Container(
+                          child: Image.asset(placeHolder),
+                          color: Colors.white,
+                        ),
+                      ),
                       errorWidget: Image.asset(errorImage),
                     ),
                   ));

@@ -58,7 +58,13 @@ class _SubCategoriesScreenState extends State<SubCategoryScreen> {
                         builder: (image) {
                           return Center(child: Image.file(image));
                         },
-                        placeHolder: LinearProgressIndicator(),
+                        placeHolder: Padding(
+                          padding: EdgeInsets.all(5),
+                          child: Container(
+                            child: Image.asset(placeHolder),
+                            color: Colors.white,
+                          ),
+                        ),
                         errorWidget: Image.asset(errorImage),
                       ),
                     ),

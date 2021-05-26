@@ -3,6 +3,7 @@ import 'package:bawabtalsharq/Model/search_quary.dart';
 import 'package:bawabtalsharq/Screens/search/search_result_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
+import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/repo/category_repo.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
@@ -153,10 +154,15 @@ class _SearchScreenState extends State<SearchScreen> {
                                               return Center(
                                                   child: Image.file(image));
                                             },
-                                            placeHolder:
-                                                LinearProgressIndicator(),
-                                            errorWidget: Image.asset(
-                                                'assets/images/error_image.png'),
+                                            placeHolder: Padding(
+                                              padding: EdgeInsets.all(5),
+                                              child: Container(
+                                                child: Image.asset(placeHolder),
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            errorWidget:
+                                                Image.asset(errorImage),
                                             imageExtensions: ['jpg', 'png'],
                                           ),
                                         )),
