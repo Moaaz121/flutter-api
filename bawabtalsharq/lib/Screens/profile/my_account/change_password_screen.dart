@@ -52,7 +52,7 @@ class _ChangePasswordState extends State<ChangePassword> {
         builder: (context, state) {
           if (state is PasswordChangeLoadingState) {
             if (!isLoading) {
-              showLoadingDialog(context);
+              progressBar();
               isLoading = true;
             }
           } else if (state is PasswordChangeLoadedState) {

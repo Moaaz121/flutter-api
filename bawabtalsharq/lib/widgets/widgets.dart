@@ -9,6 +9,7 @@ import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/Utils/validator_util.dart';
 import 'package:bawabtalsharq/bloc/countryBloc/country_bloc.dart';
 import 'package:bawabtalsharq/bloc/countryBloc/country_event.dart';
 import 'package:bawabtalsharq/bloc/countryBloc/country_state.dart';
@@ -18,12 +19,15 @@ import 'package:bawabtalsharq/bloc/currancyBloc/currency_state.dart';
 import 'package:bawabtalsharq/bloc/langBloc/lang_bloc.dart';
 import 'package:bawabtalsharq/bloc/langBloc/lang_event.dart';
 import 'package:bawabtalsharq/bloc/langBloc/lang_state.dart';
+import 'package:bawabtalsharq/main.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_html/style.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Widgets {
@@ -372,16 +376,17 @@ Widget searchButton(BuildContext context, Function _function) {
     height: 35,
     child: Container(
       decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius:
-              BorderRadiusDirectional.horizontal(end: Radius.circular(15)),
-          boxShadow: [
-            BoxShadow(
-              color: orangeShadowColor,
-              blurRadius: 5,
-              spreadRadius: 2,
-            )
-          ]),
+        borderRadius:
+            BorderRadiusDirectional.horizontal(end: Radius.circular(10)),
+        color: const Color(0xffffffff),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0x2ee16036),
+            offset: Offset(0, 1),
+            blurRadius: 6,
+          ),
+        ],
+      ),
       child: FlatButton(
           splashColor: orangeColor.withOpacity(0.4),
           highlightColor: orangeShadowColor,
@@ -400,8 +405,14 @@ Widget searchButton(BuildContext context, Function _function) {
               Text(
                 Languages.of(context).search,
                 style: TextStyle(
+                  fontFamily: 'Segoe UI',
+                  fontSize: 15,
                   color: orangeColor,
+                  letterSpacing: 0.192,
                 ),
+                textHeightBehavior:
+                    TextHeightBehavior(applyHeightToFirstAscent: false),
+                textAlign: TextAlign.left,
               ),
               SizedBox(
                 width: 5,
@@ -424,9 +435,16 @@ Widget chatButton(Function _function,
       width: size,
       height: size,
       child: Container(
-        decoration: BoxDecoration(shape: BoxShape.circle, boxShadow: [
-          BoxShadow(color: orangeShadowColor, spreadRadius: 2, blurRadius: 10)
-        ]),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0x2ee16036),
+              offset: Offset(0, 1),
+              blurRadius: 6,
+            ),
+          ],
+        ),
         child: ClipOval(
           child: Material(
             shadowColor: orangeShadowColor,
@@ -480,9 +498,9 @@ class _mainSliderState extends State<mainSlider> {
                   position = page;
                 });
               },
-              height: 170,
-              aspectRatio: 16 / 9,
-              viewportFraction: 0.8,
+              height: MediaQuery.of(context).size.width * .48,
+              aspectRatio: 16 / 14,
+              viewportFraction: 0.83,
               pauseAutoPlayInFiniteScroll: true,
               pauseAutoPlayOnTouch: true,
               initialPage: 0,
@@ -503,11 +521,42 @@ class _mainSliderState extends State<mainSlider> {
 }
 
 Widget sliderItem(BuildContext context, String image) {
-  return ClipRRect(
-    borderRadius: BorderRadius.all(Radius.circular(15)),
-    child: Image.network(
-      image,
-      fit: BoxFit.fill,
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 10),
+    child: Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15.0),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0x336e6e6e),
+            offset: Offset(0, 3),
+            blurRadius: 6,
+          ),
+        ],
+      ),
+      child: ClipRRect(
+          borderRadius: BorderRadius.circular(15.0),
+          child: Image.network(
+            image,
+            fit: BoxFit.fill,
+            loadingBuilder: (BuildContext ctx, Widget child,
+                ImageChunkEvent loadingProgress) {
+              if (loadingProgress == null) {
+                return child;
+              } else {
+                return Container(
+                  color: backgroundColor,
+                  child: Center(
+                    child: Image.asset(
+                      placeHolder,
+                      height: 72,
+                      width: 72,
+                    ),
+                  ),
+                );
+              }
+            },
+          )),
     ),
   );
 }
@@ -516,7 +565,7 @@ Widget sliderIndicator(int page, {bool noPadding = false, int count = 4}) {
   return Padding(
     padding: noPadding
         ? const EdgeInsets.symmetric(vertical: 0, horizontal: 0)
-        : const EdgeInsets.symmetric(vertical: 16, horizontal: 55),
+        : const EdgeInsetsDirectional.only(top: 5, bottom: 20, start: 50),
     child: AnimatedSmoothIndicator(
       activeIndex: page,
       count: count,
@@ -524,8 +573,8 @@ Widget sliderIndicator(int page, {bool noPadding = false, int count = 4}) {
       effect: ExpandingDotsEffect(
           spacing: 5.0,
           radius: 8.0,
-          dotWidth: 8.0,
-          dotHeight: 8.0,
+          dotWidth: 6.5,
+          dotHeight: 6.5,
           expansionFactor: 2.7,
           dotColor: orangeShadowColor,
           activeDotColor: orangeColor),
@@ -533,6 +582,12 @@ Widget sliderIndicator(int page, {bool noPadding = false, int count = 4}) {
   );
 }
 
+Widget progressBar() {
+  return CircularProgressIndicator(
+    strokeWidth: 1.5,
+    valueColor: new AlwaysStoppedAnimation<Color>(orangeColor),
+  );
+}
 // end karem
 
 // Start Asmaa
@@ -607,12 +662,13 @@ AppBar appBarBuilderWithWidget(
 FloatingActionButton buildFloatingActionBtn(
     {@required IconData icon, @required Function onPressed}) {
   return FloatingActionButton(
-    onPressed: onPressed,
+    mini: true,
     child: Icon(
-      icon,
+      Icons.arrow_upward,
       color: defaultOrangeColor,
     ),
     backgroundColor: Colors.white,
+    onPressed: onPressed,
   );
 }
 
@@ -713,7 +769,7 @@ void showLanguagesDialog(BuildContext context) {
             bloc: _bloc,
             builder: (context, state) {
               if (state is LangLoadingState) {
-                return CircularProgressIndicator();
+                return progressBar();
               } else if (state is LangLoadedState &&
                   state.langResponse != null) {
                 return Container(
@@ -889,8 +945,7 @@ Widget productItem(BuildContext context,
       overflow: Overflow.visible,
       children: [
         Container(
-          height: MediaQuery.of(context).size.height * 0.22,
-          width: MediaQuery.of(context).size.width * 0.45,
+          height: (MediaQuery.of(context).size.width / 2) - 35 * 1.36,
           decoration: BoxDecoration(
               boxShadow: [makeShadow()],
               borderRadius: BorderRadius.circular(20),
@@ -915,42 +970,47 @@ Widget productItem(BuildContext context,
                             maxLines: 3,
                             text: TextSpan(
                                 style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                  fontSize: 12,
+                                  fontFamily: 'Segoe UI',
+                                  fontSize: 10.0,
+                                  color: Color(0xff303030),
+                                  letterSpacing: 0.12,
+                                  fontWeight: FontWeight.w700,
+                                  shadows: [
+                                    Shadow(
+                                      color: Colors.black.withOpacity(0.16),
+                                      offset: Offset(0, 1.0),
+                                      blurRadius: 6.0,
+                                    ),
+                                  ],
                                 ),
                                 text: product.product),
                           ),
                           SizedBox(
-                            height: 2,
+                            height: 5,
                           ),
                           RichText(
                             maxLines: 2,
                             text: TextSpan(
                                 style: TextStyle(
-                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Segoe UI',
+                                  fontSize: 10.0,
                                   color: orangeColor,
-                                  fontSize: 12,
+                                  letterSpacing: 0.108,
+                                  fontWeight: FontWeight.w600,
                                 ),
-                                text: '${product.price} L.E'),
+                                text: '${product.price}'),
                           ),
                         ],
                       ),
                     ),
                   ),
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.13,
-                    width: MediaQuery.of(context).size.width * 0.20,
-                    decoration: BoxDecoration(
-                      color: Color(0xfffff2e5),
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: LanguageHelper.isEnglish
-                            ? Radius.circular(80)
-                            : Radius.circular(0),
-                        bottomRight: LanguageHelper.isEnglish
-                            ? Radius.circular(0)
-                            : Radius.circular(80),
-                      ),
+                  Expanded(
+                    child: Container(
+                      height: MediaQuery.of(context).size.width * 0.22,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage(searchShadow),
+                              fit: BoxFit.fill)),
                     ),
                   ),
                 ],
@@ -970,8 +1030,8 @@ Widget productItem(BuildContext context,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
-                      width: 28,
-                      height: 28,
+                      width: 17,
+                      height: 17,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
@@ -986,29 +1046,34 @@ Widget productItem(BuildContext context,
                     Flexible(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           RichText(
                             maxLines: 1,
                             text: TextSpan(
                                 style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 9,
-                                    fontWeight: FontWeight.bold),
+                                  fontFamily: 'Segoe UI',
+                                  fontSize: 9.0,
+                                  color: Color(0xff303030),
+                                  letterSpacing: 0.084,
+                                ),
                                 text: product.company),
                           ),
                           SizedBox(
                             height: 1,
                           ),
-                          RichText(
-                            maxLines: 1,
-                            text: TextSpan(
-                                style: TextStyle(
-                                  color: Colors.grey[400],
-                                  fontSize: 9,
-                                ),
-                                text: product.shortDescription),
-                          ),
+                          Html(
+                            data: product.shortDescription,
+                            style: {
+                              "body": Style(
+                                fontFamily: 'Segoe UI',
+                                fontSize: FontSize(9.0),
+                                letterSpacing: 0.084,
+                                color: Color(0xff303030),
+                                fontWeight: FontWeight.w600,
+                              ),
+                            },
+                          )
                         ],
                       ),
                     ),
@@ -1033,13 +1098,14 @@ Widget productItem(BuildContext context,
           ),
         ),
         Positioned(
-          top: -5,
-          right: LanguageHelper.isEnglish ? 0 : null,
-          left: LanguageHelper.isEnglish ? null : 0,
+          top: -10,
+          right: LanguageHelper.isEnglish ? -10 : null,
+          left: LanguageHelper.isEnglish ? null : -10,
           child: Image.network(
             product.imagePath,
-            width: MediaQuery.of(context).size.width * 0.15,
-            height: MediaQuery.of(context).size.height * 0.13,
+            width: MediaQuery.of(context).size.width * 0.1,
+            height: MediaQuery.of(context).size.height * 0.1,
+            fit: BoxFit.cover,
           ),
         ),
       ],
@@ -1421,8 +1487,8 @@ Widget ListOfProduct() {
       });
 }
 
-Widget infoCartSupplier(
-    String name, String years, String country, String category) {
+Widget infoCartSupplier(String name, String years, String country,
+    String category, String imagFlag) {
   return Column(
     children: [
       Container(
@@ -1465,7 +1531,7 @@ Widget infoCartSupplier(
                         Row(
                           children: [
                             Image(
-                              image: AssetImage(medalImage),
+                              image: AssetImage(imagFlag),
                               width: 14,
                               height: 14,
                             ),
@@ -1549,8 +1615,7 @@ Widget listOfCateWidget(List<CategoryElement> cats) {
     itemBuilder: (context, position) {
       return SizedBox(
           width: MediaQuery.of(context).size.width / 3 - 5,
-          child:
-              mostPopularByCategoryStable(context, () {}, cats[position + 1]));
+          child: mostPopularByCategoryStable(context, cats[position + 1]));
     },
   );
 }
@@ -1562,22 +1627,20 @@ Widget mostPopularByCategoryHeader(BuildContext context) {
       height: 50,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-          shape: BoxShape.rectangle,
-          gradient: LinearGradient(
-              colors: [
-                Colors.white.withOpacity(1),
-                Colors.black.withOpacity(0.3)
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              tileMode: TileMode.repeated),
-          color: Colors.black12,
-          borderRadius: BorderRadius.horizontal(
-            right: Radius.circular(20),
-            left: Radius.circular(20),
-          )),
+        borderRadius: BorderRadius.vertical(bottom: Radius.circular(25)),
+        boxShadow: [
+          BoxShadow(
+            color: orangeShadowColor.withOpacity(0.1),
+          ),
+          BoxShadow(
+              color: Colors.white,
+              spreadRadius: 1.0,
+              blurRadius: 8.0,
+              offset: Offset(0, -8)),
+        ],
+      ),
       child: Padding(
-        padding: const EdgeInsets.only(left: 20.0, top: 15.0),
+        padding: const EdgeInsets.only(left: 20.0, top: 15.0, right: 20),
         child: Text(
           Languages.of(context).mostPopularByCategories,
           style: titlesStyle(),
@@ -1598,7 +1661,7 @@ void showCurrencyDialog(BuildContext context) {
             bloc: _bloc,
             builder: (context, state) {
               if (state is CurrencyLoadingState) {
-                return CircularProgressIndicator();
+                return progressBar();
               } else if (state is CurrencyLoadedState &&
                   state.currencyResponse != null) {
                 return Container(
@@ -1613,10 +1676,11 @@ void showCurrencyDialog(BuildContext context) {
                       return GestureDetector(
                         onTap: () {
                           state.currencyResponse.data[index].isSelected = true;
-                          Constants.saveCurrency(
+                          Constants.saveCurrencyId(
                               currency: state
                                   .currencyResponse.data[index].currencyId);
-                          Navigator.pop(context);
+                          Navigator.popAndPushNamed(
+                              context, ScreenRoutes.mainScreen);
                         },
                         child: Container(
                           height: 60,
@@ -1633,7 +1697,8 @@ void showCurrencyDialog(BuildContext context) {
                                       15,
                                       fontFamily: mediumFontFamily,
                                       fontWeight: FontWeight.w600)),
-                              state.currencyResponse.data[index].isSelected
+                              state.currencyResponse.data[index].currencyId ==
+                                      Constants.getCurrency2()
                                   ? Image.asset(
                                       checkBox,
                                       width: 40,
@@ -1678,9 +1743,10 @@ void showCountryDialog(BuildContext context) {
             bloc: _bloc,
             builder: (context, state) {
               if (state is CountryLoadingState) {
-                return CircularProgressIndicator();
+                return progressBar();
               } else if (state is CountryLoadedState &&
                   state.countryResponse != null) {
+                // print(state.countryResponse.data[0].country);
                 return Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
@@ -1691,7 +1757,14 @@ void showCountryDialog(BuildContext context) {
                     itemCount: state.countryResponse.data.length,
                     itemBuilder: (context, index) {
                       return GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          state.countryResponse.data[index].isSelected = true;
+                          Constants.saveCountryCode(
+                              country:
+                                  state.countryResponse.data[index].country);
+                          Navigator.popAndPushNamed(
+                              context, ScreenRoutes.mainScreen);
+                        },
                         child: Container(
                           height: 60,
                           child: Row(
@@ -1706,11 +1779,14 @@ void showCountryDialog(BuildContext context) {
                                       15,
                                       fontFamily: mediumFontFamily,
                                       fontWeight: FontWeight.w600)),
-                              Image.asset(
-                                checkBox,
-                                width: 40,
-                                height: 40,
-                              ),
+                              state.countryResponse.data[index].country ==
+                                      Constants.getCountry2()
+                                  ? Image.asset(
+                                      checkBox,
+                                      width: 40,
+                                      height: 40,
+                                    )
+                                  : SizedBox(),
                               SizedBox(
                                 width: 10,
                               ),
@@ -1810,5 +1886,54 @@ FlatButton signInFlatButton(
 // end Islam
 
 //Start Asmaa
+
+Widget customTextFormField(
+  BuildContext context, {
+  String label,
+  IconButton rightBtn,
+  IconData leftIcon,
+  TextEditingController controller,
+  double width = 1,
+  TextInputType textInputType,
+  errorText,
+  bool isPassword = false,
+}) {
+  return SizedBox(
+    width: MediaQuery.of(context).size.width * width,
+    child: TextFormField(
+      keyboardType: textInputType,
+      controller: controller,
+      obscureText: isPassword,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter some text';
+        } else if (label == 'E-mail' &&
+            !emailValidator(controller.text.trim())) {
+          return 'please enter correct email address';
+        } else if (label == 'Tel' && !phoneValidator(controller.text.trim())) {
+          return 'please enter correct Phone Number';
+        } else if (label == 'Login Password' &&
+            !passwordValidator(controller.text.trim())) {
+          return 'Weak Password';
+        }
+        return null;
+      },
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+          //hintText: 'username',
+          prefixIcon: Icon(
+            leftIcon,
+            color: Colors.grey,
+          ),
+          suffixIcon: rightBtn,
+          labelText: label,
+          labelStyle: TextStyle(
+            fontSize: 12,
+          ),
+          focusedBorder:
+              UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey))),
+    ),
+  );
+}
 
 //End Asmaa

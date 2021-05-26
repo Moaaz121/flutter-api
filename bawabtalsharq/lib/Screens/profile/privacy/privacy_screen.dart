@@ -45,7 +45,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
               return Container(
                 color: Colors.white,
                 child: Center(
-                  child: CircularProgressIndicator(),
+                  child: progressBar(),
                 ),
               );
             }
@@ -70,7 +70,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
               : Center(
                   child: Container(
                   color: Colors.white,
-                  child: Text('No Internet Connection'),
+                  child: Text(Languages.of(context).noNetwork),
                 ));
         },
       ),

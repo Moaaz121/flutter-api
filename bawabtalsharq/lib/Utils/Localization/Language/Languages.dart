@@ -71,6 +71,10 @@ abstract class Languages {
   String get resendCode;
   String get verify;
   String get currency1;
+  String get egp;
+  String get usd;
+  String get noNetwork;
+  String get noItem;
 
 // end Bahaa
 
@@ -152,6 +156,8 @@ abstract class Languages {
   String get lan;
   String get year;
   String get overView;
+  String get chatSupplier;
+  String get buyNow;
 
 // end Mosdik
 

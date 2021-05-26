@@ -22,6 +22,8 @@ const String kareem_img = 'assets/images/kareem_img.jpg';
 const String rFqSlider1 = 'assets/images/r_t_q_slider1.jpg';
 const String rFqSlider2 = 'assets/images/r_f_q_slider2.jpg';
 const String rFqSlider3 = 'assets/images/r_f_q_slider_3.jpg';
+const String placeHolder = 'assets/images/plasceholder.png';
+const String searchShadow = 'assets/images/searchShadow.png';
 
 // end karem
 

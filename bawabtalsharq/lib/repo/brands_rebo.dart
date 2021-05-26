@@ -1,8 +1,11 @@
 import 'dart:convert';
+
 import 'package:bawabtalsharq/Model/mainCategoryModel.dart';
 import 'package:bawabtalsharq/Utils/apis.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:http/http.dart' as http;
+
+import 'dart:convert';
 
 class CategoryRepo {
   static Future<List<CategoryModel>> getCategory() async {
@@ -21,18 +24,3 @@ class CategoryRepo {
     }
   }
 }
-
-// class CategoryRepo {
-//   Future<MainCategory> showCategory() async {
-//     var response = await http.post(
-//       Uri.encodeFull(APIS.serverURL + APIS.Category_API),
-//     );
-//     var decodedResponse = json.decode(response.body);
-//     print('Category response .. ${response.body}');
-//
-//     List<MainCategory> modelResponse =
-//         List<MainCategory>.fromJson(decodedResponse);
-//
-//     return modelResponse;
-//   }
-// }

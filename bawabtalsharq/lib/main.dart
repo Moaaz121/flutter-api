@@ -16,7 +16,6 @@ import 'package:bawabtalsharq/Screens/profile/privacy/privacy_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/saved/saved_screen.dart';
 import 'package:bawabtalsharq/Screens/request_for_qutation.dart';
 import 'package:bawabtalsharq/Screens/search/categories_filter_screen.dart';
-import 'package:bawabtalsharq/Screens/search/search_filter_screen.dart';
 import 'package:bawabtalsharq/Screens/search/search_result_screen.dart';
 import 'package:bawabtalsharq/Screens/search/search_screen.dart';
 import 'package:bawabtalsharq/Screens/settings_screen.dart';
@@ -25,10 +24,12 @@ import 'package:bawabtalsharq/Screens/splash_screen.dart';
 import 'package:bawabtalsharq/Screens/sub_category_screen.dart';
 import 'package:bawabtalsharq/Screens/suppliers/golden_suppliers_screen.dart';
 import 'package:bawabtalsharq/Screens/suppliers/supplier_profile_screen.dart';
+import 'package:bawabtalsharq/Services/AnalyticsService.dart';
 import 'package:bawabtalsharq/Utils/Localization/AppLocalizationDelgate.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -54,13 +55,16 @@ void main() async {
   await Constants.initSharedPref();
 
   if (Constants.getDate(key: 'currency') == null) {
-    Constants.saveCurrency(currency: '1');
+    Constants.saveCurrencyId(currency: '1');
+  }
+  if (Constants.getDate(key: 'country') == null) {
+    Constants.saveCountryCode(country: 'Egypt');
   }
 
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+  //FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   runApp(
     DevicePreview(
       enabled: false,
@@ -98,6 +102,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
       theme: ThemeData(primaryColor: Colors.deepOrange),
       home: SplashScreen(),
       navigatorObservers: [AnalyticsService().getAnalyticsOberver()],
+      //navigatorObservers: [AnalyticsService().getAnalyticsOberver()],
       routes: {
         ScreenRoutes.splashScreen: (_) => SplashScreen(),
         ScreenRoutes.introScreen: (_) => IntroScreen(),

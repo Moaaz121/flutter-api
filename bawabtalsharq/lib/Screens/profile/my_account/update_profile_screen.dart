@@ -10,8 +10,10 @@ import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'dart:convert';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UpdateProfile extends StatefulWidget {
   @override
@@ -37,7 +39,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
   void initState() {
     // TODO: implement initState
     _updateAccountBloc = UpdateAccountBloc();
-    Constants.getUserInfo().then((value) => _currentUser = value.data);
+    _currentUser = Constants.getUserInfo2().data;
     super.initState();
   }
 
@@ -79,7 +81,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
-                                    image: AssetImage(profile_image),
+                                    image: AssetImage(logo),
                                     fit: BoxFit.fill,
                                   ),
                                 ),
@@ -177,7 +179,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                       builder: (context, state) {
                         if (state is UpdateAccountLoadingState) {
                           if (!isLoading) {
-                            showLoadingDialog(context);
+                            progressBar();
                             isLoading = true;
                           }
                         } else if (state is UpdateAccountLoadedState) {
@@ -189,8 +191,6 @@ class _UpdateProfileState extends State<UpdateProfile> {
                               Navigator.pushReplacementNamed(
                                   context, ScreenRoutes.mainScreen);
                             });
-                            Scaffold.of(context).showSnackBar(
-                                SnackBar(content: Text(state.response.msg)));
                           } else {
                             SchedulerBinding.instance.addPostFrameCallback((_) {
                               Scaffold.of(context).showSnackBar(
@@ -206,19 +206,20 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           FocusScope.of(context).unfocus();
                           firstNameError = null;
                           lastNameError = null;
+                          _phoneErrorMessage = null;
                           setState(() {
                             if (firstNameController.text.isEmpty)
                               firstNameError = 'Empty Field';
                             else if (lastNameController.text.isEmpty)
                               lastNameError = 'Empty Field';
+                            else if (phoneController.text.isEmpty)
+                              _phoneErrorMessage = 'Empty Field';
                             else {
-                              //get user information rather than static info
+                              _currentUser.firstname = firstNameController.text;
+                              _currentUser.lastname = lastNameController.text;
+                              _currentUser.phone = phoneController.text;
                               _updateAccountBloc.add(
-                                UpdateEvent(
-                                    _currentUser.userId,
-                                    _currentUser.apiKey,
-                                    firstNameController.text,
-                                    lastNameController.text),
+                                UpdateEvent(_currentUser),
                               );
                             }
                           });

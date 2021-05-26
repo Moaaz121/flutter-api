@@ -47,7 +47,7 @@ class LanguageEn extends Languages {
   String get bestRating => 'Best Rating';
   String get blueShoes => 'Blue Shoes';
   String get highestPrice => 'Highest Price';
-  String get lowestPrice => 'Lowest Price';
+  String get lowestPrice => 'Price';
   String get mostPop => 'Most Popular';
   String get newIn => 'New In';
   String get popularity => 'Popularity';
@@ -70,6 +70,10 @@ class LanguageEn extends Languages {
   String get verification => 'Verification';
   String get verify => 'Verify';
   String get currency1 => '\$';
+  String get egp => 'EGP';
+  String get usd => 'USD';
+  String get noNetwork => 'No Internet Connection';
+  String get noItem => 'No Saved Item';
 
 // end Bahaa
 
@@ -159,6 +163,8 @@ class LanguageEn extends Languages {
   String get lan => 'English';
   String get year => 'YRS';
   String get overView => 'OverView';
+  String get chatSupplier => 'Supplier Chat';
+  String get buyNow => 'Buy Now';
 
 // end Mosdik
 
