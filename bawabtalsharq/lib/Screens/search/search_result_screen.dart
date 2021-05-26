@@ -97,7 +97,7 @@ class _SearchResultState extends State<SearchResult> {
           icon: Icons.arrow_upward,
           onPressed: () {
             _resultScrollController.animateTo(0.0,
-                duration: Duration(seconds: 1), curve: Curves.easeOut);
+                duration: Duration(milliseconds: 400), curve: Curves.easeOut);
           }),
       body: Padding(
         padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
@@ -211,13 +211,19 @@ class _SearchResultState extends State<SearchResult> {
                 bloc: _bloc,
                 builder: (context, event) {
                   if (event is SearchLoadingState) {
-                    return Center(
-                      child: CircularProgressIndicator(),
+                    return Expanded(
+                      child: SizedBox(
+                        child: Center(
+                          child: progressBar(),
+                        ),
+                      ),
                     );
                   } else if (event is SearchLoadedState) {
                     return isGrid
                         ? Expanded(
                             child: GridView.builder(
+                              physics: const BouncingScrollPhysics(
+                                  parent: AlwaysScrollableScrollPhysics()),
                               controller: _resultScrollController,
                               gridDelegate:
                                   SliverGridDelegateWithFixedCrossAxisCount(
@@ -240,8 +246,9 @@ class _SearchResultState extends State<SearchResult> {
                           )
                         : Expanded(
                             child: ListView.builder(
+                              physics: const BouncingScrollPhysics(
+                                  parent: AlwaysScrollableScrollPhysics()),
                               controller: _resultScrollController,
-                              shrinkWrap: true,
                               scrollDirection: Axis.vertical,
                               itemCount: event.searchResponse.products.length,
                               itemBuilder: (context, position) {
