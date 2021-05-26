@@ -1,5 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bawabtalsharq/Model/home_model.dart';
+import 'package:bawabtalsharq/Model/search_quary.dart';
+import 'package:bawabtalsharq/Screens/search/search_result_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
@@ -47,6 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   physics: const BouncingScrollPhysics(
                       parent: AlwaysScrollableScrollPhysics()),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       SizedBox(
                         height: 100,
@@ -135,7 +138,7 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 Widget mostPopularByCategoryStable(
-    BuildContext context, Function onPress, CategoryElement category) {
+    BuildContext context, CategoryElement category) {
   return Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
@@ -166,7 +169,18 @@ Widget mostPopularByCategoryStable(
               textAlign: TextAlign.left,
             ),
             GestureDetector(
-              onTap: onPress,
+              onTap: () {
+                Navigator.push(
+                    context,
+                    new MaterialPageRoute(
+                      builder: (BuildContext context) => new SearchResult(
+                        searchQuery: new SearchQueryModel(
+                          '',
+                          Categories: [category.categoryId.toString()],
+                        ),
+                      ),
+                    ));
+              },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -511,7 +525,7 @@ Widget popularSlider(
                   : blueColor.withOpacity(.3),
               onPress: () {
                 Navigator.pushNamed(context, ScreenRoutes.individualProduct,
-                    arguments: datums[pos].id);
+                    arguments: datums[0].id);
               },
               nameProduct: datums[0].name,
               nameCategory: datums[0].category,
@@ -521,13 +535,13 @@ Widget popularSlider(
         Expanded(
           flex: 1,
           child: subMostPopularProduct(
-              img: datums[0].image,
+              img: datums[pos].image,
               backgroundColor: pos.isOdd
                   ? orangeColor.withOpacity(.3)
                   : purpleColor.withOpacity(.3),
               onPress: () {
                 Navigator.pushNamed(context, ScreenRoutes.individualProduct,
-                    arguments: datums[pos].id);
+                    arguments: datums[1].id);
               },
               nameProduct: datums[1].name,
               nameCategory: datums[1].category,

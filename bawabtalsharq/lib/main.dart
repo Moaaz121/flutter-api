@@ -6,7 +6,6 @@ import 'package:bawabtalsharq/Screens/home_screen.dart';
 import 'package:bawabtalsharq/Screens/individual_product_screen.dart';
 import 'package:bawabtalsharq/Screens/intro_screen.dart';
 import 'package:bawabtalsharq/Screens/login_screen.dart';
-import 'package:bawabtalsharq/Screens/forget_password/verification_OTP_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/faq/faq_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/history/history_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/message_center/message_center_screen.dart';
@@ -25,10 +24,12 @@ import 'package:bawabtalsharq/Screens/splash_screen.dart';
 import 'package:bawabtalsharq/Screens/sub_category_screen.dart';
 import 'package:bawabtalsharq/Screens/suppliers/golden_suppliers_screen.dart';
 import 'package:bawabtalsharq/Screens/suppliers/supplier_profile_screen.dart';
+import 'package:bawabtalsharq/Services/AnalyticsService.dart';
 import 'package:bawabtalsharq/Utils/Localization/AppLocalizationDelgate.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -98,6 +99,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.deepOrange),
       home: SplashScreen(),
+      navigatorObservers: [AnalyticsService().getAnalyticsOberver()],
       //navigatorObservers: [AnalyticsService().getAnalyticsOberver()],
       routes: {
         ScreenRoutes.splashScreen: (_) => SplashScreen(),

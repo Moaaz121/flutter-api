@@ -26,6 +26,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_html/style.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Widgets {
@@ -660,12 +662,13 @@ AppBar appBarBuilderWithWidget(
 FloatingActionButton buildFloatingActionBtn(
     {@required IconData icon, @required Function onPressed}) {
   return FloatingActionButton(
-    onPressed: onPressed,
+    mini: true,
     child: Icon(
-      icon,
+      Icons.arrow_upward,
       color: defaultOrangeColor,
     ),
     backgroundColor: Colors.white,
+    onPressed: onPressed,
   );
 }
 
@@ -995,7 +998,7 @@ Widget productItem(BuildContext context,
                                   letterSpacing: 0.108,
                                   fontWeight: FontWeight.w600,
                                 ),
-                                text: '${product.price} L.E'),
+                                text: '${product.price}'),
                           ),
                         ],
                       ),
@@ -1059,18 +1062,18 @@ Widget productItem(BuildContext context,
                           SizedBox(
                             height: 1,
                           ),
-                          RichText(
-                            maxLines: 1,
-                            text: TextSpan(
-                                style: TextStyle(
-                                  fontFamily: 'Segoe UI',
-                                  fontSize: 9.0,
-                                  color: Color(0xff303030),
-                                  letterSpacing: 0.084,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                                text: product.shortDescription),
-                          ),
+                          Html(
+                            data: product.shortDescription,
+                            style: {
+                              "body": Style(
+                                fontFamily: 'Segoe UI',
+                                fontSize: FontSize(9.0),
+                                letterSpacing: 0.084,
+                                color: Color(0xff303030),
+                                fontWeight: FontWeight.w600,
+                              ),
+                            },
+                          )
                         ],
                       ),
                     ),
@@ -1612,8 +1615,7 @@ Widget listOfCateWidget(List<CategoryElement> cats) {
     itemBuilder: (context, position) {
       return SizedBox(
           width: MediaQuery.of(context).size.width / 3 - 5,
-          child:
-              mostPopularByCategoryStable(context, () {}, cats[position + 1]));
+          child: mostPopularByCategoryStable(context, cats[position + 1]));
     },
   );
 }

@@ -37,6 +37,7 @@ class SearchRepo {
     if (searchQueryModel.countryCode != null) {
       params['country_code'] = searchQueryModel.countryCode;
     }
+    print(params['categories']);
 
     var response = await http.post(
       Uri.encodeFull(APIS.serverURL + APIS.SEARCH_API),
