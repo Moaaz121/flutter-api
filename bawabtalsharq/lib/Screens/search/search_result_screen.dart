@@ -900,9 +900,7 @@ class _FilterScreenState extends State<FilterScreen> {
                           return Center(child: Image.file(image));
                         },
                         placeHolder: LinearProgressIndicator(),
-                        errorWidget:
-                            Image.asset('assets/images/error_image.png'),
-                        imageExtensions: ['jpg', 'png'],
+                        errorWidget: Image.asset(errorImage),
                       ),
                     )),
               );
@@ -957,8 +955,7 @@ class _FilterScreenState extends State<FilterScreen> {
                         return Center(child: Image.file(image));
                       },
                       placeHolder: LinearProgressIndicator(),
-                      errorWidget: Image.asset('assets/images/error_image.png'),
-                      imageExtensions: ['jpg', 'png'],
+                      errorWidget: Image.asset(errorImage),
                     ),
                   ));
             },

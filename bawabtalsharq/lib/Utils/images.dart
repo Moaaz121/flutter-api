@@ -88,3 +88,6 @@ const String choose = 'assets/images/choose.png';
 const String chooseRight = 'assets/images/chooseRight.png';
 const String eslam = 'assets/images/eslam.png';
 // end Islam
+//start Asmaa
+const String errorImage = 'assets/images/error_image.png';
+//end Asmaa

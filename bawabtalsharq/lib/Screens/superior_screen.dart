@@ -7,6 +7,7 @@ import 'package:bawabtalsharq/bloc/superiorBlocs/superior_state.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
+import 'package:cached_network_image_builder/cached_network_image_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -202,11 +203,15 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
                                   blurRadius: 6.0,
                                 ),
                               ],
-                              image: DecorationImage(
-                                image:
-                                    NetworkImage(listOfSuperior[position].logo),
-                                fit: BoxFit.contain,
-                              ),
+                            ),
+                            child: CachedNetworkImageBuilder(
+                              url: listOfSuperior[position].logo,
+                              builder: (image) {
+                                return Center(child: Image.file(image));
+                              },
+                              placeHolder: LinearProgressIndicator(),
+                              errorWidget:
+                                  Image.asset('assets/images/error_image.png'),
                             ),
                           ),
                         ),
@@ -317,6 +322,14 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
           image: isEmpty ? AssetImage(logo) : NetworkImage(image),
           fit: BoxFit.fill,
         ),
+      ),
+      child: CachedNetworkImageBuilder(
+        url: image,
+        builder: (image) {
+          return Center(child: Image.file(image));
+        },
+        placeHolder: LinearProgressIndicator(),
+        errorWidget: Image.asset(logo),
       ),
     );
   }
