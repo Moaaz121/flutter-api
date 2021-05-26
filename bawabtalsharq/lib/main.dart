@@ -55,14 +55,17 @@ void main() async {
   if (Constants.getDate(key: 'currency') == null) {
     Constants.saveCurrencyId(currency: '1');
   }
+  if (Constants.getDate(key: 'country') == null) {
+    Constants.saveCountryCode(country: 'Egypt');
+  }
 
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+  //FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   runApp(
     DevicePreview(
-      enabled: true,
+      enabled: false,
       builder: (context) => BawabtAlsharqApp(),
     ),
   );
@@ -97,6 +100,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
       theme: ThemeData(primaryColor: Colors.deepOrange),
       home: SplashScreen(),
       navigatorObservers: [AnalyticsService().getAnalyticsOberver()],
+      //navigatorObservers: [AnalyticsService().getAnalyticsOberver()],
       routes: {
         ScreenRoutes.splashScreen: (_) => SplashScreen(),
         ScreenRoutes.introScreen: (_) => IntroScreen(),

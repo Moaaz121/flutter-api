@@ -6,6 +6,7 @@ import 'package:bawabtalsharq/bloc/notificationsBloc/notifications_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NotificationScreen extends StatefulWidget {
@@ -91,7 +92,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           builder: (context, snapshot) {
             if (snapshot is LoadingState) {
               return Center(
-                child: CircularProgressIndicator(),
+                child: progressBar(),
               );
             } else if (snapshot is DoneState) {
               return ListView.builder(
