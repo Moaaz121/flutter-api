@@ -9,6 +9,7 @@ import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/Utils/validator_util.dart';
 import 'package:bawabtalsharq/bloc/countryBloc/country_bloc.dart';
 import 'package:bawabtalsharq/bloc/countryBloc/country_event.dart';
 import 'package:bawabtalsharq/bloc/countryBloc/country_state.dart';
@@ -26,7 +27,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:bawabtalsharq/Utils/validator_util.dart';
 
 class Widgets {
   call() {}
@@ -1484,8 +1484,8 @@ Widget ListOfProduct() {
       });
 }
 
-Widget infoCartSupplier(
-    String name, String years, String country, String category) {
+Widget infoCartSupplier(String name, String years, String country,
+    String category, String imagFlag) {
   return Column(
     children: [
       Container(
@@ -1528,7 +1528,7 @@ Widget infoCartSupplier(
                         Row(
                           children: [
                             Image(
-                              image: AssetImage(medalImage),
+                              image: AssetImage(imagFlag),
                               width: 14,
                               height: 14,
                             ),
