@@ -30,6 +30,13 @@ class AnalyticsService {
         .catchError((e) => print('Error in LogEvent: $e'));
   }
 
+  Future setScreenView(String name) async {
+    await _analytics.setCurrentScreen(screenName: name);
+    await _analytics.logEvent(
+      name: name,
+    );
+  }
+
   ///
 
   //Map paramas= {  'id': 14524896,

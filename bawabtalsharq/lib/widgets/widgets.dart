@@ -1893,11 +1893,13 @@ Widget customTextFormField(
   IconButton rightBtn,
   IconData leftIcon,
   TextEditingController controller,
+  TextEditingController controller2,
   double width = 1,
   TextInputType textInputType,
   errorText,
   bool isPassword = false,
 }) {
+  print('$label: ${controller.text.trim()}');
   return SizedBox(
     width: MediaQuery.of(context).size.width * width,
     child: TextFormField(
@@ -1912,11 +1914,16 @@ Widget customTextFormField(
           return 'please enter correct email address';
         } else if (label == 'Tel' && !phoneValidator(controller.text.trim())) {
           return 'please enter correct Phone Number';
-        } else if (label == 'Login Password' &&
+        } else if ((label == 'Login Password' || label == 'Confirm Password') &&
             !passwordValidator(controller.text.trim())) {
           return 'Weak Password';
+        } else if (label == 'Confirm Password' &&
+            controller.text.trim() != controller2.text.trim()) {
+          return 'Password and confirm password does not match';
+        } else {
+          print('$label else');
+          return null;
         }
-        return null;
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(

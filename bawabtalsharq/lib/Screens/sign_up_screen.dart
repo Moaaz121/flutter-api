@@ -281,6 +281,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   textInputType: TextInputType.visiblePassword,
                   isPassword: obSecureText,
                   controller: confirmpasswordController,
+                  controller2: passwordController,
                   leftIcon: Icons.lock,
                   rightBtn: IconButton(
                     onPressed: () {
@@ -292,16 +293,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         obSecureText ? Icons.visibility_off : Icons.visibility),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Visibility(
-                    visible: _passwordErrorMessage,
-                    child: Text(
-                      'Password and confirm password does not match',
-                      style: TextStyle(color: Colors.red, fontSize: 10),
-                    ),
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.all(5.0),
+                //   child: Visibility(
+                //     visible: _passwordErrorMessage,
+                //     child: Text(
+                //       _passwordErrorTextMessage,
+                //       style: TextStyle(color: Colors.red, fontSize: 10),
+                //     ),
+                //   ),
+                // ),
                 customTextFormField(context,
                     textInputType: TextInputType.phone,
                     controller: phoneController,
@@ -362,12 +363,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ),
                             ),
                           );
-                        } else if (passwordController.text.trim() !=
-                            confirmpasswordController.text.trim()) {
-                          setState(() {
-                            _passwordErrorMessage = true;
-                          });
-                        } else {
+                        }
+                        //  else if (passwordController.text.trim() !=
+                        //     confirmpasswordController.text.trim()) {
+                        //    setState(() {
+                        //   _passwordErrorMessage = true;
+                        //   _passwordErrorTextMessage =
+                        //       '';
+                        // });
+                        // }
+
+                        // else if (passwordController.text.trim() ==
+                        //     confirmpasswordController.text.trim()) {
+                        //   if (!passwordValidator(
+                        //       passwordController.text.trim())) {
+                        //     setState(() {
+                        //       _passwordErrorMessage = true;
+                        //       _passwordErrorTextMessage = 'weak Password';
+                        //     });
+                        //   }
+                        // }
+                        else {
                           _passwordErrorMessage = false;
                           isLoading = true;
                           print('Verifying phone');
