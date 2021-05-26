@@ -14,6 +14,7 @@ import 'package:bawabtalsharq/bloc/searchBloc/search_bloc.dart';
 import 'package:bawabtalsharq/bloc/searchBloc/search_event.dart';
 import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
+import 'package:cached_network_image_builder/cached_network_image_builder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -890,24 +891,19 @@ class _FilterScreenState extends State<FilterScreen> {
                 ),
                 child: GestureDetector(
                     onTap: () {},
-                    child: Image.network(
-                      categries[position].image,
+                    child: Container(
                       height: 48,
                       width: 48,
-                      loadingBuilder: (BuildContext ctx, Widget child,
-                          ImageChunkEvent loadingProgress) {
-                        if (loadingProgress == null) {
-                          return child;
-                        } else {
-                          return Container(
-                            color: backgroundColor,
-                            child: Padding(
-                              padding: const EdgeInsets.all(5),
-                              child: Image.asset(placeHolder),
-                            ),
-                          );
-                        }
-                      },
+                      child: CachedNetworkImageBuilder(
+                        url: categries[position].image,
+                        builder: (image) {
+                          return Center(child: Image.file(image));
+                        },
+                        placeHolder: LinearProgressIndicator(),
+                        errorWidget:
+                            Image.asset('assets/images/error_image.png'),
+                        imageExtensions: ['jpg', 'png'],
+                      ),
                     )),
               );
             },
@@ -937,43 +933,34 @@ class _FilterScreenState extends State<FilterScreen> {
             itemCount: brands.length,
             itemBuilder: (context, position) {
               return Container(
-                width: 38.0,
-                height: 37.0,
-                padding: EdgeInsets.all(5),
-                margin: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.16),
-                      offset: Offset(0, 1.0),
-                      blurRadius: 6.0,
-                    ),
-                  ],
-                ),
-                child: GestureDetector(
-                    onTap: () {},
-                    child: Image.network(
-                      brands[position].logo,
-                      height: 48,
-                      width: 48,
-                      loadingBuilder: (BuildContext ctx, Widget child,
-                          ImageChunkEvent loadingProgress) {
-                        if (loadingProgress == null) {
-                          return child;
-                        } else {
-                          return Container(
-                            color: backgroundColor,
-                            child: Padding(
-                              padding: const EdgeInsets.all(5),
-                              child: Image.asset(placeHolder),
-                            ),
-                          );
-                        }
+                  width: 38.0,
+                  height: 37.0,
+                  padding: EdgeInsets.all(5),
+                  margin: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.16),
+                        offset: Offset(0, 1.0),
+                        blurRadius: 6.0,
+                      ),
+                    ],
+                  ),
+                  child: Container(
+                    height: 48,
+                    width: 48,
+                    child: CachedNetworkImageBuilder(
+                      url: brands[position].logo,
+                      builder: (image) {
+                        return Center(child: Image.file(image));
                       },
-                    )),
-              );
+                      placeHolder: LinearProgressIndicator(),
+                      errorWidget: Image.asset('assets/images/error_image.png'),
+                      imageExtensions: ['jpg', 'png'],
+                    ),
+                  ));
             },
           ),
         ),

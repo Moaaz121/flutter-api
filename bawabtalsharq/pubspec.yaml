@@ -63,6 +63,7 @@ dependencies:
   firebase_auth:
   firebase_analytics:
   firebase_crashlytics:
+  cached_network_image_builder:
 
 
 

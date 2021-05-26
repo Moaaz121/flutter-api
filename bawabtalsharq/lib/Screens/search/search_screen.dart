@@ -6,6 +6,7 @@ import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/repo/category_repo.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
+import 'package:cached_network_image_builder/cached_network_image_builder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -124,28 +125,41 @@ class _SearchScreenState extends State<SearchScreen> {
                                       ],
                                     ),
                                     child: GestureDetector(
-                                      onTap: () {
-                                        List<String> selectetList =
-                                            List<String>();
-                                        selectetList.add(
-                                            categories[position].categoryId);
-                                        SearchQueryModel queryModel =
-                                            SearchQueryModel(
-                                                _searchController.text,
-                                                Categories: selectetList);
-                                        Navigator.push(
-                                            context,
-                                            new MaterialPageRoute(
-                                              builder: (BuildContext context) =>
-                                                  new SearchResult(
-                                                searchQuery: queryModel,
-                                              ),
-                                            ));
-                                      },
-                                      child: Image.asset(
-                                        categories[position].image,
-                                      ),
-                                    ),
+                                        onTap: () {
+                                          List<String> selectetList =
+                                              List<String>();
+                                          selectetList.add(
+                                              categories[position].categoryId);
+                                          SearchQueryModel queryModel =
+                                              SearchQueryModel(
+                                                  _searchController.text,
+                                                  Categories: selectetList);
+                                          Navigator.push(
+                                              context,
+                                              new MaterialPageRoute(
+                                                builder:
+                                                    (BuildContext context) =>
+                                                        new SearchResult(
+                                                  searchQuery: queryModel,
+                                                ),
+                                              ));
+                                        },
+                                        child: Container(
+                                          height: 38,
+                                          width: 38,
+                                          child: CachedNetworkImageBuilder(
+                                            url: categories[position].image,
+                                            builder: (image) {
+                                              return Center(
+                                                  child: Image.file(image));
+                                            },
+                                            placeHolder:
+                                                LinearProgressIndicator(),
+                                            errorWidget: Image.asset(
+                                                'assets/images/error_image.png'),
+                                            imageExtensions: ['jpg', 'png'],
+                                          ),
+                                        )),
                                   );
                                 },
                               );

@@ -2,7 +2,6 @@ import 'package:bawabtalsharq/Screens/forget_password/verification_OTP_screen.da
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
-import 'package:bawabtalsharq/Utils/validator_util.dart';
 import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_bloc.dart';
 import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_event.dart';
 import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_state.dart';
