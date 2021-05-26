@@ -129,9 +129,9 @@ class _IndividualProductState extends State<IndividualProduct>
                           iconRound(Icons.bookmark_border_outlined),
                         ],
                         expandedHeight:
-                            MediaQuery.of(context).size.height * 0.5,
+                            MediaQuery.of(context).size.height * 0.4,
                         floating: true,
-                        // pinned: true,
+                        pinned: false,
                         snap: false,
                         elevation: 50,
                         backgroundColor: Color(0xfff9dfd6),
@@ -139,10 +139,12 @@ class _IndividualProductState extends State<IndividualProduct>
                             // title: Text('product'),
                             // centerTitle: true,
                             background: Container(
-                                padding: EdgeInsets.only(top: 40),
+                                padding: EdgeInsets.only(
+                                  top: 40,
+                                ),
                                 child: Column(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceEvenly,
                                     children: [
                                       CarouselSlider.builder(
                                         carouselController:
@@ -173,8 +175,8 @@ class _IndividualProductState extends State<IndividualProduct>
                                       Flexible(
                                         child: Container(
                                             margin: EdgeInsets.only(
-                                                top: 40,
-                                                bottom: 30,
+                                                top: 10,
+                                                bottom: 10,
                                                 left: 50,
                                                 right: 50),
                                             decoration: BoxDecoration(
@@ -242,9 +244,37 @@ class _IndividualProductState extends State<IndividualProduct>
                       ),
 
                       // bottom: false,
+
+                      SliverToBoxAdapter(
+                        child: Container(
+                          color: Color(0xfff9dfd6),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              Container(
+                                child: Center(
+                                  child: Container(
+                                    width: 50,
+                                    height: 2.5,
+                                    color: Colors.grey[300],
+                                  ),
+                                ),
+                                height: 25,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: const Radius.circular(30.0),
+                                    topRight: const Radius.circular(30.0),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                       SliverPersistentHeader(
                         pinned: true,
-                        floating: false,
+                        floating: true,
                         delegate: SliverPersistentHeaderDelegateImpl(
                           color: Colors.white,
                           tabBar: tabBar(),
@@ -273,19 +303,7 @@ class _IndividualProductState extends State<IndividualProduct>
                                       children: [
                                         product.color.isEmpty
                                             ? SizedBox()
-                                            : Center(
-                                                child: productOption(
-                                                  widgetTitle:
-                                                      'Product Options',
-                                                  widgetSubTitle: 'Color',
-                                                  widget: productColorOption(
-                                                    price: '50',
-                                                    counterWidget:
-                                                        productCounter(
-                                                            number: 10),
-                                                  ),
-                                                ),
-                                              ),
+                                            : Center(child: productColor()),
                                         overViewText(
                                             Html(data: product.fullDescription),
                                             context),
@@ -332,7 +350,8 @@ class _IndividualProductState extends State<IndividualProduct>
                               '${product.year}' +
                                   ' ${Languages.of(context).year}',
                               '${product.countryName}',
-                              '${product.category}'),
+                              '${product.category}',
+                              '${product.countryImage}'),
                         ),
                       ),
                     ),
@@ -433,13 +452,12 @@ class _IndividualProductState extends State<IndividualProduct>
     );
   }
 
-  Widget productOption(
-      {String widgetTitle, String widgetSubTitle, Widget widget}) {
+  Widget productColor() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          widgetTitle,
+          'Product Options',
           style: TextStyle(
               color: orangeColor, fontWeight: FontWeight.bold, fontSize: 18),
         ),
@@ -447,18 +465,56 @@ class _IndividualProductState extends State<IndividualProduct>
           height: 10,
         ),
         Text(
-          widgetSubTitle,
+          ' Color',
           style: TextStyle(
               color: Colors.black54, fontWeight: FontWeight.bold, fontSize: 14),
         ),
-        widget,
-        widget,
-        widget,
+        ListView.builder(
+            physics: BouncingScrollPhysics(
+              parent: NeverScrollableScrollPhysics(),
+            ),
+            padding: EdgeInsets.only(top: 5, bottom: 5),
+            shrinkWrap: true,
+            scrollDirection: Axis.vertical,
+            itemCount: product.color.length,
+            itemBuilder: (context, position) {
+              return Row(
+                children: [
+                  productColorOption(position),
+                  productCounter(number: product.minQty)
+                ],
+              );
+            })
       ],
     );
   }
 
-  Widget productColorOption({String price, Widget counterWidget}) {
+  // Widget productOption(
+  //     {String widgetTitle, String widgetSubTitle, Widget widget}) {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Text(
+  //         widgetTitle,
+  //         style: TextStyle(
+  //             color: orangeColor, fontWeight: FontWeight.bold, fontSize: 18),
+  //       ),
+  //       SizedBox(
+  //         height: 10,
+  //       ),
+  //       Text(
+  //         widgetSubTitle,
+  //         style: TextStyle(
+  //             color: Colors.black54, fontWeight: FontWeight.bold, fontSize: 14),
+  //       ),
+  //       widget,
+  //       widget,
+  //       // widget,
+  //     ],
+  //   );
+  // }
+
+  Widget productColorOption(int index) {
     return Padding(
       padding: const EdgeInsets.only(top: 8),
       child: Column(
@@ -469,16 +525,15 @@ class _IndividualProductState extends State<IndividualProduct>
             children: [
               Icon(
                 Icons.circle,
-                color: Colors.blue,
+                color: Color(int.parse(product.color[index])),
               ),
               SizedBox(
                 width: 8,
               ),
-              Text('$price \$'),
+              Text('${product.price} \$'),
               SizedBox(
                 width: 20,
               ),
-              counterWidget,
             ],
           ),
         ],
@@ -486,7 +541,7 @@ class _IndividualProductState extends State<IndividualProduct>
     );
   }
 
-  Widget productCounter({int number}) {
+  Widget productCounter({String number}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [

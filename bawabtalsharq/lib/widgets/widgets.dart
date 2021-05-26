@@ -1487,8 +1487,8 @@ Widget ListOfProduct() {
       });
 }
 
-Widget infoCartSupplier(
-    String name, String years, String country, String category) {
+Widget infoCartSupplier(String name, String years, String country,
+    String category, String imagFlag) {
   return Column(
     children: [
       Container(
@@ -1531,7 +1531,7 @@ Widget infoCartSupplier(
                         Row(
                           children: [
                             Image(
-                              image: AssetImage(medalImage),
+                              image: AssetImage(imagFlag),
                               width: 14,
                               height: 14,
                             ),
