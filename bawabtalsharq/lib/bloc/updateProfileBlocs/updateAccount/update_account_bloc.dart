@@ -1,4 +1,4 @@
-import 'package:bawabtalsharq/Model/base_model.dart';
+import 'package:bawabtalsharq/Model/user_model.dart';
 import 'package:bawabtalsharq/bloc/updateProfileBlocs/updateAccount/update_account_event.dart';
 import 'package:bawabtalsharq/bloc/updateProfileBlocs/updateAccount/update_account_state.dart';
 import 'package:bawabtalsharq/repo/update_profile_repo.dart';
@@ -14,7 +14,7 @@ class UpdateAccountBloc extends Bloc<UpdateAccountEvent, UpdateAccountState> {
     if (event is UpdateEvent) {
       yield UpdateAccountLoadingState();
       try {
-        BaseModel data =
+        UserModel data =
             await UpdateProfileRepo().updateAccount(event.currentUser);
         yield UpdateAccountLoadedState(response: data);
       } catch (e) {
