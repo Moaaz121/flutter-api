@@ -1,4 +1,4 @@
-import 'package:bawabtalsharq/Model/base_model.dart';
+import 'package:bawabtalsharq/Model/user_model.dart';
 
 abstract class ChangePasswordState {}
 
@@ -7,7 +7,7 @@ class PasswordChangeInitial extends ChangePasswordState {}
 class PasswordChangeLoadingState extends ChangePasswordState {}
 
 class PasswordChangeLoadedState extends ChangePasswordState {
-  BaseModel response;
+  UserModel response;
   PasswordChangeLoadedState({this.response});
 }
 

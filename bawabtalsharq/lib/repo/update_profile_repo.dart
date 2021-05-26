@@ -2,11 +2,13 @@ import 'package:bawabtalsharq/Model/base_model.dart';
 import 'package:bawabtalsharq/Utils/apis.dart';
 import 'package:bawabtalsharq/Model/user_model.dart';
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UpdateProfileRepo {
-  Future<BaseModel> changePassword(String userId, String apiKey,
+  Future<UserModel> changePassword(String userId, String apiKey,
       String newPassword, String oldPassword) async {
     Map<String, dynamic> params = {
       "user_id": userId,
@@ -20,12 +22,15 @@ class UpdateProfileRepo {
     );
     var decodedResponse = json.decode(response.body);
     print('Change Password response .. ${response.body}');
-    BaseModel modelResponse = BaseModel.fromJson(decodedResponse);
+    UserModel modelResponse = UserModel.fromJson(decodedResponse);
+
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('user', jsonEncode(modelResponse));
 
     return modelResponse;
   }
 
-  Future<BaseModel> updateAccount(UserLocal currentUser) async {
+  Future<UserModel> updateAccount(UserLocal currentUser, {File image}) async {
     print(currentUser.country);
     Map<String, dynamic> params = {
       "user_id": currentUser.userId,
@@ -33,7 +38,8 @@ class UpdateProfileRepo {
       "firstname": currentUser.firstname,
       "lastname": currentUser.lastname,
       "phone": currentUser.phone,
-      "b_country": currentUser.country != null ? currentUser.country : '',
+      "b_country": currentUser.country,
+      // "image": image,
     };
     var response = await http.post(
       Uri.encodeFull(APIS.serverURL + APIS.UPDATE_ACCOUNT_API),
@@ -41,12 +47,15 @@ class UpdateProfileRepo {
     );
     var decodedResponse = json.decode(response.body);
     print('Update Profile response .. ${response.body}');
-    BaseModel modelResponse = BaseModel.fromJson(decodedResponse);
+    UserModel modelResponse = UserModel.fromJson(decodedResponse);
+
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('user', jsonEncode(modelResponse));
 
     return modelResponse;
   }
 
-  Future<String> refreshKey(String userId, String apiKey) async {
+  Future<UserModel> refreshKey(String userId, String apiKey) async {
     Map<String, dynamic> params = {
       "user_id": userId,
       "ApiKey": apiKey,
@@ -56,8 +65,11 @@ class UpdateProfileRepo {
       body: params,
     );
     var decodedResponse = json.decode(response.body);
-    String userKey = UserModel.fromJson(decodedResponse).data.apiKey;
+    UserModel modelResponse = UserModel.fromJson(decodedResponse);
 
-    return userKey;
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('user', jsonEncode(modelResponse));
+
+    return modelResponse;
   }
 }

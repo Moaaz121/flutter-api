@@ -36,6 +36,7 @@ class UserLocal {
   String phone;
   String apiKey;
   String country;
+  String image;
 
   UserLocal(
       {this.userId,
@@ -47,7 +48,8 @@ class UserLocal {
       this.email,
       this.phone,
       this.apiKey,
-      this.country});
+      this.country,
+      this.image});
 
   UserLocal.fromJson(Map<String, dynamic> json) {
     userId = json['user_id'];
@@ -60,6 +62,7 @@ class UserLocal {
     phone = json['phone'];
     apiKey = json['ApiKey'];
     country = json['b_country'];
+    image = json['image'];
   }
 
   Map<String, dynamic> toJson() {
@@ -74,6 +77,7 @@ class UserLocal {
     data['phone'] = this.phone;
     data['ApiKey'] = this.apiKey;
     data['b_country'] = this.country;
+    data['image'] = this.image;
     return data;
   }
 }
