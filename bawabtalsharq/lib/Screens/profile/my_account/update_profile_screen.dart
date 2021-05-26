@@ -205,7 +205,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                               _currentUser.lastname = lastNameController.text;
                               _currentUser.phone = phoneController.text;
                               _updateAccountBloc.add(
-                                UpdateEvent(_currentUser),
+                                UpdateEvent(_currentUser, image: _image),
                               );
                             }
                           });
