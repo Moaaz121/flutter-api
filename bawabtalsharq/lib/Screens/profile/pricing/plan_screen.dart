@@ -1,16 +1,15 @@
+import 'package:bawabtalsharq/Model/plan_model.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
-import 'package:bawabtalsharq/widgets/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:bawabtalsharq/Model/plan_model.dart';
-import 'package:bawabtalsharq/bloc/planByIdBloc/plan_by_id_state.dart';
 import 'package:bawabtalsharq/bloc/planByIdBloc/plan_by_id_bloc.dart';
 import 'package:bawabtalsharq/bloc/planByIdBloc/plan_by_id_event.dart';
-
+import 'package:bawabtalsharq/bloc/planByIdBloc/plan_by_id_state.dart';
+import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PlanScreen extends StatefulWidget {
   final String packageId;
@@ -115,7 +114,7 @@ class _PlanScreenState extends State<PlanScreen> {
                           });
                         },
                         autoPlay: false,
-                        height: MediaQuery.of(context).size.height * 0.75,
+                        height: MediaQuery.of(context).size.height * 0.8,
                         autoPlayCurve: Curves.fastOutSlowIn,
                         scrollDirection: Axis.horizontal,
                         aspectRatio: 16 / 9,
@@ -152,7 +151,7 @@ class _PlanScreenState extends State<PlanScreen> {
   }) {
     return Container(
       margin: EdgeInsets.only(bottom: 10),
-      height: MediaQuery.of(context).size.height * 0.75,
+      height: MediaQuery.of(context).size.height * 0.8,
       width: MediaQuery.of(context).size.width * 0.9,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -164,8 +163,8 @@ class _PlanScreenState extends State<PlanScreen> {
       child: Column(
         children: [
           Container(
-            height: MediaQuery.of(context).size.height * 0.14,
-            width: MediaQuery.of(context).size.width * 0.55,
+            height: MediaQuery.of(context).size.height * 0.10,
+            width: MediaQuery.of(context).size.width * 0.4,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(140),
@@ -177,9 +176,9 @@ class _PlanScreenState extends State<PlanScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                buildText(text, 22,
+                buildText(text, 18,
                     color: Colors.white, fontWeight: FontWeight.w600),
-                buildText(price, 26,
+                buildText(price, 20,
                     color: Colors.white, fontWeight: FontWeight.w600),
               ],
             ),
@@ -226,20 +225,25 @@ class _PlanScreenState extends State<PlanScreen> {
       String leftText,
       isTrue = false}) {
     return Padding(
-      padding: const EdgeInsets.only(top: 10, right: 30, left: 30, bottom: 10),
+      padding: const EdgeInsets.only(top: 8, right: 5, left: 5, bottom: 0),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           isText
-              ? Flexible(child: buildText(leftText, 12, color: color))
-              : Icon(
-                  isTrue ? Icons.check : Icons.close,
-                  size: 16,
-                  color: color,
+              ? Container(
+                  width: 50,
+                  alignment: Alignment.center,
+                  child: Flexible(
+                      child: buildText(' ' + leftText, 9, color: color)))
+              : Container(
+                  width: 50,
+                  child: Icon(
+                    isTrue ? Icons.check : Icons.close,
+                    size: 12,
+                    color: color,
+                  ),
                 ),
-          SizedBox(
-            width: 10,
-          ),
-          Flexible(child: buildText(text, 14)),
+          Flexible(child: buildText(text, 12)),
         ],
       ),
     );

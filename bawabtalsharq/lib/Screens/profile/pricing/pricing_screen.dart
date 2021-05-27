@@ -83,8 +83,11 @@ class _PricingScreenState extends State<PricingScreen> {
 
           return isLoaded
               ? Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+                    SizedBox(
+                      height: 10,
+                    ),
                     CarouselSlider.builder(
                       itemCount: planList.length,
                       carouselController: buttonCarouselController,
@@ -111,7 +114,7 @@ class _PricingScreenState extends State<PricingScreen> {
                           });
                         },
                         autoPlay: false,
-                        height: MediaQuery.of(context).size.height * 0.75,
+                        height: MediaQuery.of(context).size.height * 0.8,
                         autoPlayCurve: Curves.fastOutSlowIn,
                         scrollDirection: Axis.horizontal,
                         aspectRatio: 16 / 9,
@@ -124,6 +127,9 @@ class _PricingScreenState extends State<PricingScreen> {
                         reverse: false,
                         enlargeCenterPage: true,
                       ),
+                    ),
+                    SizedBox(
+                      height: 10,
                     ),
                     sliderIndicator(sliderPosition,
                         noPadding: true, count: planList.length),
@@ -148,7 +154,7 @@ class _PricingScreenState extends State<PricingScreen> {
   }) {
     return Container(
       margin: EdgeInsets.only(bottom: 10),
-      height: MediaQuery.of(context).size.height * 0.75,
+      height: MediaQuery.of(context).size.height * 0.8,
       width: MediaQuery.of(context).size.width * 0.9,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -244,13 +250,14 @@ class _PricingScreenState extends State<PricingScreen> {
       String leftText,
       isTrue = false}) {
     return Padding(
-      padding: const EdgeInsets.only(top: 8, right: 10, left: 10, bottom: 0),
+      padding: const EdgeInsets.only(top: 8, right: 5, left: 5, bottom: 0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           isText
               ? Container(
                   width: 50,
+                  alignment: Alignment.center,
                   child: Flexible(
                       child: buildText(' ' + leftText, 9, color: color)))
               : Container(
