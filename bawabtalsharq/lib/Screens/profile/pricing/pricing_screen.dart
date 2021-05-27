@@ -1,16 +1,16 @@
+import 'package:bawabtalsharq/Model/plan_model.dart';
+import 'package:bawabtalsharq/Screens/profile/pricing/plan_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
-import 'package:bawabtalsharq/widgets/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:bawabtalsharq/Screens/profile/pricing/plan_screen.dart';
-import 'package:bawabtalsharq/Model/plan_model.dart';
 import 'package:bawabtalsharq/bloc/planBloc/plan_bloc.dart';
 import 'package:bawabtalsharq/bloc/planBloc/plan_event.dart';
 import 'package:bawabtalsharq/bloc/planBloc/plan_state.dart';
+import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PricingScreen extends StatefulWidget {
   @override
@@ -160,8 +160,8 @@ class _PricingScreenState extends State<PricingScreen> {
       child: Column(
         children: [
           Container(
-            height: MediaQuery.of(context).size.height * 0.14,
-            width: MediaQuery.of(context).size.width * 0.55,
+            height: MediaQuery.of(context).size.height * 0.10,
+            width: MediaQuery.of(context).size.width * 0.4,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(140),
@@ -171,11 +171,14 @@ class _PricingScreenState extends State<PricingScreen> {
               color: color,
             ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                buildText(text, 22,
+                buildText(text, 18,
                     color: Colors.white, fontWeight: FontWeight.w600),
-                buildText(price, 26,
+                SizedBox(
+                  height: 5,
+                ),
+                buildText(price, 20,
                     color: Colors.white, fontWeight: FontWeight.w600),
               ],
             ),
@@ -241,20 +244,24 @@ class _PricingScreenState extends State<PricingScreen> {
       String leftText,
       isTrue = false}) {
     return Padding(
-      padding: const EdgeInsets.only(top: 10, right: 30, left: 30, bottom: 10),
+      padding: const EdgeInsets.only(top: 8, right: 10, left: 10, bottom: 0),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           isText
-              ? Flexible(child: buildText(leftText, 12, color: color))
-              : Icon(
-                  isTrue ? Icons.check : Icons.close,
-                  size: 16,
-                  color: color,
+              ? Container(
+                  width: 50,
+                  child: Flexible(
+                      child: buildText(' ' + leftText, 9, color: color)))
+              : Container(
+                  width: 50,
+                  child: Icon(
+                    isTrue ? Icons.check : Icons.close,
+                    size: 12,
+                    color: color,
+                  ),
                 ),
-          SizedBox(
-            width: 10,
-          ),
-          Flexible(child: buildText(text, 14)),
+          Flexible(child: buildText(text, 12)),
         ],
       ),
     );
