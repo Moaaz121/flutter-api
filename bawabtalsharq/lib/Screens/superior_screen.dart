@@ -321,23 +321,18 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
               blurRadius: 6,
               spreadRadius: 0)
         ],
-        image: DecorationImage(
-          image: isEmpty
-              ? AssetImage(logo)
-              : CachedNetworkImage(
-                  imageUrl: image,
-                  placeholder: (context, url) => Padding(
-                    padding: EdgeInsets.all(5),
-                    child: Container(
-                      child: Image.asset(placeHolder),
-                      color: Colors.white,
-                    ),
-                  ),
-                  errorWidget: (context, url, error) =>
-                      Image.asset(placeHolder),
-                ),
-          fit: BoxFit.fill,
+      ),
+      child: CachedNetworkImage(
+        fit: BoxFit.fill,
+        imageUrl: image,
+        placeholder: (context, url) => Padding(
+          padding: EdgeInsets.all(5),
+          child: Container(
+            child: Image.asset(placeHolder),
+            color: Colors.white,
+          ),
         ),
+        errorWidget: (context, url, error) => Image.asset(placeHolder),
       ),
     );
   }
