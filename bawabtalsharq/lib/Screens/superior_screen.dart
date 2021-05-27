@@ -7,7 +7,7 @@ import 'package:bawabtalsharq/bloc/superiorBlocs/superior_state.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
-import 'package:cached_network_image_builder/cached_network_image_builder.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -204,14 +204,17 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
                                 ),
                               ],
                             ),
-                            child: CachedNetworkImageBuilder(
-                              url: listOfSuperior[position].logo,
-                              builder: (image) {
-                                return Center(child: Image.file(image));
-                              },
-                              placeHolder: LinearProgressIndicator(),
-                              errorWidget:
-                                  Image.asset('assets/images/error_image.png'),
+                            child: CachedNetworkImage(
+                              imageUrl: listOfSuperior[position].logo,
+                              placeholder: (context, url) => Padding(
+                                padding: EdgeInsets.all(5),
+                                child: Container(
+                                  child: Image.asset(placeHolder),
+                                  color: Colors.white,
+                                ),
+                              ),
+                              errorWidget: (context, url, error) =>
+                                  Image.asset(placeHolder),
                             ),
                           ),
                         ),
@@ -318,18 +321,18 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
               blurRadius: 6,
               spreadRadius: 0)
         ],
-        image: DecorationImage(
-          image: isEmpty ? AssetImage(logo) : NetworkImage(image),
-          fit: BoxFit.fill,
-        ),
       ),
-      child: CachedNetworkImageBuilder(
-        url: image,
-        builder: (image) {
-          return Center(child: Image.file(image));
-        },
-        placeHolder: LinearProgressIndicator(),
-        errorWidget: Image.asset(logo),
+      child: CachedNetworkImage(
+        fit: BoxFit.fill,
+        imageUrl: image,
+        placeholder: (context, url) => Padding(
+          padding: EdgeInsets.all(5),
+          child: Container(
+            child: Image.asset(placeHolder),
+            color: Colors.white,
+          ),
+        ),
+        errorWidget: (context, url, error) => Image.asset(placeHolder),
       ),
     );
   }

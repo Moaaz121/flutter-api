@@ -1,7 +1,9 @@
 import 'package:bawabtalsharq/Model/category.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
+import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class SearchCategories extends StatefulWidget {
@@ -71,18 +73,28 @@ class _SearchCategoriesState extends State<SearchCategories> {
                       width: 10,
                     ),
                     Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.white,
-                        boxShadow: [makeShadow()],
-                      ),
-                      padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
-                      child: Image.asset(
-                        searchCategoriesArr[position].icon,
-                        height: 58,
-                        width: 58,
-                      ),
-                    ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white,
+                          boxShadow: [makeShadow()],
+                        ),
+                        padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
+                        child: Container(
+                          height: 58,
+                          width: 58,
+                          child: CachedNetworkImage(
+                            imageUrl: searchCategoriesArr[position].icon,
+                            placeholder: (context, url) => Padding(
+                              padding: EdgeInsets.all(5),
+                              child: Container(
+                                child: Image.asset(placeHolder),
+                                color: Colors.white,
+                              ),
+                            ),
+                            errorWidget: (context, url, error) =>
+                                Image.asset(placeHolder),
+                          ),
+                        )),
                     SizedBox(
                       width: 10,
                     ),

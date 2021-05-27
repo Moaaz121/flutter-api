@@ -9,7 +9,8 @@ import 'package:bawabtalsharq/bloc/categoryBloc/category_event.dart';
 import 'package:bawabtalsharq/bloc/categoryBloc/category_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:bawabtalsharq/Utils/images.dart';
 import '../widgets/widgets.dart';
 
 class AllCategories extends StatefulWidget {
@@ -161,19 +162,30 @@ class _AllCategoriesState extends State<AllCategories>
                           color: Colors.white,
                         ),
                         child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Color(int.parse(listOfCategory[index].color))
-                                .withOpacity(0.15),
-                          ),
-                          padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
-                          child: Image.network(
-                            listOfCategory[index]
-                                .image, //listOfCategory[index].icon network image
-                            height: 45,
-                            width: 45,
-                          ),
-                        ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color:
+                                  Color(int.parse(listOfCategory[index].color))
+                                      .withOpacity(0.15),
+                            ),
+                            padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
+                            child: Container(
+                              height: 45,
+                              width: 45,
+                              child: CachedNetworkImage(
+                                imageUrl: listOfCategory[index]
+                                    .image, //listOfCategory[index].icon network image
+                                placeholder: (context, url) => Padding(
+                                  padding: EdgeInsets.all(5),
+                                  child: Container(
+                                    child: Image.asset(placeHolder),
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                errorWidget: (context, url, error) =>
+                                    Image.asset(placeHolder),
+                              ),
+                            )),
                       ),
                       SizedBox(
                         width: 20,
@@ -256,15 +268,25 @@ class _AllCategoriesState extends State<AllCategories>
                               color: Colors.white,
                             ),
                             child: Padding(
-                              padding: const EdgeInsetsDirectional.only(
-                                  start: 3, top: 3, end: 3, bottom: 3),
-                              child: Image.network(
-                                subCategoryArr[index].image,
-                                // categoriesArr[index].icon network image
-                                height: 37,
-                                width: 37,
-                              ),
-                            ),
+                                padding: const EdgeInsetsDirectional.only(
+                                    start: 3, top: 3, end: 3, bottom: 3),
+                                child: Container(
+                                  height: 37,
+                                  width: 37,
+                                  child: CachedNetworkImage(
+                                    imageUrl: subCategoryArr[index]
+                                        .image, // categoriesArr[index].icon network image
+                                    placeholder: (context, url) => Padding(
+                                      padding: EdgeInsets.all(5),
+                                      child: Container(
+                                        child: Image.asset(placeHolder),
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    errorWidget: (context, url, error) =>
+                                        Image.asset(placeHolder),
+                                  ),
+                                )),
                           ),
                           SizedBox(
                             width: 20,

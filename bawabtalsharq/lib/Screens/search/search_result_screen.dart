@@ -15,7 +15,7 @@ import 'package:bawabtalsharq/bloc/searchBloc/search_bloc.dart';
 import 'package:bawabtalsharq/bloc/searchBloc/search_event.dart';
 import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
-import 'package:cached_network_image_builder/cached_network_image_builder.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -901,19 +901,17 @@ class _FilterScreenState extends State<FilterScreen> {
                     child: Container(
                       height: 48,
                       width: 48,
-                      child: CachedNetworkImageBuilder(
-                        url: categries[position].image,
-                        builder: (image) {
-                          return Center(child: Image.file(image));
-                        },
-                        placeHolder: Padding(
+                      child: CachedNetworkImage(
+                        imageUrl: categries[position].image,
+                        placeholder: (context, url) => Padding(
                           padding: EdgeInsets.all(5),
                           child: Container(
                             child: Image.asset(placeHolder),
                             color: Colors.white,
                           ),
                         ),
-                        errorWidget: Image.asset(errorImage),
+                        errorWidget: (context, url, error) =>
+                            Image.asset(placeHolder),
                       ),
                     )),
               );
@@ -962,19 +960,17 @@ class _FilterScreenState extends State<FilterScreen> {
                   child: Container(
                     height: 48,
                     width: 48,
-                    child: CachedNetworkImageBuilder(
-                      url: brands[position].logo,
-                      builder: (image) {
-                        return Center(child: Image.file(image));
-                      },
-                      placeHolder: Padding(
+                    child: CachedNetworkImage(
+                      imageUrl: brands[position].logo,
+                      placeholder: (context, url) => Padding(
                         padding: EdgeInsets.all(5),
                         child: Container(
                           child: Image.asset(placeHolder),
                           color: Colors.white,
                         ),
                       ),
-                      errorWidget: Image.asset(errorImage),
+                      errorWidget: (context, url, error) =>
+                          Image.asset(placeHolder),
                     ),
                   ));
             },

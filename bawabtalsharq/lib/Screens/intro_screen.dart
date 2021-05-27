@@ -10,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class IntroScreen extends StatefulWidget {
   @override
@@ -214,11 +215,21 @@ class _IntroScreenState extends State<IntroScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Image.asset(
-            imageName,
-            fit: BoxFit.fill,
+          Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height * 0.4,
+            child: CachedNetworkImage(
+              fit: BoxFit.fill,
+              imageUrl: imageName,
+              placeholder: (context, url) => Padding(
+                padding: EdgeInsets.all(5),
+                child: Container(
+                  child: Image.asset(placeHolder),
+                  color: Colors.white,
+                ),
+              ),
+              errorWidget: (context, url, error) => Image.asset(placeHolder),
+            ),
           ),
           Container(
             margin: EdgeInsets.only(top: 10),

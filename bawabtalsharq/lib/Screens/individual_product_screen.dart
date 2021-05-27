@@ -13,7 +13,8 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:bawabtalsharq/Utils/images.dart';
 import 'SliverPersistentHeaderInvidiualProduct/IndividualProductHedaer.dart';
 
 class IndividualProduct extends StatefulWidget {
@@ -168,9 +169,18 @@ class _IndividualProductState extends State<IndividualProduct>
                                         itemCount: 4,
                                         itemBuilder:
                                             (context, index, realIndex) =>
-                                                Image(
-                                          image:
-                                              NetworkImage(product.imagePath),
+                                                CachedNetworkImage(
+                                          imageUrl: product.imagePath,
+                                          placeholder: (context, url) =>
+                                              Padding(
+                                            padding: EdgeInsets.all(5),
+                                            child: Container(
+                                              child: Image.asset(placeHolder),
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          errorWidget: (context, url, error) =>
+                                              Image.asset(placeHolder),
                                         ),
                                       ),
                                       sliderIndicator(sliderPosition,
@@ -721,13 +731,20 @@ class _IndividualProductState extends State<IndividualProduct>
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * .15,
                       decoration: new BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(
-                              product.packingShipping[position].image),
-                          fit: BoxFit.fill,
-                        ),
                         borderRadius: BorderRadius.circular(16),
                         color: Colors.white,
+                      ),
+                      child: CachedNetworkImage(
+                        imageUrl: product.packingShipping[position].image,
+                        placeholder: (context, url) => Padding(
+                          padding: EdgeInsets.all(5),
+                          child: Container(
+                            child: Image.asset(placeHolder),
+                            color: Colors.white,
+                          ),
+                        ),
+                        errorWidget: (context, url, error) =>
+                            Image.asset(placeHolder),
                       ),
                     ),
                     SizedBox(
@@ -764,7 +781,18 @@ class _IndividualProductState extends State<IndividualProduct>
                   borderRadius: BorderRadius.circular(16),
                   color: Colors.white,
                 ),
-                child: Image.network(product.certificates[position]),
+                child: CachedNetworkImage(
+                  imageUrl: product.certificates[position],
+                  placeholder: (context, url) => Padding(
+                    padding: EdgeInsets.all(5),
+                    child: Container(
+                      child: Image.asset(placeHolder),
+                      color: Colors.white,
+                    ),
+                  ),
+                  errorWidget: (context, url, error) =>
+                      Image.asset(placeHolder),
+                ),
               );
             },
           ),
@@ -795,7 +823,18 @@ class _IndividualProductState extends State<IndividualProduct>
               child: Card(
                   color: Colors.white,
                   child: Center(
-                    child: Image.network(product.detailedPictures[index]),
+                    child: CachedNetworkImage(
+                      imageUrl: product.detailedPictures[index],
+                      placeholder: (context, url) => Padding(
+                        padding: EdgeInsets.all(5),
+                        child: Container(
+                          child: Image.asset(placeHolder),
+                          color: Colors.white,
+                        ),
+                      ),
+                      errorWidget: (context, url, error) =>
+                          Image.asset(placeHolder),
+                    ),
                   )),
             );
           }),
