@@ -70,6 +70,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 end: 20,
                 bottom: MediaQuery.of(context).size.height * 0.16,
                 child: FloatingActionButton(
+                  onPressed: () {
+                    _mainScrollController.animateTo(0.0,
+                        duration: Duration(milliseconds: 600),
+                        curve: Curves.easeOut);
+                  },
                   mini: true,
                   child: Icon(
                     Icons.arrow_upward,
