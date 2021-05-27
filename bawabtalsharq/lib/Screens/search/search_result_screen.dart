@@ -894,61 +894,69 @@ class _FilterScreenState extends State<FilterScreen> {
         ),
         SizedBox(
           height: 55,
-          child: ListView.builder(
-            padding: EdgeInsets.symmetric(vertical: 9, horizontal: 35),
-            physics: const BouncingScrollPhysics(
-                parent: AlwaysScrollableScrollPhysics()),
-            scrollDirection: Axis.horizontal,
-            itemCount: categries.length,
-            itemBuilder: (context, position) {
-              return Container(
-                width: 38.0,
-                height: 37.0,
-                padding: EdgeInsets.all(5),
-                margin: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.16),
-                      offset: Offset(0, 1.0),
-                      blurRadius: 6.0,
-                    ),
-                  ],
-                ),
-                child: GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      height: 48,
-                      width: 48,
-                      child: CachedNetworkImage(
-                        imageUrl: categries[position].image,
-                        placeholder: (context, url) => Padding(
-                          padding: EdgeInsets.all(5),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
+          child:
+              StatefulBuilder(builder: (BuildContext context, StateSetter ss) {
+            return ListView.builder(
+              padding: EdgeInsets.symmetric(vertical: 9, horizontal: 35),
+              physics: const BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics()),
+              scrollDirection: Axis.horizontal,
+              itemCount: categries.length < 20 ? categries.length : 20,
+              itemBuilder: (context, position) {
+                return Container(
+                  width: 38.0,
+                  height: 37.0,
+                  padding: EdgeInsets.all(5),
+                  margin: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+                  decoration: BoxDecoration(
+                    border: searchQuery.Categories != null &&
+                            searchQuery.Categories.contains(
+                                categries[position].categoryId)
+                        ? Border.all(color: orangeColor, width: 2)
+                        : null,
+                    borderRadius: BorderRadius.circular(10.0),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.16),
+                        offset: Offset(0, 1.0),
+                        blurRadius: 6.0,
+                      ),
+                    ],
+                  ),
+                  child: GestureDetector(
+                      onTap: () {
+                        ss(() {
+                          if (searchQuery.Categories.contains(
+                              categries[position].categoryId)) {
+                            searchQuery.Categories.remove(
+                                categries[position].categoryId);
+                          } else {
+                            searchQuery.Categories.add(
+                                categries[position].categoryId);
+                          }
+                        });
+                      },
+                      child: Container(
+                        height: 48,
+                        width: 48,
+                        child: CachedNetworkImage(
+                          imageUrl: categries[position].image,
+                          placeholder: (context, url) => Padding(
+                            padding: EdgeInsets.all(5),
+                            child: Container(
+                              child: Image.asset(placeHolder),
+                              color: Colors.white,
                             ),
-                            child: Image.asset(placeHolder),
-                          ),
-                        ),
-                        errorWidget: (context, url, error) => Padding(
-                          padding: EdgeInsets.all(5),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Image.asset(placeHolder),
                           ),
                           errorWidget: (context, url, error) =>
                               Image.asset(placeHolder),
                         ),
-                      ),
-                    )),
-              );
-            },
-          ),
+                      )),
+                );
+              },
+            );
+          }),
         ),
         SizedBox(
           height: 15,
@@ -993,11 +1001,34 @@ class _FilterScreenState extends State<FilterScreen> {
                     height: 48,
                     width: 48,
                     child: CachedNetworkImage(
+                      imageUrl: brands[position].logo,
+                      placeholder: (context, url) => Padding(
+                        padding: EdgeInsets.all(5),
+                        child: Container(
+                          child: Image.asset(placeHolder),
+                          color: Colors.white,
+                        ),
+                      ),
+                      errorWidget: (context, url, error) =>
+                          Image.asset(placeHolder),
+                    ),
+                  ));
+            },
+          ),
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        lineDivider(),
+      ],
+    );
+  }
 
   Widget textTitle(BuildContext context, String text, Function onPress,
       String centerText, Color color,
       {double size = 15, IconData icon}) {
     return Padding(
+      padding: const EdgeInsetsDirectional.only(top: 20, start: 30, end: 30),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
