@@ -306,22 +306,11 @@ Widget mainHeaderButton(BuildContext context, Function function, String title,
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(8),
-                  child: Container(
+                  child: Image.asset(
+                    image,
                     height: MediaQuery.of(context).size.width * .085,
                     width: MediaQuery.of(context).size.width * .085,
-                    child: CachedNetworkImage(
-                      fit: BoxFit.fill,
-                      imageUrl: dress_icon,
-                      placeholder: (context, url) => Padding(
-                        padding: EdgeInsets.all(5),
-                        child: Container(
-                          child: Image.asset(placeHolder),
-                          color: Colors.white,
-                        ),
-                      ),
-                      errorWidget: (context, url, error) =>
-                          Image.asset(placeHolder),
-                    ),
+                    fit: BoxFit.fill,
                   ),
                 ),
               ),
