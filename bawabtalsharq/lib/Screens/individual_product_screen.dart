@@ -1,11 +1,13 @@
 import 'package:bawabtalsharq/Model/individualProduct_model.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
+import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/individualProductBloc/individualProduct_bloc.dart';
 import 'package:bawabtalsharq/bloc/individualProductBloc/individualProduct_event.dart';
 import 'package:bawabtalsharq/bloc/individualProductBloc/individualProduct_state.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,14 +19,17 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'SliverPersistentHeaderInvidiualProduct/IndividualProductHedaer.dart';
 
 class IndividualProduct extends StatefulWidget {
+  String title;
   final String productId;
-  IndividualProduct(this.productId);
+  IndividualProduct(this.productId, {this.title});
+
   @override
   _IndividualProductState createState() => _IndividualProductState();
 }
 
 class _IndividualProductState extends State<IndividualProduct>
     with TickerProviderStateMixin {
+  int _itemCount = 0;
   ScrollController _controller;
   IndividualProductBloc _productBloc;
   bool isLoading = false;
@@ -33,8 +38,8 @@ class _IndividualProductState extends State<IndividualProduct>
   TabController _controllerTab;
   final scrollController = ScrollController();
   final List<String> _tabs = <String>[
-    "Product Details",
-    "company Details",
+    "",
+    "",
   ];
 
   CarouselController buttonCarouselController = CarouselController();
@@ -46,30 +51,11 @@ class _IndividualProductState extends State<IndividualProduct>
     _productBloc = IndividualProductBloc();
     _productBloc.add(DoIndividualProductEvent(widget.productId));
     _controllerTab = TabController(vsync: this, length: _tabs.length);
-    // _controllerTab.addListener(_handleTabSelection);
     _controller = ScrollController();
     _controllerTab.addListener(() => {setState(() {})});
+
     super.initState();
   }
-
-  // void _handleTabSelection() {
-  //   if (_controller.indexIsChanging) {
-  //     switch (_controller.index) {
-  //       case 0:
-  //         Scaffold.of(context).showSnackBar(SnackBar(
-  //           content: Text('Page 1 tapped.'),
-  //           duration: Duration(milliseconds: 500),
-  //         ));
-  //         break;
-  //       case 1:
-  //         Scaffold.of(context).showSnackBar(SnackBar(
-  //           content: Text('Page 2 tapped.'),
-  //           duration: Duration(milliseconds: 500),
-  //         ));
-  //         break;
-  //     }
-  //   }
-  // }
 
   int selectedIndex = 0;
 
@@ -82,7 +68,7 @@ class _IndividualProductState extends State<IndividualProduct>
             return Container(
               color: Colors.white,
               child: Center(
-                child: CircularProgressIndicator(),
+                child: progressBar(),
               ),
             );
           }
@@ -96,18 +82,6 @@ class _IndividualProductState extends State<IndividualProduct>
               bottom: false,
               child: Scaffold(
                 floatingActionButton: productFab(product.price),
-
-                // appBar: AppBar(
-                //   title: Text(_tabs[_controllerTab.index]),
-                //   bottom: TabBar(
-                //     isScrollable: true,
-                //     controller: _controllerTab,
-                //     tabs: _tabs.map((String name) => Tab(text: name)).toList(),
-                //     indicatorColor: orangeColor,
-                //     indicatorSize: TabBarIndicatorSize.label,
-                //     labelColor: orangeColor,
-                //   ),
-                // ),
                 body: NestedScrollView(
                   headerSliverBuilder:
                       (BuildContext context, bool innerBoxScrolled) {
@@ -129,22 +103,18 @@ class _IndividualProductState extends State<IndividualProduct>
                           iconRound(Icons.bookmark_border_outlined),
                         ],
                         expandedHeight:
-                            MediaQuery.of(context).size.height * 0.4,
+                            MediaQuery.of(context).size.height * 0.45,
                         floating: true,
                         pinned: false,
                         snap: false,
                         elevation: 50,
                         backgroundColor: Color(0xfff9dfd6),
                         flexibleSpace: FlexibleSpaceBar(
-                            // title: Text('product'),
-                            // centerTitle: true,
                             background: Container(
-                                padding: EdgeInsets.only(
-                                  top: 40,
-                                ),
+                                padding: EdgeInsets.only(top: 40, bottom: 10),
                                 child: Column(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       CarouselSlider.builder(
                                         carouselController:
@@ -165,9 +135,22 @@ class _IndividualProductState extends State<IndividualProduct>
                                         itemCount: 4,
                                         itemBuilder:
                                             (context, index, realIndex) =>
-                                                Image(
-                                          image:
-                                              NetworkImage(product.imagePath),
+                                                CachedNetworkImage(
+                                          imageUrl: product.imagePath,
+                                          placeholder: (context, url) =>
+                                              Padding(
+                                            padding: EdgeInsets.all(5),
+                                            child: Container(
+                                              child: Image.asset(placeHolder),
+                                            ),
+                                          ),
+                                          errorWidget: (context, url, error) =>
+                                              Padding(
+                                            padding: EdgeInsets.all(5),
+                                            child: Container(
+                                              child: Image.asset(placeHolder),
+                                            ),
+                                          ),
                                         ),
                                       ),
                                       sliderIndicator(sliderPosition,
@@ -175,10 +158,7 @@ class _IndividualProductState extends State<IndividualProduct>
                                       Flexible(
                                         child: Container(
                                             margin: EdgeInsets.only(
-                                                top: 10,
-                                                bottom: 10,
-                                                left: 50,
-                                                right: 50),
+                                                left: 50, right: 50),
                                             decoration: BoxDecoration(
                                               color: Color(0xfff9dfd6),
                                             ),
@@ -240,11 +220,7 @@ class _IndividualProductState extends State<IndividualProduct>
                                                 ])),
                                       )
                                     ]))),
-                        // bottom: tabBar(),
                       ),
-
-                      // bottom: false,
-
                       SliverToBoxAdapter(
                         child: Container(
                           color: Color(0xfff9dfd6),
@@ -313,23 +289,21 @@ class _IndividualProductState extends State<IndividualProduct>
                                         product.faq.isEmpty
                                             ? SizedBox()
                                             : productFaq(
-                                                title: 'FAQ:',
+                                                title:
+                                                    Languages.of(context).faq,
                                               ),
                                         SizedBox(
                                           height: 20,
                                         ),
-                                        // product.detailedPictures.isEmpty
-                                        //     ? SizedBox()
-                                        //     :
-                                        detailsPictures(),
+                                        product.detailedPictures.isEmpty
+                                            ? SizedBox()
+                                            : detailsPictures(),
                                         SizedBox(
                                           height: 20,
                                         ),
-                                        // product.packingShipping.isEmpty
-                                        //     ? SizedBox()
-                                        //     :
-
-                                        listOfBackingChipping(),
+                                        product.packingShipping.isEmpty
+                                            ? SizedBox()
+                                            : listOfBackingChipping(),
                                         SizedBox(
                                           height: 20,
                                         ),
@@ -367,7 +341,10 @@ class _IndividualProductState extends State<IndividualProduct>
     return TabBar(
       isScrollable: true,
       controller: _controllerTab,
-      tabs: _tabs.map((String name) => Tab(text: name)).toList(),
+      tabs: [
+        Tab(text: Languages.of(context).productDetails),
+        Tab(text: Languages.of(context).companyDetails),
+      ],
       indicatorColor: orangeColor,
       indicatorSize: TabBarIndicatorSize.label,
       labelColor: orangeColor,
@@ -457,7 +434,7 @@ class _IndividualProductState extends State<IndividualProduct>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Product Options',
+          Languages.of(context).productOption,
           style: TextStyle(
               color: orangeColor, fontWeight: FontWeight.bold, fontSize: 18),
         ),
@@ -465,7 +442,7 @@ class _IndividualProductState extends State<IndividualProduct>
           height: 10,
         ),
         Text(
-          ' Color',
+          Languages.of(context).color,
           style: TextStyle(
               color: Colors.black54, fontWeight: FontWeight.bold, fontSize: 14),
         ),
@@ -476,12 +453,57 @@ class _IndividualProductState extends State<IndividualProduct>
             padding: EdgeInsets.only(top: 5, bottom: 5),
             shrinkWrap: true,
             scrollDirection: Axis.vertical,
-            itemCount: product.color.length,
+            itemCount: 1,
             itemBuilder: (context, position) {
+              // if (product.color.length < product.color.length) {
+              // _counter.add(0);
+              // }
+
               return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   productColorOption(position),
-                  productCounter(number: product.minQty)
+                  Container(
+                    margin: EdgeInsetsDirectional.only(end: 5),
+                    padding: EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        border: Border.all(width: 1, color: Colors.grey)),
+                    child: GestureDetector(
+                      child: Icon(
+                        Icons.remove,
+                        size: 16,
+                        color: orangeColor,
+                      ),
+                      onTap: () => setState(() => _itemCount--),
+                    ),
+                  ),
+                  Container(
+                    padding:
+                        EdgeInsets.only(left: 35, right: 35, top: 4, bottom: 4),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        border: Border.all(width: 1, color: Colors.grey)),
+                    child: Text(
+                      _itemCount.toString(),
+                      style: TextStyle(color: orangeColor),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsetsDirectional.only(start: 5),
+                    padding: EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        border: Border.all(width: 1, color: Colors.grey)),
+                    child: GestureDetector(
+                      child: Icon(
+                        Icons.add,
+                        size: 16,
+                        color: orangeColor,
+                      ),
+                      onTap: () => setState(() => _itemCount++),
+                    ),
+                  ),
                 ],
               );
             })
@@ -489,30 +511,77 @@ class _IndividualProductState extends State<IndividualProduct>
     );
   }
 
-  // Widget productOption(
-  //     {String widgetTitle, String widgetSubTitle, Widget widget}) {
-  //   return Column(
-  //     crossAxisAlignment: CrossAxisAlignment.start,
+  // Widget productCounter() {
+  //   return Row(
   //     children: [
-  //       Text(
-  //         widgetTitle,
-  //         style: TextStyle(
-  //             color: orangeColor, fontWeight: FontWeight.bold, fontSize: 18),
+  //       Container(
+  //         margin: EdgeInsetsDirectional.only(end: 5),
+  //         padding: EdgeInsets.all(6),
+  //         decoration: BoxDecoration(
+  //             borderRadius: BorderRadius.circular(100),
+  //             border: Border.all(width: 1, color: Colors.grey)),
+  //         // child:
+  //         // _createIncrementDicrementButton(Icons.remove, () => _dicrement()),
   //       ),
-  //       SizedBox(
-  //         height: 10,
+  //       Container(
+  //         padding: EdgeInsets.only(left: 35, right: 35, top: 4, bottom: 4),
+  //         decoration: BoxDecoration(
+  //             borderRadius: BorderRadius.circular(100),
+  //             border: Border.all(width: 1, color: Colors.grey)),
+  //         child: Text(
+  //           '',
+  //           // _currentCount.toString(),
+  //           style: TextStyle(color: orangeColor),
+  //         ),
   //       ),
-  //       Text(
-  //         widgetSubTitle,
-  //         style: TextStyle(
-  //             color: Colors.black54, fontWeight: FontWeight.bold, fontSize: 14),
+  //       Container(
+  //         margin: EdgeInsetsDirectional.only(start: 5),
+  //         padding: EdgeInsets.all(6),
+  //         decoration: BoxDecoration(
+  //             borderRadius: BorderRadius.circular(100),
+  //             border: Border.all(width: 1, color: Colors.grey)),
+  //         // child: _createIncrementDicrementButton(Icons.add, () => _increment()),
+  //         // Icon(
+  //         //   Icons.add,
+  //         //   size: 14,
+  //         //   color: orangeColor,
+  //         // ),
   //       ),
-  //       widget,
-  //       widget,
-  //       // widget,
   //     ],
   //   );
   // }
+
+  // void _increment() {
+  //   setState(() {
+  //     _currentCount++;
+  //     _counterCallback(_currentCount);
+  //     _increaseCallback();
+  //   });
+  // }
+  //
+  // void _dicrement() {
+  //   setState(() {
+  //     if (_currentCount > int.parse(product.maxQty)) {
+  //       _currentCount--;
+  //       _counterCallback(_currentCount);
+  //       _decreaseCallback();
+  //     }
+  //   });
+  // }
+
+  Widget _createIncrementDicrementButton(IconData icon, Function onPressed) {
+    return RawMaterialButton(
+      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      constraints: BoxConstraints(minWidth: 10.0, minHeight: 10.0),
+      onPressed: onPressed,
+      elevation: 2.0,
+      child: Icon(
+        icon,
+        size: 14,
+        color: orangeColor,
+      ),
+    );
+  }
 
   Widget productColorOption(int index) {
     return Padding(
@@ -530,7 +599,7 @@ class _IndividualProductState extends State<IndividualProduct>
               SizedBox(
                 width: 8,
               ),
-              Text('${product.price} \$'),
+              Text('${product.price}'),
               SizedBox(
                 width: 20,
               ),
@@ -538,48 +607,6 @@ class _IndividualProductState extends State<IndividualProduct>
           ),
         ],
       ),
-    );
-  }
-
-  Widget productCounter({String number}) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Container(
-          margin: EdgeInsetsDirectional.only(end: 5),
-          padding: EdgeInsets.all(6),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100),
-              border: Border.all(width: 1, color: Colors.grey)),
-          child: Icon(
-            Icons.remove,
-            size: 14,
-            color: orangeColor,
-          ),
-        ),
-        Container(
-          padding: EdgeInsets.only(left: 35, right: 35, top: 4, bottom: 4),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100),
-              border: Border.all(width: 1, color: Colors.grey)),
-          child: Text(
-            number.toString(),
-            style: TextStyle(color: orangeColor),
-          ),
-        ),
-        Container(
-          margin: EdgeInsetsDirectional.only(start: 5),
-          padding: EdgeInsets.all(6),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100),
-              border: Border.all(width: 1, color: Colors.grey)),
-          child: Icon(
-            Icons.add,
-            size: 14,
-            color: orangeColor,
-          ),
-        ),
-      ],
     );
   }
 
@@ -646,7 +673,8 @@ class _IndividualProductState extends State<IndividualProduct>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        buildText('Packiging & Shipping', 14, fontWeight: FontWeight.w600),
+        buildText(Languages.of(context).packagingShipping, 14,
+            fontWeight: FontWeight.w600),
         SizedBox(
           height: 10,
         ),
@@ -666,13 +694,27 @@ class _IndividualProductState extends State<IndividualProduct>
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * .15,
                       decoration: new BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(
-                              product.packingShipping[position].image),
-                          fit: BoxFit.fill,
-                        ),
                         borderRadius: BorderRadius.circular(16),
                         color: Colors.white,
+                      ),
+                      child: CachedNetworkImage(
+                        imageUrl: product.packingShipping[position].image,
+                        placeholder: (context, url) => Padding(
+                          padding: EdgeInsets.all(5),
+                          child: Container(
+                            decoration: new BoxDecoration(
+                                borderRadius: BorderRadius.circular(16)),
+                            child: Image.asset(placeHolder),
+                          ),
+                        ),
+                        errorWidget: (context, url, error) => Padding(
+                          padding: EdgeInsets.all(5),
+                          child: Container(
+                            decoration: new BoxDecoration(
+                                borderRadius: BorderRadius.circular(16)),
+                            child: Image.asset(placeHolder),
+                          ),
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -692,7 +734,8 @@ class _IndividualProductState extends State<IndividualProduct>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        buildText('Certificates :', 14, fontWeight: FontWeight.w600),
+        buildText(Languages.of(context).certificates, 14,
+            fontWeight: FontWeight.w600),
         SizedBox(
           height: 11,
         ),
@@ -708,7 +751,27 @@ class _IndividualProductState extends State<IndividualProduct>
                   borderRadius: BorderRadius.circular(16),
                   color: Colors.white,
                 ),
-                child: Image.network(product.certificates[position]),
+                child: CachedNetworkImage(
+                  imageUrl: product.certificates[position],
+                  placeholder: (context, url) => Padding(
+                    padding: EdgeInsets.all(5),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Image.asset(placeHolder),
+                    ),
+                  ),
+                  errorWidget: (context, url, error) => Padding(
+                    padding: EdgeInsets.all(5),
+                    child: Container(
+                      child: Image.asset(placeHolder),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ),
+                  ),
+                ),
               );
             },
           ),
@@ -721,7 +784,8 @@ class _IndividualProductState extends State<IndividualProduct>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        buildText('Detailed Pictures', 14, fontWeight: FontWeight.w600),
+        buildText(Languages.of(context).detailedPictures, 14,
+            fontWeight: FontWeight.w600),
         SizedBox(
           height: 11,
         ),
@@ -738,7 +802,21 @@ class _IndividualProductState extends State<IndividualProduct>
               child: Card(
                   color: Colors.white,
                   child: Center(
-                    child: Image.network(product.detailedPictures[index]),
+                    child: CachedNetworkImage(
+                      imageUrl: product.detailedPictures[index],
+                      placeholder: (context, url) => Padding(
+                        padding: EdgeInsets.all(5),
+                        child: Container(
+                          child: Image.asset(placeHolder),
+                        ),
+                      ),
+                      errorWidget: (context, url, error) => Padding(
+                        padding: EdgeInsets.all(5),
+                        child: Container(
+                          child: Image.asset(placeHolder),
+                        ),
+                      ),
+                    ),
                   )),
             );
           }),

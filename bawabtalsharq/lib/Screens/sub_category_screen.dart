@@ -3,6 +3,7 @@ import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class SubCategoryScreen extends StatefulWidget {
@@ -50,9 +51,20 @@ class _SubCategoriesScreenState extends State<SubCategoryScreen> {
                     SizedBox(
                       height: 5,
                     ),
-                    Image.network(
-                      dress_icon,
+                    Container(
                       width: MediaQuery.of(context).size.width * 0.15,
+                      child: CachedNetworkImage(
+                        imageUrl: dress_icon,
+                        placeholder: (context, url) => Padding(
+                          padding: EdgeInsets.all(5),
+                          child: Container(
+                            child: Image.asset(placeHolder),
+                            color: Colors.white,
+                          ),
+                        ),
+                        errorWidget: (context, url, error) =>
+                            Image.asset(placeHolder),
+                      ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

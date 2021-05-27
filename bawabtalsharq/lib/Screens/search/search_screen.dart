@@ -3,9 +3,11 @@ import 'package:bawabtalsharq/Model/search_quary.dart';
 import 'package:bawabtalsharq/Screens/search/search_result_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
+import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/repo/category_repo.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -124,28 +126,56 @@ class _SearchScreenState extends State<SearchScreen> {
                                       ],
                                     ),
                                     child: GestureDetector(
-                                      onTap: () {
-                                        List<String> selectetList =
-                                            List<String>();
-                                        selectetList.add(
-                                            categories[position].categoryId);
-                                        SearchQueryModel queryModel =
-                                            SearchQueryModel(
-                                                _searchController.text,
-                                                Categories: selectetList);
-                                        Navigator.push(
-                                            context,
-                                            new MaterialPageRoute(
-                                              builder: (BuildContext context) =>
-                                                  new SearchResult(
-                                                searchQuery: queryModel,
+                                        onTap: () {
+                                          List<String> selectetList =
+                                              List<String>();
+                                          selectetList.add(
+                                              categories[position].categoryId);
+                                          SearchQueryModel queryModel =
+                                              SearchQueryModel(
+                                                  _searchController.text,
+                                                  Categories: selectetList);
+                                          Navigator.push(
+                                              context,
+                                              new MaterialPageRoute(
+                                                builder:
+                                                    (BuildContext context) =>
+                                                        new SearchResult(
+                                                  searchQuery: queryModel,
+                                                ),
+                                              ));
+                                        },
+                                        child: Container(
+                                          height: 38,
+                                          width: 38,
+                                          child: CachedNetworkImage(
+                                            imageUrl:
+                                                categories[position].image,
+                                            placeholder: (context, url) =>
+                                                Padding(
+                                              padding: EdgeInsets.all(5),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                child: Image.asset(placeHolder),
                                               ),
-                                            ));
-                                      },
-                                      child: Image.asset(
-                                        categories[position].image,
-                                      ),
-                                    ),
+                                            ),
+                                            errorWidget:
+                                                (context, url, error) =>
+                                                    Padding(
+                                              padding: EdgeInsets.all(5),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                child: Image.asset(placeHolder),
+                                              ),
+                                            ),
+                                          ),
+                                        )),
                                   );
                                 },
                               );
@@ -267,7 +297,8 @@ class _SearchScreenState extends State<SearchScreen> {
                   context,
                   new MaterialPageRoute(
                     builder: (BuildContext context) => new SearchResult(
-                      searchQuery: new SearchQueryModel(_searchController.text),
+                      searchQuery: new SearchQueryModel(_searchController.text,
+                          Categories: []),
                     ),
                   ));
             },

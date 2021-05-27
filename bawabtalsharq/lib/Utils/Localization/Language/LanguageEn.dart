@@ -165,6 +165,11 @@ class LanguageEn extends Languages {
   String get overView => 'OverView';
   String get chatSupplier => 'Supplier Chat';
   String get buyNow => 'Buy Now';
+  String get productOption => 'Product Options';
+  String get packagingShipping => 'Packaging & Shipping';
+  String get certificates => 'Certificates :';
+  String get detailedPictures => 'Detailed Pictures';
+  String get companyDetails => 'Company Details';
 
 // end Mosdik
 

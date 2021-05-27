@@ -4,6 +4,7 @@ import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -276,7 +277,27 @@ class _FilterScreenState extends State<FilterScreen> {
                         spreadRadius: 0)
                   ],
                 ),
-                child: Image.asset(image),
+                child: CachedNetworkImage(
+                  imageUrl: image,
+                  placeholder: (context, url) => Padding(
+                    padding: EdgeInsets.all(5),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Image.asset(placeHolder),
+                    ),
+                  ),
+                  errorWidget: (context, url, error) => Padding(
+                    padding: EdgeInsets.all(5),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Image.asset(placeHolder),
+                    ),
+                  ),
+                ),
               );
             },
           ),

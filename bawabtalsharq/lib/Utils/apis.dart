@@ -9,6 +9,7 @@ class APIS {
   static const String SEND_MESSAGE_API = 'contact_us_message';
   static const String SEARCH_API = 'search';
   static const String NOTIFICATIONS_API = 'notifications';
+  static const String FILTER_API = 'filters&lang=';
 // end karem
 
 // Start Asmaa

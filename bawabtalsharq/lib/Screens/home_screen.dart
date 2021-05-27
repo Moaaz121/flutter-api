@@ -14,6 +14,7 @@ import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -353,10 +354,10 @@ Widget ourGoldenSupplier(BuildContext context, List<Supplier> suppliers) {
           itemBuilder: (context, position) {
             return supplierView(
               onPress: () {
-                Navigator.pushNamed(
-                    context, ScreenRoutes.supplierProfileScreen);
+                // Navigator.pushNamed(
+                //     context, ScreenRoutes.supplierProfileScreen);
               },
-              category: 'Food & Bevereges',
+              category: suppliers[position].category,
               nameSupplier: LanguageHelper.isEnglish
                   ? suppliers[position].title
                   : suppliers[position].title,
@@ -631,26 +632,40 @@ Widget supplierView(
                   ],
                 ),
                 child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10.0),
-                    child: Image.network(
-                      supplierImg,
-                      height: 72,
-                      width: 72,
-                      loadingBuilder: (BuildContext ctx, Widget child,
-                          ImageChunkEvent loadingProgress) {
-                        if (loadingProgress == null) {
-                          return child;
-                        } else {
-                          return Container(
-                            color: backgroundColor,
-                            child: Padding(
-                              padding: const EdgeInsets.all(5),
-                              child: Image.asset(placeHolder),
-                            ),
-                          );
-                        }
-                      },
-                    ))),
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: Container(
+                    height: 72,
+                    width: 72,
+                    child: CachedNetworkImage(
+                      fit: BoxFit.fill,
+                      imageUrl: supplierImg,
+                      placeholder: (context, url) => Padding(
+                        padding: EdgeInsets.all(8),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          child: Image.asset(
+                            placeHolder,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                      errorWidget: (context, url, error) => Padding(
+                        padding: EdgeInsets.all(8),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          child: Image.asset(
+                            placeHolder,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                )),
             SizedBox(
               height: 10,
             ),
@@ -671,7 +686,7 @@ Widget supplierView(
             SizedBox(
               height: 5.0,
             ),
-            Text(
+            AutoSizeText(
               category,
               style: TextStyle(
                 fontFamily: 'Segoe UI',
@@ -679,7 +694,10 @@ Widget supplierView(
                 color: const Color(0xff848484),
                 fontWeight: FontWeight.w600,
               ),
-              textAlign: TextAlign.left,
+              minFontSize: 8.5,
+              stepGranularity: 8.5,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
             SizedBox(
               height: 5.0,
@@ -689,10 +707,10 @@ Widget supplierView(
               children: [
                 Icon(
                   Icons.access_time_rounded,
-                  size: 13,
+                  size: 10,
                 ),
                 SizedBox(
-                  width: 5.0,
+                  width: 2.0,
                 ),
                 Text(
                   LanguageHelper.isEnglish
@@ -750,14 +768,27 @@ Widget mainMostPopularProduct(
           borderRadius: BorderRadius.circular(15),
           child: Stack(
             children: [
-              PositionedDirectional(
-                  top: -40,
-                  start: -50,
-                  child: Image.network(
-                    img,
-                    height: 120,
-                    width: 120,
-                  )),
+              // PositionedDirectional(
+              //   top: -40,
+              //   start: -50,
+              //   child: Container(
+              //     height: 120,
+              //     width: 120,
+              //     child: CachedNetworkImage(
+              //       fit: BoxFit.fill,
+              //       imageUrl: img,
+              //       placeholder: (context, url) => Padding(
+              //         padding: EdgeInsets.all(5),
+              //         child: Container(
+              //           child: Image.asset(placeHolder),
+              //           color: Colors.white,
+              //         ),
+              //       ),
+              //       errorWidget: (context, url, error) =>
+              //           Image.asset(placeHolder),
+              //     ),
+              //   ),
+              // ),
               Align(
                 alignment: Alignment.topRight,
                 child: Padding(
@@ -865,13 +896,44 @@ Widget subMostPopularProduct(
         child: Stack(
           children: [
             PositionedDirectional(
-                bottom: -5,
-                end: -5,
-                child: Image.network(
-                  img,
-                  height: 53,
-                  width: 55,
-                )),
+              bottom: -5,
+              end: -5,
+              child: Container(
+                height: 53,
+                width: 53,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                ),
+                child: CachedNetworkImage(
+                  fit: BoxFit.fill,
+                  imageUrl: img,
+                  placeholder: (context, url) => Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Image.asset(
+                        placeHolder,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                  errorWidget: (context, url, error) => Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Image.asset(
+                        placeHolder,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: Row(
@@ -1086,7 +1148,24 @@ Widget mostPopularCateg(
                 child: SizedBox(
                   width: 70,
                   height: 60,
-                  child: Image.network(productImg),
+                  child: CachedNetworkImage(
+                    fit: BoxFit.fill,
+                    imageUrl: productImg,
+                    placeholder: (context, url) => Padding(
+                      padding: EdgeInsets.all(8),
+                      child: Image.asset(
+                        placeHolder,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                    errorWidget: (context, url, error) => Padding(
+                      padding: EdgeInsets.all(8),
+                      child: Image.asset(
+                        placeHolder,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
                 )),
             Padding(
               padding:

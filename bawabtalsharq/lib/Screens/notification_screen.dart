@@ -3,10 +3,10 @@ import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/notificationsBloc/notifications_bloc.dart';
+import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NotificationScreen extends StatefulWidget {
@@ -70,6 +70,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 end: 20,
                 bottom: MediaQuery.of(context).size.height * 0.16,
                 child: FloatingActionButton(
+                  onPressed: () {
+                    _mainScrollController.animateTo(0.0,
+                        duration: Duration(milliseconds: 600),
+                        curve: Curves.easeOut);
+                  },
                   mini: true,
                   child: Icon(
                     Icons.arrow_upward,
@@ -95,35 +100,52 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 child: progressBar(),
               );
             } else if (snapshot is DoneState) {
-              return ListView.builder(
-                padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).size.height * 0.23),
-                controller: _mainScrollController,
-                scrollDirection: Axis.vertical,
-                itemCount: snapshot.messageResponse.data.length,
-                itemBuilder: (context, position) {
-                  return Container(
-                    margin: EdgeInsetsDirectional.only(
-                        top: 10, start: 14, end: 14, bottom: 10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20.0),
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: orangeColor.withOpacity(0.1),
-                          offset: Offset(0, 1.0),
-                          blurRadius: 5.0,
-                        ),
-                      ],
+              if (snapshot.messageResponse.code != 200) {
+                return Expanded(
+                  child: Center(
+                    child: Text(
+                      snapshot.messageResponse.msg,
+                      style: TextStyle(
+                        fontFamily: 'Segoe UI',
+                        fontSize: 15.0,
+                        color: Color(0xff303030),
+                        letterSpacing: 0.18,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: notificationItems(
-                          snapshot.messageResponse.data[position]),
-                    ),
-                  );
-                },
-              );
+                  ),
+                );
+              } else {
+                return ListView.builder(
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).size.height * 0.23),
+                  controller: _mainScrollController,
+                  scrollDirection: Axis.vertical,
+                  itemCount: snapshot.messageResponse.data.length,
+                  itemBuilder: (context, position) {
+                    return Container(
+                      margin: EdgeInsetsDirectional.only(
+                          top: 10, start: 14, end: 14, bottom: 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.0),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: orangeColor.withOpacity(0.1),
+                            offset: Offset(0, 1.0),
+                            blurRadius: 5.0,
+                          ),
+                        ],
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: notificationItems(
+                            snapshot.messageResponse.data[position]),
+                      ),
+                    );
+                  },
+                );
+              }
             } else {
               return SizedBox();
             }

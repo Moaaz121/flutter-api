@@ -131,22 +131,30 @@ class Supplier {
   Supplier({
     this.image,
     this.title,
+    this.category,
+    this.id,
     this.articipate,
   });
 
   String image;
   String title;
+  String category;
+  int id;
   String articipate;
 
   factory Supplier.fromJson(Map<String, dynamic> json) => Supplier(
         image: json["image"],
         title: json["title"],
+        category: json["category"],
+        id: json["id"],
         articipate: json["articipate"],
       );
 
   Map<String, dynamic> toJson() => {
         "image": image,
         "title": title,
+        "category": category,
+        "id": id,
         "articipate": articipate,
       };
 }

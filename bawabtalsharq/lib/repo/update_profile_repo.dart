@@ -2,6 +2,7 @@ import 'package:bawabtalsharq/Model/base_model.dart';
 import 'package:bawabtalsharq/Utils/apis.dart';
 import 'package:bawabtalsharq/Model/user_model.dart';
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,7 +30,7 @@ class UpdateProfileRepo {
     return modelResponse;
   }
 
-  Future<UserModel> updateAccount(UserLocal currentUser) async {
+  Future<UserModel> updateAccount(UserLocal currentUser, {File image}) async {
     print(currentUser.country);
     Map<String, dynamic> params = {
       "user_id": currentUser.userId,
@@ -38,6 +39,7 @@ class UpdateProfileRepo {
       "lastname": currentUser.lastname,
       "phone": currentUser.phone,
       "b_country": currentUser.country,
+      // "image": image,
     };
     var response = await http.post(
       Uri.encodeFull(APIS.serverURL + APIS.UPDATE_ACCOUNT_API),

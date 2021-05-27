@@ -20,14 +20,13 @@ import 'package:bawabtalsharq/bloc/langBloc/lang_bloc.dart';
 import 'package:bawabtalsharq/bloc/langBloc/lang_event.dart';
 import 'package:bawabtalsharq/bloc/langBloc/lang_state.dart';
 import 'package:bawabtalsharq/main.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_html/style.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Widgets {
@@ -535,28 +534,42 @@ Widget sliderItem(BuildContext context, String image) {
         ],
       ),
       child: ClipRRect(
-          borderRadius: BorderRadius.circular(15.0),
-          child: Image.network(
-            image,
-            fit: BoxFit.fill,
-            loadingBuilder: (BuildContext ctx, Widget child,
-                ImageChunkEvent loadingProgress) {
-              if (loadingProgress == null) {
-                return child;
-              } else {
-                return Container(
-                  color: backgroundColor,
-                  child: Center(
-                    child: Image.asset(
-                      placeHolder,
-                      height: 72,
-                      width: 72,
-                    ),
-                  ),
-                );
-              }
-            },
-          )),
+        borderRadius: BorderRadius.circular(15.0),
+        child: CachedNetworkImage(
+          fit: BoxFit.fill,
+          imageUrl: image,
+          placeholder: (context, url) => Padding(
+            padding: EdgeInsets.all(8),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(40.0),
+                child: Image.asset(
+                  placeHolder,
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
+          ),
+          errorWidget: (context, url, error) => Padding(
+            padding: EdgeInsets.all(8),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(40.0),
+                child: Image.asset(
+                  placeHolder,
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
     ),
   );
 }
@@ -1062,17 +1075,18 @@ Widget productItem(BuildContext context,
                           SizedBox(
                             height: 1,
                           ),
-                          Html(
-                            data: product.shortDescription,
-                            style: {
-                              "body": Style(
-                                fontFamily: 'Segoe UI',
-                                fontSize: FontSize(9.0),
-                                letterSpacing: 0.084,
-                                color: Color(0xff303030),
-                                fontWeight: FontWeight.w600,
-                              ),
-                            },
+                          RichText(
+                            text: TextSpan(
+                                text:
+                                    removeAllHtmlTags(product.shortDescription),
+                                style: TextStyle(
+                                  fontFamily: 'Segoe UI',
+                                  fontSize: 9.0,
+                                  color: Color(0xff303030),
+                                  fontWeight: FontWeight.w600,
+                                )),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
                           )
                         ],
                       ),
@@ -1101,16 +1115,35 @@ Widget productItem(BuildContext context,
           top: -10,
           right: LanguageHelper.isEnglish ? -10 : null,
           left: LanguageHelper.isEnglish ? null : -10,
-          child: Image.network(
-            product.imagePath,
+          child: Container(
             width: MediaQuery.of(context).size.width * 0.1,
             height: MediaQuery.of(context).size.height * 0.1,
-            fit: BoxFit.cover,
+            child: CachedNetworkImage(
+              imageUrl: product.imagePath,
+              fit: BoxFit.cover,
+              placeholder: (context, url) => Padding(
+                padding: EdgeInsets.all(5),
+                child: Container(
+                  child: Image.asset(placeHolder),
+                ),
+              ),
+              errorWidget: (context, url, error) => Padding(
+                padding: EdgeInsets.all(5),
+                child: Container(
+                  child: Image.asset(placeHolder),
+                ),
+              ),
+            ),
           ),
         ),
       ],
     ),
   );
+}
+
+String removeAllHtmlTags(String htmlText) {
+  RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
+  return htmlText.replaceAll(exp, '');
 }
 
 Widget productItemLandscape(
@@ -1245,11 +1278,25 @@ Widget productItemLandscape(
         top: 2,
         left: LanguageHelper.isEnglish ? width * 0.15 : null,
         right: LanguageHelper.isEnglish ? null : width * 0.18,
-        child: Image.network(
-          product.imagePath,
-          fit: BoxFit.fill,
+        child: Container(
           width: width * 0.17,
           height: height * 0.16,
+          child: CachedNetworkImage(
+            imageUrl: product.imagePath,
+            fit: BoxFit.cover,
+            placeholder: (context, url) => Padding(
+              padding: EdgeInsets.all(5),
+              child: Container(
+                child: Image.asset(placeHolder),
+              ),
+            ),
+            errorWidget: (context, url, error) => Padding(
+              padding: EdgeInsets.all(5),
+              child: Container(
+                child: Image.asset(placeHolder),
+              ),
+            ),
+          ),
         ),
       ),
       Positioned.directional(
@@ -1411,12 +1458,31 @@ Widget productItemLandscape2(BuildContext context,
         top: 2,
         left: LanguageHelper.isEnglish ? width * 0.15 : null,
         right: LanguageHelper.isEnglish ? null : width * 0.18,
-        child: Image.network(
-          products[index].imagePath,
-          fit: BoxFit.fill,
+        child: Container(
           width: width * 0.17,
           height: height * 0.16,
+          child: CachedNetworkImage(
+            imageUrl: products[index].imagePath,
+            fit: BoxFit.cover,
+            placeholder: (context, url) => Padding(
+              padding: EdgeInsets.all(5),
+              child: Container(
+                child: Image.asset(placeHolder),
+              ),
+            ),
+            errorWidget: (context, url, error) => Padding(
+              padding: EdgeInsets.all(5),
+              child: Container(
+                child: Image.asset(placeHolder),
+              ),
+            ),
+          ),
         ),
+
+        // Image.network(
+        //
+        //
+        // ),
       ),
       Positioned.directional(
           textDirection: Directionality.of(context),
@@ -1531,7 +1597,7 @@ Widget infoCartSupplier(String name, String years, String country,
                         Row(
                           children: [
                             Image(
-                              image: AssetImage(imagFlag),
+                              image: NetworkImage(imagFlag),
                               width: 14,
                               height: 14,
                             ),

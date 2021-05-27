@@ -1,12 +1,13 @@
 import 'package:bawabtalsharq/Model/superior_model.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
+import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/superiorBlocs/superior_bloc.dart';
 import 'package:bawabtalsharq/bloc/superiorBlocs/superior_event.dart';
 import 'package:bawabtalsharq/bloc/superiorBlocs/superior_state.dart';
-import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -72,7 +73,6 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
                                 child: Text(
                                   Languages.of(context).superior,
                                   style: TextStyle(
-                                    fontFamily: 'Segoe UI',
                                     fontSize: 29.0,
                                     color: orangeColor,
                                     letterSpacing: 0.34800000000000003,
@@ -202,10 +202,20 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
                                   blurRadius: 6.0,
                                 ),
                               ],
-                              image: DecorationImage(
-                                image:
-                                    NetworkImage(listOfSuperior[position].logo),
-                                fit: BoxFit.contain,
+                            ),
+                            child: CachedNetworkImage(
+                              imageUrl: listOfSuperior[position].logo,
+                              placeholder: (context, url) => Padding(
+                                padding: EdgeInsets.all(5),
+                                child: Container(
+                                  child: Image.asset(placeHolder),
+                                ),
+                              ),
+                              errorWidget: (context, url, error) => Padding(
+                                padding: EdgeInsets.all(5),
+                                child: Container(
+                                  child: Image.asset(placeHolder),
+                                ),
                               ),
                             ),
                           ),
@@ -231,7 +241,7 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
                               width: 5,
                             ),
                             buildText(
-                              'Member since: ${listOfSuperior[position].year}',
+                              '${Languages.of(context).memberSince + listOfSuperior[position].year}',
                               9,
                               fontWeight: FontWeight.w400,
                             ),
@@ -276,7 +286,7 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
                         ? productImage(0.11, 0.24,
                             image:
                                 listOfSuperior[position].products[1].imagePath)
-                        : productImage(0.10, 0.16, isEmpty: true),
+                        : productImage(0.11, 0.24, isEmpty: true),
                   ),
                   //top image
                   Positioned.directional(
@@ -287,7 +297,7 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
                         ? productImage(0.12, 0.3,
                             image:
                                 listOfSuperior[position].products[2].imagePath)
-                        : productImage(0.10, 0.16, isEmpty: true),
+                        : productImage(0.12, 0.3, isEmpty: true),
                   )
                 ],
               ),
@@ -299,7 +309,7 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
   }
 
   Container productImage(double width, double height,
-      {String image, bool isEmpty = false}) {
+      {String image = '', bool isEmpty = false}) {
     return Container(
       width: MediaQuery.of(context).size.height * width,
       height: MediaQuery.of(context).size.width * height,
@@ -313,9 +323,27 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
               blurRadius: 6,
               spreadRadius: 0)
         ],
-        image: DecorationImage(
-          image: isEmpty ? AssetImage(logo) : NetworkImage(image),
-          fit: BoxFit.fill,
+      ),
+      child: CachedNetworkImage(
+        fit: BoxFit.fill,
+        imageUrl: image,
+        placeholder: (context, url) => Padding(
+          padding: EdgeInsets.all(5),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: Image.asset(placeHolder),
+          ),
+        ),
+        errorWidget: (context, url, error) => Padding(
+          padding: EdgeInsets.all(5),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: Image.asset(placeHolder),
+          ),
         ),
       ),
     );

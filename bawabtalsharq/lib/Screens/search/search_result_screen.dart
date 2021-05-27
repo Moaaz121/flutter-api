@@ -1,17 +1,21 @@
 import 'dart:ui';
 
 import 'package:bawabtalsharq/Model/checkPointFliter.dart';
+import 'package:bawabtalsharq/Model/filter_model.dart';
 import 'package:bawabtalsharq/Model/mainCategoryModel.dart';
 import 'package:bawabtalsharq/Model/search_quary.dart';
+import 'package:bawabtalsharq/Screens/individual_product_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/bloc/filterBloc/filter_bloc.dart';
+import 'package:bawabtalsharq/bloc/notificationsBloc/notifications_bloc.dart';
 import 'package:bawabtalsharq/bloc/searchBloc/search_bloc.dart';
 import 'package:bawabtalsharq/bloc/searchBloc/search_event.dart';
 import 'package:bawabtalsharq/main.dart';
-import 'package:bawabtalsharq/repo/category_repo.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,7 +43,7 @@ Function blockEvent() {
 
 class SearchResult extends StatefulWidget {
   final List<CategoryModel> subCategories;
-  final List<String> Categories;
+  List<String> Categories = List<String>();
   SearchQueryModel searchQuery;
 
   SearchResult({Key key, this.subCategories, this.searchQuery, this.Categories})
@@ -219,51 +223,75 @@ class _SearchResultState extends State<SearchResult> {
                       ),
                     );
                   } else if (event is SearchLoadedState) {
-                    return isGrid
-                        ? Expanded(
-                            child: GridView.builder(
-                              physics: const BouncingScrollPhysics(
-                                  parent: AlwaysScrollableScrollPhysics()),
-                              controller: _resultScrollController,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      crossAxisSpacing: 10,
-                                      mainAxisSpacing: 0),
-                              itemCount: event.searchResponse.products.length,
-                              itemBuilder: (context, position) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    Navigator.pushNamed(context,
-                                        ScreenRoutes.individualProduct);
-                                  },
-                                  child: productItem(context,
-                                      product: event
-                                          .searchResponse.products[position]),
-                                );
-                              },
+                    if (event.searchResponse.code != 200) {
+                      return Expanded(
+                        child: Center(
+                          child: Text(
+                            event.searchResponse.msg,
+                            style: TextStyle(
+                              fontFamily: 'Segoe UI',
+                              fontSize: 15.0,
+                              color: Color(0xff303030),
+                              letterSpacing: 0.18,
+                              fontWeight: FontWeight.w600,
+                              height: 0.07,
                             ),
-                          )
-                        : Expanded(
-                            child: ListView.builder(
-                              physics: const BouncingScrollPhysics(
-                                  parent: AlwaysScrollableScrollPhysics()),
-                              controller: _resultScrollController,
-                              scrollDirection: Axis.vertical,
-                              itemCount: event.searchResponse.products.length,
-                              itemBuilder: (context, position) {
-                                return GestureDetector(
-                                  child: productItemLandscape(context,
-                                      product: event
-                                          .searchResponse.products[position]),
-                                  onTap: () {
-                                    Navigator.pushNamed(context,
-                                        ScreenRoutes.individualProduct);
-                                  },
-                                );
-                              },
-                            ),
-                          );
+                          ),
+                        ),
+                      );
+                    } else {
+                      return isGrid
+                          ? Expanded(
+                              child: GridView.builder(
+                                physics: const BouncingScrollPhysics(
+                                    parent: AlwaysScrollableScrollPhysics()),
+                                controller: _resultScrollController,
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        crossAxisSpacing: 10,
+                                        mainAxisSpacing: 0),
+                                itemCount: event.searchResponse.products.length,
+                                itemBuilder: (context, position) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  IndividualProduct(event
+                                                      .searchResponse
+                                                      .products[position]
+                                                      .productId)));
+                                    },
+                                    child: productItem(context,
+                                        product: event
+                                            .searchResponse.products[position]),
+                                  );
+                                },
+                              ),
+                            )
+                          : Expanded(
+                              child: ListView.builder(
+                                physics: const BouncingScrollPhysics(
+                                    parent: AlwaysScrollableScrollPhysics()),
+                                controller: _resultScrollController,
+                                scrollDirection: Axis.vertical,
+                                itemCount: event.searchResponse.products.length,
+                                itemBuilder: (context, position) {
+                                  return GestureDetector(
+                                    child: productItemLandscape(context,
+                                        product: event
+                                            .searchResponse.products[position]),
+                                    onTap: () {
+                                      Navigator.pushNamed(context,
+                                          ScreenRoutes.individualProduct);
+                                    },
+                                  );
+                                },
+                              ),
+                            );
+                    }
                   } else {
                     return SizedBox();
                   }
@@ -514,6 +542,13 @@ class FilterScreen extends StatefulWidget {
 class _FilterScreenState extends State<FilterScreen> {
   bool _checked1 = false;
   bool _checked2 = false;
+  FilterBloc _bloc = FilterBloc();
+
+  @override
+  void initState() {
+    super.initState();
+    _bloc.add(DoFilterEvent());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -543,71 +578,143 @@ class _FilterScreenState extends State<FilterScreen> {
       body: SingleChildScrollView(
         padding: EdgeInsetsDirectional.only(bottom: 40),
         physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            textTitle(context, Languages.of(context).category, () {
-              Navigator.pushNamed(context, ScreenRoutes.categoriesFilterScreen);
-            }, Languages.of(context).seeAll, Colors.black,
-                icon: Icons.arrow_forward),
-            listOfCate(cold_drinks),
-            titleText(Languages.of(context).expressShipping),
-            listOfCheckBox(),
-            buildSizedBox(10),
-            lineDivider(),
-            titleText(Languages.of(context).shippedFrom),
-            Row(
-              children: [
-                Expanded(
-                    flex: 1,
-                    child: buildCheckbox(1, text: Languages.of(context).egypt)),
-                Expanded(
-                    flex: 2,
-                    child: buildCheckbox(2,
-                        text: Languages.of(context).shippedFromAbroad)),
-              ],
-            ),
-            buildSizedBox(25),
-            lineDivider(),
-            titleText(Languages.of(context).rating),
-            rating(),
-            buildSizedBox(25),
-            lineDivider(),
-            titleText(Languages.of(context).sellerScore),
-            list3OfCheckBox(),
-            lineDivider(),
-            textTitle(context, Languages.of(context).brand, () {
-              Navigator.pushNamed(context, ScreenRoutes.listFilter);
-            }, Languages.of(context).seeAll, Colors.black,
-                icon: Icons.arrow_forward),
-            listOfCate(starBocks),
-            titleText(Languages.of(context).price),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                textFiledPrice(context, Languages.of(context).from, width: 0.4),
-                textFiledPrice(context, Languages.of(context).to, width: 0.4),
-              ],
-            ),
-            buildSizedBox(25),
-            titleText(Languages.of(context).discount),
-            list4OfCheckBox(),
-            lineDivider(),
-            textTitle(context, Languages.of(context).sizes, () {
-              Navigator.pushNamed(context, ScreenRoutes.listFilter);
-            }, 'X, XL', Colors.deepOrangeAccent, icon: Icons.arrow_forward_ios),
-            buildSizedBox(25),
-            lineDivider(),
-            textTitle(context, Languages.of(context).colors, () {
-              Navigator.pushNamed(context, ScreenRoutes.colorFilterScreen);
-            }, 'Orange', Colors.deepOrange, icon: Icons.arrow_forward_ios),
-            buildSizedBox(25),
-            lineDivider(),
-            textTitle(context, Languages.of(context).gender, () {
-              Navigator.pushNamed(context, ScreenRoutes.listFilter);
-            }, 'Male', Colors.deepOrange, icon: Icons.arrow_forward_ios),
-          ],
-        ),
+        child: BlocBuilder<FilterBloc, FilterState>(
+            bloc: _bloc,
+            builder: (context, snapshot) {
+              var errorMessage = '';
+              if (snapshot is LoadingState) {
+                return SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  child: Center(
+                    child: progressBar(),
+                  ),
+                );
+              } else if (snapshot is FilterErrorState) {
+                errorMessage = snapshot.message;
+                return SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  child: Center(
+                    child: Text(
+                      errorMessage,
+                      style: TextStyle(
+                        fontFamily: 'Segoe UI',
+                        fontSize: 15.0,
+                        color: Color(0xff303030),
+                        letterSpacing: 0.18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                );
+              } else if (snapshot is FilterLoadedState) {
+                if (snapshot.filterResponse.code != 200) {
+                  errorMessage = snapshot.filterResponse.msg;
+                  return SizedBox(
+                    height: MediaQuery.of(context).size.height,
+                    child: Center(
+                      child: Text(
+                        errorMessage,
+                        style: TextStyle(
+                          fontFamily: 'Segoe UI',
+                          fontSize: 15.0,
+                          color: Color(0xff303030),
+                          letterSpacing: 0.18,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  );
+                } else {
+                  return StatefulBuilder(builder: (context, setState) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        textTitle(context, Languages.of(context).category, () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SearchCategories(
+                                        cates: snapshot
+                                            .filterResponse.data.categories,
+                                      )));
+                        }, Languages.of(context).seeAll, Colors.black,
+                            icon: Icons.arrow_forward),
+                        listOfCate(snapshot.filterResponse.data.categories),
+                        titleText(Languages.of(context).expressShipping),
+                        listOfExpressShipping(
+                            snapshot.filterResponse.data.shipping),
+                        buildSizedBox(10),
+                        lineDivider(),
+                        titleText(Languages.of(context).shippedFrom),
+                        listOfExpressShippedFrom(
+                            snapshot.filterResponse.data.shipping),
+                        buildSizedBox(25),
+                        lineDivider(),
+                        titleText(Languages.of(context).rating),
+                        rating(),
+                        buildSizedBox(25),
+                        lineDivider(),
+                        titleText(Languages.of(context).sellerScore),
+                        list3OfCheckBox(),
+                        lineDivider(),
+                        textTitle(context, Languages.of(context).brand, () {
+                          Navigator.pushNamed(context, ScreenRoutes.listFilter);
+                        }, Languages.of(context).seeAll, Colors.black,
+                            icon: Icons.arrow_forward),
+                        listOfBrands(snapshot.filterResponse.data.suppliers),
+                        titleText(Languages.of(context).price),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            textFiledPrice(context, Languages.of(context).from,
+                                width: 0.4),
+                            textFiledPrice(context, Languages.of(context).to,
+                                width: 0.4),
+                          ],
+                        ),
+                        buildSizedBox(25),
+                        titleText(Languages.of(context).discount),
+                        list4OfCheckBox(),
+                        lineDivider(),
+                        textTitle(context, Languages.of(context).sizes, () {
+                          Navigator.pushNamed(context, ScreenRoutes.listFilter);
+                        }, 'X, XL', Colors.deepOrangeAccent,
+                            icon: Icons.arrow_forward_ios),
+                        buildSizedBox(25),
+                        lineDivider(),
+                        textTitle(context, Languages.of(context).colors, () {
+                          Navigator.pushNamed(
+                              context, ScreenRoutes.colorFilterScreen);
+                        }, 'Orange', Colors.deepOrange,
+                            icon: Icons.arrow_forward_ios),
+                        buildSizedBox(25),
+                        lineDivider(),
+                        textTitle(context, Languages.of(context).gender, () {
+                          Navigator.pushNamed(context, ScreenRoutes.listFilter);
+                        }, 'Male', Colors.deepOrange,
+                            icon: Icons.arrow_forward_ios),
+                      ],
+                    );
+                  });
+                }
+              } else {
+                return SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  child: Center(
+                    child: Text(
+                      errorMessage,
+                      style: TextStyle(
+                        fontFamily: 'Segoe UI',
+                        fontSize: 15.0,
+                        color: Color(0xff303030),
+                        letterSpacing: 0.18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                );
+              }
+            }),
       ),
     );
   }
@@ -731,17 +838,17 @@ class _FilterScreenState extends State<FilterScreen> {
     );
   }
 
-  Widget listOfCheckBox({List filter}) {
+  Widget listOfExpressShipping(List<Shipping> shippings) {
     return Container(
       child: ListView.builder(
         physics: NeverScrollableScrollPhysics(),
         reverse: false,
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
-        itemCount: filterArray.length,
+        itemCount: shippings.length,
         itemBuilder: (context, position) {
           return checkboxBuilder(
-            text: filterArray[position].name,
+            text: shippings[position].name,
             onChanged: (bool value) {
               setState(() {
                 filterArray[position].isSelected = value;
@@ -755,8 +862,31 @@ class _FilterScreenState extends State<FilterScreen> {
     );
   }
 
-  Widget listOfCate(String image) {
-    List<CategoryModel> categories = List<CategoryModel>();
+  Widget listOfExpressShippedFrom(List<Shipping> shippings) {
+    return Container(
+      child: ListView.builder(
+        physics: NeverScrollableScrollPhysics(),
+        reverse: false,
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemCount: shippings.length,
+        itemBuilder: (context, position) {
+          return checkboxBuilder(
+            text: shippings[position].shippingId,
+            onChanged: (bool value) {
+              setState(() {
+                filterArray[position].isSelected = value;
+                // How did value change to true at this point?
+              });
+            },
+            value: filterArray[position].isSelected,
+          );
+        },
+      ),
+    );
+  }
+
+  Widget listOfCate(List<Category> categries) {
     return Column(
       children: [
         SizedBox(
@@ -764,49 +894,127 @@ class _FilterScreenState extends State<FilterScreen> {
         ),
         SizedBox(
           height: 55,
-          child: FutureBuilder(
-              future: CategoryRepo.getCategory(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  categories = snapshot.data;
-                  return ListView.builder(
-                    padding: EdgeInsets.symmetric(vertical: 9, horizontal: 35),
-                    physics: const BouncingScrollPhysics(
-                        parent: AlwaysScrollableScrollPhysics()),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: categories.length,
-                    itemBuilder: (context, position) {
-                      return Container(
-                        width: 38.0,
-                        height: 37.0,
-                        padding: EdgeInsets.all(5),
-                        margin: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.0),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.16),
-                              offset: Offset(0, 1.0),
-                              blurRadius: 6.0,
+          child:
+              StatefulBuilder(builder: (BuildContext context, StateSetter ss) {
+            return ListView.builder(
+              padding: EdgeInsets.symmetric(vertical: 9, horizontal: 35),
+              physics: const BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics()),
+              scrollDirection: Axis.horizontal,
+              itemCount: categries.length < 20 ? categries.length : 20,
+              itemBuilder: (context, position) {
+                return Container(
+                  width: 38.0,
+                  height: 37.0,
+                  padding: EdgeInsets.all(5),
+                  margin: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+                  decoration: BoxDecoration(
+                    border: searchQuery.Categories != null &&
+                            searchQuery.Categories.contains(
+                                categries[position].categoryId)
+                        ? Border.all(color: orangeColor, width: 2)
+                        : null,
+                    borderRadius: BorderRadius.circular(10.0),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.16),
+                        offset: Offset(0, 1.0),
+                        blurRadius: 6.0,
+                      ),
+                    ],
+                  ),
+                  child: GestureDetector(
+                      onTap: () {
+                        ss(() {
+                          if (searchQuery.Categories.contains(
+                              categries[position].categoryId)) {
+                            searchQuery.Categories.remove(
+                                categries[position].categoryId);
+                          } else {
+                            searchQuery.Categories.add(
+                                categries[position].categoryId);
+                          }
+                        });
+                      },
+                      child: Container(
+                        height: 48,
+                        width: 48,
+                        child: CachedNetworkImage(
+                          imageUrl: categries[position].image,
+                          placeholder: (context, url) => Padding(
+                            padding: EdgeInsets.all(5),
+                            child: Container(
+                              child: Image.asset(placeHolder),
+                              color: Colors.white,
                             ),
-                          ],
-                        ),
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: Image.asset(
-                            categories[position].image,
                           ),
+                          errorWidget: (context, url, error) =>
+                              Image.asset(placeHolder),
                         ),
-                      );
-                    },
-                  );
-                } else {
-                  return Center(
-                    child: progressBar(),
-                  );
-                }
-              }),
+                      )),
+                );
+              },
+            );
+          }),
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        lineDivider(),
+      ],
+    );
+  }
+
+  Widget listOfBrands(List<Supplier> brands) {
+    return Column(
+      children: [
+        SizedBox(
+          height: 15,
+        ),
+        SizedBox(
+          height: 55,
+          child: ListView.builder(
+            padding: EdgeInsets.symmetric(vertical: 9, horizontal: 35),
+            physics: const BouncingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics()),
+            scrollDirection: Axis.horizontal,
+            itemCount: brands.length,
+            itemBuilder: (context, position) {
+              return Container(
+                  width: 38.0,
+                  height: 37.0,
+                  padding: EdgeInsets.all(5),
+                  margin: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.16),
+                        offset: Offset(0, 1.0),
+                        blurRadius: 6.0,
+                      ),
+                    ],
+                  ),
+                  child: Container(
+                    height: 48,
+                    width: 48,
+                    child: CachedNetworkImage(
+                      imageUrl: brands[position].logo,
+                      placeholder: (context, url) => Padding(
+                        padding: EdgeInsets.all(5),
+                        child: Container(
+                          child: Image.asset(placeHolder),
+                          color: Colors.white,
+                        ),
+                      ),
+                      errorWidget: (context, url, error) =>
+                          Image.asset(placeHolder),
+                    ),
+                  ));
+            },
+          ),
         ),
         SizedBox(
           height: 15,
@@ -896,6 +1104,129 @@ class _FilterScreenState extends State<FilterScreen> {
           print(rating);
         },
       ),
+    );
+  }
+}
+
+class SearchCategories extends StatefulWidget {
+  final List<Category> cates;
+
+  const SearchCategories({Key key, this.cates}) : super(key: key);
+
+  @override
+  _SearchCategoriesState createState() => _SearchCategoriesState();
+}
+
+class _SearchCategoriesState extends State<SearchCategories> {
+  bool _isSearchPressed = false;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: _isSearchPressed
+          ? appBarSearch(
+              hint: Languages.of(context).search,
+              onCancelPressed: () {
+                setState(() {
+                  _isSearchPressed = false;
+                });
+              },
+              context: context)
+          : appBarBuilder(
+              title: Languages.of(context).categories,
+              onBackPressed: () {
+                Navigator.pop(context);
+              },
+              actions: [
+                appBarSearchButton(() {
+                  setState(() {
+                    _isSearchPressed = true;
+                  });
+                }),
+                SizedBox(
+                  width: 10,
+                )
+              ],
+            ),
+      body: ListView.builder(
+          itemCount: widget.cates.length,
+          itemBuilder: (context, position) {
+            return GestureDetector(
+              onTap: () {
+                setState(() {
+                  if (searchQuery.Categories.contains(widget.cates[position])) {
+                    searchQuery.Categories.add(
+                        widget.cates[position].categoryId);
+                  } else {
+                    searchQuery.Categories.remove(
+                        widget.cates[position].categoryId);
+                  }
+                });
+              },
+              child: Container(
+                margin: EdgeInsetsDirectional.fromSTEB(10, 30, 10, 0),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Checkbox(
+                      value: searchQuery.Categories.contains(
+                          widget.cates[position].categoryId),
+                      onChanged: (bool newValue) {
+                        setState(() {
+                          if (searchQuery.Categories.contains(
+                              widget.cates[position].categoryId)) {
+                            searchQuery.Categories.remove(
+                                widget.cates[position].categoryId);
+                          } else {
+                            searchQuery.Categories.add(
+                                widget.cates[position].categoryId);
+                          }
+                        });
+                      },
+                      activeColor: defaultOrangeColor,
+                      checkColor: Colors.white,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white,
+                          boxShadow: [makeShadow()],
+                        ),
+                        padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
+                        child: Container(
+                          height: 58,
+                          width: 58,
+                          child: CachedNetworkImage(
+                            imageUrl: widget.cates[position].image,
+                            placeholder: (context, url) => Padding(
+                              padding: EdgeInsets.all(5),
+                              child: Container(
+                                child: Image.asset(placeHolder),
+                                color: Colors.white,
+                              ),
+                            ),
+                            errorWidget: (context, url, error) =>
+                                Image.asset(placeHolder),
+                          ),
+                        )),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: buildText(
+                        widget.cates[position].category,
+                        16,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            );
+          }),
     );
   }
 }
