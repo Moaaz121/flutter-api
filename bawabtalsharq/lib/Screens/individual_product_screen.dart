@@ -50,32 +50,11 @@ class _IndividualProductState extends State<IndividualProduct>
     _productBloc = IndividualProductBloc();
     _productBloc.add(DoIndividualProductEvent(widget.productId));
     _controllerTab = TabController(vsync: this, length: _tabs.length);
-    // _controllerTab.addListener(_handleTabSelection);
     _controller = ScrollController();
     _controllerTab.addListener(() => {setState(() {})});
 
     super.initState();
   }
-
-  // void _handleTabSelection() {
-  //   if (_controller.indexIsChanging) {
-  //     switch (_controller.index) {
-  //       case 0:
-  //         Scaffold.of(context).showSnackBar(SnackBar(
-  //           content: Text('Page 1 tapped.'),
-  //           duration: Duration(milliseconds: 500),
-  //         ));
-  //         break;
-  //       case 1:
-  //         Scaffold.of(context).showSnackBar(SnackBar(
-  //           content: Text('Page 2 tapped.'),
-  //           duration: Duration(milliseconds: 500),
-  //         ));
-  //         break;
-  //     }
-  //   }
-  // }
-
   int selectedIndex = 0;
 
   @override
@@ -101,18 +80,6 @@ class _IndividualProductState extends State<IndividualProduct>
               bottom: false,
               child: Scaffold(
                 floatingActionButton: productFab(product.price),
-
-                // appBar: AppBar(
-                //   title: Text(_tabs[_controllerTab.index]),
-                //   bottom: TabBar(
-                //     isScrollable: true,
-                //     controller: _controllerTab,
-                //     tabs: _tabs.map((String name) => Tab(text: name)).toList(),
-                //     indicatorColor: orangeColor,
-                //     indicatorSize: TabBarIndicatorSize.label,
-                //     labelColor: orangeColor,
-                //   ),
-                // ),
                 body: NestedScrollView(
                   headerSliverBuilder:
                       (BuildContext context, bool innerBoxScrolled) {
@@ -141,9 +108,6 @@ class _IndividualProductState extends State<IndividualProduct>
                         elevation: 50,
                         backgroundColor: Color(0xfff9dfd6),
                         flexibleSpace: FlexibleSpaceBar(
-
-                            // title: Text('product'),
-                            // centerTitle: true,
                             background: Container(
                                 padding: EdgeInsets.only(top: 40, bottom: 10),
                                 child: Column(
@@ -254,11 +218,7 @@ class _IndividualProductState extends State<IndividualProduct>
                                                 ])),
                                       )
                                     ]))),
-                        // bottom: tabBar(),
                       ),
-
-                      // bottom: false,
-
                       SliverToBoxAdapter(
                         child: Container(
                           color: Color(0xfff9dfd6),
@@ -333,16 +293,16 @@ class _IndividualProductState extends State<IndividualProduct>
                                         SizedBox(
                                           height: 20,
                                         ),
-                                        // product.detailedPictures.isEmpty
-                                        //     ? SizedBox()
-                                        //     :
+                                        product.detailedPictures.isEmpty
+                                            ? SizedBox()
+                                            :
                                         detailsPictures(),
                                         SizedBox(
                                           height: 20,
                                         ),
-                                        // product.packingShipping.isEmpty
-                                        //     ? SizedBox()
-                                        //     :
+                                        product.packingShipping.isEmpty
+                                            ? SizedBox()
+                                            :
 
                                         listOfBackingChipping(),
                                         SizedBox(
