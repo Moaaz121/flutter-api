@@ -73,7 +73,6 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
                                 child: Text(
                                   Languages.of(context).superior,
                                   style: TextStyle(
-                                    fontFamily: 'Segoe UI',
                                     fontSize: 29.0,
                                     color: orangeColor,
                                     letterSpacing: 0.34800000000000003,
