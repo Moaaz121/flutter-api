@@ -1,10 +1,10 @@
 import 'package:bawabtalsharq/Model/superior_model.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
+import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/superiorBlocs/superior_bloc.dart';
 import 'package:bawabtalsharq/bloc/superiorBlocs/superior_event.dart';
 import 'package:bawabtalsharq/bloc/superiorBlocs/superior_state.dart';
-import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -310,7 +310,7 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
   }
 
   Container productImage(double width, double height,
-      {String image, bool isEmpty = false}) {
+      {String image = '', bool isEmpty = false}) {
     return Container(
       width: MediaQuery.of(context).size.height * width,
       height: MediaQuery.of(context).size.width * height,
