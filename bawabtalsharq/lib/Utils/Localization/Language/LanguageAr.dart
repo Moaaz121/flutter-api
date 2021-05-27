@@ -55,7 +55,7 @@ class LanguageAr extends Languages {
   String get ascending => 'تصاعدي';
   String get descending => 'تنازلي';
   String get color => 'الألوان';
-  String get faq => 'التعليمات';
+  String get faq => 'الأسئلة والأجوبة';
   String get privacy => 'الخصوصية و أمن';
   String get technical => 'دعم فني';
   String get changePassword => 'تغيير كلمة المرور';
@@ -162,6 +162,11 @@ class LanguageAr extends Languages {
   String get overView => 'نظرة عامة';
   String get chatSupplier => 'شات المورد';
   String get buyNow => 'اشتري الآن';
+  String get productOption => 'خيارات المنتج';
+  String get packagingShipping => 'التعبئة والتغليف والشحن :';
+  String get certificates => 'الشهادات :';
+  String get detailedPictures => 'صور مفصلة';
+  String get companyDetails => 'تفاصيل الشركة';
 
 // end Mosdik
 

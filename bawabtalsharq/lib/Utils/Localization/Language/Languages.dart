@@ -158,6 +158,11 @@ abstract class Languages {
   String get overView;
   String get chatSupplier;
   String get buyNow;
+  String get productOption;
+  String get packagingShipping;
+  String get certificates;
+  String get detailedPictures;
+  String get companyDetails;
 
 // end Mosdik
 
