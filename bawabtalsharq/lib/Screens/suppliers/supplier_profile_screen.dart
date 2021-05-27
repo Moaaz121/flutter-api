@@ -235,7 +235,7 @@ class _SupplierProfileState extends State<SupplierProfile>
                           child: chatButtonAnimation(() {},
                               size: MediaQuery.of(context).size.width * 0.1,
                               sizeIcon: 7,
-                              padOfIcon: 6),
+                              padOfIcon: 11),
                         ),
                         buildText(
                           Languages.of(context).startChat,
@@ -279,7 +279,7 @@ class _SupplierProfileState extends State<SupplierProfile>
   }
 
   Widget chatButtonAnimation(Function _function,
-      {double size = 45, double sizeIcon = 15, double padOfIcon = 16}) {
+      {double size = 70, double sizeIcon = 15, double padOfIcon = 16}) {
     return Padding(
       padding: EdgeInsets.all(padOfIcon),
       child: SizedBox(
