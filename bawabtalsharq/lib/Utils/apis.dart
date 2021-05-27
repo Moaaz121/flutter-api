@@ -52,7 +52,7 @@ class APIS {
 // end Moaaz
 
 // Start Islam
-
+  static const String LogOut_API = "logout";
 // end Islam
 
 //start Asmaa

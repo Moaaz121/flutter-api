@@ -1,15 +1,19 @@
 import 'dart:ui';
+
+import 'package:bawabtalsharq/Model/user_model.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
+import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
-import 'package:bawabtalsharq/Model/user_model.dart';
-import 'package:bawabtalsharq/Utils/constants.dart';
+import 'package:bawabtalsharq/bloc/logOut/logOut_bloc.dart';
+import 'package:bawabtalsharq/bloc/logOut/logOut_event.dart';
+import 'package:bawabtalsharq/bloc/logOut/logOut_state.dart';
 import 'package:bawabtalsharq/main.dart';
-import 'package:bawabtalsharq/Screens/profile/history/history_screen.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -18,9 +22,12 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   UserModel currentUser = Constants.getUserInfo2();
+  LogOutBloc _logOutBloc;
+  bool isLoading = false;
 
   @override
   void initState() {
+    _logOutBloc = LogOutBloc();
     super.initState();
   }
 
@@ -29,103 +36,132 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return SafeArea(
       top: false,
       bottom: false,
-      child: Scaffold(
-        backgroundColor: defaultOrangeColor.withOpacity(0.15),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(14, 14, 14, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, ScreenRoutes.settingsScreen);
-                    },
-                    child: CircleAvatar(
-                      backgroundColor: Colors.white,
-                      radius: 18,
-                      child: Image.asset(
-                        settings,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 14,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      showLanguagesDialog(context);
-                    },
-                    child: buildText(
-                      Languages.of(context).language,
-                      16,
-                      fontWeight: FontWeight.bold,
-                      color: defaultOrangeColor,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(14, 0, 14, 0),
-              child: Row(
+      child: BlocProvider(
+        create: (BuildContext context) => _logOutBloc,
+        child: BlocConsumer<LogOutBloc, LogOutState>(
+          listener: (context, state) {},
+          builder: (context, state) {
+            if (state is LogOutLoadingState) {
+              if (!isLoading) {
+                showLoadingDialog(context);
+                isLoading = true;
+              }
+            }
+            if (state is LogOutLoadedState) {
+              print('loaded');
+              _logOutBloc.add(ResetState());
+              isLoading = false;
+              if (state.logOutResponse.code == 200) {
+                Constants.removeDate(key: 'user');
+                SchedulerBinding.instance.addPostFrameCallback((_) {
+                  Navigator.pushNamed(context, ScreenRoutes.mainScreen);
+                });
+              } else {
+                Navigator.pop(context);
+              }
+            }
+            return Scaffold(
+              backgroundColor: defaultOrangeColor.withOpacity(0.15),
+              body: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                    width: 76,
-                    height: 76,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: AssetImage(logo),
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                  ),
                   SizedBox(
-                    width: 10,
+                    height: 20,
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      currentUser != null
-                          ? buildText(
-                              currentUser.data.firstname +
-                                  ' ' +
-                                  currentUser.data.lastname,
-                              16,
-                              fontWeight: FontWeight.w600)
-                          : Text(''),
-                      SizedBox(
-                        height: 2,
-                      ),
-                      currentUser != null
-                          ? buildText(currentUser.data.company, 14,
-                              color: Colors.grey[500])
-                          : Text(''),
-                    ],
-                  ),
-                  currentUser == null
-                      ? GestureDetector(
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(14, 14, 14, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        GestureDetector(
                           onTap: () {
                             Navigator.pushNamed(
-                                context, ScreenRoutes.loginScreen);
+                                context, ScreenRoutes.settingsScreen);
                           },
-                          child: Text('SignUp / Login'),
-                        )
-                      : Text(''),
+                          child: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            radius: 18,
+                            child: Image.asset(
+                              settings,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 14,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            showLanguagesDialog(context);
+                          },
+                          child: buildText(
+                            Languages.of(context).language,
+                            16,
+                            fontWeight: FontWeight.bold,
+                            color: defaultOrangeColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(14, 0, 14, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 76,
+                          height: 76,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              image: AssetImage(logo),
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            currentUser != null
+                                ? buildText(
+                                    currentUser.data.firstname +
+                                        ' ' +
+                                        currentUser.data.lastname,
+                                    16,
+                                    fontWeight: FontWeight.w600)
+                                : Text(''),
+                            SizedBox(
+                              height: 2,
+                            ),
+                            currentUser != null
+                                ? buildText(currentUser.data.company, 14,
+                                    color: Colors.grey[500])
+                                : Text(''),
+                          ],
+                        ),
+                        currentUser == null
+                            ? GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, ScreenRoutes.loginScreen);
+                                },
+                                child: Text('SignUp / Login'),
+                              )
+                            : Text(''),
+                      ],
+                    ),
+                  ),
+                  profileListBuilder(context)
                 ],
               ),
-            ),
-            profileListBuilder(context)
-          ],
+            );
+          },
         ),
       ),
     );
@@ -332,10 +368,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     if (currentUser == null)
                       Navigator.pushNamed(context, ScreenRoutes.loginScreen);
                     else {
-                      Constants.removeDate(key: 'user');
-                      Navigator.pushNamed(context, ScreenRoutes.mainScreen);
+                      _logOutBloc.add(
+                        GetLogOutData(
+                            currentUser.data.userId, currentUser.data.apiKey),
+                      );
                     }
-
                     // handling api
                   },
                   drawDivider: false,

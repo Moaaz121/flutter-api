@@ -297,7 +297,8 @@ class _SearchScreenState extends State<SearchScreen> {
                   context,
                   new MaterialPageRoute(
                     builder: (BuildContext context) => new SearchResult(
-                      searchQuery: new SearchQueryModel(_searchController.text),
+                      searchQuery: new SearchQueryModel(_searchController.text,
+                          Categories: []),
                     ),
                   ));
             },

@@ -43,7 +43,7 @@ Function blockEvent() {
 
 class SearchResult extends StatefulWidget {
   final List<CategoryModel> subCategories;
-  final List<String> Categories;
+  List<String> Categories = List<String>();
   SearchQueryModel searchQuery;
 
   SearchResult({Key key, this.subCategories, this.searchQuery, this.Categories})
@@ -625,80 +625,77 @@ class _FilterScreenState extends State<FilterScreen> {
                     ),
                   );
                 } else {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      textTitle(context, Languages.of(context).category, () {
-                        Navigator.pushNamed(
-                            context, ScreenRoutes.categoriesFilterScreen);
-                      }, Languages.of(context).seeAll, Colors.black,
-                          icon: Icons.arrow_forward),
-                      listOfCate(snapshot.filterResponse.data.categories),
-                      titleText(Languages.of(context).expressShipping),
-                      listOfCheckBox(),
-                      buildSizedBox(10),
-                      lineDivider(),
-                      titleText(Languages.of(context).shippedFrom),
-                      Row(
-                        children: [
-                          Expanded(
-                              flex: 1,
-                              child: buildCheckbox(1,
-                                  text: Languages.of(context).egypt)),
-                          Expanded(
-                              flex: 2,
-                              child: buildCheckbox(2,
-                                  text:
-                                      Languages.of(context).shippedFromAbroad)),
-                        ],
-                      ),
-                      buildSizedBox(25),
-                      lineDivider(),
-                      titleText(Languages.of(context).rating),
-                      rating(),
-                      buildSizedBox(25),
-                      lineDivider(),
-                      titleText(Languages.of(context).sellerScore),
-                      list3OfCheckBox(),
-                      lineDivider(),
-                      textTitle(context, Languages.of(context).brand, () {
-                        Navigator.pushNamed(context, ScreenRoutes.listFilter);
-                      }, Languages.of(context).seeAll, Colors.black,
-                          icon: Icons.arrow_forward),
-                      listOfBrands(snapshot.filterResponse.data.suppliers),
-                      titleText(Languages.of(context).price),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          textFiledPrice(context, Languages.of(context).from,
-                              width: 0.4),
-                          textFiledPrice(context, Languages.of(context).to,
-                              width: 0.4),
-                        ],
-                      ),
-                      buildSizedBox(25),
-                      titleText(Languages.of(context).discount),
-                      list4OfCheckBox(),
-                      lineDivider(),
-                      textTitle(context, Languages.of(context).sizes, () {
-                        Navigator.pushNamed(context, ScreenRoutes.listFilter);
-                      }, 'X, XL', Colors.deepOrangeAccent,
-                          icon: Icons.arrow_forward_ios),
-                      buildSizedBox(25),
-                      lineDivider(),
-                      textTitle(context, Languages.of(context).colors, () {
-                        Navigator.pushNamed(
-                            context, ScreenRoutes.colorFilterScreen);
-                      }, 'Orange', Colors.deepOrange,
-                          icon: Icons.arrow_forward_ios),
-                      buildSizedBox(25),
-                      lineDivider(),
-                      textTitle(context, Languages.of(context).gender, () {
-                        Navigator.pushNamed(context, ScreenRoutes.listFilter);
-                      }, 'Male', Colors.deepOrange,
-                          icon: Icons.arrow_forward_ios),
-                    ],
-                  );
+                  return StatefulBuilder(builder: (context, setState) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        textTitle(context, Languages.of(context).category, () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SearchCategories(
+                                        cates: snapshot
+                                            .filterResponse.data.categories,
+                                      )));
+                        }, Languages.of(context).seeAll, Colors.black,
+                            icon: Icons.arrow_forward),
+                        listOfCate(snapshot.filterResponse.data.categories),
+                        titleText(Languages.of(context).expressShipping),
+                        listOfExpressShipping(
+                            snapshot.filterResponse.data.shipping),
+                        buildSizedBox(10),
+                        lineDivider(),
+                        titleText(Languages.of(context).shippedFrom),
+                        listOfExpressShippedFrom(
+                            snapshot.filterResponse.data.shipping),
+                        buildSizedBox(25),
+                        lineDivider(),
+                        titleText(Languages.of(context).rating),
+                        rating(),
+                        buildSizedBox(25),
+                        lineDivider(),
+                        titleText(Languages.of(context).sellerScore),
+                        list3OfCheckBox(),
+                        lineDivider(),
+                        textTitle(context, Languages.of(context).brand, () {
+                          Navigator.pushNamed(context, ScreenRoutes.listFilter);
+                        }, Languages.of(context).seeAll, Colors.black,
+                            icon: Icons.arrow_forward),
+                        listOfBrands(snapshot.filterResponse.data.suppliers),
+                        titleText(Languages.of(context).price),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            textFiledPrice(context, Languages.of(context).from,
+                                width: 0.4),
+                            textFiledPrice(context, Languages.of(context).to,
+                                width: 0.4),
+                          ],
+                        ),
+                        buildSizedBox(25),
+                        titleText(Languages.of(context).discount),
+                        list4OfCheckBox(),
+                        lineDivider(),
+                        textTitle(context, Languages.of(context).sizes, () {
+                          Navigator.pushNamed(context, ScreenRoutes.listFilter);
+                        }, 'X, XL', Colors.deepOrangeAccent,
+                            icon: Icons.arrow_forward_ios),
+                        buildSizedBox(25),
+                        lineDivider(),
+                        textTitle(context, Languages.of(context).colors, () {
+                          Navigator.pushNamed(
+                              context, ScreenRoutes.colorFilterScreen);
+                        }, 'Orange', Colors.deepOrange,
+                            icon: Icons.arrow_forward_ios),
+                        buildSizedBox(25),
+                        lineDivider(),
+                        textTitle(context, Languages.of(context).gender, () {
+                          Navigator.pushNamed(context, ScreenRoutes.listFilter);
+                        }, 'Male', Colors.deepOrange,
+                            icon: Icons.arrow_forward_ios),
+                      ],
+                    );
+                  });
                 }
               } else {
                 return SizedBox(
@@ -841,17 +838,41 @@ class _FilterScreenState extends State<FilterScreen> {
     );
   }
 
-  Widget listOfCheckBox({List filter}) {
+  Widget listOfExpressShipping(List<Shipping> shippings) {
     return Container(
       child: ListView.builder(
         physics: NeverScrollableScrollPhysics(),
         reverse: false,
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
-        itemCount: filterArray.length,
+        itemCount: shippings.length,
         itemBuilder: (context, position) {
           return checkboxBuilder(
-            text: filterArray[position].name,
+            text: shippings[position].name,
+            onChanged: (bool value) {
+              setState(() {
+                filterArray[position].isSelected = value;
+                // How did value change to true at this point?
+              });
+            },
+            value: filterArray[position].isSelected,
+          );
+        },
+      ),
+    );
+  }
+
+  Widget listOfExpressShippedFrom(List<Shipping> shippings) {
+    return Container(
+      child: ListView.builder(
+        physics: NeverScrollableScrollPhysics(),
+        reverse: false,
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemCount: shippings.length,
+        itemBuilder: (context, position) {
+          return checkboxBuilder(
+            text: shippings[position].shippingId,
             onChanged: (bool value) {
               setState(() {
                 filterArray[position].isSelected = value;
@@ -873,59 +894,69 @@ class _FilterScreenState extends State<FilterScreen> {
         ),
         SizedBox(
           height: 55,
-          child: ListView.builder(
-            padding: EdgeInsets.symmetric(vertical: 9, horizontal: 35),
-            physics: const BouncingScrollPhysics(
-                parent: AlwaysScrollableScrollPhysics()),
-            scrollDirection: Axis.horizontal,
-            itemCount: categries.length,
-            itemBuilder: (context, position) {
-              return Container(
-                width: 38.0,
-                height: 37.0,
-                padding: EdgeInsets.all(5),
-                margin: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.16),
-                      offset: Offset(0, 1.0),
-                      blurRadius: 6.0,
-                    ),
-                  ],
-                ),
-                child: GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      height: 48,
-                      width: 48,
-                      child: CachedNetworkImage(
-                        imageUrl: categries[position].image,
-                        placeholder: (context, url) => Padding(
-                          padding: EdgeInsets.all(5),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Image.asset(placeHolder),
-                          ),
-                        ),
-                        errorWidget: (context, url, error) => Padding(
-                          padding: EdgeInsets.all(5),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Image.asset(placeHolder),
-                          ),
-                        ),
+          child:
+              StatefulBuilder(builder: (BuildContext context, StateSetter ss) {
+            return ListView.builder(
+              padding: EdgeInsets.symmetric(vertical: 9, horizontal: 35),
+              physics: const BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics()),
+              scrollDirection: Axis.horizontal,
+              itemCount: categries.length < 20 ? categries.length : 20,
+              itemBuilder: (context, position) {
+                return Container(
+                  width: 38.0,
+                  height: 37.0,
+                  padding: EdgeInsets.all(5),
+                  margin: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+                  decoration: BoxDecoration(
+                    border: searchQuery.Categories != null &&
+                            searchQuery.Categories.contains(
+                                categries[position].categoryId)
+                        ? Border.all(color: orangeColor, width: 2)
+                        : null,
+                    borderRadius: BorderRadius.circular(10.0),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.16),
+                        offset: Offset(0, 1.0),
+                        blurRadius: 6.0,
                       ),
-                    )),
-              );
-            },
-          ),
+                    ],
+                  ),
+                  child: GestureDetector(
+                      onTap: () {
+                        ss(() {
+                          if (searchQuery.Categories.contains(
+                              categries[position].categoryId)) {
+                            searchQuery.Categories.remove(
+                                categries[position].categoryId);
+                          } else {
+                            searchQuery.Categories.add(
+                                categries[position].categoryId);
+                          }
+                        });
+                      },
+                      child: Container(
+                        height: 48,
+                        width: 48,
+                        child: CachedNetworkImage(
+                          imageUrl: categries[position].image,
+                          placeholder: (context, url) => Padding(
+                            padding: EdgeInsets.all(5),
+                            child: Container(
+                              child: Image.asset(placeHolder),
+                              color: Colors.white,
+                            ),
+                          ),
+                          errorWidget: (context, url, error) =>
+                              Image.asset(placeHolder),
+                        ),
+                      )),
+                );
+              },
+            );
+          }),
         ),
         SizedBox(
           height: 15,
@@ -974,21 +1005,12 @@ class _FilterScreenState extends State<FilterScreen> {
                       placeholder: (context, url) => Padding(
                         padding: EdgeInsets.all(5),
                         child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
                           child: Image.asset(placeHolder),
+                          color: Colors.white,
                         ),
                       ),
-                      errorWidget: (context, url, error) => Padding(
-                        padding: EdgeInsets.all(5),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Image.asset(placeHolder),
-                        ),
-                      ),
+                      errorWidget: (context, url, error) =>
+                          Image.asset(placeHolder),
                     ),
                   ));
             },
@@ -1082,6 +1104,129 @@ class _FilterScreenState extends State<FilterScreen> {
           print(rating);
         },
       ),
+    );
+  }
+}
+
+class SearchCategories extends StatefulWidget {
+  final List<Category> cates;
+
+  const SearchCategories({Key key, this.cates}) : super(key: key);
+
+  @override
+  _SearchCategoriesState createState() => _SearchCategoriesState();
+}
+
+class _SearchCategoriesState extends State<SearchCategories> {
+  bool _isSearchPressed = false;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: _isSearchPressed
+          ? appBarSearch(
+              hint: Languages.of(context).search,
+              onCancelPressed: () {
+                setState(() {
+                  _isSearchPressed = false;
+                });
+              },
+              context: context)
+          : appBarBuilder(
+              title: Languages.of(context).categories,
+              onBackPressed: () {
+                Navigator.pop(context);
+              },
+              actions: [
+                appBarSearchButton(() {
+                  setState(() {
+                    _isSearchPressed = true;
+                  });
+                }),
+                SizedBox(
+                  width: 10,
+                )
+              ],
+            ),
+      body: ListView.builder(
+          itemCount: widget.cates.length,
+          itemBuilder: (context, position) {
+            return GestureDetector(
+              onTap: () {
+                setState(() {
+                  if (searchQuery.Categories.contains(widget.cates[position])) {
+                    searchQuery.Categories.add(
+                        widget.cates[position].categoryId);
+                  } else {
+                    searchQuery.Categories.remove(
+                        widget.cates[position].categoryId);
+                  }
+                });
+              },
+              child: Container(
+                margin: EdgeInsetsDirectional.fromSTEB(10, 30, 10, 0),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Checkbox(
+                      value: searchQuery.Categories.contains(
+                          widget.cates[position].categoryId),
+                      onChanged: (bool newValue) {
+                        setState(() {
+                          if (searchQuery.Categories.contains(
+                              widget.cates[position].categoryId)) {
+                            searchQuery.Categories.remove(
+                                widget.cates[position].categoryId);
+                          } else {
+                            searchQuery.Categories.add(
+                                widget.cates[position].categoryId);
+                          }
+                        });
+                      },
+                      activeColor: defaultOrangeColor,
+                      checkColor: Colors.white,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white,
+                          boxShadow: [makeShadow()],
+                        ),
+                        padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
+                        child: Container(
+                          height: 58,
+                          width: 58,
+                          child: CachedNetworkImage(
+                            imageUrl: widget.cates[position].image,
+                            placeholder: (context, url) => Padding(
+                              padding: EdgeInsets.all(5),
+                              child: Container(
+                                child: Image.asset(placeHolder),
+                                color: Colors.white,
+                              ),
+                            ),
+                            errorWidget: (context, url, error) =>
+                                Image.asset(placeHolder),
+                          ),
+                        )),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: buildText(
+                        widget.cates[position].category,
+                        16,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            );
+          }),
     );
   }
 }

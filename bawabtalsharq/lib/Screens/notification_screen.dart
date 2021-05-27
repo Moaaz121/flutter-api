@@ -111,7 +111,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         color: Color(0xff303030),
                         letterSpacing: 0.18,
                         fontWeight: FontWeight.w600,
-                        height: 0.07,
                       ),
                     ),
                   ),
