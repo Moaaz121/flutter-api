@@ -20,6 +20,7 @@ import 'package:bawabtalsharq/bloc/langBloc/lang_bloc.dart';
 import 'package:bawabtalsharq/bloc/langBloc/lang_event.dart';
 import 'package:bawabtalsharq/bloc/langBloc/lang_state.dart';
 import 'package:bawabtalsharq/main.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -533,28 +534,42 @@ Widget sliderItem(BuildContext context, String image) {
         ],
       ),
       child: ClipRRect(
-          borderRadius: BorderRadius.circular(15.0),
-          child: Image.network(
-            image,
-            fit: BoxFit.fill,
-            loadingBuilder: (BuildContext ctx, Widget child,
-                ImageChunkEvent loadingProgress) {
-              if (loadingProgress == null) {
-                return child;
-              } else {
-                return Container(
-                  color: backgroundColor,
-                  child: Center(
-                    child: Image.asset(
-                      placeHolder,
-                      height: 72,
-                      width: 72,
-                    ),
-                  ),
-                );
-              }
-            },
-          )),
+        borderRadius: BorderRadius.circular(15.0),
+        child: CachedNetworkImage(
+          fit: BoxFit.fill,
+          imageUrl: image,
+          placeholder: (context, url) => Padding(
+            padding: EdgeInsets.all(8),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(40.0),
+                child: Image.asset(
+                  placeHolder,
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
+          ),
+          errorWidget: (context, url, error) => Padding(
+            padding: EdgeInsets.all(8),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(40.0),
+                child: Image.asset(
+                  placeHolder,
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
     ),
   );
 }
@@ -1100,11 +1115,25 @@ Widget productItem(BuildContext context,
           top: -10,
           right: LanguageHelper.isEnglish ? -10 : null,
           left: LanguageHelper.isEnglish ? null : -10,
-          child: Image.network(
-            product.imagePath,
+          child: Container(
             width: MediaQuery.of(context).size.width * 0.1,
             height: MediaQuery.of(context).size.height * 0.1,
-            fit: BoxFit.cover,
+            child: CachedNetworkImage(
+              imageUrl: product.imagePath,
+              fit: BoxFit.cover,
+              placeholder: (context, url) => Padding(
+                padding: EdgeInsets.all(5),
+                child: Container(
+                  child: Image.asset(placeHolder),
+                ),
+              ),
+              errorWidget: (context, url, error) => Padding(
+                padding: EdgeInsets.all(5),
+                child: Container(
+                  child: Image.asset(placeHolder),
+                ),
+              ),
+            ),
           ),
         ),
       ],
@@ -1249,11 +1278,25 @@ Widget productItemLandscape(
         top: 2,
         left: LanguageHelper.isEnglish ? width * 0.15 : null,
         right: LanguageHelper.isEnglish ? null : width * 0.18,
-        child: Image.network(
-          product.imagePath,
-          fit: BoxFit.fill,
+        child: Container(
           width: width * 0.17,
           height: height * 0.16,
+          child: CachedNetworkImage(
+            imageUrl: product.imagePath,
+            fit: BoxFit.cover,
+            placeholder: (context, url) => Padding(
+              padding: EdgeInsets.all(5),
+              child: Container(
+                child: Image.asset(placeHolder),
+              ),
+            ),
+            errorWidget: (context, url, error) => Padding(
+              padding: EdgeInsets.all(5),
+              child: Container(
+                child: Image.asset(placeHolder),
+              ),
+            ),
+          ),
         ),
       ),
       Positioned.directional(
@@ -1415,12 +1458,31 @@ Widget productItemLandscape2(BuildContext context,
         top: 2,
         left: LanguageHelper.isEnglish ? width * 0.15 : null,
         right: LanguageHelper.isEnglish ? null : width * 0.18,
-        child: Image.network(
-          products[index].imagePath,
-          fit: BoxFit.fill,
+        child: Container(
           width: width * 0.17,
           height: height * 0.16,
+          child: CachedNetworkImage(
+            imageUrl: products[index].imagePath,
+            fit: BoxFit.cover,
+            placeholder: (context, url) => Padding(
+              padding: EdgeInsets.all(5),
+              child: Container(
+                child: Image.asset(placeHolder),
+              ),
+            ),
+            errorWidget: (context, url, error) => Padding(
+              padding: EdgeInsets.all(5),
+              child: Container(
+                child: Image.asset(placeHolder),
+              ),
+            ),
+          ),
         ),
+
+        // Image.network(
+        //
+        //
+        // ),
       ),
       Positioned.directional(
           textDirection: Directionality.of(context),

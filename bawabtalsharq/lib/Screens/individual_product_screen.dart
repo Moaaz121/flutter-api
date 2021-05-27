@@ -1,11 +1,13 @@
 import 'package:bawabtalsharq/Model/individualProduct_model.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
+import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/individualProductBloc/individualProduct_bloc.dart';
 import 'package:bawabtalsharq/bloc/individualProductBloc/individualProduct_event.dart';
 import 'package:bawabtalsharq/bloc/individualProductBloc/individualProduct_state.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +15,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:bawabtalsharq/Utils/images.dart';
+
 import 'SliverPersistentHeaderInvidiualProduct/IndividualProductHedaer.dart';
 
 class IndividualProduct extends StatefulWidget {
@@ -50,31 +51,11 @@ class _IndividualProductState extends State<IndividualProduct>
     _productBloc = IndividualProductBloc();
     _productBloc.add(DoIndividualProductEvent(widget.productId));
     _controllerTab = TabController(vsync: this, length: _tabs.length);
-    // _controllerTab.addListener(_handleTabSelection);
     _controller = ScrollController();
     _controllerTab.addListener(() => {setState(() {})});
 
     super.initState();
   }
-
-  // void _handleTabSelection() {
-  //   if (_controller.indexIsChanging) {
-  //     switch (_controller.index) {
-  //       case 0:
-  //         Scaffold.of(context).showSnackBar(SnackBar(
-  //           content: Text('Page 1 tapped.'),
-  //           duration: Duration(milliseconds: 500),
-  //         ));
-  //         break;
-  //       case 1:
-  //         Scaffold.of(context).showSnackBar(SnackBar(
-  //           content: Text('Page 2 tapped.'),
-  //           duration: Duration(milliseconds: 500),
-  //         ));
-  //         break;
-  //     }
-  //   }
-  // }
 
   int selectedIndex = 0;
 
@@ -101,18 +82,6 @@ class _IndividualProductState extends State<IndividualProduct>
               bottom: false,
               child: Scaffold(
                 floatingActionButton: productFab(product.price),
-
-                // appBar: AppBar(
-                //   title: Text(_tabs[_controllerTab.index]),
-                //   bottom: TabBar(
-                //     isScrollable: true,
-                //     controller: _controllerTab,
-                //     tabs: _tabs.map((String name) => Tab(text: name)).toList(),
-                //     indicatorColor: orangeColor,
-                //     indicatorSize: TabBarIndicatorSize.label,
-                //     labelColor: orangeColor,
-                //   ),
-                // ),
                 body: NestedScrollView(
                   headerSliverBuilder:
                       (BuildContext context, bool innerBoxScrolled) {
@@ -141,9 +110,6 @@ class _IndividualProductState extends State<IndividualProduct>
                         elevation: 50,
                         backgroundColor: Color(0xfff9dfd6),
                         flexibleSpace: FlexibleSpaceBar(
-
-                            // title: Text('product'),
-                            // centerTitle: true,
                             background: Container(
                                 padding: EdgeInsets.only(top: 40, bottom: 10),
                                 child: Column(
@@ -176,11 +142,15 @@ class _IndividualProductState extends State<IndividualProduct>
                                             padding: EdgeInsets.all(5),
                                             child: Container(
                                               child: Image.asset(placeHolder),
-                                              color: Colors.white,
                                             ),
                                           ),
                                           errorWidget: (context, url, error) =>
-                                              Image.asset(placeHolder),
+                                              Padding(
+                                            padding: EdgeInsets.all(5),
+                                            child: Container(
+                                              child: Image.asset(placeHolder),
+                                            ),
+                                          ),
                                         ),
                                       ),
                                       sliderIndicator(sliderPosition,
@@ -250,11 +220,7 @@ class _IndividualProductState extends State<IndividualProduct>
                                                 ])),
                                       )
                                     ]))),
-                        // bottom: tabBar(),
                       ),
-
-                      // bottom: false,
-
                       SliverToBoxAdapter(
                         child: Container(
                           color: Color(0xfff9dfd6),
@@ -329,18 +295,15 @@ class _IndividualProductState extends State<IndividualProduct>
                                         SizedBox(
                                           height: 20,
                                         ),
-                                        // product.detailedPictures.isEmpty
-                                        //     ? SizedBox()
-                                        //     :
-                                        detailsPictures(),
+                                        product.detailedPictures.isEmpty
+                                            ? SizedBox()
+                                            : detailsPictures(),
                                         SizedBox(
                                           height: 20,
                                         ),
-                                        // product.packingShipping.isEmpty
-                                        //     ? SizedBox()
-                                        //     :
-
-                                        listOfBackingChipping(),
+                                        product.packingShipping.isEmpty
+                                            ? SizedBox()
+                                            : listOfBackingChipping(),
                                         SizedBox(
                                           height: 20,
                                         ),
@@ -739,12 +702,19 @@ class _IndividualProductState extends State<IndividualProduct>
                         placeholder: (context, url) => Padding(
                           padding: EdgeInsets.all(5),
                           child: Container(
+                            decoration: new BoxDecoration(
+                                borderRadius: BorderRadius.circular(16)),
                             child: Image.asset(placeHolder),
-                            color: Colors.white,
                           ),
                         ),
-                        errorWidget: (context, url, error) =>
-                            Image.asset(placeHolder),
+                        errorWidget: (context, url, error) => Padding(
+                          padding: EdgeInsets.all(5),
+                          child: Container(
+                            decoration: new BoxDecoration(
+                                borderRadius: BorderRadius.circular(16)),
+                            child: Image.asset(placeHolder),
+                          ),
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -786,12 +756,21 @@ class _IndividualProductState extends State<IndividualProduct>
                   placeholder: (context, url) => Padding(
                     padding: EdgeInsets.all(5),
                     child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
                       child: Image.asset(placeHolder),
-                      color: Colors.white,
                     ),
                   ),
-                  errorWidget: (context, url, error) =>
-                      Image.asset(placeHolder),
+                  errorWidget: (context, url, error) => Padding(
+                    padding: EdgeInsets.all(5),
+                    child: Container(
+                      child: Image.asset(placeHolder),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ),
+                  ),
                 ),
               );
             },
@@ -829,11 +808,14 @@ class _IndividualProductState extends State<IndividualProduct>
                         padding: EdgeInsets.all(5),
                         child: Container(
                           child: Image.asset(placeHolder),
-                          color: Colors.white,
                         ),
                       ),
-                      errorWidget: (context, url, error) =>
-                          Image.asset(placeHolder),
+                      errorWidget: (context, url, error) => Padding(
+                        padding: EdgeInsets.all(5),
+                        child: Container(
+                          child: Image.asset(placeHolder),
+                        ),
+                      ),
                     ),
                   )),
             );

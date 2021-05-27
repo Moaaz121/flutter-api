@@ -282,12 +282,21 @@ class _FilterScreenState extends State<FilterScreen> {
                   placeholder: (context, url) => Padding(
                     padding: EdgeInsets.all(5),
                     child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                       child: Image.asset(placeHolder),
-                      color: Colors.white,
                     ),
                   ),
-                  errorWidget: (context, url, error) =>
-                      Image.asset(placeHolder),
+                  errorWidget: (context, url, error) => Padding(
+                    padding: EdgeInsets.all(5),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Image.asset(placeHolder),
+                    ),
+                  ),
                 ),
               );
             },

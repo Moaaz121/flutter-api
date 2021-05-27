@@ -115,17 +115,32 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
                                 child: Container(
                                   height: 70,
                                   width: 65,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15.0),
+                                  ),
                                   child: CachedNetworkImage(
                                     imageUrl: suppliers[position].logo,
                                     placeholder: (context, url) => Padding(
                                       padding: EdgeInsets.all(5),
                                       child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(15.0),
+                                        ),
                                         child: Image.asset(placeHolder),
-                                        color: Colors.white,
                                       ),
                                     ),
                                     errorWidget: (context, url, error) =>
-                                        Image.asset(placeHolder),
+                                        Padding(
+                                      padding: EdgeInsets.all(5),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(15.0),
+                                        ),
+                                        child: Image.asset(placeHolder),
+                                      ),
+                                    ),
                                   ),
                                 )),
                           ),
@@ -188,11 +203,21 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
                 placeholder: (context, url) => Padding(
                   padding: EdgeInsets.all(5),
                   child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
                     child: Image.asset(placeHolder),
-                    color: Colors.white,
                   ),
                 ),
-                errorWidget: (context, url, error) => Image.asset(placeHolder),
+                errorWidget: (context, url, error) => Padding(
+                  padding: EdgeInsets.all(5),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: Image.asset(placeHolder),
+                  ),
+                ),
               ),
             )),
         SizedBox(
