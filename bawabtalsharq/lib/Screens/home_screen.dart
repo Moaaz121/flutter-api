@@ -14,6 +14,7 @@ import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -305,11 +306,22 @@ Widget mainHeaderButton(BuildContext context, Function function, String title,
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(8),
-                  child: Image.asset(
-                    image,
+                  child: Container(
                     height: MediaQuery.of(context).size.width * .085,
                     width: MediaQuery.of(context).size.width * .085,
-                    fit: BoxFit.fill,
+                    child: CachedNetworkImage(
+                      fit: BoxFit.fill,
+                      imageUrl: dress_icon,
+                      placeholder: (context, url) => Padding(
+                        padding: EdgeInsets.all(5),
+                        child: Container(
+                          child: Image.asset(placeHolder),
+                          color: Colors.white,
+                        ),
+                      ),
+                      errorWidget: (context, url, error) =>
+                          Image.asset(placeHolder),
+                    ),
                   ),
                 ),
               ),
@@ -631,26 +643,25 @@ Widget supplierView(
                   ],
                 ),
                 child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10.0),
-                    child: Image.network(
-                      supplierImg,
-                      height: 72,
-                      width: 72,
-                      loadingBuilder: (BuildContext ctx, Widget child,
-                          ImageChunkEvent loadingProgress) {
-                        if (loadingProgress == null) {
-                          return child;
-                        } else {
-                          return Container(
-                            color: backgroundColor,
-                            child: Padding(
-                              padding: const EdgeInsets.all(5),
-                              child: Image.asset(placeHolder),
-                            ),
-                          );
-                        }
-                      },
-                    ))),
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: Container(
+                    height: 72,
+                    width: 72,
+                    child: CachedNetworkImage(
+                      fit: BoxFit.fill,
+                      imageUrl: supplierImg,
+                      placeholder: (context, url) => Padding(
+                        padding: EdgeInsets.all(5),
+                        child: Container(
+                          child: Image.asset(placeHolder),
+                          color: Colors.white,
+                        ),
+                      ),
+                      errorWidget: (context, url, error) =>
+                          Image.asset(placeHolder),
+                    ),
+                  ),
+                )),
             SizedBox(
               height: 10,
             ),
@@ -754,13 +765,26 @@ Widget mainMostPopularProduct(
           child: Stack(
             children: [
               PositionedDirectional(
-                  top: -40,
-                  start: -50,
-                  child: Image.network(
-                    img,
-                    height: 120,
-                    width: 120,
-                  )),
+                top: -40,
+                start: -50,
+                child: Container(
+                  height: 120,
+                  width: 120,
+                  child: CachedNetworkImage(
+                    fit: BoxFit.fill,
+                    imageUrl: img,
+                    placeholder: (context, url) => Padding(
+                      padding: EdgeInsets.all(5),
+                      child: Container(
+                        child: Image.asset(placeHolder),
+                        color: Colors.white,
+                      ),
+                    ),
+                    errorWidget: (context, url, error) =>
+                        Image.asset(placeHolder),
+                  ),
+                ),
+              ),
               Align(
                 alignment: Alignment.topRight,
                 child: Padding(
@@ -868,13 +892,26 @@ Widget subMostPopularProduct(
         child: Stack(
           children: [
             PositionedDirectional(
-                bottom: -5,
-                end: -5,
-                child: Image.network(
-                  img,
-                  height: 53,
-                  width: 55,
-                )),
+              bottom: -5,
+              end: -5,
+              child: Container(
+                height: 53,
+                width: 53,
+                child: CachedNetworkImage(
+                  fit: BoxFit.fill,
+                  imageUrl: img,
+                  placeholder: (context, url) => Padding(
+                    padding: EdgeInsets.all(5),
+                    child: Container(
+                      child: Image.asset(placeHolder),
+                      color: Colors.white,
+                    ),
+                  ),
+                  errorWidget: (context, url, error) =>
+                      Image.asset(placeHolder),
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: Row(
@@ -1089,7 +1126,19 @@ Widget mostPopularCateg(
                 child: SizedBox(
                   width: 70,
                   height: 60,
-                  child: Image.network(productImg),
+                  child: CachedNetworkImage(
+                    fit: BoxFit.fill,
+                    imageUrl: productImg,
+                    placeholder: (context, url) => Padding(
+                      padding: EdgeInsets.all(5),
+                      child: Container(
+                        child: Image.asset(placeHolder),
+                        color: Colors.white,
+                      ),
+                    ),
+                    errorWidget: (context, url, error) =>
+                        Image.asset(placeHolder),
+                  ),
                 )),
             Padding(
               padding:
