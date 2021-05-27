@@ -225,10 +225,14 @@ class _IntroScreenState extends State<IntroScreen> {
                 padding: EdgeInsets.all(5),
                 child: Container(
                   child: Image.asset(placeHolder),
-                  color: Colors.white,
                 ),
               ),
-              errorWidget: (context, url, error) => Image.asset(placeHolder),
+              errorWidget: (context, url, error) => Padding(
+                padding: EdgeInsets.all(5),
+                child: Container(
+                  child: Image.asset(placeHolder),
+                ),
+              ),
             ),
           ),
           Container(

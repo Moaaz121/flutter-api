@@ -179,11 +179,20 @@ class _AllCategoriesState extends State<AllCategories>
                                   padding: EdgeInsets.all(5),
                                   child: Container(
                                     child: Image.asset(placeHolder),
-                                    color: Colors.white,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
                                   ),
                                 ),
-                                errorWidget: (context, url, error) =>
-                                    Image.asset(placeHolder),
+                                errorWidget: (context, url, error) => Padding(
+                                  padding: EdgeInsets.all(5),
+                                  child: Container(
+                                    child: Image.asset(placeHolder),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                  ),
+                                ),
                               ),
                             )),
                       ),

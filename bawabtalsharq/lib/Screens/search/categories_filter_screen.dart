@@ -87,12 +87,21 @@ class _SearchCategoriesState extends State<SearchCategories> {
                             placeholder: (context, url) => Padding(
                               padding: EdgeInsets.all(5),
                               child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
                                 child: Image.asset(placeHolder),
-                                color: Colors.white,
                               ),
                             ),
-                            errorWidget: (context, url, error) =>
-                                Image.asset(placeHolder),
+                            errorWidget: (context, url, error) => Padding(
+                              padding: EdgeInsets.all(5),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Image.asset(placeHolder),
+                              ),
+                            ),
                           ),
                         )),
                     SizedBox(

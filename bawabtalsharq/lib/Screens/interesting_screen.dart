@@ -103,11 +103,15 @@ class _InterestingState extends State<Interesting> {
                                         padding: EdgeInsets.all(5),
                                         child: Container(
                                           child: Image.asset(placeHolder),
-                                          color: Colors.white,
                                         ),
                                       ),
                                       errorWidget: (context, url, error) =>
-                                          Image.asset(placeHolder),
+                                          Padding(
+                                        padding: EdgeInsets.all(5),
+                                        child: Container(
+                                          child: Image.asset(placeHolder),
+                                        ),
+                                      ),
                                     ),
                                   ),
                                   Text(

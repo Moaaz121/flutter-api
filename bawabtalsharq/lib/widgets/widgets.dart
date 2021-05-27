@@ -29,6 +29,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/style.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class Widgets {
   call() {}
@@ -535,28 +536,42 @@ Widget sliderItem(BuildContext context, String image) {
         ],
       ),
       child: ClipRRect(
-          borderRadius: BorderRadius.circular(15.0),
-          child: Image.network(
-            image,
-            fit: BoxFit.fill,
-            loadingBuilder: (BuildContext ctx, Widget child,
-                ImageChunkEvent loadingProgress) {
-              if (loadingProgress == null) {
-                return child;
-              } else {
-                return Container(
-                  color: backgroundColor,
-                  child: Center(
-                    child: Image.asset(
-                      placeHolder,
-                      height: 72,
-                      width: 72,
-                    ),
-                  ),
-                );
-              }
-            },
-          )),
+        borderRadius: BorderRadius.circular(15.0),
+        child: CachedNetworkImage(
+          fit: BoxFit.fill,
+          imageUrl: image,
+          placeholder: (context, url) => Padding(
+            padding: EdgeInsets.all(8),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(40.0),
+                child: Image.asset(
+                  placeHolder,
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
+          ),
+          errorWidget: (context, url, error) => Padding(
+            padding: EdgeInsets.all(8),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(40.0),
+                child: Image.asset(
+                  placeHolder,
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
     ),
   );
 }

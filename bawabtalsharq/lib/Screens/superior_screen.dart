@@ -210,11 +210,14 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
                                 padding: EdgeInsets.all(5),
                                 child: Container(
                                   child: Image.asset(placeHolder),
-                                  color: Colors.white,
                                 ),
                               ),
-                              errorWidget: (context, url, error) =>
-                                  Image.asset(placeHolder),
+                              errorWidget: (context, url, error) => Padding(
+                                padding: EdgeInsets.all(5),
+                                child: Container(
+                                  child: Image.asset(placeHolder),
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -328,11 +331,21 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
         placeholder: (context, url) => Padding(
           padding: EdgeInsets.all(5),
           child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+            ),
             child: Image.asset(placeHolder),
-            color: Colors.white,
           ),
         ),
-        errorWidget: (context, url, error) => Image.asset(placeHolder),
+        errorWidget: (context, url, error) => Padding(
+          padding: EdgeInsets.all(5),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: Image.asset(placeHolder),
+          ),
+        ),
       ),
     );
   }

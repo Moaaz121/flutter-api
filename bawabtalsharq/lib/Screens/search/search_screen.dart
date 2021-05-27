@@ -155,13 +155,25 @@ class _SearchScreenState extends State<SearchScreen> {
                                                 Padding(
                                               padding: EdgeInsets.all(5),
                                               child: Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
                                                 child: Image.asset(placeHolder),
-                                                color: Colors.white,
                                               ),
                                             ),
                                             errorWidget:
                                                 (context, url, error) =>
-                                                    Image.asset(placeHolder),
+                                                    Padding(
+                                              padding: EdgeInsets.all(5),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                child: Image.asset(placeHolder),
+                                              ),
+                                            ),
                                           ),
                                         )),
                                   );

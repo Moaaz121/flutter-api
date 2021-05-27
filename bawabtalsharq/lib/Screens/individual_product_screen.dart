@@ -176,11 +176,15 @@ class _IndividualProductState extends State<IndividualProduct>
                                             padding: EdgeInsets.all(5),
                                             child: Container(
                                               child: Image.asset(placeHolder),
-                                              color: Colors.white,
                                             ),
                                           ),
                                           errorWidget: (context, url, error) =>
-                                              Image.asset(placeHolder),
+                                              Padding(
+                                            padding: EdgeInsets.all(5),
+                                            child: Container(
+                                              child: Image.asset(placeHolder),
+                                            ),
+                                          ),
                                         ),
                                       ),
                                       sliderIndicator(sliderPosition,
@@ -739,12 +743,19 @@ class _IndividualProductState extends State<IndividualProduct>
                         placeholder: (context, url) => Padding(
                           padding: EdgeInsets.all(5),
                           child: Container(
+                            decoration: new BoxDecoration(
+                                borderRadius: BorderRadius.circular(16)),
                             child: Image.asset(placeHolder),
-                            color: Colors.white,
                           ),
                         ),
-                        errorWidget: (context, url, error) =>
-                            Image.asset(placeHolder),
+                        errorWidget: (context, url, error) => Padding(
+                          padding: EdgeInsets.all(5),
+                          child: Container(
+                            decoration: new BoxDecoration(
+                                borderRadius: BorderRadius.circular(16)),
+                            child: Image.asset(placeHolder),
+                          ),
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -786,12 +797,21 @@ class _IndividualProductState extends State<IndividualProduct>
                   placeholder: (context, url) => Padding(
                     padding: EdgeInsets.all(5),
                     child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
                       child: Image.asset(placeHolder),
-                      color: Colors.white,
                     ),
                   ),
-                  errorWidget: (context, url, error) =>
-                      Image.asset(placeHolder),
+                  errorWidget: (context, url, error) => Padding(
+                    padding: EdgeInsets.all(5),
+                    child: Container(
+                      child: Image.asset(placeHolder),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ),
+                  ),
                 ),
               );
             },
@@ -829,11 +849,14 @@ class _IndividualProductState extends State<IndividualProduct>
                         padding: EdgeInsets.all(5),
                         child: Container(
                           child: Image.asset(placeHolder),
-                          color: Colors.white,
                         ),
                       ),
-                      errorWidget: (context, url, error) =>
-                          Image.asset(placeHolder),
+                      errorWidget: (context, url, error) => Padding(
+                        padding: EdgeInsets.all(5),
+                        child: Container(
+                          child: Image.asset(placeHolder),
+                        ),
+                      ),
                     ),
                   )),
             );

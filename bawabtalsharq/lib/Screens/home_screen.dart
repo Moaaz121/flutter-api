@@ -640,14 +640,29 @@ Widget supplierView(
                       fit: BoxFit.fill,
                       imageUrl: supplierImg,
                       placeholder: (context, url) => Padding(
-                        padding: EdgeInsets.all(5),
+                        padding: EdgeInsets.all(8),
                         child: Container(
-                          child: Image.asset(placeHolder),
-                          color: Colors.white,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          child: Image.asset(
+                            placeHolder,
+                            fit: BoxFit.fill,
+                          ),
                         ),
                       ),
-                      errorWidget: (context, url, error) =>
-                          Image.asset(placeHolder),
+                      errorWidget: (context, url, error) => Padding(
+                        padding: EdgeInsets.all(8),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          child: Image.asset(
+                            placeHolder,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 )),
@@ -753,27 +768,27 @@ Widget mainMostPopularProduct(
           borderRadius: BorderRadius.circular(15),
           child: Stack(
             children: [
-              PositionedDirectional(
-                top: -40,
-                start: -50,
-                child: Container(
-                  height: 120,
-                  width: 120,
-                  child: CachedNetworkImage(
-                    fit: BoxFit.fill,
-                    imageUrl: img,
-                    placeholder: (context, url) => Padding(
-                      padding: EdgeInsets.all(5),
-                      child: Container(
-                        child: Image.asset(placeHolder),
-                        color: Colors.white,
-                      ),
-                    ),
-                    errorWidget: (context, url, error) =>
-                        Image.asset(placeHolder),
-                  ),
-                ),
-              ),
+              // PositionedDirectional(
+              //   top: -40,
+              //   start: -50,
+              //   child: Container(
+              //     height: 120,
+              //     width: 120,
+              //     child: CachedNetworkImage(
+              //       fit: BoxFit.fill,
+              //       imageUrl: img,
+              //       placeholder: (context, url) => Padding(
+              //         padding: EdgeInsets.all(5),
+              //         child: Container(
+              //           child: Image.asset(placeHolder),
+              //           color: Colors.white,
+              //         ),
+              //       ),
+              //       errorWidget: (context, url, error) =>
+              //           Image.asset(placeHolder),
+              //     ),
+              //   ),
+              // ),
               Align(
                 alignment: Alignment.topRight,
                 child: Padding(
@@ -886,18 +901,36 @@ Widget subMostPopularProduct(
               child: Container(
                 height: 53,
                 width: 53,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                ),
                 child: CachedNetworkImage(
                   fit: BoxFit.fill,
                   imageUrl: img,
                   placeholder: (context, url) => Padding(
-                    padding: EdgeInsets.all(5),
+                    padding: EdgeInsets.all(8),
                     child: Container(
-                      child: Image.asset(placeHolder),
-                      color: Colors.white,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Image.asset(
+                        placeHolder,
+                        fit: BoxFit.fill,
+                      ),
                     ),
                   ),
-                  errorWidget: (context, url, error) =>
-                      Image.asset(placeHolder),
+                  errorWidget: (context, url, error) => Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Image.asset(
+                        placeHolder,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -1119,14 +1152,19 @@ Widget mostPopularCateg(
                     fit: BoxFit.fill,
                     imageUrl: productImg,
                     placeholder: (context, url) => Padding(
-                      padding: EdgeInsets.all(5),
-                      child: Container(
-                        child: Image.asset(placeHolder),
-                        color: Colors.white,
+                      padding: EdgeInsets.all(8),
+                      child: Image.asset(
+                        placeHolder,
+                        fit: BoxFit.fill,
                       ),
                     ),
-                    errorWidget: (context, url, error) =>
-                        Image.asset(placeHolder),
+                    errorWidget: (context, url, error) => Padding(
+                      padding: EdgeInsets.all(8),
+                      child: Image.asset(
+                        placeHolder,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
                   ),
                 )),
             Padding(
