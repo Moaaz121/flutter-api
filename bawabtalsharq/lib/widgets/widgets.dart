@@ -26,8 +26,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_html/style.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Widgets {
@@ -1062,17 +1060,18 @@ Widget productItem(BuildContext context,
                           SizedBox(
                             height: 1,
                           ),
-                          Html(
-                            data: product.shortDescription,
-                            style: {
-                              "body": Style(
-                                fontFamily: 'Segoe UI',
-                                fontSize: FontSize(9.0),
-                                letterSpacing: 0.084,
-                                color: Color(0xff303030),
-                                fontWeight: FontWeight.w600,
-                              ),
-                            },
+                          RichText(
+                            text: TextSpan(
+                                text:
+                                    removeAllHtmlTags(product.shortDescription),
+                                style: TextStyle(
+                                  fontFamily: 'Segoe UI',
+                                  fontSize: 9.0,
+                                  color: Color(0xff303030),
+                                  fontWeight: FontWeight.w600,
+                                )),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
                           )
                         ],
                       ),
@@ -1111,6 +1110,11 @@ Widget productItem(BuildContext context,
       ],
     ),
   );
+}
+
+String removeAllHtmlTags(String htmlText) {
+  RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
+  return htmlText.replaceAll(exp, '');
 }
 
 Widget productItemLandscape(

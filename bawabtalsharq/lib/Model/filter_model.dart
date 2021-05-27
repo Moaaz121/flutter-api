@@ -43,14 +43,14 @@ class Data {
     this.shipping,
     this.suppliers,
     this.sizes,
-    this.colors,
+    this.colorCode,
   });
 
   List<Category> categories;
   List<Shipping> shipping;
   List<Supplier> suppliers;
   List<String> sizes;
-  List<ColorCode> colors;
+  List<ColorCode> colorCode;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         categories: json["categories"] == null
@@ -68,10 +68,10 @@ class Data {
         sizes: json["sizes"] == null
             ? null
             : List<String>.from(json["sizes"].map((x) => x)),
-        colors: json["colors"] == null
+        colorCode: json["color_code"] == null
             ? null
             : List<ColorCode>.from(
-                json["colors"].map((x) => ColorCode.fromJson(x))),
+                json["color_code"].map((x) => ColorCode.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -85,9 +85,9 @@ class Data {
             ? null
             : List<dynamic>.from(suppliers.map((x) => x.toJson())),
         "sizes": sizes == null ? null : List<dynamic>.from(sizes.map((x) => x)),
-        "colors": colors == null
+        "color_code": colorCode == null
             ? null
-            : List<dynamic>.from(colors.map((x) => x.toJson())),
+            : List<dynamic>.from(colorCode.map((x) => x.toJson())),
       };
 }
 
@@ -138,20 +138,20 @@ class ColorCode {
 class Shipping {
   Shipping({
     this.shippingId,
-    this.image,
+    this.name,
   });
 
   String shippingId;
-  String image;
+  String name;
 
   factory Shipping.fromJson(Map<String, dynamic> json) => Shipping(
         shippingId: json["shipping_id"] == null ? null : json["shipping_id"],
-        image: json["image"] == null ? null : json["image"],
+        name: json["name"] == null ? null : json["name"],
       );
 
   Map<String, dynamic> toJson() => {
         "shipping_id": shippingId == null ? null : shippingId,
-        "image": image == null ? null : image,
+        "name": name == null ? null : name,
       };
 }
 
