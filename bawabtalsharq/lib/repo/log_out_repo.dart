@@ -5,9 +5,13 @@ import 'package:bawabtalsharq/Utils/apis.dart';
 import 'package:http/http.dart' as http;
 
 class LogOutRepo {
-  Future<LogOutModel> logOutApi() async {
-    var response =
-        await http.get(Uri.encodeFull(APIS.serverURL + APIS.LogOut_API));
+  Future<LogOutModel> logOutApi(String userId, String apiKey) async {
+    Map<String, dynamic> params = {"user_id": userId, "ApiKey": apiKey};
+
+    var response = await http.post(
+      Uri.encodeFull(APIS.serverURL + APIS.LogOut_API),
+      body: params,
+    );
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
       LogOutModel returnData = LogOutModel.fromJson(data);

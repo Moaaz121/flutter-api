@@ -14,7 +14,7 @@ class LogOutBloc extends Bloc<LogOutEvent, LogOutState> {
     if (event is GetLogOutData) {
       yield LogOutLoadingState();
       print('loaded');
-      var response = await LogOutRepo().logOutApi();
+      var response = await LogOutRepo().logOutApi(event.userId, event.apiKey);
 
       yield LogOutLoadedState(logOutResponse: response);
     } else if (event is ResetState) {

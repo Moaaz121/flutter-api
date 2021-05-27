@@ -1,7 +1,9 @@
 abstract class LogOutEvent {}
 
 class GetLogOutData extends LogOutEvent {
-  GetLogOutData();
+  String userId;
+  String apiKey;
+  GetLogOutData(this.userId, this.apiKey);
 }
 
 class ResetState extends LogOutEvent {}

@@ -12,6 +12,7 @@ import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -22,11 +23,11 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   UserModel currentUser = Constants.getUserInfo2();
   LogOutBloc _logOutBloc;
+  bool isLoading = false;
 
   @override
   void initState() {
     _logOutBloc = LogOutBloc();
-    _logOutBloc.add(GetLogOutData());
     super.initState();
   }
 
@@ -38,19 +39,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: BlocProvider(
         create: (BuildContext context) => _logOutBloc,
         child: BlocConsumer<LogOutBloc, LogOutState>(
-          listener: (context, state) {
+          listener: (context, state) {},
+          builder: (context, state) {
             if (state is LogOutLoadingState) {
-              return Container(
-                child: Text('Logout Loading'),
-              );
+              if (!isLoading) {
+                showLoadingDialog(context);
+                isLoading = true;
+              }
             }
             if (state is LogOutLoadedState) {
-              return Container(
-                child: Text('Logout Loading' + state.logOutResponse.msg),
-              );
+              print('loaded');
+              _logOutBloc.add(ResetState());
+              isLoading = false;
+              if (state.logOutResponse.code == 200) {
+                Constants.removeDate(key: 'user');
+                SchedulerBinding.instance.addPostFrameCallback((_) {
+                  Navigator.pushNamed(context, ScreenRoutes.mainScreen);
+                });
+              } else {
+                Navigator.pop(context);
+              }
             }
-          },
-          builder: (context, state) {
             return Scaffold(
               backgroundColor: defaultOrangeColor.withOpacity(0.15),
               body: Column(
@@ -359,11 +368,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     if (currentUser == null)
                       Navigator.pushNamed(context, ScreenRoutes.loginScreen);
                     else {
-                      _logOutBloc.add(GetLogOutData());
-                      Constants.removeDate(key: 'user');
-                      Navigator.pushNamed(context, ScreenRoutes.mainScreen);
+                      _logOutBloc.add(
+                        GetLogOutData(
+                            currentUser.data.userId, currentUser.data.apiKey),
+                      );
                     }
-
                     // handling api
                   },
                   drawDivider: false,

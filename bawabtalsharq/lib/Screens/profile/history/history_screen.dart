@@ -1,15 +1,12 @@
-import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
-import 'package:bawabtalsharq/main.dart';
-import 'package:bawabtalsharq/widgets/widgets.dart';
-import 'package:bawabtalsharq/Utils/constants.dart';
-import 'package:bawabtalsharq/Model/user_model.dart';
 import 'package:bawabtalsharq/Model/history_model.dart';
+import 'package:bawabtalsharq/Model/user_model.dart';
 import 'package:bawabtalsharq/Screens/individual_product_screen.dart';
+import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/bloc/profileBlocs/historyBloc/history_bloc.dart';
 import 'package:bawabtalsharq/bloc/profileBlocs/historyBloc/history_event.dart';
 import 'package:bawabtalsharq/bloc/profileBlocs/historyBloc/history_state.dart';
+import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -106,8 +103,13 @@ class _HistoryState extends State<HistoryScreen> {
                   ])
                 : Center(
                     child: Container(
-                      color: Colors.white,
+                      //   decoration: BoxDecoration(
+                      //       image: DecorationImage(
+                      //     image: AssetImage(noConnectionImage),
+                      //     fit: BoxFit.cover,
+                      //   )),
                       child: Text(errorMessage),
+                      // ),
                     ),
                   );
           },
