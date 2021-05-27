@@ -1,11 +1,13 @@
 import 'package:bawabtalsharq/Model/individualProduct_model.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
+import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/individualProductBloc/individualProduct_bloc.dart';
 import 'package:bawabtalsharq/bloc/individualProductBloc/individualProduct_event.dart';
 import 'package:bawabtalsharq/bloc/individualProductBloc/individualProduct_state.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +15,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:bawabtalsharq/Utils/images.dart';
+
 import 'SliverPersistentHeaderInvidiualProduct/IndividualProductHedaer.dart';
 
 class IndividualProduct extends StatefulWidget {
@@ -55,6 +56,7 @@ class _IndividualProductState extends State<IndividualProduct>
 
     super.initState();
   }
+
   int selectedIndex = 0;
 
   @override
@@ -295,16 +297,13 @@ class _IndividualProductState extends State<IndividualProduct>
                                         ),
                                         product.detailedPictures.isEmpty
                                             ? SizedBox()
-                                            :
-                                        detailsPictures(),
+                                            : detailsPictures(),
                                         SizedBox(
                                           height: 20,
                                         ),
                                         product.packingShipping.isEmpty
                                             ? SizedBox()
-                                            :
-
-                                        listOfBackingChipping(),
+                                            : listOfBackingChipping(),
                                         SizedBox(
                                           height: 20,
                                         ),

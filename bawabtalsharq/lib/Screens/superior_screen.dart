@@ -242,7 +242,7 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
                               width: 5,
                             ),
                             buildText(
-                              'Member since: ${listOfSuperior[position].year}',
+                              '${Languages.of(context).memberSince + listOfSuperior[position].year}',
                               9,
                               fontWeight: FontWeight.w400,
                             ),
@@ -287,7 +287,7 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
                         ? productImage(0.11, 0.24,
                             image:
                                 listOfSuperior[position].products[1].imagePath)
-                        : productImage(0.10, 0.16, isEmpty: true),
+                        : productImage(0.11, 0.24, isEmpty: true),
                   ),
                   //top image
                   Positioned.directional(
@@ -298,7 +298,7 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
                         ? productImage(0.12, 0.3,
                             image:
                                 listOfSuperior[position].products[2].imagePath)
-                        : productImage(0.10, 0.16, isEmpty: true),
+                        : productImage(0.12, 0.3, isEmpty: true),
                   )
                 ],
               ),
