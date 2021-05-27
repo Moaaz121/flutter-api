@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bawabtalsharq/main.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class GoldenSuppliers extends StatefulWidget {
   @override
@@ -110,13 +111,23 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
                             top: 2,
                             start: 30,
                             child: ClipRRect(
-                              borderRadius: BorderRadius.circular(15.0),
-                              child: Image(
-                                image: NetworkImage(suppliers[position].logo),
-                                width: 70,
-                                height: 65,
-                              ),
-                            ),
+                                borderRadius: BorderRadius.circular(15.0),
+                                child: Container(
+                                  height: 70,
+                                  width: 65,
+                                  child: CachedNetworkImage(
+                                    imageUrl: suppliers[position].logo,
+                                    placeholder: (context, url) => Padding(
+                                      padding: EdgeInsets.all(5),
+                                      child: Container(
+                                        child: Image.asset(placeHolder),
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    errorWidget: (context, url, error) =>
+                                        Image.asset(placeHolder),
+                                  ),
+                                )),
                           ),
                         ]),
                       );
@@ -168,13 +179,22 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
       // mainAxisAlignment: MainAxisAlignment.start,
       children: [
         ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: Image(
-            image: isEmpty ? AssetImage(logo) : NetworkImage(imagePath),
-            width: 85,
-            height: 70,
-          ),
-        ),
+            borderRadius: BorderRadius.circular(20),
+            child: Container(
+              height: 70,
+              width: 85,
+              child: CachedNetworkImage(
+                imageUrl: imagePath,
+                placeholder: (context, url) => Padding(
+                  padding: EdgeInsets.all(5),
+                  child: Container(
+                    child: Image.asset(placeHolder),
+                    color: Colors.white,
+                  ),
+                ),
+                errorWidget: (context, url, error) => Image.asset(placeHolder),
+              ),
+            )),
         SizedBox(
           height: 3,
         ),

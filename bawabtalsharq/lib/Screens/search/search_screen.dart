@@ -7,7 +7,7 @@ import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/repo/category_repo.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
-import 'package:cached_network_image_builder/cached_network_image_builder.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -148,13 +148,11 @@ class _SearchScreenState extends State<SearchScreen> {
                                         child: Container(
                                           height: 38,
                                           width: 38,
-                                          child: CachedNetworkImageBuilder(
-                                            url: categories[position].image,
-                                            builder: (image) {
-                                              return Center(
-                                                  child: Image.file(image));
-                                            },
-                                            placeHolder: Padding(
+                                          child: CachedNetworkImage(
+                                            imageUrl:
+                                                categories[position].image,
+                                            placeholder: (context, url) =>
+                                                Padding(
                                               padding: EdgeInsets.all(5),
                                               child: Container(
                                                 child: Image.asset(placeHolder),
@@ -162,8 +160,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                               ),
                                             ),
                                             errorWidget:
-                                                Image.asset(errorImage),
-                                            imageExtensions: ['jpg', 'png'],
+                                                (context, url, error) =>
+                                                    Image.asset(placeHolder),
                                           ),
                                         )),
                                   );

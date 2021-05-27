@@ -4,6 +4,8 @@ import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:bawabtalsharq/Utils/images.dart';
 
 class Interesting extends StatefulWidget {
   @override
@@ -92,11 +94,21 @@ class _InterestingState extends State<Interesting> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Image.asset(
-                                    interestingArray[index].image,
-                                    fit: BoxFit.fill,
+                                  Container(
                                     width: 44,
                                     height: 44,
+                                    child: CachedNetworkImage(
+                                      imageUrl: interestingArray[index].image,
+                                      placeholder: (context, url) => Padding(
+                                        padding: EdgeInsets.all(5),
+                                        child: Container(
+                                          child: Image.asset(placeHolder),
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      errorWidget: (context, url, error) =>
+                                          Image.asset(placeHolder),
+                                    ),
                                   ),
                                   Text(
                                     interestingArray[index].text,
