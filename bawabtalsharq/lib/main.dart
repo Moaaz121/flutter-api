@@ -125,7 +125,8 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.subCategoryScreen: (_) => SubCategoryScreen(),
         ScreenRoutes.savedScreen: (_) => SavedScreen(),
         ScreenRoutes.quoteScreen: (_) => QuoteDetailsScreen(),
-        ScreenRoutes.supplierProfileScreen: (_) => SupplierProfile(),
+        ScreenRoutes.supplierProfileScreen: (context) =>
+            SupplierProfile(ModalRoute.of(context).settings.arguments),
         ScreenRoutes.historyScreen: (context) =>
             HistoryScreen(ModalRoute.of(context).settings.arguments),
         ScreenRoutes.forgetPassword: (_) => ForgetPassword(),

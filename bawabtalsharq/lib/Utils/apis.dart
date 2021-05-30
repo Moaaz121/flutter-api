@@ -44,6 +44,7 @@ class APIS {
   static const String IndividualProduct_API = "product_details&lang=";
   static const String Currency_API = "get_currencies&lang=";
   static const String Country_API = "get_countries&lang=";
+  static const String SupplierProfile_API = "supplier_profile&currency_id=";
 
 // end Mosdik
 
