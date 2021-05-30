@@ -2,6 +2,7 @@ import 'package:bawabtalsharq/Model/history_model.dart';
 import 'package:bawabtalsharq/Model/user_model.dart';
 import 'package:bawabtalsharq/Screens/individual_product_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
+import 'package:bawabtalsharq/Utils/loading.dart';
 import 'package:bawabtalsharq/bloc/profileBlocs/historyBloc/history_bloc.dart';
 import 'package:bawabtalsharq/bloc/profileBlocs/historyBloc/history_event.dart';
 import 'package:bawabtalsharq/bloc/profileBlocs/historyBloc/history_state.dart';
@@ -60,7 +61,7 @@ class _HistoryState extends State<HistoryScreen> {
                 return Container(
                   color: Colors.white,
                   child: Center(
-                    child: progressBar(),
+                    child: LoadingLogo(),
                   ),
                 );
               }

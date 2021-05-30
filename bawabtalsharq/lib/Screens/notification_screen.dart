@@ -1,9 +1,9 @@
 import 'package:bawabtalsharq/Model/notification_model.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
+import 'package:bawabtalsharq/Utils/loading.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/notificationsBloc/notifications_bloc.dart';
-import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -97,7 +97,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           builder: (context, snapshot) {
             if (snapshot is LoadingState) {
               return Center(
-                child: progressBar(),
+                child: LoadingLogo(),
               );
             } else if (snapshot is DoneState) {
               if (snapshot.messageResponse.code != 200) {

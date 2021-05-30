@@ -1,6 +1,7 @@
 import 'package:bawabtalsharq/Model/plan_model.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
+import 'package:bawabtalsharq/Utils/loading.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/planByIdBloc/plan_by_id_bloc.dart';
 import 'package:bawabtalsharq/bloc/planByIdBloc/plan_by_id_event.dart';
@@ -73,7 +74,7 @@ class _PlanScreenState extends State<PlanScreen> {
               return Container(
                 color: Colors.white,
                 child: Center(
-                  child: progressBar(),
+                  child: LoadingLogo(),
                 ),
               );
             }
