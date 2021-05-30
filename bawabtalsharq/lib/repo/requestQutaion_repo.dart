@@ -12,13 +12,13 @@ class RequestQuotationsRepo {
     data['ApiKey'] = _userModel.data.apiKey;
     data['user_id'] = _userModel.data.userId;
 
-    print(data);
     BaseModel modelResponse;
     var response = await http.post(
       Uri.encodeFull(
           APIS.serverURL + APIS.Req_Quotation_API + Constants.getLanguage()),
       body: data,
     );
+
     if (response.statusCode == 200) {
       var decodedResponse = json.decode(response.body);
       BaseModel modelResponse = BaseModel.fromJson(decodedResponse);

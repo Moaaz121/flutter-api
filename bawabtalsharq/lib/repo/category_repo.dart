@@ -13,7 +13,6 @@ class CategoryRepo {
       //print(data.toString());
 
       List<CategoryModel> returnData = MainCategory.fromJson(data).data;
-      // print(data.toString());
 
       return returnData;
     } else {

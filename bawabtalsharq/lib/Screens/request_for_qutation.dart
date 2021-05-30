@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dropdown/flutter_dropdown.dart';
 import 'package:bawabtalsharq/bloc/QuotationBloc/quotation_bloc.dart';
 import 'package:bawabtalsharq/main.dart';
+import 'package:bawabtalsharq/Model/fillQuotationModel.dart';
 
 class Requestforqutation extends StatefulWidget {
   @override
@@ -26,8 +27,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
   TextEditingController leadTimeForInCtrl = TextEditingController();
   TextEditingController paymentTermCtrl = TextEditingController();
 
-  List<String> categoryList = [];
-  List<String> categoryIdList = [];
+  // List<CategoryRQF> categoryList = [];
   List<String> purposeList = ['ahmed', 'moaaz'];
   List<String> piecesList = [
     "Apparel",
@@ -39,6 +39,15 @@ class _RequestforqutationState extends State<Requestforqutation> {
   List<String> certList = ['ahmed', 'moaaz'];
   List<String> shippingMethodList = ['ahmed', 'moaaz'];
   List<String> destinationList = ['ahmed', 'moaaz'];
+
+  List<String> categoryList = [];
+  List<String> categoryListId = [];
+
+  List<CertificationRQF> certification = [];
+  List<DestinationRQF> destination = [];
+  List<ShippingRQF> shipping = [];
+  List<SourcingPurposeRQF> sourcingPurpose = [];
+  List<TradeTermRQF> tradeTerms = [];
 
   Map<String, dynamic> data = {};
   QuotationBloc _quotationBloc;
@@ -108,8 +117,8 @@ class _RequestforqutationState extends State<Requestforqutation> {
                       child: CircularProgressIndicator(),
                     );
                   } else if (state is LoadedCategoryListState) {
-                    categoryList = List.from(state.categoryNameList);
-                    categoryIdList = List.from(state.categoryIdList);
+                    categoryList = List.from(state.categories);
+                    // categoryIdList = List.from(state.categoryIdList);
 
                     return buildBody();
                   } else if (state is PostingReqQuotationState) {
