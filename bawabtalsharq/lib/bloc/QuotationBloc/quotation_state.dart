@@ -19,9 +19,11 @@ class ReqQuotationErrorState extends QuotationState {
   ReqQuotationErrorState({this.msg});
 }
 
-class LoadingCategoryListState extends QuotationState {}
+class LoadingListsState extends QuotationState {}
 
-class LoadedCategoryListState extends QuotationState {
+class ShowLoadedDataState extends QuotationState {}
+
+class LoadedListsState extends QuotationState {
   List<CategoryRQF> categories;
   List<CertificationRQF> certification;
   List<DestinationRQF> destination;
@@ -29,7 +31,7 @@ class LoadedCategoryListState extends QuotationState {
   List<SourcingPurposeRQF> sourcingPurpose;
   List<TradeTermRQF> tradeTerms;
 
-  LoadedCategoryListState(
+  LoadedListsState(
       {@required this.categories,
       @required this.certification,
       @required this.destination,

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:bawabtalsharq/repo/requestQutaion_repo.dart';
 import 'package:bawabtalsharq/repo/fillQuotation.dart';
-import 'package:bawabtalsharq/repo/category_repo.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:bawabtalsharq/Model/fillQuotationModel.dart';
@@ -23,7 +22,7 @@ class QuotationBloc extends Bloc<QuotationEvent, QuotationState> {
     QuotationEvent event,
   ) async* {
     if (event is GetCatergoryList) {
-      yield LoadingCategoryListState();
+      yield LoadingListsState();
       DataRQF data = await FillQuotationRepo().fillQuotation();
 
       List.generate(data.categories.length, (i) {
@@ -45,14 +44,17 @@ class QuotationBloc extends Bloc<QuotationEvent, QuotationState> {
         tradeTerms.add(data.tradeTerms[i]);
       });
 
-      yield LoadedCategoryListState(
+      yield LoadedListsState(
           categories: categories,
           certification: certification,
           destination: destination,
           shipping: shipping,
           sourcingPurpose: sourcingPurpose,
           tradeTerms: tradeTerms);
-    } else if (event is GetReqQuotation) {
+    } else if (event is ShowLoadedData) {
+      yield ShowLoadedDataState();
+    } else if (event is PostReqQuotation) {
+      print('in PostReqQuotation');
       BaseModel data =
           await RequestQuotationsRepo().postReqQuotation(event.data);
 
