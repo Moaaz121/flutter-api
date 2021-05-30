@@ -3,14 +3,16 @@ import 'package:bawabtalsharq/Model/search_quary.dart';
 import 'package:bawabtalsharq/Screens/search/search_result_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
+import 'package:bawabtalsharq/Utils/images.dart';
+import 'package:bawabtalsharq/Utils/loading.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/categoryBloc/category_bloc.dart';
 import 'package:bawabtalsharq/bloc/categoryBloc/category_event.dart';
 import 'package:bawabtalsharq/bloc/categoryBloc/category_state.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:bawabtalsharq/Utils/images.dart';
+
 import '../widgets/widgets.dart';
 
 class AllCategories extends StatefulWidget {
@@ -62,7 +64,7 @@ class _AllCategoriesState extends State<AllCategories>
               return Container(
                 color: Colors.white,
                 child: Center(
-                  child: progressBar(),
+                  child: LoadingLogo(),
                 ),
               );
             }

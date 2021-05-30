@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:bawabtalsharq/Model/user_model.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
+import 'package:bawabtalsharq/Utils/loading.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/updateProfileBlocs/updateAccount/update_account_bloc.dart';
 import 'package:bawabtalsharq/bloc/updateProfileBlocs/updateAccount/update_account_event.dart';
@@ -10,13 +13,9 @@ import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'dart:io';
-
-import 'dart:convert';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:image_picker/image_picker.dart';
 
 class UpdateProfile extends StatefulWidget {
   @override
@@ -165,7 +164,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                       builder: (context, state) {
                         if (state is UpdateAccountLoadingState) {
                           if (!isLoading) {
-                            progressBar();
+                            LoadingLogo();
                             isLoading = true;
                           }
                         } else if (state is UpdateAccountLoadedState) {

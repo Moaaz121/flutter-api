@@ -5,16 +5,17 @@ import 'package:bawabtalsharq/Screens/search/search_result_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
+import 'package:bawabtalsharq/Utils/loading.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/homeBloc/home_bloc.dart';
 import 'package:bawabtalsharq/bloc/homeBloc/home_event.dart';
 import 'package:bawabtalsharq/bloc/homeBloc/home_state.dart';
 import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -40,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
           if (state is HomeLoadingState) {
             print('Loading');
             return Center(
-              child: progressBar(),
+              child: LoadingLogo(),
             );
           } else if (state is HomeLoadedState) {
             print(state.homeResponse.data);

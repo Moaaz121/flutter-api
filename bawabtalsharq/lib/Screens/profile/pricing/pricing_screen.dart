@@ -2,6 +2,7 @@ import 'package:bawabtalsharq/Model/plan_model.dart';
 import 'package:bawabtalsharq/Screens/profile/pricing/plan_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
+import 'package:bawabtalsharq/Utils/loading.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/planBloc/plan_bloc.dart';
 import 'package:bawabtalsharq/bloc/planBloc/plan_event.dart';
@@ -70,7 +71,7 @@ class _PricingScreenState extends State<PricingScreen> {
               return Container(
                 color: Colors.white,
                 child: Center(
-                  child: progressBar(),
+                  child: LoadingLogo(),
                 ),
               );
             }

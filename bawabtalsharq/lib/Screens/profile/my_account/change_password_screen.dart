@@ -1,6 +1,7 @@
 import 'package:bawabtalsharq/Model/user_model.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
+import 'package:bawabtalsharq/Utils/loading.dart';
 import 'package:bawabtalsharq/Utils/validator_util.dart';
 import 'package:bawabtalsharq/bloc/updateProfileBlocs/changePassword/change_password_bloc.dart';
 import 'package:bawabtalsharq/bloc/updateProfileBlocs/changePassword/change_password_event.dart';
@@ -52,7 +53,7 @@ class _ChangePasswordState extends State<ChangePassword> {
         builder: (context, state) {
           if (state is PasswordChangeLoadingState) {
             if (!isLoading) {
-              progressBar();
+              LoadingLogo();
               isLoading = true;
             }
           } else if (state is PasswordChangeLoadedState) {

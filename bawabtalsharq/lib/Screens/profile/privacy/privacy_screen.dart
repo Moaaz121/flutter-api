@@ -1,5 +1,6 @@
 import 'package:bawabtalsharq/Model/privacy_model.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
+import 'package:bawabtalsharq/Utils/loading.dart';
 import 'package:bawabtalsharq/bloc/profileBlocs/privacyBloc/privacy_bloc.dart';
 import 'package:bawabtalsharq/bloc/profileBlocs/privacyBloc/privacy_event.dart';
 import 'package:bawabtalsharq/bloc/profileBlocs/privacyBloc/privacy_state.dart';
@@ -45,7 +46,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
               return Container(
                 color: Colors.white,
                 child: Center(
-                  child: progressBar(),
+                  child: LoadingLogo(),
                 ),
               );
             }

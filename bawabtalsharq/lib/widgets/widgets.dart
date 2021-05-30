@@ -8,6 +8,7 @@ import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
+import 'package:bawabtalsharq/Utils/loading.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/Utils/validator_util.dart';
 import 'package:bawabtalsharq/bloc/countryBloc/country_bloc.dart';
@@ -782,7 +783,7 @@ void showLanguagesDialog(BuildContext context) {
             bloc: _bloc,
             builder: (context, state) {
               if (state is LangLoadingState) {
-                return progressBar();
+                return LoadingLogo();
               } else if (state is LangLoadedState &&
                   state.langResponse != null) {
                 return Container(
@@ -1727,7 +1728,7 @@ void showCurrencyDialog(BuildContext context) {
             bloc: _bloc,
             builder: (context, state) {
               if (state is CurrencyLoadingState) {
-                return progressBar();
+                return LoadingLogo();
               } else if (state is CurrencyLoadedState &&
                   state.currencyResponse != null) {
                 return Container(
@@ -1809,7 +1810,7 @@ void showCountryDialog(BuildContext context) {
             bloc: _bloc,
             builder: (context, state) {
               if (state is CountryLoadingState) {
-                return progressBar();
+                return LoadingLogo();
               } else if (state is CountryLoadedState &&
                   state.countryResponse != null) {
                 // print(state.countryResponse.data[0].country);

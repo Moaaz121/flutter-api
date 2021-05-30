@@ -8,6 +8,7 @@ import 'package:bawabtalsharq/Screens/individual_product_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
+import 'package:bawabtalsharq/Utils/loading.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/filterBloc/filter_bloc.dart';
 import 'package:bawabtalsharq/bloc/notificationsBloc/notifications_bloc.dart';
@@ -218,7 +219,7 @@ class _SearchResultState extends State<SearchResult> {
                     return Expanded(
                       child: SizedBox(
                         child: Center(
-                          child: progressBar(),
+                          child: LoadingLogo(),
                         ),
                       ),
                     );
@@ -586,7 +587,7 @@ class _FilterScreenState extends State<FilterScreen> {
                 return SizedBox(
                   height: MediaQuery.of(context).size.height,
                   child: Center(
-                    child: progressBar(),
+                    child: LoadingLogo(),
                   ),
                 );
               } else if (snapshot is FilterErrorState) {
