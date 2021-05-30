@@ -4,6 +4,7 @@ import 'package:bawabtalsharq/Screens/search/search_result_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
+import 'package:bawabtalsharq/Utils/loading.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/repo/category_repo.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
@@ -181,7 +182,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               );
                             } else {
                               return Center(
-                                child: progressBar(),
+                                child: LoadingLogo(),
                               );
                             }
                           }),

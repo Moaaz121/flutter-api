@@ -6,6 +6,7 @@ import 'package:bawabtalsharq/Screens/profile/contact_us/send_message_dialog.dar
 import 'package:bawabtalsharq/Screens/profile_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
+import 'package:bawabtalsharq/Utils/loading.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/currancyBloc/currency_bloc.dart';
 import 'package:bawabtalsharq/bloc/currancyBloc/currency_event.dart';
@@ -276,9 +277,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           textSize: 12,
                                         );
                                       } else if (state is SettingLoadingState) {
-                                        return progressBar();
+                                        return LoadingLogo();
                                       } else {
-                                        return progressBar();
+                                        return LoadingLogo();
                                       }
                                     },
                                   ),
