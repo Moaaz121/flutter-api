@@ -1,6 +1,8 @@
 import 'package:bawabtalsharq/Model/individualProduct_model.dart';
+import 'package:bawabtalsharq/Model/user_model.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
+import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/loading.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
@@ -47,6 +49,8 @@ class _IndividualProductState extends State<IndividualProduct>
   int sliderPosition = 0;
   bool sliverPersistentHeader = false;
 
+  UserModel currentUser = Constants.getUserInfo2();
+
   @override
   void initState() {
     _productBloc = IndividualProductBloc();
@@ -76,6 +80,14 @@ class _IndividualProductState extends State<IndividualProduct>
           if (state is IndividualProductLoadedState) {
             isLoaded = true;
             product = state.individualProductResponse;
+
+            if (currentUser != null) {
+              _productBloc.add(DoHistoryEvent(currentUser.data.userId,
+                  currentUser.data.apiKey, widget.productId));
+            }
+          }
+          if (state is HistoryLoadedState) {
+            print('History Respone' + state.historyResponse.msg);
           }
           return DefaultTabController(
             length: _tabs.length,

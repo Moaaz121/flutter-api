@@ -1,3 +1,4 @@
+import 'package:bawabtalsharq/Model/base_model.dart';
 import 'package:bawabtalsharq/Model/individualProduct_model.dart';
 import 'package:bawabtalsharq/repo/individualProduct_repo.dart';
 import 'package:bloc/bloc.dart';
@@ -21,6 +22,17 @@ class IndividualProductBloc
       }
     } else if (event is ResetState) {
       yield IndividualProductInitial();
+    }
+
+    if (event is DoHistoryEvent) {
+      yield HistoryLoadingState();
+      try {
+        BaseModel history = await IndividualProductRepo.saveHistory(
+            event.userId, event.apiKey, event.productId);
+        yield HistoryLoadedState(historyResponse: history);
+      } catch (e) {
+        yield HistoryErrorState(message: e.toString());
+      }
     }
   }
 
