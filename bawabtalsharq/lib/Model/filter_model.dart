@@ -45,7 +45,6 @@ class Data {
     this.sizes,
     this.colorCode,
   });
-
   List<Category> categories;
   List<Shipping> shipping;
   List<Supplier> suppliers;
@@ -68,10 +67,10 @@ class Data {
         sizes: json["sizes"] == null
             ? null
             : List<String>.from(json["sizes"].map((x) => x)),
-        colorCode: json["color_code"] == null
+        colorCode: json["colors"] == null
             ? null
             : List<ColorCode>.from(
-                json["color_code"].map((x) => ColorCode.fromJson(x))),
+                json["colors"].map((x) => ColorCode.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -85,7 +84,7 @@ class Data {
             ? null
             : List<dynamic>.from(suppliers.map((x) => x.toJson())),
         "sizes": sizes == null ? null : List<dynamic>.from(sizes.map((x) => x)),
-        "color_code": colorCode == null
+        "colors": colorCode == null
             ? null
             : List<dynamic>.from(colorCode.map((x) => x.toJson())),
       };

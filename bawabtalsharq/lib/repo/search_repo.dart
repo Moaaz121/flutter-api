@@ -10,31 +10,33 @@ class SearchRepo {
     Map<String, dynamic> params = {
       "search_text": searchQueryModel.q,
     };
-    if (searchQueryModel.Categories != null) {
-      params['categories'] = '[' + searchQueryModel.Categories[0] + ']';
+    if (searchQueryModel.Categories != null &&
+        searchQueryModel.Categories.length > 0) {
+      params['categories'] = searchQueryModel.Categories.toList().toString();
     }
-    if (searchQueryModel.page != null) {
+    if (searchQueryModel.page != null && searchQueryModel.page.isNotEmpty) {
       params['page'] = searchQueryModel.page;
     }
-    if (searchQueryModel.gender != null) {
+    if (searchQueryModel.gender != null && searchQueryModel.gender.isNotEmpty) {
       params['gender'] = searchQueryModel.gender;
     }
-    if (searchQueryModel.brand != null) {
+    if (searchQueryModel.brand != null && searchQueryModel.brand.isNotEmpty) {
       params['brand'] = searchQueryModel.brand;
     }
-    if (searchQueryModel.sizes != null) {
+    if (searchQueryModel.sizes != null && searchQueryModel.sizes.isNotEmpty) {
       params['sizes'] = searchQueryModel.sizes;
     }
-    if (searchQueryModel.colors != null) {
+    if (searchQueryModel.colors != null && searchQueryModel.colors.isNotEmpty) {
       params['colors'] = searchQueryModel.colors;
     }
-    if (searchQueryModel.sort != null) {
+    if (searchQueryModel.sort != null && searchQueryModel.sort.isNotEmpty) {
       params['sort'] = searchQueryModel.sort;
     }
-    if (searchQueryModel.sortBy != null) {
+    if (searchQueryModel.sortBy != null && searchQueryModel.sortBy.isNotEmpty) {
       params['sort_by'] = searchQueryModel.sortBy;
     }
-    if (searchQueryModel.countryCode != null) {
+    if (searchQueryModel.countryCode != null &&
+        searchQueryModel.countryCode.isNotEmpty) {
       params['country_code'] = searchQueryModel.countryCode;
     }
     print(params['categories']);

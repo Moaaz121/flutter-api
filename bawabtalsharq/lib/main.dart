@@ -41,7 +41,6 @@ import 'Screens/profile/my_account/update_profile_screen.dart';
 import 'Screens/profile_screen.dart';
 import 'Screens/request_for_quatation_screen.dart';
 import 'Screens/request_for_qutation.dart';
-import 'Screens/search/color_filter_screen.dart';
 import 'Screens/search/list_filter_screen.dart';
 import 'Utils/Localization/LanguageHelper.dart';
 
@@ -117,7 +116,6 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.searchScreen: (_) => SearchScreen(),
         ScreenRoutes.searchResultScreen: (_) => SearchResult(),
         ScreenRoutes.categoriesFilterScreen: (_) => SearchCategories(),
-        ScreenRoutes.colorFilterScreen: (_) => ColorScreen(),
         ScreenRoutes.filterScreen: (_) => FilterScreen(),
         ScreenRoutes.messageCenter: (_) => MessageCenter(),
         ScreenRoutes.signUpScreen: (_) => SignUpScreen(),
@@ -207,7 +205,6 @@ class ScreenRoutes {
   static const String searchScreen = '/search_screen';
   static const String searchResultScreen = '/search_result_screen';
   static const String categoriesFilterScreen = '/categories_filter_screen';
-  static const String colorFilterScreen = '/color_filter_screen';
   static const String listFilter = '/list_filter_screen';
   static const String messageCenter = '/message_center_screen';
   static const String signUpScreen = '/sign_up_screen';

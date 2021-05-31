@@ -7,7 +7,6 @@ import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/loading.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/repo/category_repo.dart';
-import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -298,8 +297,20 @@ class _SearchScreenState extends State<SearchScreen> {
                   context,
                   new MaterialPageRoute(
                     builder: (BuildContext context) => new SearchResult(
-                      searchQuery: new SearchQueryModel(_searchController.text,
-                          Categories: []),
+                      searchQuery: new SearchQueryModel(
+                        _searchController.text,
+                        Categories: [],
+                        sortBy: '',
+                        sort: '',
+                        brand: [],
+                        colors: [],
+                        countryCode: '',
+                        page: '',
+                        gender: [],
+                        sizes: [],
+                        expressShipping: [],
+                        shippedFrom: [],
+                      ),
                     ),
                   ));
             },
