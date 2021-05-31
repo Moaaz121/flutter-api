@@ -310,6 +310,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         sizes: [],
                         expressShipping: [],
                         shippedFrom: [],
+                        discount: [],
                       ),
                     ),
                   ));

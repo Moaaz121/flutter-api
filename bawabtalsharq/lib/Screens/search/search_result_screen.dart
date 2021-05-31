@@ -387,8 +387,8 @@ class _SortScreenState extends State<SortScreen> {
                         top: 30, left: 30, right: 30, bottom: 10),
                     child: GestureDetector(
                       onTap: () {
-                        blockEvent();
                         Navigator.pop(context);
+                        blockEvent();
                       },
                       child: buildText(
                         Languages.of(context).done,
@@ -545,10 +545,21 @@ class _FilterScreenState extends State<FilterScreen> {
   bool _checked2 = false;
   FilterBloc _bloc = FilterBloc();
 
+  TextEditingController _priceFromController = TextEditingController();
+  TextEditingController _priceToController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
     _bloc.add(DoFilterEvent());
+    _priceFromController.addListener(() {
+      searchQuery.priceFrom =
+          int.tryParse(_priceFromController.text.toString() ?? 0);
+    });
+    _priceToController.addListener(() {
+      searchQuery.priceTo =
+          int.tryParse(_priceToController.text.toString() ?? 9999999999999999);
+    });
   }
 
   @override
@@ -562,7 +573,10 @@ class _FilterScreenState extends State<FilterScreen> {
         ),
         actions: [
           FlatButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pop();
+              blockEvent();
+            },
             child: Text(
               Languages.of(context).done,
               style: TextStyle(color: Colors.white),
@@ -682,9 +696,13 @@ class _FilterScreenState extends State<FilterScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             textFiledPrice(context, Languages.of(context).from,
-                                width: 0.4),
+                                width: 0.4,
+                                controller: _priceFromController,
+                                keyboardType: TextInputType.number),
                             textFiledPrice(context, Languages.of(context).to,
-                                width: 0.4),
+                                width: 0.4,
+                                controller: _priceToController,
+                                keyboardType: TextInputType.number),
                           ],
                         ),
                         buildSizedBox(25),
@@ -865,8 +883,32 @@ class _FilterScreenState extends State<FilterScreen> {
             text: filterArray4[position].name,
             onChanged: (bool value) {
               setState(() {
+                if (position == 0) {
+                  if (searchQuery.discount.contains(30)) {
+                    searchQuery.discount.remove(30);
+                  } else {
+                    searchQuery.discount.add(30);
+                  }
+                } else if (position == 1) {
+                  if (searchQuery.discount.contains(50)) {
+                    searchQuery.discount.remove(50);
+                  } else {
+                    searchQuery.discount.add(50);
+                  }
+                } else if (position == 2) {
+                  if (searchQuery.discount.contains(70)) {
+                    searchQuery.discount.remove(70);
+                  } else {
+                    searchQuery.discount.add(70);
+                  }
+                } else {
+                  if (searchQuery.discount.contains(90)) {
+                    searchQuery.discount.remove(90);
+                  } else {
+                    searchQuery.discount.add(90);
+                  }
+                }
                 filterArray4[position].isSelected = value;
-                // How did value change to true at this point?
               });
             },
             value: filterArray4[position].isSelected,
@@ -1129,44 +1171,46 @@ class _FilterScreenState extends State<FilterScreen> {
       {double size = 15, IconData icon}) {
     return Padding(
       padding: const EdgeInsetsDirectional.only(top: 20, start: 30, end: 30),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            text,
-            style: TextStyle(
-              fontFamily: 'Segoe UI',
-              fontSize: 15.0,
-              color: Color(0xff303030),
-              letterSpacing: 0.18,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          GestureDetector(
-            onTap: onPress,
-            child: Row(
-              children: [
-                Text(
-                  centerText,
-                  style: TextStyle(
-                    fontFamily: 'Segoe UI',
-                    fontSize: 13.0,
-                    color: Color(0xff646464),
-                    letterSpacing: 0.156,
+      child: GestureDetector(
+        onTap: onPress,
+        child: InkWell(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                text,
+                style: TextStyle(
+                  fontFamily: 'Segoe UI',
+                  fontSize: 15.0,
+                  color: Color(0xff303030),
+                  letterSpacing: 0.18,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              Row(
+                children: [
+                  Text(
+                    centerText,
+                    style: TextStyle(
+                      fontFamily: 'Segoe UI',
+                      fontSize: 13.0,
+                      color: Color(0xff646464),
+                      letterSpacing: 0.156,
+                    ),
                   ),
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Icon(
-                  icon,
-                  size: 18,
-                  color: Colors.black.withOpacity(0.7),
-                ),
-              ],
-            ),
-          )
-        ],
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Icon(
+                    icon,
+                    size: 18,
+                    color: Colors.black.withOpacity(0.7),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -1656,55 +1700,61 @@ class _ColorScreenState extends State<ColorScreen> {
   }
 
   Widget listOfColors(BuildContext context) {
-    return MediaQuery.removePadding(
-      context: context,
-      removeTop: true,
-      child: GridView.builder(
-          padding: EdgeInsets.all(10),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 6,
-            mainAxisSpacing: 20,
-          ),
-          itemCount: widget.colors.length,
-          itemBuilder: (BuildContext context, int index) {
-            return GestureDetector(
-              onTap: () {
-                setState(() {
-                  if (!searchQuery.colors.contains(widget.colors[index])) {
-                    searchQuery.colors.add(widget.colors[index].name);
-                  } else {
-                    searchQuery.colors.remove(widget.colors[index].name);
-                  }
-                });
-              },
-              child: Stack(
-                children: [
-                  Container(
-                    margin: EdgeInsets.all(6),
-                    decoration: BoxDecoration(
-                        boxShadow: [makeShadow()],
-                        borderRadius: BorderRadius.circular(50),
-                        color: Color(int.tryParse(widget.colors[index].color) ??
-                            0xffffffff)),
-                  ),
-                  Positioned(
-                    child: Center(
-                        child: searchQuery.colors
-                                .contains(widget.colors[index].name)
-                            ? Icon(
-                                Icons.done_rounded,
-                                size: MediaQuery.of(context).size.longestSide *
-                                    0.04,
-                                color: widget.colors[index].color == '0xFFfffff'
-                                    ? Colors.black
-                                    : Colors.white,
-                              )
-                            : SizedBox()),
-                  )
-                ],
-              ),
-            );
-          }),
-    );
+    return StatefulBuilder(builder: (BuildContext context, StateSetter ss) {
+      return MediaQuery.removePadding(
+        context: context,
+        removeTop: true,
+        child: GridView.builder(
+            padding: EdgeInsets.all(10),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 6,
+              mainAxisSpacing: 20,
+            ),
+            itemCount: widget.colors.length,
+            itemBuilder: (BuildContext context, int index) {
+              return GestureDetector(
+                onTap: () {
+                  ss(() {
+                    if (searchQuery.colors
+                        .contains(widget.colors[index].name)) {
+                      searchQuery.colors.remove(widget.colors[index].name);
+                    } else {
+                      searchQuery.colors.add(widget.colors[index].name);
+                    }
+                  });
+                },
+                child: Stack(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.all(6),
+                      decoration: BoxDecoration(
+                          boxShadow: [makeShadow()],
+                          borderRadius: BorderRadius.circular(50),
+                          color: Color(
+                              int.tryParse(widget.colors[index].color) ??
+                                  0xffffffff)),
+                    ),
+                    Positioned(
+                      child: Center(
+                          child: searchQuery.colors
+                                  .contains(widget.colors[index].name)
+                              ? Icon(
+                                  Icons.done_rounded,
+                                  size:
+                                      MediaQuery.of(context).size.longestSide *
+                                          0.04,
+                                  color:
+                                      widget.colors[index].color == '0xFFfffff'
+                                          ? Colors.black
+                                          : Colors.white,
+                                )
+                              : SizedBox()),
+                    )
+                  ],
+                ),
+              );
+            }),
+      );
+    });
   }
 }

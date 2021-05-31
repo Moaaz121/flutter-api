@@ -17,17 +17,17 @@ class SearchRepo {
     if (searchQueryModel.page != null && searchQueryModel.page.isNotEmpty) {
       params['page'] = searchQueryModel.page;
     }
-    if (searchQueryModel.gender != null && searchQueryModel.gender.isNotEmpty) {
-      params['gender'] = searchQueryModel.gender;
-    }
+    // if (searchQueryModel.gender != null && searchQueryModel.gender.isNotEmpty) {
+    //   params['gender'] = searchQueryModel.gender;
+    // }
     if (searchQueryModel.brand != null && searchQueryModel.brand.isNotEmpty) {
-      params['brand'] = searchQueryModel.brand;
+      params['brand'] = searchQueryModel.brand.toList().toString();
     }
     if (searchQueryModel.sizes != null && searchQueryModel.sizes.isNotEmpty) {
-      params['sizes'] = searchQueryModel.sizes;
+      params['sizes'] = searchQueryModel.sizes.toList().toString();
     }
     if (searchQueryModel.colors != null && searchQueryModel.colors.isNotEmpty) {
-      params['colors'] = searchQueryModel.colors;
+      params['colors'] = searchQueryModel.colors.toList().toString();
     }
     if (searchQueryModel.sort != null && searchQueryModel.sort.isNotEmpty) {
       params['sort'] = searchQueryModel.sort;

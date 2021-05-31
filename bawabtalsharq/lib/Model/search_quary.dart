@@ -12,6 +12,9 @@ class SearchQueryModel {
   String rating = '3';
   String countryCode;
   String page;
+  int priceFrom;
+  int priceTo;
+  List<int> discount;
 
   SearchQueryModel(this.q,
       {this.Categories,
@@ -24,5 +27,8 @@ class SearchQueryModel {
       this.sort,
       this.sortBy,
       this.countryCode,
-      this.page});
+      this.page,
+      this.priceFrom,
+      this.priceTo,
+      this.discount});
 }

@@ -27,6 +27,7 @@ import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -1653,10 +1654,13 @@ Widget textFiledPrice(BuildContext context, String text,
     TextInputType keyboardType = TextInputType.text}) {
   return SizedBox(
     width: MediaQuery.of(context).size.width * width,
-    child: TextField(
+    child: TextFormField(
       controller: controller,
       keyboardType: keyboardType,
       obscureText: isPassword,
+      inputFormatters: keyboardType == TextInputType.number
+          ? <TextInputFormatter>[WhitelistingTextInputFormatter.digitsOnly]
+          : null,
       cursorColor: Theme.of(context).bottomAppBarColor,
       decoration: InputDecoration(
         errorText: errorMessage,
@@ -1670,6 +1674,17 @@ Widget textFiledPrice(BuildContext context, String text,
       ),
     ),
   );
+}
+
+String numberValidator(String value) {
+  if (value == null) {
+    return null;
+  }
+  final n = num.tryParse(value);
+  if (n == null) {
+    return '"$value" is not a valid number';
+  }
+  return null;
 }
 
 Widget listOfCateWidget(List<CategoryElement> cats) {
