@@ -98,14 +98,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           12,
                           fontWeight: FontWeight.w600,
                         )),
-                        CupertinoSwitch(
-                          value: _switchValue,
-                          activeColor: orangeColor,
-                          onChanged: (value) {
-                            setState(() {
-                              _switchValue = value;
-                            });
-                          },
+                        Transform.scale(
+                          scale: 0.7,
+                          child: CupertinoSwitch(
+                            value: _switchValue,
+                            activeColor: orangeColor,
+                            onChanged: (value) {
+                              setState(() {
+                                _switchValue = value;
+                              });
+                            },
+                          ),
                         ),
                       ],
                     ),
