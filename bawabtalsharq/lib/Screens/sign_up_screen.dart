@@ -116,7 +116,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           selectedRadio = 'Both';
           break;
       }
-      if (selectedRadio == 'Seller') {
+      if (selectedRadio == 'Buyer') {
         companyTypeBool = false;
       } else {
         companyTypeBool = true;

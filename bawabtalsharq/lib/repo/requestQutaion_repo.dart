@@ -6,22 +6,24 @@ import 'dart:convert';
 import 'package:bawabtalsharq/Model/user_model.dart';
 
 class RequestQuotationsRepo {
+  BaseModel modelResponse;
+
   Future<BaseModel> postReqQuotation(Map<String, dynamic> data) async {
     UserModel _userModel = await Constants.getUserInfo();
 
     data['ApiKey'] = _userModel.data.apiKey;
     data['user_id'] = _userModel.data.userId;
 
-    print(data);
-    BaseModel modelResponse;
     var response = await http.post(
       Uri.encodeFull(
           APIS.serverURL + APIS.Req_Quotation_API + Constants.getLanguage()),
       body: data,
     );
-    if (response.statusCode == 200) {
+
+    if (response.statusCode == 204) {
       var decodedResponse = json.decode(response.body);
       BaseModel modelResponse = BaseModel.fromJson(decodedResponse);
+      print('Code:Stated response');
 
       return modelResponse;
     } else {

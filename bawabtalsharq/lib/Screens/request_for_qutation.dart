@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dropdown/flutter_dropdown.dart';
 import 'package:bawabtalsharq/bloc/QuotationBloc/quotation_bloc.dart';
 import 'package:bawabtalsharq/main.dart';
+import 'package:bawabtalsharq/Utils/loading.dart';
 
 class Requestforqutation extends StatefulWidget {
   @override
@@ -17,6 +18,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
   bool _isPressed = false;
   bool _checked1 = false;
   bool _checked2 = false;
+  bool showErrorMessage = false;
 
   TextEditingController productNameCtrl = TextEditingController();
   TextEditingController quantityCrtl = TextEditingController();
@@ -26,21 +28,47 @@ class _RequestforqutationState extends State<Requestforqutation> {
   TextEditingController leadTimeForInCtrl = TextEditingController();
   TextEditingController paymentTermCtrl = TextEditingController();
 
-  List<String> categoryList = [];
-  List<String> categoryIdList = [];
-  List<String> purposeList = ['ahmed', 'moaaz'];
   List<String> piecesList = [
     "Apparel",
     "Electronics",
     "Other",
     "sony",
   ];
-  List<String> tradeTermList = ['ahmed', 'moaaz'];
-  List<String> certList = ['ahmed', 'moaaz'];
-  List<String> shippingMethodList = ['ahmed', 'moaaz'];
-  List<String> destinationList = ['ahmed', 'moaaz'];
 
-  Map<String, dynamic> data = {};
+  //Pulled Data
+  List<String> categoryList = [];
+  List<String> categoryIdList = [];
+  List<String> certList = [];
+  List<String> certIdList = [];
+  List<String> tradeList = [];
+  List<String> tradeIdList = [];
+  List<String> purposeList = [];
+  List<String> purposeIdList = [];
+  List<String> destinationList = [];
+  List<String> destinationCodeList = [];
+
+  List<String> shippingList = [];
+  List<String> shippingIdList = [];
+  String dropDownVal = '';
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  //Sent data
+  Map<String, dynamic> data = {
+    'product': '',
+    'category_id': '',
+    'sourcing': '',
+    'qty': '',
+    'prices': '',
+    'trade': '',
+    'details': '',
+    'document': '',
+    'certifications': '',
+    'other_requirements': '',
+    'shipping_method': '',
+    'destination': '',
+    'lead_time': '',
+    'payment_term': '',
+  };
   QuotationBloc _quotationBloc;
 
   @override
@@ -101,16 +129,40 @@ class _RequestforqutationState extends State<Requestforqutation> {
                 builder: (context, state) {
                   if (state is QuotationInitialState) {
                     _quotationBloc.add(GetCatergoryList());
-
                     return buildBody();
-                  } else if (state is LoadingCategoryListState) {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else if (state is LoadedCategoryListState) {
-                    categoryList = List.from(state.categoryNameList);
-                    categoryIdList = List.from(state.categoryIdList);
+                  } else if (state is LoadingListsState) {
+                    return LoadingLogo();
+                  } else if (state is LoadedListsState) {
+                    state.categories.forEach((element) {
+                      categoryList.add(element.category);
+                      categoryIdList.add(element.categoryId);
+                    });
+                    state.certification.forEach((element) {
+                      certList.add(element.cName);
+                      certIdList.add(element.cId);
+                    });
+                    state.tradeTerms.forEach((element) {
+                      tradeList.add(element.tName);
+                      tradeIdList.add(element.tId);
+                    });
 
+                    state.sourcingPurpose.forEach((element) {
+                      purposeList.add(element.sName);
+                      purposeIdList.add(element.sId);
+                    });
+                    state.destination.forEach((element) {
+                      destinationList.add(element.country);
+                      destinationCodeList.add(element.code);
+                    });
+                    state.shipping.forEach((element) {
+                      shippingList.add(element.shipping);
+                      shippingIdList.add(element.shippingId);
+                    });
+
+                    _quotationBloc.add(ShowLoadedData());
+
+                    return LoadingLogo();
+                  } else if (state is ShowLoadedDataState) {
                     return buildBody();
                   } else if (state is PostingReqQuotationState) {
                     return Center(
@@ -130,296 +182,305 @@ class _RequestforqutationState extends State<Requestforqutation> {
 
   Widget buildBody() {
     return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          buildColumnText(context,
-              text: Languages.of(context).productName + ' *',
-              inputText: Languages.of(context).inputProduct,
-              maxLines: 1,
-              controller: productNameCtrl),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            buildColumnText(context,
+                text: Languages.of(context).productName + ' *',
+                inputText: Languages.of(context).inputProduct,
+                maxLines: 1,
+                controller: productNameCtrl),
 
-          buildColumnDrop(context,
-              text: Languages.of(context).categoryName + ' *',
-              dropText: Languages.of(context).dropCategory,
-              dropList: categoryList),
+            dropDownButton(context,
+                text: Languages.of(context).categoryName + ' *',
+                dropText: Languages.of(context).dropCategory,
+                dropList: categoryList),
 
-          buildColumnDrop(context,
-              text: Languages.of(context).sourcingPurpose + ' *',
-              dropText: Languages.of(context).dropSourcing,
-              dropList: purposeList),
+            dropDownButton(context,
+                text: Languages.of(context).sourcingPurpose + ' *',
+                dropText: Languages.of(context).dropSourcing,
+                dropList: purposeList),
 
-          buildColumnText(context,
-              text: Languages.of(context).quantity,
-              inputText: '000000000',
-              // margin: 60,
-              controller: quantityCrtl),
+            buildColumnText(context,
+                text: Languages.of(context).quantity,
+                inputText: '000000000',
+                // margin: 60,
+                controller: quantityCrtl),
 
-          Center(
-            child: Padding(
-              padding: const EdgeInsetsDirectional.only(top: 8.0),
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.9,
-                height: MediaQuery.of(context).size.height * 0.055,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(10),
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                  child: DropDown<String>(
-                    showUnderline: false,
-                    isExpanded: true,
-                    items: piecesList,
-                    hint: Text(
-                      Languages.of(context).dropQuantity,
-                      style: TextStyle(
-                        color: backTabColor.withOpacity(0.8),
-                        decoration: TextDecoration.none,
-                      ),
+            Center(
+              child: Padding(
+                padding: const EdgeInsetsDirectional.only(top: 8.0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  height: MediaQuery.of(context).size.height * 0.055,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10),
                     ),
-                    // onChanged: print,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                    child: DropDown<String>(
+                      showUnderline: false,
+                      isExpanded: true,
+                      items: piecesList,
+                      hint: Text(
+                        Languages.of(context).dropQuantity,
+                        style: TextStyle(
+                          color: backTabColor.withOpacity(0.8),
+                          decoration: TextDecoration.none,
+                        ),
+                      ),
+                      // onChanged: print,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
 
-          buildColumnDrop(context,
-              text: Languages.of(context).tradeTerms + ' *',
-              dropText: Languages.of(context).dropTrade,
-              dropList: tradeTermList),
+            dropDownButton(context,
+                text: Languages.of(context).tradeTerms + ' *',
+                dropText: Languages.of(context).dropTrade,
+                dropList: tradeList),
 
-          // <----start Details---->
-          buildColumnText(context,
-              text: Languages.of(context).details + ' *',
-              inputText: Languages.of(context).inputDetails,
-              height: 0.3,
-              minLines: 1,
-              maxLines: null,
-              controller: detailsCrtl),
+            // <----start Details---->
+            buildColumnText(context,
+                text: Languages.of(context).details + ' *',
+                inputText: Languages.of(context).inputDetails,
+                height: 0.3,
+                minLines: 1,
+                maxLines: null,
+                controller: detailsCrtl),
 
-          Padding(
-            padding: const EdgeInsetsDirectional.only(top: 15),
-            child: Center(
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.8,
-                height: MediaQuery.of(context).size.height * 0.23,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: defaultPrimaryBackgroundColor.withOpacity(0.3),
+            Padding(
+              padding: const EdgeInsetsDirectional.only(top: 15),
+              child: Center(
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  height: MediaQuery.of(context).size.height * 0.23,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: defaultPrimaryBackgroundColor.withOpacity(0.15),
+                  ),
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.backup_rounded,
+                        color: Colors.deepOrangeAccent.withOpacity(0.5),
+                        size: MediaQuery.of(context).size.width * 0.30,
+                      ),
+                      Text(
+                        Languages.of(context).uploadDocument,
+                        style: TextStyle(
+                            color: Color(0xFF5E5E5E),
+                            decoration: TextDecoration.underline),
+                      ),
+                    ],
+                  ),
                 ),
-                child: Column(
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _isPressed = !_isPressed;
+                  });
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Icon(
-                      Icons.backup_rounded,
-                      color: Colors.deepOrangeAccent.withOpacity(0.5),
-                      size: MediaQuery.of(context).size.width * 0.30,
-                    ),
                     Text(
-                      Languages.of(context).uploadDocument,
+                      Languages.of(context).advanced,
                       style: TextStyle(
-                          color: Color(0xFF5E5E5E),
-                          decoration: TextDecoration.underline),
+                          fontSize: 17,
+                          color: orangeColor,
+                          fontWeight: FontWeight.w700),
                     ),
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsetsDirectional.only(start: 10, end: 10),
+                        height: 2,
+                        color: orangeColor.withOpacity(0.3),
+                      ),
+                    ),
+                    _isPressed
+                        ? Icon(Icons.keyboard_arrow_up_rounded,
+                            color: orangeColor)
+                        : Icon(Icons.keyboard_arrow_down_rounded,
+                            color: orangeColor),
                   ],
                 ),
               ),
             ),
-          ),
 
-          Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  _isPressed = !_isPressed;
-                });
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Visibility(
+              visible: _isPressed,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    Languages.of(context).advanced,
-                    style: TextStyle(
-                        fontSize: 17,
-                        color: orangeColor,
-                        fontWeight: FontWeight.w700),
-                  ),
-                  Expanded(
-                    child: Container(
-                      margin: EdgeInsetsDirectional.only(start: 10, end: 10),
-                      height: 2,
-                      color: orangeColor.withOpacity(0.3),
-                    ),
-                  ),
-                  _isPressed
-                      ? Icon(Icons.keyboard_arrow_up_rounded,
-                          color: orangeColor)
-                      : Icon(Icons.keyboard_arrow_down_rounded,
-                          color: orangeColor),
-                ],
-              ),
-            ),
-          ),
-
-          Visibility(
-            visible: _isPressed,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  child: Padding(
-                    padding: const EdgeInsetsDirectional.only(
-                        start: 20, top: 5, bottom: 5, end: 20),
-                    child: Text(
-                      Languages.of(context).supplierCapability,
-                      style: TextStyle(
-                        fontFamily: 'assets/fonts/Roboto-Light.ttf',
-                        fontSize: 17,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.only(
-                      top: 10, bottom: 20, end: 20, start: 20),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    height: 2,
-                    color: Colors.black.withOpacity(0.5),
-                  ),
-                ),
-                buildColumnDrop(context,
-                    text: Languages.of(context).certifications + ' *',
-                    dropText: Languages.of(context).dropCertificate,
-                    dropList: certList),
-                buildColumnText(context,
-                    text: Languages.of(context).requirements + ' *',
-                    inputText: Languages.of(context).inputRequire,
-                    height: 0.3,
-                    controller: otherReqCtrl),
-                Container(
-                  child: Padding(
-                    padding: const EdgeInsetsDirectional.only(
-                        end: 20, top: 5, bottom: 5, start: 20),
-                    child: Text(
-                      Languages.of(context).shipping,
-                      style: TextStyle(
+                  Container(
+                    child: Padding(
+                      padding: const EdgeInsetsDirectional.only(
+                          start: 20, top: 5, bottom: 5, end: 20),
+                      child: Text(
+                        Languages.of(context).supplierCapability,
+                        style: TextStyle(
                           fontFamily: 'assets/fonts/Roboto-Light.ttf',
                           fontSize: 17,
-                          fontWeight: FontWeight.w700),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.only(
-                      top: 10, bottom: 20, end: 20, start: 20),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    height: 2,
-                    color: Colors.black.withOpacity(0.5),
-                  ),
-                ),
-                buildColumnDrop(context,
-                    text: Languages.of(context).shippingMethod + ' *',
-                    dropText: Languages.of(context).dropShipping,
-                    dropList: shippingMethodList),
-                buildColumnDrop(context,
-                    text: Languages.of(context).destination + ' *',
-                    dropText: Languages.of(context).dropDestination,
-                    dropList: destinationList),
-                buildColumnText(context,
-                    text: Languages.of(context).port + ' *',
-                    inputText: Languages.of(context).port,
-                    controller: portCtrl),
-                buildColumnText(context,
-                    text: Languages.of(context).leadTime + ' *',
-                    inputText: '000000000',
-                    // margin: 60,
-                    controller: leadTimeForInCtrl),
-                buildColumnText(context,
-                    text: Languages.of(context).paymentTerm + ' *',
-                    inputText: Languages.of(context).paymentTerm,
-                    controller: paymentTermCtrl),
-                buildCheckbox(1, text: Languages.of(context).check1),
-                buildCheckbox(2, text: Languages.of(context).check2),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsetsDirectional.only(
-                          start: 15, bottom: 20, end: 40),
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.3,
-                        child: RaisedButton(
-                          splashColor: orangeColor.withOpacity(0.5),
-                          highlightColor: orangeColor.withOpacity(0.2),
-                          disabledColor: Colors.transparent,
-                          color: Colors.white,
-                          child: Text(
-                            Languages.of(context).submit,
-                            style: TextStyle(
-                              color: orangeColor,
-                            ),
-                          ),
-                          onPressed: () {
-                            if (productNameCtrl.text.isEmpty ||
-                                quantityCrtl.text.isEmpty ||
-                                detailsCrtl.text.isEmpty ||
-                                otherReqCtrl.text.isEmpty ||
-                                portCtrl.text.isEmpty ||
-                                leadTimeForInCtrl.text.isEmpty ||
-                                paymentTermCtrl.text.isEmpty ||
-                                data['category_id'] == null ||
-                                data['sourcing'] == null ||
-                                data['tradeTerms'] == null ||
-                                data['certificates'] == null ||
-                                data['Shipping'] == null ||
-                                data['Destination'] == null) {
-                              _scaffoldKey.currentState.showSnackBar(
-                                new SnackBar(
-                                  content: new Text(
-                                      'Please make sure that all the required fields are filled'),
-                                  action: SnackBarAction(
-                                    label: 'continue',
-                                    onPressed: () {
-                                      _scaffoldKey.currentState
-                                          .hideCurrentSnackBar();
-                                    },
-                                  ),
-                                ),
-                              );
-                            } else {
-                              data['qty'] = quantityCrtl.text.trim();
-                              data['product'] = productNameCtrl.text.trim();
-                              data['details'] = detailsCrtl.text.trim();
-                              data['otherReq'] = otherReqCtrl.text.trim();
-                              data['port'] = portCtrl.text.trim();
-                              data['leadTime'] = leadTimeForInCtrl.text.trim();
-                              data['paymentTerm'] = quantityCrtl.text.trim();
-                              _quotationBloc.add(GetReqQuotation(data: data));
-                            }
-                          },
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            side: new BorderSide(
-                              color: orangeColor,
-                              width: 2,
-                            ),
-                          ),
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                     ),
-                  ],
-                )
-              ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.only(
+                        top: 10, bottom: 20, end: 20, start: 20),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: 2,
+                      color: Colors.black.withOpacity(0.5),
+                    ),
+                  ),
+                  dropDownButton(context,
+                      text: Languages.of(context).certifications + ' *',
+                      dropText: Languages.of(context).dropCertificate,
+                      dropList: certList),
+                  buildColumnText(context,
+                      text: Languages.of(context).requirements + ' *',
+                      inputText: Languages.of(context).inputRequire,
+                      height: 0.3,
+                      controller: otherReqCtrl),
+                  Container(
+                    child: Padding(
+                      padding: const EdgeInsetsDirectional.only(
+                          end: 20, top: 5, bottom: 5, start: 20),
+                      child: Text(
+                        Languages.of(context).shipping,
+                        style: TextStyle(
+                            fontFamily: 'assets/fonts/Roboto-Light.ttf',
+                            fontSize: 17,
+                            fontWeight: FontWeight.w700),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.only(
+                        top: 10, bottom: 20, end: 20, start: 20),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: 2,
+                      color: Colors.black.withOpacity(0.5),
+                    ),
+                  ),
+                  dropDownButton(context,
+                      text: Languages.of(context).shippingMethod + ' *',
+                      dropText: Languages.of(context).dropShipping,
+                      dropList: shippingList),
+                  dropDownButton(context,
+                      text: Languages.of(context).destination + ' *',
+                      dropText: Languages.of(context).dropDestination,
+                      dropList: destinationList),
+                  buildColumnText(context,
+                      text: Languages.of(context).port + ' *',
+                      inputText: Languages.of(context).port,
+                      controller: portCtrl),
+                  buildColumnText(context,
+                      text: Languages.of(context).leadTime + ' *',
+                      inputText: '000000000',
+                      // margin: 60,
+                      controller: leadTimeForInCtrl),
+                  buildColumnText(context,
+                      text: Languages.of(context).paymentTerm + ' *',
+                      inputText: Languages.of(context).paymentTerm,
+                      controller: paymentTermCtrl),
+                ],
+              ),
             ),
-          ),
-        ],
+            buildCheckbox(1, text: Languages.of(context).check1),
+            buildCheckbox(2, text: Languages.of(context).check2),
+
+            Visibility(
+                visible: showErrorMessage,
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.only(top: 15),
+                  child: Center(
+                    child: Container(
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: defaultPrimaryBackgroundColor.withOpacity(0.5),
+                        ),
+                        child: Padding(
+                            padding: EdgeInsets.only(
+                                top: 10, right: 5.0, left: 5, bottom: 10),
+                            child: Text(
+                              'Please accept the terms and conditions to proceed...',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ))),
+                  ),
+                )),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsetsDirectional.only(
+                      start: 15, bottom: 20, end: 40),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.3,
+                    child: RaisedButton(
+                      splashColor: orangeColor.withOpacity(0.5),
+                      highlightColor: orangeColor.withOpacity(0.2),
+                      disabledColor: Colors.transparent,
+                      color: orangeColor,
+                      child: Text(
+                        Languages.of(context).submit,
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      onPressed: () {
+                        if (_formKey.currentState.validate()) {
+                          if (_checked1 != true || _checked2 != true)
+                            setState(() => showErrorMessage = true);
+                          else {
+                            setState(() => showErrorMessage = false);
+
+                            data['qty'] = quantityCrtl.text.trim();
+                            data['product'] = productNameCtrl.text.trim();
+                            data['details'] = detailsCrtl.text.trim();
+                            data['other_requirements'] =
+                                otherReqCtrl.text.trim();
+                            data['port'] = portCtrl.text.trim();
+                            data['lead_time'] = leadTimeForInCtrl.text.trim();
+                            data['payment_term'] = quantityCrtl.text.trim();
+                            // data['document'] = documentFile;
+                            _quotationBloc.add(PostReqQuotation(data: data));
+                            print('data $data');
+                          }
+                        }
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        side: new BorderSide(
+                          color: orangeColor,
+                          width: 2,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
@@ -439,7 +500,69 @@ class _RequestforqutationState extends State<Requestforqutation> {
     );
   }
 
-  Padding buildColumnDrop(
+  Padding buildColumnText(BuildContext context,
+      {String text,
+      String inputText,
+      double margin = 5,
+      double height = 0.07,
+      int minLines,
+      int maxLines,
+      TextEditingController controller}) {
+    return Padding(
+      padding: const EdgeInsetsDirectional.fromSTEB(18, 20, 18, 18),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Text(
+            text,
+            style: TextStyle(
+                fontFamily: 'assets/fonts/Roboto-Light.ttf', fontSize: 16),
+          ),
+          Center(
+            child: Container(
+              padding: const EdgeInsets.all(5),
+              // EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+              // margin: EdgeInsetsDirectional.only(
+              //     top: 10, end: margin, start: margin),
+              height: MediaQuery.of(context).size.height * height,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10),
+                ),
+              ),
+              child: TextFormField(
+                controller: controller,
+                maxLines: maxLines,
+                textInputAction: TextInputAction.next,
+                keyboardType: maxLines == null
+                    ? TextInputType.multiline
+                    : TextInputType.text,
+                decoration: InputDecoration(
+                  // border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  hintText: inputText,
+                  hintStyle: TextStyle(
+                    color: backTabColor.withOpacity(0.8),
+                  ),
+                ),
+                validator: (String value) {
+                  if (value == null || value.isEmpty) {
+                    return ' ';
+                  }
+                  return null;
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget dropDownButton(
     BuildContext context, {
     String text,
     String dropText,
@@ -455,108 +578,76 @@ class _RequestforqutationState extends State<Requestforqutation> {
             style: TextStyle(
                 fontFamily: 'assets/fonts/Roboto-Light.ttf', fontSize: 16),
           ),
-          Center(
-            child: Container(
-              padding: EdgeInsetsDirectional.only(start: 10),
-              margin: EdgeInsetsDirectional.only(top: 10),
-              height: MediaQuery.of(context).size.height * 0.055,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10),
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                child: DropDown<String>(
-                  showUnderline: false,
-                  isExpanded: true,
-                  items: dropList,
-                  hint: Text(
-                    dropText,
-                    style: TextStyle(
-                      color: backTabColor.withOpacity(0.8),
-                      decoration: TextDecoration.none,
-                    ),
-                  ),
-                  onChanged: (val) {
-                    String key;
-                    if (dropText == 'Select category') {
-                      key = 'category_id';
-                      data[key] = categoryIdList[categoryList.indexOf(val)];
-                    } else if (dropText == 'Sourcing purpose') {
-                      key = 'sourcing';
-                      data[key] = val;
-                    } else if (dropText == 'FCA') {
-                      key = 'tradeTerms';
-                      data[key] = val;
-                    } else if (dropText == 'Select certificates') {
-                      key = 'certificates';
-                      data[key] = val;
-                    } else if (dropText == 'Shipping') {
-                      key = 'Shipping';
-                      data[key] = val;
-                    } else if (dropText == 'Select Destination') {
-                      key = 'Destination';
-                      data[key] = val;
-                    }
-                  },
-                ),
+          Container(
+            padding: EdgeInsetsDirectional.only(start: 10),
+            // margin: EdgeInsetsDirectional.only(top: 10),
+            height: MediaQuery.of(context).size.height * 0.065,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(
+                Radius.circular(10),
               ),
             ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Padding buildColumnText(BuildContext context,
-      {String text,
-      String inputText,
-      double margin = 5,
-      double height = 0.07,
-      int minLines,
-      int maxLines,
-      TextEditingController controller}) {
-    print(controller.text.trim());
-
-    return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(18, 20, 18, 18),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Text(
-            text,
-            style: TextStyle(
-                fontFamily: 'assets/fonts/Roboto-Light.ttf', fontSize: 16),
-          ),
-          Center(
-            child: Container(
-              padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
-              margin: EdgeInsetsDirectional.only(
-                  top: 10, end: margin, start: margin),
-              height: MediaQuery.of(context).size.height * height,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10),
-                ),
-              ),
-              child: TextField(
-                controller: controller,
-                maxLines: maxLines,
-                textInputAction: TextInputAction.next,
-                keyboardType: maxLines == null
-                    ? TextInputType.multiline
-                    : TextInputType.text,
+            child: Padding(
+              padding: const EdgeInsets.all(0),
+              //  const EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+              child: DropdownButtonFormField<String>(
                 decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText: inputText,
-                  hintStyle: TextStyle(
+                  enabledBorder: InputBorder.none,
+                ),
+                isExpanded: true,
+                items: dropList.map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value,
+                        style: TextStyle(color: Colors.black, fontSize: 14)),
+                  );
+                }).toList(),
+                onChanged: (dropDownVal) {
+                  setState(() {
+                    String key;
+                    if (dropText == Languages.of(context).dropCategory) {
+                      key = 'category_id';
+                      data[key] =
+                          categoryIdList[categoryList.indexOf(dropDownVal)];
+                    } else if (dropText == Languages.of(context).dropSourcing) {
+                      key = 'sourcing';
+                      data[key] = dropDownVal;
+                    } else if (dropText == Languages.of(context).dropTrade) {
+                      key = 'trade';
+                      data[key] = dropDownVal;
+                    } else if (dropText ==
+                        Languages.of(context).dropCertificate) {
+                      key = 'certifications';
+                      data[key] = certIdList[certList.indexOf(dropDownVal)];
+                    } else if (dropText == Languages.of(context).dropShipping) {
+                      key = 'shipping_method';
+                      data[key] =
+                          shippingIdList[shippingList.indexOf(dropDownVal)];
+                    } else if (dropText ==
+                        Languages.of(context).dropDestination) {
+                      key = 'destination';
+                      data[key] = destinationCodeList[
+                          destinationList.indexOf(dropDownVal)];
+                    }
+                  });
+                },
+                hint: Text(
+                  dropDownVal != '' ? dropDownVal : dropText,
+                  style: TextStyle(
                     color: backTabColor.withOpacity(0.8),
                   ),
                 ),
+                validator: (value) {
+                  print('VALIDATOR: $value');
+
+                  if (value == null || value.isEmpty) {
+                    print('VALIDATOR: error');
+
+                    return ' ';
+                  }
+                  return null;
+                },
               ),
             ),
           ),

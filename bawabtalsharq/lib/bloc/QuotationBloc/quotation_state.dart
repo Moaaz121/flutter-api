@@ -19,11 +19,23 @@ class ReqQuotationErrorState extends QuotationState {
   ReqQuotationErrorState({this.msg});
 }
 
-class LoadingCategoryListState extends QuotationState {}
+class LoadingListsState extends QuotationState {}
 
-class LoadedCategoryListState extends QuotationState {
-  List<String> categoryNameList;
-  List<String> categoryIdList;
+class ShowLoadedDataState extends QuotationState {}
 
-  LoadedCategoryListState({this.categoryNameList, this.categoryIdList});
+class LoadedListsState extends QuotationState {
+  List<CategoryRQF> categories;
+  List<CertificationRQF> certification;
+  List<DestinationRQF> destination;
+  List<ShippingRQF> shipping;
+  List<SourcingPurposeRQF> sourcingPurpose;
+  List<TradeTermRQF> tradeTerms;
+
+  LoadedListsState(
+      {@required this.categories,
+      @required this.certification,
+      @required this.destination,
+      @required this.shipping,
+      @required this.sourcingPurpose,
+      @required this.tradeTerms});
 }

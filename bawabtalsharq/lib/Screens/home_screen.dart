@@ -355,8 +355,9 @@ Widget ourGoldenSupplier(BuildContext context, List<Supplier> suppliers) {
           itemBuilder: (context, position) {
             return supplierView(
               onPress: () {
-                // Navigator.pushNamed(
-                //     context, ScreenRoutes.supplierProfileScreen);
+                Navigator.pushNamed(context, ScreenRoutes.supplierProfileScreen,
+                    arguments: suppliers[position].id);
+                print(suppliers[position].id);
               },
               category: suppliers[position].category,
               nameSupplier: LanguageHelper.isEnglish

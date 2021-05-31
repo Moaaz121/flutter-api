@@ -105,83 +105,20 @@ class _LoadingLogoState extends State<LoadingLogo>
                         new Transform.translate(
                           child: Dot(
                             radius: dotRadius,
-                            color: Colors.amber,
+                            color: Colors.lightGreen,
                           ),
                           offset: Offset(
                             radius * cos(0.0),
                             radius * sin(0.0),
                           ),
                         ),
-                        new Transform.translate(
-                          child: Dot(
-                            radius: dotRadius,
-                            color: Colors.deepOrangeAccent,
-                          ),
-                          offset: Offset(
-                            radius * cos(0.0 + 1 * pi / 4),
-                            radius * sin(0.0 + 1 * pi / 4),
-                          ),
-                        ),
-                        new Transform.translate(
-                          child: Dot(
-                            radius: dotRadius,
-                            color: Colors.pinkAccent,
-                          ),
-                          offset: Offset(
-                            radius * cos(0.0 + 2 * pi / 4),
-                            radius * sin(0.0 + 2 * pi / 4),
-                          ),
-                        ),
-                        new Transform.translate(
-                          child: Dot(
-                            radius: dotRadius,
-                            color: Colors.purple,
-                          ),
-                          offset: Offset(
-                            radius * cos(0.0 + 3 * pi / 4),
-                            radius * sin(0.0 + 3 * pi / 4),
-                          ),
-                        ),
-                        new Transform.translate(
-                          child: Dot(
-                            radius: dotRadius,
-                            color: Colors.yellow,
-                          ),
-                          offset: Offset(
-                            radius * cos(0.0 + 4 * pi / 4),
-                            radius * sin(0.0 + 4 * pi / 4),
-                          ),
-                        ),
-                        new Transform.translate(
-                          child: Dot(
-                            radius: dotRadius,
-                            color: Colors.lightGreen,
-                          ),
-                          offset: Offset(
-                            radius * cos(0.0 + 5 * pi / 4),
-                            radius * sin(0.0 + 5 * pi / 4),
-                          ),
-                        ),
-                        new Transform.translate(
-                          child: Dot(
-                            radius: dotRadius,
-                            color: Colors.orangeAccent,
-                          ),
-                          offset: Offset(
-                            radius * cos(0.0 + 6 * pi / 4),
-                            radius * sin(0.0 + 6 * pi / 4),
-                          ),
-                        ),
-                        new Transform.translate(
-                          child: Dot(
-                            radius: dotRadius,
-                            color: Colors.blueAccent,
-                          ),
-                          offset: Offset(
-                            radius * cos(0.0 + 7 * pi / 4),
-                            radius * sin(0.0 + 7 * pi / 4),
-                          ),
-                        ),
+                        transform(Colors.orange, 1),
+                        transform(Colors.black, 2),
+                        transform(Colors.lightGreen, 3),
+                        transform(Colors.orange, 4),
+                        transform(Colors.black, 5),
+                        transform(Colors.lightGreen, 6),
+                        transform(Colors.orange, 7)
                       ],
                     ),
                   ),
@@ -190,6 +127,19 @@ class _LoadingLogoState extends State<LoadingLogo>
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget transform(Color colors, int num) {
+    return Transform.translate(
+      child: Dot(
+        radius: dotRadius,
+        color: colors,
+      ),
+      offset: Offset(
+        radius * cos(0.0 + num * pi / 4),
+        radius * sin(0.0 + num * pi / 4),
       ),
     );
   }
