@@ -576,7 +576,7 @@ Widget sliderItem(BuildContext context, String image) {
 }
 
 Widget sliderIndicator(int page,
-    {bool noPadding = false, int count = 4, Color dotColor}) {
+    {bool noPadding = false, int count = 4, Color dotColor = orangeColor}) {
   return Padding(
     padding: noPadding
         ? const EdgeInsets.symmetric(vertical: 0, horizontal: 0)
