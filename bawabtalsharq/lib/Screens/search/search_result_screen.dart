@@ -637,7 +637,11 @@ class _FilterScreenState extends State<FilterScreen> {
                                   builder: (context) => SearchCategories(
                                         cates: snapshot
                                             .filterResponse.data.categories,
-                                      )));
+                                      ))).then((value) {
+                            setState(() {
+                              searchQuery = searchQuery;
+                            });
+                          });
                         }, Languages.of(context).seeAll, Colors.black,
                             icon: Icons.arrow_forward),
                         listOfCate(snapshot.filterResponse.data.categories),
@@ -659,7 +663,17 @@ class _FilterScreenState extends State<FilterScreen> {
                         list3OfCheckBox(),
                         lineDivider(),
                         textTitle(context, Languages.of(context).brand, () {
-                          Navigator.pushNamed(context, ScreenRoutes.listFilter);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SearchBrand(
+                                        supplier: snapshot
+                                            .filterResponse.data.suppliers,
+                                      ))).then((value) {
+                            setState(() {
+                              searchQuery = searchQuery;
+                            });
+                          });
                         }, Languages.of(context).seeAll, Colors.black,
                             icon: Icons.arrow_forward),
                         listOfBrands(snapshot.filterResponse.data.suppliers),
@@ -678,21 +692,67 @@ class _FilterScreenState extends State<FilterScreen> {
                         list4OfCheckBox(),
                         lineDivider(),
                         textTitle(context, Languages.of(context).sizes, () {
-                          Navigator.pushNamed(context, ScreenRoutes.listFilter);
-                        }, 'X, XL', Colors.deepOrangeAccent,
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SearchSizes(
+                                        size:
+                                            snapshot.filterResponse.data.sizes,
+                                      ))).then((value) {
+                            setState(() {
+                              searchQuery = searchQuery;
+                            });
+                          });
+                        },
+                            searchQuery.sizes
+                                .toList()
+                                .toString()
+                                .replaceAll('[', '')
+                                .replaceAll(']', ''),
+                            Colors.deepOrangeAccent,
                             icon: Icons.arrow_forward_ios),
                         buildSizedBox(25),
                         lineDivider(),
                         textTitle(context, Languages.of(context).colors, () {
-                          Navigator.pushNamed(
-                              context, ScreenRoutes.colorFilterScreen);
-                        }, 'Orange', Colors.deepOrange,
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ColorScreen(
+                                        colors: snapshot
+                                            .filterResponse.data.colorCode,
+                                      ))).then((value) {
+                            setState(() {
+                              searchQuery = searchQuery;
+                            });
+                          });
+                        },
+                            searchQuery.colors
+                                .toList()
+                                .toString()
+                                .replaceAll('[', '')
+                                .replaceAll(']', ''),
+                            Colors.deepOrange,
                             icon: Icons.arrow_forward_ios),
                         buildSizedBox(25),
                         lineDivider(),
                         textTitle(context, Languages.of(context).gender, () {
-                          Navigator.pushNamed(context, ScreenRoutes.listFilter);
-                        }, 'Male', Colors.deepOrange,
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SearchGenders(
+                                        genders: ['Male', 'Female'],
+                                      ))).then((value) {
+                            setState(() {
+                              searchQuery = searchQuery;
+                            });
+                          });
+                        },
+                            searchQuery.gender
+                                .toList()
+                                .toString()
+                                .replaceAll('[', '')
+                                .replaceAll(']', ''),
+                            Colors.deepOrange,
                             icon: Icons.arrow_forward_ios),
                       ],
                     );
@@ -841,49 +901,71 @@ class _FilterScreenState extends State<FilterScreen> {
 
   Widget listOfExpressShipping(List<Shipping> shippings) {
     return Container(
-      child: ListView.builder(
-        physics: NeverScrollableScrollPhysics(),
-        reverse: false,
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemCount: shippings.length,
-        itemBuilder: (context, position) {
-          return checkboxBuilder(
-            text: shippings[position].name,
-            onChanged: (bool value) {
-              setState(() {
-                filterArray[position].isSelected = value;
-                // How did value change to true at this point?
-              });
-            },
-            value: filterArray[position].isSelected,
-          );
-        },
-      ),
+      child: StatefulBuilder(builder: (BuildContext context, StateSetter ss) {
+        return ListView.builder(
+          physics: NeverScrollableScrollPhysics(),
+          reverse: false,
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          itemCount: shippings.length,
+          itemBuilder: (context, position) {
+            return checkboxBuilder(
+              text: shippings[position].name,
+              onChanged: (bool value) {
+                setState(() {
+                  ss(() {
+                    if (searchQuery.expressShipping
+                        .contains(shippings[position].shippingId)) {
+                      searchQuery.expressShipping
+                          .remove(shippings[position].shippingId);
+                    } else {
+                      searchQuery.expressShipping
+                          .add(shippings[position].shippingId);
+                    }
+                  });
+                });
+              },
+              value: searchQuery.expressShipping
+                  .contains(shippings[position].shippingId),
+            );
+          },
+        );
+      }),
     );
   }
 
   Widget listOfExpressShippedFrom(List<Shipping> shippings) {
     return Container(
-      child: ListView.builder(
-        physics: NeverScrollableScrollPhysics(),
-        reverse: false,
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemCount: shippings.length,
-        itemBuilder: (context, position) {
-          return checkboxBuilder(
-            text: shippings[position].shippingId,
-            onChanged: (bool value) {
-              setState(() {
-                filterArray[position].isSelected = value;
-                // How did value change to true at this point?
-              });
-            },
-            value: filterArray[position].isSelected,
-          );
-        },
-      ),
+      child: StatefulBuilder(builder: (BuildContext context, StateSetter ss) {
+        return ListView.builder(
+          physics: NeverScrollableScrollPhysics(),
+          reverse: false,
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          itemCount: shippings.length,
+          itemBuilder: (context, position) {
+            return checkboxBuilder(
+              text: shippings[position].name,
+              onChanged: (bool value) {
+                setState(() {
+                  ss(() {
+                    if (searchQuery.shippedFrom
+                        .contains(shippings[position].shippingId)) {
+                      searchQuery.shippedFrom
+                          .remove(shippings[position].shippingId);
+                    } else {
+                      searchQuery.shippedFrom
+                          .add(shippings[position].shippingId);
+                    }
+                  });
+                });
+              },
+              value: searchQuery.shippedFrom
+                  .contains(shippings[position].shippingId),
+            );
+          },
+        );
+      }),
     );
   }
 
@@ -988,6 +1070,11 @@ class _FilterScreenState extends State<FilterScreen> {
                   padding: EdgeInsets.all(5),
                   margin: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
                   decoration: BoxDecoration(
+                    border: searchQuery.brand != null &&
+                            searchQuery.brand
+                                .contains(brands[position].supplierId)
+                        ? Border.all(color: orangeColor, width: 2)
+                        : null,
                     borderRadius: BorderRadius.circular(10.0),
                     color: Colors.white,
                     boxShadow: [
@@ -998,20 +1085,32 @@ class _FilterScreenState extends State<FilterScreen> {
                       ),
                     ],
                   ),
-                  child: Container(
-                    height: 48,
-                    width: 48,
-                    child: CachedNetworkImage(
-                      imageUrl: brands[position].logo,
-                      placeholder: (context, url) => Padding(
-                        padding: EdgeInsets.all(5),
-                        child: Container(
-                          child: Image.asset(placeHolder),
-                          color: Colors.white,
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        if (searchQuery.brand
+                            .contains(brands[position].supplierId)) {
+                          searchQuery.brand.remove(brands[position].supplierId);
+                        } else {
+                          searchQuery.brand.add(brands[position].supplierId);
+                        }
+                      });
+                    },
+                    child: Container(
+                      height: 48,
+                      width: 48,
+                      child: CachedNetworkImage(
+                        imageUrl: brands[position].logo,
+                        placeholder: (context, url) => Padding(
+                          padding: EdgeInsets.all(5),
+                          child: Container(
+                            child: Image.asset(placeHolder),
+                            color: Colors.white,
+                          ),
                         ),
+                        errorWidget: (context, url, error) =>
+                            Image.asset(placeHolder),
                       ),
-                      errorWidget: (context, url, error) =>
-                          Image.asset(placeHolder),
                     ),
                   ));
             },
@@ -1102,7 +1201,7 @@ class _FilterScreenState extends State<FilterScreen> {
           color: Colors.amber,
         ),
         onRatingUpdate: (rating) {
-          print(rating);
+          searchQuery.rating = rating.toString();
         },
       ),
     );
@@ -1225,6 +1324,384 @@ class _SearchCategoriesState extends State<SearchCategories> {
                     )
                   ],
                 ),
+              ),
+            );
+          }),
+    );
+  }
+}
+
+class SearchBrand extends StatefulWidget {
+  final List<Supplier> supplier;
+
+  const SearchBrand({Key key, this.supplier}) : super(key: key);
+
+  @override
+  _SearchBrandState createState() => _SearchBrandState();
+}
+
+class _SearchBrandState extends State<SearchBrand> {
+  bool _isSearchPressed = false;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: _isSearchPressed
+          ? appBarSearch(
+              hint: Languages.of(context).search,
+              onCancelPressed: () {
+                setState(() {
+                  _isSearchPressed = false;
+                });
+              },
+              context: context)
+          : appBarBuilder(
+              title: Languages.of(context).categories,
+              onBackPressed: () {
+                Navigator.pop(context);
+              },
+              actions: [
+                appBarSearchButton(() {
+                  setState(() {
+                    _isSearchPressed = true;
+                  });
+                }),
+                SizedBox(
+                  width: 10,
+                )
+              ],
+            ),
+      body: ListView.builder(
+          itemCount: widget.supplier.length,
+          itemBuilder: (context, position) {
+            return GestureDetector(
+              onTap: () {
+                setState(() {
+                  if (searchQuery.brand
+                      .contains(widget.supplier[position].supplierId)) {
+                    searchQuery.brand.add(widget.supplier[position].supplierId);
+                  } else {
+                    searchQuery.brand
+                        .remove(widget.supplier[position].supplierId);
+                  }
+                });
+              },
+              child: Container(
+                margin: EdgeInsetsDirectional.fromSTEB(10, 30, 10, 0),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Checkbox(
+                      value: searchQuery.brand
+                          .contains(widget.supplier[position].supplierId),
+                      onChanged: (bool newValue) {
+                        setState(() {
+                          if (searchQuery.brand
+                              .contains(widget.supplier[position].supplierId)) {
+                            searchQuery.brand
+                                .remove(widget.supplier[position].supplierId);
+                          } else {
+                            searchQuery.brand
+                                .add(widget.supplier[position].supplierId);
+                          }
+                        });
+                      },
+                      activeColor: defaultOrangeColor,
+                      checkColor: Colors.white,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white,
+                          boxShadow: [makeShadow()],
+                        ),
+                        padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
+                        child: Container(
+                          height: 58,
+                          width: 58,
+                          child: CachedNetworkImage(
+                            imageUrl: widget.supplier[position].logo,
+                            placeholder: (context, url) => Padding(
+                              padding: EdgeInsets.all(5),
+                              child: Container(
+                                child: Image.asset(placeHolder),
+                                color: Colors.white,
+                              ),
+                            ),
+                            errorWidget: (context, url, error) =>
+                                Image.asset(placeHolder),
+                          ),
+                        )),
+                    SizedBox(
+                      width: 10,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }),
+    );
+  }
+}
+
+class SearchSizes extends StatefulWidget {
+  final List<String> size;
+
+  const SearchSizes({Key key, this.size}) : super(key: key);
+
+  @override
+  _SearchSizeState createState() => _SearchSizeState();
+}
+
+class _SearchSizeState extends State<SearchSizes> {
+  bool _isSearchPressed = false;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: _isSearchPressed
+          ? appBarSearch(
+              hint: Languages.of(context).search,
+              onCancelPressed: () {
+                setState(() {
+                  _isSearchPressed = false;
+                });
+              },
+              context: context)
+          : appBarBuilder(
+              title: Languages.of(context).categories,
+              onBackPressed: () {
+                Navigator.pop(context);
+              },
+              actions: [
+                appBarSearchButton(() {
+                  setState(() {
+                    _isSearchPressed = true;
+                  });
+                }),
+                SizedBox(
+                  width: 10,
+                )
+              ],
+            ),
+      body: ListView.builder(
+          itemCount: widget.size.length,
+          itemBuilder: (context, position) {
+            return GestureDetector(
+              onTap: () {
+                setState(() {
+                  if (searchQuery.sizes.contains(widget.size[position])) {
+                    searchQuery.sizes.add(widget.size[position]);
+                  } else {
+                    searchQuery.sizes.remove(widget.size[position]);
+                  }
+                });
+              },
+              child: Container(
+                margin: EdgeInsetsDirectional.fromSTEB(10, 30, 10, 0),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Checkbox(
+                      value: searchQuery.sizes.contains(widget.size[position]),
+                      onChanged: (bool newValue) {
+                        setState(() {
+                          if (searchQuery.sizes
+                              .contains(widget.size[position])) {
+                            searchQuery.sizes.remove(widget.size[position]);
+                          } else {
+                            searchQuery.sizes.add(widget.size[position]);
+                          }
+                        });
+                      },
+                      activeColor: defaultOrangeColor,
+                      checkColor: Colors.white,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: buildText(
+                        widget.size[position],
+                        16,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }),
+    );
+  }
+}
+
+class SearchGenders extends StatefulWidget {
+  final List<String> genders;
+
+  const SearchGenders({Key key, this.genders}) : super(key: key);
+
+  @override
+  _SearchGendersState createState() => _SearchGendersState();
+}
+
+class _SearchGendersState extends State<SearchGenders> {
+  bool _isSearchPressed = false;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: _isSearchPressed
+          ? appBarSearch(
+              hint: Languages.of(context).search,
+              onCancelPressed: () {
+                setState(() {
+                  _isSearchPressed = false;
+                });
+              },
+              context: context)
+          : appBarBuilder(
+              title: Languages.of(context).categories,
+              onBackPressed: () {
+                Navigator.pop(context);
+              },
+              actions: [
+                appBarSearchButton(() {
+                  setState(() {
+                    _isSearchPressed = true;
+                  });
+                }),
+                SizedBox(
+                  width: 10,
+                )
+              ],
+            ),
+      body: ListView.builder(
+          itemCount: widget.genders.length,
+          itemBuilder: (context, position) {
+            return GestureDetector(
+              onTap: () {
+                setState(() {
+                  if (searchQuery.gender.contains(widget.genders[position])) {
+                    searchQuery.gender.add(widget.genders[position]);
+                  } else {
+                    searchQuery.gender.remove(widget.genders[position]);
+                  }
+                });
+              },
+              child: Container(
+                margin: EdgeInsetsDirectional.fromSTEB(10, 30, 10, 0),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Checkbox(
+                      value:
+                          searchQuery.gender.contains(widget.genders[position]),
+                      onChanged: (bool newValue) {
+                        setState(() {
+                          if (searchQuery.gender
+                              .contains(widget.genders[position])) {
+                            searchQuery.gender.remove(widget.genders[position]);
+                          } else {
+                            searchQuery.gender.add(widget.genders[position]);
+                          }
+                        });
+                      },
+                      activeColor: defaultOrangeColor,
+                      checkColor: Colors.white,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: buildText(
+                        widget.genders[position],
+                        16,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }),
+    );
+  }
+}
+
+class ColorScreen extends StatefulWidget {
+  final List<ColorCode> colors;
+
+  const ColorScreen({Key key, this.colors}) : super(key: key);
+  @override
+  _ColorScreenState createState() => _ColorScreenState();
+}
+
+class _ColorScreenState extends State<ColorScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: appBarBuilder(
+        title: Languages.of(context).color,
+        onBackPressed: () {
+          Navigator.pop(context);
+        },
+      ),
+      body: listOfColors(context),
+    );
+  }
+
+  Widget listOfColors(BuildContext context) {
+    return MediaQuery.removePadding(
+      context: context,
+      removeTop: true,
+      child: GridView.builder(
+          padding: EdgeInsets.all(10),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 6,
+            mainAxisSpacing: 20,
+          ),
+          itemCount: widget.colors.length,
+          itemBuilder: (BuildContext context, int index) {
+            return GestureDetector(
+              onTap: () {
+                setState(() {
+                  if (!searchQuery.colors.contains(widget.colors[index])) {
+                    searchQuery.colors.add(widget.colors[index].name);
+                  } else {
+                    searchQuery.colors.remove(widget.colors[index].name);
+                  }
+                });
+              },
+              child: Stack(
+                children: [
+                  Container(
+                    margin: EdgeInsets.all(6),
+                    decoration: BoxDecoration(
+                        boxShadow: [makeShadow()],
+                        borderRadius: BorderRadius.circular(50),
+                        color: Color(int.tryParse(widget.colors[index].color) ??
+                            0xffffffff)),
+                  ),
+                  Positioned(
+                    child: Center(
+                        child: searchQuery.colors
+                                .contains(widget.colors[index].name)
+                            ? Icon(
+                                Icons.done_rounded,
+                                size: MediaQuery.of(context).size.longestSide *
+                                    0.04,
+                                color: widget.colors[index].color == '0xFFfffff'
+                                    ? Colors.black
+                                    : Colors.white,
+                              )
+                            : SizedBox()),
+                  )
+                ],
               ),
             );
           }),

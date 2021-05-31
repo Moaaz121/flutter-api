@@ -36,6 +36,7 @@ class APIS {
   static const String GOLDEN_API = "golden_suppliers&lang=";
   static const String PLAN_API = "get_palns&lang=";
   static const String PLAN_BY_ID_API = "get_paln_by_id&lang=";
+  static const String ADD_HISTORY_API = "add_product_to_history&lang=";
 // end Bahaa
 
 // Start Mosdik

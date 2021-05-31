@@ -8,9 +8,8 @@ import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class IntroScreen extends StatefulWidget {
   @override
@@ -218,21 +217,11 @@ class _IntroScreenState extends State<IntroScreen> {
           Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height * 0.4,
-            child: CachedNetworkImage(
+            child: Image.asset(
+              imageName,
               fit: BoxFit.fill,
-              imageUrl: imageName,
-              placeholder: (context, url) => Padding(
-                padding: EdgeInsets.all(5),
-                child: Container(
-                  child: Image.asset(placeHolder),
-                ),
-              ),
-              errorWidget: (context, url, error) => Padding(
-                padding: EdgeInsets.all(5),
-                child: Container(
-                  child: Image.asset(placeHolder),
-                ),
-              ),
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.4,
             ),
           ),
           Container(
