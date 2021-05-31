@@ -484,9 +484,40 @@ class _mainSliderState extends State<mainSlider> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Stack(
       children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 50),
+          child: Column(
+            children: [
+              Divider(
+                indent: 80,
+                endIndent: 85,
+                thickness: 1.5,
+                color: Colors.white,
+              ),
+              buildText(
+                'Bawabt Al-Sharq',
+                40,
+                color: Colors.white,
+                fontWeight: FontWeight.w400,
+                fontFamily: 'FrenchScriptMT',
+              ),
+              Divider(
+                indent: 80,
+                endIndent: 85,
+                thickness: 1.5,
+                color: Colors.white,
+              ),
+              buildText(
+                'gsgsgsdgsdfg',
+                16,
+                color: Colors.white,
+                fontWeight: FontWeight.w400,
+              ),
+            ],
+          ),
+        ),
         CarouselSlider(
             carouselController: control,
             items: widget.imgs
@@ -514,7 +545,7 @@ class _mainSliderState extends State<mainSlider> {
               enlargeCenterPage: true,
               scrollDirection: Axis.horizontal,
             )),
-        sliderIndicator(position, count: widget.imgs.length)
+        sliderIndicator(position, count: widget.imgs.length),
       ],
     );
   }
