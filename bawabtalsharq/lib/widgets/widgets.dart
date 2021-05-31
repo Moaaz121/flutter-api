@@ -575,7 +575,8 @@ Widget sliderItem(BuildContext context, String image) {
   );
 }
 
-Widget sliderIndicator(int page, {bool noPadding = false, int count = 4}) {
+Widget sliderIndicator(int page,
+    {bool noPadding = false, int count = 4, Color dotColor}) {
   return Padding(
     padding: noPadding
         ? const EdgeInsets.symmetric(vertical: 0, horizontal: 0)
@@ -590,8 +591,8 @@ Widget sliderIndicator(int page, {bool noPadding = false, int count = 4}) {
           dotWidth: 6.5,
           dotHeight: 6.5,
           expansionFactor: 2.7,
-          dotColor: orangeShadowColor,
-          activeDotColor: orangeColor),
+          dotColor: dotColor.withOpacity(0.2),
+          activeDotColor: dotColor),
     ),
   );
 }

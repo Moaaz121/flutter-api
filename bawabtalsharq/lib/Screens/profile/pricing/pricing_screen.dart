@@ -23,6 +23,8 @@ class _PricingScreenState extends State<PricingScreen> {
   int sliderPosition = 0;
   PlanBloc _planBloc;
 
+  Color dotColor = orangeColor;
+
   List<Plan> planList;
 
   bool isLoading = false;
@@ -112,6 +114,7 @@ class _PricingScreenState extends State<PricingScreen> {
                         onPageChanged: (index, reason) {
                           setState(() {
                             sliderPosition = index;
+                            dotColor = Color(int.parse(planList[index].color));
                           });
                         },
                         autoPlay: false,
@@ -133,7 +136,9 @@ class _PricingScreenState extends State<PricingScreen> {
                       height: 10,
                     ),
                     sliderIndicator(sliderPosition,
-                        noPadding: true, count: planList.length),
+                        noPadding: true,
+                        count: planList.length,
+                        dotColor: dotColor),
                   ],
                 )
               : Center(
