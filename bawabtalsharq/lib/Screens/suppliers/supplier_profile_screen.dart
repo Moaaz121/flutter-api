@@ -445,7 +445,7 @@ class _SupplierProfileState extends State<SupplierProfile>
                     child: Padding(
                       padding: EdgeInsets.all(sizeIcon),
                       child: Image.asset(
-                        chat,
+                        chatSupplier,
                         width: 30,
                         height: 30,
                         fit: BoxFit.fill,

@@ -24,7 +24,7 @@ const String rFqSlider2 = 'assets/images/r_f_q_slider2.jpg';
 const String rFqSlider3 = 'assets/images/r_f_q_slider_3.jpg';
 const String placeHolder = 'assets/images/placeholder.png';
 const String searchShadow = 'assets/images/searchShadow.png';
-
+const String chatSupplier = 'assets/images/chatSupplier.png';
 // end karem
 
 // Start Asmaa
