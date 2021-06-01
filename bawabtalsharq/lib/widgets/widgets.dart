@@ -1247,7 +1247,7 @@ Widget productItemLandscape(
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
-                                      image: AssetImage(profile_image),
+                                      image: NetworkImage(product.companyImg),
                                       fit: BoxFit.fill,
                                     ),
                                   ),
@@ -1262,7 +1262,7 @@ Widget productItemLandscape(
                                           color: Colors.black,
                                           fontSize: 7,
                                           fontWeight: FontWeight.w400),
-                                      text: 'Bahaa Robert'),
+                                      text: product.company),
                                 ),
                               ],
                             ),
@@ -1427,7 +1427,8 @@ Widget productItemLandscape2(BuildContext context,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
-                                      image: AssetImage(profile_image),
+                                      image: NetworkImage(
+                                          products[index].companyImg),
                                       fit: BoxFit.fill,
                                     ),
                                   ),
@@ -1442,7 +1443,7 @@ Widget productItemLandscape2(BuildContext context,
                                           color: Colors.black,
                                           fontSize: 7,
                                           fontWeight: FontWeight.w400),
-                                      text: 'Bahaa Robert'),
+                                      text: products[index].company),
                                 ),
                               ],
                             ),

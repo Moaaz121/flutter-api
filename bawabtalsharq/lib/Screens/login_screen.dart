@@ -77,6 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
             }
           }
           return Container(
+            height: MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(logo1),
@@ -245,33 +246,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   },
                                 ),
                               ]),
-                        ),
-                        SizedBox(
-                          height: 30,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(bottom: height * 0.05),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              GestureDetector(
-                                onTap: () {},
-                                child: (Text(
-                                  Languages.of(context).alreadyHaveAccount,
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.grey,
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: regularFontFamily,
-                                      decoration: TextDecoration.underline),
-                                )),
-                              ),
-                              SizedBox(
-                                height: height * .02,
-                              ),
-                              buildRowSocialMedia(height),
-                            ],
-                          ),
                         ),
                       ],
                     ),
