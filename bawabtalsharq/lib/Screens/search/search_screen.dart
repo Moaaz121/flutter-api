@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bawabtalsharq/Model/mainCategoryModel.dart';
 import 'package:bawabtalsharq/Model/search_quary.dart';
 import 'package:bawabtalsharq/Screens/search/search_result_screen.dart';
@@ -11,6 +13,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -20,6 +23,8 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   TextEditingController _searchController = TextEditingController();
   List<CategoryModel> categories = List<CategoryModel>();
+  SharedPreferences pref;
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -181,7 +186,8 @@ class _SearchScreenState extends State<SearchScreen> {
                               );
                             } else {
                               return Center(
-                                child: LoadingLogo(),
+                                child: Transform.scale(
+                                    scale: 0.55, child: LoadingLogo()),
                               );
                             }
                           }),
@@ -218,7 +224,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         parent: AlwaysScrollableScrollPhysics()),
                     scrollDirection: Axis.vertical,
                     padding: EdgeInsets.symmetric(vertical: 12),
-                    itemCount: 33,
+                    itemCount: pref.getStringList('searchSaved').length,
                     itemBuilder: (context, position) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(
@@ -292,26 +298,36 @@ class _SearchScreenState extends State<SearchScreen> {
         child: SizedBox(
           height: 35,
           child: TextField(
-            onSubmitted: (value) {
+            onSubmitted: (value) async {
+              SearchQueryModel queryModel = new SearchQueryModel(
+                _searchController.text,
+                Categories: [],
+                sortBy: '',
+                sort: '',
+                brand: [],
+                colors: [],
+                countryCode: '',
+                page: '',
+                gender: [],
+                sizes: [],
+                expressShipping: [],
+                shippedFrom: [],
+                discount: [],
+              );
+              SharedPreferences pref = await SharedPreferences.getInstance();
+              Map json = jsonDecode(queryModel.toString());
+              String search = jsonEncode(SearchQueryModel.fromJson(json));
+              pref.getStringList('searchSaved').forEach((dynamic s) {
+                if (s is SearchQueryModel && s.q == _searchController.text) {
+                  pref.getStringList('searchSaved').remove(s);
+                }
+              });
+              pref.getStringList('searchSaved').add(search);
               Navigator.push(
                   context,
                   new MaterialPageRoute(
                     builder: (BuildContext context) => new SearchResult(
-                      searchQuery: new SearchQueryModel(
-                        _searchController.text,
-                        Categories: [],
-                        sortBy: '',
-                        sort: '',
-                        brand: [],
-                        colors: [],
-                        countryCode: '',
-                        page: '',
-                        gender: [],
-                        sizes: [],
-                        expressShipping: [],
-                        shippedFrom: [],
-                        discount: [],
-                      ),
+                      searchQuery: queryModel,
                     ),
                   ));
             },

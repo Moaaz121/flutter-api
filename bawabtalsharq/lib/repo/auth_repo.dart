@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:bawabtalsharq/Model/base_model.dart';
 import 'package:bawabtalsharq/Model/user_model.dart';
+import 'package:bawabtalsharq/Services/AnalyticsService.dart';
 import 'package:bawabtalsharq/Utils/apis.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:bawabtalsharq/Services/AnalyticsService.dart';
 
 class AuthRepo {
   String verficationId;
@@ -66,6 +67,21 @@ class AuthRepo {
       return modelResponse;
     }
   }
+
+  Future<BaseModel> forgetPassword(String email) async {
+    Map<String, dynamic> params = {"email": email};
+    var response = await http.post(
+      Uri.encodeFull(APIS.serverURL + APIS.FORGET_PASSWORD_API),
+      body: params,
+    );
+    if (response.statusCode == 200) {
+      var decodedResponse = json.decode(response.body);
+      BaseModel modelResponse = BaseModel.fromJson(decodedResponse);
+
+      return modelResponse;
+    }
+  }
+
 // End Bahaa //
 
 // Start Asmaa //
