@@ -99,6 +99,7 @@ class _SupplierProfileState extends State<SupplierProfile>
   }
 
   int segmentedControlGroupValue = 0;
+
   _launchURL(String toMailId, String subject, String body) async {
     var url = 'mailto:$toMailId?subject=$subject&body=$body';
     if (await canLaunch(url)) {
@@ -330,12 +331,10 @@ class _SupplierProfileState extends State<SupplierProfile>
                                                     actions: <Widget>[
                                                   CupertinoActionSheetAction(
                                                     child: Text(
-                                                        supplierProfileData
-                                                            .supplierData
-                                                            .email),
+                                                        'ahmedbahaasayed1996@gmail.com'),
                                                     onPressed: () {
                                                       _launchURL(
-                                                          '${supplierProfileData.supplierData.email}',
+                                                          'ahmedbahaasayed1996@gmail.com',
                                                           '',
                                                           '');
                                                     },
