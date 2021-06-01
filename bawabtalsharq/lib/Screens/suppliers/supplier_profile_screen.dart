@@ -1,8 +1,10 @@
 import 'package:bawabtalsharq/Model/search_quary.dart';
 import 'package:bawabtalsharq/Model/supplier_model.dart';
+import 'package:bawabtalsharq/Model/user_model.dart';
 import 'package:bawabtalsharq/Screens/search/search_result_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
+import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/loading.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
@@ -42,11 +44,12 @@ class SupplierProfile extends StatefulWidget {
 
 class _SupplierProfileState extends State<SupplierProfile>
     with TickerProviderStateMixin {
+  UserModel currentUser = Constants.getUserInfo2();
   AnimationController _controller;
   SupplierProfileBloc _supplierProfileBloc;
   bool isLoaded = false;
   bool isLoading = false;
-  List<SupplierData> listOfSupplierData;
+  List<Categories> listOfCategoryData;
   @override
   void initState() {
     _supplierProfileBloc = SupplierProfileBloc();
@@ -118,7 +121,8 @@ class _SupplierProfileState extends State<SupplierProfile>
         }
         if (state is SupplierProfileLoadedState) {
           isLoaded = true;
-          listOfSupplierData = state.supplierProfileResponse.data;
+          listOfCategoryData =
+              state.supplierProfileResponse.supplierData.categories;
           return Scaffold(
             body: SafeArea(
               bottom: false,
@@ -130,43 +134,22 @@ class _SupplierProfileState extends State<SupplierProfile>
                       children: [
                         Container(
                           height: 120,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage(supplierBanner),
-                              colorFilter: new ColorFilter.mode(
-                                  Colors.black.withOpacity(0.5),
-                                  BlendMode.darken),
-                              fit: BoxFit.fill,
+                          width: MediaQuery.of(context).size.width,
+                          child: CachedNetworkImage(
+                            imageUrl: state
+                                .supplierProfileResponse.supplierData.banner,
+                            placeholder: (context, url) => Padding(
+                              padding: EdgeInsets.all(5),
+                              child: Container(
+                                child: Image.asset(placeHolder),
+                              ),
                             ),
-                          ),
-                          child: Column(
-                            children: [
-                              Divider(
-                                indent: 80,
-                                endIndent: 85,
-                                thickness: 1.5,
-                                color: Colors.white,
+                            errorWidget: (context, url, error) => Padding(
+                              padding: EdgeInsets.all(5),
+                              child: Container(
+                                child: Image.asset(placeHolder),
                               ),
-                              buildText(
-                                state.supplierProfileResponse.data[0].name,
-                                30,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w400,
-                              ),
-                              Divider(
-                                indent: 80,
-                                endIndent: 85,
-                                thickness: 1.5,
-                                color: Colors.white,
-                              ),
-                              buildText(
-                                state.supplierProfileResponse.data[0]
-                                    .products[0].category,
-                                16,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ],
+                            ),
                           ),
                         ),
                         Positioned.directional(
@@ -208,7 +191,9 @@ class _SupplierProfileState extends State<SupplierProfile>
                                   shape: BoxShape.rectangle,
                                   image: DecorationImage(
                                     image: NetworkImage(state
-                                        .supplierProfileResponse.data[0].logo),
+                                        .supplierProfileResponse
+                                        .supplierData
+                                        .logo),
                                     fit: BoxFit.fill,
                                   ),
                                 ),
@@ -221,8 +206,8 @@ class _SupplierProfileState extends State<SupplierProfile>
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   buildText(
-                                      state
-                                          .supplierProfileResponse.data[0].name,
+                                      state.supplierProfileResponse.supplierData
+                                          .name,
                                       12),
                                   Row(
                                     children: [
@@ -234,7 +219,7 @@ class _SupplierProfileState extends State<SupplierProfile>
                                         width: 5,
                                       ),
                                       buildText(
-                                        '${Languages.of(context).memberSince + state.supplierProfileResponse.data[0].year}',
+                                        '${Languages.of(context).memberSince + state.supplierProfileResponse.supplierData.year}',
                                         8,
                                         fontWeight: FontWeight.w400,
                                       ),
@@ -258,94 +243,109 @@ class _SupplierProfileState extends State<SupplierProfile>
                             child: Row(
                               children: [
                                 iconOfSupplier(Icons.location_on, () {
-                                  showCupertinoModalPopup(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        CupertinoActionSheet(
-                                            actions: <Widget>[
-                                          CupertinoActionSheetAction(
-                                            child: Text(state
-                                                .supplierProfileResponse
-                                                .data[0]
-                                                .address),
-                                            onPressed: () {},
-                                          ),
-                                        ],
-                                            cancelButton:
-                                                CupertinoActionSheetAction(
-                                              child: Text(
-                                                  Languages.of(context).cancel),
-                                              isDefaultAction: true,
+                                  if (currentUser == null)
+                                    Navigator.pushNamed(
+                                        context, ScreenRoutes.loginScreen);
+                                  else
+                                    showCupertinoModalPopup(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          CupertinoActionSheet(
+                                              actions: <Widget>[
+                                            CupertinoActionSheetAction(
+                                              child: Text(state
+                                                  .supplierProfileResponse
+                                                  .supplierData
+                                                  .address),
                                               onPressed: () {},
-                                            )),
-                                  );
+                                            ),
+                                          ],
+                                              cancelButton:
+                                                  CupertinoActionSheetAction(
+                                                child: Text(
+                                                    Languages.of(context)
+                                                        .cancel),
+                                                isDefaultAction: true,
+                                                onPressed: () {},
+                                              )),
+                                    );
                                 }),
                                 SizedBox(
                                   width: 20,
                                 ),
                                 iconOfSupplier(Icons.phone, () {
-                                  showCupertinoModalPopup(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        CupertinoActionSheet(
-                                            actions: <Widget>[
-                                          CupertinoActionSheetAction(
-                                            child: Text(state
-                                                .supplierProfileResponse
-                                                .data[0]
-                                                .phone),
-                                            onPressed: () {
-                                              launch(
-                                                "tel://+${state.supplierProfileResponse.data[0].phone}",
-                                              );
-                                            },
-                                          ),
-                                        ],
-                                            cancelButton:
-                                                CupertinoActionSheetAction(
-                                              child: Text(
-                                                  Languages.of(context).cancel),
-                                              isDefaultAction: true,
+                                  if (currentUser == null)
+                                    Navigator.pushNamed(
+                                        context, ScreenRoutes.loginScreen);
+                                  else
+                                    showCupertinoModalPopup(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          CupertinoActionSheet(
+                                              actions: <Widget>[
+                                            CupertinoActionSheetAction(
+                                              child: Text(state
+                                                  .supplierProfileResponse
+                                                  .supplierData
+                                                  .phone),
                                               onPressed: () {
-                                                Navigator.pop(
-                                                    context, 'Cancel');
+                                                launch(
+                                                  "tel://+${state.supplierProfileResponse.supplierData.phone}",
+                                                );
                                               },
-                                            )),
-                                  );
+                                            ),
+                                          ],
+                                              cancelButton:
+                                                  CupertinoActionSheetAction(
+                                                child: Text(
+                                                    Languages.of(context)
+                                                        .cancel),
+                                                isDefaultAction: true,
+                                                onPressed: () {
+                                                  Navigator.pop(
+                                                      context, 'Cancel');
+                                                },
+                                              )),
+                                    );
                                 }),
                                 SizedBox(
                                   width: 20,
                                 ),
                                 iconOfSupplier(Icons.email_outlined, () {
-                                  showCupertinoModalPopup(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        CupertinoActionSheet(
-                                            actions: <Widget>[
-                                          CupertinoActionSheetAction(
-                                            child: Text(state
-                                                .supplierProfileResponse
-                                                .data[0]
-                                                .email),
-                                            onPressed: () {
-                                              _launchURL(
-                                                  '${state.supplierProfileResponse.data[0].email}',
-                                                  '',
-                                                  '');
-                                            },
-                                          ),
-                                        ],
-                                            cancelButton:
-                                                CupertinoActionSheetAction(
-                                              child: Text(
-                                                  Languages.of(context).cancel),
-                                              isDefaultAction: true,
+                                  if (currentUser == null)
+                                    Navigator.pushNamed(
+                                        context, ScreenRoutes.loginScreen);
+                                  else
+                                    showCupertinoModalPopup(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          CupertinoActionSheet(
+                                              actions: <Widget>[
+                                            CupertinoActionSheetAction(
+                                              child: Text(state
+                                                  .supplierProfileResponse
+                                                  .supplierData
+                                                  .email),
                                               onPressed: () {
-                                                Navigator.pop(
-                                                    context, 'Cancel');
+                                                _launchURL(
+                                                    '${state.supplierProfileResponse.supplierData.email}',
+                                                    '',
+                                                    '');
                                               },
-                                            )),
-                                  );
+                                            ),
+                                          ],
+                                              cancelButton:
+                                                  CupertinoActionSheetAction(
+                                                child: Text(
+                                                    Languages.of(context)
+                                                        .cancel),
+                                                isDefaultAction: true,
+                                                onPressed: () {
+                                                  Navigator.pop(
+                                                      context, 'Cancel');
+                                                },
+                                              )),
+                                    );
                                 }),
                               ],
                             ),
@@ -365,9 +365,9 @@ class _SupplierProfileState extends State<SupplierProfile>
                                   color: widget.color,
                                 ),
                                 child: chatButtonAnimation(() {},
-                                    size:
-                                        MediaQuery.of(context).size.width * 0.1,
-                                    sizeIcon: 7,
+                                    size: MediaQuery.of(context).size.width *
+                                        0.08,
+                                    sizeIcon: 5,
                                     padOfIcon: 16),
                               ),
                               buildText(
@@ -515,17 +515,17 @@ class _SupplierProfileState extends State<SupplierProfile>
         reverse: false,
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
-        itemCount: listOfSupplierData.length,
+        itemCount: listOfCategoryData.length,
         itemBuilder: (context, position) {
           return SizedBox(
               width: MediaQuery.of(context).size.width / 3 - 5,
               child: categoryOfProductSupplier(
-                  context, listOfSupplierData, position));
+                  context, listOfCategoryData, position));
         });
   }
 
   Widget categoryOfProductSupplier(
-      BuildContext context, List<SupplierData> product, int position) {
+      BuildContext context, List<Categories> listOfCategoryData, int position) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -536,7 +536,7 @@ class _SupplierProfileState extends State<SupplierProfile>
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                product[position].products[position].category,
+                listOfCategoryData[position].name,
                 style: TextStyle(
                   fontSize: 16,
                   color: const Color(0xff303030),
@@ -563,7 +563,7 @@ class _SupplierProfileState extends State<SupplierProfile>
                           searchQuery: new SearchQueryModel(
                             '',
                             Categories: [
-                              product[0].products[0].categoryId.toString()
+                              listOfCategoryData[position].categoryId.toString()
                             ],
                           ),
                         ),
@@ -648,7 +648,11 @@ class _SupplierProfileState extends State<SupplierProfile>
                   ),
                 ),
               ),
-              Positioned(top: 5, left: 5, child: productOfSupplier(product)),
+              Positioned(
+                  top: 5,
+                  left: 5,
+                  child: productOfSupplier(
+                      listOfCategoryData[position].productData)),
             ],
           ),
         ),
@@ -656,7 +660,7 @@ class _SupplierProfileState extends State<SupplierProfile>
     );
   }
 
-  Widget productOfSupplier(List<SupplierData> product) {
+  Widget productOfSupplier(List<ProductData> product) {
     return SizedBox(
       height: 170,
       child: ListView.builder(
@@ -672,15 +676,15 @@ class _SupplierProfileState extends State<SupplierProfile>
               context: context,
               onPress: () {
                 Navigator.pushNamed(context, ScreenRoutes.individualProduct,
-                    arguments: product[0].products[position].productId);
+                    arguments: product[position].id);
               },
               position: position,
               backgroundColor: position == 2
                   ? redColor
                   : (position == 1 ? orangeColor : blueColor),
-              nameProduct: product[0].products[position].product,
-              productImg: product[0].products[position].imagePath,
-              price: product[0].products[position].price,
+              nameProduct: product[position].name,
+              productImg: product[position].image,
+              price: product[position].price,
             ),
           );
         },

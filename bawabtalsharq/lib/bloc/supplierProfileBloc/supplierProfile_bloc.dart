@@ -14,6 +14,7 @@ class SupplierProfileBloc
       try {
         SupplierProfileModel data =
             await SupplierProfileRepo.getSupplierProfile(event.id);
+        print(data.supplierData);
         yield SupplierProfileLoadedState(supplierProfileResponse: data);
       } catch (e) {
         yield SupplierProfileErrorState(message: e.toString());

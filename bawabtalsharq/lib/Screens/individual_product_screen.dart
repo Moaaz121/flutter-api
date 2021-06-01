@@ -94,7 +94,7 @@ class _IndividualProductState extends State<IndividualProduct>
             child: SafeArea(
               bottom: false,
               child: Scaffold(
-                floatingActionButton: productFab(product.price),
+                bottomNavigationBar: productFab(product.price),
                 body: NestedScrollView(
                   headerSliverBuilder:
                       (BuildContext context, bool innerBoxScrolled) {
@@ -275,9 +275,7 @@ class _IndividualProductState extends State<IndividualProduct>
                     Container(
                       color: Colors.white,
                       child: SingleChildScrollView(
-                          padding: EdgeInsets.only(
-                              bottom: MediaQuery.of(context).size.height * 0.05,
-                              top: 10),
+                          padding: EdgeInsets.only(top: 10),
                           child: Column(
                             children: [
                               Container(
@@ -286,7 +284,7 @@ class _IndividualProductState extends State<IndividualProduct>
                                   padding: EdgeInsets.only(
                                       bottom:
                                           MediaQuery.of(context).size.height *
-                                              0.1),
+                                              0.05),
                                   child: Column(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
@@ -368,11 +366,11 @@ class _IndividualProductState extends State<IndividualProduct>
     return Padding(
       padding: const EdgeInsets.only(left: 25, bottom: 25),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
-            padding: EdgeInsets.all(10),
             height: 50,
+            width: MediaQuery.of(context).size.width * 0.3,
             decoration: BoxDecoration(
                 boxShadow: [makeShadow(color: (0x29e16036), offset: 3)],
                 borderRadius: BorderRadius.circular(16),
@@ -380,8 +378,10 @@ class _IndividualProductState extends State<IndividualProduct>
             child: Center(
               child: Text(
                 price,
-                style:
-                    TextStyle(color: orangeColor, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: orangeColor,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -391,50 +391,31 @@ class _IndividualProductState extends State<IndividualProduct>
           Container(
             padding: EdgeInsets.all(10),
             height: 50,
+            width: MediaQuery.of(context).size.width * 0.6,
             decoration: BoxDecoration(
                 boxShadow: [makeShadow(color: (0x29e16036), offset: 3)],
                 borderRadius: BorderRadius.circular(16),
                 color: orangeColor),
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 10, right: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Icon(
-                          Icons.person_pin_rounded,
-                          size: 18,
-                          color: Colors.white,
-                        ),
-                        Text(
-                          Languages.of(context).chatSupplier,
-                          style: TextStyle(color: Colors.white, fontSize: 9),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: 30,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Icon(
-                          Icons.person_pin_rounded,
-                          size: 18,
-                          color: Colors.white,
-                        ),
-                        Text(
-                          Languages.of(context).buyNow,
-                          style: TextStyle(color: Colors.white, fontSize: 9),
-                        ),
-                      ],
-                    ),
-                  ],
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.person_pin_rounded,
+                  size: 25,
+                  color: Colors.white,
                 ),
-              ),
+                SizedBox(
+                  width: 20,
+                ),
+                Text(
+                  Languages.of(context).buyNow,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
             ),
           ),
         ],
