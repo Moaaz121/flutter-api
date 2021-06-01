@@ -396,7 +396,7 @@ class _IndividualProductState extends State<IndividualProduct>
           Container(
             padding: EdgeInsets.all(10),
             height: 50,
-            width: MediaQuery.of(context).size.width * 0.6,
+            width: MediaQuery.of(context).size.width * 0.57,
             decoration: BoxDecoration(
                 boxShadow: [makeShadow(color: (0x29e16036), offset: 3)],
                 borderRadius: BorderRadius.circular(16),

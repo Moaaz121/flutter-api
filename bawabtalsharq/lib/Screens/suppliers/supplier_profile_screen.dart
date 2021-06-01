@@ -51,7 +51,7 @@ class _SupplierProfileState extends State<SupplierProfile>
   bool isLoaded = false;
   bool isLoading = false;
   String errorMessage = '';
-  SupplierProfileModel listOfCategoryData;
+  SupplierProfileModel supplierProfileData;
   @override
   void initState() {
     _supplierProfileBloc = SupplierProfileBloc();
@@ -124,7 +124,7 @@ class _SupplierProfileState extends State<SupplierProfile>
         if (state is SupplierProfileLoadedState) {
           isLoaded = true;
           isLoading = true;
-          listOfCategoryData = state.supplierProfileResponse;
+          supplierProfileData = state.supplierProfileResponse;
         }
         if (state is SupplierProfileErrorState)
           errorMessage = 'No Internet Connection';
@@ -143,7 +143,7 @@ class _SupplierProfileState extends State<SupplierProfile>
                                 width: MediaQuery.of(context).size.width,
                                 child: CachedNetworkImage(
                                   imageUrl:
-                                      listOfCategoryData.supplierData.banner,
+                                      supplierProfileData.supplierData.banner,
                                   placeholder: (context, url) => Padding(
                                     padding: EdgeInsets.all(5),
                                     child: Container(
@@ -196,8 +196,9 @@ class _SupplierProfileState extends State<SupplierProfile>
                                         ),
                                         shape: BoxShape.rectangle,
                                         image: DecorationImage(
-                                          image: NetworkImage(listOfCategoryData
-                                              .supplierData.logo),
+                                          image: NetworkImage(
+                                              supplierProfileData
+                                                  .supplierData.logo),
                                           fit: BoxFit.fill,
                                         ),
                                       ),
@@ -212,7 +213,7 @@ class _SupplierProfileState extends State<SupplierProfile>
                                           CrossAxisAlignment.start,
                                       children: [
                                         buildText(
-                                            listOfCategoryData
+                                            supplierProfileData
                                                 .supplierData.name,
                                             12),
                                         Row(
@@ -225,7 +226,7 @@ class _SupplierProfileState extends State<SupplierProfile>
                                               width: 5,
                                             ),
                                             buildText(
-                                              '${Languages.of(context).memberSince + listOfCategoryData.supplierData.year}',
+                                              '${Languages.of(context).memberSince + supplierProfileData.supplierData.year}',
                                               8,
                                               fontWeight: FontWeight.w400,
                                             ),
@@ -260,7 +261,7 @@ class _SupplierProfileState extends State<SupplierProfile>
                                                     actions: <Widget>[
                                                   CupertinoActionSheetAction(
                                                     child: Text(
-                                                        listOfCategoryData
+                                                        supplierProfileData
                                                             .supplierData
                                                             .address),
                                                     onPressed: () {},
@@ -291,12 +292,12 @@ class _SupplierProfileState extends State<SupplierProfile>
                                                     actions: <Widget>[
                                                   CupertinoActionSheetAction(
                                                     child: Text(
-                                                        listOfCategoryData
+                                                        supplierProfileData
                                                             .supplierData
                                                             .phone),
                                                     onPressed: () {
                                                       launch(
-                                                        "tel://+${listOfCategoryData.supplierData.phone}",
+                                                        "tel://+${supplierProfileData.supplierData.phone}",
                                                       );
                                                     },
                                                   ),
@@ -329,12 +330,12 @@ class _SupplierProfileState extends State<SupplierProfile>
                                                     actions: <Widget>[
                                                   CupertinoActionSheetAction(
                                                     child: Text(
-                                                        listOfCategoryData
+                                                        supplierProfileData
                                                             .supplierData
                                                             .email),
                                                     onPressed: () {
                                                       _launchURL(
-                                                          '${listOfCategoryData.supplierData.email}',
+                                                          '${supplierProfileData.supplierData.email}',
                                                           '',
                                                           '');
                                                     },
@@ -371,12 +372,7 @@ class _SupplierProfileState extends State<SupplierProfile>
                                         color: widget.color,
                                       ),
                                       child: chatButtonAnimation(() {},
-                                          size: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.08,
-                                          sizeIcon: 5,
-                                          padOfIcon: 16),
+                                          size: 35, sizeIcon: 5, padOfIcon: 16),
                                     ),
                                     buildText(
                                       Languages.of(context).startChat,
@@ -521,12 +517,12 @@ class _SupplierProfileState extends State<SupplierProfile>
         reverse: false,
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
-        itemCount: listOfCategoryData.supplierData.categories.length,
+        itemCount: supplierProfileData.supplierData.categories.length,
         itemBuilder: (context, position) {
           return SizedBox(
               width: MediaQuery.of(context).size.width / 3 - 5,
               child: categoryOfProductSupplier(context,
-                  listOfCategoryData.supplierData.categories, position));
+                  supplierProfileData.supplierData.categories, position));
         });
   }
 
