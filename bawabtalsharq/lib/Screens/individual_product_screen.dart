@@ -285,7 +285,7 @@ class _IndividualProductState extends State<IndividualProduct>
                                   padding: EdgeInsets.only(
                                       bottom:
                                           MediaQuery.of(context).size.height *
-                                              0.05),
+                                              0.1),
                                   child: Column(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
@@ -369,13 +369,13 @@ class _IndividualProductState extends State<IndividualProduct>
 
   Widget productFab(String price) {
     return Padding(
-      padding: const EdgeInsets.only(left: 30),
+      padding: const EdgeInsetsDirectional.only(start: 45),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
             height: 50,
-            width: MediaQuery.of(context).size.width * 0.3,
+            width: MediaQuery.of(context).size.width * 0.25,
             decoration: BoxDecoration(
                 boxShadow: [makeShadow(color: (0x29e16036), offset: 3)],
                 borderRadius: BorderRadius.circular(16),
