@@ -70,5 +70,5 @@ class QuotationBloc extends Bloc<QuotationEvent, QuotationState> {
   // TODO: implement initialState
   QuotationState get initialState => QuotationInitialState();
 
-  // QuotationBloc() : super(QuotationInitialState());
+
 }

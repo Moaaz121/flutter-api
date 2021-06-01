@@ -7,7 +7,9 @@ import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:bawabtalsharq/Model/user_model.dart';
 
 class RequestForQScreen extends StatefulWidget {
   @override
@@ -17,6 +19,7 @@ class RequestForQScreen extends StatefulWidget {
 class _RequestForQScreenState extends State<RequestForQScreen> {
   CarouselController control = CarouselController();
   int position = 0;
+  UserModel currentUser = Constants.getUserInfo2();
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +38,10 @@ class _RequestForQScreenState extends State<RequestForQScreen> {
           children: [
             requestForQuotationSlider(),
             postSourcingRequestNowButton(() {
-              Navigator.pushNamed(context, ScreenRoutes.postQuotationRequest);
+              if (currentUser == null)
+                Navigator.pushNamed(context, ScreenRoutes.loginScreen);
+              else
+                Navigator.pushNamed(context, ScreenRoutes.postQuotationRequest);
             }),
           ],
         ),

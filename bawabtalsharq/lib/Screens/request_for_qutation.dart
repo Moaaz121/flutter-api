@@ -19,6 +19,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
   bool _checked1 = false;
   bool _checked2 = false;
   bool showErrorMessage = false;
+  bool requiredField = false;
 
   TextEditingController productNameCtrl = TextEditingController();
   TextEditingController quantityCrtl = TextEditingController();
@@ -187,68 +188,41 @@ class _RequestforqutationState extends State<Requestforqutation> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildColumnText(context,
-                text: Languages.of(context).productName + ' *',
+            _buildtextFormField(context,
+                text: Languages.of(context).productName,
                 inputText: Languages.of(context).inputProduct,
                 maxLines: 1,
                 controller: productNameCtrl),
 
             dropDownButton(context,
-                text: Languages.of(context).categoryName + ' *',
+                text: Languages.of(context).categoryName,
                 dropText: Languages.of(context).dropCategory,
                 dropList: categoryList),
 
             dropDownButton(context,
-                text: Languages.of(context).sourcingPurpose + ' *',
+                text: Languages.of(context).sourcingPurpose,
                 dropText: Languages.of(context).dropSourcing,
                 dropList: purposeList),
 
-            buildColumnText(context,
+            _buildtextFormField(context,
                 text: Languages.of(context).quantity,
                 inputText: '000000000',
                 // margin: 60,
                 controller: quantityCrtl),
 
-            Center(
-              child: Padding(
-                padding: const EdgeInsetsDirectional.only(top: 8.0),
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  height: MediaQuery.of(context).size.height * 0.055,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(10),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                    child: DropDown<String>(
-                      showUnderline: false,
-                      isExpanded: true,
-                      items: piecesList,
-                      hint: Text(
-                        Languages.of(context).dropQuantity,
-                        style: TextStyle(
-                          color: backTabColor.withOpacity(0.8),
-                          decoration: TextDecoration.none,
-                        ),
-                      ),
-                      // onChanged: print,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            dropDownButton(context,
+                text: Languages.of(context).dropQuantity,
+                dropText: Languages.of(context).dropQuantity,
+                dropList: piecesList),
 
             dropDownButton(context,
-                text: Languages.of(context).tradeTerms + ' *',
+                text: Languages.of(context).tradeTerms,
                 dropText: Languages.of(context).dropTrade,
                 dropList: tradeList),
 
             // <----start Details---->
-            buildColumnText(context,
-                text: Languages.of(context).details + ' *',
+            _buildtextFormField(context,
+                text: Languages.of(context).details,
                 inputText: Languages.of(context).inputDetails,
                 height: 0.3,
                 minLines: 1,
@@ -351,8 +325,8 @@ class _RequestforqutationState extends State<Requestforqutation> {
                       text: Languages.of(context).certifications + ' *',
                       dropText: Languages.of(context).dropCertificate,
                       dropList: certList),
-                  buildColumnText(context,
-                      text: Languages.of(context).requirements + ' *',
+                  _buildtextFormField(context,
+                      text: Languages.of(context).requirements,
                       inputText: Languages.of(context).inputRequire,
                       height: 0.3,
                       controller: otherReqCtrl),
@@ -379,24 +353,24 @@ class _RequestforqutationState extends State<Requestforqutation> {
                     ),
                   ),
                   dropDownButton(context,
-                      text: Languages.of(context).shippingMethod + ' *',
+                      text: Languages.of(context).shippingMethod,
                       dropText: Languages.of(context).dropShipping,
                       dropList: shippingList),
                   dropDownButton(context,
-                      text: Languages.of(context).destination + ' *',
+                      text: Languages.of(context).destination,
                       dropText: Languages.of(context).dropDestination,
                       dropList: destinationList),
-                  buildColumnText(context,
-                      text: Languages.of(context).port + ' *',
+                  _buildtextFormField(context,
+                      text: Languages.of(context).port,
                       inputText: Languages.of(context).port,
                       controller: portCtrl),
-                  buildColumnText(context,
-                      text: Languages.of(context).leadTime + ' *',
+                  _buildtextFormField(context,
+                      text: Languages.of(context).leadTime,
                       inputText: '000000000',
                       // margin: 60,
                       controller: leadTimeForInCtrl),
-                  buildColumnText(context,
-                      text: Languages.of(context).paymentTerm + ' *',
+                  _buildtextFormField(context,
+                      text: Languages.of(context).paymentTerm,
                       inputText: Languages.of(context).paymentTerm,
                       controller: paymentTermCtrl),
                 ],
@@ -404,7 +378,6 @@ class _RequestforqutationState extends State<Requestforqutation> {
             ),
             buildCheckbox(1, text: Languages.of(context).check1),
             buildCheckbox(2, text: Languages.of(context).check2),
-
             Visibility(
                 visible: showErrorMessage,
                 child: Padding(
@@ -452,7 +425,6 @@ class _RequestforqutationState extends State<Requestforqutation> {
                             setState(() => showErrorMessage = true);
                           else {
                             setState(() => showErrorMessage = false);
-
                             data['qty'] = quantityCrtl.text.trim();
                             data['product'] = productNameCtrl.text.trim();
                             data['details'] = detailsCrtl.text.trim();
@@ -500,101 +472,50 @@ class _RequestforqutationState extends State<Requestforqutation> {
     );
   }
 
-  Padding buildColumnText(BuildContext context,
-      {String text,
-      String inputText,
-      double margin = 5,
-      double height = 0.07,
-      int minLines,
-      int maxLines,
-      TextEditingController controller}) {
+  Widget dropDownButton(BuildContext context,
+      {String text, String dropText, List<String> dropList}) {
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(18, 20, 18, 18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
-          Text(
-            text,
-            style: TextStyle(
-                fontFamily: 'assets/fonts/Roboto-Light.ttf', fontSize: 16),
-          ),
-          Center(
-            child: Container(
-              padding: const EdgeInsets.all(5),
-              // EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
-              // margin: EdgeInsetsDirectional.only(
-              //     top: 10, end: margin, start: margin),
-              height: MediaQuery.of(context).size.height * height,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Row(
+              children: [
+                Text(
+                  '$text *',
+                  style: TextStyle(
+                      fontFamily: 'assets/fonts/Roboto-Light.ttf',
+                      fontSize: 16,
+                      color: requiredField ? Colors.red : Colors.black),
                 ),
-              ),
-              child: TextFormField(
-                controller: controller,
-                maxLines: maxLines,
-                textInputAction: TextInputAction.next,
-                keyboardType: maxLines == null
-                    ? TextInputType.multiline
-                    : TextInputType.text,
-                decoration: InputDecoration(
-                  // border: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  hintText: inputText,
-                  hintStyle: TextStyle(
-                    color: backTabColor.withOpacity(0.8),
-                  ),
-                ),
-                validator: (String value) {
-                  if (value == null || value.isEmpty) {
-                    return ' ';
-                  }
-                  return null;
-                },
-              ),
+              ],
             ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget dropDownButton(
-    BuildContext context, {
-    String text,
-    String dropText,
-    List<String> dropList,
-  }) {
-    return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(18, 18, 18, 18),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            text,
-            style: TextStyle(
-                fontFamily: 'assets/fonts/Roboto-Light.ttf', fontSize: 16),
           ),
           Container(
-            padding: EdgeInsetsDirectional.only(start: 10),
-            // margin: EdgeInsetsDirectional.only(top: 10),
-            height: MediaQuery.of(context).size.height * 0.065,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(
-                Radius.circular(10),
-              ),
-            ),
             child: Padding(
               padding: const EdgeInsets.all(0),
-              //  const EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
               child: DropdownButtonFormField<String>(
                 decoration: InputDecoration(
-                  enabledBorder: InputBorder.none,
-                ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          const BorderSide(color: Colors.white, width: 2.0),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: BorderSide(
+                        color: Colors.white,
+                        width: 2.0,
+                      ),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white),
                 isExpanded: true,
                 items: dropList.map((String value) {
                   return DropdownMenuItem<String>(
@@ -639,15 +560,98 @@ class _RequestforqutationState extends State<Requestforqutation> {
                   ),
                 ),
                 validator: (value) {
-                  print('VALIDATOR: $value');
-
                   if (value == null || value.isEmpty) {
-                    print('VALIDATOR: error');
-
                     return ' ';
                   }
                   return null;
                 },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildtextFormField(BuildContext context,
+      {String text,
+      String inputText,
+      double height = 0.07,
+      int minLines,
+      int maxLines,
+      TextEditingController controller}) {
+    return Padding(
+      padding: const EdgeInsetsDirectional.fromSTEB(18, 20, 18, 18),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Row(
+              children: [
+                Text(
+                  '$text *',
+                  style: TextStyle(
+                      fontFamily: 'assets/fonts/Roboto-Light.ttf',
+                      fontSize: 16,
+                      color: requiredField ? Colors.red : Colors.black),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            height: MediaQuery.of(context).size.height * height,
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minWidth: double.infinity),
+              child: Padding(
+                padding: const EdgeInsets.all(0),
+                child: TextFormField(
+                    expands: true,
+                    controller: controller,
+                    maxLines: null,
+                    textAlignVertical: TextAlignVertical.top,
+                    textInputAction: TextInputAction.next,
+                    keyboardType: maxLines == null
+                        ? TextInputType.multiline
+                        : TextInputType.text,
+                    validator: (val) {
+                      if (val.isEmpty) {
+                        setState(() {
+                          requiredField = true;
+                        });
+                        return null;
+                      }
+                    },
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        fillColor: Colors.white,
+                        focusColor: Colors.white,
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Colors.white, width: 2.0),
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                            width: 2.0,
+                          ),
+                        ),
+                        hintText: inputText,
+                        hintStyle: TextStyle(
+                          color: backTabColor.withOpacity(0.8),
+                        ),
+                        contentPadding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        isDense: true,
+                        filled: true),
+                    style: TextStyle(
+                      height: 2.0,
+                    )),
               ),
             ),
           ),
