@@ -335,8 +335,8 @@ class _SupplierProfileState extends State<SupplierProfile>
                                                     onPressed: () {
                                                       _launchURL(
                                                           'ahmedbahaasayed1996@gmail.com',
-                                                          '',
-                                                          '');
+                                                          'ahmedBahah',
+                                                          'test');
                                                     },
                                                   ),
                                                 ],
