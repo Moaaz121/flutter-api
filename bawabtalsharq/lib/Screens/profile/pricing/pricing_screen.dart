@@ -1,5 +1,4 @@
 import 'package:bawabtalsharq/Model/plan_model.dart';
-import 'package:bawabtalsharq/Screens/profile/pricing/plan_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/loading.dart';
@@ -227,14 +226,14 @@ class _PricingScreenState extends State<PricingScreen> {
           ),
           RaisedButton(
             child: Text(Languages.of(context).selectPlan),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => PlanScreen(planList[index].packageId),
-                ),
-              );
-            },
+            // onPressed: () {
+            //   Navigator.push(
+            //     context,
+            //     MaterialPageRoute(
+            //       builder: (context) => PlanScreen(planList[index].packageId),
+            //     ),
+            //   );
+            // },
             padding: EdgeInsets.only(left: 36, right: 36),
             disabledTextColor: Colors.white,
             textColor: Colors.white,

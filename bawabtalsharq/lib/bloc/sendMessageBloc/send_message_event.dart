@@ -9,3 +9,5 @@ class SendEvent extends SendMessageEvent {
 
   SendEvent(this.email, this.subject, this.message);
 }
+
+class ResetState extends SendMessageEvent {}
