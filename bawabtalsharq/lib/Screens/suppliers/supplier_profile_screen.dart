@@ -331,12 +331,14 @@ class _SupplierProfileState extends State<SupplierProfile>
                                                     actions: <Widget>[
                                                   CupertinoActionSheetAction(
                                                     child: Text(
-                                                        'ahmedbahaasayed1996@gmail.com'),
+                                                        supplierProfileData
+                                                            .supplierData
+                                                            .email),
                                                     onPressed: () {
                                                       _launchURL(
-                                                          'ahmedbahaasayed1996@gmail.com',
-                                                          'ahmedBahah',
-                                                          'test');
+                                                          '${supplierProfileData.supplierData.email}',
+                                                          '',
+                                                          '');
                                                     },
                                                   ),
                                                 ],
