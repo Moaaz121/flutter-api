@@ -1,17 +1,25 @@
 class SearchQueryModel {
   String q;
   List<String> Categories = [];
+  List<String> expressShipping = [];
+  List<String> shippedFrom = [];
   List<String> gender = [];
   List<String> brand = [];
   List<String> sizes = [];
   List<String> colors = [];
   String sort = 'DESC';
   String sortBy = 'popular';
+  String rating = '3';
   String countryCode;
   String page;
+  int priceFrom;
+  int priceTo;
+  List<int> discount;
 
   SearchQueryModel(this.q,
       {this.Categories,
+      this.expressShipping,
+      this.shippedFrom,
       this.gender,
       this.brand,
       this.sizes,
@@ -19,5 +27,8 @@ class SearchQueryModel {
       this.sort,
       this.sortBy,
       this.countryCode,
-      this.page});
+      this.page,
+      this.priceFrom,
+      this.priceTo,
+      this.discount});
 }

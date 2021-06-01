@@ -27,6 +27,7 @@ import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -575,7 +576,8 @@ Widget sliderItem(BuildContext context, String image) {
   );
 }
 
-Widget sliderIndicator(int page, {bool noPadding = false, int count = 4}) {
+Widget sliderIndicator(int page,
+    {bool noPadding = false, int count = 4, Color dotColor = orangeColor}) {
   return Padding(
     padding: noPadding
         ? const EdgeInsets.symmetric(vertical: 0, horizontal: 0)
@@ -590,8 +592,8 @@ Widget sliderIndicator(int page, {bool noPadding = false, int count = 4}) {
           dotWidth: 6.5,
           dotHeight: 6.5,
           expansionFactor: 2.7,
-          dotColor: orangeShadowColor,
-          activeDotColor: orangeColor),
+          dotColor: dotColor.withOpacity(0.2),
+          activeDotColor: dotColor),
     ),
   );
 }
@@ -1653,10 +1655,13 @@ Widget textFiledPrice(BuildContext context, String text,
     TextInputType keyboardType = TextInputType.text}) {
   return SizedBox(
     width: MediaQuery.of(context).size.width * width,
-    child: TextField(
+    child: TextFormField(
       controller: controller,
       keyboardType: keyboardType,
       obscureText: isPassword,
+      inputFormatters: keyboardType == TextInputType.number
+          ? <TextInputFormatter>[WhitelistingTextInputFormatter.digitsOnly]
+          : null,
       cursorColor: Theme.of(context).bottomAppBarColor,
       decoration: InputDecoration(
         errorText: errorMessage,
@@ -1670,6 +1675,17 @@ Widget textFiledPrice(BuildContext context, String text,
       ),
     ),
   );
+}
+
+String numberValidator(String value) {
+  if (value == null) {
+    return null;
+  }
+  final n = num.tryParse(value);
+  if (n == null) {
+    return '"$value" is not a valid number';
+  }
+  return null;
 }
 
 Widget listOfCateWidget(List<CategoryElement> cats) {
