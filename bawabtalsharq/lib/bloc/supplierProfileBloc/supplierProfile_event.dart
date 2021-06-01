@@ -1,7 +1,7 @@
 abstract class SupplierProfileEvent {}
 
 class DoSupplierProfileEvent extends SupplierProfileEvent {
-  int id;
+  String id;
   DoSupplierProfileEvent(this.id);
 }
 

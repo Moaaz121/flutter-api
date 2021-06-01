@@ -19,6 +19,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
+import '../main.dart';
 import 'SliverPersistentHeaderInvidiualProduct/IndividualProductHedaer.dart';
 
 class IndividualProduct extends StatefulWidget {
@@ -94,7 +95,7 @@ class _IndividualProductState extends State<IndividualProduct>
             child: SafeArea(
               bottom: false,
               child: Scaffold(
-                bottomNavigationBar: productFab(product.price),
+                floatingActionButton: productFab(product.price),
                 body: NestedScrollView(
                   headerSliverBuilder:
                       (BuildContext context, bool innerBoxScrolled) {
@@ -336,7 +337,11 @@ class _IndividualProductState extends State<IndividualProduct>
                                   ' ${Languages.of(context).year}',
                               '${product.countryName}',
                               '${product.category}',
-                              '${product.countryImage}'),
+                              '${product.countryImage}', () {
+                            Navigator.pushNamed(
+                                context, ScreenRoutes.supplierProfileScreen,
+                                arguments: product.companyId);
+                          }),
                         ),
                       ),
                     ),
@@ -364,7 +369,7 @@ class _IndividualProductState extends State<IndividualProduct>
 
   Widget productFab(String price) {
     return Padding(
-      padding: const EdgeInsets.only(left: 25, bottom: 25),
+      padding: const EdgeInsets.only(left: 30),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [

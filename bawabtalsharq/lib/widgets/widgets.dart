@@ -1558,89 +1558,92 @@ Widget ListOfProduct() {
 }
 
 Widget infoCartSupplier(String name, String years, String country,
-    String category, String imagFlag) {
+    String category, String imagFlag, Function onPress) {
   return Column(
     children: [
-      Container(
-        child: Stack(children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(35),
-                boxShadow: [makeShadow(color: (0x29e16036), offset: 3)],
-              ),
-              child: Padding(
-                padding: const EdgeInsetsDirectional.only(
-                    top: 10, start: 10, bottom: 10, end: 10),
-                child: Column(
-                  children: [
-                    buildText(name, 10.0,
-                        color: Colors.black, fontWeight: FontWeight.w700),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.access_time_rounded,
-                              size: 13,
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            buildText(years, 7.0,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w700),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Image(
-                              image: NetworkImage(imagFlag),
-                              width: 14,
-                              height: 14,
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            buildText(country, 7.0,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w700),
-                          ],
-                        ),
-                        buildText(category, 7.0,
-                            color: Colors.black, fontWeight: FontWeight.w700),
-                      ],
-                    ),
-                  ],
+      GestureDetector(
+        onTap: onPress,
+        child: Container(
+          child: Stack(children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(35),
+                  boxShadow: [makeShadow(color: (0x29e16036), offset: 3)],
+                ),
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.only(
+                      top: 10, start: 10, bottom: 10, end: 10),
+                  child: Column(
+                    children: [
+                      buildText(name, 10.0,
+                          color: Colors.black, fontWeight: FontWeight.w700),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.access_time_rounded,
+                                size: 13,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              buildText(years, 7.0,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w700),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Image(
+                                image: NetworkImage(imagFlag),
+                                width: 14,
+                                height: 14,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              buildText(country, 7.0,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w700),
+                            ],
+                          ),
+                          buildText(category, 7.0,
+                              color: Colors.black, fontWeight: FontWeight.w700),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          Positioned(
-            top: 1,
-            left: 3,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [makeShadow(color: (0x29e16036), offset: 3)],
-              ),
-              child: Image(
-                image: AssetImage(
-                  medalImage,
+            Positioned(
+              top: 1,
+              left: 3,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [makeShadow(color: (0x29e16036), offset: 3)],
                 ),
-                height: 40,
-                width: 40,
+                child: Image(
+                  image: AssetImage(
+                    medalImage,
+                  ),
+                  height: 40,
+                  width: 40,
+                ),
               ),
             ),
-          ),
-        ]),
+          ]),
+        ),
       ),
     ],
   );
