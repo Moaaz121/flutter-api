@@ -24,6 +24,7 @@ class _SearchScreenState extends State<SearchScreen> {
   TextEditingController _searchController = TextEditingController();
   List<CategoryModel> categories = List<CategoryModel>();
   SharedPreferences pref;
+  List<String> savedSearch = [];
 
   @override
   Widget build(BuildContext context) {
@@ -203,72 +204,135 @@ class _SearchScreenState extends State<SearchScreen> {
                     SizedBox(
                       height: 10,
                     ),
-                    Padding(
-                      padding: const EdgeInsetsDirectional.only(start: 20),
-                      child: Text(
-                        Languages.of(context).resentSearch,
-                        style: TextStyle(
-                          fontFamily: 'Segoe UI',
-                          fontSize: 13.0,
-                          color: Color(0xff303030),
-                          letterSpacing: 0.156,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
                   ],
                 ),
-                Expanded(
-                  child: ListView.builder(
-                    physics: const BouncingScrollPhysics(
-                        parent: AlwaysScrollableScrollPhysics()),
-                    scrollDirection: Axis.vertical,
-                    padding: EdgeInsets.symmetric(vertical: 12),
-                    itemCount: pref.getStringList('searchSaved').length,
-                    itemBuilder: (context, position) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 12, horizontal: 20),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                'handmade crafts',
-                                style: TextStyle(
-                                  fontFamily: 'Segoe UI',
-                                  fontSize: 14.0,
-                                  color: Color(0xff646464),
-                                  letterSpacing: 0.168,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 15,
-                              height: 15,
-                              child: CircleAvatar(
-                                radius: 6,
-                                backgroundColor: orangeColor,
-                                child: Center(
-                                  child: Icon(
-                                    Icons.close,
-                                    size: 12,
-                                    color: Colors.white,
+                FutureBuilder(
+                    future: getListSearchSaved(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (!snapshot.hasData) {
+                        return SizedBox();
+                      } else {
+                        savedSearch = snapshot.data;
+                        if (savedSearch.length > 0) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsetsDirectional.only(start: 20),
+                                child: Text(
+                                  Languages.of(context).resentSearch,
+                                  style: TextStyle(
+                                    fontFamily: 'Segoe UI',
+                                    fontSize: 13.0,
+                                    color: Color(0xff303030),
+                                    letterSpacing: 0.156,
+                                    fontWeight: FontWeight.w600,
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                ),
+                              ListView.builder(
+                                shrinkWrap: true,
+                                reverse: true,
+                                physics: AlwaysScrollableScrollPhysics(),
+                                scrollDirection: Axis.vertical,
+                                padding: EdgeInsets.symmetric(vertical: 12),
+                                itemCount: savedSearch.length,
+                                itemBuilder: (context, position) {
+                                  SearchQueryModel search =
+                                      SearchQueryModel.fromJson(
+                                          json.decode(savedSearch[position]));
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 0, horizontal: 20),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            new MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  new SearchResult(
+                                                searchQuery: search,
+                                              ),
+                                            )).then((value) {
+                                          setState(() {
+                                            searchQuery = searchQuery;
+                                          });
+                                        });
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              search.q,
+                                              style: TextStyle(
+                                                fontFamily: 'Segoe UI',
+                                                fontSize: 14.0,
+                                                color: Color(0xff646464),
+                                                letterSpacing: 0.168,
+                                              ),
+                                            ),
+                                          ),
+                                          FlatButton(
+                                            shape: CircleBorder(),
+                                            height: 13,
+                                            minWidth: 20,
+                                            color: orangeColor,
+                                            onPressed: () {
+                                              setState(() {
+                                                List<String> s =
+                                                    pref.getStringList(
+                                                        'searchSaved');
+                                                s.remove(savedSearch[position]);
+                                                pref.setStringList(
+                                                    'searchSaved', s);
+                                                savedSearch.remove(
+                                                    savedSearch[position]);
+                                              });
+                                            },
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(3.0),
+                                              child: Icon(Icons.close_rounded,
+                                                  size: 12,
+                                                  color: Colors.white),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
+                          );
+                        } else {
+                          return SizedBox();
+                        }
+                      }
+                    }),
               ],
             ),
           ),
         ],
       ),
     );
+  }
+
+  Future<List<String>> getListSearchSaved() async {
+    pref = await SharedPreferences.getInstance();
+
+    return pref.getStringList('searchSaved');
+  }
+
+  Future storeList(String info) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('searchSaved', info);
+  }
+
+  Future getListFromSharedPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getStringList('searchSaved');
   }
 
   Text buildText(
@@ -315,21 +379,24 @@ class _SearchScreenState extends State<SearchScreen> {
                 discount: [],
               );
               SharedPreferences pref = await SharedPreferences.getInstance();
-              Map json = jsonDecode(queryModel.toString());
-              String search = jsonEncode(SearchQueryModel.fromJson(json));
-              pref.getStringList('searchSaved').forEach((dynamic s) {
-                if (s is SearchQueryModel && s.q == _searchController.text) {
-                  pref.getStringList('searchSaved').remove(s);
-                }
-              });
-              pref.getStringList('searchSaved').add(search);
+              List<String> entriesStr = pref.getStringList('searchSaved');
+              if (entriesStr == null) {
+                entriesStr = [];
+              }
+              entriesStr.add(jsonEncode(queryModel.toJson()));
+
+              pref.setStringList('searchSaved', entriesStr);
               Navigator.push(
                   context,
                   new MaterialPageRoute(
                     builder: (BuildContext context) => new SearchResult(
                       searchQuery: queryModel,
                     ),
-                  ));
+                  )).then((value) {
+                setState(() {
+                  searchQuery = searchQuery;
+                });
+              });
             },
             keyboardType: TextInputType.text,
             autocorrect: true,
