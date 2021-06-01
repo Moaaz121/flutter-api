@@ -133,7 +133,8 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
   Widget supplierItem(int position) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, ScreenRoutes.supplierProfileScreen);
+        Navigator.pushNamed(context, ScreenRoutes.supplierProfileScreen,
+            arguments: listOfSuperior[position].supplierId);
       },
       child: Container(
         child: Column(
@@ -170,7 +171,8 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
                     child: GestureDetector(
                       onTap: () {
                         Navigator.pushNamed(
-                            context, ScreenRoutes.supplierProfileScreen);
+                            context, ScreenRoutes.supplierProfileScreen,
+                            arguments: listOfSuperior[position].supplierId);
                       },
                       child: Icon(
                         Icons.arrow_forward,
@@ -189,7 +191,8 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
                         GestureDetector(
                           onTap: () {
                             Navigator.pushNamed(
-                                context, ScreenRoutes.supplierProfileScreen);
+                                context, ScreenRoutes.supplierProfileScreen,
+                                arguments: listOfSuperior[position].supplierId);
                           },
                           child: Container(
                             width: MediaQuery.of(context).size.width * 0.3,

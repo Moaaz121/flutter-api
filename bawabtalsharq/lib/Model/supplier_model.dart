@@ -1,60 +1,32 @@
-import 'dart:convert';
-
-SupplierProfileModel supplierProfileModelFromJson(String str) =>
-    SupplierProfileModel.fromJson(json.decode(str));
-
-String supplierProfileModelToJson(SupplierProfileModel data) =>
-    json.encode(data.toJson());
-
 class SupplierProfileModel {
-  SupplierProfileModel({
-    this.code,
-    this.status,
-    this.msg,
-    this.data,
-  });
-
   int code;
   String status;
   String msg;
-  List<SupplierData> data;
+  SupplierData supplierData;
 
-  factory SupplierProfileModel.fromJson(Map<String, dynamic> json) =>
-      SupplierProfileModel(
-        code: json["code"],
-        status: json["status"],
-        msg: json["msg"],
-        data: List<SupplierData>.from(
-            json["data"].map((x) => SupplierData.fromJson(x))),
-      );
+  SupplierProfileModel({this.code, this.status, this.msg, this.supplierData});
 
-  Map<String, dynamic> toJson() => {
-        "code": code,
-        "status": status,
-        "msg": msg,
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
-      };
+  SupplierProfileModel.fromJson(Map<String, dynamic> json) {
+    code = json['code'];
+    status = json['status'];
+    msg = json['msg'];
+    supplierData =
+        json['data'] != null ? new SupplierData.fromJson(json['data']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['code'] = this.code;
+    data['status'] = this.status;
+    data['msg'] = this.msg;
+    if (this.supplierData != null) {
+      data['data'] = this.supplierData.toJson();
+    }
+    return data;
+  }
 }
 
 class SupplierData {
-  SupplierData({
-    this.supplierId,
-    this.name,
-    this.address,
-    this.country,
-    this.city,
-    this.state,
-    this.zipcode,
-    this.email,
-    this.phone,
-    this.fax,
-    this.url,
-    this.year,
-    this.logo,
-    this.rate,
-    this.products,
-  });
-
   String supplierId;
   String name;
   String address;
@@ -69,106 +41,140 @@ class SupplierData {
   String year;
   String logo;
   int rate;
-  List<Product> products;
+  String banner;
+  List<Categories> categories;
 
-  factory SupplierData.fromJson(Map<String, dynamic> json) => SupplierData(
-        supplierId: json["supplier_id"],
-        name: json["name"],
-        address: json["address"],
-        country: json["country"],
-        city: json["city"],
-        state: json["state"],
-        zipcode: json["zipcode"],
-        email: json["email"],
-        phone: json["phone"],
-        fax: json["fax"],
-        url: json["url"],
-        year: json["year"],
-        logo: json["logo"],
-        rate: json["rate"],
-        products: List<Product>.from(
-            json["products"].map((x) => Product.fromJson(x))),
-      );
+  SupplierData(
+      {this.supplierId,
+      this.name,
+      this.address,
+      this.country,
+      this.city,
+      this.state,
+      this.zipcode,
+      this.email,
+      this.phone,
+      this.fax,
+      this.url,
+      this.year,
+      this.logo,
+      this.rate,
+      this.banner,
+      this.categories});
 
-  Map<String, dynamic> toJson() => {
-        "supplier_id": supplierId,
-        "name": name,
-        "address": address,
-        "country": country,
-        "city": city,
-        "state": state,
-        "zipcode": zipcode,
-        "email": email,
-        "phone": phone,
-        "fax": fax,
-        "url": url,
-        "year": year,
-        "logo": logo,
-        "rate": rate,
-        "products": List<dynamic>.from(products.map((x) => x.toJson())),
-      };
+  SupplierData.fromJson(Map<String, dynamic> json) {
+    supplierId = json['supplier_id'];
+    name = json['name'];
+    address = json['address'];
+    country = json['country'];
+    city = json['city'];
+    state = json['state'];
+    zipcode = json['zipcode'];
+    email = json['email'];
+    phone = json['phone'];
+    fax = json['fax'];
+    url = json['url'];
+    year = json['year'];
+    logo = json['logo'];
+    rate = json['rate'];
+    banner = json['banner'];
+    if (json['categories'] != null) {
+      categories = new List<Categories>();
+      json['categories'].forEach((v) {
+        categories.add(new Categories.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['supplier_id'] = this.supplierId;
+    data['name'] = this.name;
+    data['address'] = this.address;
+    data['country'] = this.country;
+    data['city'] = this.city;
+    data['state'] = this.state;
+    data['zipcode'] = this.zipcode;
+    data['email'] = this.email;
+    data['phone'] = this.phone;
+    data['fax'] = this.fax;
+    data['url'] = this.url;
+    data['year'] = this.year;
+    data['logo'] = this.logo;
+    data['rate'] = this.rate;
+    data['banner'] = this.banner;
+    if (this.categories != null) {
+      data['categories'] = this.categories.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
 }
 
-class Product {
-  Product({
-    this.productId,
-    this.product,
-    this.shortDescription,
-    this.searchWords,
-    this.productCode,
-    this.minQty,
-    this.maxQty,
-    this.status,
-    this.categoryId,
-    this.category,
-    this.price,
-    this.company,
-    this.imagePath,
-  });
+class Categories {
+  String name;
+  int categoryId;
+  int type;
+  List<ProductData> productData;
 
-  String productId;
-  String product;
-  String shortDescription;
-  String searchWords;
-  String productCode;
-  String minQty;
-  String maxQty;
-  String status;
-  String categoryId;
+  Categories({this.name, this.categoryId, this.type, this.productData});
+
+  Categories.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    categoryId = json['category_id'];
+    type = json['type'];
+    if (json['data'] != null) {
+      productData = new List<ProductData>();
+      json['data'].forEach((v) {
+        productData.add(new ProductData.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['name'] = this.name;
+    data['category_id'] = this.categoryId;
+    data['type'] = this.type;
+    if (this.productData != null) {
+      data['data'] = this.productData.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class ProductData {
+  String id;
+  String name;
   String category;
+  int categoryId;
   String price;
-  String company;
-  String imagePath;
+  String image;
 
-  factory Product.fromJson(Map<String, dynamic> json) => Product(
-        productId: json["product_id"],
-        product: json["product"],
-        shortDescription: json["short_description"],
-        searchWords: json["search_words"],
-        productCode: json["product_code"],
-        minQty: json["min_qty"],
-        maxQty: json["max_qty"],
-        status: json["status"],
-        categoryId: json["category_id"],
-        category: json["category"],
-        price: json["price"],
-        company: json["company"],
-        imagePath: json["image_path"],
-      );
+  ProductData(
+      {this.id,
+      this.name,
+      this.category,
+      this.categoryId,
+      this.price,
+      this.image});
 
-  Map<String, dynamic> toJson() => {
-        "product_id": productId,
-        "product": product,
-        "short_description": shortDescription,
-        "search_words": searchWords,
-        "product_code": productCode,
-        "min_qty": minQty,
-        "max_qty": maxQty,
-        "status": status,
-        "category_id": categoryId,
-        "category": category,
-        "price": price,
-        "company": company,
-        "image_path": imagePath,
-      };
+  ProductData.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    category = json['category'];
+    categoryId = json['category_id'];
+    price = json['price'];
+    image = json['image'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['category'] = this.category;
+    data['category_id'] = this.categoryId;
+    data['price'] = this.price;
+    data['image'] = this.image;
+    return data;
+  }
 }

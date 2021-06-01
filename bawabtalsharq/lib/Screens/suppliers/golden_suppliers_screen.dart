@@ -1,15 +1,15 @@
+import 'package:bawabtalsharq/Model/golden_suppliers_model.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
-import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:bawabtalsharq/bloc/goldenSuppliersBloc/golden_supplier_bloc.dart';
 import 'package:bawabtalsharq/bloc/goldenSuppliersBloc/golden_supplier_event.dart';
 import 'package:bawabtalsharq/bloc/goldenSuppliersBloc/golden_supplier_state.dart';
-import 'package:bawabtalsharq/Model/golden_suppliers_model.dart';
+import 'package:bawabtalsharq/main.dart';
+import 'package:bawabtalsharq/widgets/widgets.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:bawabtalsharq/main.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 class GoldenSuppliers extends StatefulWidget {
   @override
@@ -75,7 +75,8 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
                       return GestureDetector(
                         onTap: () {
                           Navigator.pushNamed(
-                              context, ScreenRoutes.supplierProfileScreen);
+                              context, ScreenRoutes.supplierProfileScreen,
+                              arguments: suppliers[position].supplierId);
                         },
                         child: Stack(children: [
                           Padding(

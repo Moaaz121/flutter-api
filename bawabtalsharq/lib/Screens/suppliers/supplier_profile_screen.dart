@@ -1,8 +1,10 @@
 import 'package:bawabtalsharq/Model/search_quary.dart';
 import 'package:bawabtalsharq/Model/supplier_model.dart';
+import 'package:bawabtalsharq/Model/user_model.dart';
 import 'package:bawabtalsharq/Screens/search/search_result_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
+import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/loading.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
@@ -25,7 +27,8 @@ class SupplierProfile extends StatefulWidget {
   final Color color;
   final Widget child;
   final VoidCallback onPressed;
-  final int supplierId;
+  final String supplierId;
+  String errorMessage = '';
 
   SupplierProfile(
     this.supplierId, {
@@ -42,11 +45,13 @@ class SupplierProfile extends StatefulWidget {
 
 class _SupplierProfileState extends State<SupplierProfile>
     with TickerProviderStateMixin {
+  UserModel currentUser = Constants.getUserInfo2();
   AnimationController _controller;
   SupplierProfileBloc _supplierProfileBloc;
   bool isLoaded = false;
   bool isLoading = false;
-  List<SupplierData> listOfSupplierData;
+  String errorMessage = '';
+  SupplierProfileModel supplierProfileData;
   @override
   void initState() {
     _supplierProfileBloc = SupplierProfileBloc();
@@ -94,6 +99,7 @@ class _SupplierProfileState extends State<SupplierProfile>
   }
 
   int segmentedControlGroupValue = 0;
+
   _launchURL(String toMailId, String subject, String body) async {
     var url = 'mailto:$toMailId?subject=$subject&body=$body';
     if (await canLaunch(url)) {
@@ -118,300 +124,297 @@ class _SupplierProfileState extends State<SupplierProfile>
         }
         if (state is SupplierProfileLoadedState) {
           isLoaded = true;
-          listOfSupplierData = state.supplierProfileResponse.data;
-          return Scaffold(
-            body: SafeArea(
-              bottom: false,
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 220,
-                    child: Stack(
+          isLoading = true;
+          supplierProfileData = state.supplierProfileResponse;
+        }
+        if (state is SupplierProfileErrorState)
+          errorMessage = 'No Internet Connection';
+        return Scaffold(
+            body: isLoaded
+                ? SafeArea(
+                    bottom: false,
+                    child: Column(
                       children: [
-                        Container(
-                          height: 120,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage(supplierBanner),
-                              colorFilter: new ColorFilter.mode(
-                                  Colors.black.withOpacity(0.5),
-                                  BlendMode.darken),
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                          child: Column(
-                            children: [
-                              Divider(
-                                indent: 80,
-                                endIndent: 85,
-                                thickness: 1.5,
-                                color: Colors.white,
-                              ),
-                              buildText(
-                                state.supplierProfileResponse.data[0].name,
-                                30,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w400,
-                              ),
-                              Divider(
-                                indent: 80,
-                                endIndent: 85,
-                                thickness: 1.5,
-                                color: Colors.white,
-                              ),
-                              buildText(
-                                state.supplierProfileResponse.data[0]
-                                    .products[0].category,
-                                16,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Positioned.directional(
-                          textDirection: Directionality.of(context),
-                          top: 20,
-                          start: 10,
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: CircleAvatar(
-                              radius: 9,
-                              backgroundColor: Colors.white,
-                              child: Icon(
-                                LanguageHelper.isEnglish
-                                    ? Icons.keyboard_arrow_left_outlined
-                                    : Icons.keyboard_arrow_right_outlined,
-                                size: 15,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Positioned.directional(
-                          textDirection: Directionality.of(context),
-                          top: 70,
-                          start: 30,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                        SizedBox(
+                          height: 220,
+                          child: Stack(
                             children: [
                               Container(
-                                width: 86,
-                                height: 86,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(16),
-                                  border: Border.all(
-                                    color: Colors.white,
+                                height: 120,
+                                width: MediaQuery.of(context).size.width,
+                                child: CachedNetworkImage(
+                                  imageUrl:
+                                      supplierProfileData.supplierData.banner,
+                                  placeholder: (context, url) => Padding(
+                                    padding: EdgeInsets.all(5),
+                                    child: Container(
+                                      child: Image.asset(placeHolder),
+                                    ),
                                   ),
-                                  shape: BoxShape.rectangle,
-                                  image: DecorationImage(
-                                    image: NetworkImage(state
-                                        .supplierProfileResponse.data[0].logo),
-                                    fit: BoxFit.fill,
+                                  errorWidget: (context, url, error) => Padding(
+                                    padding: EdgeInsets.all(5),
+                                    child: Container(
+                                      child: Image.asset(placeHolder),
+                                    ),
                                   ),
                                 ),
                               ),
-                              SizedBox(
-                                width: 10,
+                              Positioned.directional(
+                                textDirection: Directionality.of(context),
+                                top: 20,
+                                start: 10,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: CircleAvatar(
+                                    radius: 9,
+                                    backgroundColor: Colors.white,
+                                    child: Icon(
+                                      LanguageHelper.isEnglish
+                                          ? Icons.keyboard_arrow_left_outlined
+                                          : Icons.keyboard_arrow_right_outlined,
+                                      size: 15,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
                               ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  buildText(
-                                      state
-                                          .supplierProfileResponse.data[0].name,
-                                      12),
-                                  Row(
+                              Positioned.directional(
+                                textDirection: Directionality.of(context),
+                                top: 70,
+                                start: 30,
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Container(
+                                      width: 86,
+                                      height: 86,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(16),
+                                        border: Border.all(
+                                          color: Colors.white,
+                                        ),
+                                        shape: BoxShape.rectangle,
+                                        image: DecorationImage(
+                                          image: NetworkImage(
+                                              supplierProfileData
+                                                  .supplierData.logo),
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        buildText(
+                                            supplierProfileData
+                                                .supplierData.name,
+                                            12),
+                                        Row(
+                                          children: [
+                                            Icon(
+                                              Icons.access_time_rounded,
+                                              size: 12,
+                                            ),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            buildText(
+                                              '${Languages.of(context).memberSince + supplierProfileData.supplierData.year}',
+                                              8,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                            SizedBox(
+                                              height: 15,
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Positioned.directional(
+                                textDirection: Directionality.of(context),
+                                top: 170,
+                                start: 20,
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.only(
+                                      start: 10),
+                                  child: Row(
                                     children: [
-                                      Icon(
-                                        Icons.access_time_rounded,
-                                        size: 12,
-                                      ),
+                                      iconOfSupplier(Icons.location_on, () {
+                                        if (currentUser == null)
+                                          Navigator.pushNamed(context,
+                                              ScreenRoutes.loginScreen);
+                                        else
+                                          showCupertinoModalPopup(
+                                            context: context,
+                                            builder: (BuildContext context) =>
+                                                CupertinoActionSheet(
+                                                    actions: <Widget>[
+                                                  CupertinoActionSheetAction(
+                                                    child: Text(
+                                                        supplierProfileData
+                                                            .supplierData
+                                                            .address),
+                                                    onPressed: () {},
+                                                  ),
+                                                ],
+                                                    cancelButton:
+                                                        CupertinoActionSheetAction(
+                                                      child: Text(
+                                                          Languages.of(context)
+                                                              .cancel),
+                                                      isDefaultAction: true,
+                                                      onPressed: () {},
+                                                    )),
+                                          );
+                                      }),
                                       SizedBox(
-                                        width: 5,
+                                        width: 20,
                                       ),
-                                      buildText(
-                                        '${Languages.of(context).memberSince + state.supplierProfileResponse.data[0].year}',
-                                        8,
-                                        fontWeight: FontWeight.w400,
-                                      ),
+                                      iconOfSupplier(Icons.phone, () {
+                                        if (currentUser == null)
+                                          Navigator.pushNamed(context,
+                                              ScreenRoutes.loginScreen);
+                                        else
+                                          showCupertinoModalPopup(
+                                            context: context,
+                                            builder: (BuildContext context) =>
+                                                CupertinoActionSheet(
+                                                    actions: <Widget>[
+                                                  CupertinoActionSheetAction(
+                                                    child: Text(
+                                                        supplierProfileData
+                                                            .supplierData
+                                                            .phone),
+                                                    onPressed: () {
+                                                      launch(
+                                                        "tel://+${supplierProfileData.supplierData.phone}",
+                                                      );
+                                                    },
+                                                  ),
+                                                ],
+                                                    cancelButton:
+                                                        CupertinoActionSheetAction(
+                                                      child: Text(
+                                                          Languages.of(context)
+                                                              .cancel),
+                                                      isDefaultAction: true,
+                                                      onPressed: () {
+                                                        Navigator.pop(
+                                                            context, 'Cancel');
+                                                      },
+                                                    )),
+                                          );
+                                      }),
                                       SizedBox(
-                                        height: 15,
-                                      )
+                                        width: 20,
+                                      ),
+                                      iconOfSupplier(Icons.email_rounded, () {
+                                        if (currentUser == null)
+                                          Navigator.pushNamed(context,
+                                              ScreenRoutes.loginScreen);
+                                        else
+                                          showCupertinoModalPopup(
+                                            context: context,
+                                            builder: (BuildContext context) =>
+                                                CupertinoActionSheet(
+                                                    actions: <Widget>[
+                                                  CupertinoActionSheetAction(
+                                                    child: Text(
+                                                        supplierProfileData
+                                                            .supplierData
+                                                            .email),
+                                                    onPressed: () {
+                                                      _launchURL(
+                                                          '${supplierProfileData.supplierData.email}',
+                                                          '',
+                                                          '');
+                                                    },
+                                                  ),
+                                                ],
+                                                    cancelButton:
+                                                        CupertinoActionSheetAction(
+                                                      child: Text(
+                                                          Languages.of(context)
+                                                              .cancel),
+                                                      isDefaultAction: true,
+                                                      onPressed: () {
+                                                        Navigator.pop(
+                                                            context, 'Cancel');
+                                                      },
+                                                    )),
+                                          );
+                                      }),
                                     ],
-                                  )
-                                ],
+                                  ),
+                                ),
                               ),
+                              Positioned.directional(
+                                textDirection: Directionality.of(context),
+                                top: 120,
+                                end: 25,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    CustomPaint(
+                                      painter: CirclePainter(
+                                        _controller,
+                                        color: widget.color,
+                                      ),
+                                      child: chatButtonAnimation(() {},
+                                          size: 35, sizeIcon: 5, padOfIcon: 16),
+                                    ),
+                                    buildText(
+                                      Languages.of(context).startChat,
+                                      10,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ],
+                                ),
+                              )
                             ],
                           ),
                         ),
-                        Positioned.directional(
-                          textDirection: Directionality.of(context),
-                          top: 170,
-                          start: 20,
+                        Container(
+                          height: 70,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.vertical(
+                                bottom: Radius.circular(25)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.05),
+                              ),
+                              BoxShadow(
+                                  color: Colors.white,
+                                  spreadRadius: 1.0,
+                                  blurRadius: 8.0,
+                                  offset: Offset(0, -8)),
+                            ],
+                          ),
                           child: Padding(
-                            padding:
-                                const EdgeInsetsDirectional.only(start: 10),
-                            child: Row(
-                              children: [
-                                iconOfSupplier(Icons.location_on, () {
-                                  showCupertinoModalPopup(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        CupertinoActionSheet(
-                                            actions: <Widget>[
-                                          CupertinoActionSheetAction(
-                                            child: Text(state
-                                                .supplierProfileResponse
-                                                .data[0]
-                                                .address),
-                                            onPressed: () {},
-                                          ),
-                                        ],
-                                            cancelButton:
-                                                CupertinoActionSheetAction(
-                                              child: Text(
-                                                  Languages.of(context).cancel),
-                                              isDefaultAction: true,
-                                              onPressed: () {},
-                                            )),
-                                  );
-                                }),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                iconOfSupplier(Icons.phone, () {
-                                  showCupertinoModalPopup(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        CupertinoActionSheet(
-                                            actions: <Widget>[
-                                          CupertinoActionSheetAction(
-                                            child: Text(state
-                                                .supplierProfileResponse
-                                                .data[0]
-                                                .phone),
-                                            onPressed: () {
-                                              launch(
-                                                "tel://+${state.supplierProfileResponse.data[0].phone}",
-                                              );
-                                            },
-                                          ),
-                                        ],
-                                            cancelButton:
-                                                CupertinoActionSheetAction(
-                                              child: Text(
-                                                  Languages.of(context).cancel),
-                                              isDefaultAction: true,
-                                              onPressed: () {
-                                                Navigator.pop(
-                                                    context, 'Cancel');
-                                              },
-                                            )),
-                                  );
-                                }),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                iconOfSupplier(Icons.email_outlined, () {
-                                  showCupertinoModalPopup(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        CupertinoActionSheet(
-                                            actions: <Widget>[
-                                          CupertinoActionSheetAction(
-                                            child: Text(state
-                                                .supplierProfileResponse
-                                                .data[0]
-                                                .email),
-                                            onPressed: () {
-                                              _launchURL(
-                                                  '${state.supplierProfileResponse.data[0].email}',
-                                                  '',
-                                                  '');
-                                            },
-                                          ),
-                                        ],
-                                            cancelButton:
-                                                CupertinoActionSheetAction(
-                                              child: Text(
-                                                  Languages.of(context).cancel),
-                                              isDefaultAction: true,
-                                              onPressed: () {
-                                                Navigator.pop(
-                                                    context, 'Cancel');
-                                              },
-                                            )),
-                                  );
-                                }),
-                              ],
-                            ),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 40, vertical: 14),
+                            child: detailsSupplierTabBar(),
                           ),
                         ),
-                        Positioned.directional(
-                          textDirection: Directionality.of(context),
-                          top: 120,
-                          end: 25,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              CustomPaint(
-                                painter: CirclePainter(
-                                  _controller,
-                                  color: widget.color,
-                                ),
-                                child: chatButtonAnimation(() {},
-                                    size:
-                                        MediaQuery.of(context).size.width * 0.1,
-                                    sizeIcon: 7,
-                                    padOfIcon: 16),
-                              ),
-                              buildText(
-                                Languages.of(context).startChat,
-                                10,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ],
-                          ),
-                        )
+                        Expanded(
+                            child: info(context)[segmentedControlGroupValue]),
                       ],
                     ),
-                  ),
-                  Container(
-                    height: 70,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      borderRadius:
-                          BorderRadius.vertical(bottom: Radius.circular(25)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
-                        ),
-                        BoxShadow(
-                            color: Colors.white,
-                            spreadRadius: 1.0,
-                            blurRadius: 8.0,
-                            offset: Offset(0, -8)),
-                      ],
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 40, vertical: 14),
-                      child: detailsSupplierTabBar(),
-                    ),
-                  ),
-                  Expanded(child: info(context)[segmentedControlGroupValue]),
-                ],
-              ),
-            ),
-          );
-        } else {
-          return SizedBox();
-        }
+                  )
+                : Center(child: Text(errorMessage)));
       },
     );
   }
@@ -515,17 +518,17 @@ class _SupplierProfileState extends State<SupplierProfile>
         reverse: false,
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
-        itemCount: listOfSupplierData.length,
+        itemCount: supplierProfileData.supplierData.categories.length,
         itemBuilder: (context, position) {
           return SizedBox(
               width: MediaQuery.of(context).size.width / 3 - 5,
-              child: categoryOfProductSupplier(
-                  context, listOfSupplierData, position));
+              child: categoryOfProductSupplier(context,
+                  supplierProfileData.supplierData.categories, position));
         });
   }
 
   Widget categoryOfProductSupplier(
-      BuildContext context, List<SupplierData> product, int position) {
+      BuildContext context, List<Categories> listOfCategoryData, int position) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -536,7 +539,7 @@ class _SupplierProfileState extends State<SupplierProfile>
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                product[position].products[position].category,
+                listOfCategoryData[position].name,
                 style: TextStyle(
                   fontSize: 16,
                   color: const Color(0xff303030),
@@ -563,7 +566,7 @@ class _SupplierProfileState extends State<SupplierProfile>
                           searchQuery: new SearchQueryModel(
                             '',
                             Categories: [
-                              product[0].products[0].categoryId.toString()
+                              listOfCategoryData[position].categoryId.toString()
                             ],
                           ),
                         ),
@@ -648,7 +651,11 @@ class _SupplierProfileState extends State<SupplierProfile>
                   ),
                 ),
               ),
-              Positioned(top: 5, left: 5, child: productOfSupplier(product)),
+              Positioned(
+                  top: 5,
+                  left: 5,
+                  child: productOfSupplier(
+                      listOfCategoryData[position].productData)),
             ],
           ),
         ),
@@ -656,7 +663,7 @@ class _SupplierProfileState extends State<SupplierProfile>
     );
   }
 
-  Widget productOfSupplier(List<SupplierData> product) {
+  Widget productOfSupplier(List<ProductData> product) {
     return SizedBox(
       height: 170,
       child: ListView.builder(
@@ -672,15 +679,15 @@ class _SupplierProfileState extends State<SupplierProfile>
               context: context,
               onPress: () {
                 Navigator.pushNamed(context, ScreenRoutes.individualProduct,
-                    arguments: product[0].products[position].productId);
+                    arguments: product[position].id);
               },
               position: position,
               backgroundColor: position == 2
                   ? redColor
                   : (position == 1 ? orangeColor : blueColor),
-              nameProduct: product[0].products[position].product,
-              productImg: product[0].products[position].imagePath,
-              price: product[0].products[position].price,
+              nameProduct: product[position].name,
+              productImg: product[position].image,
+              price: product[position].price,
             ),
           );
         },

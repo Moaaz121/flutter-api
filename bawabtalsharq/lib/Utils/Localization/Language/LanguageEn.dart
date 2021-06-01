@@ -268,7 +268,7 @@ class LanguageEn extends Languages {
   String get unitPrice => 'Unit Price:';
   String get shippingTerm => 'Shipping Terms:';
   String get paymentTerms => 'Payment Terms:';
-  String get productDetails => 'Product Details:';
+  String get productDetails => 'Product Details';
   String get send => 'Send';
   String get createNewPassword => 'Create New Password';
   String get emailAddress => 'Email Address';
