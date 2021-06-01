@@ -540,32 +540,28 @@ Widget sliderItem(BuildContext context, String image) {
         child: CachedNetworkImage(
           fit: BoxFit.fill,
           imageUrl: image,
-          placeholder: (context, url) => Padding(
-            padding: EdgeInsets.all(8),
+          placeholder: (context, url) => Center(
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15.0),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(40.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Image.asset(
                   placeHolder,
-                  fit: BoxFit.fill,
                 ),
               ),
             ),
           ),
-          errorWidget: (context, url, error) => Padding(
-            padding: EdgeInsets.all(8),
+          errorWidget: (context, url, error) => Center(
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15.0),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(40.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Image.asset(
                   placeHolder,
-                  fit: BoxFit.fill,
                 ),
               ),
             ),
