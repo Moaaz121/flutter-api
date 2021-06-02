@@ -14,51 +14,69 @@ class _ListMessageScreenState extends State<ListMessageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0.0,
+        actions: [
+          IconButton(
+            icon: CircleAvatar(
+              radius: 9,
+              backgroundColor: orangeColor,
+              child: Icon(
+                LanguageHelper.isEnglish
+                    ? Icons.keyboard_arrow_left_outlined
+                    : Icons.keyboard_arrow_right_outlined,
+                size: 17,
+                color: Colors.white,
+              ),
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      ),
       body: Padding(
-        padding: const EdgeInsets.only(
-          top: 11,
-        ),
+        padding: const EdgeInsets.only(left: 17),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Row(
+            //   children: [
+            //     IconButton(
+            //       icon: CircleAvatar(
+            //         radius: 9,
+            //         backgroundColor: orangeColor,
+            //         child: Icon(
+            //           LanguageHelper.isEnglish
+            //               ? Icons.keyboard_arrow_left_outlined
+            //               : Icons.keyboard_arrow_right_outlined,
+            //           size: 17,
+            //           color: Colors.white,
+            //         ),
+            //       ),
+            //       onPressed: () {
+            //         Navigator.of(context).pop();
+            //       },
+            //     ),
+            //   ],
+            // ),
             Row(
               children: [
-                IconButton(
-                  icon: CircleAvatar(
-                    radius: 9,
-                    backgroundColor: orangeColor,
-                    child: Icon(
-                      LanguageHelper.isEnglish
-                          ? Icons.keyboard_arrow_left_outlined
-                          : Icons.keyboard_arrow_right_outlined,
-                      size: 17,
-                      color: Colors.white,
-                    ),
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
+                Padding(
+                  padding: const EdgeInsets.all(9.0),
+                  child: buildTextField(
+                      hint: (Languages.of(context).search), context: context),
                 ),
               ],
             ),
-            Padding(
-              padding: EdgeInsets.only(left: 35, top: 16),
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(9.0),
-                    child: buildTextField(
-                        hint: (Languages.of(context).search), context: context),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                left: 44,
-                top: 22,
-              ),
-              child: ListView.separated(child: buildListMessage()),
+            Expanded(
+              child: ListView.separated(
+                  itemBuilder: (context, index) => buildListMessage(),
+                  separatorBuilder: (context, index) => SizedBox(
+                        height: 16,
+                      ),
+                  itemCount: 15),
             )
           ],
         ),
