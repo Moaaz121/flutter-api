@@ -5,7 +5,7 @@ bool emailValidator(String email) {
 }
 
 bool passwordValidator(String password) {
-  return RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$')
+  return RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$')
       .hasMatch(password);
 }
 
