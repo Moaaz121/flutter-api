@@ -8,7 +8,6 @@ import 'package:bawabtalsharq/Screens/intro_screen.dart';
 import 'package:bawabtalsharq/Screens/login_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/faq/faq_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/history/history_screen.dart';
-import 'package:bawabtalsharq/Screens/profile/message_center/list_message_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/message_center/message_center_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/message_center/qoute_details_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/my_account/my_account_screen.dart';
@@ -63,7 +62,7 @@ void main() async {
   //FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   runApp(
     DevicePreview(
-      enabled: true,
+      enabled: false,
       builder: (context) => BawabtAlsharqApp(),
     ),
   );

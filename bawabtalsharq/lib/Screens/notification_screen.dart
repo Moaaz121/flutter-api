@@ -1,9 +1,12 @@
 import 'package:bawabtalsharq/Model/notification_model.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
+import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/loading.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/notificationsBloc/notifications_bloc.dart';
+import 'package:bawabtalsharq/main.dart';
+import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -96,9 +99,17 @@ class _NotificationScreenState extends State<NotificationScreen> {
           bloc: _bloc,
           builder: (context, snapshot) {
             if (snapshot is LoadingState) {
-              return Center(
-                child: LoadingLogo(),
-              );
+              return Constants.getUserInfo2() != null
+                  ? Center(
+                      child: LoadingLogo(),
+                    )
+                  : Center(
+                      child: signInFlatButton(
+                          context,
+                          MediaQuery.of(context).size.height,
+                          Languages.of(context).login, () {
+                      Navigator.pushNamed(context, ScreenRoutes.loginScreen);
+                    }));
             } else if (snapshot is DoneState) {
               if (snapshot.messageResponse.code != 200) {
                 return Expanded(
