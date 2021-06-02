@@ -8,6 +8,7 @@ import 'package:bawabtalsharq/Screens/intro_screen.dart';
 import 'package:bawabtalsharq/Screens/login_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/faq/faq_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/history/history_screen.dart';
+import 'package:bawabtalsharq/Screens/profile/message_center/list_message_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/message_center/message_center_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/message_center/qoute_details_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/my_account/my_account_screen.dart';
@@ -62,7 +63,7 @@ void main() async {
   //FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   runApp(
     DevicePreview(
-      enabled: false,
+      enabled: true,
       builder: (context) => BawabtAlsharqApp(),
     ),
   );
@@ -95,7 +96,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.deepOrange),
-      home: SplashScreen(),
+      home: ListMessageScreen(),
       navigatorObservers: [AnalyticsService().getAnalyticsOberver()],
       //navigatorObservers: [AnalyticsService().getAnalyticsOberver()],
       routes: {
