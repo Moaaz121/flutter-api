@@ -2,6 +2,7 @@ import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -18,113 +19,117 @@ class _ListMessageScreenState extends State<ListMessageScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0.0,
-        actions: [
-          IconButton(
-            icon: CircleAvatar(
-              radius: 9,
-              backgroundColor: orangeColor,
-              child: Icon(
-                LanguageHelper.isEnglish
-                    ? Icons.keyboard_arrow_left_outlined
-                    : Icons.keyboard_arrow_right_outlined,
-                size: 17,
-                color: Colors.white,
-              ),
+        leading: IconButton(
+          icon: CircleAvatar(
+            radius: 9,
+            backgroundColor: orangeColor,
+            child: Icon(
+              LanguageHelper.isEnglish
+                  ? Icons.keyboard_arrow_left_outlined
+                  : Icons.keyboard_arrow_right_outlined,
+              size: 17,
+              color: Colors.white,
             ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
           ),
-        ],
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 17),
-        child: Column(
-          children: [
-            // Row(
-            //   children: [
-            //     IconButton(
-            //       icon: CircleAvatar(
-            //         radius: 9,
-            //         backgroundColor: orangeColor,
-            //         child: Icon(
-            //           LanguageHelper.isEnglish
-            //               ? Icons.keyboard_arrow_left_outlined
-            //               : Icons.keyboard_arrow_right_outlined,
-            //           size: 17,
-            //           color: Colors.white,
-            //         ),
-            //       ),
-            //       onPressed: () {
-            //         Navigator.of(context).pop();
-            //       },
-            //     ),
-            //   ],
-            // ),
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(9.0),
-                  child: buildTextField(
-                      hint: (Languages.of(context).search), context: context),
-                ),
-              ],
-            ),
-            Expanded(
+      body: Column(
+        children: [
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(9.0),
+                child: buildTextField(
+                    hint: (Languages.of(context).search),
+                    context: context,
+                    rightBtn: Icons.search),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 14,
+          ),
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(35),
+                      topRight: Radius.circular(35)),
+                  boxShadow: [
+                    makeShadow(),
+                  ]),
+              padding: EdgeInsetsDirectional.only(start: 33, top: 15),
               child: ListView.separated(
                   itemBuilder: (context, index) => buildListMessage(),
                   separatorBuilder: (context, index) => SizedBox(
                         height: 16,
                       ),
                   itemCount: 15),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }
 
   Row buildListMessage() {
-    return Row(children: [
+    return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
       CircleAvatar(
-        radius: 25,
+        radius: 24,
         backgroundImage: AssetImage(eslam),
       ),
-      Padding(
-        padding: EdgeInsets.only(
-          left: 22,
-        ),
+      SizedBox(
+        width: 15,
+      ),
+      Expanded(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text("varius sollicitudin",
+          Text("varius sollicitudin nbxhjsvkgh bgvgvhkvg n khb",
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontFamily: 'SegoeUI',
                 color: Color(0xff000000),
-                fontSize: 16,
+                fontSize: 14,
                 fontWeight: FontWeight.w700,
                 fontStyle: FontStyle.normal,
               )),
           SizedBox(
             height: 7,
           ),
-          Row(
-            children: [
-              Text("Etiam blandit est leo, etdawd weq df ...",
-                  style: TextStyle(
-                    fontFamily: 'SegoeUI',
-                    color: Color(0xff000000),
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                    fontStyle: FontStyle.normal,
-                  ))
-            ],
-          )
+          Text("Etiam blandit est leo, etdawd weq df ...",
+              style: TextStyle(
+                fontFamily: 'SegoeUI',
+                color: Color(0xff000000),
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
+                fontStyle: FontStyle.normal,
+              )),
+          Container(
+            margin: EdgeInsets.only(right: 40, top: 22),
+            height: 0.3,
+            color: Colors.grey,
+          ),
+          SizedBox(
+            height: 15,
+          ),
         ]),
       )
     ]);
   }
 
-  Widget buildTextField({String hint, BuildContext context}) {
+  Widget buildTextField({
+    String hint,
+    BuildContext context,
+    IconData rightBtn,
+  }) {
     return Container(
+      margin: EdgeInsetsDirectional.only(
+        start: 25,
+      ),
       width: MediaQuery.of(context).size.width * 0.80,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(11), color: Colors.grey[100]),
@@ -145,11 +150,19 @@ class _ListMessageScreenState extends State<ListMessageScreen> {
               contentPadding: EdgeInsets.only(
                 left: 16,
                 right: 16,
-                bottom: 10, // HERE THE IMPORTANT PART
+                bottom: 13, // HERE THE IMPORTANT PART
               ),
               errorBorder: InputBorder.none,
               disabledBorder: InputBorder.none,
               hintText: hint,
+              suffix: Icon(
+                rightBtn,
+                color: Colors.grey,
+                size: 17,
+              ),
+              labelStyle: TextStyle(
+                fontSize: 12,
+              ),
               hintStyle: TextStyle(
                 fontFamily: 'Segoe UI',
                 fontSize: 13.0,
