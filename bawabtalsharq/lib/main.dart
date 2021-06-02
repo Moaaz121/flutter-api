@@ -1,4 +1,5 @@
 import 'package:bawabtalsharq/Screens/Chat/chat_screen.dart';
+import 'package:bawabtalsharq/Screens/NoInternetScreen.dart';
 import 'package:bawabtalsharq/Screens/all_categories_screen.dart';
 import 'package:bawabtalsharq/Screens/forget_password/forget_password_screen.dart';
 import 'package:bawabtalsharq/Screens/forget_password/new_password_screen.dart';
@@ -138,6 +139,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.aboutUs: (_) => AboutUsScreen(),
         ScreenRoutes.updateProfile: (_) => UpdateProfile(),
         ScreenRoutes.changePassword: (_) => ChangePassword(),
+        ScreenRoutes.noInternet: (_) => NoInternet(),
       },
       locale: _locale,
       supportedLocales: supportedLocales,
@@ -227,4 +229,5 @@ class ScreenRoutes {
   static const String chatsScreen = '/chatsScreen';
   static const String conversationScreen = '/conversation';
   static const String aboutUs = '/aboutUs_screen';
+  static const String noInternet = '/noInternet';
 }

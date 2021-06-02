@@ -1,3 +1,4 @@
+import 'package:bawabtalsharq/Model/country_model.dart';
 import 'package:bawabtalsharq/Screens/forget_password/verification_OTP_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
@@ -6,6 +7,7 @@ import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_bloc.dart';
 import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_event.dart';
 import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_state.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
+import 'package:bawabtalsharq/Utils/loading.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,47 +17,30 @@ class SignUpScreen extends StatefulWidget {
   _SignUpScreenState createState() => _SignUpScreenState();
 }
 
-class Country {
-  int id;
-  String name;
-
-  Country(this.id, this.name);
-
-  static List<Country> getCountries() {
-    return <Country>[
-      Country(1, 'Country/Region'),
-      Country(2, 'Egypt'),
-      Country(3, 'Sudan'),
-      Country(4, 'Asia'),
-      Country(5, 'Korea'),
-      Country(6, 'Japan'),
-    ];
-  }
-}
-
 class _SignUpScreenState extends State<SignUpScreen> {
   bool obSecureText = true;
   int selectedRadioTile;
   bool companyTypeBool = true;
   Map data;
+  String dropDownVal = '';
 
-  List<Country> _countries = Country.getCountries();
-  List<DropdownMenuItem<Country>> _dropdownMenuItems;
-  Country _selectedCountry;
+  String countryCode = '';
+
+  List<CountryData> _countries = [];
+  List<String> _countriesName = [];
+
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmpasswordController = TextEditingController();
   TextEditingController companyController = TextEditingController();
 
   String selectedRadio;
-
   bool _passwordErrorMessage;
-
   bool isLoading = false;
+
   RegisterBloc _registerBloc;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -63,11 +48,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   void initState() {
-    _dropdownMenuItems = buildDropdownMenuItems(_countries);
-    _selectedCountry = _dropdownMenuItems[0].value;
-    selectedRadioTile = 0;
-    _registerBloc = RegisterBloc();
     super.initState();
+    selectedRadioTile = 0;
+
+    _registerBloc = RegisterBloc();
+    _registerBloc.add(GetCountries());
+
     _passwordErrorMessage = false;
   }
 
@@ -81,25 +67,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     passwordController.dispose();
     confirmpasswordController.dispose();
     companyController.dispose();
-  }
-
-  List<DropdownMenuItem<Country>> buildDropdownMenuItems(List Countries) {
-    List<DropdownMenuItem<Country>> items = List();
-    for (Country country in Countries) {
-      items.add(
-        DropdownMenuItem(
-          value: country,
-          child: Text(country.name),
-        ),
-      );
-    }
-    return items;
-  }
-
-  onChangeDropdownItem(Country selectedCompany) {
-    setState(() {
-      _selectedCountry = selectedCompany;
-    });
+    
   }
 
   setSelectedRadioTile(int val) {
@@ -157,10 +125,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 bloc: _registerBloc,
                 builder: (context, state) {
                   if (state is VerifyingPhoneLoadingState) {
-                    if (isLoading) {
-                      showLoadingDialog(context);
-                      isLoading = false;
-                    }
+                    return LoadingLogo();
+                  } else if (state is LoadedCountriesState) {
+                    List.generate(state.countries.length, (i) {
+                      _countries.add(state.countries[i]);
+                      _countriesName.add(state.countries[i].country);
+                    });
+                    _registerBloc.add(GetLoadedCountries());
+                    return LoadingLogo();
+                  } else if (state is ShowLoadedCountriesState) {
+                    return _buildMain();
+                  } else if (state is LoadingCountriesState) {
+                    return LoadingLogo();
                   }
 
                   return _buildMain();
@@ -321,15 +297,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   height: 15,
                 ),
                 buildSizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: DropdownButton(
-                    isExpanded: true,
-                    isDense: false,
-                    value: _selectedCountry,
-                    items: _dropdownMenuItems,
-                    onChanged: onChangeDropdownItem,
-                  ),
-                ),
+                    width: MediaQuery.of(context).size.width,
+                    child: dropDownButton()),
                 SizedBox(
                   height: 20,
                 ),
@@ -352,15 +321,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ),
                             ),
                           );
-                        } else if (_selectedCountry.name == 'Country/Region') {
-                          _scaffoldKey.currentState.showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                'Country is not selected',
-                                style: TextStyle(color: Colors.red),
-                              ),
-                            ),
-                          );
                         } else if (passwordController.text.trim() !=
                             confirmpasswordController.text.trim()) {
                           setState(() {
@@ -370,7 +330,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           _passwordErrorMessage = false;
                           isLoading = true;
                           print('Verifying phone');
-                          print('country ${_selectedCountry.name}');
                           data = {
                             'phone': '+2${phoneController.text.trim()}',
                             'email': emailController.text.trim(),
@@ -379,7 +338,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             'password': passwordController.text.trim(),
                             'userType': selectedRadio,
                             'company': companyController.text.trim(),
-                            'country': _selectedCountry.name
+                            'country': countryCode
                           };
 
                           _registerBloc.add(VerifyPhone(
@@ -419,6 +378,55 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
         buildText(text, 12)
       ],
+    );
+  }
+
+  Widget dropDownButton() {
+    return Container(
+      child: Padding(
+        padding: const EdgeInsets.all(0),
+        child: DropdownButtonFormField<String>(
+          itemHeight: 50,
+          decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.white, width: 2.0),
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+                borderSide: BorderSide(color: Colors.white, width: 2.0),
+              ),
+              filled: true,
+              fillColor: Colors.white),
+          isExpanded: true,
+          items: _countriesName.map((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value,
+                  style: TextStyle(color: Colors.black, fontSize: 14)),
+            );
+          }).toList(),
+          onChanged: (dropDownVal) {
+            setState(() {
+              countryCode =
+                  _countries[_countriesName.indexOf(dropDownVal)].code;
+            });
+          },
+          validator: (value) {
+            if (value == null || value.isEmpty) return '';
+            return null;
+          },
+          hint: Text(
+            dropDownVal != '' ? dropDownVal : 'Select Country',
+            style: TextStyle(
+              color: backTabColor.withOpacity(0.8),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

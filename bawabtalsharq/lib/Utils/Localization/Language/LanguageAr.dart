@@ -279,4 +279,9 @@ class LanguageAr extends Languages {
 
 // end Islam
 
+//Start Asmaa
+  String get noInternertConnection => 'No Internet Connection';
+
+//end Asmaa
+
 }

@@ -1,9 +1,19 @@
 import 'package:bawabtalsharq/Model/user_model.dart';
+import 'package:bawabtalsharq/Model/country_model.dart';
 import 'package:flutter/material.dart';
 
 abstract class RegisterState {}
 
 class RegisterInitial extends RegisterState {}
+
+class LoadingCountriesState extends RegisterState {}
+
+class LoadedCountriesState extends RegisterState {
+  List<CountryData> countries;
+  LoadedCountriesState({@required this.countries});
+}
+
+class ShowLoadedCountriesState extends RegisterState {}
 
 class RegisterLoadingState extends RegisterState {}
 

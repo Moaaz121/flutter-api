@@ -15,6 +15,7 @@ class QuotationBloc extends Bloc<QuotationEvent, QuotationState> {
   List<CertificationRQF> certification = [];
   List<DestinationRQF> destination = [];
   List<ShippingRQF> shipping = [];
+  List<PieceRQF> pieces = [];
   List<SourcingPurposeRQF> sourcingPurpose = [];
   List<TradeTermRQF> tradeTerms = [];
   @override
@@ -37,6 +38,9 @@ class QuotationBloc extends Bloc<QuotationEvent, QuotationState> {
       List.generate(data.shipping.length, (i) {
         shipping.add(data.shipping[i]);
       });
+      List.generate(data.pieces.length, (i) {
+        pieces.add(data.pieces[i]);
+      });
       List.generate(data.sourcingPurpose.length, (i) {
         sourcingPurpose.add(data.sourcingPurpose[i]);
       });
@@ -49,18 +53,18 @@ class QuotationBloc extends Bloc<QuotationEvent, QuotationState> {
           certification: certification,
           destination: destination,
           shipping: shipping,
+          pieces: pieces,
           sourcingPurpose: sourcingPurpose,
           tradeTerms: tradeTerms);
     } else if (event is ShowLoadedData) {
       yield ShowLoadedDataState();
     } else if (event is PostReqQuotation) {
-      print('in PostReqQuotation');
-      BaseModel data =
-          await RequestQuotationsRepo().postReqQuotation(event.data);
-
-      if (data != null) {
-        yield PostedQuotationResponseState(msg: data.msg);
-      } else {
+      String msg = await RequestQuotationsRepo().postReqQuotation(event.data);
+      if (msg != 'Mobile is not Connected' && msg != null) {
+        yield PostedQuotationResponseState(msg: msg);
+      } else if (msg == 'Mobile is not Connected') {
+        yield NoInternetState();
+      } else if (msg == null) {
         ReqQuotationErrorState(msg: 'Connection Error');
       }
     }
@@ -69,6 +73,4 @@ class QuotationBloc extends Bloc<QuotationEvent, QuotationState> {
   @override
   // TODO: implement initialState
   QuotationState get initialState => QuotationInitialState();
-
-
 }

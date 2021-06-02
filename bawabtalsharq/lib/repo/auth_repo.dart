@@ -25,7 +25,6 @@ class AuthRepo {
 
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('user', jsonEncode(modelResponse));
-
       return modelResponse;
     }
   }
@@ -51,10 +50,14 @@ class AuthRepo {
       "plan": '',
       'country': country
     };
+
+    print('Params: $params');
     var response = await http.post(
       Uri.encodeFull(APIS.serverURL + APIS.REGISTER_API),
       body: params,
     );
+    print('response Regid=ster: ${response.statusCode}');
+    print('responseBody Register: ${response.body}');
 
     if (response.statusCode == 200) {
       var decodedResponse = json.decode(response.body);
@@ -62,6 +65,7 @@ class AuthRepo {
 
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('user', jsonEncode(modelResponse));
+      print('modelResponse Register: ${modelResponse.msg}');
 
       return modelResponse;
     }

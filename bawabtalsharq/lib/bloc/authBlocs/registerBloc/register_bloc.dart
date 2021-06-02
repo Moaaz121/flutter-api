@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_event.dart';
 import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_state.dart';
 import 'package:bawabtalsharq/repo/auth_repo.dart';
+import 'package:bawabtalsharq/repo/getCountrie_repo.dart';
+import 'package:bawabtalsharq/Model/country_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
@@ -9,7 +11,6 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   Stream<RegisterState> mapEventToState(
     RegisterEvent event,
   ) async* {
-    Map verId;
     if (event is DoRegisterEvent) {
       yield RegisterLoadingState();
 
@@ -40,6 +41,12 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       } else {
         yield FirebaseExceptionState(msg: signInState);
       }
+    } else if (event is GetCountries) {
+      yield LoadingCountriesState();
+      List<CountryData> countries = await CountriesRepo().getCountries();
+      yield LoadedCountriesState(countries: countries);
+    } else if (event is GetLoadedCountries) {
+      yield ShowLoadedCountriesState();
     } else if (event is ResetState) {
       yield RegisterInitial();
     }

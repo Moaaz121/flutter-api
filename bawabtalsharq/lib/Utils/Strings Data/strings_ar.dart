@@ -59,4 +59,8 @@ class StringsAR {
   static const String signIn = 'تسجيل الدخول';
 
 // end Islam
+//Start Asmaa
+  static String noInternertConnection = 'لا يوجد خدمه انترنت';
+
+//end Asmaa
 }

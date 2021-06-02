@@ -45,6 +45,7 @@ class DataRQF {
     this.certifications,
     this.tradeTerms,
     this.sourcingPurpose,
+    this.pieces,
     this.destination,
     this.shipping,
   });
@@ -54,6 +55,7 @@ class DataRQF {
   List<TradeTermRQF> tradeTerms;
   List<SourcingPurposeRQF> sourcingPurpose;
   List<DestinationRQF> destination;
+  List<PieceRQF> pieces;
   List<ShippingRQF> shipping;
 
   factory DataRQF.fromJson(Map<String, dynamic> json) => DataRQF(
@@ -67,6 +69,8 @@ class DataRQF {
             .map((x) => SourcingPurposeRQF.fromJson(x))),
         destination: List<DestinationRQF>.from(
             json["destination"].map((x) => DestinationRQF.fromJson(x))),
+        pieces: List<PieceRQF>.from(
+            json["pieces"].map((x) => PieceRQF.fromJson(x))),
         shipping: List<ShippingRQF>.from(
             json["shipping"].map((x) => ShippingRQF.fromJson(x))),
       );
@@ -79,6 +83,7 @@ class DataRQF {
         "sourcing_purpose":
             List<dynamic>.from(sourcingPurpose.map((x) => x.toJson())),
         "destination": List<dynamic>.from(destination.map((x) => x.toJson())),
+        "pieces": List<dynamic>.from(pieces.map((x) => x.toJson())),
         "shipping": List<dynamic>.from(shipping.map((x) => x.toJson())),
       };
 }
@@ -145,6 +150,26 @@ class DestinationRQF {
   Map<String, dynamic> toJson() => {
         "code": code,
         "country": country,
+      };
+}
+
+class PieceRQF {
+  PieceRQF({
+    this.pId,
+    this.pName,
+  });
+
+  String pId;
+  String pName;
+
+  factory PieceRQF.fromJson(Map<String, dynamic> json) => PieceRQF(
+        pId: json["p_id"],
+        pName: json["p_name"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "p_id": pId,
+        "p_name": pName,
       };
 }
 

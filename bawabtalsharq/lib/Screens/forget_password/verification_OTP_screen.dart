@@ -11,6 +11,7 @@ import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_bloc.dart';
 import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_state.dart';
 import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bawabtalsharq/Utils/loading.dart';
 
 class VerificationScreen extends StatefulWidget {
   final String verId;
@@ -24,13 +25,12 @@ class VerificationScreen extends StatefulWidget {
 class _VerificationScreenState extends State<VerificationScreen> {
   var onTapRecognizer;
 
-  TextEditingController textEditingController = TextEditingController();
-
-  // ..text = "123456";
+  TextEditingController codeController = TextEditingController();
 
   StreamController<ErrorAnimationType> errorController;
 
   bool hasError = false;
+  bool codeTyped = false;
   String currentText = "";
   String smsCode = "";
   String companyName = '';
@@ -40,20 +40,23 @@ class _VerificationScreenState extends State<VerificationScreen> {
 
   @override
   void initState() {
+    super.initState();
+
     onTapRecognizer = TapGestureRecognizer()
       ..onTap = () {
         Navigator.pop(context);
       };
     errorController = StreamController<ErrorAnimationType>();
-    super.initState();
     _registerBloc = RegisterBloc();
   }
 
   @override
   void dispose() {
-    errorController.close();
-
     super.dispose();
+
+    errorController.close();
+    codeController.dispose();
+
     _registerBloc.close();
   }
 
@@ -67,22 +70,16 @@ class _VerificationScreenState extends State<VerificationScreen> {
           child: BlocListener<RegisterBloc, RegisterState>(
             listener: (context, state) {
               if (state is RegisterLoadedState) {
-                print('response ${state.userResponse.code}');
-                print('response ${state.userResponse.data}');
-                print('response ${state.userResponse.status}');
-                print('response ${state.userResponse.msg}');
-                if (state.userResponse.code == 200) {
-                  Navigator.pushReplacementNamed(
-                      context, ScreenRoutes.interestingScreen);
-                } else {
-                  _scaffoldKey.currentState.showSnackBar(
-                    SnackBar(
-                      content: Text(state.userResponse.msg),
-                    ),
-                  );
-                  Navigator.pop(context);
-                }
+                Navigator.pushReplacementNamed(
+                    context, ScreenRoutes.mainScreen);
               }
+              // else if (state is FirebaseExceptionState) {
+              //   _scaffoldKey.currentState.showSnackBar(
+              //     SnackBar(
+              //       content: Text(state.msg),
+              //     ),
+              //   );
+              // }
             },
             child: BlocBuilder<RegisterBloc, RegisterState>(
               builder: (context, state) {
@@ -102,15 +99,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                       country: widget.data['country'],
                       company: companyName));
                 } else if (state is RegisterLoadingState) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state is FirebaseExceptionState) {
-                  _scaffoldKey.currentState.showSnackBar(
-                    SnackBar(
-                      content: Text(state.msg),
-                    ),
-                  );
+                  return LoadingLogo();
                 }
                 return _buildMain();
               },
@@ -183,11 +172,11 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   obscuringCharacter: '*',
                   animationType: AnimationType.fade,
                   validator: (v) {
+                    print(v);
                     if (v.length < 6) {
                       return "Please enter the code form sms ";
-                    } else {
-                      return null;
                     }
+                    return null;
                   },
                   pinTheme: PinTheme(
                     shape: PinCodeFieldShape.box,
@@ -208,7 +197,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   textStyle: TextStyle(fontSize: 20, height: 1.6),
                   enableActiveFill: true,
                   errorAnimationController: errorController,
-                  controller: textEditingController,
+                  controller: codeController,
                   keyboardType: TextInputType.number,
                   boxShadows: [
                     BoxShadow(
@@ -220,7 +209,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   onCompleted: (v) {
                     print("Completed");
                     smsCode = currentText;
-                    print(smsCode);
+                    codeTyped = true;
+                    print('smsCode: $smsCode');
                   },
                   // onTap: () {
                   //   print("Pressed");
@@ -241,18 +231,18 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 SizedBox(
                   height: 15,
                 ),
-                Row(
-                  children: [
-                    buildText(
-                      Languages.of(context).resendCode,
-                      15,
-                    ),
-                    buildText(' 30 Seconds', 15, color: defaultOrangeColor),
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
+                // Row(
+                //   children: [
+                //     buildText(
+                //       Languages.of(context).resendCode,
+                //       15,
+                //     ),
+                //     buildText(' 30 Seconds', 15, color: defaultOrangeColor),
+                //   ],
+                // ),
+                // SizedBox(
+                //   height: 20,
+                // ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -260,8 +250,9 @@ class _VerificationScreenState extends State<VerificationScreen> {
                         context,
                         MediaQuery.of(context).size.height,
                         Languages.of(context).verify, () {
-                      _registerBloc.add(
-                          SignWithOTP(smsCode: smsCode, verId: widget.verId));
+                      if (codeTyped)
+                        _registerBloc.add(
+                            SignWithOTP(smsCode: smsCode, verId: widget.verId));
                     }),
                   ],
                 ),

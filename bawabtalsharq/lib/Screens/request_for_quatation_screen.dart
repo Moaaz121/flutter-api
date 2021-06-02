@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:bawabtalsharq/Model/user_model.dart';
+import 'package:bawabtalsharq/Services/checkIntrernetConnectivity.dart';
 
 class RequestForQScreen extends StatefulWidget {
   @override
@@ -20,6 +21,15 @@ class _RequestForQScreenState extends State<RequestForQScreen> {
   CarouselController control = CarouselController();
   int position = 0;
   UserModel currentUser = Constants.getUserInfo2();
+  InternetConnection connection;
+  bool connected;
+  @override
+  void initState() {
+    print(currentUser.data.email);
+    // TODO: implement initState
+    super.initState();
+    connection = new InternetConnection();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,11 +47,18 @@ class _RequestForQScreenState extends State<RequestForQScreen> {
         child: Column(
           children: [
             requestForQuotationSlider(),
-            postSourcingRequestNowButton(() {
-              if (currentUser == null)
+            postSourcingRequestNowButton(() async {
+              bool connected = await connection.isConnected();
+
+              if (currentUser == null) {
                 Navigator.pushNamed(context, ScreenRoutes.loginScreen);
-              else
-                Navigator.pushNamed(context, ScreenRoutes.postQuotationRequest);
+              } else {
+                if (!connected)
+                  Navigator.pushNamed(context, ScreenRoutes.noInternet);
+                else
+                  Navigator.pushNamed(
+                      context, ScreenRoutes.postQuotationRequest);
+              }
             }),
           ],
         ),

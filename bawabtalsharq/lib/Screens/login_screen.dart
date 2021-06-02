@@ -119,13 +119,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                   GestureDetector(
                                       onTap: () => Navigator.pushNamed(
                                           context, ScreenRoutes.signUpScreen),
-                                      child:
-                                          Text(Languages.of(context).signUp)),
+                                      child: Row(
+                                        children: [
+                                          Text(Languages.of(context).signUp),
+                                          Icon(Icons.arrow_forward)
+                                        ],
+                                      )),
                                   // Languages.of(context).languages,
-                                  IconButton(
-                                    onPressed: () {},
-                                    icon: Icon(Icons.arrow_forward),
-                                  ),
+                                  // IconButton(
+                                  //   onPressed: () {},
+                                  //   icon:,
+                                  // ),
                                 ],
                               ),
                             ),

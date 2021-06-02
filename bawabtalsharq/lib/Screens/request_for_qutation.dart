@@ -4,10 +4,12 @@ import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dropdown/flutter_dropdown.dart';
 import 'package:bawabtalsharq/bloc/QuotationBloc/quotation_bloc.dart';
 import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/Utils/loading.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+import 'package:bawabtalsharq/Utils/images.dart';
 
 class Requestforqutation extends StatefulWidget {
   @override
@@ -19,8 +21,16 @@ class _RequestforqutationState extends State<Requestforqutation> {
   bool _checked1 = false;
   bool _checked2 = false;
   bool showErrorMessage = false;
-  bool requiredField = false;
+  bool selecetedCertBool = false;
+  List requiredList = [];
+  String imageUrl;
 
+  //Image Picker
+  bool _showImages = false;
+  File _image = new File('');
+  final ImagePicker _imagePicker = ImagePicker();
+
+//TextEditors
   TextEditingController productNameCtrl = TextEditingController();
   TextEditingController quantityCrtl = TextEditingController();
   TextEditingController detailsCrtl = TextEditingController();
@@ -29,18 +39,13 @@ class _RequestforqutationState extends State<Requestforqutation> {
   TextEditingController leadTimeForInCtrl = TextEditingController();
   TextEditingController paymentTermCtrl = TextEditingController();
 
-  List<String> piecesList = [
-    "Apparel",
-    "Electronics",
-    "Other",
-    "sony",
-  ];
-
   //Pulled Data
   List<String> categoryList = [];
   List<String> categoryIdList = [];
   List<String> certList = [];
   List<String> certIdList = [];
+  List<String> selecetedCert = [];
+  List<String> selecetedCertId = [];
   List<String> tradeList = [];
   List<String> tradeIdList = [];
   List<String> purposeList = [];
@@ -50,26 +55,14 @@ class _RequestforqutationState extends State<Requestforqutation> {
 
   List<String> shippingList = [];
   List<String> shippingIdList = [];
+  List<String> piecesList = [];
+  List<String> piecesIdList = [];
+
   String dropDownVal = '';
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   //Sent data
-  Map<String, dynamic> data = {
-    'product': '',
-    'category_id': '',
-    'sourcing': '',
-    'qty': '',
-    'prices': '',
-    'trade': '',
-    'details': '',
-    'document': '',
-    'certifications': '',
-    'other_requirements': '',
-    'shipping_method': '',
-    'destination': '',
-    'lead_time': '',
-    'payment_term': '',
-  };
+  Map<String, dynamic> data;
   QuotationBloc _quotationBloc;
 
   @override
@@ -77,6 +70,23 @@ class _RequestforqutationState extends State<Requestforqutation> {
     // TODO: implement initState
     super.initState();
     _quotationBloc = QuotationBloc();
+    data = {
+      'product': ' ',
+      'category_id': ' ',
+      'sourcing': ' ',
+      'qty': ' ',
+      'pieces': ' ',
+      'trade': ' ',
+      'details': ' ',
+      'document': ' _image.uri',
+      'certifications': ' ',
+      'other_requirements': ' ',
+      'shipping_method': ' ',
+      'destination': ' ',
+      // 'lead_time': ' ',
+      'ship_in': ' ',
+      'payment_term': ' ',
+    };
   }
 
   @override
@@ -93,7 +103,6 @@ class _RequestforqutationState extends State<Requestforqutation> {
     portCtrl.dispose();
     leadTimeForInCtrl.dispose();
     paymentTermCtrl.dispose();
-    portCtrl.dispose();
   }
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -105,7 +114,8 @@ class _RequestforqutationState extends State<Requestforqutation> {
       top: false,
       child: Scaffold(
           key: _scaffoldKey,
-          backgroundColor: Colors.white54.withOpacity(0.92),
+          backgroundColor: Color.fromRGBO(248, 248, 248, 0.92),
+          // Colors.white54.withOpacity(0.92),
           appBar: appBarBuilderWithWidget(
               titleWidget: buildText(
                   Languages.of(context).requestForQuotation, 18.0,
@@ -124,6 +134,9 @@ class _RequestforqutationState extends State<Requestforqutation> {
                       .showSnackBar(new SnackBar(content: new Text(state.msg)));
                   Navigator.pushReplacementNamed(
                       context, ScreenRoutes.mainScreen);
+                } else if (state is NoInternetState) {
+                  Navigator.pushReplacementNamed(
+                      context, ScreenRoutes.noInternet);
                 }
               },
               child: BlocBuilder<QuotationBloc, QuotationState>(
@@ -158,6 +171,10 @@ class _RequestforqutationState extends State<Requestforqutation> {
                     state.shipping.forEach((element) {
                       shippingList.add(element.shipping);
                       shippingIdList.add(element.shippingId);
+                    });
+                    state.pieces.forEach((element) {
+                      piecesList.add(element.pName);
+                      piecesIdList.add(element.pId);
                     });
 
                     _quotationBloc.add(ShowLoadedData());
@@ -230,32 +247,69 @@ class _RequestforqutationState extends State<Requestforqutation> {
                 controller: detailsCrtl),
 
             Padding(
-              padding: const EdgeInsetsDirectional.only(top: 15),
+              padding: const EdgeInsetsDirectional.only(top: 20),
               child: Center(
                 child: Container(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  height: MediaQuery.of(context).size.height * 0.23,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: defaultPrimaryBackgroundColor.withOpacity(0.15),
-                  ),
-                  child: Column(
-                    children: [
-                      Icon(
-                        Icons.backup_rounded,
-                        color: Colors.deepOrangeAccent.withOpacity(0.5),
-                        size: MediaQuery.of(context).size.width * 0.30,
-                      ),
-                      Text(
-                        Languages.of(context).uploadDocument,
-                        style: TextStyle(
-                            color: Color(0xFF5E5E5E),
-                            decoration: TextDecoration.underline),
-                      ),
-                    ],
-                  ),
-                ),
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: MediaQuery.of(context).size.height * 0.23,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: defaultPrimaryBackgroundColor.withOpacity(0.15),
+                    ),
+                    child: IconButton(
+                        icon: Column(
+                          children: [
+                            Icon(
+                              Icons.backup_rounded,
+                              color: Colors.deepOrangeAccent.withOpacity(0.5),
+                              size: MediaQuery.of(context).size.width * 0.30,
+                            ),
+                            Text(
+                              Languages.of(context).uploadDocument,
+                              style: TextStyle(
+                                  color: Color(0xFF5E5E5E),
+                                  decoration: TextDecoration.underline),
+                            ),
+                          ],
+                        ),
+                        onPressed: _onCameraClick)),
               ),
+            ),
+            Visibility(
+              visible: _showImages,
+              child: Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(20, 20, 20, 0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    width: MediaQuery.of(context).size.width,
+                    height: 85,
+                    child: ListView.builder(
+                        itemCount: 7,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (ctx, i) {
+                          return Padding(
+                            padding: const EdgeInsets.all(3.0),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10.0),
+                              child: Container(
+                                width: 80,
+                                height: 85,
+                                child: this.imageUrl != null
+                                    ? Image.asset(
+                                        placeHolder,
+                                        fit: BoxFit.fill,
+                                      )
+                                    : Image.file(
+                                        _image,
+                                        fit: BoxFit.fill,
+                                      ),
+                              ),
+                            ),
+                          );
+                        }),
+                  )),
             ),
 
             Padding(
@@ -322,9 +376,54 @@ class _RequestforqutationState extends State<Requestforqutation> {
                     ),
                   ),
                   dropDownButton(context,
-                      text: Languages.of(context).certifications + ' *',
+                      text: Languages.of(context).certifications,
                       dropText: Languages.of(context).dropCertificate,
                       dropList: certList),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.only(
+                        start: 35, top: 1, bottom: 1, end: 35),
+                    child: Visibility(
+                      visible: selecetedCertBool,
+                      child: Container(
+                        height: 70,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: selecetedCert.length,
+                          itemBuilder: (ctx, i) {
+                            return Container(
+                              child: Row(
+                                children: [
+                                  Text(selecetedCert[i]),
+                                  IconButton(
+                                    icon: Icon(
+                                      Icons.cancel,
+                                      color: orangeColor,
+                                    ),
+                                    iconSize: 15,
+                                    onPressed: () {
+                                      setState(() {
+                                        selecetedCert.removeAt(i);
+                                        selecetedCertId.removeAt(i);
+                                        if (selecetedCert.length == 0)
+                                          selecetedCertBool = false;
+                                      });
+                                    },
+                                  ),
+                                  VerticalDivider(
+                                    color: Colors.grey,
+                                    thickness: 2,
+                                    endIndent: 25,
+                                    indent: 25,
+                                  ),
+                                  SizedBox(width: 3)
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
                   _buildtextFormField(context,
                       text: Languages.of(context).requirements,
                       inputText: Languages.of(context).inputRequire,
@@ -430,12 +529,11 @@ class _RequestforqutationState extends State<Requestforqutation> {
                             data['details'] = detailsCrtl.text.trim();
                             data['other_requirements'] =
                                 otherReqCtrl.text.trim();
-                            data['port'] = portCtrl.text.trim();
+                            data['ship_in'] = portCtrl.text.trim();
                             data['lead_time'] = leadTimeForInCtrl.text.trim();
                             data['payment_term'] = quantityCrtl.text.trim();
-                            // data['document'] = documentFile;
+                            data['document'] = '_image.uri';
                             _quotationBloc.add(PostReqQuotation(data: data));
-                            print('data $data');
                           }
                         }
                       },
@@ -475,7 +573,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
   Widget dropDownButton(BuildContext context,
       {String text, String dropText, List<String> dropList}) {
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(18, 20, 18, 18),
+      padding: const EdgeInsetsDirectional.fromSTEB(18, 20, 18, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
@@ -489,83 +587,95 @@ class _RequestforqutationState extends State<Requestforqutation> {
                   style: TextStyle(
                       fontFamily: 'assets/fonts/Roboto-Light.ttf',
                       fontSize: 16,
-                      color: requiredField ? Colors.red : Colors.black),
+                      color: (requiredList.contains(text))
+                          ? Colors.red
+                          : Colors.black),
                 ),
               ],
             ),
           ),
           Container(
-            child: Padding(
-              padding: const EdgeInsets.all(0),
-              child: DropdownButtonFormField<String>(
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          const BorderSide(color: Colors.white, width: 2.0),
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide(
-                        color: Colors.white,
-                        width: 2.0,
-                      ),
-                    ),
-                    filled: true,
-                    fillColor: Colors.white),
-                isExpanded: true,
-                items: dropList.map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value,
-                        style: TextStyle(color: Colors.black, fontSize: 14)),
-                  );
-                }).toList(),
-                onChanged: (dropDownVal) {
-                  setState(() {
-                    String key;
-                    if (dropText == Languages.of(context).dropCategory) {
-                      key = 'category_id';
-                      data[key] =
-                          categoryIdList[categoryList.indexOf(dropDownVal)];
-                    } else if (dropText == Languages.of(context).dropSourcing) {
-                      key = 'sourcing';
-                      data[key] = dropDownVal;
-                    } else if (dropText == Languages.of(context).dropTrade) {
-                      key = 'trade';
-                      data[key] = dropDownVal;
-                    } else if (dropText ==
-                        Languages.of(context).dropCertificate) {
-                      key = 'certifications';
-                      data[key] = certIdList[certList.indexOf(dropDownVal)];
-                    } else if (dropText == Languages.of(context).dropShipping) {
-                      key = 'shipping_method';
-                      data[key] =
-                          shippingIdList[shippingList.indexOf(dropDownVal)];
-                    } else if (dropText ==
-                        Languages.of(context).dropDestination) {
-                      key = 'destination';
-                      data[key] = destinationCodeList[
-                          destinationList.indexOf(dropDownVal)];
-                    }
-                  });
-                },
-                hint: Text(
-                  dropDownVal != '' ? dropDownVal : dropText,
-                  style: TextStyle(
-                    color: backTabColor.withOpacity(0.8),
+            child: DropdownButtonFormField<String>(
+              itemHeight: 50,
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return ' ';
+                  focusedBorder: OutlineInputBorder(
+                    borderSide:
+                        const BorderSide(color: Colors.white, width: 2.0),
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: BorderSide(
+                      color: Colors.white,
+                      width: 2.0,
+                    ),
+                  ),
+                  filled: true,
+                  fillColor: Colors.white),
+              isExpanded: true,
+              items: dropList.map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value,
+                      style: TextStyle(color: Colors.black, fontSize: 14)),
+                );
+              }).toList(),
+              onChanged: (dropDownVal) {
+                setState(() {
+                  String key;
+
+                  if (dropText == Languages.of(context).dropCategory) {
+                    key = 'category_id';
+                    data[key] =
+                        categoryIdList[categoryList.indexOf(dropDownVal)];
+                  } else if (dropText == Languages.of(context).dropSourcing) {
+                    key = 'sourcing';
+                    data[key] = dropDownVal;
+                  } else if (dropText == Languages.of(context).dropQuantity) {
+                    key = 'pieces';
+                    data[key] = piecesIdList[piecesList.indexOf(dropDownVal)];
+                  } else if (dropText == Languages.of(context).dropTrade) {
+                    key = 'trade';
+                    data[key] = tradeIdList[tradeList.indexOf(dropDownVal)];
+                  } else if (dropText ==
+                      Languages.of(context).dropCertificate) {
+                    key = 'certifications';
+                    selecetedCert.add(dropDownVal);
+                    selecetedCertId
+                        .add(certIdList[certList.indexOf(dropDownVal)]);
+                    selecetedCertBool = true;
+                    data[key] = '1,2'; //selecetedCertId;
+                  } else if (dropText == Languages.of(context).dropShipping) {
+                    key = 'shipping_method';
+                    data[key] =
+                        shippingIdList[shippingList.indexOf(dropDownVal)];
+                  } else if (dropText ==
+                      Languages.of(context).dropDestination) {
+                    key = 'destination';
+                    data[key] = destinationCodeList[
+                        destinationList.indexOf(dropDownVal)];
                   }
-                  return null;
-                },
+                });
+              },
+              hint: Text(
+                dropDownVal != '' ? dropDownVal : dropText,
+                style: TextStyle(
+                  color: backTabColor.withOpacity(0.8),
+                ),
               ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  setState(() {
+                    requiredList.add(text);
+                  });
+                } else {
+                  requiredList.remove(text);
+                }
+                return null;
+              },
             ),
           ),
         ],
@@ -581,7 +691,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
       int maxLines,
       TextEditingController controller}) {
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(18, 20, 18, 18),
+      padding: const EdgeInsetsDirectional.fromSTEB(18, 20, 18, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
@@ -595,7 +705,9 @@ class _RequestforqutationState extends State<Requestforqutation> {
                   style: TextStyle(
                       fontFamily: 'assets/fonts/Roboto-Light.ttf',
                       fontSize: 16,
-                      color: requiredField ? Colors.red : Colors.black),
+                      color: requiredList.contains(text)
+                          ? Colors.red
+                          : Colors.black),
                 ),
               ],
             ),
@@ -615,13 +727,15 @@ class _RequestforqutationState extends State<Requestforqutation> {
                     keyboardType: maxLines == null
                         ? TextInputType.multiline
                         : TextInputType.text,
-                    validator: (val) {
-                      if (val.isEmpty) {
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
                         setState(() {
-                          requiredField = true;
+                          requiredList.add(text);
                         });
-                        return null;
+                      } else {
+                        requiredList.remove(text);
                       }
+                      return null;
                     },
                     decoration: InputDecoration(
                         border: OutlineInputBorder(
@@ -631,7 +745,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
                         focusColor: Colors.white,
                         focusedBorder: OutlineInputBorder(
                           borderSide:
-                              const BorderSide(color: Colors.white, width: 2.0),
+                              const BorderSide(color: Colors.white, width: 1.0),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         enabledBorder: OutlineInputBorder(
@@ -646,7 +760,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
                           color: backTabColor.withOpacity(0.8),
                         ),
                         contentPadding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                         isDense: true,
                         filled: true),
                     style: TextStyle(
@@ -658,5 +772,45 @@ class _RequestforqutationState extends State<Requestforqutation> {
         ],
       ),
     );
+  }
+
+  _onCameraClick() {
+    final action = CupertinoActionSheet(
+      message: Text(
+        "Add profile picture",
+        style: TextStyle(fontSize: 15.0),
+      ),
+      actions: <Widget>[
+        CupertinoActionSheetAction(
+          child: Text("Choose from gallery"),
+          isDefaultAction: false,
+          onPressed: () async {
+            Navigator.pop(context);
+            PickedFile image =
+                await _imagePicker.getImage(source: ImageSource.gallery);
+
+            if (image != null) {
+              setState(() {
+                _image = File(image.path);
+                _showImages = true;
+              });
+              await uploadFile();
+            }
+          },
+        ),
+      ],
+      cancelButton: CupertinoActionSheetAction(
+        child: Text("Cancel"),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
+    );
+    showCupertinoModalPopup(context: context, builder: (context) => action);
+  }
+
+  Future uploadFile() async {
+    print('Image : $_image');
+    print('upload File');
   }
 }

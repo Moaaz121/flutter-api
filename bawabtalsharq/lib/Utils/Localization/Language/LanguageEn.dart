@@ -280,4 +280,9 @@ class LanguageEn extends Languages {
   String get birthDay => 'Birth day';
 
 // end Islam
+
+//Start Asmaa
+  String get noInternertConnection => 'لا يوجد خدمه انترنت';
+
+//end Asmaa
 }

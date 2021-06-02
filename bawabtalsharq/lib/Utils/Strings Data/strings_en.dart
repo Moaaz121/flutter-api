@@ -60,4 +60,9 @@ class StringsEN {
   static const String signIn = 'Sign In';
 
 // end Islam
+
+//Start Asmaa
+  static String noInternertConnection = 'No Internert Connection';
+
+//end Asmaa
 }

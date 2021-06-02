@@ -13,6 +13,8 @@ class PostedQuotationResponseState extends QuotationState {
   PostedQuotationResponseState({this.msg});
 }
 
+class NoInternetState extends QuotationState {}
+
 class ReqQuotationErrorState extends QuotationState {
   String msg;
 
@@ -28,6 +30,8 @@ class LoadedListsState extends QuotationState {
   List<CertificationRQF> certification;
   List<DestinationRQF> destination;
   List<ShippingRQF> shipping;
+  List<PieceRQF> pieces;
+
   List<SourcingPurposeRQF> sourcingPurpose;
   List<TradeTermRQF> tradeTerms;
 
@@ -36,6 +40,7 @@ class LoadedListsState extends QuotationState {
       @required this.certification,
       @required this.destination,
       @required this.shipping,
+      @required this.pieces,
       @required this.sourcingPurpose,
       @required this.tradeTerms});
 }
