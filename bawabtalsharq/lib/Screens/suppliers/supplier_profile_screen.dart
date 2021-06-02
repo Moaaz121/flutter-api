@@ -256,27 +256,13 @@ class _SupplierProfileState extends State<SupplierProfile>
                                               ScreenRoutes.loginScreen);
                                         else
                                           showCupertinoModalPopup(
-                                            context: context,
-                                            builder: (BuildContext context) =>
-                                                CupertinoActionSheet(
-                                                    actions: <Widget>[
-                                                  CupertinoActionSheetAction(
-                                                    child: Text(
-                                                        supplierProfileData
-                                                            .supplierData
-                                                            .address),
-                                                    onPressed: () {},
-                                                  ),
-                                                ],
-                                                    cancelButton:
-                                                        CupertinoActionSheetAction(
-                                                      child: Text(
-                                                          Languages.of(context)
-                                                              .cancel),
-                                                      isDefaultAction: true,
-                                                      onPressed: () {},
-                                                    )),
-                                          );
+                                              context: context,
+                                              builder: (BuildContext context) =>
+                                                  cupertinoActionSheet(
+                                                    context,
+                                                    supplierProfileData
+                                                        .supplierData.address,
+                                                  ));
                                       }),
                                       SizedBox(
                                         width: 20,
@@ -287,34 +273,14 @@ class _SupplierProfileState extends State<SupplierProfile>
                                               ScreenRoutes.loginScreen);
                                         else
                                           showCupertinoModalPopup(
-                                            context: context,
-                                            builder: (BuildContext context) =>
-                                                CupertinoActionSheet(
-                                                    actions: <Widget>[
-                                                  CupertinoActionSheetAction(
-                                                    child: Text(
-                                                        supplierProfileData
-                                                            .supplierData
-                                                            .phone),
-                                                    onPressed: () {
-                                                      launch(
-                                                        "tel://+${supplierProfileData.supplierData.phone}",
-                                                      );
-                                                    },
-                                                  ),
-                                                ],
-                                                    cancelButton:
-                                                        CupertinoActionSheetAction(
-                                                      child: Text(
-                                                          Languages.of(context)
-                                                              .cancel),
-                                                      isDefaultAction: true,
-                                                      onPressed: () {
-                                                        Navigator.pop(
-                                                            context, 'Cancel');
-                                                      },
-                                                    )),
-                                          );
+                                              context: context,
+                                              builder: (BuildContext context) =>
+                                                  cupertinoActionSheet(
+                                                      context,
+                                                      supplierProfileData
+                                                          .supplierData.phone,
+                                                      action: launch(
+                                                          "tel://${supplierProfileData.supplierData.phone}")));
                                       }),
                                       SizedBox(
                                         width: 20,
@@ -325,35 +291,16 @@ class _SupplierProfileState extends State<SupplierProfile>
                                               ScreenRoutes.loginScreen);
                                         else
                                           showCupertinoModalPopup(
-                                            context: context,
-                                            builder: (BuildContext context) =>
-                                                CupertinoActionSheet(
-                                                    actions: <Widget>[
-                                                  CupertinoActionSheetAction(
-                                                    child: Text(
-                                                        supplierProfileData
-                                                            .supplierData
-                                                            .email),
-                                                    onPressed: () {
-                                                      _launchURL(
+                                              context: context,
+                                              builder: (BuildContext context) =>
+                                                  cupertinoActionSheet(
+                                                      context,
+                                                      supplierProfileData
+                                                          .supplierData.email,
+                                                      action: _launchURL(
                                                           '${supplierProfileData.supplierData.email}',
                                                           '',
-                                                          '');
-                                                    },
-                                                  ),
-                                                ],
-                                                    cancelButton:
-                                                        CupertinoActionSheetAction(
-                                                      child: Text(
-                                                          Languages.of(context)
-                                                              .cancel),
-                                                      isDefaultAction: true,
-                                                      onPressed: () {
-                                                        Navigator.pop(
-                                                            context, 'Cancel');
-                                                      },
-                                                    )),
-                                          );
+                                                          '')));
                                       }),
                                     ],
                                   ),

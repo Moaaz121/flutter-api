@@ -85,9 +85,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             SizedBox(
                               width: MediaQuery.of(context).size.width / 3 - 25,
-                              child: mainHeaderButton(
-                                  context,
-                                  () {},
+                              child: mainHeaderButton(context, () {
+                                Navigator.pushNamed(
+                                    context, ScreenRoutes.sendMessage);
+                              },
                                   Languages.of(context).technical,
                                   technical_icon,
                                   purpleColor.withOpacity(0.15)),

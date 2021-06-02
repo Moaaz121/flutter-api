@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:bawabtalsharq/Model/history_model.dart';
 import 'package:bawabtalsharq/Model/home_model.dart';
 import 'package:bawabtalsharq/Model/search_model.dart' as SearchItem;
@@ -1899,6 +1897,24 @@ void showCountryDialog(BuildContext context) {
       );
     },
   );
+}
+
+Widget cupertinoActionSheet(BuildContext context, String headerText,
+    {Future action}) {
+  return CupertinoActionSheet(
+      actions: <Widget>[
+        CupertinoActionSheetAction(
+          child: Text(headerText),
+          onPressed: () => action,
+        ),
+      ],
+      cancelButton: CupertinoActionSheetAction(
+        child: Text(Languages.of(context).cancel),
+        isDefaultAction: true,
+        onPressed: () {
+          Navigator.pop(context, 'Cancel');
+        },
+      ));
 }
 
 // end Mosdik

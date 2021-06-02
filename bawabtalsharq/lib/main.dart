@@ -8,7 +8,6 @@ import 'package:bawabtalsharq/Screens/intro_screen.dart';
 import 'package:bawabtalsharq/Screens/login_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/faq/faq_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/history/history_screen.dart';
-import 'package:bawabtalsharq/Screens/profile/message_center/list_message_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/message_center/message_center_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/message_center/qoute_details_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/my_account/my_account_screen.dart';
@@ -37,6 +36,7 @@ import 'Screens/interesting_screen.dart';
 import 'Screens/main_srceen.dart';
 import 'Screens/notification_screen.dart';
 import 'Screens/profile/about_us/aboutUs_screen.dart';
+import 'Screens/profile/contact_us/send_message.dart';
 import 'Screens/profile/my_account/change_password_screen.dart';
 import 'Screens/profile/my_account/update_profile_screen.dart';
 import 'Screens/profile_screen.dart';
@@ -63,7 +63,7 @@ void main() async {
   //FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   runApp(
     DevicePreview(
-      enabled: true,
+      enabled: false,
       builder: (context) => BawabtAlsharqApp(),
     ),
   );
@@ -96,7 +96,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.deepOrange),
-      home: ListMessageScreen(),
+      home: SplashScreen(),
       navigatorObservers: [AnalyticsService().getAnalyticsOberver()],
       //navigatorObservers: [AnalyticsService().getAnalyticsOberver()],
       routes: {
@@ -139,6 +139,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.aboutUs: (_) => AboutUsScreen(),
         ScreenRoutes.updateProfile: (_) => UpdateProfile(),
         ScreenRoutes.changePassword: (_) => ChangePassword(),
+        ScreenRoutes.sendMessage: (_) => SendMessage(),
       },
       locale: _locale,
       supportedLocales: supportedLocales,
@@ -228,4 +229,5 @@ class ScreenRoutes {
   static const String chatsScreen = '/chatsScreen';
   static const String conversationScreen = '/conversation';
   static const String aboutUs = '/aboutUs_screen';
+  static const String sendMessage = '/send_message.dart';
 }
