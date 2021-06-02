@@ -96,7 +96,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.deepOrange),
-      home: ListMessageScreen(),
+      home: SplashScreen(),
       navigatorObservers: [AnalyticsService().getAnalyticsOberver()],
       //navigatorObservers: [AnalyticsService().getAnalyticsOberver()],
       routes: {
@@ -139,6 +139,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.aboutUs: (_) => AboutUsScreen(),
         ScreenRoutes.updateProfile: (_) => UpdateProfile(),
         ScreenRoutes.changePassword: (_) => ChangePassword(),
+        ScreenRoutes.listMessageScreen: (_) => ListMessageScreen(),
       },
       locale: _locale,
       supportedLocales: supportedLocales,
@@ -228,4 +229,5 @@ class ScreenRoutes {
   static const String chatsScreen = '/chatsScreen';
   static const String conversationScreen = '/conversation';
   static const String aboutUs = '/aboutUs_screen';
+  static const String listMessageScreen = '/list_message_screen';
 }
