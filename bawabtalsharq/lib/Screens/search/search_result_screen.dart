@@ -285,8 +285,14 @@ class _SearchResultState extends State<SearchResult> {
                                         product: event
                                             .searchResponse.products[position]),
                                     onTap: () {
-                                      Navigator.pushNamed(context,
-                                          ScreenRoutes.individualProduct);
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  IndividualProduct(event
+                                                      .searchResponse
+                                                      .products[position]
+                                                      .productId)));
                                     },
                                   );
                                 },
