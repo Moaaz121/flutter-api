@@ -725,17 +725,19 @@ BoxShadow makeShadow({int color = 0xFF727272, double offset = 2}) {
 Widget appBarSearchButton(Function onTap) {
   return GestureDetector(
     onTap: onTap,
-    child: Container(
-      padding: EdgeInsets.all(5),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.white,
-      ),
-      margin: EdgeInsets.all(15),
-      child: Icon(
-        Icons.search,
-        color: orangeColor,
-        size: 22,
+    child: ClipRRect(
+      child: Container(
+        padding: EdgeInsets.all(5),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.white,
+        ),
+        margin: EdgeInsets.all(15),
+        child: Icon(
+          Icons.search,
+          color: orangeColor,
+          size: 22,
+        ),
       ),
     ),
   );
@@ -888,7 +890,11 @@ void showAnimatedDialog(
   );
 }
 
-Widget searchTextField({String hint, BuildContext context}) {
+Widget searchTextField(
+    {String hint,
+    BuildContext context,
+    Function onTap,
+    TextEditingController controller}) {
   return Container(
     width: MediaQuery.of(context).size.width * 0.7,
     height: MediaQuery.of(context).size.width * 0.10,
@@ -898,6 +904,7 @@ Widget searchTextField({String hint, BuildContext context}) {
     ),
     child: Center(
       child: TextField(
+        controller: controller,
         keyboardType: TextInputType.text,
         autocorrect: true,
         decoration: InputDecoration(
@@ -907,15 +914,18 @@ Widget searchTextField({String hint, BuildContext context}) {
           errorBorder: InputBorder.none,
           disabledBorder: InputBorder.none,
           hintText: hint,
-          prefixIcon: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(7),
-              color: Colors.white,
-            ),
-            margin: EdgeInsets.all(5),
-            child: Icon(
-              Icons.search,
-              color: orangeColor,
+          prefixIcon: InkWell(
+            onTap: onTap,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(7),
+                color: Colors.white,
+              ),
+              margin: EdgeInsets.all(5),
+              child: Icon(
+                Icons.search,
+                color: orangeColor,
+              ),
             ),
           ),
           hintStyle: TextStyle(color: Colors.black12),
@@ -926,11 +936,12 @@ Widget searchTextField({String hint, BuildContext context}) {
   );
 }
 
-AppBar appBarSearch({
-  @required String hint,
-  @required Function onCancelPressed,
-  @required BuildContext context,
-}) {
+AppBar appBarSearch(
+    {@required String hint,
+    @required Function onCancelPressed,
+    @required BuildContext context,
+    Function onTap,
+    TextEditingController controller}) {
   return AppBar(
     leading: SizedBox(),
     centerTitle: true,
@@ -942,7 +953,12 @@ AppBar appBarSearch({
       ),
     ),
     backgroundColor: defaultOrangeColor,
-    title: searchTextField(hint: hint, context: context),
+    title: searchTextField(
+      hint: hint,
+      context: context,
+      onTap: onTap,
+      controller: controller,
+    ),
     actions: [
       FlatButton(
         child: buildText(Languages.of(context).cancel, 15.0,

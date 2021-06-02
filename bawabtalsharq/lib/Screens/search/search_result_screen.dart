@@ -36,9 +36,9 @@ PopularityCharacter _popularCharacter = PopularityCharacter.popular;
 
 SearchQueryModel searchQuery;
 SearchBloc _bloc;
+TextEditingController _searchController = TextEditingController();
 
 Function blockEvent() {
-  print(_popularCharacter.toString());
   _bloc.add(DoSearchEvent(searchQuery));
 }
 
@@ -74,12 +74,17 @@ class _SearchResultState extends State<SearchResult> {
     return Scaffold(
       appBar: _isSearchPressed
           ? appBarSearch(
+              onTap: () {
+                searchQuery.q = _searchController.text;
+                blockEvent();
+              },
               hint: Languages.of(context).search,
               onCancelPressed: () {
                 setState(() {
                   _isSearchPressed = false;
                 });
               },
+              controller: _searchController,
               context: context)
           : appBarBuilder(
               title: '',
