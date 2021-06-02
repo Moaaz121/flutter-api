@@ -37,6 +37,8 @@ import 'Screens/interesting_screen.dart';
 import 'Screens/main_srceen.dart';
 import 'Screens/notification_screen.dart';
 import 'Screens/profile/about_us/aboutUs_screen.dart';
+import 'Screens/profile/contact_us/send_message.dart';
+import 'Screens/profile/message_center/list_message_screen.dart';
 import 'Screens/profile/my_account/change_password_screen.dart';
 import 'Screens/profile/my_account/update_profile_screen.dart';
 import 'Screens/profile_screen.dart';
@@ -140,6 +142,8 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
         ScreenRoutes.updateProfile: (_) => UpdateProfile(),
         ScreenRoutes.changePassword: (_) => ChangePassword(),
         ScreenRoutes.noInternet: (_) => NoInternet(),
+        ScreenRoutes.sendMessage: (_) => SendMessage(),
+        ScreenRoutes.listMessageScreen: (_) => ListMessageScreen(),
       },
       locale: _locale,
       supportedLocales: supportedLocales,
@@ -230,4 +234,8 @@ class ScreenRoutes {
   static const String conversationScreen = '/conversation';
   static const String aboutUs = '/aboutUs_screen';
   static const String noInternet = '/noInternet';
+
+  static const String sendMessage = '/send_message.dart';
+
+  static const String listMessageScreen = '/list_message_screen';
 }

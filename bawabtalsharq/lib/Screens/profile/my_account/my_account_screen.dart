@@ -60,11 +60,6 @@ class _MyAccountState extends State<MyAccount> {
                   Navigator.pushNamed(context, ScreenRoutes.updateProfile);
                 }),
             accountCard(
-                text: Text(Languages.of(context).switchProfile),
-                icon: Icons.switch_left,
-                iconColor: Colors.redAccent,
-                onPress: () {}),
-            accountCard(
                 text: Text(Languages.of(context).changePassword),
                 icon: Icons.lock,
                 iconColor: Colors.deepPurpleAccent,

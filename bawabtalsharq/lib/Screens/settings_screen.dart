@@ -1,12 +1,8 @@
 import 'package:bawabtalsharq/Model/contactUs_model.dart';
 import 'package:bawabtalsharq/Model/currency_model.dart';
-import 'package:bawabtalsharq/Screens/profile/contact_us/location_dialog.dart';
-import 'package:bawabtalsharq/Screens/profile/contact_us/phone_dialog.dart';
-import 'package:bawabtalsharq/Screens/profile/contact_us/send_message_dialog.dart';
 import 'package:bawabtalsharq/Screens/profile_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
-import 'package:bawabtalsharq/Utils/loading.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/currancyBloc/currency_bloc.dart';
 import 'package:bawabtalsharq/bloc/currancyBloc/currency_event.dart';
@@ -19,6 +15,7 @@ import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -212,82 +209,82 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       children: <Widget>[
                         Container(
                           width: MediaQuery.of(context).size.width,
+                          // height: MediaQuery.of(context).size.width * 0.46,
                           margin:
                               EdgeInsets.only(left: 20, right: 20, bottom: 10),
                           decoration: BoxDecoration(
                             color: Colors.blue[100],
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 25.0, vertical: 10),
-                              child: Column(
-                                children: [
-                                  unExpansionProfileItem(
-                                    Icon(
-                                      Icons.phone,
-                                      size: 20,
-                                      color: Colors.blue,
-                                    ),
-                                    Languages.of(context).phoneNumber,
-                                    () {
-                                      showAnimatedDialog(
-                                        context,
-                                        phoneNumberDialog(context),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 25.0, vertical: 10),
+                            child: Column(
+                              children: [
+                                unExpansionProfileItem(
+                                  Icon(
+                                    Icons.phone,
+                                    size: 20,
+                                    color: Colors.blue,
+                                  ),
+                                  Languages.of(context).phoneNumber,
+                                  () {
+                                    showCupertinoModalPopup(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            cupertinoActionSheet(
+                                                context, '+215453',
+                                                action:
+                                                    launch("tel://+215453")));
+                                  },
+                                  textSize: 12,
+                                ),
+                                unExpansionProfileItem(
+                                  Icon(
+                                    Icons.email,
+                                    size: 20,
+                                    color: Colors.deepOrange,
+                                  ),
+                                  Languages.of(context).sendMessage,
+                                  () {
+                                    Navigator.pushNamed(
+                                        context, ScreenRoutes.sendMessage);
+                                  },
+                                  textSize: 12,
+                                ),
+                                BlocBuilder<SettingBloc, SettingState>(
+                                  bloc: _settingBloc,
+                                  builder: (context, state) {
+                                    if (state is SettingLoadedState &&
+                                        state.SettingResponse != null) {
+                                      return unExpansionProfileItem(
+                                        Icon(
+                                          Icons.location_on,
+                                          size: 20,
+                                          color: Colors.deepPurpleAccent,
+                                        ),
+                                        Languages.of(context).location,
+                                        () {
+                                          showCupertinoModalPopup(
+                                              context: context,
+                                              builder: (BuildContext context) =>
+                                                  cupertinoActionSheet(
+                                                    context,
+                                                    state.SettingResponse
+                                                        .companyAddress,
+                                                  ));
+                                        },
+                                        drawDivider: false,
+                                        textSize: 12,
                                       );
-                                    },
-                                    textSize: 12,
-                                  ),
-                                  unExpansionProfileItem(
-                                    Icon(
-                                      Icons.email,
-                                      size: 20,
-                                      color: Colors.deepOrange,
-                                    ),
-                                    Languages.of(context).sendMessage,
-                                    () {
-                                      showAnimatedDialog(
-                                        context,
-                                        sendMessageDialog(context),
-                                      );
-                                    },
-                                    textSize: 12,
-                                  ),
-                                  BlocBuilder<SettingBloc, SettingState>(
-                                    bloc: _settingBloc,
-                                    builder: (context, state) {
-                                      if (state is SettingLoadedState &&
-                                          state.SettingResponse != null) {
-                                        return unExpansionProfileItem(
-                                          Icon(
-                                            Icons.location_on,
-                                            size: 20,
-                                            color: Colors.deepPurpleAccent,
-                                          ),
-                                          Languages.of(context).location,
-                                          () {
-                                            showAnimatedDialog(
-                                              context,
-                                              locationDialog(
-                                                  context,
-                                                  state.SettingResponse
-                                                      .companyAddress),
-                                            );
-                                          },
-                                          drawDivider: false,
-                                          textSize: 12,
-                                        );
-                                      } else if (state is SettingLoadingState) {
-                                        return LoadingLogo();
-                                      } else {
-                                        return LoadingLogo();
-                                      }
-                                    },
-                                  ),
-                                ],
-                              ),
+                                    } else if (state is SettingLoadingState) {
+                                      return SizedBox();
+                                    } else {
+                                      return SizedBox();
+                                    }
+                                  },
+                                ),
+                              ],
                             ),
                           ),
                         ),

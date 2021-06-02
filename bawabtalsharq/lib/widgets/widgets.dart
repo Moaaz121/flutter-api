@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:bawabtalsharq/Model/history_model.dart';
 import 'package:bawabtalsharq/Model/home_model.dart';
 import 'package:bawabtalsharq/Model/search_model.dart' as SearchItem;
@@ -721,17 +719,19 @@ BoxShadow makeShadow({int color = 0xFF727272, double offset = 2}) {
 Widget appBarSearchButton(Function onTap) {
   return GestureDetector(
     onTap: onTap,
-    child: Container(
-      padding: EdgeInsets.all(5),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.white,
-      ),
-      margin: EdgeInsets.all(15),
-      child: Icon(
-        Icons.search,
-        color: orangeColor,
-        size: 22,
+    child: ClipRRect(
+      child: Container(
+        padding: EdgeInsets.all(5),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.white,
+        ),
+        margin: EdgeInsets.all(15),
+        child: Icon(
+          Icons.search,
+          color: orangeColor,
+          size: 22,
+        ),
       ),
     ),
   );
@@ -884,7 +884,11 @@ void showAnimatedDialog(
   );
 }
 
-Widget searchTextField({String hint, BuildContext context}) {
+Widget searchTextField(
+    {String hint,
+    BuildContext context,
+    Function onTap,
+    TextEditingController controller}) {
   return Container(
     width: MediaQuery.of(context).size.width * 0.7,
     height: MediaQuery.of(context).size.width * 0.10,
@@ -894,6 +898,7 @@ Widget searchTextField({String hint, BuildContext context}) {
     ),
     child: Center(
       child: TextField(
+        controller: controller,
         keyboardType: TextInputType.text,
         autocorrect: true,
         decoration: InputDecoration(
@@ -903,15 +908,18 @@ Widget searchTextField({String hint, BuildContext context}) {
           errorBorder: InputBorder.none,
           disabledBorder: InputBorder.none,
           hintText: hint,
-          prefixIcon: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(7),
-              color: Colors.white,
-            ),
-            margin: EdgeInsets.all(5),
-            child: Icon(
-              Icons.search,
-              color: orangeColor,
+          prefixIcon: InkWell(
+            onTap: onTap,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(7),
+                color: Colors.white,
+              ),
+              margin: EdgeInsets.all(5),
+              child: Icon(
+                Icons.search,
+                color: orangeColor,
+              ),
             ),
           ),
           hintStyle: TextStyle(color: Colors.black12),
@@ -922,11 +930,12 @@ Widget searchTextField({String hint, BuildContext context}) {
   );
 }
 
-AppBar appBarSearch({
-  @required String hint,
-  @required Function onCancelPressed,
-  @required BuildContext context,
-}) {
+AppBar appBarSearch(
+    {@required String hint,
+    @required Function onCancelPressed,
+    @required BuildContext context,
+    Function onTap,
+    TextEditingController controller}) {
   return AppBar(
     leading: SizedBox(),
     centerTitle: true,
@@ -938,7 +947,12 @@ AppBar appBarSearch({
       ),
     ),
     backgroundColor: defaultOrangeColor,
-    title: searchTextField(hint: hint, context: context),
+    title: searchTextField(
+      hint: hint,
+      context: context,
+      onTap: onTap,
+      controller: controller,
+    ),
     actions: [
       FlatButton(
         child: buildText(Languages.of(context).cancel, 15.0,
@@ -1243,7 +1257,7 @@ Widget productItemLandscape(
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
-                                      image: AssetImage(profile_image),
+                                      image: NetworkImage(product.companyImg),
                                       fit: BoxFit.fill,
                                     ),
                                   ),
@@ -1258,7 +1272,7 @@ Widget productItemLandscape(
                                           color: Colors.black,
                                           fontSize: 7,
                                           fontWeight: FontWeight.w400),
-                                      text: 'Bahaa Robert'),
+                                      text: product.company),
                                 ),
                               ],
                             ),
@@ -1423,7 +1437,8 @@ Widget productItemLandscape2(BuildContext context,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
-                                      image: AssetImage(profile_image),
+                                      image: NetworkImage(
+                                          products[index].companyImg),
                                       fit: BoxFit.fill,
                                     ),
                                   ),
@@ -1438,7 +1453,7 @@ Widget productItemLandscape2(BuildContext context,
                                           color: Colors.black,
                                           fontSize: 7,
                                           fontWeight: FontWeight.w400),
-                                      text: 'Bahaa Robert'),
+                                      text: products[index].company),
                                 ),
                               ],
                             ),
@@ -1553,89 +1568,92 @@ Widget ListOfProduct() {
 }
 
 Widget infoCartSupplier(String name, String years, String country,
-    String category, String imagFlag) {
+    String category, String imagFlag, Function onPress) {
   return Column(
     children: [
-      Container(
-        child: Stack(children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(35),
-                boxShadow: [makeShadow(color: (0x29e16036), offset: 3)],
-              ),
-              child: Padding(
-                padding: const EdgeInsetsDirectional.only(
-                    top: 10, start: 10, bottom: 10, end: 10),
-                child: Column(
-                  children: [
-                    buildText(name, 10.0,
-                        color: Colors.black, fontWeight: FontWeight.w700),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.access_time_rounded,
-                              size: 13,
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            buildText(years, 7.0,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w700),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Image(
-                              image: NetworkImage(imagFlag),
-                              width: 14,
-                              height: 14,
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            buildText(country, 7.0,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w700),
-                          ],
-                        ),
-                        buildText(category, 7.0,
-                            color: Colors.black, fontWeight: FontWeight.w700),
-                      ],
-                    ),
-                  ],
+      GestureDetector(
+        onTap: onPress,
+        child: Container(
+          child: Stack(children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(35),
+                  boxShadow: [makeShadow(color: (0x29e16036), offset: 3)],
+                ),
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.only(
+                      top: 10, start: 10, bottom: 10, end: 10),
+                  child: Column(
+                    children: [
+                      buildText(name, 10.0,
+                          color: Colors.black, fontWeight: FontWeight.w700),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.access_time_rounded,
+                                size: 13,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              buildText(years, 7.0,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w700),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Image(
+                                image: NetworkImage(imagFlag),
+                                width: 14,
+                                height: 14,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              buildText(country, 7.0,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w700),
+                            ],
+                          ),
+                          buildText(category, 7.0,
+                              color: Colors.black, fontWeight: FontWeight.w700),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          Positioned(
-            top: 1,
-            left: 3,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [makeShadow(color: (0x29e16036), offset: 3)],
-              ),
-              child: Image(
-                image: AssetImage(
-                  medalImage,
+            Positioned(
+              top: 1,
+              left: 3,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [makeShadow(color: (0x29e16036), offset: 3)],
                 ),
-                height: 40,
-                width: 40,
+                child: Image(
+                  image: AssetImage(
+                    medalImage,
+                  ),
+                  height: 40,
+                  width: 40,
+                ),
               ),
             ),
-          ),
-        ]),
+          ]),
+        ),
       ),
     ],
   );
@@ -1891,6 +1909,24 @@ void showCountryDialog(BuildContext context) {
       );
     },
   );
+}
+
+Widget cupertinoActionSheet(BuildContext context, String headerText,
+    {Future action}) {
+  return CupertinoActionSheet(
+      actions: <Widget>[
+        CupertinoActionSheetAction(
+          child: Text(headerText),
+          onPressed: () => action,
+        ),
+      ],
+      cancelButton: CupertinoActionSheetAction(
+        child: Text(Languages.of(context).cancel),
+        isDefaultAction: true,
+        onPressed: () {
+          Navigator.pop(context, 'Cancel');
+        },
+      ));
 }
 
 // end Mosdik

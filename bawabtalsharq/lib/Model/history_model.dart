@@ -42,6 +42,7 @@ class Product {
   String imagePath;
   String price;
   String company;
+  String companyImg;
 
   Product(
       {this.productId,
@@ -54,6 +55,7 @@ class Product {
       this.categoryId,
       this.imagePath,
       this.price,
+      this.companyImg,
       this.company});
 
   Product.fromJson(Map<String, dynamic> json) {
@@ -68,6 +70,7 @@ class Product {
     imagePath = json['image_path'];
     price = json['price'];
     company = json['company'];
+    companyImg = json['company_img'];
   }
 
   Map<String, dynamic> toJson() {
@@ -83,6 +86,7 @@ class Product {
     data['image_path'] = this.imagePath;
     data['price'] = this.price;
     data['company'] = this.company;
+    data['company_img'] = this.companyImg;
     return data;
   }
 }

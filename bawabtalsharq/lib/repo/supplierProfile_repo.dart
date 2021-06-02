@@ -6,9 +6,10 @@ import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:http/http.dart' as http;
 
 class SupplierProfileRepo {
-  static Future<SupplierProfileModel> getSupplierProfile(int supplierId) async {
-    Map<String, dynamic> params = {"supplier_id": '1'};
-
+  static Future<SupplierProfileModel> getSupplierProfile(
+      String supplierId) async {
+    Map<String, dynamic> params = {"supplier_id": supplierId};
+    print('SupplierID' + supplierId);
     var response = await http.post(
       Uri.encodeFull(
           APIS.serverURL + APIS.SupplierProfile_API + Constants.getCurrency()),

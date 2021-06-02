@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bawabtalsharq/Model/mainCategoryModel.dart';
 import 'package:bawabtalsharq/Model/search_quary.dart';
 import 'package:bawabtalsharq/Screens/search/search_result_screen.dart';
@@ -11,6 +13,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -20,6 +23,9 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   TextEditingController _searchController = TextEditingController();
   List<CategoryModel> categories = List<CategoryModel>();
+  SharedPreferences pref;
+  List<String> savedSearch = [];
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -30,239 +36,315 @@ class _SearchScreenState extends State<SearchScreen> {
         children: [
           Scaffold(
             resizeToAvoidBottomInset: false,
-            body: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(1, 60, 0, 0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      IconButton(
-                        icon: CircleAvatar(
-                          radius: 9,
-                          backgroundColor: orangeColor,
-                          child: Icon(
-                            LanguageHelper.isEnglish
-                                ? Icons.keyboard_arrow_left_outlined
-                                : Icons.keyboard_arrow_right_outlined,
-                            size: 17,
-                            color: Colors.white,
+            body: SingleChildScrollView(
+              physics: AlwaysScrollableScrollPhysics(),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(1, 60, 0, 0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        IconButton(
+                          icon: CircleAvatar(
+                            radius: 9,
+                            backgroundColor: orangeColor,
+                            child: Icon(
+                              LanguageHelper.isEnglish
+                                  ? Icons.keyboard_arrow_left_outlined
+                                  : Icons.keyboard_arrow_right_outlined,
+                              size: 17,
+                              color: Colors.white,
+                            ),
                           ),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
                         ),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: buildTextField(
+                              hint: (Languages.of(context).search),
+                              context: context),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: height * .01,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsetsDirectional.only(start: 20),
+                        child: Divider(
+                          thickness: .2,
+                          endIndent: 10,
+                          color: Colors.grey,
+                        ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: buildTextField(
-                            hint: (Languages.of(context).search),
-                            context: context),
+                        padding: const EdgeInsetsDirectional.only(start: 20),
+                        child: Text(
+                          Languages.of(context).searchByCategories,
+                          style: TextStyle(
+                            fontFamily: 'Segoe UI',
+                            fontSize: 13.0,
+                            color: Color(0xff303030),
+                            letterSpacing: 0.156,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      SizedBox(
+                        height: 55,
+                        child: FutureBuilder(
+                            future: CategoryRepo.getCategory(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                categories = snapshot.data;
+                                return ListView.builder(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 9, horizontal: 20),
+                                  physics: const BouncingScrollPhysics(
+                                      parent: AlwaysScrollableScrollPhysics()),
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: categories.length,
+                                  itemBuilder: (context, position) {
+                                    return Container(
+                                      width: 38.0,
+                                      height: 37.0,
+                                      padding: EdgeInsets.all(5),
+                                      margin: EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 10, 0),
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                        color: Colors.white,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color:
+                                                Colors.black.withOpacity(0.16),
+                                            offset: Offset(0, 1.0),
+                                            blurRadius: 6.0,
+                                          ),
+                                        ],
+                                      ),
+                                      child: GestureDetector(
+                                          onTap: () {
+                                            List<String> selectetList =
+                                                List<String>();
+                                            selectetList.add(
+                                                categories[position]
+                                                    .categoryId);
+                                            SearchQueryModel queryModel =
+                                                SearchQueryModel(
+                                                    _searchController.text,
+                                                    Categories: selectetList);
+                                            Navigator.push(
+                                                context,
+                                                new MaterialPageRoute(
+                                                  builder:
+                                                      (BuildContext context) =>
+                                                          new SearchResult(
+                                                    searchQuery: queryModel,
+                                                  ),
+                                                ));
+                                          },
+                                          child: Container(
+                                            height: 38,
+                                            width: 38,
+                                            child: CachedNetworkImage(
+                                              imageUrl:
+                                                  categories[position].image,
+                                              placeholder: (context, url) =>
+                                                  Padding(
+                                                padding: EdgeInsets.all(5),
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                  ),
+                                                  child:
+                                                      Image.asset(placeHolder),
+                                                ),
+                                              ),
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      Padding(
+                                                padding: EdgeInsets.all(5),
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                  ),
+                                                  child:
+                                                      Image.asset(placeHolder),
+                                                ),
+                                              ),
+                                            ),
+                                          )),
+                                    );
+                                  },
+                                );
+                              } else {
+                                return Center(
+                                  child: Transform.scale(
+                                      scale: 0.55, child: LoadingLogo()),
+                                );
+                              }
+                            }),
+                      ),
+                      Padding(
+                        padding: const EdgeInsetsDirectional.only(start: 20),
+                        child: Divider(
+                          thickness: .2,
+                          endIndent: 10,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
                       ),
                     ],
                   ),
-                ),
-                SizedBox(
-                  height: height * .01,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsetsDirectional.only(start: 20),
-                      child: Divider(
-                        thickness: .2,
-                        endIndent: 10,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsetsDirectional.only(start: 20),
-                      child: Text(
-                        Languages.of(context).searchByCategories,
-                        style: TextStyle(
-                          fontFamily: 'Segoe UI',
-                          fontSize: 13.0,
-                          color: Color(0xff303030),
-                          letterSpacing: 0.156,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    SizedBox(
-                      height: 55,
-                      child: FutureBuilder(
-                          future: CategoryRepo.getCategory(),
-                          builder: (context, snapshot) {
-                            if (snapshot.hasData) {
-                              categories = snapshot.data;
-                              return ListView.builder(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 9, horizontal: 20),
-                                physics: const BouncingScrollPhysics(
-                                    parent: AlwaysScrollableScrollPhysics()),
-                                scrollDirection: Axis.horizontal,
-                                itemCount: categories.length,
-                                itemBuilder: (context, position) {
-                                  return Container(
-                                    width: 38.0,
-                                    height: 37.0,
-                                    padding: EdgeInsets.all(5),
-                                    margin: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 10, 0),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      color: Colors.white,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withOpacity(0.16),
-                                          offset: Offset(0, 1.0),
-                                          blurRadius: 6.0,
-                                        ),
-                                      ],
+                  FutureBuilder(
+                      future: getListSearchSaved(),
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        if (!snapshot.hasData) {
+                          return SizedBox();
+                        } else {
+                          savedSearch = snapshot.data;
+                          if (savedSearch.length > 0) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.only(
+                                      start: 20),
+                                  child: Text(
+                                    Languages.of(context).resentSearch,
+                                    style: TextStyle(
+                                      fontFamily: 'Segoe UI',
+                                      fontSize: 13.0,
+                                      color: Color(0xff303030),
+                                      letterSpacing: 0.156,
+                                      fontWeight: FontWeight.w600,
                                     ),
-                                    child: GestureDetector(
+                                  ),
+                                ),
+                                ListView.builder(
+                                  reverse: true,
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  scrollDirection: Axis.vertical,
+                                  padding: EdgeInsets.symmetric(vertical: 12),
+                                  itemCount: savedSearch.length,
+                                  itemBuilder: (context, position) {
+                                    SearchQueryModel search =
+                                        SearchQueryModel.fromJson(
+                                            json.decode(savedSearch[position]));
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 0, horizontal: 20),
+                                      child: GestureDetector(
                                         onTap: () {
-                                          List<String> selectetList =
-                                              List<String>();
-                                          selectetList.add(
-                                              categories[position].categoryId);
-                                          SearchQueryModel queryModel =
-                                              SearchQueryModel(
-                                                  _searchController.text,
-                                                  Categories: selectetList);
                                           Navigator.push(
                                               context,
                                               new MaterialPageRoute(
                                                 builder:
                                                     (BuildContext context) =>
                                                         new SearchResult(
-                                                  searchQuery: queryModel,
+                                                  searchQuery: search,
                                                 ),
-                                              ));
+                                              )).then((value) {
+                                            setState(() {
+                                              searchQuery = searchQuery;
+                                            });
+                                          });
                                         },
-                                        child: Container(
-                                          height: 38,
-                                          width: 38,
-                                          child: CachedNetworkImage(
-                                            imageUrl:
-                                                categories[position].image,
-                                            placeholder: (context, url) =>
-                                                Padding(
-                                              padding: EdgeInsets.all(5),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                search.q,
+                                                style: TextStyle(
+                                                  fontFamily: 'Segoe UI',
+                                                  fontSize: 14.0,
+                                                  color: Color(0xff646464),
+                                                  letterSpacing: 0.168,
                                                 ),
-                                                child: Image.asset(placeHolder),
                                               ),
                                             ),
-                                            errorWidget:
-                                                (context, url, error) =>
-                                                    Padding(
-                                              padding: EdgeInsets.all(5),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                ),
-                                                child: Image.asset(placeHolder),
+                                            FlatButton(
+                                              shape: CircleBorder(),
+                                              height: 13,
+                                              minWidth: 20,
+                                              color: orangeColor,
+                                              onPressed: () {
+                                                setState(() {
+                                                  List<String> s =
+                                                      pref.getStringList(
+                                                          'searchSaved');
+                                                  s.remove(
+                                                      savedSearch[position]);
+                                                  pref.setStringList(
+                                                      'searchSaved', s);
+                                                  savedSearch.remove(
+                                                      savedSearch[position]);
+                                                });
+                                              },
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(3.0),
+                                                child: Icon(Icons.close_rounded,
+                                                    size: 12,
+                                                    color: Colors.white),
                                               ),
                                             ),
-                                          ),
-                                        )),
-                                  );
-                                },
-                              );
-                            } else {
-                              return Center(
-                                child: LoadingLogo(),
-                              );
-                            }
-                          }),
-                    ),
-                    Padding(
-                      padding: const EdgeInsetsDirectional.only(start: 20),
-                      child: Divider(
-                        thickness: .2,
-                        endIndent: 10,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Padding(
-                      padding: const EdgeInsetsDirectional.only(start: 20),
-                      child: Text(
-                        Languages.of(context).resentSearch,
-                        style: TextStyle(
-                          fontFamily: 'Segoe UI',
-                          fontSize: 13.0,
-                          color: Color(0xff303030),
-                          letterSpacing: 0.156,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    physics: const BouncingScrollPhysics(
-                        parent: AlwaysScrollableScrollPhysics()),
-                    scrollDirection: Axis.vertical,
-                    padding: EdgeInsets.symmetric(vertical: 12),
-                    itemCount: 33,
-                    itemBuilder: (context, position) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 12, horizontal: 20),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                'handmade crafts',
-                                style: TextStyle(
-                                  fontFamily: 'Segoe UI',
-                                  fontSize: 14.0,
-                                  color: Color(0xff646464),
-                                  letterSpacing: 0.168,
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  },
                                 ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 15,
-                              height: 15,
-                              child: CircleAvatar(
-                                radius: 6,
-                                backgroundColor: orangeColor,
-                                child: Center(
-                                  child: Icon(
-                                    Icons.close,
-                                    size: 12,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
+                              ],
+                            );
+                          } else {
+                            return SizedBox();
+                          }
+                        }
+                      }),
+                ],
+              ),
             ),
           ),
         ],
       ),
     );
+  }
+
+  Future<List<String>> getListSearchSaved() async {
+    pref = await SharedPreferences.getInstance();
+
+    return pref.getStringList('searchSaved');
+  }
+
+  Future storeList(String info) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('searchSaved', info);
+  }
+
+  Future getListFromSharedPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getStringList('searchSaved');
   }
 
   Text buildText(
@@ -292,28 +374,41 @@ class _SearchScreenState extends State<SearchScreen> {
         child: SizedBox(
           height: 35,
           child: TextField(
-            onSubmitted: (value) {
+            onSubmitted: (value) async {
+              SearchQueryModel queryModel = new SearchQueryModel(
+                _searchController.text,
+                Categories: [],
+                sortBy: '',
+                sort: '',
+                brand: [],
+                colors: [],
+                countryCode: '',
+                page: '',
+                gender: [],
+                sizes: [],
+                expressShipping: [],
+                shippedFrom: [],
+                discount: [],
+              );
+              SharedPreferences pref = await SharedPreferences.getInstance();
+              List<String> entriesStr = pref.getStringList('searchSaved');
+              if (entriesStr == null) {
+                entriesStr = [];
+              }
+              entriesStr.add(jsonEncode(queryModel.toJson()));
+
+              pref.setStringList('searchSaved', entriesStr);
               Navigator.push(
                   context,
                   new MaterialPageRoute(
                     builder: (BuildContext context) => new SearchResult(
-                      searchQuery: new SearchQueryModel(
-                        _searchController.text,
-                        Categories: [],
-                        sortBy: '',
-                        sort: '',
-                        brand: [],
-                        colors: [],
-                        countryCode: '',
-                        page: '',
-                        gender: [],
-                        sizes: [],
-                        expressShipping: [],
-                        shippedFrom: [],
-                        discount: [],
-                      ),
+                      searchQuery: queryModel,
                     ),
-                  ));
+                  )).then((value) {
+                setState(() {
+                  searchQuery = searchQuery;
+                });
+              });
             },
             keyboardType: TextInputType.text,
             autocorrect: true,
