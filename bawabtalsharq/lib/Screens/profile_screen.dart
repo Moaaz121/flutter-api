@@ -116,7 +116,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             image: DecorationImage(
-                              image: AssetImage(logo),
+                              image: currentUser == null ||
+                                      currentUser.data.image == ''
+                                  ? AssetImage(placeHolder)
+                                  : NetworkImage(currentUser.data.image),
                               fit: BoxFit.fill,
                             ),
                           ),
@@ -141,7 +144,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             currentUser != null
                                 ? buildText(currentUser.data.company, 14,
-                                    color: Colors.grey[500])
+                                    color: Colors.grey[400])
                                 : Text(''),
                           ],
                         ),
