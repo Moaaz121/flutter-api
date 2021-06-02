@@ -1,10 +1,10 @@
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
+import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:bawabtalsharq/main.dart';
 
 class MessageCenter extends StatefulWidget {
   @override
@@ -42,7 +42,8 @@ class _MessageCenterState extends State<MessageCenter> {
                 itemBuilder: (context, position) {
                   return GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, ScreenRoutes.quoteScreen);
+                      Navigator.pushNamed(
+                          context, ScreenRoutes.listMessageScreen);
                     },
                     child: Container(
                       margin: EdgeInsets.only(

@@ -92,11 +92,11 @@ class _IndividualProductState extends State<IndividualProduct>
           }
           return DefaultTabController(
             length: _tabs.length,
-            child: SafeArea(
-              bottom: false,
-              child: Scaffold(
-                floatingActionButton: productFab(product.price),
-                body: NestedScrollView(
+            child: Scaffold(
+              floatingActionButton: productFab(product.price),
+              body: SafeArea(
+                bottom: false,
+                child: NestedScrollView(
                   headerSliverBuilder:
                       (BuildContext context, bool innerBoxScrolled) {
                     return <Widget>[
