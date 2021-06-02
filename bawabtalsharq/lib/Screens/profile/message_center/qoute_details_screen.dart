@@ -31,8 +31,8 @@ class _QuoteDetailsScreenState extends State<QuoteDetailsScreen> {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        infoCartSupplier('varius sollicitudin', '3 YRS',
-                            'Egypt', 'Food & Bevereges', ''),
+                        // infoCartSupplier('varius sollicitudin', '3 YRS',
+                        //     'Egypt', 'Food & Bevereges', ''),
                         buildSizedBox(height: 22),
                         Row(children: [
                           ClipRRect(

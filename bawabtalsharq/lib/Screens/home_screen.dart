@@ -356,7 +356,7 @@ Widget ourGoldenSupplier(BuildContext context, List<Supplier> suppliers) {
             return supplierView(
               onPress: () {
                 Navigator.pushNamed(context, ScreenRoutes.supplierProfileScreen,
-                    arguments: suppliers[position].id);
+                    arguments: suppliers[position].id.toString());
                 print(suppliers[position].id);
               },
               category: suppliers[position].category,

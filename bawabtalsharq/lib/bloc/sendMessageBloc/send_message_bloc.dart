@@ -6,12 +6,12 @@ import 'package:bloc/bloc.dart';
 
 part 'send_message_event.dart';
 
-class SendMessageBloc extends Bloc<SendEvent, SendMessageState> {
+class SendMessageBloc extends Bloc<SendMessageEvent, SendMessageState> {
   @override
   Stream<SendMessageState> mapEventToState(
-    SendEvent event,
+    SendMessageEvent event,
   ) async* {
-    if (event is SendMessageEvent) {
+    if (event is SendEvent) {
       yield LoadingState();
       var response = await ContactRepo()
           .contactMessage(event.email, event.subject, event.message);
