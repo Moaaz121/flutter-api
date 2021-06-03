@@ -1,18 +1,16 @@
-import 'dart:async';
-import 'package:bawabtalsharq/Utils/images.dart';
-import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
+import 'package:bawabtalsharq/Utils/images.dart';
+import 'package:bawabtalsharq/Utils/loading.dart';
+import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_bloc.dart';
+import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_event.dart';
+import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_state.dart';
 import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_bloc.dart';
-import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_state.dart';
-import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:bawabtalsharq/Utils/loading.dart';
-import 'package:bawabtalsharq/widgets/widgets.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 
 class VerificationScreen extends StatefulWidget {
   final String verId;
@@ -26,10 +24,8 @@ class VerificationScreen extends StatefulWidget {
 class _VerificationScreenState extends State<VerificationScreen> {
   var onTapRecognizer;
 
-  static TextEditingController _codeController = TextEditingController();
-
-  final StreamController<ErrorAnimationType> errorController =
-      StreamController<ErrorAnimationType>();
+  // final StreamController<ErrorAnimationType> errorController =
+  //     StreamController<ErrorAnimationType>();
 
   bool hasError = false;
   bool codeTyped = false;
@@ -43,7 +39,6 @@ class _VerificationScreenState extends State<VerificationScreen> {
   @override
   void initState() {
     super.initState();
-
     onTapRecognizer = TapGestureRecognizer()
       ..onTap = () {
         Navigator.pop(context);
@@ -53,9 +48,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
 
   @override
   void dispose() {
-    errorController.close();
-    _registerBloc.close();
     super.dispose();
+    _registerBloc.close();
   }
 
   @override
@@ -196,8 +190,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   animationDuration: Duration(milliseconds: 300),
                   textStyle: TextStyle(fontSize: 20, height: 1.6),
                   enableActiveFill: true,
-                  errorAnimationController: errorController,
-                  controller: _codeController,
+                  // errorAnimationController: errorController,
                   keyboardType: TextInputType.number,
                   boxShadows: [
                     BoxShadow(
