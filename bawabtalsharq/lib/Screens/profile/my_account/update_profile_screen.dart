@@ -203,7 +203,10 @@ class _UpdateProfileState extends State<UpdateProfile> {
                               lastNameError = 'Empty Field';
                             else if (phoneController.text.isEmpty)
                               _phoneErrorMessage = 'Empty Field';
-                            else {
+                            else if (_image == null) {
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                  content: Text('Please Select Image')));
+                            } else {
                               _currentUser.firstname = firstNameController.text;
                               _currentUser.lastname = lastNameController.text;
                               _currentUser.phone = phoneController.text;

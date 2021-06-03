@@ -42,6 +42,7 @@ dependencies:
   shared_preferences:
   line_icons:
   url_launcher:
+  dio:
   rocket_chat_connector_flutter:
   bloc:
   flutter_speed_dial_material_design: ^2.0.0
