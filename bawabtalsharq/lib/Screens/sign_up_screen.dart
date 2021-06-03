@@ -29,13 +29,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
   List<CountryData> _countries = [];
   List<String> _countriesName = [];
 
-  TextEditingController firstNameController = TextEditingController();
-  TextEditingController lastNameController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmpasswordController = TextEditingController();
-  TextEditingController companyController = TextEditingController();
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmpasswordController =
+      TextEditingController();
+  final TextEditingController companyController = TextEditingController();
 
   String selectedRadio;
   bool _passwordErrorMessage;
@@ -67,7 +68,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     passwordController.dispose();
     confirmpasswordController.dispose();
     companyController.dispose();
-    
   }
 
   setSelectedRadioTile(int val) {
@@ -110,6 +110,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             verId: state.verId, data: state.data),
                       ));
                 } else if (state is FirebaseExceptionState) {
+                  setState(() {
+                    isLoading = false;
+                  });
+                  Navigator.pop(context);
+                  _scaffoldKey.currentState.showSnackBar(
+                    SnackBar(
+                      content: Text(state.msg),
+                    ),
+                  );
+                } else if (state is PhoneAlreadyRegisteredState) {
                   setState(() {
                     isLoading = false;
                   });

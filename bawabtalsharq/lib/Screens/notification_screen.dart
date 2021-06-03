@@ -23,8 +23,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   @override
   void initState() {
-    _bloc.add(GetNotificationsEvent());
     super.initState();
+
+    _bloc.add(GetNotificationsEvent());
   }
 
   @override

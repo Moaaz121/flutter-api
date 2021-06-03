@@ -12,6 +12,7 @@ import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_state.dart';
 import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bawabtalsharq/Utils/loading.dart';
+import 'package:bawabtalsharq/widgets/widgets.dart';
 
 class VerificationScreen extends StatefulWidget {
   final String verId;
@@ -25,9 +26,10 @@ class VerificationScreen extends StatefulWidget {
 class _VerificationScreenState extends State<VerificationScreen> {
   var onTapRecognizer;
 
-  TextEditingController codeController = TextEditingController();
+  static TextEditingController _codeController = TextEditingController();
 
-  StreamController<ErrorAnimationType> errorController;
+  final StreamController<ErrorAnimationType> errorController =
+      StreamController<ErrorAnimationType>();
 
   bool hasError = false;
   bool codeTyped = false;
@@ -46,18 +48,14 @@ class _VerificationScreenState extends State<VerificationScreen> {
       ..onTap = () {
         Navigator.pop(context);
       };
-    errorController = StreamController<ErrorAnimationType>();
     _registerBloc = RegisterBloc();
   }
 
   @override
   void dispose() {
-    super.dispose();
-
     errorController.close();
-    codeController.dispose();
-
     _registerBloc.close();
+    super.dispose();
   }
 
   @override
@@ -72,14 +70,15 @@ class _VerificationScreenState extends State<VerificationScreen> {
               if (state is RegisterLoadedState) {
                 Navigator.pushReplacementNamed(
                     context, ScreenRoutes.mainScreen);
+              } else if (state is FirebaseExceptionState) {
+                _scaffoldKey.currentState.showSnackBar(
+                  SnackBar(
+                    content: Text(state.msg),
+                  ),
+                );
+              } else if (state is PhoneAlreadyRegisteredState) {
+                return showPhoneDialog(context);
               }
-              // else if (state is FirebaseExceptionState) {
-              //   _scaffoldKey.currentState.showSnackBar(
-              //     SnackBar(
-              //       content: Text(state.msg),
-              //     ),
-              //   );
-              // }
             },
             child: BlocBuilder<RegisterBloc, RegisterState>(
               builder: (context, state) {
@@ -137,6 +136,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
             margin: EdgeInsets.only(left: 10, top: 15, right: 10),
             padding: EdgeInsets.all(10),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -197,7 +197,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   textStyle: TextStyle(fontSize: 20, height: 1.6),
                   enableActiveFill: true,
                   errorAnimationController: errorController,
-                  controller: codeController,
+                  controller: _codeController,
                   keyboardType: TextInputType.number,
                   boxShadows: [
                     BoxShadow(
@@ -207,25 +207,15 @@ class _VerificationScreenState extends State<VerificationScreen> {
                     )
                   ],
                   onCompleted: (v) {
-                    print("Completed");
+                    print("Completed:$v");
                     smsCode = currentText;
                     codeTyped = true;
                     print('smsCode: $smsCode');
                   },
-                  // onTap: () {
-                  //   print("Pressed");
-                  // },
                   onChanged: (value) {
-                    print(value);
                     setState(() {
                       currentText = value;
                     });
-                  },
-                  beforeTextPaste: (text) {
-                    print("Allowing to paste $text");
-                    //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
-                    //but you can show anything you want here, like your pop up saying wrong paste format or etc
-                    return true;
                   },
                 ),
                 SizedBox(

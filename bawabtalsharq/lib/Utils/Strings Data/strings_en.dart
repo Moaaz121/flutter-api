@@ -63,6 +63,8 @@ class StringsEN {
 
 //Start Asmaa
   static String noInternertConnection = 'No Internert Connection';
+  static String phoneAlreadyRegistered =
+      'This number already registered, please register with another number';
 
 //end Asmaa
 }

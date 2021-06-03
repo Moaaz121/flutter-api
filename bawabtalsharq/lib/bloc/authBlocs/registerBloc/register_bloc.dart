@@ -35,9 +35,13 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         yield EnterSMSCodeState(verId: verId['verId'], data: event.data);
       }
     } else if (event is SignWithOTP) {
-      String signInState = AuthRepo().signInWithOTP(event.smsCode, event.verId);
+      String signInState =
+          await AuthRepo().signInWithOTP(event.smsCode, event.verId);
+      print('State: $signInState');
       if (signInState == 'Verified Succefully') {
         yield ResumeRegisterState();
+      } else if (signInState == 'User already registered') {
+        yield PhoneAlreadyRegisteredState(msg: signInState);
       } else {
         yield FirebaseExceptionState(msg: signInState);
       }
@@ -49,6 +53,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       yield ShowLoadedCountriesState();
     } else if (event is ResetState) {
       yield RegisterInitial();
+    } else if (event is ReRegister) {
+      yield ReReisgterWithNewNumber();
     }
   }
 

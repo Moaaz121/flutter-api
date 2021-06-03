@@ -15,7 +15,6 @@ class RequestQuotationsRepo {
 
     data['ApiKey'] = _userModel.data.apiKey;
     data['user_id'] = _userModel.data.userId;
-    print('Data in Repo : $data');
     bool connected = await connection.isConnected();
     if (connected) {
       var response = await http.post(

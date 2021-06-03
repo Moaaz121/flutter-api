@@ -44,3 +44,10 @@ class FirebaseExceptionState extends RegisterState {
 
   FirebaseExceptionState({@required this.msg});
 }
+
+class PhoneAlreadyRegisteredState extends RegisterState {
+  String msg;
+  PhoneAlreadyRegisteredState({@required this.msg});
+}
+
+class ReReisgterWithNewNumber extends RegisterState {}

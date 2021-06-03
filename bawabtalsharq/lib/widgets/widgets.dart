@@ -15,6 +15,11 @@ import 'package:bawabtalsharq/bloc/countryBloc/country_state.dart';
 import 'package:bawabtalsharq/bloc/currancyBloc/currency_bloc.dart';
 import 'package:bawabtalsharq/bloc/currancyBloc/currency_event.dart';
 import 'package:bawabtalsharq/bloc/currancyBloc/currency_state.dart';
+
+import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_bloc.dart';
+import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_event.dart';
+import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_state.dart';
+
 import 'package:bawabtalsharq/bloc/langBloc/lang_bloc.dart';
 import 'package:bawabtalsharq/bloc/langBloc/lang_event.dart';
 import 'package:bawabtalsharq/bloc/langBloc/lang_state.dart';
@@ -2001,6 +2006,96 @@ FlatButton signInFlatButton(
 // end Islam
 
 //Start Asmaa
+void showPhoneDialog(BuildContext context) async {
+  Future.delayed(Duration(milliseconds: 10), () {
+    RegisterBloc _registerBloc = RegisterBloc();
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Center(
+            child: BlocProvider(
+          create: (context) => _registerBloc,
+          child: BlocListener<RegisterBloc, RegisterState>(
+            listener: (context, state) {
+              // TODO: implement listener
+              if (state is ReReisgterWithNewNumber) {
+                Navigator.pushReplacementNamed(
+                    context, ScreenRoutes.signUpScreen);
+              }
+            },
+            child: BlocBuilder<RegisterBloc, RegisterState>(
+              builder: (context, state) {
+                return StatefulBuilder(builder: (context, setState) {
+                  return AlertDialog(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                    actions: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * .75,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  Languages.of(context).phoneAlreadyRegistered,
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                                SizedBox(height: 15),
+                                Container(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      FlatButton(
+                                        child: Text(
+                                          Languages.of(context).cancel,
+                                          style: TextStyle(color: Colors.grey),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                      VerticalDivider(
+                                        color: Colors.grey,
+                                        thickness: 2,
+                                        endIndent: 25,
+                                        indent: 25,
+                                      ),
+                                      FlatButton(
+                                        child: Text(
+                                          Languages.of(context).signUp,
+                                          style: TextStyle(color: orangeColor),
+                                        ),
+                                        onPressed: () {
+                                          _registerBloc.add(ReRegister());
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  );
+                });
+              },
+            ),
+          ),
+        ));
+      },
+    );
+  });
+}
 
 Widget customTextFormField(
   BuildContext context, {

@@ -27,9 +27,10 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
 
   @override
   void initState() {
+    super.initState();
+
     _superiorBloc = SuperiorBloc();
     _superiorBloc.add(DoSuperiorEvent());
-    super.initState();
   }
 
   @override

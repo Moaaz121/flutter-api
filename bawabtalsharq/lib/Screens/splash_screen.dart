@@ -28,11 +28,12 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
+    super.initState();
+
     if (Constants.getDate(key: 'onBoarding') == null)
       onBoarding = false;
     else
       onBoarding = true;
-    super.initState();
     print(onBoarding);
     startTime();
   }

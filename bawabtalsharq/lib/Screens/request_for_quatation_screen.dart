@@ -25,7 +25,6 @@ class _RequestForQScreenState extends State<RequestForQScreen> {
   bool connected;
   @override
   void initState() {
-    print(currentUser.data.email);
     // TODO: implement initState
     super.initState();
     connection = new InternetConnection();

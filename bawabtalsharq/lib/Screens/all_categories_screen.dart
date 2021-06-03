@@ -38,9 +38,10 @@ class _AllCategoriesState extends State<AllCategories>
 
   @override
   void initState() {
+    super.initState();
+
     _categoryBloc = CategoryBloc();
     _categoryBloc.add(DoCategoryEvent());
-    super.initState();
   }
 
   @override

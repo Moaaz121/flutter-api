@@ -27,8 +27,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   void initState() {
-    _logOutBloc = LogOutBloc();
     super.initState();
+
+    _logOutBloc = LogOutBloc();
   }
 
   @override

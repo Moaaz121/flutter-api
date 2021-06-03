@@ -83,7 +83,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
       'other_requirements': ' ',
       'shipping_method': ' ',
       'destination': ' ',
-      // 'lead_time': ' ',
+      'lead_time': ' ',
       'ship_in': ' ',
       'payment_term': ' ',
     };
@@ -492,7 +492,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
                             padding: EdgeInsets.only(
                                 top: 10, right: 5.0, left: 5, bottom: 10),
                             child: Text(
-                              'Please accept the terms and conditions to proceed...',
+                              Languages.of(context).termsConditions,
                               textAlign: TextAlign.center,
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ))),
@@ -647,7 +647,8 @@ class _RequestforqutationState extends State<Requestforqutation> {
                     selecetedCertId
                         .add(certIdList[certList.indexOf(dropDownVal)]);
                     selecetedCertBool = true;
-                    data[key] = '1,2'; //selecetedCertId;
+                    data[key] =
+                        selecetedCertId.toList().toString(); //selecetedCertId;
                   } else if (dropText == Languages.of(context).dropShipping) {
                     key = 'shipping_method';
                     data[key] =
