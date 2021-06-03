@@ -26,7 +26,6 @@ class _HistoryState extends State<HistoryScreen> {
   bool isLoading = false;
   bool isLoaded = false;
   String errorMessage = '';
-
   List<Product> products;
 
   @override
@@ -71,16 +70,13 @@ class _HistoryState extends State<HistoryScreen> {
                 isLoaded = true;
                 isLoading = true;
                 products = state.response.product;
-              }
-              if (state.response.code == 501) errorMessage = state.response.msg;
+              } else
+                errorMessage = state.response.msg;
             }
             if (state is HistoryNoInternetState) {
-              print('asdsadsadsadsadddddd');
-              errorMessage = 'No Internet Connection Please Try Again';
-              return Center(child: Text('asdsad'));
-            }
-            if (state is HistoryErrorState)
               errorMessage = Languages.of(context).noNetwork;
+            }
+            if (state is HistoryErrorState) errorMessage = state.message;
             return isLoaded
                 ? Column(children: [
                     Flexible(
