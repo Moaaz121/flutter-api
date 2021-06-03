@@ -1,9 +1,11 @@
 import 'dart:async';
+
+import 'package:bawabtalsharq/Model/country_model.dart';
+import 'package:bawabtalsharq/Services/checkIntrernetConnectivity.dart';
 import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_event.dart';
 import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_state.dart';
 import 'package:bawabtalsharq/repo/auth_repo.dart';
 import 'package:bawabtalsharq/repo/getCountrie_repo.dart';
-import 'package:bawabtalsharq/Model/country_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
@@ -12,21 +14,23 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     RegisterEvent event,
   ) async* {
     if (event is DoRegisterEvent) {
-      yield RegisterLoadingState();
-
-      var response = await AuthRepo().doRegister(
-          event.phone,
-          event.email,
-          event.password,
-          event.firstname,
-          event.lastname,
-          event.userType,
-          event.country,
-          event.company);
-      yield RegisterLoadedState(userResponse: response);
+      bool isConnected = await InternetConnection.isConnected2();
+      if (isConnected) {
+        yield RegisterLoadingState();
+        var response = await AuthRepo().doRegister(
+            event.phone,
+            event.email,
+            event.password,
+            event.firstname,
+            event.lastname,
+            event.userType,
+            event.country,
+            event.company);
+        yield RegisterLoadedState(userResponse: response);
+      } else
+        yield RegisterNetworkErrorState();
     } else if (event is VerifyPhone) {
       yield VerifyingPhoneLoadingState();
-
       var verId = await AuthRepo().verifyPhone(event.data['phone']);
 
       if (verId['e'] != null) {
@@ -46,9 +50,13 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         yield FirebaseExceptionState(msg: signInState);
       }
     } else if (event is GetCountries) {
-      yield LoadingCountriesState();
-      List<CountryData> countries = await CountriesRepo().getCountries();
-      yield LoadedCountriesState(countries: countries);
+      bool isConnected = await InternetConnection.isConnected2();
+      if (isConnected) {
+        yield LoadingCountriesState();
+        List<CountryData> countries = await CountriesRepo().getCountries();
+        yield LoadedCountriesState(countries: countries);
+      } else
+        yield RegisterNetworkErrorState();
     } else if (event is GetLoadedCountries) {
       yield ShowLoadedCountriesState();
     } else if (event is ResetState) {

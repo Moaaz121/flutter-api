@@ -1,5 +1,5 @@
-import 'package:bawabtalsharq/Model/user_model.dart';
 import 'package:bawabtalsharq/Model/country_model.dart';
+import 'package:bawabtalsharq/Model/user_model.dart';
 import 'package:flutter/material.dart';
 
 abstract class RegisterState {}
@@ -16,6 +16,8 @@ class LoadedCountriesState extends RegisterState {
 class ShowLoadedCountriesState extends RegisterState {}
 
 class RegisterLoadingState extends RegisterState {}
+
+class RegisterNetworkErrorState extends RegisterState {}
 
 class VerifyingPhoneLoadingState extends RegisterState {}
 
