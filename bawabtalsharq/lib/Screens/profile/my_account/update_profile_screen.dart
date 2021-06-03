@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:bawabtalsharq/Model/user_model.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
-import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/loading.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/updateProfileBlocs/updateAccount/update_account_bloc.dart';
@@ -79,13 +78,18 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                     shape: BoxShape.circle,
                                   ),
                                   child: _image == null
-                                      ? Image(
-                                          image: AssetImage(logo),
-                                          fit: BoxFit.fill,
+                                      ? ClipOval(
+                                          child: Image(
+                                            image:
+                                                AssetImage(_currentUser.image),
+                                            fit: BoxFit.fill,
+                                          ),
                                         )
-                                      : Image.file(
-                                          _image,
-                                          fit: BoxFit.fill,
+                                      : ClipOval(
+                                          child: Image.file(
+                                            _image,
+                                            fit: BoxFit.fill,
+                                          ),
                                         ),
                                 ),
                               ),
@@ -226,17 +230,34 @@ class _UpdateProfileState extends State<UpdateProfile> {
       }
     });
   }
-
-//   Widget datetime() {
-//     return CupertinoDatePicker(
-//       initialDateTime: DateTime.now(),
-//       onDateTimeChanged: (DateTime newDate) {
-//         setState(() {
-//           _selectedDateTime = newDate;
-//           print(newDate);
-//         });
-//       },
-//       mode: CupertinoDatePickerMode.date,
-//     );
-//   }
 }
+
+// upload(File imageFile) async {
+//   // open a bytestream
+//   var stream =
+//       new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+//   // get file length
+//   var length = await imageFile.length();
+//
+//   // string to uri
+//   var uri = Uri.parse("http://ip:8082/composer/predict");
+//
+//   // create multipart request
+//   var request = new http.MultipartRequest("POST", uri);
+//
+//   // multipart that takes file
+//   var multipartFile = new http.MultipartFile('file', stream, length,
+//       filename: basename(imageFile.path));
+//
+//   // add file to multipart
+//   request.files.add(multipartFile);
+//
+//   // send
+//   var response = await request.send();
+//   print(response.statusCode);
+//
+//   // listen for response
+//   response.stream.transform(utf8.decoder).listen((value) {
+//     print(value);
+//   });
+// }
