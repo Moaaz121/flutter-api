@@ -67,7 +67,8 @@ dependencies:
   cached_network_image:
   connectivity:
   flutter_svg:
-
+  numberpicker:
+  multi_image_picker:
 
 
 dev_dependencies:
