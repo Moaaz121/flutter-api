@@ -62,7 +62,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   //Sent data
-  Map<String, dynamic> data;
+  Map<String, String> data;
   QuotationBloc _quotationBloc;
   // List<Asset> images = <Asset>[];
 
@@ -72,21 +72,21 @@ class _RequestforqutationState extends State<Requestforqutation> {
     super.initState();
     _quotationBloc = QuotationBloc();
     data = {
-      'product': ' ',
-      'category_id': ' ',
-      'sourcing': ' ',
-      'qty': ' ',
-      'pieces': ' ',
-      'trade': ' ',
-      'details': ' ',
-      'document': null,
-      'certifications': ' ',
-      'other_requirements': ' ',
-      'shipping_method': ' ',
-      'destination': ' ',
-      'lead_time': ' ',
-      'ship_in': ' ',
-      'payment_term': ' ',
+      'product': 'null',
+      'category_id': 'null',
+      'sourcing': 'null',
+      'qty': 'null',
+      'pieces': 'null',
+      'trade': 'null',
+      'details': 'null',
+      'document': 'null',
+      'certifications': 'null',
+      'other_requirements': 'null',
+      'shipping_method': 'null',
+      'destination': 'null',
+      'lead_time': 'null',
+      'ship_in': 'null',
+      'payment_term': 'null',
     };
   }
 
@@ -298,12 +298,12 @@ class _RequestforqutationState extends State<Requestforqutation> {
                                 width: 80,
                                 height: 85,
                                 child: this.imageUrl != null
-                                    ? Image.asset(
-                                        placeHolder,
+                                    ? Image.file(
+                                        _image,
                                         fit: BoxFit.fill,
                                       )
-                                    : Image.file(
-                                        _image,
+                                    : Image.asset(
+                                        placeHolder,
                                         fit: BoxFit.fill,
                                       ),
                               ),
@@ -535,6 +535,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
                             data['payment_term'] = quantityCrtl.text.trim();
                             _quotationBloc.add(PostReqQuotation(data: data));
                           }
+                          print('dataSubmit: $data');
                         }
                       },
                       shape: RoundedRectangleBorder(
@@ -794,10 +795,13 @@ class _RequestforqutationState extends State<Requestforqutation> {
               setState(() {
                 _image = File(image.path);
                 _showImages = true;
-              });
-              data['document'] = _image.path;
-              print('path: ${_image.path}');
+                imageUrl = image.path;
 
+                print('path: ${image.path}');
+                data['document'] = image.path;
+
+                print('path: ${_image.path.runtimeType}');
+              });
               // path=  /data/user/0/com.bawabtalsharq/cache/image_picker7905254239152282226.jpg
 
             }

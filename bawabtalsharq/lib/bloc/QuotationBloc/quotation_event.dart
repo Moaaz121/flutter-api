@@ -4,7 +4,7 @@ part of 'quotation_bloc.dart';
 abstract class QuotationEvent {}
 
 class PostReqQuotation extends QuotationEvent {
-  Map<String, dynamic> data;
+  Map<String, String> data;
   PostReqQuotation({@required this.data});
 }
 
