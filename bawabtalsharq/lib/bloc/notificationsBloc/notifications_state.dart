@@ -10,3 +10,5 @@ class DoneState extends NotificationsState {
   NotificationsModel messageResponse;
   DoneState({this.messageResponse});
 }
+
+class NoInternetState extends NotificationsState {}

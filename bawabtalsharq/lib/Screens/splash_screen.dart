@@ -35,12 +35,12 @@ class _SplashScreenState extends State<SplashScreen> {
     _controller.setLooping(true);
     _controller.setVolume(0.0);
     _controller.play();
+    super.initState();
 
     if (Constants.getDate(key: 'onBoarding') == null)
       onBoarding = false;
     else
       onBoarding = true;
-    super.initState();
     print(onBoarding);
     startTime();
   }

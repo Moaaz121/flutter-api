@@ -39,3 +39,5 @@ class SignWithOTP extends RegisterEvent {
 
   SignWithOTP({@required this.verId, @required this.smsCode});
 }
+
+class ReRegister extends RegisterEvent {}

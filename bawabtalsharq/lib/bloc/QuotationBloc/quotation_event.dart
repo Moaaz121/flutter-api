@@ -5,7 +5,9 @@ abstract class QuotationEvent {}
 
 class PostReqQuotation extends QuotationEvent {
   Map<String, dynamic> data;
-  PostReqQuotation({@required this.data});
+  Map<String, dynamic> dataIdentifier;
+
+  PostReqQuotation({@required this.data, @required this.dataIdentifier});
 }
 
 class GetCatergoryList extends QuotationEvent {}

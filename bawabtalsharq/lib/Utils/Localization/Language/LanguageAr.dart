@@ -71,7 +71,7 @@ class LanguageAr extends Languages {
   String get currency1 => 'جنيهًا';
   String get egp => 'جنيه مصري';
   String get usd => 'دولار أمريكي';
-  String get noNetwork => 'لا يوجد اتصال بالإنترنت';
+  String get noNetwork => 'لا يوجد اتصال بالإنترنت ، يرجى المحاولة مرة أخرى';
   String get noItem => 'لا يوجد منتج محفوظ';
 
 // end Bahaa
@@ -280,8 +280,12 @@ class LanguageAr extends Languages {
 // end Islam
 
 //Start Asmaa
-  String get noInternertConnection => 'No Internet Connection';
 
+  String get noInternertConnection => 'لا يوجد خدمه انترنت';
+  String get phoneAlreadyRegistered =>
+      'هذا الرقم مسجل بالفعل،من فضلك ادخل رقم اخر';
+
+  String get termsConditions => 'برجاء الموافقه علي الشروط و الاحكام للمتابعه';
 //end Asmaa
 
 }

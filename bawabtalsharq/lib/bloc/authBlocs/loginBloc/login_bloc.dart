@@ -1,4 +1,6 @@
 import 'dart:async';
+
+import 'package:bawabtalsharq/Services/checkIntrernetConnectivity.dart';
 import 'package:bawabtalsharq/bloc/authBlocs/loginBloc/login_event.dart';
 import 'package:bawabtalsharq/bloc/authBlocs/loginBloc/login_state.dart';
 import 'package:bawabtalsharq/repo/auth_repo.dart';
@@ -10,10 +12,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     LoginEvent event,
   ) async* {
     if (event is DoLoginEvent) {
-      yield LoginLoadingState();
-      var response = await AuthRepo().doLogin(event.userName, event.password);
+      bool isConnected = await InternetConnection.isConnected2();
+      if (isConnected) {
+        yield LoginLoadingState();
+        var response = await AuthRepo().doLogin(event.userName, event.password);
 
-      yield LoginLoadedState(userResponse: response);
+        yield LoginLoadedState(userResponse: response);
+      } else
+        yield LoginNetworkErrorState();
     } else if (event is ResetState) {
       yield LoginInitial();
     }

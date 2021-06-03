@@ -15,3 +15,5 @@ class SuperiorErrorState extends SuperiorState {
   String message;
   SuperiorErrorState({this.message});
 }
+
+class SuperiorNetworkErrorState extends SuperiorState {}

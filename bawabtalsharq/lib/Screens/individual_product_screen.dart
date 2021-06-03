@@ -54,13 +54,13 @@ class _IndividualProductState extends State<IndividualProduct>
 
   @override
   void initState() {
+    super.initState();
+
     _productBloc = IndividualProductBloc();
     _productBloc.add(DoIndividualProductEvent(widget.productId));
     _controllerTab = TabController(vsync: this, length: _tabs.length);
     _controller = ScrollController();
     _controllerTab.addListener(() => {setState(() {})});
-
-    super.initState();
   }
 
   int selectedIndex = 0;

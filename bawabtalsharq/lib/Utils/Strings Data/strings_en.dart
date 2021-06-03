@@ -62,7 +62,10 @@ class StringsEN {
 // end Islam
 
 //Start Asmaa
-  static String noInternertConnection = 'No Internert Connection';
+  static String noInternertConnection =
+      'No Internet Connection Please Try Again';
+  static String phoneAlreadyRegistered =
+      'This number already registered, please register with another number';
 
 //end Asmaa
 }

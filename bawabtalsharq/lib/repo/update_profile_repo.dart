@@ -1,9 +1,9 @@
-import 'package:bawabtalsharq/Model/base_model.dart';
-import 'package:bawabtalsharq/Utils/apis.dart';
-import 'package:bawabtalsharq/Model/user_model.dart';
 import 'dart:convert';
 import 'dart:io';
-import 'package:flutter/material.dart';
+
+import 'package:bawabtalsharq/Model/user_model.dart';
+import 'package:bawabtalsharq/Utils/apis.dart';
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -31,7 +31,8 @@ class UpdateProfileRepo {
   }
 
   Future<UserModel> updateAccount(UserLocal currentUser, {File image}) async {
-    print(currentUser.country);
+    var fileName = image.path.split('/').last;
+
     Map<String, dynamic> params = {
       "user_id": currentUser.userId,
       "ApiKey": currentUser.apiKey,
@@ -39,14 +40,23 @@ class UpdateProfileRepo {
       "lastname": currentUser.lastname,
       "phone": currentUser.phone,
       "b_country": currentUser.country,
-      // "image": image,
+      "image": MultipartFile.fromString(image.path, filename: fileName),
     };
-    var response = await http.post(
-      Uri.encodeFull(APIS.serverURL + APIS.UPDATE_ACCOUNT_API),
-      body: params,
-    );
-    var decodedResponse = json.decode(response.body);
-    print('Update Profile response .. ${response.body}');
+
+    print(image.path + ' : ' + fileName);
+
+    FormData formData = new FormData.fromMap(params);
+
+    var response = await Dio()
+        .post(APIS.serverURL + APIS.UPDATE_ACCOUNT_API, data: formData);
+    print('Update Profile response .. ${response.data}');
+
+    // var response = await http.post(
+    //   Uri.encodeFull(APIS.serverURL + APIS.UPDATE_ACCOUNT_API),
+    //   body: formData,
+    // );
+
+    var decodedResponse = json.decode(response.toString());
     UserModel modelResponse = UserModel.fromJson(decodedResponse);
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();

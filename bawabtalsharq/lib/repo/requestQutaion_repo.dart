@@ -5,27 +5,50 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:bawabtalsharq/Model/user_model.dart';
 import 'package:bawabtalsharq/Services/checkIntrernetConnectivity.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter_absolute_path/flutter_absolute_path.dart';
 
 class RequestQuotationsRepo {
   BaseModel modelResponse;
   InternetConnection connection = new InternetConnection();
 
-  Future<String> postReqQuotation(Map<String, dynamic> data) async {
+  Future<String> postReqQuotation(
+      Map<String, dynamic> data, Map<String, dynamic> dataIdentifier) async {
     UserModel _userModel = await Constants.getUserInfo();
 
     data['ApiKey'] = _userModel.data.apiKey;
     data['user_id'] = _userModel.data.userId;
-    print('Data in Repo : $data');
+
     bool connected = await connection.isConnected();
     if (connected) {
-      var response = await http.post(
-        Uri.encodeFull(
-            APIS.serverURL + APIS.Req_Quotation_API + Constants.getLanguage()),
-        body: data,
-      );
+      for (int i = 0; i < 3; i++) {
+        if (data['document[$i]'] != 'null') {
+          String path = await getPath(dataIdentifier['document[$i]']);
+
+          data['document[$i]'] =
+              MultipartFile.fromString(path, filename: data['document[$i]']);
+          print('Getted Pathe: $path');
+        }
+        print('New Data:$data');
+        print('Type: ${data['document[$i]']}');
+        print('Type: ${data['document[$i]'].runtimeType}');
+      }
+      FormData formData = new FormData.fromMap(data);
+
+      var response = await Dio().post(
+          APIS.serverURL + APIS.Req_Quotation_API + Constants.getLanguage(),
+          data: formData);
+      print('RQF response .. ${response.statusCode}');
+      print('RQF response .. ${response.data}');
+
+      // var response = await http.post(
+      //   Uri.encodeFull(
+      //       APIS.serverURL + APIS.Req_Quotation_API + Constants.getLanguage()),
+      //   body: data,
+      // );
+
       if (response.statusCode == 200) {
-        var decodedResponse = json.decode(response.body);
-        BaseModel modelResponse = BaseModel.fromJson(decodedResponse);
+        BaseModel modelResponse = BaseModel.fromJson(response.data);
         return modelResponse.msg;
       } else {
         return null;
@@ -33,5 +56,10 @@ class RequestQuotationsRepo {
     } else {
       return 'Mobile is not Connected';
     }
+  }
+
+  Future<String> getPath(imageIdentifier) async {
+    String path = await FlutterAbsolutePath.getAbsolutePath(imageIdentifier);
+    return path;
   }
 }
