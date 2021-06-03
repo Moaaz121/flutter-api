@@ -54,8 +54,11 @@ class _SuperiorScreenState extends State<SuperiorScreen> {
           isLoading = true;
           listOfSuperior = state.superiorResponse;
         }
-        if (state is SuperiorErrorState)
-          errorMessage = 'No Internet Connection';
+        if (state is SuperiorErrorState) errorMessage = state.message;
+
+        if (state is SuperiorNetworkErrorState)
+          errorMessage = Languages.of(context).noNetwork;
+
         return isLoaded
             ? Container(
                 color: Color(0xfff8f8f8),

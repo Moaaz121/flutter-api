@@ -10,3 +10,5 @@ class LoginLoadedState extends LoginState {
   UserModel userResponse;
   LoginLoadedState({this.userResponse});
 }
+
+class LoginNetworkErrorState extends LoginState {}

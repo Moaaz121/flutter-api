@@ -73,10 +73,11 @@ class _HistoryState extends State<HistoryScreen> {
               } else
                 errorMessage = state.response.msg;
             }
-            if (state is HistoryNoInternetState) {
+            if (state is HistoryNoInternetState)
               errorMessage = Languages.of(context).noNetwork;
-            }
+
             if (state is HistoryErrorState) errorMessage = state.message;
+
             return isLoaded
                 ? Column(children: [
                     Flexible(
