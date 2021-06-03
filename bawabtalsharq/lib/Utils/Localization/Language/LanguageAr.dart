@@ -71,7 +71,7 @@ class LanguageAr extends Languages {
   String get currency1 => 'جنيهًا';
   String get egp => 'جنيه مصري';
   String get usd => 'دولار أمريكي';
-  String get noNetwork => 'لا يوجد اتصال بالإنترنت';
+  String get noNetwork => 'لا يوجد اتصال بالإنترنت ، يرجى المحاولة مرة أخرى';
   String get noItem => 'لا يوجد منتج محفوظ';
 
 // end Bahaa

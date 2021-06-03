@@ -13,7 +13,7 @@ class RequestQuotationsRepo {
   BaseModel modelResponse;
   InternetConnection connection = new InternetConnection();
 
-  Future<String> postReqQuotation(Map<String, dynamic> data) async {
+  Future<String> postReqQuotation(Map<String, String> data) async {
     UserModel _userModel = await Constants.getUserInfo();
 
     data['ApiKey'] = _userModel.data.apiKey;
@@ -21,7 +21,7 @@ class RequestQuotationsRepo {
 
     bool connected = await connection.isConnected();
     if (connected) {
-      if (data['document'] != null) {
+      if (data['document'] != 'null') {
         print('sendFile');
         print('document:${data['document']}');
         sendFile(data['document'], data);
@@ -57,7 +57,7 @@ class RequestQuotationsRepo {
     request.files.add(await http.MultipartFile.fromPath('file', filePath,
         filename: name,
         contentType: MediaType(mimeTypeData[0], mimeTypeData[1])));
-
+    print('DataSending Fikle: $data');
     request.fields.addAll(data);
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {

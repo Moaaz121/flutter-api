@@ -60,7 +60,8 @@ class StringsAR {
 
 // end Islam
 //Start Asmaa
-  static String noInternertConnection = 'لا يوجد خدمه انترنت';
+  static String noInternertConnection =
+      'لا يوجد اتصال بالإنترنت ، يرجى المحاولة مرة أخرى';
   static String phoneAlreadyRegistered =
       'هذا الرقم مسجل بالفعل،من فضلك ادخل رقم اخر';
 //end Asmaa
