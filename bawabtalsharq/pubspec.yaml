@@ -69,6 +69,7 @@ dependencies:
   flutter_svg:
   numberpicker:
   multi_image_picker:
+  flutter_absolute_path:
 
 
 dev_dependencies:
