@@ -64,6 +64,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
   //Sent data
   Map<String, dynamic> data;
   QuotationBloc _quotationBloc;
+  // List<Asset> images = <Asset>[];
 
   @override
   void initState() {
@@ -78,7 +79,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
       'pieces': ' ',
       'trade': ' ',
       'details': ' ',
-      'document': ' _image.uri',
+      'document': null,
       'certifications': ' ',
       'other_requirements': ' ',
       'shipping_method': ' ',
@@ -532,7 +533,6 @@ class _RequestforqutationState extends State<Requestforqutation> {
                             data['ship_in'] = portCtrl.text.trim();
                             data['lead_time'] = leadTimeForInCtrl.text.trim();
                             data['payment_term'] = quantityCrtl.text.trim();
-                            data['document'] = '_image.uri';
                             _quotationBloc.add(PostReqQuotation(data: data));
                           }
                         }
@@ -795,7 +795,11 @@ class _RequestforqutationState extends State<Requestforqutation> {
                 _image = File(image.path);
                 _showImages = true;
               });
-              await uploadFile();
+              data['document'] = _image.path;
+              print('path: ${_image.path}');
+
+              // path=  /data/user/0/com.bawabtalsharq/cache/image_picker7905254239152282226.jpg
+
             }
           },
         ),
@@ -808,10 +812,5 @@ class _RequestforqutationState extends State<Requestforqutation> {
       ),
     );
     showCupertinoModalPopup(context: context, builder: (context) => action);
-  }
-
-  Future uploadFile() async {
-    print('Image : $_image');
-    print('upload File');
   }
 }

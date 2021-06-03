@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "120155871462-u89k3fj2r7m315nlkkci3n18760u8q3i.apps.googleusercontent.com",
+          "client_id": "120155871462-mngj5svb4jp6bffcbabhon19f1gk217f.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.bawabtalsharq",
-            "certificate_hash": "2b6f9da18e5252a7c6cbf954c0eeac7b70ef4bf5"
+            "certificate_hash": "bdb736593be8c2d0746f6bf702f33fc076e90522"
           }
         },
         {
@@ -37,6 +37,13 @@
             {
               "client_id": "120155871462-mma56frgsf03mblgg4o511fnggdkrsqt.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "120155871462-2bubhkmtddio8u3fuiu43sgo86rphp8q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bawabtalsharq"
+              }
             }
           ]
         }
