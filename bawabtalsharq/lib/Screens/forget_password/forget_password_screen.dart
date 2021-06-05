@@ -25,9 +25,9 @@ class _ForgetPasswordState extends State<ForgetPassword> {
 
   @override
   void initState() {
-    _forgetPasswordBloc = ForgetPasswordBloc();
     // TODO: implement initState
     super.initState();
+    _forgetPasswordBloc = ForgetPasswordBloc();
   }
 
   @override

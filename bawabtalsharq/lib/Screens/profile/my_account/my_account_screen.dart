@@ -1,8 +1,8 @@
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
+import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:bawabtalsharq/Utils/constants.dart';
 
 import '../../../main.dart';
 
@@ -33,7 +33,10 @@ class _MyAccountState extends State<MyAccount> {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
-                    image: AssetImage(logo),
+                    image: Constants.getUserInfo2() == null ||
+                            Constants.getUserInfo2().data.image == ''
+                        ? AssetImage(placeHolder)
+                        : NetworkImage(Constants.getUserInfo2().data.image),
                     fit: BoxFit.fill,
                   ),
                 ),

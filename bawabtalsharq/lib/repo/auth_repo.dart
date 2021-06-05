@@ -131,24 +131,24 @@ class AuthRepo {
     return complete.future;
   }
 
-  String signInWithOTP(smsCode, verId) {
+  Future<String> signInWithOTP(smsCode, verId) async {
+    UserCredential _authUser;
     final AnalyticsService _analyticsService = AnalyticsService();
     String op;
     try {
       AuthCredential authCreds =
           PhoneAuthProvider.credential(smsCode: smsCode, verificationId: verId);
-      FirebaseAuth.instance.signInWithCredential(authCreds).then((value) async {
-        User user = FirebaseAuth.instance.currentUser;
-        await _analyticsService.setUserProperties(
-          userId: user.uid,
-        );
-      });
+      _authUser = await FirebaseAuth.instance.signInWithCredential(authCreds);
 
       op = 'Verified Succefully';
     } on FirebaseAuthException catch (e) {
       op = e.toString();
     }
-    return op;
+    if (_authUser.additionalUserInfo.isNewUser) {
+      return op;
+    } else {
+      return 'User already registered';
+    }
   }
 
 // End Asmaa //

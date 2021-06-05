@@ -57,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
         builder: (context, state) {
           if (state is LoginLoadingState) {
             if (!isLoading) {
-              showLoadingDialog(context);
+              progressBar();
               isLoading = true;
             }
           } else if (state is LoginLoadedState) {
@@ -73,8 +73,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 _scaffoldKey.currentState.showSnackBar(
                     new SnackBar(content: new Text(state.userResponse.msg)));
               });
-              Navigator.pop(context);
             }
+          } else if (state is LoginNetworkErrorState) {
+            SchedulerBinding.instance.addPostFrameCallback((_) {
+              _scaffoldKey.currentState.showSnackBar(
+                new SnackBar(
+                  content: new Text(Languages.of(context).noNetwork),
+                ),
+              );
+            });
           }
           return Container(
             height: MediaQuery.of(context).size.height,

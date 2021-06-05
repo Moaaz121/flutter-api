@@ -72,7 +72,7 @@ class LanguageEn extends Languages {
   String get currency1 => '\$';
   String get egp => 'EGP';
   String get usd => 'USD';
-  String get noNetwork => 'No Internet Connection';
+  String get noNetwork => 'No Internet Connection Please Try Again';
   String get noItem => 'No Saved Item';
 
 // end Bahaa
@@ -282,7 +282,10 @@ class LanguageEn extends Languages {
 // end Islam
 
 //Start Asmaa
-  String get noInternertConnection => 'لا يوجد خدمه انترنت';
-
+  String get noInternertConnection => 'No Internet Connection';
+  String get phoneAlreadyRegistered =>
+      'This number already registered, please register with another number';
+  String get termsConditions =>
+      'Please accept the terms and conditions to proceed...';
 //end Asmaa
 }

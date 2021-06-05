@@ -236,4 +236,12 @@ abstract class Languages {
   String get birthDay;
 
 // end Islam
+
+//start Asmaa
+  String get noInternertConnection;
+
+  String get phoneAlreadyRegistered;
+
+  String get termsConditions;
+//end Asmaa
 }

@@ -15,3 +15,5 @@ class HistoryErrorState extends HistoryState {
   String message;
   HistoryErrorState({this.message});
 }
+
+class HistoryNoInternetState extends HistoryState {}
