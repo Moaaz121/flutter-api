@@ -117,7 +117,7 @@ class _IndividualProductState extends State<IndividualProduct>
                           iconRound(Icons.bookmark_border_outlined),
                         ],
                         expandedHeight:
-                            MediaQuery.of(context).size.height * 0.45,
+                            MediaQuery.of(context).size.height * 0.4,
                         floating: true,
                         pinned: false,
                         snap: false,
@@ -125,7 +125,7 @@ class _IndividualProductState extends State<IndividualProduct>
                         backgroundColor: Color(0xfff9dfd6),
                         flexibleSpace: FlexibleSpaceBar(
                             background: Container(
-                                padding: EdgeInsets.only(top: 40, bottom: 10),
+                                padding: EdgeInsets.only(top: 20, bottom: 10),
                                 child: Column(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -153,17 +153,14 @@ class _IndividualProductState extends State<IndividualProduct>
                                           imageUrl: product.imagePath,
                                           placeholder: (context, url) =>
                                               Padding(
-                                            padding: EdgeInsets.all(5),
+                                            padding: EdgeInsets.all(15),
                                             child: Container(
                                               child: Image.asset(placeHolder),
                                             ),
                                           ),
                                           errorWidget: (context, url, error) =>
-                                              Padding(
-                                            padding: EdgeInsets.all(5),
-                                            child: Container(
-                                              child: Image.asset(placeHolder),
-                                            ),
+                                              Container(
+                                            child: Image.asset(placeHolder),
                                           ),
                                         ),
                                       ),
@@ -216,7 +213,7 @@ class _IndividualProductState extends State<IndividualProduct>
                                                         itemCount: 1,
                                                         itemPadding: EdgeInsets
                                                             .symmetric(
-                                                                horizontal: 1),
+                                                                horizontal: 5),
                                                         itemBuilder:
                                                             (context, _) =>
                                                                 Icon(

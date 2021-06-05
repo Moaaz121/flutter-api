@@ -142,6 +142,13 @@ class _SupplierProfileState extends State<SupplierProfile>
                               Container(
                                 height: 120,
                                 width: MediaQuery.of(context).size.width,
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.02),
+                                    )
+                                  ],
+                                ),
                                 child: CachedNetworkImage(
                                   imageUrl:
                                       supplierProfileData.supplierData.banner,
@@ -193,7 +200,8 @@ class _SupplierProfileState extends State<SupplierProfile>
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(16),
                                         border: Border.all(
-                                          color: Colors.white,
+                                          color: orangeShadowColor
+                                              .withOpacity(0.09),
                                         ),
                                         shape: BoxShape.rectangle,
                                         image: DecorationImage(
@@ -341,7 +349,7 @@ class _SupplierProfileState extends State<SupplierProfile>
                                 bottom: Radius.circular(25)),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black.withOpacity(0.05),
+                                color: orangeShadowColor.withOpacity(0.1),
                               ),
                               BoxShadow(
                                   color: Colors.white,
@@ -375,31 +383,28 @@ class _SupplierProfileState extends State<SupplierProfile>
         height: size,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(widget.size),
-          child: DecoratedBox(
-            decoration: BoxDecoration(),
-            child: ClipOval(
-              child: Material(
-                shadowColor: orangeShadowColor,
-                color: Colors.white,
-                child: InkWell(
-                  onTap: _function,
-                  splashColor: orangeColor.withOpacity(0.4),
-                  highlightColor: orangeShadowColor,
-                  child: ScaleTransition(
-                    scale: Tween(begin: 0.8, end: 1.0).animate(
-                      CurvedAnimation(
-                        parent: _controller,
-                        curve: CurveWave(),
-                      ),
+          child: ClipOval(
+            child: Material(
+              shadowColor: orangeShadowColor,
+              color: Colors.white,
+              child: InkWell(
+                onTap: _function,
+                splashColor: orangeColor.withOpacity(0.4),
+                highlightColor: orangeShadowColor,
+                child: ScaleTransition(
+                  scale: Tween(begin: 0.8, end: 1.0).animate(
+                    CurvedAnimation(
+                      parent: _controller,
+                      curve: CurveWave(),
                     ),
-                    child: Padding(
-                      padding: EdgeInsets.all(sizeIcon),
-                      child: Image.asset(
-                        chatSupplier,
-                        width: 30,
-                        height: 30,
-                        fit: BoxFit.fill,
-                      ),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(sizeIcon),
+                    child: Image.asset(
+                      chatSupplier,
+                      width: 30,
+                      height: 30,
+                      fit: BoxFit.fill,
                     ),
                   ),
                 ),
@@ -423,7 +428,7 @@ class _SupplierProfileState extends State<SupplierProfile>
           borderRadius: BorderRadius.circular(8),
           boxShadow: [
             BoxShadow(
-                color: Color(0x297a7a7a),
+                color: orangeShadowColor.withOpacity(0.3),
                 offset: Offset(0, 1),
                 blurRadius: 6,
                 spreadRadius: 0)
