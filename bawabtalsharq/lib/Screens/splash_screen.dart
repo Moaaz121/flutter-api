@@ -63,10 +63,8 @@ class _SplashScreenState extends State<SplashScreen> {
       autoPlay: true,
       looping: false,
     );
-    return Expanded(
-      child: Chewie(
-        controller: chewieController,
-      ),
+    return Chewie(
+      controller: chewieController,
     );
   }
 }
