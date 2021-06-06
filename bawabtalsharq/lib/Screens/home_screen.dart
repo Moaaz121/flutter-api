@@ -135,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
           } else {
             print(state);
             return Center(
-              child: CircularProgressIndicator(),
+              child: LoadingLogo(),
             );
           }
         },
