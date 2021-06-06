@@ -57,8 +57,7 @@ class _SplashScreenState extends State<SplashScreen> {
     chewieController = ChewieController(
       allowFullScreen: true,
       showControls: false,
-      aspectRatio: MediaQuery.of(context).size.width *
-          1.085 /
+      aspectRatio: MediaQuery.of(context).size.width /
           MediaQuery.of(context).size.height,
       videoPlayerController: videoPlayerController,
       autoPlay: true,
