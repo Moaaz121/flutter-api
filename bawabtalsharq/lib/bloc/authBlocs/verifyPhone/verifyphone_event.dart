@@ -5,8 +5,6 @@ abstract class VerifyphoneEvent {}
 
 class GetCountries extends VerifyphoneEvent {}
 
-class GetLoadedCountries extends VerifyphoneEvent {}
-
 class VerifyPhone extends VerifyphoneEvent {
   Map data;
 

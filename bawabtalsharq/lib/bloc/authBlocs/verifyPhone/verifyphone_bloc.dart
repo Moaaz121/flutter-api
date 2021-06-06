@@ -21,11 +21,7 @@ class VerifyphoneBloc extends Bloc<VerifyphoneEvent, VerifyphoneState> {
         yield LoadedCountriesState(countries: countries);
       } else
         yield VerifyphoneNetworkErrorState();
-    } 
-    // else if (event is GetLoadedCountries) {
-    //   yield ShowLoadedCountriesState();
-    // }
-     else if (event is VerifyPhone) {
+    } else if (event is VerifyPhone) {
       yield VerifyingPhoneLoadingState();
       bool isConnected = await InternetConnection.isConnected2();
       if (isConnected) {
