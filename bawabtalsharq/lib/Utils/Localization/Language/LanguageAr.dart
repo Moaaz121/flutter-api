@@ -56,7 +56,7 @@ class LanguageAr extends Languages {
   String get descending => 'تنازلي';
   String get color => 'الألوان';
   String get faq => 'الأسئلة والأجوبة';
-  String get privacy => 'الخصوصية و أمن';
+  String get privacy => 'الخصوصية والأمان';
   String get technical => 'دعم فني';
   String get changePassword => 'تغيير كلمة المرور';
   String get switchProfile => 'تبديل الملف الشخصي';
