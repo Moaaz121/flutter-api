@@ -14,6 +14,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:bawabtalsharq/Services/AnalyticsService.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -25,6 +26,12 @@ class _SearchScreenState extends State<SearchScreen> {
   List<CategoryModel> categories = List<CategoryModel>();
   SharedPreferences pref;
   List<String> savedSearch = [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    AnalyticsService().setScreenName(name: 'SearchScreen');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -146,6 +153,17 @@ class _SearchScreenState extends State<SearchScreen> {
                                                 SearchQueryModel(
                                                     _searchController.text,
                                                     Categories: selectetList);
+
+                                            AnalyticsService()
+                                                .sendAnalyticsEvent(
+                                                    eventName:
+                                                        'search_by_Categories ',
+                                                    param: {
+                                                  'bool': true,
+                                                  'msg':
+                                                      'Searching for ${categories[position].category}; id: ${categories[position].categoryId}'
+                                                });
+
                                             Navigator.push(
                                                 context,
                                                 new MaterialPageRoute(
@@ -256,6 +274,13 @@ class _SearchScreenState extends State<SearchScreen> {
                                           vertical: 0, horizontal: 20),
                                       child: GestureDetector(
                                         onTap: () {
+                                          AnalyticsService().sendAnalyticsEvent(
+                                              eventName: 'Recent_Search',
+                                              param: {
+                                                'bool': true,
+                                                'msg': 'View all recent search'
+                                              });
+
                                           Navigator.push(
                                               context,
                                               new MaterialPageRoute(
@@ -375,6 +400,10 @@ class _SearchScreenState extends State<SearchScreen> {
           height: 35,
           child: TextField(
             onSubmitted: (value) async {
+              AnalyticsService().sendAnalyticsEvent(
+                  eventName: 'SearchBox',
+                  param: {'bool': true, 'msg': 'Searching for $value'});
+
               SearchQueryModel queryModel = new SearchQueryModel(
                 _searchController.text,
                 Categories: [],

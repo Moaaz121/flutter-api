@@ -21,6 +21,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:bawabtalsharq/Services/AnalyticsService.dart';
 
 enum ArrangeCharacter { ASC, DESC }
 
@@ -67,6 +68,7 @@ class _SearchResultState extends State<SearchResult> {
     searchQuery = widget.searchQuery;
     blockEvent();
     super.initState();
+    AnalyticsService().setScreenName(name: 'Search_ResultScreen');
   }
 
   @override
@@ -77,6 +79,12 @@ class _SearchResultState extends State<SearchResult> {
               onTap: () {
                 searchQuery.q = _searchController.text;
                 blockEvent();
+                AnalyticsService().sendAnalyticsEvent(
+                    eventName: 'SearchBox',
+                    param: {
+                      'bool': true,
+                      'msg': 'Searching for ${_searchController.text.trim()}'
+                    });
               },
               hint: Languages.of(context).search,
               onCancelPressed: () {
