@@ -48,6 +48,8 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               _forgetPasswordBloc.add(ResetState());
               isLoading = false;
               if (state.baseModel.code == 200) {
+                showToast(
+                    text: "Please check your email to reset your password");
                 print(state.baseModel.msg);
                 SchedulerBinding.instance.addPostFrameCallback((_) {
                   Navigator.pushNamed(context, ScreenRoutes.mainScreen);
