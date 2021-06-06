@@ -15,3 +15,5 @@ class SupplierProfileErrorState extends SupplierProfileState {
   String message;
   SupplierProfileErrorState({this.message});
 }
+
+class SupplierProfileNetworkErrorState extends SupplierProfileState {}

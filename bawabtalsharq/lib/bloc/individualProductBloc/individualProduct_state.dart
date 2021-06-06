@@ -8,7 +8,7 @@ class IndividualProductInitial extends IndividualProductState {}
 class IndividualProductLoadingState extends IndividualProductState {}
 
 class IndividualProductLoadedState extends IndividualProductState {
-  ProductDetails individualProductResponse;
+  IndividualProductModel individualProductResponse;
   IndividualProductLoadedState({this.individualProductResponse});
 }
 
@@ -30,3 +30,5 @@ class HistoryErrorState extends IndividualProductState {
   String message;
   HistoryErrorState({this.message});
 }
+
+class IndividualProductNetworkErrorState extends IndividualProductState {}

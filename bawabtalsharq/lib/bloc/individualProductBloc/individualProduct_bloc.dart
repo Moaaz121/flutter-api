@@ -1,5 +1,6 @@
 import 'package:bawabtalsharq/Model/base_model.dart';
 import 'package:bawabtalsharq/Model/individualProduct_model.dart';
+import 'package:bawabtalsharq/Services/checkIntrernetConnectivity.dart';
 import 'package:bawabtalsharq/repo/individualProduct_repo.dart';
 import 'package:bloc/bloc.dart';
 
@@ -12,14 +13,18 @@ class IndividualProductBloc
   Stream<IndividualProductState> mapEventToState(
       IndividualProductEvent event) async* {
     if (event is DoIndividualProductEvent) {
-      yield IndividualProductLoadingState();
-      try {
-        ProductDetails data =
-            await IndividualProductRepo.getIndividualProduct(event.id);
-        yield IndividualProductLoadedState(individualProductResponse: data);
-      } catch (e) {
-        yield IndividualProductErrorState(message: e.toString());
-      }
+      bool isConnected = await InternetConnection.isConnected2();
+      if (isConnected) {
+        yield IndividualProductLoadingState();
+        try {
+          IndividualProductModel data =
+              await IndividualProductRepo.getIndividualProduct(event.id);
+          yield IndividualProductLoadedState(individualProductResponse: data);
+        } catch (e) {
+          yield IndividualProductErrorState(message: e.toString());
+        }
+      } else
+        yield IndividualProductNetworkErrorState();
     } else if (event is ResetState) {
       yield IndividualProductInitial();
     }
