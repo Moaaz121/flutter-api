@@ -1,8 +1,6 @@
 import 'package:bawabtalsharq/Model/base_model.dart';
 import 'package:bawabtalsharq/Utils/apis.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:bawabtalsharq/Model/user_model.dart';
 import 'package:bawabtalsharq/Services/checkIntrernetConnectivity.dart';
 import 'package:dio/dio.dart';
@@ -19,42 +17,36 @@ class RequestQuotationsRepo {
     data['ApiKey'] = _userModel.data.apiKey;
     data['user_id'] = _userModel.data.userId;
 
-    bool connected = await connection.isConnected();
-    if (connected) {
-      for (int i = 0; i < 3; i++) {
-        if (data['document[$i]'] != 'null') {
-          String path = await getPath(dataIdentifier['document[$i]']);
-
-          data['document[$i]'] =
-              MultipartFile.fromString(path, filename: data['document[$i]']);
-          print('Getted Pathe: $path');
-        }
-        print('New Data:$data');
-        print('Type: ${data['document[$i]']}');
-        print('Type: ${data['document[$i]'].runtimeType}');
+    for (int i = 0; i < 3; i++) {
+      if (data['document[$i]'] != 'null') {
+        String path = await getPath(dataIdentifier['document[$i]']);
+        data['document[$i]'] =
+            MultipartFile.fromString(path, filename: data['document[$i]']);
+        // print('Getted Pathe: $path');
       }
-      FormData formData = new FormData.fromMap(data);
+      // print('New Data:$data');
+      // print('Type: ${data['document[$i]']}');
+      // print('Type: ${data['document[$i]'].runtimeType}');
+    }
+    FormData formData = new FormData.fromMap(data);
 
-      var response = await Dio().post(
-          APIS.serverURL + APIS.Req_Quotation_API + Constants.getLanguage(),
-          data: formData);
-      print('RQF response .. ${response.statusCode}');
-      print('RQF response .. ${response.data}');
+    var response = await Dio().post(
+        APIS.serverURL + APIS.Req_Quotation_API + Constants.getLanguage(),
+        data: formData);
+    // print('RQF response .. ${response.statusCode}');
+    // print('RQF response .. ${response.data}');
 
-      // var response = await http.post(
-      //   Uri.encodeFull(
-      //       APIS.serverURL + APIS.Req_Quotation_API + Constants.getLanguage()),
-      //   body: data,
-      // );
+    // var response = await http.post(
+    //   Uri.encodeFull(
+    //       APIS.serverURL + APIS.Req_Quotation_API + Constants.getLanguage()),
+    //   body: data,
+    // );
 
-      if (response.statusCode == 200) {
-        BaseModel modelResponse = BaseModel.fromJson(response.data);
-        return modelResponse.msg;
-      } else {
-        return null;
-      }
+    if (response.statusCode == 200) {
+      BaseModel modelResponse = BaseModel.fromJson(response.data);
+      return modelResponse.msg;
     } else {
-      return 'Mobile is not Connected';
+      return null;
     }
   }
 
