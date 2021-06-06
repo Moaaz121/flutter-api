@@ -59,7 +59,8 @@ class QuotationBloc extends Bloc<QuotationEvent, QuotationState> {
     } else if (event is ShowLoadedData) {
       yield ShowLoadedDataState();
     } else if (event is PostReqQuotation) {
-      String msg = await RequestQuotationsRepo().postReqQuotation(event.data);
+      String msg = await RequestQuotationsRepo()
+          .postReqQuotation(event.data, event.dataIdentifier);
       if (msg != 'Mobile is not Connected' && msg != null) {
         yield PostedQuotationResponseState(msg: msg);
       } else if (msg == 'Mobile is not Connected') {

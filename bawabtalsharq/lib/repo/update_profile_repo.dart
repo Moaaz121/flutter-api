@@ -43,6 +43,8 @@ class UpdateProfileRepo {
       "image": MultipartFile.fromString(image.path, filename: fileName),
     };
 
+    print(image.path + ' : ' + fileName);
+
     FormData formData = new FormData.fromMap(params);
 
     var response = await Dio()

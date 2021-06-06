@@ -2,12 +2,12 @@ import 'package:bawabtalsharq/Model/country_model.dart';
 import 'package:bawabtalsharq/Screens/forget_password/verification_OTP_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
+import 'package:bawabtalsharq/Utils/loading.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_bloc.dart';
 import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_event.dart';
 import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_state.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
-import 'package:bawabtalsharq/Utils/loading.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -103,7 +103,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: BlocListener<RegisterBloc, RegisterState>(
               listener: (context, state) {
                 if (state is EnterSMSCodeState) {
-                  Navigator.pushReplacement(
+                  Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (BuildContext context) => VerificationScreen(
@@ -147,6 +147,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     return _buildMain();
                   } else if (state is LoadingCountriesState) {
                     return LoadingLogo();
+                  } else if (state is RegisterNetworkErrorState) {
+                    return Center(
+                      child: Text(Languages.of(context).noNetwork),
+                    );
                   }
 
                   return _buildMain();

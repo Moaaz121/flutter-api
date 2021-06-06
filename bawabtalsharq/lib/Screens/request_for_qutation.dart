@@ -9,7 +9,8 @@ import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/Utils/loading.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-import 'package:bawabtalsharq/Utils/images.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:flutter_absolute_path/flutter_absolute_path.dart';
 
 class Requestforqutation extends StatefulWidget {
   @override
@@ -62,9 +63,11 @@ class _RequestforqutationState extends State<Requestforqutation> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   //Sent data
-  Map<String, String> data;
+  Map<String, dynamic> data;
+  Map<String, dynamic> dataIdentifier;
+
   QuotationBloc _quotationBloc;
-  // List<Asset> images = <Asset>[];
+  List<Asset> images = <Asset>[];
 
   @override
   void initState() {
@@ -79,7 +82,9 @@ class _RequestforqutationState extends State<Requestforqutation> {
       'pieces': 'null',
       'trade': 'null',
       'details': 'null',
-      'document': 'null',
+      'document[0]': 'null',
+      'document[1]': 'null',
+      'document[2]': 'null',
       'certifications': 'null',
       'other_requirements': 'null',
       'shipping_method': 'null',
@@ -87,6 +92,11 @@ class _RequestforqutationState extends State<Requestforqutation> {
       'lead_time': 'null',
       'ship_in': 'null',
       'payment_term': 'null',
+    };
+    dataIdentifier = {
+      'document[0]': 'null',
+      'document[1]': 'null',
+      'document[2]': 'null'
     };
   }
 
@@ -273,46 +283,46 @@ class _RequestforqutationState extends State<Requestforqutation> {
                             ),
                           ],
                         ),
-                        onPressed: _onCameraClick)),
+                        onPressed: loadAssets)),
               ),
             ),
             Visibility(
               visible: _showImages,
               child: Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(20, 20, 20, 0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    width: MediaQuery.of(context).size.width,
-                    height: 85,
-                    child: ListView.builder(
-                        itemCount: 7,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (ctx, i) {
-                          return Padding(
-                            padding: const EdgeInsets.all(3.0),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10.0),
-                              child: Container(
-                                width: 80,
-                                height: 85,
-                                child: this.imageUrl != null
-                                    ? Image.file(
-                                        _image,
-                                        fit: BoxFit.fill,
-                                      )
-                                    : Image.asset(
-                                        placeHolder,
-                                        fit: BoxFit.fill,
-                                      ),
+                  child: Center(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      width: MediaQuery.of(context).size.width,
+                      height: 85,
+                      child: ListView.builder(
+                          itemCount: images.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (ctx, i) {
+                            Asset asset = images[i];
+
+                            return Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(3.0),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  child: Container(
+                                      width: 80,
+                                      height: 85,
+                                      child: AssetThumb(
+                                        asset: asset,
+                                        width: 300,
+                                        height: 300,
+                                      )),
+                                ),
                               ),
-                            ),
-                          );
-                        }),
+                            );
+                          }),
+                    ),
                   )),
             ),
-
             Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
               child: GestureDetector(
@@ -533,7 +543,8 @@ class _RequestforqutationState extends State<Requestforqutation> {
                             data['ship_in'] = portCtrl.text.trim();
                             data['lead_time'] = leadTimeForInCtrl.text.trim();
                             data['payment_term'] = quantityCrtl.text.trim();
-                            _quotationBloc.add(PostReqQuotation(data: data));
+                            _quotationBloc.add(PostReqQuotation(
+                                data: data, dataIdentifier: dataIdentifier));
                           }
                           print('dataSubmit: $data');
                         }
@@ -776,45 +787,39 @@ class _RequestforqutationState extends State<Requestforqutation> {
     );
   }
 
-  _onCameraClick() {
-    final action = CupertinoActionSheet(
-      message: Text(
-        "Add profile picture",
-        style: TextStyle(fontSize: 15.0),
-      ),
-      actions: <Widget>[
-        CupertinoActionSheetAction(
-          child: Text("Choose from gallery"),
-          isDefaultAction: false,
-          onPressed: () async {
-            Navigator.pop(context);
-            PickedFile image =
-                await _imagePicker.getImage(source: ImageSource.gallery);
+  Future<void> loadAssets() async {
+    List<Asset> resultList = <Asset>[];
+    String error = 'No Error Detected';
 
-            if (image != null) {
-              setState(() {
-                _image = File(image.path);
-                _showImages = true;
-                imageUrl = image.path;
-
-                print('path: ${image.path}');
-                data['document'] = image.path;
-
-                print('path: ${_image.path.runtimeType}');
-              });
-              // path=  /data/user/0/com.bawabtalsharq/cache/image_picker7905254239152282226.jpg
-
-            }
-          },
+    try {
+      resultList = await MultiImagePicker.pickImages(
+        maxImages: 3,
+        enableCamera: true,
+        selectedAssets: images,
+        cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
+        materialOptions: MaterialOptions(
+          actionBarColor: "#E16036",
+          actionBarTitle: "Upload images",
+          allViewTitle: "All Photos",
+          useDetailsView: false,
+          selectCircleStrokeColor: "#000000",
         ),
-      ],
-      cancelButton: CupertinoActionSheetAction(
-        child: Text("Cancel"),
-        onPressed: () {
-          Navigator.pop(context);
-        },
-      ),
-    );
-    showCupertinoModalPopup(context: context, builder: (context) => action);
+      );
+    } on Exception catch (e) {
+      error = e.toString();
+    }
+
+    if (!mounted) return;
+
+    setState(() {
+      images = resultList;
+      _showImages = true;
+
+      for (int i = 0; i < images.length; i++) {
+        data['document[$i]'] = images[i].name;
+        dataIdentifier['document[$i]'] = images[i].identifier;
+      }
+      // _error = error;
+    });
   }
 }

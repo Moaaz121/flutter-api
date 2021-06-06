@@ -4,8 +4,10 @@ part of 'quotation_bloc.dart';
 abstract class QuotationEvent {}
 
 class PostReqQuotation extends QuotationEvent {
-  Map<String, String> data;
-  PostReqQuotation({@required this.data});
+  Map<String, dynamic> data;
+  Map<String, dynamic> dataIdentifier;
+
+  PostReqQuotation({@required this.data, @required this.dataIdentifier});
 }
 
 class GetCatergoryList extends QuotationEvent {}

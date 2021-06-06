@@ -5,15 +5,15 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:bawabtalsharq/Model/user_model.dart';
 import 'package:bawabtalsharq/Services/checkIntrernetConnectivity.dart';
-import 'package:http_parser/http_parser.dart';
-import 'package:mime/mime.dart';
-import 'package:numberpicker/numberpicker.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter_absolute_path/flutter_absolute_path.dart';
 
 class RequestQuotationsRepo {
   BaseModel modelResponse;
   InternetConnection connection = new InternetConnection();
 
-  Future<String> postReqQuotation(Map<String, String> data) async {
+  Future<String> postReqQuotation(
+      Map<String, dynamic> data, Map<String, dynamic> dataIdentifier) async {
     UserModel _userModel = await Constants.getUserInfo();
 
     data['ApiKey'] = _userModel.data.apiKey;
@@ -21,51 +21,45 @@ class RequestQuotationsRepo {
 
     bool connected = await connection.isConnected();
     if (connected) {
-      if (data['document'] != 'null') {
-        print('sendFile');
-        print('document:${data['document']}');
-        sendFile(data['document'], data);
-      } else {
-        var response = await http.post(
-          Uri.encodeFull(APIS.serverURL +
-              APIS.Req_Quotation_API +
-              Constants.getLanguage()),
-          body: data,
-        );
-        if (response.statusCode == 200) {
-          var decodedResponse = json.decode(response.body);
-          BaseModel modelResponse = BaseModel.fromJson(decodedResponse);
-          return modelResponse.msg;
-        } else {
-          return null;
+      for (int i = 0; i < 3; i++) {
+        if (data['document[$i]'] != 'null') {
+          String path = await getPath(dataIdentifier['document[$i]']);
+
+          data['document[$i]'] =
+              MultipartFile.fromString(path, filename: data['document[$i]']);
+          print('Getted Pathe: $path');
         }
+        print('New Data:$data');
+        print('Type: ${data['document[$i]']}');
+        print('Type: ${data['document[$i]'].runtimeType}');
+      }
+      FormData formData = new FormData.fromMap(data);
+
+      var response = await Dio().post(
+          APIS.serverURL + APIS.Req_Quotation_API + Constants.getLanguage(),
+          data: formData);
+      print('RQF response .. ${response.statusCode}');
+      print('RQF response .. ${response.data}');
+
+      // var response = await http.post(
+      //   Uri.encodeFull(
+      //       APIS.serverURL + APIS.Req_Quotation_API + Constants.getLanguage()),
+      //   body: data,
+      // );
+
+      if (response.statusCode == 200) {
+        BaseModel modelResponse = BaseModel.fromJson(response.data);
+        return modelResponse.msg;
+      } else {
+        return null;
       }
     } else {
       return 'Mobile is not Connected';
     }
   }
 
-  Future<dynamic> sendFile(String filePath, Map data) async {
-    String name = DateTime.now().millisecondsSinceEpoch.toString();
-    print('sendingFile');
-    final mimeTypeData =
-        lookupMimeType(filePath, headerBytes: [0xFF, 0xD8]).split('/');
-    var request = http.MultipartRequest(
-        'POST',
-        Uri.parse(
-            APIS.serverURL + APIS.Req_Quotation_API + Constants.getLanguage()));
-    request.files.add(await http.MultipartFile.fromPath('file', filePath,
-        filename: name,
-        contentType: MediaType(mimeTypeData[0], mimeTypeData[1])));
-    print('DataSending Fikle: $data');
-    request.fields.addAll(data);
-    http.StreamedResponse response = await request.send();
-    if (response.statusCode == 200) {
-      print('File Sent');
-
-      print(await response.stream.bytesToString());
-    } else {
-      print(response.reasonPhrase);
-    }
+  Future<String> getPath(imageIdentifier) async {
+    String path = await FlutterAbsolutePath.getAbsolutePath(imageIdentifier);
+    return path;
   }
 }

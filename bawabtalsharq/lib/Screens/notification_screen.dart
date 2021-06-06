@@ -158,6 +158,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   },
                 );
               }
+            } else if (snapshot is NoInternetState) {
+              return Center(
+                child: Text(Languages.of(context).noNetwork),
+              );
             } else {
               return SizedBox();
             }
