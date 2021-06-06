@@ -94,12 +94,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             SizedBox(
                               width: MediaQuery.of(context).size.width / 3 - 25,
                               child: mainHeaderButton(context, () {
-                                AnalyticsService().sendAnalyticsEvent(
-                                    eventName: 'RQF',
-                                    param: {
-                                      'msg': 'Open categories',
-                                      'bool': true,
-                                    });
+                                // AnalyticsService().sendAnalyticsEvent(
+                                //     eventName: 'RQF',
+                                //     param: {
+                                //       'msg': 'Open categories',
+                                //       'bool': true,
+                                //     });
                                 Navigator.pushNamed(
                                     context, ScreenRoutes.requestForQuotation);
                               }, Languages.of(context).requestForQ, requestForQ,
