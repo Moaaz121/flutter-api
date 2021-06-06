@@ -151,7 +151,7 @@ class _IndividualProductState extends State<IndividualProduct>
                       elevation: 0,
                       title: RemoveTitleAppBar(
                         child: Text(
-                          Languages.of(context).productInformation,
+                          product.data.product,
                           style: TextStyle(
                             fontSize: 19,
                             color: orangeColor,
