@@ -14,6 +14,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UpdateProfile extends StatefulWidget {
@@ -182,11 +183,9 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                   context, ScreenRoutes.mainScreen);
                             });
                           } else {
-                            SchedulerBinding.instance.addPostFrameCallback((_) {
-                              Scaffold.of(context).showSnackBar(
-                                  SnackBar(content: Text(state.response.msg)));
-                            });
-                            Navigator.pop(context);
+                            showToast(
+                                text: state.response.msg,
+                                toastGravity: ToastGravity.SNACKBAR);
                           }
                         }
                         return signInFlatButton(
