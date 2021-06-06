@@ -24,8 +24,10 @@ class UpdateProfileRepo {
     print('Change Password response .. ${response.body}');
     UserModel modelResponse = UserModel.fromJson(decodedResponse);
 
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('user', jsonEncode(modelResponse));
+    if (modelResponse.code == 200) {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('user', jsonEncode(modelResponse));
+    }
 
     return modelResponse;
   }
@@ -59,8 +61,10 @@ class UpdateProfileRepo {
     var decodedResponse = json.decode(response.toString());
     UserModel modelResponse = UserModel.fromJson(decodedResponse);
 
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('user', jsonEncode(modelResponse));
+    if (modelResponse.code == 200) {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('user', jsonEncode(modelResponse));
+    }
 
     return modelResponse;
   }
@@ -77,8 +81,10 @@ class UpdateProfileRepo {
     var decodedResponse = json.decode(response.body);
     UserModel modelResponse = UserModel.fromJson(decodedResponse);
 
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('user', jsonEncode(modelResponse));
+    if (modelResponse.code == 200) {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('user', jsonEncode(modelResponse));
+    }
 
     return modelResponse;
   }
