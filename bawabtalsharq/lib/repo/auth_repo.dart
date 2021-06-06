@@ -33,9 +33,9 @@ class AuthRepo {
   Future<UserModel> doRegister(
       String phone,
       String email,
-      String password,
       String firstname,
       String lastname,
+      String password,
       String userType,
       String country,
       String company) async {

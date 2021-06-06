@@ -24,16 +24,6 @@ class DoRegisterEvent extends RegisterEvent {
 
 class ResetState extends RegisterEvent {}
 
-class GetCountries extends RegisterEvent {}
-
-class GetLoadedCountries extends RegisterEvent {}
-
-class VerifyPhone extends RegisterEvent {
-  Map data;
-
-  VerifyPhone({@required this.data});
-}
-
 class SignWithOTP extends RegisterEvent {
   String verId, smsCode;
 

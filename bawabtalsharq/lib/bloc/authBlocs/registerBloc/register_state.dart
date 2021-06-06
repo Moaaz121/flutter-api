@@ -6,37 +6,11 @@ abstract class RegisterState {}
 
 class RegisterInitial extends RegisterState {}
 
-class LoadingCountriesState extends RegisterState {}
-
-class LoadedCountriesState extends RegisterState {
-  List<CountryData> countries;
-  LoadedCountriesState({@required this.countries});
-}
-
-class ShowLoadedCountriesState extends RegisterState {}
-
 class RegisterLoadingState extends RegisterState {}
-
-class RegisterNetworkErrorState extends RegisterState {}
-
-class VerifyingPhoneLoadingState extends RegisterState {}
 
 class RegisterLoadedState extends RegisterState {
   UserModel userResponse;
   RegisterLoadedState({this.userResponse});
-}
-
-class EnterSMSCodeState extends RegisterState {
-  String verId;
-  Map data;
-
-  EnterSMSCodeState({@required this.verId, @required this.data});
-}
-
-class VerifyinCode extends RegisterState {
-  Map data;
-
-  VerifyinCode({@required this.data});
 }
 
 class ResumeRegisterState extends RegisterState {}
@@ -53,3 +27,5 @@ class PhoneAlreadyRegisteredState extends RegisterState {
 }
 
 class ReReisgterWithNewNumber extends RegisterState {}
+
+class RegisterNetworkErrorState extends RegisterState {}

@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:bawabtalsharq/Utils/constants.dart';
-import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/main.dart';
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -12,37 +12,38 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  VideoPlayerController _controller;
   Timer _timer;
   int t;
   bool onBoarding;
 
-  startTime() async {
-    var _duration = new Duration(seconds: 3);
+  ChewieController chewieController;
+  VideoPlayerController videoPlayerController =
+      VideoPlayerController.asset('assets/animation_gif/bawaba_1.mp4');
+
+  startTime(int time) async {
+    var _duration = new Duration(milliseconds: time * 1000 + 150);
     return new Timer(_duration, navigationPage);
   }
 
   void navigationPage() async {
-    Navigator.pushReplacementNamed(context,
-        onBoarding ? ScreenRoutes.mainScreen : ScreenRoutes.introScreen);
+    if (videoPlayerController != null &&
+        !videoPlayerController.value.isPlaying) {
+      Navigator.pushReplacementNamed(context,
+          onBoarding ? ScreenRoutes.mainScreen : ScreenRoutes.introScreen);
+    } else {
+      startTime(1);
+    }
   }
 
   @override
-  void initState() {
-    _controller =
-        VideoPlayerController.asset('assets/animation_gif/bawaba_1.mp4');
-    _controller.play();
-    _controller.setLooping(true);
-    _controller.setVolume(0.0);
-    _controller.play();
+  initState() {
     super.initState();
-
     if (Constants.getDate(key: 'onBoarding') == null)
       onBoarding = false;
     else
       onBoarding = true;
     print(onBoarding);
-    startTime();
+    startTime(4);
   }
 
   @override
@@ -53,27 +54,18 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(splashImage),
-          fit: BoxFit.fill,
-        ),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(logo),
-          SizedBox(
-            height: 20,
-          ),
-          SizedBox(
-            width: _controller.value.size?.width ?? 0,
-            height: _controller.value.size?.height ?? 0,
-            child: VideoPlayer(_controller),
-          ),
-          // Image.asset(companyName),
-        ],
+    chewieController = ChewieController(
+      allowFullScreen: true,
+      showControls: false,
+      aspectRatio: MediaQuery.of(context).size.width /
+          MediaQuery.of(context).size.height,
+      videoPlayerController: videoPlayerController,
+      autoPlay: true,
+      looping: false,
+    );
+    return Expanded(
+      child: Chewie(
+        controller: chewieController,
       ),
     );
   }

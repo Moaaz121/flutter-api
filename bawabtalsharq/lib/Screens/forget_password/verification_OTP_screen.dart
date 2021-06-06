@@ -62,6 +62,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
           child: BlocListener<RegisterBloc, RegisterState>(
             listener: (context, state) {
               if (state is RegisterLoadedState) {
+                showToast(text: "Registration Completed Successfully!");
                 Navigator.pushReplacementNamed(
                     context, ScreenRoutes.mainScreen);
               } else if (state is FirebaseExceptionState) {
@@ -93,6 +94,10 @@ class _VerificationScreenState extends State<VerificationScreen> {
                       company: companyName));
                 } else if (state is RegisterLoadingState) {
                   return LoadingLogo();
+                } else if (state is RegisterNetworkErrorState) {
+                  return Center(
+                    child: Text(Languages.of(context).noNetwork),
+                  );
                 }
                 return _buildMain();
               },

@@ -40,7 +40,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
           builder: (context, state) {
             if (state is ForgetPasswordLoadingState) {
               if (!isLoading) {
-                showLoadingDialog(context);
+                progressBar();
                 isLoading = true;
               }
             } else if (state is ForgetPasswordLoadedState) {
@@ -48,16 +48,14 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               _forgetPasswordBloc.add(ResetState());
               isLoading = false;
               if (state.baseModel.code == 200) {
+                showToast(
+                    text: "Please check your email to reset your password");
                 print(state.baseModel.msg);
                 SchedulerBinding.instance.addPostFrameCallback((_) {
                   Navigator.pushNamed(context, ScreenRoutes.mainScreen);
                 });
               } else {
-                SchedulerBinding.instance.addPostFrameCallback((_) {
-                  _scaffoldKey.currentState.showSnackBar(
-                      new SnackBar(content: new Text(state.baseModel.msg)));
-                });
-                Navigator.pop(context);
+                showToast(text: state.baseModel.msg);
               }
             }
             return Container(

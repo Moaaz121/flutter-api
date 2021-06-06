@@ -239,10 +239,8 @@ abstract class Languages {
 // end Islam
 
 //start Asmaa
-  String get noInternertConnection;
-
   String get phoneAlreadyRegistered;
-
   String get termsConditions;
+  String get countryCode;
 //end Asmaa
 }

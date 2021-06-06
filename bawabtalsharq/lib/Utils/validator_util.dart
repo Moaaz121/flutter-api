@@ -12,3 +12,5 @@ bool passwordValidator(String password) {
 bool phoneValidator(String phone) {
   return RegExp(r'^-?[0-9]+$').hasMatch(phone);
 }
+
+

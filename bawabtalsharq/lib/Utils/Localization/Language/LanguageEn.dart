@@ -283,10 +283,11 @@ class LanguageEn extends Languages {
 // end Islam
 
 //Start Asmaa
-  String get noInternertConnection => 'No Internet Connection';
   String get phoneAlreadyRegistered =>
       'This number already registered, please register with another number';
   String get termsConditions =>
       'Please accept the terms and conditions to proceed...';
+  String get countryCode => 'Code';
+
 //end Asmaa
 }
