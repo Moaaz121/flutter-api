@@ -61,6 +61,7 @@ class _ChangePasswordState extends State<ChangePassword> {
             _changePasswordBloc.add(ResetState());
             isLoading = false;
             if (state.response.code == 200) {
+              showToast(text: "Password has been changed");
               SchedulerBinding.instance.addPostFrameCallback((_) {
                 Navigator.pushReplacementNamed(
                     context, ScreenRoutes.mainScreen);

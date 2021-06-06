@@ -1,16 +1,16 @@
+import 'dart:io';
+
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
+import 'package:bawabtalsharq/Utils/loading.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/bloc/QuotationBloc/quotation_bloc.dart';
+import 'package:bawabtalsharq/main.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:bawabtalsharq/bloc/QuotationBloc/quotation_bloc.dart';
-import 'package:bawabtalsharq/main.dart';
-import 'package:bawabtalsharq/Utils/loading.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
 import 'package:multi_image_picker/multi_image_picker.dart';
-import 'package:flutter_absolute_path/flutter_absolute_path.dart';
 
 class Requestforqutation extends StatefulWidget {
   @override
@@ -141,8 +141,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
             child: BlocListener<QuotationBloc, QuotationState>(
               listener: (context, state) {
                 if (state is PostedQuotationResponseState) {
-                  _scaffoldKey.currentState
-                      .showSnackBar(new SnackBar(content: new Text(state.msg)));
+                  showToast(text: "Your request was successfully submitted");
                   Navigator.pushReplacementNamed(
                       context, ScreenRoutes.mainScreen);
                 } else if (state is NoInternetState) {

@@ -176,6 +176,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           _updateAccountBloc.add(ResetState());
                           isLoading = false;
                           if (state.response.code == 200) {
+                            showToast(text: "Update Successful");
                             SchedulerBinding.instance.addPostFrameCallback((_) {
                               Navigator.pushReplacementNamed(
                                   context, ScreenRoutes.mainScreen);

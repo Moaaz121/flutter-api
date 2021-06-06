@@ -65,6 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
             _loginBloc.add(ResetState());
             isLoading = false;
             if (state.userResponse.code == 200) {
+              showToast(text: "Login Successfully!");
               SchedulerBinding.instance.addPostFrameCallback((_) {
                 Navigator.pushNamed(context, ScreenRoutes.mainScreen);
               });
