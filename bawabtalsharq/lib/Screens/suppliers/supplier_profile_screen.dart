@@ -123,12 +123,19 @@ class _SupplierProfileState extends State<SupplierProfile>
           );
         }
         if (state is SupplierProfileLoadedState) {
-          isLoaded = true;
-          isLoading = true;
-          supplierProfileData = state.supplierProfileResponse;
+          if (state.supplierProfileResponse.code == 200) {
+            isLoaded = true;
+            isLoading = true;
+            supplierProfileData = state.supplierProfileResponse;
+          } else {
+            errorMessage = state.supplierProfileResponse.msg;
+          }
         }
-        if (state is SupplierProfileErrorState)
+        if (state is SupplierProfileNetworkErrorState) {
           errorMessage = 'No Internet Connection';
+        }
+        if (state is SupplierProfileErrorState) errorMessage = state.message;
+
         return Scaffold(
             body: isLoaded
                 ? SafeArea(

@@ -70,19 +70,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 Navigator.pushNamed(context, ScreenRoutes.mainScreen);
               });
             } else {
-              SchedulerBinding.instance.addPostFrameCallback((_) {
-                _scaffoldKey.currentState.showSnackBar(
-                    new SnackBar(content: new Text(state.userResponse.msg)));
-              });
+              showToast(text: state.userResponse.msg);
             }
           } else if (state is LoginNetworkErrorState) {
-            SchedulerBinding.instance.addPostFrameCallback((_) {
-              _scaffoldKey.currentState.showSnackBar(
-                new SnackBar(
-                  content: new Text(Languages.of(context).noNetwork),
-                ),
-              );
-            });
+            showToast(text: Languages.of(context).noNetwork);
           }
           return Container(
             height: MediaQuery.of(context).size.height,

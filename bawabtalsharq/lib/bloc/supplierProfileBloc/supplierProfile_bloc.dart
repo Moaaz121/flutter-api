@@ -1,4 +1,5 @@
 import 'package:bawabtalsharq/Model/supplier_model.dart';
+import 'package:bawabtalsharq/Services/checkIntrernetConnectivity.dart';
 import 'package:bawabtalsharq/bloc/supplierProfileBloc/supplierProfile_event.dart';
 import 'package:bawabtalsharq/bloc/supplierProfileBloc/supplierProfile_state.dart';
 import 'package:bawabtalsharq/repo/supplierProfile_repo.dart';
@@ -10,15 +11,19 @@ class SupplierProfileBloc
   Stream<SupplierProfileState> mapEventToState(
       SupplierProfileEvent event) async* {
     if (event is DoSupplierProfileEvent) {
-      yield SupplierProfileLoadingState();
-      try {
-        SupplierProfileModel data =
-            await SupplierProfileRepo.getSupplierProfile(event.id);
-        print(data.supplierData);
-        yield SupplierProfileLoadedState(supplierProfileResponse: data);
-      } catch (e) {
-        yield SupplierProfileErrorState(message: e.toString());
-      }
+      bool isConnected = await InternetConnection.isConnected2();
+      if (isConnected) {
+        yield SupplierProfileLoadingState();
+        try {
+          SupplierProfileModel data =
+              await SupplierProfileRepo.getSupplierProfile(event.id);
+          print(data.supplierData);
+          yield SupplierProfileLoadedState(supplierProfileResponse: data);
+        } catch (e) {
+          yield SupplierProfileErrorState(message: e.toString());
+        }
+      } else
+        yield SupplierProfileNetworkErrorState();
     } else if (event is ResetState) {
       yield SupplierProfileInitial();
     }

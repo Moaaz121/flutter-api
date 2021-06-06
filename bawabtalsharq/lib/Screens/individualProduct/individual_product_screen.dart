@@ -39,7 +39,7 @@ class _IndividualProductState extends State<IndividualProduct>
   IndividualProductBloc _productBloc;
   bool isLoading = false;
   bool isLoaded = false;
-  ProductDetails product;
+  IndividualProductModel product;
   TabController _controllerTab;
   final scrollController = ScrollController();
   final List<String> _tabs = <String>[
@@ -80,21 +80,40 @@ class _IndividualProductState extends State<IndividualProduct>
             );
           }
           if (state is IndividualProductLoadedState) {
-            isLoaded = true;
-            product = state.individualProductResponse;
+            if (state.individualProductResponse.code == 200) {
+              isLoaded = true;
+              product = state.individualProductResponse;
 
-            if (currentUser != null) {
-              _productBloc.add(DoHistoryEvent(currentUser.data.userId,
-                  currentUser.data.apiKey, widget.productId));
+              if (currentUser != null) {
+                _productBloc.add(DoHistoryEvent(currentUser.data.userId,
+                    currentUser.data.apiKey, widget.productId));
+              }
+            } else {
+              return Scaffold(
+                body: Center(
+                  child: Container(
+                    child: Text(state.individualProductResponse.msg),
+                  ),
+                ),
+              );
             }
           }
           if (state is HistoryLoadedState) {
             print('History Respone' + state.historyResponse.msg);
           }
+          if (state is IndividualProductNetworkErrorState) {
+            return Scaffold(
+              body: Center(
+                child: Container(
+                  child: Text(Languages.of(context).noNetwork),
+                ),
+              ),
+            );
+          }
           return DefaultTabController(
             length: _tabs.length,
             child: Scaffold(
-              floatingActionButton: productFab(product.price),
+              floatingActionButton: productFab(product.data.price),
               body: NestedScrollView(
                 headerSliverBuilder:
                     (BuildContext context, bool innerBoxScrolled) {
@@ -168,7 +187,7 @@ class _IndividualProductState extends State<IndividualProduct>
                                       itemBuilder:
                                           (context, index, realIndex) =>
                                               CachedNetworkImage(
-                                        imageUrl: product.imagePath,
+                                        imageUrl: product.data.imagePath,
                                         placeholder: (context, url) => Padding(
                                           padding: EdgeInsets.all(10),
                                           child: Container(
@@ -211,7 +230,8 @@ class _IndividualProductState extends State<IndividualProduct>
                                                             fontWeight:
                                                                 FontWeight
                                                                     .bold),
-                                                        text: product.product),
+                                                        text: product
+                                                            .data.product),
                                                   ),
                                                 ),
                                                 SizedBox(
@@ -239,7 +259,7 @@ class _IndividualProductState extends State<IndividualProduct>
                                                         print(rating);
                                                       },
                                                     ),
-                                                    Text(product.rating)
+                                                    Text(product.data.rating)
                                                   ],
                                                 ),
                                               ])),
@@ -299,16 +319,18 @@ class _IndividualProductState extends State<IndividualProduct>
                                 child: Column(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
-                                      product.color.isEmpty
+                                      product.data.color.isEmpty
                                           ? SizedBox()
                                           : Center(child: productColor()),
                                       overViewText(
-                                          Html(data: product.fullDescription),
+                                          Html(
+                                              data:
+                                                  product.data.fullDescription),
                                           context),
                                       SizedBox(
                                         height: 20,
                                       ),
-                                      product.faq.isEmpty
+                                      product.data.faq.isEmpty
                                           ? SizedBox()
                                           : productFaq(
                                               title: Languages.of(context).faq,
@@ -316,19 +338,19 @@ class _IndividualProductState extends State<IndividualProduct>
                                       SizedBox(
                                         height: 20,
                                       ),
-                                      product.detailedPictures.isEmpty
+                                      product.data.detailedPictures.isEmpty
                                           ? SizedBox()
                                           : detailsPictures(),
                                       SizedBox(
                                         height: 20,
                                       ),
-                                      product.packingShipping.isEmpty
+                                      product.data.packingShipping.isEmpty
                                           ? SizedBox()
                                           : listOfBackingChipping(),
                                       SizedBox(
                                         height: 20,
                                       ),
-                                      product.certificates.isEmpty
+                                      product.data.certificates.isEmpty
                                           ? SizedBox()
                                           : certificateListView(),
                                     ])),
@@ -341,15 +363,15 @@ class _IndividualProductState extends State<IndividualProduct>
                       child: Padding(
                         padding: const EdgeInsets.only(top: 30, left: 10),
                         child: infoCartSupplier(
-                            '${product.company}',
-                            '${product.year}' +
+                            '${product.data.company}',
+                            '${product.data.year}' +
                                 ' ${Languages.of(context).year}',
-                            '${product.countryName}',
-                            '${product.category}',
-                            '${product.countryImage}', () {
+                            '${product.data.countryName}',
+                            '${product.data.category}',
+                            '${product.data.countryImage}', () {
                           Navigator.pushNamed(
                               context, ScreenRoutes.supplierProfileScreen,
-                              arguments: product.companyId);
+                              arguments: product.data.companyId);
                         }),
                       ),
                     ),
@@ -601,12 +623,12 @@ class _IndividualProductState extends State<IndividualProduct>
             children: [
               Icon(
                 Icons.circle,
-                color: Color(int.parse(product.color[index])),
+                color: Color(int.parse(product.data.color[index])),
               ),
               SizedBox(
                 width: 8,
               ),
-              Text('${product.price}'),
+              Text('${product.data.price}'),
               SizedBox(
                 width: 20,
               ),
@@ -632,7 +654,7 @@ class _IndividualProductState extends State<IndividualProduct>
           padding: EdgeInsets.only(top: 5, bottom: 5),
           shrinkWrap: true,
           scrollDirection: Axis.vertical,
-          itemCount: product.faq.length,
+          itemCount: product.data.faq.length,
           itemBuilder: (context, position) {
             return Padding(
               padding: const EdgeInsets.only(bottom: 5),
@@ -640,14 +662,14 @@ class _IndividualProductState extends State<IndividualProduct>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    product.faq[position].question,
+                    product.data.faq[position].question,
                     style: TextStyle(color: Colors.black, fontSize: 12),
                   ),
                   SizedBox(
                     height: 2,
                   ),
                   Text(
-                    product.faq[position].answer,
+                    product.data.faq[position].answer,
                     style: TextStyle(color: Colors.black54, fontSize: 12),
                   ),
                 ],
@@ -690,7 +712,7 @@ class _IndividualProductState extends State<IndividualProduct>
           reverse: false,
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
-          itemCount: product.packingShipping.length,
+          itemCount: product.data.packingShipping.length,
           itemBuilder: (context, position) {
             return Padding(
               padding: const EdgeInsets.only(bottom: 20),
@@ -705,7 +727,7 @@ class _IndividualProductState extends State<IndividualProduct>
                         color: Colors.white,
                       ),
                       child: CachedNetworkImage(
-                        imageUrl: product.packingShipping[position].image,
+                        imageUrl: product.data.packingShipping[position].image,
                         placeholder: (context, url) => Padding(
                           padding: EdgeInsets.all(5),
                           child: Container(
@@ -727,7 +749,8 @@ class _IndividualProductState extends State<IndividualProduct>
                     SizedBox(
                       height: 11,
                     ),
-                    buildText(product.packingShipping[position].description, 12,
+                    buildText(
+                        product.data.packingShipping[position].description, 12,
                         textAlign: TextAlign.center, color: Colors.black87),
                   ]),
             );
@@ -750,7 +773,7 @@ class _IndividualProductState extends State<IndividualProduct>
           height: 80,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: product.certificates.length,
+            itemCount: product.data.certificates.length,
             itemBuilder: (context, position) {
               return Container(
                 margin: EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
@@ -759,7 +782,7 @@ class _IndividualProductState extends State<IndividualProduct>
                   color: Colors.white,
                 ),
                 child: CachedNetworkImage(
-                  imageUrl: product.certificates[position],
+                  imageUrl: product.data.certificates[position],
                   placeholder: (context, url) => Padding(
                     padding: EdgeInsets.all(5),
                     child: Container(
@@ -804,13 +827,14 @@ class _IndividualProductState extends State<IndividualProduct>
           crossAxisCount: 4,
           crossAxisSpacing: 15,
           mainAxisSpacing: 15,
-          children: List.generate(product.detailedPictures.length, (index) {
+          children:
+              List.generate(product.data.detailedPictures.length, (index) {
             return GridTile(
               child: Card(
                   color: Colors.white,
                   child: Center(
                     child: CachedNetworkImage(
-                      imageUrl: product.detailedPictures[index],
+                      imageUrl: product.data.detailedPictures[index],
                       placeholder: (context, url) => Padding(
                         padding: EdgeInsets.all(5),
                         child: Container(
