@@ -2097,19 +2097,16 @@ void showPhoneDialog(BuildContext context) async {
   });
 }
 
-Widget customTextFormField(
-  BuildContext context, {
-  String label,
-  IconButton rightBtn,
-  IconData leftIcon,
-  TextEditingController controller,
-  double width = 1,
-  TextInputType textInputType,
-  errorText,
-  bool isPassword = false,
-
-  String hintText
-}) {
+Widget customTextFormField(BuildContext context,
+    {String label,
+    IconButton rightBtn,
+    IconData leftIcon,
+    TextEditingController controller,
+    double width = 1,
+    TextInputType textInputType,
+    errorText,
+    bool isPassword = false,
+    String hintText}) {
   return SizedBox(
     width: MediaQuery.of(context).size.width * width,
     child: TextFormField(
@@ -2117,18 +2114,24 @@ Widget customTextFormField(
       controller: controller,
       obscureText: isPassword,
       validator: (value) {
+        print(value);
         if (value == null || value.isEmpty) {
           return 'Please enter some text';
-        } else if (label == 'E-mail' &&
+        } else if (label == Languages.of(context).email &&
             !emailValidator(controller.text.trim())) {
           return 'please enter correct email address';
-        } else if (label == 'Tel' && !phoneValidator(controller.text.trim())) {
+        } else if (label == Languages.of(context).tel &&
+            !phoneValidator(controller.text.trim())) {
           return 'please enter correct Phone Number';
-        } else if (label == 'Login Password' &&
+        } else if (label == Languages.of(context).loginPass &&
             !passwordValidator(controller.text.trim())) {
           return 'Weak Password';
-        }
-        return null;
+        } else if (label == Languages.of(context).countryCode &&
+                value == null ||
+            value.isEmpty) {
+          return 'Enter code';
+        } else
+          return null;
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(

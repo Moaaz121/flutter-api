@@ -93,6 +93,10 @@ class _VerificationScreenState extends State<VerificationScreen> {
                       company: companyName));
                 } else if (state is RegisterLoadingState) {
                   return LoadingLogo();
+                } else if (state is RegisterNetworkErrorState) {
+                  return Center(
+                    child: Text(Languages.of(context).noNetwork),
+                  );
                 }
                 return _buildMain();
               },

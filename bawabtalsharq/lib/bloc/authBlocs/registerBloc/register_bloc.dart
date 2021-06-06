@@ -20,45 +20,31 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         var response = await AuthRepo().doRegister(
             event.phone,
             event.email,
-            event.password,
             event.firstname,
             event.lastname,
+            event.password,
             event.userType,
             event.country,
             event.company);
         yield RegisterLoadedState(userResponse: response);
       } else
         yield RegisterNetworkErrorState();
-    } else if (event is VerifyPhone) {
-      yield VerifyingPhoneLoadingState();
-      var verId = await AuthRepo().verifyPhone(event.data['phone']);
-
-      if (verId['e'] != null) {
-        yield FirebaseExceptionState(msg: verId['e']);
-      } else {
-        yield EnterSMSCodeState(verId: verId['verId'], data: event.data);
-      }
     } else if (event is SignWithOTP) {
-      String signInState =
-          await AuthRepo().signInWithOTP(event.smsCode, event.verId);
-      print('State: $signInState');
-      if (signInState == 'Verified Succefully') {
-        yield ResumeRegisterState();
-      } else if (signInState == 'User already registered') {
-        yield PhoneAlreadyRegisteredState(msg: signInState);
-      } else {
-        yield FirebaseExceptionState(msg: signInState);
-      }
-    } else if (event is GetCountries) {
       bool isConnected = await InternetConnection.isConnected2();
       if (isConnected) {
-        yield LoadingCountriesState();
-        List<CountryData> countries = await CountriesRepo().getCountries();
-        yield LoadedCountriesState(countries: countries);
-      } else
+        String signInState =
+            await AuthRepo().signInWithOTP(event.smsCode, event.verId);
+        print('State: $signInState');
+        if (signInState == 'Verified Succefully') {
+          yield ResumeRegisterState();
+        } else if (signInState == 'User already registered') {
+          yield PhoneAlreadyRegisteredState(msg: signInState);
+        } else {
+          yield FirebaseExceptionState(msg: signInState);
+        }
+      } else {
         yield RegisterNetworkErrorState();
-    } else if (event is GetLoadedCountries) {
-      yield ShowLoadedCountriesState();
+      }
     } else if (event is ResetState) {
       yield RegisterInitial();
     } else if (event is ReRegister) {

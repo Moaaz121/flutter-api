@@ -4,9 +4,10 @@ import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/loading.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
-import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_bloc.dart';
-import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_event.dart';
-import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_state.dart';
+import 'package:bawabtalsharq/bloc/authBlocs/verifyPhone/verifyphone_bloc.dart';
+import 'package:bawabtalsharq/bloc/authBlocs/verifyPhone/verifyphone_state.dart';
+import 'package:bawabtalsharq/bloc/authBlocs/verifyPhone/verifyphone_event.dart';
+
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +45,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool _passwordErrorMessage;
   bool isLoading = false;
 
-  RegisterBloc _registerBloc;
+  VerifyphoneBloc _verifyphoneBloc;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -54,8 +55,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.initState();
     selectedRadioTile = 0;
 
-    _registerBloc = RegisterBloc();
-    _registerBloc.add(GetCountries());
+    _verifyphoneBloc = VerifyphoneBloc();
+    _verifyphoneBloc.add(GetCountries());
 
     _passwordErrorMessage = false;
   }
@@ -102,8 +103,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
         body: Form(
           key: _formKey,
           child: BlocProvider(
-            create: (context) => _registerBloc,
-            child: BlocListener<RegisterBloc, RegisterState>(
+            create: (context) => _verifyphoneBloc,
+            child: BlocListener<VerifyphoneBloc, VerifyphoneState>(
               listener: (context, state) {
                 if (state is EnterSMSCodeState) {
                   Navigator.push(
@@ -113,19 +114,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             verId: state.verId, data: state.data),
                       ));
                 } else if (state is FirebaseExceptionState) {
-                  setState(() {
-                    isLoading = false;
-                  });
-                  Navigator.pop(context);
-                  _scaffoldKey.currentState.showSnackBar(
-                    SnackBar(
-                      content: Text(state.msg),
-                    ),
-                  );
-                } else if (state is PhoneAlreadyRegisteredState) {
-                  setState(() {
-                    isLoading = false;
-                  });
                   Navigator.pop(context);
                   _scaffoldKey.currentState.showSnackBar(
                     SnackBar(
@@ -134,29 +122,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   );
                 }
               },
-              child: BlocBuilder<RegisterBloc, RegisterState>(
-                bloc: _registerBloc,
+              child: BlocBuilder<VerifyphoneBloc, VerifyphoneState>(
+                bloc: _verifyphoneBloc,
                 builder: (context, state) {
-                  if (state is VerifyingPhoneLoadingState) {
-                    return LoadingLogo();
-                  } else if (state is LoadedCountriesState) {
+                  if (state is LoadedCountriesState) {
                     List.generate(state.countries.length, (i) {
                       _countries.add(state.countries[i]);
                       _countriesName.add(state.countries[i].country);
                     });
-                    _registerBloc.add(GetLoadedCountries());
-                    return LoadingLogo();
-                  } else if (state is ShowLoadedCountriesState) {
-                    return _buildMain();
+                    isLoading = false;
+                    return _buildMain(state.countries);
                   } else if (state is LoadingCountriesState) {
                     return LoadingLogo();
-                  } else if (state is RegisterNetworkErrorState) {
+                  } else if (state is VerifyphoneNetworkErrorState) {
                     return Center(
                       child: Text(Languages.of(context).noNetwork),
                     );
+                  } else if (state is VerifyingPhoneLoadingState) {
+                    return LoadingLogo();
+                  } else if (state is VerifyphoneInitial) {
+                    isLoading = false;
                   }
-
-                  return _buildMain();
+                  return _buildMain(null);
                 },
               ),
             ),
@@ -164,7 +151,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ));
   }
 
-  Widget _buildMain() {
+  Widget _buildMain(List<CountryData> countries) {
     return Stack(
       children: [
         Positioned(
@@ -190,210 +177,211 @@ class _SignUpScreenState extends State<SignUpScreen> {
               boxShadow: [
                 makeShadow(),
               ]),
-          child: SingleChildScrollView(
-            reverse: false,
-            padding: EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                backIconRounded(onBackPressed: () {
-                  Navigator.of(context).pop();
-                }),
-                buildSizedBox(height: 20),
-                buildText(Languages.of(context).signUp, 40,
-                    fontWeight: FontWeight.w700),
-                buildSizedBox(height: 10),
-                buildSizedBox(height: 10),
-                buildText(
-                  Languages.of(context).plzSecect,
-                  15,
-                  color: Colors.grey[500],
-                  fontWeight: FontWeight.w400,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    buildRadioListTile(Languages.of(context).buyer, 1),
-                    buildRadioListTile(Languages.of(context).seller, 2),
-                    buildRadioListTile(Languages.of(context).both, 3),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: customTextFormField(
-                        context,
-                        textInputType: TextInputType.emailAddress,
-                        controller: firstNameController,
-                        label: Languages.of(context).firstName,
-                        width: .50,
+          child: isLoading
+              ? LoadingLogo()
+              : SingleChildScrollView(
+                  reverse: false,
+                  padding: EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      backIconRounded(onBackPressed: () {
+                        Navigator.of(context).pop();
+                      }),
+                      buildSizedBox(height: 20),
+                      buildText(Languages.of(context).signUp, 40,
+                          fontWeight: FontWeight.w700),
+                      buildSizedBox(height: 10),
+                      buildSizedBox(height: 10),
+                      buildText(
+                        Languages.of(context).plzSecect,
+                        15,
+                        color: Colors.grey[500],
+                        fontWeight: FontWeight.w400,
                       ),
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    Expanded(
-                      child: customTextFormField(context,
-                          textInputType: TextInputType.emailAddress,
-                          label: Languages.of(context).lasttNam,
-                          width: .50,
-                          controller: lastNameController),
-                    ),
-                  ],
-                ),
-                customTextFormField(context,
-                    textInputType: TextInputType.emailAddress,
-                    controller: emailController,
-                    label: Languages.of(context).email,
-                    width: 1,
-                    leftIcon: Icons.email),
-                customTextFormField(
-                  context,
-                  textInputType: TextInputType.visiblePassword,
-                  controller: passwordController,
-                  width: 1,
-                  label: Languages.of(context).loginPass,
-                  leftIcon: Icons.lock,
-                  isPassword: obSecureText,
-                  rightBtn: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        obSecureText = !obSecureText;
-                      });
-                    },
-                    icon: Icon(
-                        obSecureText ? Icons.visibility_off : Icons.visibility),
-                  ),
-                ),
-                customTextFormField(
-                  context,
-                  width: 1,
-                  label: Languages.of(context).confirmPass,
-                  textInputType: TextInputType.visiblePassword,
-                  isPassword: obSecureText,
-                  controller: confirmpasswordController,
-                  leftIcon: Icons.lock,
-                  rightBtn: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        obSecureText = !obSecureText;
-                      });
-                    },
-                    icon: Icon(
-                        obSecureText ? Icons.visibility_off : Icons.visibility),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Visibility(
-                    visible: _passwordErrorMessage,
-                    child: Text(
-                      'Password and confirm password does not match',
-                      style: TextStyle(color: Colors.red, fontSize: 10),
-                    ),
-                  ),
-                ),
-                Row(
-                  children: [
-                    Flexible(
-                      flex: 2,
-                      child: customTextFormField(context,
-                          textInputType: TextInputType.phone,
-                          controller: countryCodeController,
-                          label: Languages.of(context).countryCode,
-                          leftIcon: Icons.phone,
-                          hintText: '+20'),
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Flexible(
-                      flex: 5,
-                      child: customTextFormField(
-                        context,
-                        textInputType: TextInputType.phone,
-                        controller: phoneController,
-                        label: Languages.of(context).tel,
-                        // leftIcon: Icons.phone
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          buildRadioListTile(Languages.of(context).buyer, 1),
+                          buildRadioListTile(Languages.of(context).seller, 2),
+                          buildRadioListTile(Languages.of(context).both, 3),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Visibility(
-                  visible: companyTypeBool,
-                  child: customTextFormField(context,
-                      width: 1,
-                      controller: companyController,
-                      label: Languages.of(context).companyName,
-                      leftIcon: Icons.home_work),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                buildSizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: dropDownButton()),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    signInFlatButton(
-                        context,
-                        MediaQuery.of(context).size.height,
-                        Languages.of(context).signUp, () {
-                      FocusScope.of(context).unfocus();
-
-                      if (_formKey.currentState.validate()) {
-                        if (selectedRadio == null) {
-                          _scaffoldKey.currentState.showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                'User type is not selected',
-                                style: TextStyle(color: Colors.red),
-                              ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: customTextFormField(
+                              context,
+                              textInputType: TextInputType.text,
+                              controller: firstNameController,
+                              label: Languages.of(context).firstName,
+                              width: .50,
                             ),
-                          );
-                        } else if (passwordController.text.trim() !=
-                            confirmpasswordController.text.trim()) {
-                          setState(() {
-                            _passwordErrorMessage = true;
-                          });
-                        } else {
-                          _passwordErrorMessage = false;
-                          isLoading = true;
+                          ),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Expanded(
+                            child: customTextFormField(context,
+                                textInputType: TextInputType.text,
+                                label: Languages.of(context).lasttNam,
+                                width: .50,
+                                controller: lastNameController),
+                          ),
+                        ],
+                      ),
+                      customTextFormField(context,
+                          textInputType: TextInputType.emailAddress,
+                          controller: emailController,
+                          label: Languages.of(context).email,
+                          width: 1,
+                          leftIcon: Icons.email),
+                      customTextFormField(
+                        context,
+                        textInputType: TextInputType.visiblePassword,
+                        controller: passwordController,
+                        width: 1,
+                        label: Languages.of(context).loginPass,
+                        leftIcon: Icons.lock,
+                        isPassword: obSecureText,
+                        rightBtn: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              obSecureText = !obSecureText;
+                            });
+                          },
+                          icon: Icon(obSecureText
+                              ? Icons.visibility_off
+                              : Icons.visibility),
+                        ),
+                      ),
+                      customTextFormField(
+                        context,
+                        width: 1,
+                        label: Languages.of(context).confirmPass,
+                        textInputType: TextInputType.visiblePassword,
+                        isPassword: obSecureText,
+                        controller: confirmpasswordController,
+                        leftIcon: Icons.lock,
+                        rightBtn: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              obSecureText = !obSecureText;
+                            });
+                          },
+                          icon: Icon(obSecureText
+                              ? Icons.visibility_off
+                              : Icons.visibility),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Visibility(
+                          visible: _passwordErrorMessage,
+                          child: Text(
+                            'Password and confirm password does not match',
+                            style: TextStyle(color: Colors.red, fontSize: 10),
+                          ),
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Flexible(
+                            flex: 2,
+                            child: customTextFormField(context,
+                                textInputType: TextInputType.phone,
+                                controller: countryCodeController,
+                                label: Languages.of(context).countryCode,
+                                leftIcon: Icons.phone,
+                                hintText: '+20'),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Flexible(
+                            flex: 5,
+                            child: customTextFormField(
+                              context,
+                              textInputType: TextInputType.phone,
+                              controller: phoneController,
+                              label: Languages.of(context).tel,
+                              // leftIcon: Icons.phone
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Visibility(
+                        visible: companyTypeBool,
+                        child: customTextFormField(context,
+                            width: 1,
+                            controller: companyController,
+                            label: Languages.of(context).companyName,
+                            leftIcon: Icons.home_work),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      buildSizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: dropDownButton(countries)),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          signInFlatButton(
+                              context,
+                              MediaQuery.of(context).size.height,
+                              Languages.of(context).signUp, () {
+                            FocusScope.of(context).unfocus();
 
-                          print('Verifying phone');
-                          print(
-                              '${countryCodeController.text.trim()}${phoneController.text.trim()}');
-                          data = {
-                            'phone':
-                                '${countryCodeController.text.trim()}${phoneController.text.trim()}',
-                            'email': emailController.text.trim(),
-                            'firstname': firstNameController.text.trim(),
-                            'lastname': lastNameController.text.trim(),
-                            'password': passwordController.text.trim(),
-                            'userType': selectedRadio,
-                            'company': companyController.text.trim(),
-                            'country': countryCode
-                          };
+                            if (_formKey.currentState.validate()) {
+                              if (selectedRadio == null) {
+                                _scaffoldKey.currentState.showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'User type is not selected',
+                                      style: TextStyle(color: Colors.red),
+                                    ),
+                                  ),
+                                );
+                              } else if (passwordController.text.trim() !=
+                                  confirmpasswordController.text.trim()) {
+                                setState(() {
+                                  _passwordErrorMessage = true;
+                                });
+                              } else {
+                                _passwordErrorMessage = false;
+                                isLoading = true;
 
-                          _registerBloc.add(VerifyPhone(
-                            data: data,
-                          ));
-                        }
-                      }
-                    }),
-                  ],
+                                data = {
+                                  'phone':
+                                      '${countryCodeController.text.trim()}${phoneController.text.trim()}',
+                                  'email': emailController.text.trim(),
+                                  'firstname': firstNameController.text.trim(),
+                                  'lastname': lastNameController.text.trim(),
+                                  'password': passwordController.text.trim(),
+                                  'userType': selectedRadio,
+                                  'company': companyController.text.trim(),
+                                  'country': countryCode
+                                };
+
+                                _verifyphoneBloc.add(VerifyPhone(
+                                  data: data,
+                                ));
+                              }
+                            }
+                          }),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ],
-            ),
-          ),
         ),
       ],
     );
@@ -423,7 +411,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  Widget dropDownButton() {
+  Widget dropDownButton(List<CountryData> countries) {
     return Container(
       child: Padding(
         padding: const EdgeInsets.all(0),
@@ -444,17 +432,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
               filled: true,
               fillColor: Colors.white),
           isExpanded: true,
-          items: _countriesName.map((String value) {
+          items:
+              //  _countriesName.map((String value) {
+              //   return DropdownMenuItem<String>(
+              //     value: value,
+              //     child: Text(value,
+              //         style: TextStyle(color: Colors.black, fontSize: 14)),
+              //   );
+              // }).toList()
+
+              countries.map((e) {
             return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value,
+              value: e.country,
+              child: Text(e.country,
                   style: TextStyle(color: Colors.black, fontSize: 14)),
             );
           }).toList(),
           onChanged: (dropDownVal) {
             setState(() {
-              countryCode =
-                  _countries[_countriesName.indexOf(dropDownVal)].code;
+              countryCode = countries
+                  .where((element) => element.country == dropDownVal)
+                  .single
+                  .code;
             });
           },
           validator: (value) {
