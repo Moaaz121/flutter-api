@@ -10,6 +10,7 @@ import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
 class Requestforqutation extends StatefulWidget {
@@ -149,6 +150,10 @@ class _RequestforqutationState extends State<Requestforqutation> {
                   } else if (state is ReqQuotationErrorState) {
                     _scaffoldKey.currentState.showSnackBar(
                         new SnackBar(content: new Text(state.msg)));
+                  } else if (state is QuotationNetworkErrorState) {
+                    return Center(
+                      child: Text(Languages.of(context).noNetwork),
+                    );
                   }
                   return buildBody();
                 },
@@ -525,6 +530,10 @@ class _RequestforqutationState extends State<Requestforqutation> {
                                 data: data, dataIdentifier: dataIdentifier));
                           }
                           print('dataSubmit: $data');
+                        } else {
+                          showToast(
+                            text: 'Some fields need to be filled',
+                          );
                         }
                       },
                       shape: RoundedRectangleBorder(
@@ -662,10 +671,11 @@ class _RequestforqutationState extends State<Requestforqutation> {
                   setState(() {
                     requiredList.add(text);
                   });
+                  return '';
                 } else {
                   requiredList.remove(text);
+                  return null;
                 }
-                return null;
               },
             ),
           ),
@@ -723,10 +733,13 @@ class _RequestforqutationState extends State<Requestforqutation> {
                         setState(() {
                           requiredList.add(text);
                         });
+                        return '';
                       } else {
-                        requiredList.remove(text);
+                        setState(() {
+                          requiredList.remove(text);
+                        });
+                        return null;
                       }
-                      return null;
                     },
                     decoration: InputDecoration(
                         border: OutlineInputBorder(

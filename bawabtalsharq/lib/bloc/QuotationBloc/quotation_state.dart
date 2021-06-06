@@ -50,3 +50,5 @@ class LoadedListsState extends QuotationState {
       @required this.sourcingPurpose,
       @required this.tradeTerms});
 }
+
+class QuotationNetworkErrorState extends QuotationState {}
