@@ -167,6 +167,7 @@ class LanguageAr extends Languages {
   String get certificates => 'الشهادات :';
   String get detailedPictures => 'صور مفصلة';
   String get companyDetails => 'تفاصيل الشركة';
+  String get productInformation => 'معلومات المنتج';
 
 // end Mosdik
 

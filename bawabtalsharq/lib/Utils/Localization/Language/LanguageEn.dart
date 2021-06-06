@@ -170,6 +170,7 @@ class LanguageEn extends Languages {
   String get certificates => 'Certificates :';
   String get detailedPictures => 'Detailed Pictures';
   String get companyDetails => 'Company Details';
+  String get productInformation => 'Product Information';
 
 // end Mosdik
 

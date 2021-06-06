@@ -9,17 +9,15 @@ import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/loading.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/Utils/validator_util.dart';
+import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_bloc.dart';
+import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_event.dart';
+import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_state.dart';
 import 'package:bawabtalsharq/bloc/countryBloc/country_bloc.dart';
 import 'package:bawabtalsharq/bloc/countryBloc/country_event.dart';
 import 'package:bawabtalsharq/bloc/countryBloc/country_state.dart';
 import 'package:bawabtalsharq/bloc/currancyBloc/currency_bloc.dart';
 import 'package:bawabtalsharq/bloc/currancyBloc/currency_event.dart';
 import 'package:bawabtalsharq/bloc/currancyBloc/currency_state.dart';
-
-import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_bloc.dart';
-import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_event.dart';
-import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_state.dart';
-
 import 'package:bawabtalsharq/bloc/langBloc/lang_bloc.dart';
 import 'package:bawabtalsharq/bloc/langBloc/lang_event.dart';
 import 'package:bawabtalsharq/bloc/langBloc/lang_state.dart';
@@ -861,7 +859,7 @@ RawMaterialButton iconRound(IconData icon) {
     fillColor: Colors.white,
     child: Icon(
       icon,
-      color: Colors.black54,
+      color: orangeColor,
     ),
     shape: CircleBorder(),
   );

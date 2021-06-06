@@ -4,7 +4,7 @@ import 'package:bawabtalsharq/Model/checkPointFliter.dart';
 import 'package:bawabtalsharq/Model/filter_model.dart';
 import 'package:bawabtalsharq/Model/mainCategoryModel.dart';
 import 'package:bawabtalsharq/Model/search_quary.dart';
-import 'package:bawabtalsharq/Screens/individual_product_screen.dart';
+import 'package:bawabtalsharq/Screens/individualProduct/individual_product_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
