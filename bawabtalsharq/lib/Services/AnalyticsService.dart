@@ -17,9 +17,24 @@ class AnalyticsService {
         .then((value) => print('Name is $name'));
   }
 
-  //  Navigator.of(context).push(MaterialPageRoute(
-  //       builder: (context) => HomeView(),
-  //       //this name will be in the frebase Analytics console
-  //       settings: RouteSettings(name: 'HomeView'),
-  //     ));
+  Future<void> sendAnalyticsEvent(
+      {@required String eventName,
+      @required Map<String, dynamic> param}) async {
+    //tested
+    await _analytics
+        .logEvent(
+          name: eventName, // name that will be show in the debuge console
+          parameters: param,
+
+          //  <String, dynamic>{
+          //   'id': 14524896,
+          //   'name': 'Hello_in_Analytics',
+          //   'bool': true,
+          //   'screen': name
+          // }
+          // ,
+        )
+        .whenComplete(() => print('logEvent succeeded'))
+        .catchError((e) => print('Error in LogEvent: $e'));
+  }
 }
