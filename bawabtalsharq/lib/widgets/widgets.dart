@@ -9,17 +9,15 @@ import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/loading.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/Utils/validator_util.dart';
+import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_bloc.dart';
+import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_event.dart';
+import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_state.dart';
 import 'package:bawabtalsharq/bloc/countryBloc/country_bloc.dart';
 import 'package:bawabtalsharq/bloc/countryBloc/country_event.dart';
 import 'package:bawabtalsharq/bloc/countryBloc/country_state.dart';
 import 'package:bawabtalsharq/bloc/currancyBloc/currency_bloc.dart';
 import 'package:bawabtalsharq/bloc/currancyBloc/currency_event.dart';
 import 'package:bawabtalsharq/bloc/currancyBloc/currency_state.dart';
-
-import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_bloc.dart';
-import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_event.dart';
-import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_state.dart';
-
 import 'package:bawabtalsharq/bloc/langBloc/lang_bloc.dart';
 import 'package:bawabtalsharq/bloc/langBloc/lang_event.dart';
 import 'package:bawabtalsharq/bloc/langBloc/lang_state.dart';
@@ -32,6 +30,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Widgets {
@@ -1547,6 +1546,17 @@ Widget backIconRounded({Function onBackPressed}) {
       ),
     ),
   );
+}
+
+showToast({@required String text}) {
+  Fluttertoast.showToast(
+      msg: text,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.TOP,
+      timeInSecForIosWeb: 1,
+      backgroundColor: orangeColor,
+      textColor: Colors.white,
+      fontSize: 14);
 }
 
 // end Bahaa

@@ -128,6 +128,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             );
+          } else if (state is HomeNoInternetState) {
+            return Center(
+              child: Text(Languages.of(context).noInternertConnection),
+            );
           } else {
             print(state);
             return Center(

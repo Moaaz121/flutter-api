@@ -65,7 +65,7 @@ void main() async {
   //FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   runApp(
     DevicePreview(
-      enabled: true,
+      enabled: false,
       builder: (context) => BawabtAlsharqApp(),
     ),
   );

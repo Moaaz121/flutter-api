@@ -10,3 +10,5 @@ class HomeLoadedState extends HomeState {
   HomeModel homeResponse;
   HomeLoadedState({this.homeResponse});
 }
+
+class HomeNoInternetState extends HomeState {}

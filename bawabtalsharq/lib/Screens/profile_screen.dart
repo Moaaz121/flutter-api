@@ -53,6 +53,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               _logOutBloc.add(ResetState());
               isLoading = false;
               if (state.logOutResponse.code == 200) {
+                showToast(text: "You have Successfully logged out");
                 Constants.removeDate(key: 'user');
                 SchedulerBinding.instance.addPostFrameCallback((_) {
                   Navigator.pushNamed(context, ScreenRoutes.mainScreen);

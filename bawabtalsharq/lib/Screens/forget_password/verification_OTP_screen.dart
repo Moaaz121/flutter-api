@@ -62,6 +62,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
           child: BlocListener<RegisterBloc, RegisterState>(
             listener: (context, state) {
               if (state is RegisterLoadedState) {
+                showToast(text: "Registration Completed Successfully!");
                 Navigator.pushReplacementNamed(
                     context, ScreenRoutes.mainScreen);
               } else if (state is FirebaseExceptionState) {
