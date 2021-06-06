@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bawabtalsharq/Model/fillQuotationModel.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/loading.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
@@ -9,7 +10,6 @@ import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
 class Requestforqutation extends StatefulWidget {
@@ -24,13 +24,11 @@ class _RequestforqutationState extends State<Requestforqutation> {
   bool showErrorMessage = false;
   bool selecetedCertBool = false;
   List requiredList = [];
-  String imageUrl;
 
   //Image Picker
   bool _showImages = false;
-  File _image = new File('');
-  final ImagePicker _imagePicker = ImagePicker();
 
+  bool isLoading = false;
 //TextEditors
   TextEditingController productNameCtrl = TextEditingController();
   TextEditingController quantityCrtl = TextEditingController();
@@ -40,40 +38,28 @@ class _RequestforqutationState extends State<Requestforqutation> {
   TextEditingController leadTimeForInCtrl = TextEditingController();
   TextEditingController paymentTermCtrl = TextEditingController();
 
-  //Pulled Data
-  List<String> categoryList = [];
-  List<String> categoryIdList = [];
-  List<String> certList = [];
-  List<String> certIdList = [];
-  List<String> selecetedCert = [];
-  List<String> selecetedCertId = [];
-  List<String> tradeList = [];
-  List<String> tradeIdList = [];
-  List<String> purposeList = [];
-  List<String> purposeIdList = [];
-  List<String> destinationList = [];
-  List<String> destinationCodeList = [];
-
-  List<String> shippingList = [];
-  List<String> shippingIdList = [];
-  List<String> piecesList = [];
-  List<String> piecesIdList = [];
-
   String dropDownVal = '';
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+//Data Will be filled
+  DataRQF dataLists = null;
+
   //Sent data
+  List selecetedCert = [];
+  List selecetedCertId = [];
+
   Map<String, dynamic> data;
   Map<String, dynamic> dataIdentifier;
 
   QuotationBloc _quotationBloc;
   List<Asset> images = <Asset>[];
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _quotationBloc = QuotationBloc();
+    _quotationBloc.add(GetCatergoryList());
+
     data = {
       'product': 'null',
       'category_id': 'null',
@@ -151,46 +137,10 @@ class _RequestforqutationState extends State<Requestforqutation> {
               },
               child: BlocBuilder<QuotationBloc, QuotationState>(
                 builder: (context, state) {
-                  if (state is QuotationInitialState) {
-                    _quotationBloc.add(GetCatergoryList());
-                    return buildBody();
-                  } else if (state is LoadingListsState) {
+                  if (state is LoadingListsState) {
                     return LoadingLogo();
-                  } else if (state is LoadedListsState) {
-                    state.categories.forEach((element) {
-                      categoryList.add(element.category);
-                      categoryIdList.add(element.categoryId);
-                    });
-                    state.certification.forEach((element) {
-                      certList.add(element.cName);
-                      certIdList.add(element.cId);
-                    });
-                    state.tradeTerms.forEach((element) {
-                      tradeList.add(element.tName);
-                      tradeIdList.add(element.tId);
-                    });
-
-                    state.sourcingPurpose.forEach((element) {
-                      purposeList.add(element.sName);
-                      purposeIdList.add(element.sId);
-                    });
-                    state.destination.forEach((element) {
-                      destinationList.add(element.country);
-                      destinationCodeList.add(element.code);
-                    });
-                    state.shipping.forEach((element) {
-                      shippingList.add(element.shipping);
-                      shippingIdList.add(element.shippingId);
-                    });
-                    state.pieces.forEach((element) {
-                      piecesList.add(element.pName);
-                      piecesIdList.add(element.pId);
-                    });
-
-                    _quotationBloc.add(ShowLoadedData());
-
-                    return LoadingLogo();
-                  } else if (state is ShowLoadedDataState) {
+                  } else if (state is LoadedDataState) {
+                    dataLists = state.dataLists;
                     return buildBody();
                   } else if (state is PostingReqQuotationState) {
                     return Center(
@@ -208,8 +158,12 @@ class _RequestforqutationState extends State<Requestforqutation> {
     );
   }
 
-  Widget buildBody() {
-    return SingleChildScrollView(
+  Widget buildBody(/*DataRQF dataList*/) {
+    return
+        // isLoading
+        //     ? LoadingLogo()
+        //     :
+        SingleChildScrollView(
       child: Form(
         key: _formKey,
         child: Column(
@@ -221,15 +175,21 @@ class _RequestforqutationState extends State<Requestforqutation> {
                 maxLines: 1,
                 controller: productNameCtrl),
 
-            dropDownButton(context,
-                text: Languages.of(context).categoryName,
-                dropText: Languages.of(context).dropCategory,
-                dropList: categoryList),
+            dropDownButton(
+              context,
+              text: Languages.of(context).categoryName,
+              dropText: Languages.of(context).dropCategory,
+              dropList: dataLists.categories.map((e) => e.category).toList(),
+              idList: dataLists.categories.map((e) => e.categoryId).toList(),
+            ),
 
-            dropDownButton(context,
-                text: Languages.of(context).sourcingPurpose,
-                dropText: Languages.of(context).dropSourcing,
-                dropList: purposeList),
+            dropDownButton(
+              context,
+              text: Languages.of(context).sourcingPurpose,
+              dropText: Languages.of(context).dropSourcing,
+              dropList: dataLists.sourcingPurpose.map((e) => e.sName).toList(),
+              idList: dataLists.sourcingPurpose.map((e) => e.sId).toList(),
+            ),
 
             _buildtextFormField(context,
                 text: Languages.of(context).quantity,
@@ -237,15 +197,21 @@ class _RequestforqutationState extends State<Requestforqutation> {
                 // margin: 60,
                 controller: quantityCrtl),
 
-            dropDownButton(context,
-                text: Languages.of(context).dropQuantity,
-                dropText: Languages.of(context).dropQuantity,
-                dropList: piecesList),
+            dropDownButton(
+              context,
+              text: Languages.of(context).dropQuantity,
+              dropText: Languages.of(context).dropQuantity,
+              dropList: dataLists.pieces.map((e) => e.pName).toList(),
+              idList: dataLists.pieces.map((e) => e.pId).toList(),
+            ),
 
-            dropDownButton(context,
-                text: Languages.of(context).tradeTerms,
-                dropText: Languages.of(context).dropTrade,
-                dropList: tradeList),
+            dropDownButton(
+              context,
+              text: Languages.of(context).tradeTerms,
+              dropText: Languages.of(context).dropTrade,
+              dropList: dataLists.tradeTerms.map((e) => e.tName).toList(),
+              idList: dataLists.tradeTerms.map((e) => e.tId).toList(),
+            ),
 
             // <----start Details---->
             _buildtextFormField(context,
@@ -288,7 +254,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
             Visibility(
               visible: _showImages,
               child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(20, 20, 20, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(70, 20, 20, 0),
                   child: Center(
                     child: Container(
                       decoration: BoxDecoration(
@@ -385,10 +351,14 @@ class _RequestforqutationState extends State<Requestforqutation> {
                       color: Colors.black.withOpacity(0.5),
                     ),
                   ),
-                  dropDownButton(context,
-                      text: Languages.of(context).certifications,
-                      dropText: Languages.of(context).dropCertificate,
-                      dropList: certList),
+                  dropDownButton(
+                    context,
+                    text: Languages.of(context).certifications,
+                    dropText: Languages.of(context).dropCertificate,
+                    dropList:
+                        dataLists.certifications.map((e) => e.cName).toList(),
+                    idList: dataLists.certifications.map((e) => e.cId).toList(),
+                  ),
                   Padding(
                     padding: const EdgeInsetsDirectional.only(
                         start: 35, top: 1, bottom: 1, end: 35),
@@ -461,14 +431,23 @@ class _RequestforqutationState extends State<Requestforqutation> {
                       color: Colors.black.withOpacity(0.5),
                     ),
                   ),
-                  dropDownButton(context,
-                      text: Languages.of(context).shippingMethod,
-                      dropText: Languages.of(context).dropShipping,
-                      dropList: shippingList),
-                  dropDownButton(context,
-                      text: Languages.of(context).destination,
-                      dropText: Languages.of(context).dropDestination,
-                      dropList: destinationList),
+                  dropDownButton(
+                    context,
+                    text: Languages.of(context).shippingMethod,
+                    dropText: Languages.of(context).dropShipping,
+                    dropList:
+                        dataLists.shipping.map((e) => e.shipping).toList(),
+                    idList:
+                        dataLists.shipping.map((e) => e.shippingId).toList(),
+                  ),
+                  dropDownButton(
+                    context,
+                    text: Languages.of(context).destination,
+                    dropText: Languages.of(context).dropDestination,
+                    dropList:
+                        dataLists.destination.map((e) => e.country).toList(),
+                    idList: dataLists.destination.map((e) => e.code).toList(),
+                  ),
                   _buildtextFormField(context,
                       text: Languages.of(context).port,
                       inputText: Languages.of(context).port,
@@ -582,7 +561,10 @@ class _RequestforqutationState extends State<Requestforqutation> {
   }
 
   Widget dropDownButton(BuildContext context,
-      {String text, String dropText, List<String> dropList}) {
+      {String text,
+      String dropText,
+      List<dynamic> dropList,
+      List<dynamic> idList}) {
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(18, 20, 18, 0),
       child: Column(
@@ -627,10 +609,10 @@ class _RequestforqutationState extends State<Requestforqutation> {
                   filled: true,
                   fillColor: Colors.white),
               isExpanded: true,
-              items: dropList.map((String value) {
+              items: dropList.map((value) {
                 return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value,
+                  value: value.toString(),
+                  child: Text(value.toString(),
                       style: TextStyle(color: Colors.black, fontSize: 14)),
                 );
               }).toList(),
@@ -640,35 +622,32 @@ class _RequestforqutationState extends State<Requestforqutation> {
 
                   if (dropText == Languages.of(context).dropCategory) {
                     key = 'category_id';
-                    data[key] =
-                        categoryIdList[categoryList.indexOf(dropDownVal)];
+                    data[key] = idList.elementAt(dropList.indexOf(dropDownVal));
                   } else if (dropText == Languages.of(context).dropSourcing) {
                     key = 'sourcing';
                     data[key] = dropDownVal;
                   } else if (dropText == Languages.of(context).dropQuantity) {
                     key = 'pieces';
-                    data[key] = piecesIdList[piecesList.indexOf(dropDownVal)];
+                    data[key] = idList.elementAt(dropList.indexOf(dropDownVal));
                   } else if (dropText == Languages.of(context).dropTrade) {
                     key = 'trade';
-                    data[key] = tradeIdList[tradeList.indexOf(dropDownVal)];
+                    data[key] = idList.elementAt(dropList.indexOf(dropDownVal));
                   } else if (dropText ==
                       Languages.of(context).dropCertificate) {
                     key = 'certifications';
                     selecetedCert.add(dropDownVal);
                     selecetedCertId
-                        .add(certIdList[certList.indexOf(dropDownVal)]);
+                        .add(idList.elementAt(dropList.indexOf(dropDownVal)));
                     selecetedCertBool = true;
                     data[key] =
                         selecetedCertId.toList().toString(); //selecetedCertId;
                   } else if (dropText == Languages.of(context).dropShipping) {
                     key = 'shipping_method';
-                    data[key] =
-                        shippingIdList[shippingList.indexOf(dropDownVal)];
+                    data[key] = idList.elementAt(dropList.indexOf(dropDownVal));
                   } else if (dropText ==
                       Languages.of(context).dropDestination) {
                     key = 'destination';
-                    data[key] = destinationCodeList[
-                        destinationList.indexOf(dropDownVal)];
+                    data[key] = idList.elementAt(dropList.indexOf(dropDownVal));
                   }
                 });
               },

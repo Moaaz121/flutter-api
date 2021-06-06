@@ -25,8 +25,13 @@ class LoadingListsState extends QuotationState {}
 
 class ShowLoadedDataState extends QuotationState {}
 
+class LoadedDataState extends QuotationState {
+  DataRQF dataLists;
+  LoadedDataState({@required this.dataLists});
+}
+
 class LoadedListsState extends QuotationState {
-  List<CategoryRQF> categories;
+  // List<CategoryRQF> categories;
   List<CertificationRQF> certification;
   List<DestinationRQF> destination;
   List<ShippingRQF> shipping;
@@ -36,7 +41,8 @@ class LoadedListsState extends QuotationState {
   List<TradeTermRQF> tradeTerms;
 
   LoadedListsState(
-      {@required this.categories,
+      {
+      // @required this.categories,
       @required this.certification,
       @required this.destination,
       @required this.shipping,

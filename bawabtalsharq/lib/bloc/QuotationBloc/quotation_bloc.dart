@@ -5,7 +5,6 @@ import 'package:bawabtalsharq/repo/fillQuotation.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:bawabtalsharq/Model/fillQuotationModel.dart';
-import 'package:bawabtalsharq/Model/base_model.dart';
 
 part 'quotation_event.dart';
 part 'quotation_state.dart';
@@ -26,9 +25,9 @@ class QuotationBloc extends Bloc<QuotationEvent, QuotationState> {
       yield LoadingListsState();
       DataRQF data = await FillQuotationRepo().fillQuotation();
 
-      List.generate(data.categories.length, (i) {
-        categories.add(data.categories[i]);
-      });
+      // List.generate(data.categories.length, (i) {
+      //   categories.add(data.categories[i]);
+      // });
       List.generate(data.certifications.length, (i) {
         certification.add(data.certifications[i]);
       });
@@ -47,18 +46,20 @@ class QuotationBloc extends Bloc<QuotationEvent, QuotationState> {
       List.generate(data.tradeTerms.length, (i) {
         tradeTerms.add(data.tradeTerms[i]);
       });
-
       yield LoadedListsState(
-          categories: categories,
+          // categories: categories,
           certification: certification,
           destination: destination,
           shipping: shipping,
           pieces: pieces,
           sourcingPurpose: sourcingPurpose,
           tradeTerms: tradeTerms);
-    } else if (event is ShowLoadedData) {
-      yield ShowLoadedDataState();
-    } else if (event is PostReqQuotation) {
+      yield LoadedDataState(dataLists: data);
+    }
+    //  else if (event is ShowLoadedData) {
+    //   yield ShowLoadedDataState();
+    // }
+    else if (event is PostReqQuotation) {
       String msg = await RequestQuotationsRepo()
           .postReqQuotation(event.data, event.dataIdentifier);
       if (msg != 'Mobile is not Connected' && msg != null) {
