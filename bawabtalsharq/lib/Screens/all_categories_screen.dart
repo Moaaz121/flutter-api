@@ -269,15 +269,33 @@ class _AllCategoriesState extends State<AllCategories>
                 scrollDirection: Axis.vertical,
                 itemBuilder: (context, index) {
                   return GestureDetector(
-                    onTap: () {
+                    onTap: () async {
+                      SearchQueryModel queryModel = new SearchQueryModel(
+                        '',
+                        Categories: [subCategoryArr[index].categoryId],
+                        sortBy: '',
+                        sort: '',
+                        brand: [],
+                        colors: [],
+                        countryCode: '',
+                        page: '',
+                        gender: [],
+                        sizes: [],
+                        expressShipping: [],
+                        shippedFrom: [],
+                        discount: [],
+                      );
                       Navigator.push(
                           context,
                           new MaterialPageRoute(
                             builder: (BuildContext context) => new SearchResult(
-                              Categories: [subCategoryArr[index].categoryId],
-                              searchQuery: new SearchQueryModel(''),
+                              searchQuery: queryModel,
                             ),
-                          ));
+                          )).then((value) {
+                        setState(() {
+                          searchQuery = searchQuery;
+                        });
+                      });
                     },
                     child: Container(
                       margin: EdgeInsetsDirectional.only(

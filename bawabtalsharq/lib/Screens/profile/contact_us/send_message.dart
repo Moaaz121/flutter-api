@@ -1,5 +1,4 @@
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
-import 'package:bawabtalsharq/Utils/loading.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/sendMessageBloc/send_message_bloc.dart';
 import 'package:bawabtalsharq/bloc/sendMessageBloc/send_message_state.dart';
@@ -7,6 +6,7 @@ import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class SendMessage extends StatefulWidget {
   @override
@@ -44,18 +44,20 @@ class _SendMessageState extends State<SendMessage> {
               return Container(
                 color: Colors.white,
                 child: Center(
-                  child: LoadingLogo(),
+                  child: progressBar(),
                 ),
               );
             }
             if (state is SentState) {
-              emailController.clear();
-              subjectController.clear();
-              msgController.clear();
-              Navigator.of(context).pop();
-
-              // print(state.messageResponse.msg);
-              // _bloc.add(ResetState());
+              if (state.messageResponse.code == 200) {
+                emailController.clear();
+                subjectController.clear();
+                msgController.clear();
+                Navigator.of(context).pop();
+                showToast(
+                    text: "Your message was sent successfully",
+                    toastGravity: ToastGravity.CENTER);
+              }
             }
             return SingleChildScrollView(
               child: Column(

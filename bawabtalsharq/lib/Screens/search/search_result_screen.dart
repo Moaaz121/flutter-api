@@ -733,11 +733,13 @@ class _FilterScreenState extends State<FilterScreen> {
                             });
                           });
                         },
-                            searchQuery.sizes
-                                .toList()
-                                .toString()
-                                .replaceAll('[', '')
-                                .replaceAll(']', ''),
+                            searchQuery.sizes != null
+                                ? searchQuery.sizes
+                                    .toList()
+                                    .toString()
+                                    .replaceAll('[', '')
+                                    .replaceAll(']', '')
+                                : '',
                             Colors.deepOrangeAccent,
                             icon: Icons.arrow_forward_ios),
                         buildSizedBox(25),

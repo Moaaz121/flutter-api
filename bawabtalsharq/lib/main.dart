@@ -27,6 +27,7 @@ import 'package:bawabtalsharq/Screens/suppliers/supplier_profile_screen.dart';
 import 'package:bawabtalsharq/Services/AnalyticsService.dart';
 import 'package:bawabtalsharq/Utils/Localization/AppLocalizationDelgate.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
+import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -97,7 +98,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
       // locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primaryColor: Colors.deepOrange),
+      theme: ThemeData(primaryColor: orangeColor, accentColor: orangeColor),
       home: SplashScreen(),
       navigatorObservers: [AnalyticsService().getAnalyticsOberver()],
       routes: {
