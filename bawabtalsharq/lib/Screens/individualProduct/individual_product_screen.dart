@@ -142,7 +142,8 @@ class _IndividualProductState extends State<IndividualProduct>
                       backgroundColor: Colors.grey.shade100,
                       flexibleSpace: FlexibleSpaceBar(
                           background: Container(
-                              padding: EdgeInsets.only(top: 45, bottom: 10),
+                              padding: EdgeInsetsDirectional.only(
+                                  top: 45, bottom: 10),
                               child: Column(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -184,10 +185,10 @@ class _IndividualProductState extends State<IndividualProduct>
                                         noPadding: true),
                                     Flexible(
                                       child: Container(
-                                          padding:
-                                              EdgeInsets.symmetric(vertical: 5),
-                                          margin: EdgeInsets.only(
-                                              left: 30, right: 50),
+                                          padding: EdgeInsetsDirectional.only(
+                                              top: 5, bottom: 5),
+                                          margin: EdgeInsetsDirectional.only(
+                                              start: 30, end: 50),
                                           decoration: BoxDecoration(
                                             color: Colors.grey.shade100,
                                           ),
@@ -286,13 +287,13 @@ class _IndividualProductState extends State<IndividualProduct>
                   Container(
                     color: Colors.white,
                     child: SingleChildScrollView(
-                        padding: EdgeInsets.only(top: 10),
+                        padding: EdgeInsetsDirectional.only(top: 10),
                         child: Column(
                           children: [
                             Container(
                                 margin: EdgeInsets.all(20),
                                 color: Colors.white,
-                                padding: EdgeInsets.only(
+                                padding: EdgeInsetsDirectional.only(
                                     bottom: MediaQuery.of(context).size.height *
                                         0.1),
                                 child: Column(
@@ -456,7 +457,7 @@ class _IndividualProductState extends State<IndividualProduct>
             physics: BouncingScrollPhysics(
               parent: NeverScrollableScrollPhysics(),
             ),
-            padding: EdgeInsets.only(top: 5, bottom: 5),
+            padding: EdgeInsetsDirectional.only(top: 5, bottom: 5),
             shrinkWrap: true,
             scrollDirection: Axis.vertical,
             itemCount: 1,
@@ -485,8 +486,8 @@ class _IndividualProductState extends State<IndividualProduct>
                     ),
                   ),
                   Container(
-                    padding:
-                        EdgeInsets.only(left: 35, right: 35, top: 4, bottom: 4),
+                    padding: EdgeInsetsDirectional.only(
+                        start: 35, end: 35, top: 4, bottom: 4),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(100),
                         border: Border.all(width: 1, color: Colors.grey)),
@@ -574,20 +575,20 @@ class _IndividualProductState extends State<IndividualProduct>
   //     }
   //   });
   // }
-
-  Widget _createIncrementDicrementButton(IconData icon, Function onPressed) {
-    return RawMaterialButton(
-      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      constraints: BoxConstraints(minWidth: 10.0, minHeight: 10.0),
-      onPressed: onPressed,
-      elevation: 2.0,
-      child: Icon(
-        icon,
-        size: 14,
-        color: orangeColor,
-      ),
-    );
-  }
+  //
+  // Widget _createIncrementDicrementButton(IconData icon, Function onPressed) {
+  //   return RawMaterialButton(
+  //     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+  //     constraints: BoxConstraints(minWidth: 10.0, minHeight: 10.0),
+  //     onPressed: onPressed,
+  //     elevation: 2.0,
+  //     child: Icon(
+  //       icon,
+  //       size: 14,
+  //       color: orangeColor,
+  //     ),
+  //   );
+  // }
 
   Widget productColorOption(int index) {
     return Padding(
@@ -660,7 +661,7 @@ class _IndividualProductState extends State<IndividualProduct>
 
   Widget overViewText(Html html, BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 15),
+      margin: EdgeInsetsDirectional.only(top: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
