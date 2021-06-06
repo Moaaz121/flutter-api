@@ -65,7 +65,7 @@ void main() async {
   //FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   runApp(
     DevicePreview(
-      enabled: false,
+      enabled: true,
       builder: (context) => BawabtAlsharqApp(),
     ),
   );
@@ -234,8 +234,6 @@ class ScreenRoutes {
   static const String conversationScreen = '/conversation';
   static const String aboutUs = '/aboutUs_screen';
   static const String noInternet = '/noInternet';
-
   static const String sendMessage = '/send_message.dart';
-
   static const String listMessageScreen = '/list_message_screen';
 }

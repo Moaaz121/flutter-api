@@ -1,10 +1,10 @@
 import 'dart:async';
 
+import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/main.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:bawabtalsharq/Utils/constants.dart';
+import 'package:video_player/video_player.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -12,6 +12,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  VideoPlayerController _controller;
   Timer _timer;
   int t;
   bool onBoarding;
@@ -28,6 +29,12 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
+    _controller =
+        VideoPlayerController.asset('assets/animation_gif/bawaba_1.mp4');
+    _controller.play();
+    _controller.setLooping(true);
+    _controller.setVolume(0.0);
+    _controller.play();
     super.initState();
 
     if (Constants.getDate(key: 'onBoarding') == null)
@@ -60,7 +67,12 @@ class _SplashScreenState extends State<SplashScreen> {
           SizedBox(
             height: 20,
           ),
-          Image.asset(companyName),
+          SizedBox(
+            width: _controller.value.size?.width ?? 0,
+            height: _controller.value.size?.height ?? 0,
+            child: VideoPlayer(_controller),
+          ),
+          // Image.asset(companyName),
         ],
       ),
     );
