@@ -132,6 +132,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                             context,
                             Languages.of(context).firstName,
                             width: .50,
+                            keyboardType: TextInputType.text,
                             errorMessage: firstNameError,
                             controller: firstNameController,
                           ),
@@ -143,6 +144,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                           child: textFiledPrice(
                               context, Languages.of(context).lasttNam,
                               width: .50,
+                              keyboardType: TextInputType.text,
                               errorMessage: lastNameError,
                               controller: lastNameController),
                         ),
@@ -151,13 +153,11 @@ class _UpdateProfileState extends State<UpdateProfile> {
                     SizedBox(
                       height: 40,
                     ),
-                    textFiledPrice(
-                      context,
-                      Languages.of(context).tel,
-                      width: 1,
-                      errorMessage: _phoneErrorMessage,
-                      controller: phoneController,
-                    ),
+                    textFiledPrice(context, Languages.of(context).tel,
+                        width: 1,
+                        errorMessage: _phoneErrorMessage,
+                        controller: phoneController,
+                        keyboardType: TextInputType.phone),
                     SizedBox(
                       height: 30,
                     ),
