@@ -69,7 +69,7 @@ dependencies:
   connectivity:
   flutter_svg:
 
-  video_player:
+  chewie:
 
 
   numberpicker:
