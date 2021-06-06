@@ -34,7 +34,7 @@ class IndividualProduct extends StatefulWidget {
 
 class _IndividualProductState extends State<IndividualProduct>
     with TickerProviderStateMixin {
-  int _itemCount = 0;
+  int _counter = 0;
   ScrollController _controller;
   IndividualProductBloc _productBloc;
   bool isLoading = false;
@@ -42,11 +42,6 @@ class _IndividualProductState extends State<IndividualProduct>
   IndividualProductModel product;
   TabController _controllerTab;
   final scrollController = ScrollController();
-  final List<String> _tabs = <String>[
-    "",
-    "",
-  ];
-
   CarouselController buttonCarouselController = CarouselController();
   int sliderPosition = 0;
   bool sliverPersistentHeader = false;
@@ -59,7 +54,7 @@ class _IndividualProductState extends State<IndividualProduct>
 
     _productBloc = IndividualProductBloc();
     _productBloc.add(DoIndividualProductEvent(widget.productId));
-    _controllerTab = TabController(vsync: this, length: _tabs.length);
+    _controllerTab = TabController(vsync: this, length: 2);
     _controller = ScrollController();
     _controllerTab.addListener(() => {setState(() {})});
   }
@@ -111,7 +106,7 @@ class _IndividualProductState extends State<IndividualProduct>
             );
           }
           return DefaultTabController(
-            length: _tabs.length,
+            length: 2,
             child: Scaffold(
               floatingActionButton: productFab(product.data.price),
               body: NestedScrollView(
@@ -307,55 +302,52 @@ class _IndividualProductState extends State<IndividualProduct>
                   Container(
                     color: Colors.white,
                     child: SingleChildScrollView(
-                        padding: EdgeInsetsDirectional.only(top: 10),
                         child: Column(
-                          children: [
-                            Container(
-                                margin: EdgeInsets.all(20),
-                                color: Colors.white,
-                                padding: EdgeInsetsDirectional.only(
-                                    bottom: MediaQuery.of(context).size.height *
-                                        0.1),
-                                child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      product.data.color.isEmpty
-                                          ? SizedBox()
-                                          : Center(child: productColor()),
-                                      overViewText(
-                                          Html(
-                                              data:
-                                                  product.data.fullDescription),
-                                          context),
-                                      SizedBox(
-                                        height: 20,
-                                      ),
-                                      product.data.faq.isEmpty
-                                          ? SizedBox()
-                                          : productFaq(
-                                              title: Languages.of(context).faq,
-                                            ),
-                                      SizedBox(
-                                        height: 20,
-                                      ),
-                                      product.data.detailedPictures.isEmpty
-                                          ? SizedBox()
-                                          : detailsPictures(),
-                                      SizedBox(
-                                        height: 20,
-                                      ),
-                                      product.data.packingShipping.isEmpty
-                                          ? SizedBox()
-                                          : listOfBackingChipping(),
-                                      SizedBox(
-                                        height: 20,
-                                      ),
-                                      product.data.certificates.isEmpty
-                                          ? SizedBox()
-                                          : certificateListView(),
-                                    ])),
-                          ],
-                        )),
+                      children: [
+                        Container(
+                            margin: EdgeInsets.all(20),
+                            color: Colors.white,
+                            padding: EdgeInsetsDirectional.only(
+                                bottom:
+                                    MediaQuery.of(context).size.height * 0.1),
+                            child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  // product.data.color.isEmpty
+                                  //     ? SizedBox()
+                                  //     : Center(child: productColor()),
+                                  overViewText(
+                                      Html(data: product.data.fullDescription),
+                                      context),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  product.data.faq.isEmpty
+                                      ? SizedBox()
+                                      : productFaq(
+                                          title: Languages.of(context).faq,
+                                        ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  product.data.detailedPictures.isEmpty
+                                      ? SizedBox()
+                                      : detailsPictures(),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  product.data.packingShipping.isEmpty
+                                      ? SizedBox()
+                                      : listOfBackingChipping(),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  product.data.certificates.isEmpty
+                                      ? SizedBox()
+                                      : certificateListView(),
+                                ])),
+                      ],
+                    )),
                   ),
                   Container(
                     color: Colors.white,
@@ -499,13 +491,12 @@ class _IndividualProductState extends State<IndividualProduct>
                         borderRadius: BorderRadius.circular(100),
                         border: Border.all(width: 1, color: Colors.grey)),
                     child: GestureDetector(
-                      child: Icon(
-                        Icons.remove,
-                        size: 16,
-                        color: orangeColor,
-                      ),
-                      onTap: () => setState(() => _itemCount--),
-                    ),
+                        child: Icon(
+                          Icons.remove,
+                          size: 16,
+                          color: orangeColor,
+                        ),
+                        onTap: () => _removeProduct()),
                   ),
                   Container(
                     padding: EdgeInsetsDirectional.only(
@@ -514,7 +505,7 @@ class _IndividualProductState extends State<IndividualProduct>
                         borderRadius: BorderRadius.circular(100),
                         border: Border.all(width: 1, color: Colors.grey)),
                     child: Text(
-                      _itemCount.toString(),
+                      '$_counter',
                       style: TextStyle(color: orangeColor),
                     ),
                   ),
@@ -525,13 +516,12 @@ class _IndividualProductState extends State<IndividualProduct>
                         borderRadius: BorderRadius.circular(100),
                         border: Border.all(width: 1, color: Colors.grey)),
                     child: GestureDetector(
-                      child: Icon(
-                        Icons.add,
-                        size: 16,
-                        color: orangeColor,
-                      ),
-                      onTap: () => setState(() => _itemCount++),
-                    ),
+                        child: Icon(
+                          Icons.add,
+                          size: 16,
+                          color: orangeColor,
+                        ),
+                        onTap: () => _addProduct()),
                   ),
                 ],
               );
@@ -540,64 +530,19 @@ class _IndividualProductState extends State<IndividualProduct>
     );
   }
 
-  // Widget productCounter() {
-  //   return Row(
-  //     children: [
-  //       Container(
-  //         margin: EdgeInsetsDirectional.only(end: 5),
-  //         padding: EdgeInsets.all(6),
-  //         decoration: BoxDecoration(
-  //             borderRadius: BorderRadius.circular(100),
-  //             border: Border.all(width: 1, color: Colors.grey)),
-  //         // child:
-  //         // _createIncrementDicrementButton(Icons.remove, () => _dicrement()),
-  //       ),
-  //       Container(
-  //         padding: EdgeInsets.only(left: 35, right: 35, top: 4, bottom: 4),
-  //         decoration: BoxDecoration(
-  //             borderRadius: BorderRadius.circular(100),
-  //             border: Border.all(width: 1, color: Colors.grey)),
-  //         child: Text(
-  //           '',
-  //           // _currentCount.toString(),
-  //           style: TextStyle(color: orangeColor),
-  //         ),
-  //       ),
-  //       Container(
-  //         margin: EdgeInsetsDirectional.only(start: 5),
-  //         padding: EdgeInsets.all(6),
-  //         decoration: BoxDecoration(
-  //             borderRadius: BorderRadius.circular(100),
-  //             border: Border.all(width: 1, color: Colors.grey)),
-  //         // child: _createIncrementDicrementButton(Icons.add, () => _increment()),
-  //         // Icon(
-  //         //   Icons.add,
-  //         //   size: 14,
-  //         //   color: orangeColor,
-  //         // ),
-  //       ),
-  //     ],
-  //   );
-  // }
+  _removeProduct() {
+    setState(() {
+      if (_counter > 0) {
+        _counter--;
+      }
+    });
+  }
 
-  // void _increment() {
-  //   setState(() {
-  //     _currentCount++;
-  //     _counterCallback(_currentCount);
-  //     _increaseCallback();
-  //   });
-  // }
-  //
-  // void _dicrement() {
-  //   setState(() {
-  //     if (_currentCount > int.parse(product.maxQty)) {
-  //       _currentCount--;
-  //       _counterCallback(_currentCount);
-  //       _decreaseCallback();
-  //     }
-  //   });
-  // }
-  //
+  _addProduct() {
+    setState(() {
+      _counter++;
+    });
+  }
   // Widget _createIncrementDicrementButton(IconData icon, Function onPressed) {
   //   return RawMaterialButton(
   //     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
