@@ -1,6 +1,6 @@
 import 'package:bawabtalsharq/Model/history_model.dart';
 import 'package:bawabtalsharq/Model/user_model.dart';
-import 'package:bawabtalsharq/Screens/individual_product_screen.dart';
+import 'package:bawabtalsharq/Screens/individualProduct/individual_product_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/loading.dart';
 import 'package:bawabtalsharq/bloc/profileBlocs/historyBloc/history_bloc.dart';

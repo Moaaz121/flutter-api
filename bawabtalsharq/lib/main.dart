@@ -4,7 +4,7 @@ import 'package:bawabtalsharq/Screens/all_categories_screen.dart';
 import 'package:bawabtalsharq/Screens/forget_password/forget_password_screen.dart';
 import 'package:bawabtalsharq/Screens/forget_password/new_password_screen.dart';
 import 'package:bawabtalsharq/Screens/home_screen.dart';
-import 'package:bawabtalsharq/Screens/individual_product_screen.dart';
+import 'package:bawabtalsharq/Screens/individualProduct/individual_product_screen.dart';
 import 'package:bawabtalsharq/Screens/intro_screen.dart';
 import 'package:bawabtalsharq/Screens/login_screen.dart';
 import 'package:bawabtalsharq/Screens/profile/faq/faq_screen.dart';

@@ -1,5 +1,6 @@
 import 'package:bawabtalsharq/Model/individualProduct_model.dart';
 import 'package:bawabtalsharq/Model/user_model.dart';
+import 'package:bawabtalsharq/Screens/individualProduct/removeTitle.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
@@ -19,8 +20,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-import '../main.dart';
-import 'SliverPersistentHeaderInvidiualProduct/IndividualProductHedaer.dart';
+import '../../main.dart';
+import '../SliverPersistentHeaderInvidiualProduct/IndividualProductHedaer.dart';
 
 class IndividualProduct extends StatefulWidget {
   String title;
@@ -94,256 +95,266 @@ class _IndividualProductState extends State<IndividualProduct>
             length: _tabs.length,
             child: Scaffold(
               floatingActionButton: productFab(product.price),
-              body: SafeArea(
-                bottom: false,
-                child: NestedScrollView(
-                  headerSliverBuilder:
-                      (BuildContext context, bool innerBoxScrolled) {
-                    return <Widget>[
-                      SliverAppBar(
-                        leading: GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Icon(
-                            LanguageHelper.isEnglish
-                                ? Icons.keyboard_arrow_left_outlined
-                                : Icons.keyboard_arrow_right_outlined,
-                            size: 28,
+              body: NestedScrollView(
+                headerSliverBuilder:
+                    (BuildContext context, bool innerBoxScrolled) {
+                  return <Widget>[
+                    SliverAppBar(
+                      leading: GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Icon(
+                          LanguageHelper.isEnglish
+                              ? Icons.keyboard_arrow_left_outlined
+                              : Icons.keyboard_arrow_right_outlined,
+                          size: 28,
+                          color: orangeColor,
+                        ),
+                      ),
+                      actions: [
+                        GestureDetector(
+                          onTap: () {},
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.only(end: 20),
+                            child: Icon(
+                              Icons.bookmark_border_outlined,
+                              color: orangeColor,
+                              size: 22,
+                            ),
+                          ),
+                        )
+                      ],
+                      expandedHeight: MediaQuery.of(context).size.height * 0.4,
+                      floating: true,
+                      pinned: true,
+                      snap: false,
+                      elevation: 0,
+                      title: RemoveTitleAppBar(
+                        child: Text(
+                          Languages.of(context).productInformation,
+                          style: TextStyle(
+                            fontSize: 19,
+                            color: orangeColor,
                           ),
                         ),
-                        actions: [
-                          // tabBar(),
-                          iconRound(Icons.bookmark_border_outlined),
-                        ],
-                        expandedHeight:
-                            MediaQuery.of(context).size.height * 0.4,
-                        floating: true,
-                        pinned: false,
-                        snap: false,
-                        elevation: 50,
-                        backgroundColor: Color(0xfff9dfd6),
-                        flexibleSpace: FlexibleSpaceBar(
-                            background: Container(
-                                padding: EdgeInsets.only(top: 20, bottom: 10),
-                                child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      CarouselSlider.builder(
-                                        carouselController:
-                                            buttonCarouselController,
-                                        options: CarouselOptions(
-                                          onPageChanged: (index, reason) {
-                                            setState(() {
-                                              sliderPosition = index;
-                                            });
-                                          },
-                                          autoPlay: false,
-                                          viewportFraction: 0.9,
-                                          aspectRatio: 2,
-                                          initialPage: 0,
-                                          autoPlayCurve: Curves.fastOutSlowIn,
-                                          scrollDirection: Axis.horizontal,
-                                        ),
-                                        itemCount: 4,
-                                        itemBuilder:
-                                            (context, index, realIndex) =>
-                                                CachedNetworkImage(
-                                          imageUrl: product.imagePath,
-                                          placeholder: (context, url) =>
-                                              Padding(
-                                            padding: EdgeInsets.all(15),
-                                            child: Container(
-                                              child: Image.asset(placeHolder),
-                                            ),
-                                          ),
-                                          errorWidget: (context, url, error) =>
-                                              Container(
+                      ),
+                      backgroundColor: Colors.grey.shade100,
+                      flexibleSpace: FlexibleSpaceBar(
+                          background: Container(
+                              padding: EdgeInsetsDirectional.only(
+                                  top: 45, bottom: 10),
+                              child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    CarouselSlider.builder(
+                                      carouselController:
+                                          buttonCarouselController,
+                                      options: CarouselOptions(
+                                        onPageChanged: (index, reason) {
+                                          setState(() {
+                                            sliderPosition = index;
+                                          });
+                                        },
+                                        autoPlay: false,
+                                        viewportFraction: 0.9,
+                                        aspectRatio: 2,
+                                        initialPage: 0,
+                                        autoPlayCurve: Curves.fastOutSlowIn,
+                                        scrollDirection: Axis.horizontal,
+                                      ),
+                                      itemCount: 4,
+                                      itemBuilder:
+                                          (context, index, realIndex) =>
+                                              CachedNetworkImage(
+                                        imageUrl: product.imagePath,
+                                        placeholder: (context, url) => Padding(
+                                          padding: EdgeInsets.all(10),
+                                          child: Container(
                                             child: Image.asset(placeHolder),
                                           ),
                                         ),
+                                        errorWidget: (context, url, error) =>
+                                            Container(
+                                          child: Image.asset(placeHolder),
+                                        ),
                                       ),
-                                      sliderIndicator(sliderPosition,
-                                          noPadding: true),
-                                      Flexible(
-                                        child: Container(
-                                            margin: EdgeInsets.only(
-                                                left: 50, right: 50),
-                                            decoration: BoxDecoration(
-                                              color: Color(0xfff9dfd6),
-                                            ),
-                                            child: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Flexible(
-                                                    child: RichText(
-                                                      maxLines: 2,
-                                                      overflow:
-                                                          TextOverflow.clip,
-                                                      strutStyle: StrutStyle(
-                                                          fontSize: 14),
-                                                      text: TextSpan(
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.black,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                          text:
-                                                              product.product),
-                                                    ),
+                                    ),
+                                    sliderIndicator(sliderPosition,
+                                        noPadding: true),
+                                    Flexible(
+                                      child: Container(
+                                          padding: EdgeInsetsDirectional.only(
+                                              top: 5, bottom: 5),
+                                          margin: EdgeInsetsDirectional.only(
+                                              start: 30, end: 50),
+                                          decoration: BoxDecoration(
+                                            color: Colors.grey.shade100,
+                                          ),
+                                          child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Flexible(
+                                                  child: RichText(
+                                                    maxLines: 2,
+                                                    overflow: TextOverflow.clip,
+                                                    strutStyle: StrutStyle(
+                                                        fontSize: 14),
+                                                    text: TextSpan(
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                        text: product.product),
                                                   ),
-                                                  SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      RatingBar.builder(
-                                                        itemSize: 18,
-                                                        initialRating: 3,
-                                                        minRating: 1,
-                                                        direction:
-                                                            Axis.horizontal,
-                                                        allowHalfRating: true,
-                                                        itemCount: 1,
-                                                        itemPadding: EdgeInsets
-                                                            .symmetric(
-                                                                horizontal: 5),
-                                                        itemBuilder:
-                                                            (context, _) =>
-                                                                Icon(
-                                                          Icons.star,
-                                                          color: Colors.amber,
-                                                        ),
-                                                        onRatingUpdate:
-                                                            (rating) {
-                                                          print(rating);
-                                                        },
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    RatingBar.builder(
+                                                      itemSize: 18,
+                                                      initialRating: 3,
+                                                      minRating: 1,
+                                                      direction:
+                                                          Axis.horizontal,
+                                                      allowHalfRating: true,
+                                                      itemCount: 1,
+                                                      itemPadding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 5),
+                                                      itemBuilder:
+                                                          (context, _) => Icon(
+                                                        Icons.star,
+                                                        color: Colors.amber,
                                                       ),
-                                                      Text(product.rating)
-                                                    ],
-                                                  ),
-                                                ])),
-                                      )
-                                    ]))),
-                      ),
-                      SliverToBoxAdapter(
-                        child: Container(
-                          color: Color(0xfff9dfd6),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
-                              Container(
-                                child: Center(
-                                  child: Container(
-                                    width: 50,
-                                    height: 2.5,
-                                    color: Colors.grey[300],
-                                  ),
-                                ),
-                                height: 25,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: const Radius.circular(30.0),
-                                    topRight: const Radius.circular(30.0),
-                                  ),
+                                                      onRatingUpdate: (rating) {
+                                                        print(rating);
+                                                      },
+                                                    ),
+                                                    Text(product.rating)
+                                                  ],
+                                                ),
+                                              ])),
+                                    )
+                                  ]))),
+                    ),
+                    SliverToBoxAdapter(
+                      child: Container(
+                        color: Colors.grey.shade100,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            Container(
+                              child: Center(
+                                child: Container(
+                                  width: 50,
+                                  height: 3,
+                                  color: Colors.grey[300],
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SliverPersistentHeader(
-                        pinned: true,
-                        floating: true,
-                        delegate: SliverPersistentHeaderDelegateImpl(
-                          color: Colors.white,
-                          tabBar: tabBar(),
-                        ),
-                      ),
-                    ];
-                  },
-                  body: TabBarView(controller: _controllerTab, children: [
-                    Container(
-                      color: Colors.white,
-                      child: SingleChildScrollView(
-                          padding: EdgeInsets.only(top: 10),
-                          child: Column(
-                            children: [
-                              Container(
-                                  margin: EdgeInsets.all(20),
-                                  color: Colors.white,
-                                  padding: EdgeInsets.only(
-                                      bottom:
-                                          MediaQuery.of(context).size.height *
-                                              0.1),
-                                  child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        product.color.isEmpty
-                                            ? SizedBox()
-                                            : Center(child: productColor()),
-                                        overViewText(
-                                            Html(data: product.fullDescription),
-                                            context),
-                                        SizedBox(
-                                          height: 20,
-                                        ),
-                                        product.faq.isEmpty
-                                            ? SizedBox()
-                                            : productFaq(
-                                                title:
-                                                    Languages.of(context).faq,
-                                              ),
-                                        SizedBox(
-                                          height: 20,
-                                        ),
-                                        product.detailedPictures.isEmpty
-                                            ? SizedBox()
-                                            : detailsPictures(),
-                                        SizedBox(
-                                          height: 20,
-                                        ),
-                                        product.packingShipping.isEmpty
-                                            ? SizedBox()
-                                            : listOfBackingChipping(),
-                                        SizedBox(
-                                          height: 20,
-                                        ),
-                                        product.certificates.isEmpty
-                                            ? SizedBox()
-                                            : certificateListView(),
-                                      ])),
-                            ],
-                          )),
-                    ),
-                    Container(
-                      color: Colors.white,
-                      child: SingleChildScrollView(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 30, left: 10),
-                          child: infoCartSupplier(
-                              '${product.company}',
-                              '${product.year}' +
-                                  ' ${Languages.of(context).year}',
-                              '${product.countryName}',
-                              '${product.category}',
-                              '${product.countryImage}', () {
-                            Navigator.pushNamed(
-                                context, ScreenRoutes.supplierProfileScreen,
-                                arguments: product.companyId);
-                          }),
+                              height: 25,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: const Radius.circular(40.0),
+                                  topRight: const Radius.circular(40.0),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  ]),
-                ),
+                    SliverPersistentHeader(
+                      pinned: true,
+                      floating: false,
+                      delegate: SliverPersistentHeaderDelegateImpl(
+                        color: Colors.white,
+                        tabBar: tabBar(),
+                      ),
+                    ),
+                  ];
+                },
+                body: TabBarView(controller: _controllerTab, children: [
+                  Container(
+                    color: Colors.white,
+                    child: SingleChildScrollView(
+                        padding: EdgeInsetsDirectional.only(top: 10),
+                        child: Column(
+                          children: [
+                            Container(
+                                margin: EdgeInsets.all(20),
+                                color: Colors.white,
+                                padding: EdgeInsetsDirectional.only(
+                                    bottom: MediaQuery.of(context).size.height *
+                                        0.1),
+                                child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      product.color.isEmpty
+                                          ? SizedBox()
+                                          : Center(child: productColor()),
+                                      overViewText(
+                                          Html(data: product.fullDescription),
+                                          context),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      product.faq.isEmpty
+                                          ? SizedBox()
+                                          : productFaq(
+                                              title: Languages.of(context).faq,
+                                            ),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      product.detailedPictures.isEmpty
+                                          ? SizedBox()
+                                          : detailsPictures(),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      product.packingShipping.isEmpty
+                                          ? SizedBox()
+                                          : listOfBackingChipping(),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      product.certificates.isEmpty
+                                          ? SizedBox()
+                                          : certificateListView(),
+                                    ])),
+                          ],
+                        )),
+                  ),
+                  Container(
+                    color: Colors.white,
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 30, left: 10),
+                        child: infoCartSupplier(
+                            '${product.company}',
+                            '${product.year}' +
+                                ' ${Languages.of(context).year}',
+                            '${product.countryName}',
+                            '${product.category}',
+                            '${product.countryImage}', () {
+                          Navigator.pushNamed(
+                              context, ScreenRoutes.supplierProfileScreen,
+                              arguments: product.companyId);
+                        }),
+                      ),
+                    ),
+                  ),
+                ]),
               ),
             ),
           );
@@ -446,7 +457,7 @@ class _IndividualProductState extends State<IndividualProduct>
             physics: BouncingScrollPhysics(
               parent: NeverScrollableScrollPhysics(),
             ),
-            padding: EdgeInsets.only(top: 5, bottom: 5),
+            padding: EdgeInsetsDirectional.only(top: 5, bottom: 5),
             shrinkWrap: true,
             scrollDirection: Axis.vertical,
             itemCount: 1,
@@ -475,8 +486,8 @@ class _IndividualProductState extends State<IndividualProduct>
                     ),
                   ),
                   Container(
-                    padding:
-                        EdgeInsets.only(left: 35, right: 35, top: 4, bottom: 4),
+                    padding: EdgeInsetsDirectional.only(
+                        start: 35, end: 35, top: 4, bottom: 4),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(100),
                         border: Border.all(width: 1, color: Colors.grey)),
@@ -564,20 +575,20 @@ class _IndividualProductState extends State<IndividualProduct>
   //     }
   //   });
   // }
-
-  Widget _createIncrementDicrementButton(IconData icon, Function onPressed) {
-    return RawMaterialButton(
-      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      constraints: BoxConstraints(minWidth: 10.0, minHeight: 10.0),
-      onPressed: onPressed,
-      elevation: 2.0,
-      child: Icon(
-        icon,
-        size: 14,
-        color: orangeColor,
-      ),
-    );
-  }
+  //
+  // Widget _createIncrementDicrementButton(IconData icon, Function onPressed) {
+  //   return RawMaterialButton(
+  //     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+  //     constraints: BoxConstraints(minWidth: 10.0, minHeight: 10.0),
+  //     onPressed: onPressed,
+  //     elevation: 2.0,
+  //     child: Icon(
+  //       icon,
+  //       size: 14,
+  //       color: orangeColor,
+  //     ),
+  //   );
+  // }
 
   Widget productColorOption(int index) {
     return Padding(
@@ -650,7 +661,7 @@ class _IndividualProductState extends State<IndividualProduct>
 
   Widget overViewText(Html html, BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 15),
+      margin: EdgeInsetsDirectional.only(top: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

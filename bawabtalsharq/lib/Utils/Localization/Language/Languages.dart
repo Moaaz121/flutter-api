@@ -163,6 +163,7 @@ abstract class Languages {
   String get certificates;
   String get detailedPictures;
   String get companyDetails;
+  String get productInformation;
 
 // end Mosdik
 

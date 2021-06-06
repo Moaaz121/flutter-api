@@ -46,7 +46,6 @@ dependencies:
   dio:
   rocket_chat_connector_flutter:
   bloc:
-  fluttertoast: ^7.1.7
   flutter_speed_dial_material_design: ^2.0.0
   image_picker:
   file_picker: ^2.1.7
@@ -69,7 +68,8 @@ dependencies:
   cached_network_image:
   connectivity:
   flutter_svg:
-
+  fluttertoast:
+  video_player:
   chewie:
 
 
