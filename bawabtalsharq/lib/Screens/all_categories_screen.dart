@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bawabtalsharq/Model/mainCategoryModel.dart';
 import 'package:bawabtalsharq/Model/search_quary.dart';
 import 'package:bawabtalsharq/Screens/search/search_result_screen.dart';
@@ -12,6 +14,7 @@ import 'package:bawabtalsharq/bloc/categoryBloc/category_state.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../widgets/widgets.dart';
 
@@ -259,15 +262,43 @@ class _AllCategoriesState extends State<AllCategories>
                 scrollDirection: Axis.vertical,
                 itemBuilder: (context, index) {
                   return GestureDetector(
-                    onTap: () {
+                    onTap: () async {
+                      SearchQueryModel queryModel = new SearchQueryModel(
+                        '',
+                        Categories: [subCategoryArr[index].categoryId],
+                        sortBy: '',
+                        sort: '',
+                        brand: [],
+                        colors: [],
+                        countryCode: '',
+                        page: '',
+                        gender: [],
+                        sizes: [],
+                        expressShipping: [],
+                        shippedFrom: [],
+                        discount: [],
+                      );
+                      SharedPreferences pref =
+                          await SharedPreferences.getInstance();
+                      List<String> entriesStr =
+                          pref.getStringList('searchSaved');
+                      if (entriesStr == null) {
+                        entriesStr = [];
+                      }
+                      entriesStr.add(jsonEncode(queryModel.toJson()));
+
+                      pref.setStringList('searchSaved', entriesStr);
                       Navigator.push(
                           context,
                           new MaterialPageRoute(
                             builder: (BuildContext context) => new SearchResult(
-                              Categories: [subCategoryArr[index].categoryId],
-                              searchQuery: new SearchQueryModel(''),
+                              searchQuery: queryModel,
                             ),
-                          ));
+                          )).then((value) {
+                        setState(() {
+                          searchQuery = searchQuery;
+                        });
+                      });
                     },
                     child: Container(
                       margin: EdgeInsetsDirectional.only(
