@@ -239,9 +239,8 @@ abstract class Languages {
 
 //start Asmaa
   String get noInternertConnection;
-
   String get phoneAlreadyRegistered;
-
   String get termsConditions;
+  String get countryCode;
 //end Asmaa
 }

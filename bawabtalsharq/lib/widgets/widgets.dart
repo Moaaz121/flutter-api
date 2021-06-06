@@ -2107,6 +2107,8 @@ Widget customTextFormField(
   TextInputType textInputType,
   errorText,
   bool isPassword = false,
+
+  String hintText
 }) {
   return SizedBox(
     width: MediaQuery.of(context).size.width * width,
@@ -2130,7 +2132,7 @@ Widget customTextFormField(
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          //hintText: 'username',
+          hintText: hintText,
           prefixIcon: Icon(
             leftIcon,
             color: Colors.grey,

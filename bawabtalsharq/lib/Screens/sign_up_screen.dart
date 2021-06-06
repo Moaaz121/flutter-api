@@ -32,6 +32,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
+  final TextEditingController countryCodeController = TextEditingController();
+
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmpasswordController =
@@ -68,6 +70,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     passwordController.dispose();
     confirmpasswordController.dispose();
     companyController.dispose();
+    countryCodeController.dispose();
   }
 
   setSelectedRadioTile(int val) {
@@ -291,11 +294,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                 ),
-                customTextFormField(context,
-                    textInputType: TextInputType.phone,
-                    controller: phoneController,
-                    label: Languages.of(context).tel,
-                    leftIcon: Icons.phone),
+                Row(
+                  children: [
+                    Flexible(
+                      flex: 2,
+                      child: customTextFormField(context,
+                          textInputType: TextInputType.phone,
+                          controller: countryCodeController,
+                          label: Languages.of(context).countryCode,
+                          leftIcon: Icons.phone,
+                          hintText: '+20'),
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Flexible(
+                      flex: 5,
+                      child: customTextFormField(
+                        context,
+                        textInputType: TextInputType.phone,
+                        controller: phoneController,
+                        label: Languages.of(context).tel,
+                        // leftIcon: Icons.phone
+                      ),
+                    ),
+                  ],
+                ),
                 SizedBox(
                   height: 10,
                 ),
@@ -343,9 +367,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         } else {
                           _passwordErrorMessage = false;
                           isLoading = true;
+
                           print('Verifying phone');
+                          print(
+                              '${countryCodeController.text.trim()}${phoneController.text.trim()}');
                           data = {
-                            'phone': '+2${phoneController.text.trim()}',
+                            'phone':
+                                '${countryCodeController.text.trim()}${phoneController.text.trim()}',
                             'email': emailController.text.trim(),
                             'firstname': firstNameController.text.trim(),
                             'lastname': lastNameController.text.trim(),

@@ -287,5 +287,7 @@ class LanguageEn extends Languages {
       'This number already registered, please register with another number';
   String get termsConditions =>
       'Please accept the terms and conditions to proceed...';
+  String get countryCode => 'Code';
+
 //end Asmaa
 }

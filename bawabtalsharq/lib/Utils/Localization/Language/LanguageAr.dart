@@ -284,8 +284,9 @@ class LanguageAr extends Languages {
   String get noInternertConnection => 'لا يوجد خدمه انترنت';
   String get phoneAlreadyRegistered =>
       'هذا الرقم مسجل بالفعل،من فضلك ادخل رقم اخر';
-
   String get termsConditions => 'برجاء الموافقه علي الشروط و الاحكام للمتابعه';
+  String get countryCode => 'الكود';
+
 //end Asmaa
 
 }
