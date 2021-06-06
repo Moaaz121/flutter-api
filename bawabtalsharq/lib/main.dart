@@ -100,7 +100,7 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: orangeColor, accentColor: orangeColor),
       home: SplashScreen(),
-      navigatorObservers: [AnalyticsService().getAnalyticsOberver()],
+      // navigatorObservers: [AnalyticsService().getAnalyticsOberver()],
       routes: {
         ScreenRoutes.splashScreen: (_) => SplashScreen(),
         ScreenRoutes.introScreen: (_) => IntroScreen(),
