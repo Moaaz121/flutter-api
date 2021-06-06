@@ -32,7 +32,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
     super.initState();
-
     _settingBloc = SettingBloc();
     _settingBloc.add(GetSettingEvent());
     _currencyBloc = CurrencyBloc();
