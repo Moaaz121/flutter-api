@@ -12,7 +12,7 @@ import 'package:bawabtalsharq/bloc/categoryBloc/category_state.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:bawabtalsharq/Services/AnalyticsService.dart';
 import '../widgets/widgets.dart';
 
 class AllCategories extends StatefulWidget {
@@ -42,6 +42,11 @@ class _AllCategoriesState extends State<AllCategories>
 
     _categoryBloc = CategoryBloc();
     _categoryBloc.add(DoCategoryEvent());
+    AnalyticsService().sendAnalyticsEvent(eventName: 'All Categories', param: {
+      'msg': 'Open Categories',
+      'bool': true,
+    });
+    AnalyticsService().setScreenName(name: "All Categories");
   }
 
   @override
@@ -108,6 +113,11 @@ class _AllCategoriesState extends State<AllCategories>
                     color: Colors.white,
                     fontWeight: FontWeight.bold),
                 onBackPressed: () {
+                  AnalyticsService()
+                      .sendAnalyticsEvent(eventName: 'All Categories', param: {
+                    'msg': 'Close Categories',
+                    'bool': false,
+                  });
                   Navigator.pop(context);
                 },
               ),

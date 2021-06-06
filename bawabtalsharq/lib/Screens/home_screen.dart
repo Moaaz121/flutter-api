@@ -16,6 +16,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bawabtalsharq/Services/AnalyticsService.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -29,6 +30,12 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _homeBloc.add(GetHomeData());
+    AnalyticsService().sendAnalyticsEvent(eventName: 'HomeScreenView', param: {
+      'msg':
+          'Home screen view; Search, Chat, All categories, RFQ, Technical Support, Our Golden Supplier, Most Popular in Egypt, Most Popular by Categories.',
+      'bool': true,
+    });
+    AnalyticsService().setScreenName(name: 'HomeScreenView');
   }
 
   @override
@@ -40,6 +47,10 @@ class _HomeScreenState extends State<HomeScreen> {
           print(state);
           if (state is HomeLoadingState) {
             print('Loading');
+            AnalyticsService().sendAnalyticsEvent(eventName: 'On_Load', param: {
+              'msg': 'view home screen',
+              'bool': true,
+            });
             return Center(
               child: LoadingLogo(),
             );
@@ -70,6 +81,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             SizedBox(
                               width: MediaQuery.of(context).size.width / 3 - 25,
                               child: mainHeaderButton(context, () {
+                                AnalyticsService().sendAnalyticsEvent(
+                                    eventName: 'All_Categories',
+                                    param: {
+                                      'msg': 'Open categories',
+                                      'bool': true,
+                                    });
                                 Navigator.pushNamed(
                                     context, ScreenRoutes.categoriesScreen);
                               }, Languages.of(context).allCategories,
@@ -78,6 +95,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             SizedBox(
                               width: MediaQuery.of(context).size.width / 3 - 25,
                               child: mainHeaderButton(context, () {
+                                AnalyticsService().sendAnalyticsEvent(
+                                    eventName: 'RQF',
+                                    param: {
+                                      'msg': 'Open categories',
+                                      'bool': true,
+                                    });
                                 Navigator.pushNamed(
                                     context, ScreenRoutes.requestForQuotation);
                               }, Languages.of(context).requestForQ, requestForQ,
@@ -86,6 +109,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             SizedBox(
                               width: MediaQuery.of(context).size.width / 3 - 25,
                               child: mainHeaderButton(context, () {
+                                AnalyticsService().sendAnalyticsEvent(
+                                    eventName: 'Technical_Support',
+                                    param: {
+                                      'msg': 'View Technical Support',
+                                      'bool': true,
+                                    });
                                 Navigator.pushNamed(
                                     context, ScreenRoutes.sendMessage);
                               },
@@ -114,10 +143,17 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           searchButton(context, () {
+                            AnalyticsService().sendAnalyticsEvent(
+                                eventName: 'Search',
+                                param: {'bool': true, 'msg': 'Open Search'});
                             Navigator.pushNamed(
                                 context, ScreenRoutes.searchScreen);
                           }),
                           chatButton(() {
+                            AnalyticsService().sendAnalyticsEvent(
+                                eventName: 'Chat',
+                                param: {'bool': true, 'msg': 'Open Chat'});
+
                             Navigator.pushNamed(
                                 context, ScreenRoutes.chatsScreen);
                           })
@@ -345,6 +381,11 @@ Widget ourGoldenSupplier(BuildContext context, List<Supplier> suppliers) {
       ourGoldenSupplierHeader(
         context,
         onPress: () {
+          AnalyticsService()
+              .sendAnalyticsEvent(eventName: 'Our_Golden_Supplier', param: {
+            'msg': 'View golden supplier',
+            'bool': true,
+          });
           Navigator.pushNamed(context, ScreenRoutes.goldenSuppliers);
         },
       ),
