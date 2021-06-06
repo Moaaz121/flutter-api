@@ -68,7 +68,7 @@ dependencies:
   cached_network_image:
   connectivity:
   flutter_svg:
-
+  fluttertoast:
   video_player:
   chewie:
 
