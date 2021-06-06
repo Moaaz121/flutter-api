@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:bawabtalsharq/Model/fillQuotationModel.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/loading.dart';
@@ -532,8 +530,8 @@ class _RequestforqutationState extends State<Requestforqutation> {
                           print('dataSubmit: $data');
                         } else {
                           showToast(
-                            text: 'Some fields need to be filled',
-                          );
+                              text: 'Some fields need to be filled',
+                              toastGravity: ToastGravity.CENTER);
                         }
                       },
                       shape: RoundedRectangleBorder(

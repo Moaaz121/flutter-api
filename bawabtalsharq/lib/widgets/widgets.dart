@@ -1548,11 +1548,12 @@ Widget backIconRounded({Function onBackPressed}) {
   );
 }
 
-showToast({@required String text}) {
+showToast(
+    {@required String text, ToastGravity toastGravity = ToastGravity.TOP}) {
   Fluttertoast.showToast(
       msg: text,
       toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.TOP,
+      gravity: toastGravity,
       timeInSecForIosWeb: 1,
       backgroundColor: orangeColor,
       textColor: Colors.white,

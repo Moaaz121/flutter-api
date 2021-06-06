@@ -12,6 +12,7 @@ import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:rocket_chat_connector_flutter/models/authentication.dart';
 
 import '../main.dart';
@@ -70,10 +71,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 Navigator.pushNamed(context, ScreenRoutes.mainScreen);
               });
             } else {
-              showToast(text: state.userResponse.msg);
+              showToast(
+                  text: state.userResponse.msg,
+                  toastGravity: ToastGravity.SNACKBAR);
             }
           } else if (state is LoginNetworkErrorState) {
-            showToast(text: Languages.of(context).noNetwork);
+            showToast(
+                text: Languages.of(context).noNetwork,
+                toastGravity: ToastGravity.SNACKBAR);
           }
           return Container(
             height: MediaQuery.of(context).size.height,
