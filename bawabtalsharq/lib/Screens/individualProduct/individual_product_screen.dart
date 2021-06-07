@@ -21,7 +21,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../../main.dart';
-import 'IndividualProductHedaer.dart';
+import 'IndividualSliverPersistentHeader.dart';
 
 class IndividualProduct extends StatefulWidget {
   String title;
@@ -139,7 +139,7 @@ class _IndividualProductState extends State<IndividualProduct>
                           ),
                         )
                       ],
-                      expandedHeight: MediaQuery.of(context).size.height * 0.45,
+                      expandedHeight: MediaQuery.of(context).size.height * 0.4,
                       floating: true,
                       pinned: true,
                       snap: false,
@@ -158,7 +158,7 @@ class _IndividualProductState extends State<IndividualProduct>
                       flexibleSpace: FlexibleSpaceBar(
                           background: Container(
                               padding: EdgeInsetsDirectional.only(
-                                  top: 45, bottom: 10),
+                                  top: 55, bottom: 25),
                               child: Column(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -198,68 +198,9 @@ class _IndividualProductState extends State<IndividualProduct>
                                     ),
                                     sliderIndicator(sliderPosition,
                                         noPadding: true),
-                                    Flexible(
-                                      child: Container(
-                                          padding: EdgeInsetsDirectional.only(
-                                              top: 5, bottom: 5),
-                                          margin: EdgeInsetsDirectional.only(
-                                              start: 30, end: 50),
-                                          decoration: BoxDecoration(
-                                            color: Colors.grey.shade100,
-                                          ),
-                                          child: Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Flexible(
-                                                  child: RichText(
-                                                    maxLines: 2,
-                                                    overflow: TextOverflow.clip,
-                                                    strutStyle: StrutStyle(
-                                                        fontSize: 14),
-                                                    text: TextSpan(
-                                                        style: TextStyle(
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                        text: product
-                                                            .data.product),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    RatingBar.builder(
-                                                      itemSize: 18,
-                                                      initialRating: 3,
-                                                      minRating: 1,
-                                                      direction:
-                                                          Axis.horizontal,
-                                                      allowHalfRating: true,
-                                                      itemCount: 1,
-                                                      itemPadding:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal: 5),
-                                                      itemBuilder:
-                                                          (context, _) => Icon(
-                                                        Icons.star,
-                                                        color: Colors.amber,
-                                                      ),
-                                                      onRatingUpdate: (rating) {
-                                                        print(rating);
-                                                      },
-                                                    ),
-                                                    Text(product.data.rating)
-                                                  ],
-                                                ),
-                                              ])),
-                                    )
+                                    // Flexible(
+                                    //   child:,
+                                    // )
                                   ]))),
                     ),
                     SliverToBoxAdapter(
@@ -269,14 +210,94 @@ class _IndividualProductState extends State<IndividualProduct>
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
                             Container(
+                              padding: EdgeInsets.only(top: 20),
+                              // height: 140,
                               child: Center(
-                                child: Container(
-                                  width: 50,
-                                  height: 3,
-                                  color: Colors.grey[300],
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      width: 50,
+                                      height: 3,
+                                      color: Colors.grey[300],
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Container(
+                                        padding: EdgeInsetsDirectional.only(
+                                            top: 5, bottom: 5),
+                                        margin: EdgeInsetsDirectional.only(
+                                            start: 30, end: 50),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                        ),
+                                        child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Flexible(
+                                                child: RichText(
+                                                  maxLines: 2,
+                                                  overflow: TextOverflow.clip,
+                                                  strutStyle:
+                                                      StrutStyle(fontSize: 14),
+                                                  text: TextSpan(
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                      text:
+                                                          product.data.product),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  RatingBar.builder(
+                                                    itemSize: 18,
+                                                    initialRating: 3,
+                                                    minRating: 1,
+                                                    direction: Axis.horizontal,
+                                                    allowHalfRating: true,
+                                                    itemCount: 1,
+                                                    itemPadding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 5),
+                                                    itemBuilder: (context, _) =>
+                                                        Icon(
+                                                      Icons.star,
+                                                      color: Colors.amber,
+                                                    ),
+                                                    onRatingUpdate: (rating) {
+                                                      print(rating);
+                                                    },
+                                                  ),
+                                                  Text(product.data.rating)
+                                                ],
+                                              ),
+                                            ])),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 20, left: 10),
+                                      child: infoCartSupplier(
+                                          '${product.data.company}',
+                                          '${product.data.year}' +
+                                              ' ${Languages.of(context).year}',
+                                          '${product.data.countryName}',
+                                          '${product.data.category}',
+                                          '${product.data.countryImage}', () {
+                                        Navigator.pushNamed(context,
+                                            ScreenRoutes.supplierProfileScreen,
+                                            arguments: product.data.companyId);
+                                      }),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              height: 30,
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.only(
@@ -353,21 +374,21 @@ class _IndividualProductState extends State<IndividualProduct>
                   Container(
                     color: Colors.white,
                     child: SingleChildScrollView(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 30, left: 10),
-                        child: infoCartSupplier(
-                            '${product.data.company}',
-                            '${product.data.year}' +
-                                ' ${Languages.of(context).year}',
-                            '${product.data.countryName}',
-                            '${product.data.category}',
-                            '${product.data.countryImage}', () {
-                          Navigator.pushNamed(
-                              context, ScreenRoutes.supplierProfileScreen,
-                              arguments: product.data.companyId);
-                        }),
-                      ),
-                    ),
+                        // child: Padding(
+                        //   padding: const EdgeInsets.only(top: 30, left: 10),
+                        //   child: infoCartSupplier(
+                        //       '${product.data.company}',
+                        //       '${product.data.year}' +
+                        //           ' ${Languages.of(context).year}',
+                        //       '${product.data.countryName}',
+                        //       '${product.data.category}',
+                        //       '${product.data.countryImage}', () {
+                        //     Navigator.pushNamed(
+                        //         context, ScreenRoutes.supplierProfileScreen,
+                        //         arguments: product.data.companyId);
+                        //   }),
+                        // ),
+                        ),
                   ),
                 ]),
               ),
@@ -400,7 +421,7 @@ class _IndividualProductState extends State<IndividualProduct>
             height: 50,
             width: MediaQuery.of(context).size.width * 0.25,
             decoration: BoxDecoration(
-                boxShadow: [makeShadow(color: (0x29e16036), offset: 3)],
+                boxShadow: [makeShadow(color: (0x29e16036), offset: 5)],
                 borderRadius: BorderRadius.circular(16),
                 color: Colors.white),
             child: Center(
@@ -421,7 +442,7 @@ class _IndividualProductState extends State<IndividualProduct>
             height: 50,
             width: MediaQuery.of(context).size.width * 0.57,
             decoration: BoxDecoration(
-                boxShadow: [makeShadow(color: (0x29e16036), offset: 3)],
+                boxShadow: [makeShadow(color: (0x29e16036), offset: 5)],
                 borderRadius: BorderRadius.circular(16),
                 color: orangeColor),
             child: Row(
