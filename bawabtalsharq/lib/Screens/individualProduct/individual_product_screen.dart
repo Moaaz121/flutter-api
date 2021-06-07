@@ -21,7 +21,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../../main.dart';
-import '../SliverPersistentHeaderInvidiualProduct/IndividualProductHedaer.dart';
+import 'IndividualProductHedaer.dart';
 
 class IndividualProduct extends StatefulWidget {
   String title;
@@ -139,11 +139,12 @@ class _IndividualProductState extends State<IndividualProduct>
                           ),
                         )
                       ],
-                      expandedHeight: MediaQuery.of(context).size.height * 0.4,
+                      expandedHeight: MediaQuery.of(context).size.height * 0.45,
                       floating: true,
                       pinned: true,
                       snap: false,
                       elevation: 0,
+                      centerTitle: true,
                       title: RemoveTitleAppBar(
                         child: Text(
                           product.data.product,
@@ -275,7 +276,7 @@ class _IndividualProductState extends State<IndividualProduct>
                                   color: Colors.grey[300],
                                 ),
                               ),
-                              height: 25,
+                              height: 30,
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.only(
@@ -450,99 +451,99 @@ class _IndividualProductState extends State<IndividualProduct>
     );
   }
 
-  Widget productColor() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          Languages.of(context).productOption,
-          style: TextStyle(
-              color: orangeColor, fontWeight: FontWeight.bold, fontSize: 18),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Text(
-          Languages.of(context).color,
-          style: TextStyle(
-              color: Colors.black54, fontWeight: FontWeight.bold, fontSize: 14),
-        ),
-        ListView.builder(
-            physics: BouncingScrollPhysics(
-              parent: NeverScrollableScrollPhysics(),
-            ),
-            padding: EdgeInsetsDirectional.only(top: 5, bottom: 5),
-            shrinkWrap: true,
-            scrollDirection: Axis.vertical,
-            itemCount: 1,
-            itemBuilder: (context, position) {
-              // if (product.color.length < product.color.length) {
-              // _counter.add(0);
-              // }
+  // Widget productColor() {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Text(
+  //         Languages.of(context).productOption,
+  //         style: TextStyle(
+  //             color: orangeColor, fontWeight: FontWeight.bold, fontSize: 18),
+  //       ),
+  //       SizedBox(
+  //         height: 10,
+  //       ),
+  //       Text(
+  //         Languages.of(context).color,
+  //         style: TextStyle(
+  //             color: Colors.black54, fontWeight: FontWeight.bold, fontSize: 14),
+  //       ),
+  //       ListView.builder(
+  //           physics: BouncingScrollPhysics(
+  //             parent: NeverScrollableScrollPhysics(),
+  //           ),
+  //           padding: EdgeInsetsDirectional.only(top: 5, bottom: 5),
+  //           shrinkWrap: true,
+  //           scrollDirection: Axis.vertical,
+  //           itemCount: 1,
+  //           itemBuilder: (context, position) {
+  //             // if (product.color.length < product.color.length) {
+  //             // _counter.add(0);
+  //             // }
+  //
+  //             return Row(
+  //               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //               children: [
+  //                 productColorOption(position),
+  //                 Container(
+  //                   margin: EdgeInsetsDirectional.only(end: 5),
+  //                   padding: EdgeInsets.all(5),
+  //                   decoration: BoxDecoration(
+  //                       borderRadius: BorderRadius.circular(100),
+  //                       border: Border.all(width: 1, color: Colors.grey)),
+  //                   child: GestureDetector(
+  //                       child: Icon(
+  //                         Icons.remove,
+  //                         size: 16,
+  //                         color: orangeColor,
+  //                       ),
+  //                       onTap: () => _removeProduct()),
+  //                 ),
+  //                 Container(
+  //                   padding: EdgeInsetsDirectional.only(
+  //                       start: 35, end: 35, top: 4, bottom: 4),
+  //                   decoration: BoxDecoration(
+  //                       borderRadius: BorderRadius.circular(100),
+  //                       border: Border.all(width: 1, color: Colors.grey)),
+  //                   child: Text(
+  //                     '$_counter',
+  //                     style: TextStyle(color: orangeColor),
+  //                   ),
+  //                 ),
+  //                 Container(
+  //                   margin: EdgeInsetsDirectional.only(start: 5),
+  //                   padding: EdgeInsets.all(5),
+  //                   decoration: BoxDecoration(
+  //                       borderRadius: BorderRadius.circular(100),
+  //                       border: Border.all(width: 1, color: Colors.grey)),
+  //                   child: GestureDetector(
+  //                       child: Icon(
+  //                         Icons.add,
+  //                         size: 16,
+  //                         color: orangeColor,
+  //                       ),
+  //                       // onTap: () => _addProduct()),
+  //                 ),
+  //               ],
+  //             );
+  //           })
+  //     ],
+  //   );
+  // }
 
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  productColorOption(position),
-                  Container(
-                    margin: EdgeInsetsDirectional.only(end: 5),
-                    padding: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        border: Border.all(width: 1, color: Colors.grey)),
-                    child: GestureDetector(
-                        child: Icon(
-                          Icons.remove,
-                          size: 16,
-                          color: orangeColor,
-                        ),
-                        onTap: () => _removeProduct()),
-                  ),
-                  Container(
-                    padding: EdgeInsetsDirectional.only(
-                        start: 35, end: 35, top: 4, bottom: 4),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        border: Border.all(width: 1, color: Colors.grey)),
-                    child: Text(
-                      '$_counter',
-                      style: TextStyle(color: orangeColor),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsetsDirectional.only(start: 5),
-                    padding: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        border: Border.all(width: 1, color: Colors.grey)),
-                    child: GestureDetector(
-                        child: Icon(
-                          Icons.add,
-                          size: 16,
-                          color: orangeColor,
-                        ),
-                        onTap: () => _addProduct()),
-                  ),
-                ],
-              );
-            })
-      ],
-    );
-  }
-
-  _removeProduct() {
-    setState(() {
-      if (_counter > 0) {
-        _counter--;
-      }
-    });
-  }
-
-  _addProduct() {
-    setState(() {
-      _counter++;
-    });
-  }
+  // _removeProduct() {
+  //   setState(() {
+  //     if (_counter > 0) {
+  //       _counter--;
+  //     }
+  //   });
+  // }
+  //
+  // _addProduct() {
+  //   setState(() {
+  //     _counter++;
+  //   });
+  // }
   // Widget _createIncrementDicrementButton(IconData icon, Function onPressed) {
   //   return RawMaterialButton(
   //     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,

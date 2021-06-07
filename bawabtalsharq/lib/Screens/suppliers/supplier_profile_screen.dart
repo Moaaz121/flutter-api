@@ -324,7 +324,7 @@ class _SupplierProfileState extends State<SupplierProfile>
                               Positioned.directional(
                                 textDirection: Directionality.of(context),
                                 top: 120,
-                                end: 25,
+                                end: 20,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -409,8 +409,8 @@ class _SupplierProfileState extends State<SupplierProfile>
                     padding: EdgeInsets.all(sizeIcon),
                     child: Image.asset(
                       chatSupplier,
-                      width: 30,
-                      height: 30,
+                      width: 25,
+                      height: 25,
                       fit: BoxFit.fill,
                     ),
                   ),
