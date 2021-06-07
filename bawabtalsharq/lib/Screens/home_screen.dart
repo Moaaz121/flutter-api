@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
           print(state);
           if (state is HomeLoadingState) {
             AnalyticsService().sendAnalyticsEvent(eventName: 'On_Load', param: {
-              'msg': 'view home screen',
+              'msg': 'Loading HomeScreen',
               'bool': true,
             });
             return Center(
@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 AnalyticsService().sendAnalyticsEvent(
                                     eventName: 'All_Categories',
                                     param: {
-                                      'msg': 'Open categories',
+                                      'msg': 'Opening Categories',
                                       'bool': true,
                                     });
                                 Navigator.pushNamed(
@@ -97,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 AnalyticsService().sendAnalyticsEvent(
                                     eventName: 'RQF',
                                     param: {
-                                      'msg': 'Open categories',
+                                      'msg': 'Opening RQF',
                                       'bool': true,
                                     });
                                 Navigator.pushNamed(
@@ -111,9 +111,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 AnalyticsService().sendAnalyticsEvent(
                                     eventName: 'Technical_Support',
                                     param: {
-                                      'msg': 'View Technical Support',
+                                      'msg': 'Opening Technical Support',
                                       'bool': true,
                                     });
+
                                 Navigator.pushNamed(
                                     context, ScreenRoutes.sendMessage);
                               },
@@ -144,14 +145,20 @@ class _HomeScreenState extends State<HomeScreen> {
                           searchButton(context, () {
                             AnalyticsService().sendAnalyticsEvent(
                                 eventName: 'Search',
-                                param: {'bool': true, 'msg': 'Open Search'});
+                                param: {
+                                  'bool': true,
+                                  'msg': 'Open SearchScreen from HomeScreen'
+                                });
                             Navigator.pushNamed(
                                 context, ScreenRoutes.searchScreen);
                           }),
                           chatButton(() {
                             AnalyticsService().sendAnalyticsEvent(
                                 eventName: 'Chat',
-                                param: {'bool': true, 'msg': 'Open Chat'});
+                                param: {
+                                  'bool': true,
+                                  'msg': 'Open ChatScreen'
+                                });
 
                             Navigator.pushNamed(
                                 context, ScreenRoutes.chatsScreen);
@@ -212,6 +219,14 @@ Widget mostPopularByCategoryStable(
             ),
             GestureDetector(
               onTap: () {
+                AnalyticsService().sendAnalyticsEvent(
+                    eventName: 'See_All_Most_Popular_by_Category',
+                    param: {
+                      'msg':
+                          'Clicking on See All Items on Most Popular by Category',
+                      'bool': true,
+                      'Category_Name': '${category.name}'
+                    });
                 Navigator.push(
                     context,
                     new MaterialPageRoute(
@@ -541,6 +556,15 @@ Widget mostPopularIn(BuildContext context, CategoryElement category) {
                 img: category.data[0].image,
                 backgroundColor: yellowColor.withOpacity(.3),
                 onPress: () {
+                  AnalyticsService().sendAnalyticsEvent(
+                      eventName: 'Most_Popular_by_Catergory',
+                      param: {
+                        'msg':
+                            'Clicking on an Item from Most Popular by Catergory',
+                        'bool': true,
+                        'Category_Name': '${category.data[0].category}',
+                        'product_id': '${category.data[0].id}'
+                      });
                   Navigator.pushNamed(context, ScreenRoutes.individualProduct,
                       arguments: category.data[0].id);
                 },
@@ -572,6 +596,13 @@ Widget popularSlider(
                   ? redColor.withOpacity(.3)
                   : blueColor.withOpacity(.3),
               onPress: () {
+                AnalyticsService().sendAnalyticsEvent(
+                    eventName: 'Most_Popular_in_Egypt',
+                    param: {
+                      'msg': 'Clicking on an Item from Most Popular in Egypt',
+                      'bool': true,
+                      'product_id': '${datums[0].id}'
+                    });
                 Navigator.pushNamed(context, ScreenRoutes.individualProduct,
                     arguments: datums[0].id);
               },
@@ -1091,6 +1122,14 @@ Widget mainMostPopularCategory(CategoryElement category) {
           child: mostPopularCateg(
             context: context,
             onPress: () {
+              AnalyticsService().sendAnalyticsEvent(
+                  eventName: 'Most_Popular_by_Catergory',
+                  param: {
+                    'msg': 'Clicking on an Item from Most Popular by Catergory',
+                    'bool': true,
+                    'Category_Name': '${category.name}',
+                    'product_id': '${category.data[position].id}'
+                  });
               Navigator.pushNamed(context, ScreenRoutes.individualProduct,
                   arguments: category.data[position].id);
             },

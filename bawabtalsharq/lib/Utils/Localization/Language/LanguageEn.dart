@@ -262,7 +262,7 @@ class LanguageEn extends Languages {
   String get ourGroupCompanies => 'Our Group Companies';
   String get searchByCategories => 'Search by categories';
   String get handmadeCrafts => 'Handmade crafts';
-  String get resentSearch => 'Resent Search';
+  String get recentSearch => 'Recent Search';
   String get quoteDetails => 'Quote Details';
   String get backToChat => 'Back To Chat';
   String get minOrder => 'Min. Order:';

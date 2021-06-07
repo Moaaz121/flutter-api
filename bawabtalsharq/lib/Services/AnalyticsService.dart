@@ -14,7 +14,7 @@ class AnalyticsService {
   setScreenName({@required String name}) async {
     await _analytics
         .setCurrentScreen(screenName: name)
-        .then((value) => print('Name is $name'));
+        .then((value) => print('ScreenName is $name'));
   }
 
   Future<void> sendAnalyticsEvent(

@@ -31,6 +31,10 @@ class _SearchScreenState extends State<SearchScreen> {
     // TODO: implement initState
     super.initState();
     AnalyticsService().setScreenName(name: 'SearchScreen');
+    AnalyticsService().sendAnalyticsEvent(eventName: 'SearchScreen', param: {
+      'msg': 'SearchBox, Search by Categories and Recent Search',
+      'bool': true,
+    });
   }
 
   @override
@@ -157,11 +161,15 @@ class _SearchScreenState extends State<SearchScreen> {
                                             AnalyticsService()
                                                 .sendAnalyticsEvent(
                                                     eventName:
-                                                        'search_by_Categories ',
+                                                        'Search_by_Categories',
                                                     param: {
                                                   'bool': true,
                                                   'msg':
-                                                      'Searching for ${categories[position].category}; id: ${categories[position].categoryId}'
+                                                      'Searching for "${categories[position].category}"',
+                                                  'Category_Name':
+                                                      '${categories[position].category}',
+                                                  'Category_Id':
+                                                      '${categories[position].categoryId}'
                                                 });
 
                                             Navigator.push(
@@ -248,7 +256,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                   padding: const EdgeInsetsDirectional.only(
                                       start: 20),
                                   child: Text(
-                                    Languages.of(context).resentSearch,
+                                    Languages.of(context).recentSearch,
                                     style: TextStyle(
                                       fontFamily: 'Segoe UI',
                                       fontSize: 13.0,
@@ -275,10 +283,11 @@ class _SearchScreenState extends State<SearchScreen> {
                                       child: GestureDetector(
                                         onTap: () {
                                           AnalyticsService().sendAnalyticsEvent(
-                                              eventName: 'Recent_Search',
+                                              eventName: 'Search_by_Recent',
                                               param: {
                                                 'bool': true,
-                                                'msg': 'View all recent search'
+                                                'msg':
+                                                    'Searching for "${savedSearch[position]}"',
                                               });
 
                                           Navigator.push(
@@ -401,8 +410,8 @@ class _SearchScreenState extends State<SearchScreen> {
           child: TextField(
             onSubmitted: (value) async {
               AnalyticsService().sendAnalyticsEvent(
-                  eventName: 'SearchBox',
-                  param: {'bool': true, 'msg': 'Searching for $value'});
+                  eventName: 'Searchbox',
+                  param: {'bool': true, 'msg': 'Searching for "$value"'});
 
               SearchQueryModel queryModel = new SearchQueryModel(
                 _searchController.text,

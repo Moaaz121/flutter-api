@@ -69,6 +69,12 @@ class _SearchResultState extends State<SearchResult> {
     blockEvent();
     super.initState();
     AnalyticsService().setScreenName(name: 'Search_ResultScreen');
+    AnalyticsService()
+        .sendAnalyticsEvent(eventName: 'Search_ResultScreen', param: {
+      'msg':
+          'Search box, Search by Categories, Recent Search, Filter Customization for search, Sort Search Result by Most Viewer, Best Rate and Price by Ascending and Descending',
+      'bool': true,
+    });
   }
 
   @override
@@ -127,6 +133,12 @@ class _SearchResultState extends State<SearchResult> {
               children: [
                 GestureDetector(
                   onTap: () {
+                    AnalyticsService().sendAnalyticsEvent(
+                        eventName: 'Filtering_Search',
+                        param: {
+                          'bool': true,
+                          'msg': 'opening Filter',
+                        });
                     Navigator.pushNamed(context, ScreenRoutes.filterScreen);
                   },
                   child: sortFilterContainer(
@@ -136,6 +148,14 @@ class _SearchResultState extends State<SearchResult> {
                 ),
                 GestureDetector(
                   onTap: () {
+                    AnalyticsService().sendAnalyticsEvent(
+                        eventName: 'Sorting_Search',
+                        param: {
+                          'bool': true,
+                          'msg':
+                              'open popularity view most popular , price , rating and new with arranging ascending and descending',
+                          'sort_by': '${searchQuery.sortBy}'
+                        });
                     showAnimatedDialog(
                       context,
                       SortScreen(),
@@ -163,6 +183,12 @@ class _SearchResultState extends State<SearchResult> {
                           setState(() {
                             if (!isGrid) {
                               isGrid = true;
+                              AnalyticsService().sendAnalyticsEvent(
+                                  eventName: 'Products_Grid_View',
+                                  param: {
+                                    'bool': isGrid,
+                                    'msg': 'Showing List as Grid',
+                                  });
                             }
                           });
                         },
@@ -184,6 +210,12 @@ class _SearchResultState extends State<SearchResult> {
                           setState(() {
                             if (isGrid) {
                               isGrid = false;
+                              AnalyticsService().sendAnalyticsEvent(
+                                  eventName: 'Products_List_View',
+                                  param: {
+                                    'bool': isGrid,
+                                    'msg': 'Showing List as List',
+                                  });
                             }
                           });
                         },
@@ -269,6 +301,15 @@ class _SearchResultState extends State<SearchResult> {
                                 itemBuilder: (context, position) {
                                   return GestureDetector(
                                     onTap: () {
+                                      AnalyticsService().sendAnalyticsEvent(
+                                          eventName: 'Search_Action',
+                                          param: {
+                                            'bool': true,
+                                            'msg':
+                                                'Opening product searched by category  for "${event.searchResponse.products[position].productId}"',
+                                            'product_id':
+                                                '${event.searchResponse.products[position].productId}'
+                                          });
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -298,6 +339,15 @@ class _SearchResultState extends State<SearchResult> {
                                         product: event
                                             .searchResponse.products[position]),
                                     onTap: () {
+                                      AnalyticsService().sendAnalyticsEvent(
+                                          eventName: 'Search_Action',
+                                          param: {
+                                            'bool': true,
+                                            'msg':
+                                                'Opening product searched by category  for "${event.searchResponse.products[position].productId}"',
+                                            'product_id':
+                                                '${event.searchResponse.products[position].productId}'
+                                          });
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -593,6 +643,24 @@ class _FilterScreenState extends State<FilterScreen> {
         actions: [
           FlatButton(
             onPressed: () {
+              AnalyticsService()
+                  .sendAnalyticsEvent(eventName: 'Filter', param: {
+                'bool': true,
+                'msg': 'Choosed Filter',
+                'Categories': "${searchQuery.Categories}",
+                'Express_Shipping':
+                    '${searchQuery.expressShipping.toList().toString()}',
+                'Shipped_From':
+                    '${searchQuery.shippedFrom.toList().toString()}',
+                "Rating": "${searchQuery.rating}",
+                'Search_Brand': '${searchQuery.brand.toList().toString()}',
+                'Price_range':
+                    'From: ${_priceFromController.text.trim()}, To: ${_priceToController.text.trim()}',
+                'Discount': '${searchQuery.discount.toList().toString()}',
+                'Sizes': '${searchQuery.sizes.toList().toString()}',
+                'Colors': '${searchQuery.colors.toList().toString()}',
+                'Gender': '${searchQuery.gender.toList().toString()}'
+              });
               Navigator.of(context).pop();
               blockEvent();
             },
@@ -664,6 +732,13 @@ class _FilterScreenState extends State<FilterScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         textTitle(context, Languages.of(context).category, () {
+                          AnalyticsService().sendAnalyticsEvent(
+                              eventName: 'Search_by_Categories',
+                              param: {
+                                'bool': true,
+                                'msg': 'Choosing Categories',
+                              });
+
                           Navigator.push(
                               context,
                               MaterialPageRoute(

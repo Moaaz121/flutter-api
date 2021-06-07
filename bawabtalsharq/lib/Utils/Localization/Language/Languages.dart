@@ -217,7 +217,7 @@ abstract class Languages {
   String get ourGroup;
   String get ourGroupCompanies;
   String get searchByCategories;
-  String get resentSearch;
+  String get recentSearch;
   String get handmadeCrafts;
   String get quoteDetails;
   String get backToChat;

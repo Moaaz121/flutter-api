@@ -259,7 +259,7 @@ class LanguageAr extends Languages {
   String get ourGroup => 'مجموعتنا';
   String get ourGroupCompanies => 'شركاتنا';
   String get searchByCategories => 'البحث حسب الفئه';
-  String get resentSearch => 'البحث الأخير ';
+  String get recentSearch => 'البحث الأخير ';
   String get handmadeCrafts => 'يدويا ';
   String get quoteDetails => 'تفاصيل الاقتباس';
   String get backToChat => 'الرجوع الي المحادثه';
