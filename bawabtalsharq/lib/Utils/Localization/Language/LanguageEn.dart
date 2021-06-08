@@ -171,6 +171,19 @@ class LanguageEn extends Languages {
   String get detailedPictures => 'Detailed Pictures';
   String get companyDetails => 'Company Details';
   String get productInformation => 'Product Information';
+  String get city => 'City';
+  String get zipCode => 'Zip-Code';
+  String get state => 'State';
+  String get companySiteUrl => 'Company Site URL';
+  String get mainProduct => 'Main product';
+  String get businessType => 'Business Type';
+  String get yearEstablished => 'Year established';
+  String get acceptedPaymentCurrency => 'Accepted payment currency';
+  String get acceptedPaymentType => 'Accepted payment type';
+  String get averageLeadTime => 'Average lead time';
+  String get sampleOrder => 'Sample order';
+  String get phoneNum => 'Phone';
+  String get addressName => 'Address';
 
 // end Mosdik
 
