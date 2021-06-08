@@ -10,3 +10,5 @@ class SearchLoadedState extends SearchState {
   SearchModel searchResponse;
   SearchLoadedState({this.searchResponse});
 }
+
+class SearchNoInternetState extends SearchState {}
