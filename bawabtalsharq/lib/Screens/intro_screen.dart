@@ -10,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:bawabtalsharq/Services/AnalyticsService.dart';
 
 class IntroScreen extends StatefulWidget {
   @override
@@ -19,6 +20,20 @@ class IntroScreen extends StatefulWidget {
 class _IntroScreenState extends State<IntroScreen> {
   int imageIndex = 0;
   PageController _pageController = PageController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    AnalyticsService().setScreenName(name: 'IntroScreen');
+    AnalyticsService().sendAnalyticsEvent(eventName: 'IntroScreen', param: {
+      'msg':
+          'Emphasizing our service with choosing the language and  comes in 3 stages/pages',
+      'bool': true,
+    });
+
+    //
+  }
 
   @override
   Widget build(BuildContext context) {

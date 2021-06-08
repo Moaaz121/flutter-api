@@ -72,7 +72,7 @@ class _SearchResultState extends State<SearchResult> {
     AnalyticsService()
         .sendAnalyticsEvent(eventName: 'Search_ResultScreen', param: {
       'msg':
-          'Search box, Search by Categories, Recent Search, Filter Customization for search, Sort Search Result by Most Viewer, Best Rate and Price by Ascending and Descending',
+          'Search box, Search by Categories, Recent Search, Filter Customization, Sort Search',
       'bool': true,
     });
   }

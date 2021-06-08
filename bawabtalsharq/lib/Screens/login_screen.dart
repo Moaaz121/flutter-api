@@ -14,7 +14,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:rocket_chat_connector_flutter/models/authentication.dart';
-
+import 'package:bawabtalsharq/Services/AnalyticsService.dart';
 import '../main.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -122,8 +122,16 @@ class _LoginScreenState extends State<LoginScreen> {
                               child: Row(
                                 children: [
                                   GestureDetector(
-                                      onTap: () => Navigator.pushNamed(
-                                          context, ScreenRoutes.signUpScreen),
+                                      onTap: () {
+                                        Navigator.pushNamed(
+                                            context, ScreenRoutes.signUpScreen);
+                                        AnalyticsService().sendAnalyticsEvent(
+                                            eventName: 'Registering',
+                                            param: {
+                                              'msg': 'Opening Regeister',
+                                              'bool': true,
+                                            });
+                                      },
                                       child: Row(
                                         children: [
                                           Text(Languages.of(context).signUp),
@@ -249,6 +257,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                           DoLoginEvent(usernameController.text,
                                               passwordController.text),
                                         );
+
+                                        AnalyticsService()
+                                            .logging(method: 'email');
+
+                                        // AnalyticsService().sendAnalyticsEvent(
+                                        //     eventName: 'LoginScreen',
+                                        //     param: {
+                                        //       'msg': 'Loggin',
+                                        //       'bool': true,
+                                        //     });
                                       }
                                     });
                                   },

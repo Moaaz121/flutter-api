@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _homeBloc.add(GetHomeData());
     AnalyticsService().sendAnalyticsEvent(eventName: 'HomeScreenView', param: {
       'msg':
-          'Home screen view; Search, Chat, All categories, RFQ, Technical Support, Our Golden Supplier, Most Popular in Egypt, Most Popular by Categories.',
+          'Contains Search, Chat, All categories, RFQ, Technical Support, Our Golden Supplier, Most Popular in Egypt and by Categories.',
       'bool': true,
     });
     AnalyticsService().setScreenName(name: 'HomeScreenView');

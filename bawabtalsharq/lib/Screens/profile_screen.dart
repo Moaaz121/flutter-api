@@ -14,6 +14,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bawabtalsharq/Services/AnalyticsService.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -30,6 +31,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
 
     _logOutBloc = LogOutBloc();
+    AnalyticsService().sendAnalyticsEvent(eventName: 'ProfileScreen', param: {
+      'msg':
+          'All the Profile details; ,My Account, Saved, History, Message Center, FAQ, Update Packages',
+      'bool': true,
+    });
   }
 
   @override

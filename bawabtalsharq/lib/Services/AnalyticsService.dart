@@ -11,7 +11,7 @@ class AnalyticsService {
     await _analytics.setUserId(userId);
   }
 
-  setScreenName({@required String name}) async {
+  Future setScreenName({@required String name}) async {
     await _analytics
         .setCurrentScreen(screenName: name)
         .then((value) => print('ScreenName is $name'));
@@ -36,5 +36,9 @@ class AnalyticsService {
         )
         .whenComplete(() => print('logEvent succeeded'))
         .catchError((e) => print('Error in LogEvent: $e'));
+  }
+
+  Future logging({@required String method}) async {
+    await _analytics.logLogin(loginMethod: method);
   }
 }

@@ -5,6 +5,7 @@ import 'package:bawabtalsharq/main.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+import 'package:bawabtalsharq/Services/AnalyticsService.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -44,6 +45,11 @@ class _SplashScreenState extends State<SplashScreen> {
       onBoarding = true;
     print(onBoarding);
     startTime(4);
+    AnalyticsService().setScreenName(name: 'SplashScreen');
+    AnalyticsService().sendAnalyticsEvent(eventName: 'SplashScreen', param: {
+      'msg': 'Bawabet AlSharq animation Logo',
+      'bool': true,
+    });
   }
 
   @override
