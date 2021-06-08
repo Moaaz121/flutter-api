@@ -168,6 +168,19 @@ class LanguageAr extends Languages {
   String get detailedPictures => 'صور مفصلة';
   String get companyDetails => 'تفاصيل الشركة';
   String get productInformation => 'معلومات المنتج';
+  String get city => 'المدينة';
+  String get zipCode => 'الرمز البريدي';
+  String get state => 'المنطقة';
+  String get companySiteUrl => 'موقع الشركة الإلكتروني';
+  String get mainProduct => 'المنتجات الرئيسية';
+  String get businessType => 'نوع العمل';
+  String get yearEstablished => 'سنة التأسيس';
+  String get acceptedPaymentCurrency => 'عملة الدفع المقبولة';
+  String get acceptedPaymentType => 'نوع الدفع المقبول';
+  String get averageLeadTime => 'متوسط مدة التوصيل';
+  String get sampleOrder => 'طلب عينة';
+  String get phoneNum => 'رقم الهاتف';
+  String get addressName => 'العنوان';
 
 // end Mosdik
 

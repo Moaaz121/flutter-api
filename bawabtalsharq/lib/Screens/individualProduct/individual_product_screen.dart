@@ -374,27 +374,87 @@ class _IndividualProductState extends State<IndividualProduct>
                   Container(
                     color: Colors.white,
                     child: SingleChildScrollView(
-                        // child: Padding(
-                        //   padding: const EdgeInsets.only(top: 30, left: 10),
-                        //   child: infoCartSupplier(
-                        //       '${product.data.company}',
-                        //       '${product.data.year}' +
-                        //           ' ${Languages.of(context).year}',
-                        //       '${product.data.countryName}',
-                        //       '${product.data.category}',
-                        //       '${product.data.countryImage}', () {
-                        //     Navigator.pushNamed(
-                        //         context, ScreenRoutes.supplierProfileScreen,
-                        //         arguments: product.data.companyId);
-                        //   }),
-                        // ),
-                        ),
+                      padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).size.height * 0.1),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          companyDetails(Languages.of(context).companyName,
+                              product.data.companyDetails.company),
+                          companyDetails(Languages.of(context).email,
+                              product.data.companyDetails.email),
+                          companyDetails(Languages.of(context).phone,
+                              product.data.companyDetails.phone),
+                          companyDetails(Languages.of(context).country,
+                              product.data.companyDetails.country),
+                          companyDetails(Languages.of(context).city,
+                              product.data.companyDetails.city),
+                          companyDetails(Languages.of(context).addressName,
+                              product.data.companyDetails.address),
+                          companyDetails(Languages.of(context).zipCode,
+                              product.data.companyDetails.zipcode),
+                          companyDetails(Languages.of(context).state,
+                              product.data.companyDetails.state),
+                          companyDetails(Languages.of(context).companySiteUrl,
+                              product.data.companyDetails.companySite),
+                          companyDetails(Languages.of(context).mainProduct,
+                              product.data.companyDetails.mainProduct),
+                          companyDetails(Languages.of(context).businessType,
+                              product.data.companyDetails.businessType),
+                          companyDetails(Languages.of(context).yearEstablished,
+                              product.data.companyDetails.year),
+                          companyDetails(
+                              Languages.of(context).acceptedPaymentCurrency,
+                              product.data.companyDetails.paymentCurrency),
+                          companyDetails(
+                              Languages.of(context).acceptedPaymentType,
+                              product.data.companyDetails.paymentType),
+                          companyDetails(Languages.of(context).averageLeadTime,
+                              product.data.companyDetails.leadTime),
+                          companyDetails(Languages.of(context).sampleOrder,
+                              product.data.companyDetails.sampleOrder),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.only(
+                                start: 15.0, top: 10),
+                            child: buildText(
+                              'Total employees',
+                              15,
+                              fontWeight: FontWeight.w700,
+                              fontStyle: FontStyle.normal,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
                   ),
                 ]),
               ),
             ),
           );
         });
+  }
+
+  Widget companyDetails(String textHeader, String subText) {
+    return subText != ''
+        ? Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  textHeader,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontStyle: FontStyle.normal,
+                      fontSize: 15),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(subText)
+              ],
+            ))
+        : SizedBox();
   }
 
   Widget tabBar() {
@@ -471,6 +531,10 @@ class _IndividualProductState extends State<IndividualProduct>
       ),
     );
   }
+
+  //bahaa
+
+  //bahaa
 
   // Widget productColor() {
   //   return Column(
