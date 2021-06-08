@@ -59,6 +59,7 @@ class _IndividualProductState extends State<IndividualProduct>
     _controllerTab.addListener(() => {setState(() {})});
   }
 
+  List<int> _selectedItems = List<int>();
   int selectedIndex = 0;
 
   @override
@@ -375,7 +376,7 @@ class _IndividualProductState extends State<IndividualProduct>
                     color: Colors.white,
                     child: SingleChildScrollView(
                       padding: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).size.height * 0.1),
+                          bottom: MediaQuery.of(context).size.height * 0.15),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -415,13 +416,101 @@ class _IndividualProductState extends State<IndividualProduct>
                               product.data.companyDetails.sampleOrder),
                           Padding(
                             padding: const EdgeInsetsDirectional.only(
-                                start: 15.0, top: 10),
+                                start: 15.0, top: 10, bottom: 10),
                             child: buildText(
                               'Total employees',
                               15,
                               fontWeight: FontWeight.w700,
                               fontStyle: FontStyle.normal,
                             ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(product
+                                      .data.companyDetails.totalEmployees
+                                      .split('-')[0]),
+                                  Container(
+                                    height: 20,
+                                    width: 20,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                            width: 4, color: orangeColor)),
+                                  ),
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 15),
+                                child: Container(
+                                  width: 150,
+                                  height: 2.5,
+                                  color: orangeColor,
+                                ),
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(product
+                                      .data.companyDetails.totalEmployees
+                                      .split('-')[1]),
+                                  Container(
+                                    height: 20,
+                                    width: 20,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                            width: 4, color: orangeColor)),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.only(
+                                start: 15.0, top: 20, bottom: 10),
+                            child: buildText(
+                              'Total employees',
+                              15,
+                              fontWeight: FontWeight.w700,
+                              fontStyle: FontStyle.normal,
+                            ),
+                          ),
+                          Image(image: AssetImage(mosadaq_img)),
+                          Container(
+                            height: 100,
+                            // width: 100,
+                            child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: 10,
+                                itemBuilder: (context, index) {
+                                  return Container(
+                                    color: (_selectedItems.contains(index))
+                                        ? Colors.blue.withOpacity(0.5)
+                                        : Colors.transparent,
+                                    child: ListTile(
+                                      onTap: () {
+                                        if (_selectedItems.contains(index)) {
+                                          setState(() {
+                                            _selectedItems.removeWhere(
+                                                (val) => val == index);
+                                          });
+                                        }
+                                      },
+                                      onLongPress: () {
+                                        if (!_selectedItems.contains(index)) {
+                                          setState(() {
+                                            _selectedItems.add(index);
+                                          });
+                                        }
+                                      },
+                                      title: Text('Text+$index'),
+                                    ),
+                                  );
+                                }),
                           )
                         ],
                       ),
