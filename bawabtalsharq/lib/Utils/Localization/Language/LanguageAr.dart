@@ -181,6 +181,8 @@ class LanguageAr extends Languages {
   String get sampleOrder => 'طلب عينة';
   String get phoneNum => 'رقم الهاتف';
   String get addressName => 'العنوان';
+  String get companyProfile => 'ملف الشركة';
+  String get totalEmployees => 'عدد الموظفين';
 
 // end Mosdik
 

@@ -184,6 +184,8 @@ class LanguageEn extends Languages {
   String get sampleOrder => 'Sample order';
   String get phoneNum => 'Phone';
   String get addressName => 'Address';
+  String get companyProfile => 'Company Profile';
+  String get totalEmployees => 'Total Employees';
 
 // end Mosdik
 

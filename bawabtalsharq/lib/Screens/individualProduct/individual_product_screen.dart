@@ -59,8 +59,8 @@ class _IndividualProductState extends State<IndividualProduct>
     _controllerTab.addListener(() => {setState(() {})});
   }
 
-  List<int> _selectedItems = List<int>();
   int selectedIndex = 0;
+  String imageProfile = "";
 
   @override
   Widget build(BuildContext context) {
@@ -384,7 +384,7 @@ class _IndividualProductState extends State<IndividualProduct>
                               product.data.companyDetails.company),
                           companyDetails(Languages.of(context).email,
                               product.data.companyDetails.email),
-                          companyDetails(Languages.of(context).phone,
+                          companyDetails(Languages.of(context).phoneNum,
                               product.data.companyDetails.phone),
                           companyDetails(Languages.of(context).country,
                               product.data.companyDetails.country),
@@ -418,7 +418,7 @@ class _IndividualProductState extends State<IndividualProduct>
                             padding: const EdgeInsetsDirectional.only(
                                 start: 15.0, top: 10, bottom: 10),
                             child: buildText(
-                              'Total employees',
+                              Languages.of(context).totalEmployees,
                               15,
                               fontWeight: FontWeight.w700,
                               fontStyle: FontStyle.normal,
@@ -473,44 +473,65 @@ class _IndividualProductState extends State<IndividualProduct>
                             padding: const EdgeInsetsDirectional.only(
                                 start: 15.0, top: 20, bottom: 10),
                             child: buildText(
-                              'Total employees',
+                              Languages.of(context).companyProfile,
                               15,
                               fontWeight: FontWeight.w700,
                               fontStyle: FontStyle.normal,
                             ),
                           ),
-                          Image(image: AssetImage(mosadaq_img)),
+                          Center(
+                              child: Container(
+                            height: 250,
+                            margin: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              boxShadow: [makeShadow()],
+                              borderRadius: BorderRadius.circular(20),
+                              shape: BoxShape.rectangle,
+                              image: DecorationImage(
+                                image: NetworkImage(imageProfile),
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          )),
                           Container(
-                            height: 100,
-                            // width: 100,
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            height: 70,
                             child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: 10,
-                                itemBuilder: (context, index) {
-                                  return Container(
-                                    color: (_selectedItems.contains(index))
-                                        ? Colors.blue.withOpacity(0.5)
-                                        : Colors.transparent,
-                                    child: ListTile(
-                                      onTap: () {
-                                        if (_selectedItems.contains(index)) {
+                              physics:
+                                  PageScrollPhysics(), // this is what you are looking for
+                              scrollDirection: Axis.horizontal,
+                              itemCount: product.data.companyProfile.length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                    margin: EdgeInsets.symmetric(horizontal: 5),
+                                    width: 100,
+                                    child: Card(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(3)),
+                                      child: ListTile(
+                                        contentPadding: EdgeInsets.only(
+                                            bottom: 7, left: 5, right: 5),
+                                        title: Image(
+                                          image: NetworkImage(product
+                                              .data.companyProfile[index]),
+                                          fit: BoxFit.fill,
+                                        ),
+                                        tileColor: selectedIndex == index
+                                            ? Colors.deepOrange[200]
+                                            : null,
+                                        // selected: true,
+                                        onTap: () {
                                           setState(() {
-                                            _selectedItems.removeWhere(
-                                                (val) => val == index);
+                                            selectedIndex = index;
+                                            imageProfile = product
+                                                .data.companyProfile[index];
                                           });
-                                        }
-                                      },
-                                      onLongPress: () {
-                                        if (!_selectedItems.contains(index)) {
-                                          setState(() {
-                                            _selectedItems.add(index);
-                                          });
-                                        }
-                                      },
-                                      title: Text('Text+$index'),
-                                    ),
-                                  );
-                                }),
+                                        },
+                                      ),
+                                    ));
+                              },
+                            ),
                           )
                         ],
                       ),

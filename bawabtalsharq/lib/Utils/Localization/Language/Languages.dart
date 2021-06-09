@@ -177,6 +177,8 @@ abstract class Languages {
   String get sampleOrder;
   String get phoneNum;
   String get addressName;
+  String get companyProfile;
+  String get totalEmployees;
 
 // end Mosdik
 
