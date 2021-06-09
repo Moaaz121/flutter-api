@@ -51,6 +51,9 @@ class _SupplierProfileState extends State<SupplierProfile>
   bool isLoaded = false;
   bool isLoading = false;
   String errorMessage = '';
+
+  int selectedIndex = 0;
+  String imageProfile = "";
   SupplierProfileModel supplierProfileData;
   @override
   void initState() {
@@ -93,7 +96,7 @@ class _SupplierProfileState extends State<SupplierProfile>
   Map<int, Widget> info(BuildContext context) {
     final Map<int, Widget> info = <int, Widget>{
       0: listOfCateWidgetSupplier(),
-      1: infoList(),
+      1: _buildTablesRow(),
     };
     return info;
   }
@@ -822,40 +825,192 @@ class _SupplierProfileState extends State<SupplierProfile>
     );
   }
 
-  Widget infoList() {
+  Widget _buildTablesRow() {
     return SingleChildScrollView(
       padding:
           EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.1),
-      child: Padding(
-        padding: const EdgeInsets.only(left: 30, right: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 20,
-            ),
-            buildText('Member info:', 13, fontWeight: FontWeight.w600),
-            SizedBox(
-              height: 100,
-            ),
-            buildText('Contact Detail:', 13, fontWeight: FontWeight.w600),
-            SizedBox(
-              height: 100,
-            ),
-            buildText('Company Profile', 13, fontWeight: FontWeight.w600),
-            SizedBox(
-              height: 20,
-            ),
-            // mainSlider(
-            //     // imgs: state.homeResponse.data.slider,
-            //     ),
-            buildText(
-                'It is our passion to make people forget their daily stress while indulging in one of our many exclusive pieces...It is our passion to make people forget their daily stress while indulging in one of our many exclusive pieces...It is our passion to make people forget their daily stress while indulging in one of our many exclusive pieces...It is our passion to make people forget their daily stress while indulging in one of our many exclusive piecesIt is our passion to make people forget their daily stress while indulging in one of our many exclusive piecesIt is our passion to make people forget their daily stress while indulging in one of our many exclusive piecesIt is our passion to make people forget their daily stress while indulging in one of our many exclusive piecesIt is our passion to make people forget their daily stress while indulging in one of our many exclusive pieces...',
-                11,
-                fontWeight: FontWeight.w600)
-          ],
+      child: Center(
+          child: Column(children: <Widget>[
+        Container(
+          margin: EdgeInsets.all(20),
+          child: Table(
+            textDirection: TextDirection.ltr,
+            border: TableBorder.all(width: 0.3),
+            children: [
+              tableRow(Languages.of(context).companyName,
+                  supplierProfileData.supplierData.supplierInfo.company),
+              tableRow(Languages.of(context).email,
+                  supplierProfileData.supplierData.supplierInfo.email),
+              tableRow(Languages.of(context).phoneNum,
+                  supplierProfileData.supplierData.supplierInfo.phone),
+              tableRow(Languages.of(context).country,
+                  supplierProfileData.supplierData.supplierInfo.country),
+              tableRow(Languages.of(context).city,
+                  supplierProfileData.supplierData.supplierInfo.city),
+              tableRow(Languages.of(context).addressName,
+                  supplierProfileData.supplierData.supplierInfo.address),
+              tableRow(Languages.of(context).zipCode,
+                  supplierProfileData.supplierData.supplierInfo.zipcode),
+              tableRow(Languages.of(context).state,
+                  supplierProfileData.supplierData.supplierInfo.state),
+              tableRow(Languages.of(context).companySite,
+                  supplierProfileData.supplierData.supplierInfo.companySite),
+              tableRow(Languages.of(context).mainProduct,
+                  supplierProfileData.supplierData.supplierInfo.mainProduct),
+              tableRow(Languages.of(context).businessType,
+                  supplierProfileData.supplierData.supplierInfo.businessType),
+              tableRow(Languages.of(context).yearEstablished,
+                  supplierProfileData.supplierData.supplierInfo.year),
+              tableRow(
+                  Languages.of(context).acceptedPaymentCurrency,
+                  supplierProfileData
+                      .supplierData.supplierInfo.paymentCurrency),
+              tableRow(Languages.of(context).acceptedPaymentType,
+                  supplierProfileData.supplierData.supplierInfo.paymentType),
+              tableRow(Languages.of(context).averageLeadTime,
+                  supplierProfileData.supplierData.supplierInfo.leadTime),
+              tableRow(Languages.of(context).sampleOrder,
+                  supplierProfileData.supplierData.supplierInfo.sampleOrder),
+              tableRow(Languages.of(context).totalEmployees,
+                  supplierProfileData.supplierData.supplierInfo.totalEmployees),
+            ],
+          ),
         ),
-      ),
+        Center(
+            child: Container(
+          height: 250,
+          margin: EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            boxShadow: [makeShadow()],
+            borderRadius: BorderRadius.circular(20),
+            shape: BoxShape.rectangle,
+            image: DecorationImage(
+              image: NetworkImage(imageProfile),
+              fit: BoxFit.fill,
+            ),
+          ),
+        )),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          height: 70,
+          child: ListView.builder(
+            physics: PageScrollPhysics(), // this is what you are looking for
+            scrollDirection: Axis.horizontal,
+            itemCount: supplierProfileData.supplierData.companyProfile.length,
+            itemBuilder: (context, index) {
+              return Container(
+                  margin: EdgeInsets.symmetric(horizontal: 5),
+                  width: 100,
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(3)),
+                    child: ListTile(
+                      contentPadding:
+                          EdgeInsets.only(bottom: 7, left: 5, right: 5),
+                      title: Image(
+                        image: NetworkImage(supplierProfileData
+                            .supplierData.companyProfile[index]),
+                        fit: BoxFit.fill,
+                      ),
+                      tileColor: selectedIndex == index
+                          ? Colors.deepOrange[200]
+                          : null,
+                      // selected: true,
+                      onTap: () {
+                        setState(() {
+                          selectedIndex = index;
+                          imageProfile = supplierProfileData
+                              .supplierData.companyProfile[index];
+                        });
+                      },
+                    ),
+                  ));
+            },
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 20, top: 20),
+          child: certificateListView(),
+        )
+      ])),
     );
+  }
+
+  Widget certificateListView() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        buildText(Languages.of(context).certificates, 14,
+            fontWeight: FontWeight.w600),
+        SizedBox(
+          height: 11,
+        ),
+        Container(
+          height: 80,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: supplierProfileData.supplierData.certificates.length,
+            itemBuilder: (context, position) {
+              return Container(
+                margin: EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  color: Colors.white,
+                ),
+                child: CachedNetworkImage(
+                  imageUrl:
+                      supplierProfileData.supplierData.certificates[position],
+                  placeholder: (context, url) => Padding(
+                    padding: EdgeInsets.all(5),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Image.asset(placeHolder),
+                    ),
+                  ),
+                  errorWidget: (context, url, error) => Padding(
+                    padding: EdgeInsets.all(5),
+                    child: Container(
+                      child: Image.asset(placeHolder),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  TableRow tableRow(String frist, String second) {
+    return second != ''
+        ? TableRow(children: [
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: buildText(
+                  frist,
+                  13,
+                  fontWeight: FontWeight.w600,
+                ),
+              )
+            ]),
+            Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: buildText(
+                  second,
+                  13,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ]),
+          ])
+        : TableRow(children: [SizedBox(), SizedBox()]);
   }
 }
