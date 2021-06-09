@@ -33,7 +33,7 @@ class VerifyphoneBloc extends Bloc<VerifyphoneEvent, VerifyphoneState> {
           yield EnterSMSCodeState(verId: verId['verId'], data: event.data);
         }
       } else {
-        yield VerifyingPhoneLoadingState();
+        yield VerifyphoneNetworkErrorState();
       }
     }
   }

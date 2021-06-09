@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bawabtalsharq/Services/AnalyticsService.dart';
 
 class ForgetPassword extends StatefulWidget {
   @override
@@ -28,6 +29,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
     // TODO: implement initState
     super.initState();
     _forgetPasswordBloc = ForgetPasswordBloc();
+    AnalyticsService().setScreenName(name: 'Forget_Password_Screen');
   }
 
   @override
@@ -48,6 +50,12 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               _forgetPasswordBloc.add(ResetState());
               isLoading = false;
               if (state.baseModel.code == 200) {
+                AnalyticsService().sendAnalyticsEvent(
+                    eventName: 'New_Paswword_created',
+                    param: {
+                      'msg': 'New password is sent to user\'s email',
+                      'bool': true,
+                    });
                 showToast(
                     text: "Please check your email to reset your password");
                 print(state.baseModel.msg);
@@ -56,6 +64,13 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 });
               } else {
                 showToast(text: state.baseModel.msg);
+                AnalyticsService()
+                    .sendAnalyticsEvent(eventName: 'Error_Response', param: {
+                  'msg': 'New password creation is not successful',
+                  'Screen_Name': 'Forget_Password_Screen',
+                  'error': '${state.baseModel.msg}',
+                  'bool': false,
+                });
               }
             }
             return Container(
@@ -112,6 +127,12 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                               else {
                                 _forgetPasswordBloc.add(DoForgetPasswordEvent(
                                     emailController.text));
+                                AnalyticsService().sendAnalyticsEvent(
+                                    eventName: 'Save_Password_Changes',
+                                    param: {
+                                      'msg': 'Saving New Password',
+                                      'bool': true,
+                                    });
                               }
                             });
                           }),

@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:bawabtalsharq/Services/AnalyticsService.dart';
 
 class ChangePassword extends StatefulWidget {
   @override
@@ -39,6 +40,7 @@ class _ChangePasswordState extends State<ChangePassword> {
     _changePasswordBloc = ChangePasswordBloc();
     Constants.getUserInfo().then((value) => _currentUser = value.data);
     super.initState();
+    AnalyticsService().setScreenName(name: 'Change_Password');
   }
 
   @override
@@ -63,6 +65,11 @@ class _ChangePasswordState extends State<ChangePassword> {
             isLoading = false;
             if (state.response.code == 200) {
               showToast(text: "Password has been changed");
+              AnalyticsService()
+                  .sendAnalyticsEvent(eventName: 'Change_Password', param: {
+                'msg': 'Password is changed',
+                'bool': true,
+              });
               SchedulerBinding.instance.addPostFrameCallback((_) {
                 Navigator.pushReplacementNamed(
                     context, ScreenRoutes.mainScreen);
@@ -71,6 +78,13 @@ class _ChangePasswordState extends State<ChangePassword> {
               showToast(
                   text: state.response.msg,
                   toastGravity: ToastGravity.SNACKBAR);
+              AnalyticsService()
+                  .sendAnalyticsEvent(eventName: 'Error_Response', param: {
+                'msg': 'Change password is giving an error',
+                'error': '${state.response.msg}',
+                'Screen_Name': 'Change_Password_Screen',
+                'bool': false,
+              });
             }
           }
           return SingleChildScrollView(
@@ -140,6 +154,12 @@ class _ChangePasswordState extends State<ChangePassword> {
                               oldPasswordController.text,
                               newPasswordController.text),
                         );
+                        AnalyticsService().sendAnalyticsEvent(
+                            eventName: 'Save_Password_Changes',
+                            param: {
+                              'msg': 'Saving New Password',
+                              'bool': true,
+                            });
                       }
                     });
                   }, widthOfBtn: 1),

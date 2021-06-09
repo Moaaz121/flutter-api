@@ -67,15 +67,31 @@ class _LoginScreenState extends State<LoginScreen> {
             isLoading = false;
             if (state.userResponse.code == 200) {
               showToast(text: "Login Successfully!");
+              AnalyticsService()
+                  .sendAnalyticsEvent(eventName: 'Login_Screen', param: {
+                'msg': 'Logged Succesfully',
+                'bool': true,
+              });
               SchedulerBinding.instance.addPostFrameCallback((_) {
                 Navigator.pushNamed(context, ScreenRoutes.mainScreen);
               });
             } else {
+              AnalyticsService()
+                  .sendAnalyticsEvent(eventName: 'Login_Screen', param: {
+                'msg': 'Login is not Succefull',
+                'bool': false,
+              });
               showToast(
                   text: state.userResponse.msg,
                   toastGravity: ToastGravity.SNACKBAR);
             }
           } else if (state is LoginNetworkErrorState) {
+            AnalyticsService()
+                .sendAnalyticsEvent(eventName: 'No_Network', param: {
+              'msg': 'No network',
+              'Screen_Name': 'Login_Screen',
+              'bool': false,
+            });
             showToast(
                 text: Languages.of(context).noNetwork,
                 toastGravity: ToastGravity.SNACKBAR);
@@ -126,9 +142,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                         Navigator.pushNamed(
                                             context, ScreenRoutes.signUpScreen);
                                         AnalyticsService().sendAnalyticsEvent(
-                                            eventName: 'Registering',
+                                            eventName: 'User_Registering',
                                             param: {
-                                              'msg': 'Opening Regeister',
+                                              'msg': 'Opening Regeister_Screen',
                                               'bool': true,
                                             });
                                       },
@@ -260,13 +276,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
                                         AnalyticsService()
                                             .logging(method: 'email');
-
-                                        // AnalyticsService().sendAnalyticsEvent(
-                                        //     eventName: 'LoginScreen',
-                                        //     param: {
-                                        //       'msg': 'Loggin',
-                                        //       'bool': true,
-                                        //     });
                                       }
                                     });
                                   },

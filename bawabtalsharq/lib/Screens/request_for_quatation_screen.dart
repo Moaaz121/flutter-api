@@ -29,11 +29,8 @@ class _RequestForQScreenState extends State<RequestForQScreen> {
     // TODO: implement initState
     super.initState();
     connection = new InternetConnection();
-    AnalyticsService().sendAnalyticsEvent(eventName: 'RQF', param: {
-      'msg': 'Opening RFQ',
-      'bool': true,
-    });
-    AnalyticsService().setScreenName(name: 'RQFScreen');
+
+    AnalyticsService().setScreenName(name: 'RQF_Screen');
   }
 
   @override
@@ -56,22 +53,11 @@ class _RequestForQScreenState extends State<RequestForQScreen> {
               bool connected = await connection.isConnected();
 
               if (currentUser == null) {
-                // AnalyticsService()
-                //     .sendAnalyticsEvent(eventName: 'Login', param: {
-                //   'msg': '',
-                //   'bool': true,
-                // });
                 Navigator.pushNamed(context, ScreenRoutes.loginScreen);
               } else {
                 if (!connected)
                   Navigator.pushNamed(context, ScreenRoutes.noInternet);
                 else {
-                  AnalyticsService().sendAnalyticsEvent(
-                      eventName: 'PostRQF',
-                      param: {
-                        'msg': 'Posting RFQ',
-                        'userId': currentUser.data.userId
-                      });
                   AnalyticsService()
                       .setUserProperties(userId: currentUser.data.userId);
                   Navigator.pushNamed(

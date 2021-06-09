@@ -12,6 +12,7 @@ import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bawabtalsharq/Services/AnalyticsService.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -26,9 +27,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String dropDownVal = '';
 
   String countryCode = '';
-
-  List<CountryData> _countries = [];
-  List<String> _countriesName = [];
 
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
@@ -59,6 +57,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _verifyphoneBloc.add(GetCountries());
 
     _passwordErrorMessage = false;
+    AnalyticsService().setScreenName(name: 'Sign_Up_Screen');
   }
 
   @override
@@ -107,6 +106,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: BlocListener<VerifyphoneBloc, VerifyphoneState>(
               listener: (context, state) {
                 if (state is EnterSMSCodeState) {
+                  AnalyticsService().sendAnalyticsEvent(
+                      eventName: 'Starting_Verfication',
+                      param: {
+                        'msg': 'Moving to verficaction Screen',
+                        'Screen_Name': 'Sign_Up_Screen',
+                        'bool': true,
+                      });
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -114,6 +120,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             verId: state.verId, data: state.data),
                       ));
                 } else if (state is FirebaseExceptionState) {
+                  AnalyticsService().sendAnalyticsEvent(
+                      eventName: 'Error_FirebaseException',
+                      param: {
+                        'msg': 'Firebase error',
+                        'error': '${state.msg}',
+                        'Screen_Name': 'Sign_Up_Screen',
+                        'bool': false,
+                      });
                   Navigator.pop(context);
                   _scaffoldKey.currentState.showSnackBar(
                     SnackBar(
@@ -126,15 +140,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 bloc: _verifyphoneBloc,
                 builder: (context, state) {
                   if (state is LoadedCountriesState) {
-                    List.generate(state.countries.length, (i) {
-                      _countries.add(state.countries[i]);
-                      _countriesName.add(state.countries[i].country);
-                    });
+                    AnalyticsService().sendAnalyticsEvent(
+                        eventName: 'Sign_Up_Screen',
+                        param: {
+                          'msg': 'Filling Data to register',
+                          'bool': true,
+                        });
                     isLoading = false;
                     return _buildMain(state.countries);
                   } else if (state is LoadingCountriesState) {
                     return LoadingLogo();
                   } else if (state is VerifyphoneNetworkErrorState) {
+                    AnalyticsService().sendAnalyticsEvent(
+                        eventName: 'Error_No_Network',
+                        param: {
+                          'msg': 'No network',
+                          'ScreenName': 'Sign_Up_Screen',
+                          'bool': false,
+                        });
+
                     return Center(
                       child: Text(Languages.of(context).noNetwork),
                     );
@@ -374,6 +398,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 _verifyphoneBloc.add(VerifyPhone(
                                   data: data,
                                 ));
+                                AnalyticsService().sendAnalyticsEvent(
+                                    eventName: 'Send_Verification_Code',
+                                    param: {
+                                      'msg':
+                                          'Sending sms code to user to authenticate the phone',
+                                      'Screen_Name': 'Sign_Up_Screen',
+                                      'bool': true,
+                                    });
                               }
                             }
                           }),
@@ -432,16 +464,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               filled: true,
               fillColor: Colors.white),
           isExpanded: true,
-          items:
-              //  _countriesName.map((String value) {
-              //   return DropdownMenuItem<String>(
-              //     value: value,
-              //     child: Text(value,
-              //         style: TextStyle(color: Colors.black, fontSize: 14)),
-              //   );
-              // }).toList()
-
-              countries.map((e) {
+          items: countries.map((e) {
             return DropdownMenuItem<String>(
               value: e.country,
               child: Text(e.country,

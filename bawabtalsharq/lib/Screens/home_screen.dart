@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _homeBloc.add(GetHomeData());
     AnalyticsService().sendAnalyticsEvent(eventName: 'HomeScreenView', param: {
       'msg':
-          'Contains Search, Chat, All categories, RFQ, Technical Support, Our Golden Supplier, Most Popular in Egypt and by Categories.',
+          'Contains Search, Chat, RFQ, Technical Support, Our Golden Supplier, Most Popular',
       'bool': true,
     });
     AnalyticsService().setScreenName(name: 'HomeScreenView');
@@ -95,9 +95,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               width: MediaQuery.of(context).size.width / 3 - 25,
                               child: mainHeaderButton(context, () {
                                 AnalyticsService().sendAnalyticsEvent(
-                                    eventName: 'RQF',
+                                    eventName: 'RFQ',
                                     param: {
-                                      'msg': 'Opening RQF',
+                                      'msg': 'Opening RFQ',
                                       'bool': true,
                                     });
                                 Navigator.pushNamed(

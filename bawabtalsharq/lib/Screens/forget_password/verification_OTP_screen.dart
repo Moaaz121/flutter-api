@@ -11,6 +11,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:bawabtalsharq/Services/AnalyticsService.dart';
 
 class VerificationScreen extends StatefulWidget {
   final String verId;
@@ -44,6 +45,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
         Navigator.pop(context);
       };
     _registerBloc = RegisterBloc();
+    AnalyticsService().setScreenName(name: 'Verfication_Screen');
   }
 
   @override
@@ -62,16 +64,40 @@ class _VerificationScreenState extends State<VerificationScreen> {
           child: BlocListener<RegisterBloc, RegisterState>(
             listener: (context, state) {
               if (state is RegisterLoadedState) {
-                showToast(text: "Registration Completed Successfully!");
+                showToast(text: "Registeration Completed Successfully!");
+                AnalyticsService().register(method: 'Email');
+
+                AnalyticsService().sendAnalyticsEvent(
+                    eventName: 'Registeration_Completed',
+                    param: {
+                      'msg': 'Registeration is completed Successfully',
+                      'bool': true,
+                    });
                 Navigator.pushReplacementNamed(
                     context, ScreenRoutes.mainScreen);
               } else if (state is FirebaseExceptionState) {
+                AnalyticsService().sendAnalyticsEvent(
+                    eventName: 'Error_FirebaseException',
+                    param: {
+                      'msg': 'Firebase error',
+                      'error': '${state.msg}',
+                      'Screen_Name': 'Verfication_Screen',
+                      'bool': false,
+                    });
+
                 _scaffoldKey.currentState.showSnackBar(
                   SnackBar(
                     content: Text(state.msg),
                   ),
                 );
               } else if (state is PhoneAlreadyRegisteredState) {
+                AnalyticsService().sendAnalyticsEvent(
+                    eventName: 'Phone_Already_Registered',
+                    param: {
+                      'msg':
+                          'User is trying to register with phone already registered',
+                      'bool': false,
+                    });
                 return showPhoneDialog(context);
               }
             },
@@ -83,6 +109,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   } else {
                     companyName = widget.data['company'];
                   }
+                  AnalyticsService().register(method: 'Phone');
+
                   _registerBloc.add(DoRegisterEvent(
                       phone: widget.data['phone'],
                       email: widget.data['email'],
@@ -92,9 +120,22 @@ class _VerificationScreenState extends State<VerificationScreen> {
                       userType: widget.data['userType'],
                       country: widget.data['country'],
                       company: companyName));
+                  AnalyticsService().sendAnalyticsEvent(
+                      eventName: 'Verfication_Screen',
+                      param: {
+                        'msg': 'Registering user',
+                        'bool': true,
+                      });
                 } else if (state is RegisterLoadingState) {
                   return LoadingLogo();
                 } else if (state is RegisterNetworkErrorState) {
+                  AnalyticsService().sendAnalyticsEvent(
+                      eventName: 'Error_No_Network',
+                      param: {
+                        'msg': 'No network',
+                        'Screen_Name': 'Verification_Screen',
+                        'bool': false,
+                      });
                   return Center(
                     child: Text(Languages.of(context).noNetwork),
                   );
@@ -241,6 +282,14 @@ class _VerificationScreenState extends State<VerificationScreen> {
                       if (codeTyped)
                         _registerBloc.add(
                             SignWithOTP(smsCode: smsCode, verId: widget.verId));
+                      AnalyticsService().sendAnalyticsEvent(
+                          eventName: 'Verifying_Phone',
+                          param: {
+                            'msg':
+                                'Enter your OTP code that was sent to  verfiy',
+                            'Screen_Name': 'Verifivation_Screen',
+                            'bool': true,
+                          });
                     }),
                   ],
                 ),

@@ -38,7 +38,32 @@ class AnalyticsService {
         .catchError((e) => print('Error in LogEvent: $e'));
   }
 
+  Future<void> sendRFQDataEvent(
+      {@required Map<String, dynamic> param, @required bool advanced}) async {
+    print('in1');
+
+    for (int i = 0; i < 3; i++) {
+      var value = param["document[$i]"];
+      param.remove('document[$i]');
+      param['document$i'] = value;
+      param['Advanced'] = advanced;
+    }
+    print('Param:$param');
+
+    await _analytics
+        .logEvent(
+          name: advanced ? 'RFQ_Data_Advanced' : 'RFQ_Data',
+          parameters: param,
+        )
+        .whenComplete(() => print('RFQ Data uploded successfuly$param'))
+        .catchError((e) => print('Error in LogEvent: $e'));
+  }
+
   Future logging({@required String method}) async {
     await _analytics.logLogin(loginMethod: method);
+  }
+
+  Future register({@required String method}) async {
+    await _analytics.logSignUp(signUpMethod: method);
   }
 }

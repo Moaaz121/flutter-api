@@ -59,7 +59,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
     super.initState();
     _quotationBloc = QuotationBloc();
     _quotationBloc.add(GetCatergoryList());
-
+    AnalyticsService().setScreenName(name: 'Post_RQF_Screen');
     data = {
       'product': 'null',
       'category_id': 'null',
@@ -92,7 +92,6 @@ class _RequestforqutationState extends State<Requestforqutation> {
     super.dispose();
 
     _quotationBloc.close();
-
     productNameCtrl.dispose();
     quantityCrtl.dispose();
     detailsCrtl.dispose();
@@ -127,6 +126,11 @@ class _RequestforqutationState extends State<Requestforqutation> {
             child: BlocListener<QuotationBloc, QuotationState>(
               listener: (context, state) {
                 if (state is PostedQuotationResponseState) {
+                  AnalyticsService()
+                      .sendAnalyticsEvent(eventName: 'Posted_RQF', param: {
+                    'msg': 'Posted RFQ is Successfully submitted',
+                    'bool': true,
+                  });
                   showToast(text: "Your request was successfully submitted");
                   Navigator.pushReplacementNamed(
                       context, ScreenRoutes.mainScreen);
@@ -141,20 +145,33 @@ class _RequestforqutationState extends State<Requestforqutation> {
                     return LoadingLogo();
                   } else if (state is LoadedDataState) {
                     dataLists = state.dataLists;
-                    return buildBody();
+                    return buildBody(state.dataLists);
                   } else if (state is PostingReqQuotationState) {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
+                    return LoadingLogo();
                   } else if (state is ReqQuotationErrorState) {
+                    AnalyticsService().sendAnalyticsEvent(
+                        eventName: 'Error_Response',
+                        param: {
+                          'msg': 'Posted RFQ is not Successfully submitted',
+                          'bool': false,
+                          'Error': '${state.msg}',
+                          'Screen_Name': 'PostRFQ_Screen'
+                        });
                     _scaffoldKey.currentState.showSnackBar(
                         new SnackBar(content: new Text(state.msg)));
                   } else if (state is QuotationNetworkErrorState) {
+                    AnalyticsService().sendAnalyticsEvent(
+                        eventName: 'Error_No_Network',
+                        param: {
+                          'bool': false,
+                          'msg': 'No Interner Connection',
+                          'Screen_Name': 'PostRFQ_Screen'
+                        });
                     return Center(
                       child: Text(Languages.of(context).noNetwork),
                     );
                   }
-                  return buildBody();
+                  return buildBody(null);
                 },
               ),
             ),
@@ -162,12 +179,8 @@ class _RequestforqutationState extends State<Requestforqutation> {
     );
   }
 
-  Widget buildBody(/*DataRQF dataList*/) {
-    return
-        // isLoading
-        //     ? LoadingLogo()
-        //     :
-        SingleChildScrollView(
+  Widget buildBody(DataRQF dataLists) {
+    return SingleChildScrollView(
       child: Form(
         key: _formKey,
         child: Column(
@@ -525,10 +538,18 @@ class _RequestforqutationState extends State<Requestforqutation> {
                             data['ship_in'] = portCtrl.text.trim();
                             data['lead_time'] = leadTimeForInCtrl.text.trim();
                             data['payment_term'] = quantityCrtl.text.trim();
+                            AnalyticsService().sendAnalyticsEvent(
+                                eventName: 'Posting_RQF',
+                                param: {
+                                  'msg': '  ',
+                                  'bool': true,
+                                });
+
+                            AnalyticsService().sendRFQDataEvent(
+                                param: data, advanced: _isPressed);
                             _quotationBloc.add(PostReqQuotation(
                                 data: data, dataIdentifier: dataIdentifier));
                           }
-                          print('dataSubmit: $data');
                         } else {
                           showToast(
                               text: 'Some fields need to be filled',

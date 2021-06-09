@@ -22,25 +22,15 @@ class RequestQuotationsRepo {
         String path = await getPath(dataIdentifier['document[$i]']);
         data['document[$i]'] =
             MultipartFile.fromString(path, filename: data['document[$i]']);
-        // print('Getted Pathe: $path');
       }
-      // print('New Data:$data');
-      // print('Type: ${data['document[$i]']}');
-      // print('Type: ${data['document[$i]'].runtimeType}');
     }
     FormData formData = new FormData.fromMap(data);
 
     var response = await Dio().post(
         APIS.serverURL + APIS.Req_Quotation_API + Constants.getLanguage(),
         data: formData);
-    // print('RQF response .. ${response.statusCode}');
-    // print('RQF response .. ${response.data}');
-
-    // var response = await http.post(
-    //   Uri.encodeFull(
-    //       APIS.serverURL + APIS.Req_Quotation_API + Constants.getLanguage()),
-    //   body: data,
-    // );
+    print('RQF response .. ${response.statusCode}');
+    print('RQF response .. ${response.data}');
 
     if (response.statusCode == 200) {
       BaseModel modelResponse = BaseModel.fromJson(response.data);

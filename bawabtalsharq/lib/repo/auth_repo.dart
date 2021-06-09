@@ -69,7 +69,8 @@ class AuthRepo {
       print('modelResponse Register: ${modelResponse.msg}');
 
       return modelResponse;
-    }
+    } else
+      return null;
   }
 
   Future<BaseModel> forgetPassword(String email) async {
