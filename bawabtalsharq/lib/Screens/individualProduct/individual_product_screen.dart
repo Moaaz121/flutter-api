@@ -56,7 +56,11 @@ class _IndividualProductState extends State<IndividualProduct>
     _productBloc.add(DoIndividualProductEvent(widget.productId));
     _controllerTab = TabController(vsync: this, length: 2);
     _controller = ScrollController();
-    _controllerTab.addListener(() => {setState(() {})});
+    _controllerTab.addListener(() => {
+          setState(() {
+            // _controller.jumpTo(0);
+          })
+        });
   }
 
   int selectedIndex = 0;
@@ -140,7 +144,7 @@ class _IndividualProductState extends State<IndividualProduct>
                           ),
                         )
                       ],
-                      expandedHeight: MediaQuery.of(context).size.height * 0.4,
+                      expandedHeight: MediaQuery.of(context).size.height * 0.45,
                       floating: true,
                       pinned: true,
                       snap: false,
@@ -159,7 +163,7 @@ class _IndividualProductState extends State<IndividualProduct>
                       flexibleSpace: FlexibleSpaceBar(
                           background: Container(
                               padding: EdgeInsetsDirectional.only(
-                                  top: 55, bottom: 25),
+                                  top: 55, bottom: 30),
                               child: Column(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -175,7 +179,7 @@ class _IndividualProductState extends State<IndividualProduct>
                                         },
                                         autoPlay: false,
                                         viewportFraction: 0.9,
-                                        aspectRatio: 2,
+                                        aspectRatio: 6 / 3,
                                         initialPage: 0,
                                         autoPlayCurve: Curves.fastOutSlowIn,
                                         scrollDirection: Axis.horizontal,
@@ -186,7 +190,7 @@ class _IndividualProductState extends State<IndividualProduct>
                                               CachedNetworkImage(
                                         imageUrl: product.data.imagePath,
                                         placeholder: (context, url) => Padding(
-                                          padding: EdgeInsets.all(10),
+                                          padding: EdgeInsets.all(5),
                                           child: Container(
                                             child: Image.asset(placeHolder),
                                           ),
