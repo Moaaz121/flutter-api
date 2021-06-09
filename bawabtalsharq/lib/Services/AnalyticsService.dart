@@ -55,7 +55,7 @@ class AnalyticsService {
           name: advanced ? 'RFQ_Data_Advanced' : 'RFQ_Data',
           parameters: param,
         )
-        .whenComplete(() => print('RFQ Data uploded successfuly$param'))
+        .whenComplete(() => print('RFQ Data uploded successfuly $param'))
         .catchError((e) => print('Error in LogEvent: $e'));
   }
 

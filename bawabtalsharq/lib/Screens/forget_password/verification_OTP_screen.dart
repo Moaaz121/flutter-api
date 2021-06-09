@@ -148,14 +148,16 @@ class _VerificationScreenState extends State<VerificationScreen> {
   }
 
   Widget _buildMain() {
+    final mediaQuery = MediaQuery.of(context);
+
     return Stack(
       children: [
         Positioned(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
+          width: mediaQuery.size.width,
+          height: mediaQuery.size.height,
           child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
+            width: mediaQuery.size.width,
+            height: mediaQuery.size.height,
             decoration: BoxDecoration(
               image:
                   DecorationImage(image: AssetImage(logo1), fit: BoxFit.fill),
@@ -221,8 +223,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   pinTheme: PinTheme(
                     shape: PinCodeFieldShape.box,
                     borderRadius: BorderRadius.circular(10),
-                    fieldHeight: MediaQuery.of(context).size.height * .06,
-                    fieldWidth: MediaQuery.of(context).size.width * .1,
+                    fieldHeight: mediaQuery.size.height * .06,
+                    fieldWidth: mediaQuery.size.width * .1,
                     selectedColor: orangeColor,
                     borderWidth: 2,
                     inactiveColor: Colors.transparent,
@@ -275,9 +277,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    signInFlatButton(
-                        context,
-                        MediaQuery.of(context).size.height,
+                    signInFlatButton(context, mediaQuery.size.height,
                         Languages.of(context).verify, () {
                       if (codeTyped)
                         _registerBloc.add(

@@ -180,11 +180,13 @@ class _RequestforqutationState extends State<Requestforqutation> {
   }
 
   Widget buildBody(DataRQF dataLists) {
+    final mediaQuery = MediaQuery.of(context);
+
     return SingleChildScrollView(
       child: Form(
         key: _formKey,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildtextFormField(context,
                 text: Languages.of(context).productName,
@@ -243,8 +245,8 @@ class _RequestforqutationState extends State<Requestforqutation> {
               padding: const EdgeInsetsDirectional.only(top: 20),
               child: Center(
                 child: Container(
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    height: MediaQuery.of(context).size.height * 0.23,
+                    width: mediaQuery.size.width * 0.8,
+                    height: mediaQuery.size.height * 0.23,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       color: defaultPrimaryBackgroundColor.withOpacity(0.15),
@@ -255,7 +257,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
                             Icon(
                               Icons.backup_rounded,
                               color: Colors.deepOrangeAccent.withOpacity(0.5),
-                              size: MediaQuery.of(context).size.width * 0.30,
+                              size: mediaQuery.size.width * 0.30,
                             ),
                             Text(
                               Languages.of(context).uploadDocument,
@@ -277,7 +279,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
-                      width: MediaQuery.of(context).size.width,
+                      width: mediaQuery.size.width,
                       height: 85,
                       child: ListView.builder(
                           itemCount: images.length,
@@ -285,11 +287,11 @@ class _RequestforqutationState extends State<Requestforqutation> {
                           itemBuilder: (ctx, i) {
                             Asset asset = images[i];
 
-                            return Center(
-                              child: Padding(
-                                padding: const EdgeInsets.all(3.0),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10.0),
+                            return Padding(
+                              padding: const EdgeInsets.all(3.0),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10.0),
+                                child: Center(
                                   child: Container(
                                       width: 80,
                                       height: 85,
@@ -363,7 +365,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
                     padding: const EdgeInsetsDirectional.only(
                         top: 10, bottom: 20, end: 20, start: 20),
                     child: Container(
-                      width: MediaQuery.of(context).size.width * 0.9,
+                      width: mediaQuery.size.width * 0.9,
                       height: 2,
                       color: Colors.black.withOpacity(0.5),
                     ),
@@ -443,7 +445,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
                     padding: const EdgeInsetsDirectional.only(
                         top: 10, bottom: 20, end: 20, start: 20),
                     child: Container(
-                      width: MediaQuery.of(context).size.width * 0.9,
+                      width: mediaQuery.size.width * 0.9,
                       height: 2,
                       color: Colors.black.withOpacity(0.5),
                     ),
@@ -489,7 +491,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
                   padding: const EdgeInsetsDirectional.only(top: 15),
                   child: Center(
                     child: Container(
-                        width: MediaQuery.of(context).size.width * 0.8,
+                        width: mediaQuery.size.width * 0.8,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: defaultPrimaryBackgroundColor.withOpacity(0.5),
@@ -512,7 +514,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
                   padding: const EdgeInsetsDirectional.only(
                       start: 15, bottom: 20, end: 40),
                   child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.3,
+                    width: mediaQuery.size.width * 0.3,
                     child: RaisedButton(
                       splashColor: orangeColor.withOpacity(0.5),
                       highlightColor: orangeColor.withOpacity(0.2),

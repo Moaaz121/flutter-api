@@ -176,14 +176,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Widget _buildMain(List<CountryData> countries) {
+    final mediaQuery = MediaQuery.of(context);
+
     return Stack(
       children: [
         Positioned(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
+          width: mediaQuery.size.width,
+          height: mediaQuery.size.height,
           child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
+            width: mediaQuery.size.width,
+            height: mediaQuery.size.height,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(logo1),
@@ -350,7 +352,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         height: 15,
                       ),
                       buildSizedBox(
-                          width: MediaQuery.of(context).size.width,
+                          width: mediaQuery.size.width,
                           child: dropDownButton(countries)),
                       SizedBox(
                         height: 20,
@@ -358,9 +360,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          signInFlatButton(
-                              context,
-                              MediaQuery.of(context).size.height,
+                          signInFlatButton(context, mediaQuery.size.height,
                               Languages.of(context).signUp, () {
                             FocusScope.of(context).unfocus();
 
