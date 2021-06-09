@@ -362,6 +362,10 @@ class _SearchResultState extends State<SearchResult> {
                               ),
                             );
                     }
+                  } else if (event is SearchNoInternetState) {
+                    return Center(
+                      child: Text(Languages.of(context).noNetwork),
+                    );
                   } else {
                     return SizedBox();
                   }

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bawabtalsharq/Model/search_model.dart';
+import 'package:bawabtalsharq/Services/checkIntrernetConnectivity.dart';
 import 'package:bawabtalsharq/repo/search_repo.dart';
 import 'package:bloc/bloc.dart';
 
@@ -14,10 +15,15 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     SearchEvent event,
   ) async* {
     if (event is DoSearchEvent) {
-      yield SearchLoadingState();
-      var response = await SearchRepo().getSearch(event.searchQueryModel);
+      bool isConnected = await InternetConnection.isConnected2();
+      if (isConnected) {
+        yield SearchLoadingState();
+        var response = await SearchRepo().getSearch(event.searchQueryModel);
 
-      yield SearchLoadedState(searchResponse: response);
+        yield SearchLoadedState(searchResponse: response);
+      } else {
+        yield SearchNoInternetState();
+      }
     } else if (event is ResetState) {
       yield SearchInitial();
     }

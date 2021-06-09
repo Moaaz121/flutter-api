@@ -242,7 +242,7 @@ class _SupplierProfileState extends State<SupplierProfile>
                                               width: 5,
                                             ),
                                             buildText(
-                                              '${Languages.of(context).memberSince + supplierProfileData.supplierData.year}',
+                                              '${Languages.of(context).memberSince + supplierProfileData.supplierData.supplierInfo.year}',
                                               8,
                                               fontWeight: FontWeight.w400,
                                             ),
@@ -276,7 +276,9 @@ class _SupplierProfileState extends State<SupplierProfile>
                                                   cupertinoActionSheet(
                                                     context,
                                                     supplierProfileData
-                                                        .supplierData.address,
+                                                        .supplierData
+                                                        .supplierInfo
+                                                        .address,
                                                   ));
                                       }),
                                       SizedBox(
@@ -293,9 +295,11 @@ class _SupplierProfileState extends State<SupplierProfile>
                                                   cupertinoActionSheet(
                                                       context,
                                                       supplierProfileData
-                                                          .supplierData.phone,
+                                                          .supplierData
+                                                          .supplierInfo
+                                                          .phone,
                                                       action: launch(
-                                                          "tel://${supplierProfileData.supplierData.phone}")));
+                                                          "tel://${supplierProfileData.supplierData.supplierInfo.phone}")));
                                       }),
                                       SizedBox(
                                         width: 20,
@@ -311,9 +315,11 @@ class _SupplierProfileState extends State<SupplierProfile>
                                                   cupertinoActionSheet(
                                                       context,
                                                       supplierProfileData
-                                                          .supplierData.email,
+                                                          .supplierData
+                                                          .supplierInfo
+                                                          .email,
                                                       action: _launchURL(
-                                                          '${supplierProfileData.supplierData.email}',
+                                                          '${supplierProfileData.supplierData.supplierInfo.email}',
                                                           '',
                                                           '')));
                                       }),
@@ -324,7 +330,7 @@ class _SupplierProfileState extends State<SupplierProfile>
                               Positioned.directional(
                                 textDirection: Directionality.of(context),
                                 top: 120,
-                                end: 25,
+                                end: 20,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -409,8 +415,8 @@ class _SupplierProfileState extends State<SupplierProfile>
                     padding: EdgeInsets.all(sizeIcon),
                     child: Image.asset(
                       chatSupplier,
-                      width: 30,
-                      height: 30,
+                      width: 25,
+                      height: 25,
                       fit: BoxFit.fill,
                     ),
                   ),

@@ -164,6 +164,21 @@ abstract class Languages {
   String get detailedPictures;
   String get companyDetails;
   String get productInformation;
+  String get city;
+  String get zipCode;
+  String get state;
+  String get companySiteUrl;
+  String get mainProduct;
+  String get businessType;
+  String get yearEstablished;
+  String get acceptedPaymentCurrency;
+  String get acceptedPaymentType;
+  String get averageLeadTime;
+  String get sampleOrder;
+  String get phoneNum;
+  String get addressName;
+  String get companyProfile;
+  String get totalEmployees;
 
 // end Mosdik
 

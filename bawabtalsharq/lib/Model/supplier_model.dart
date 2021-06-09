@@ -29,55 +29,33 @@ class SupplierProfileModel {
 class SupplierData {
   String supplierId;
   String name;
-  String address;
-  String country;
-  String city;
-  String state;
-  String zipcode;
-  String email;
-  String phone;
-  String fax;
-  String url;
-  String year;
   String logo;
-  int rate;
   String banner;
+  SupplierInfo supplierInfo;
+  List<String> companyProfile;
+  List<String> certificates;
   List<Categories> categories;
 
   SupplierData(
       {this.supplierId,
       this.name,
-      this.address,
-      this.country,
-      this.city,
-      this.state,
-      this.zipcode,
-      this.email,
-      this.phone,
-      this.fax,
-      this.url,
-      this.year,
       this.logo,
-      this.rate,
       this.banner,
+      this.supplierInfo,
+      this.companyProfile,
+      this.certificates,
       this.categories});
 
   SupplierData.fromJson(Map<String, dynamic> json) {
     supplierId = json['supplier_id'];
     name = json['name'];
-    address = json['address'];
-    country = json['country'];
-    city = json['city'];
-    state = json['state'];
-    zipcode = json['zipcode'];
-    email = json['email'];
-    phone = json['phone'];
-    fax = json['fax'];
-    url = json['url'];
-    year = json['year'];
     logo = json['logo'];
-    rate = json['rate'];
     banner = json['banner'];
+    supplierInfo = json['member_info'] != null
+        ? new SupplierInfo.fromJson(json['member_info'])
+        : null;
+    companyProfile = json['company_profile'].cast<String>();
+    certificates = json['certificates'].cast<String>();
     if (json['categories'] != null) {
       categories = new List<Categories>();
       json['categories'].forEach((v) {
@@ -90,22 +68,97 @@ class SupplierData {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['supplier_id'] = this.supplierId;
     data['name'] = this.name;
-    data['address'] = this.address;
-    data['country'] = this.country;
-    data['city'] = this.city;
-    data['state'] = this.state;
-    data['zipcode'] = this.zipcode;
-    data['email'] = this.email;
-    data['phone'] = this.phone;
-    data['fax'] = this.fax;
-    data['url'] = this.url;
-    data['year'] = this.year;
     data['logo'] = this.logo;
-    data['rate'] = this.rate;
     data['banner'] = this.banner;
+    if (this.supplierInfo != null) {
+      data['member_info'] = this.supplierInfo.toJson();
+    }
+    data['company_profile'] = this.companyProfile;
+    data['certificates'] = this.certificates;
     if (this.categories != null) {
       data['categories'] = this.categories.map((v) => v.toJson()).toList();
     }
+    return data;
+  }
+}
+
+class SupplierInfo {
+  String company;
+  String email;
+  String phone;
+  String country;
+  String city;
+  String address;
+  String zipcode;
+  String state;
+  String companySite;
+  String mainProduct;
+  String businessType;
+  String year;
+  String paymentCurrency;
+  String paymentType;
+  String leadTime;
+  String sampleOrder;
+  String totalEmployees;
+
+  SupplierInfo(
+      {this.company,
+      this.email,
+      this.phone,
+      this.country,
+      this.city,
+      this.address,
+      this.zipcode,
+      this.state,
+      this.companySite,
+      this.mainProduct,
+      this.businessType,
+      this.year,
+      this.paymentCurrency,
+      this.paymentType,
+      this.leadTime,
+      this.sampleOrder,
+      this.totalEmployees});
+
+  SupplierInfo.fromJson(Map<String, dynamic> json) {
+    company = json['company'];
+    email = json['email'];
+    phone = json['phone'];
+    country = json['country'];
+    city = json['city'];
+    address = json['address'];
+    zipcode = json['zipcode'];
+    state = json['state'];
+    companySite = json['company_site'];
+    mainProduct = json['main_product'];
+    businessType = json['business_type'];
+    year = json['year'];
+    paymentCurrency = json['payment_currency'];
+    paymentType = json['payment_type'];
+    leadTime = json['lead_time'];
+    sampleOrder = json['sample_order'];
+    totalEmployees = json['total_employees'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['company'] = this.company;
+    data['email'] = this.email;
+    data['phone'] = this.phone;
+    data['country'] = this.country;
+    data['city'] = this.city;
+    data['address'] = this.address;
+    data['zipcode'] = this.zipcode;
+    data['state'] = this.state;
+    data['company_site'] = this.companySite;
+    data['main_product'] = this.mainProduct;
+    data['business_type'] = this.businessType;
+    data['year'] = this.year;
+    data['payment_currency'] = this.paymentCurrency;
+    data['payment_type'] = this.paymentType;
+    data['lead_time'] = this.leadTime;
+    data['sample_order'] = this.sampleOrder;
+    data['total_employees'] = this.totalEmployees;
     return data;
   }
 }

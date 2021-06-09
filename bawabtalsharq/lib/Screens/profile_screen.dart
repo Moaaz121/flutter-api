@@ -50,7 +50,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           builder: (context, state) {
             if (state is LogOutLoadingState) {
               if (!isLoading) {
-                showLoadingDialog(context);
+                progressBar();
                 isLoading = true;
               }
             }

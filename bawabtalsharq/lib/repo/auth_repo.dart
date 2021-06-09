@@ -24,8 +24,10 @@ class AuthRepo {
       var decodedResponse = json.decode(response.body);
       UserModel modelResponse = UserModel.fromJson(decodedResponse);
 
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString('user', jsonEncode(modelResponse));
+      if (modelResponse.code == 200) {
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString('user', jsonEncode(modelResponse));
+      }
       return modelResponse;
     }
   }
@@ -64,9 +66,10 @@ class AuthRepo {
       var decodedResponse = json.decode(response.body);
       UserModel modelResponse = UserModel.fromJson(decodedResponse);
 
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString('user', jsonEncode(modelResponse));
-      print('modelResponse Register: ${modelResponse.msg}');
+      if (modelResponse.code == 200) {
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString('user', jsonEncode(modelResponse));
+      }
 
       return modelResponse;
     } else
