@@ -26,7 +26,6 @@ class SupplierProfile extends StatefulWidget {
   final double size;
   final Color color;
   final Widget child;
-  final VoidCallback onPressed;
   final String supplierId;
   String errorMessage = '';
 
@@ -35,7 +34,6 @@ class SupplierProfile extends StatefulWidget {
     Key key,
     this.size = 100.0,
     this.color = Colors.red,
-    this.onPressed,
     @required this.child,
   }) : super(key: key);
 
@@ -51,7 +49,6 @@ class _SupplierProfileState extends State<SupplierProfile>
   bool isLoaded = false;
   bool isLoading = false;
   String errorMessage = '';
-
   int selectedIndex = 0;
   String imageProfile = "";
   SupplierProfileModel supplierProfileData;
@@ -924,14 +921,39 @@ class _SupplierProfileState extends State<SupplierProfile>
           ),
           Container(
             height: 250,
+            width: MediaQuery.of(context).size.width,
             margin: EdgeInsets.symmetric(vertical: 20),
             decoration: BoxDecoration(
               boxShadow: [makeShadow()],
               borderRadius: BorderRadius.circular(20),
               shape: BoxShape.rectangle,
-              image: DecorationImage(
-                image: NetworkImage(imageProfile),
-                fit: BoxFit.fill,
+            ),
+            child: CachedNetworkImage(
+              fit: BoxFit.fill,
+              imageUrl: imageProfile,
+              placeholder: (context, url) => Padding(
+                padding: EdgeInsets.all(8),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Image.asset(
+                    placeHolder,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+              errorWidget: (context, url, error) => Padding(
+                padding: EdgeInsets.all(8),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Image.asset(
+                    placeHolder,
+                    fit: BoxFit.fill,
+                  ),
+                ),
               ),
             ),
           ),
