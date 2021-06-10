@@ -1028,8 +1028,10 @@ class _SupplierProfileState extends State<SupplierProfile>
   }
 
   TableRow tableRow(String frist, String second) {
-    return second != ''
-        ? TableRow(children: [
+    return second == '' ||
+            (frist == Languages.of(context).email && currentUser == null)
+        ? TableRow(children: [SizedBox(), SizedBox()])
+        : TableRow(children: [
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -1050,7 +1052,6 @@ class _SupplierProfileState extends State<SupplierProfile>
                 ),
               ),
             ]),
-          ])
-        : TableRow(children: [SizedBox(), SizedBox()]);
+          ]);
   }
 }
