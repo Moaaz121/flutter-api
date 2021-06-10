@@ -285,9 +285,7 @@ showLoadingDialog(BuildContext context) async {
       builder: (context) {
         return Container(
           child: Center(
-            child: Platform.isAndroid
-                ? CircularProgressIndicator()
-                : CupertinoActivityIndicator(),
+            child: progressBar(),
           ),
         );
       },
@@ -849,9 +847,7 @@ void showLanguagesDialog(BuildContext context) {
                   ),
                 );
               } else {
-                return Platform.isAndroid
-                    ? CircularProgressIndicator()
-                    : CupertinoActivityIndicator();
+                return progressBar();
               }
             }),
       );
@@ -1845,9 +1841,7 @@ void showCurrencyDialog(BuildContext context) {
                   ),
                 );
               } else {
-                return Platform.isAndroid
-                    ? CircularProgressIndicator()
-                    : CupertinoActivityIndicator();
+                return progressBar();
               }
             }),
       );
@@ -1929,9 +1923,7 @@ void showCountryDialog(BuildContext context) {
                   ),
                 );
               } else {
-                return Platform.isAndroid
-                    ? CircularProgressIndicator()
-                    : CupertinoActivityIndicator();
+                return progressBar();
               }
             }),
       );

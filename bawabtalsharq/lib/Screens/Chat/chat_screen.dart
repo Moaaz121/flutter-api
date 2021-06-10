@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:bawabtalsharq/Model/chat/room_model.dart';
 import 'package:bawabtalsharq/Repos/ChatRepos/chat_repo.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
@@ -63,9 +61,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (!snapshot.hasData) {
               return Center(
-                child: Platform.isAndroid
-                    ? CircularProgressIndicator()
-                    : CupertinoActivityIndicator(),
+                child: progressBar(),
               );
             } else {
               _chats = snapshot.data;

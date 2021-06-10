@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:bawabtalsharq/Model/fillQuotationModel.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/loading.dart';
@@ -144,11 +142,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
                     dataLists = state.dataLists;
                     return buildBody();
                   } else if (state is PostingReqQuotationState) {
-                    return Center(
-                      child: Platform.isAndroid
-                          ? CircularProgressIndicator()
-                          : CupertinoActivityIndicator(),
-                    );
+                    return Center(child: progressBar());
                   } else if (state is ReqQuotationErrorState) {
                     _scaffoldKey.currentState.showSnackBar(
                         new SnackBar(content: new Text(state.msg)));
