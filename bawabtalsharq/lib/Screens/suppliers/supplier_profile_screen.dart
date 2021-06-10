@@ -1029,7 +1029,9 @@ class _SupplierProfileState extends State<SupplierProfile>
 
   TableRow tableRow(String frist, String second) {
     return second == '' ||
-            (frist == Languages.of(context).email && currentUser == null)
+            (frist == Languages.of(context).email && currentUser == null) ||
+            (frist == Languages.of(context).phoneNum && currentUser == null) ||
+            (frist == Languages.of(context).addressName && currentUser == null)
         ? TableRow(children: [SizedBox(), SizedBox()])
         : TableRow(children: [
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
