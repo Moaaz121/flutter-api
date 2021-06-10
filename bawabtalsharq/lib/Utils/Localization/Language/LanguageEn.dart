@@ -55,7 +55,7 @@ class LanguageEn extends Languages {
   String get sort => 'Sort';
   String get ascending => 'Ascending';
   String get descending => 'Descending';
-  String get color => 'Colors';
+  String get color => 'Color';
   String get faq => 'FAQ';
   String get privacy => 'Privacy \& Security';
   String get technical => 'Technical Support';

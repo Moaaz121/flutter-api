@@ -23,9 +23,6 @@ import 'package:bawabtalsharq/Screens/sign_up_screen.dart';
 import 'package:bawabtalsharq/Screens/splash_screen.dart';
 import 'package:bawabtalsharq/Screens/sub_category_screen.dart';
 import 'package:bawabtalsharq/Screens/suppliers/golden_suppliers_screen.dart';
-import 'package:bawabtalsharq/Screens/suppliers/supplier_profile_screen.dart';
-import 'package:bawabtalsharq/Services/AnalyticsService.dart';
-import 'package:bawabtalsharq/Utils/Localization/AppLocalizationDelgate.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:device_preview/device_preview.dart';
@@ -46,6 +43,8 @@ import 'Screens/profile_screen.dart';
 import 'Screens/request_for_quatation_screen.dart';
 import 'Screens/request_for_qutation.dart';
 import 'Screens/search/list_filter_screen.dart';
+import 'Screens/suppliers/supplier_profile_screen.dart';
+import 'Utils/Localization/AppLocalizationDelgate.dart';
 import 'Utils/Localization/LanguageHelper.dart';
 
 void main() async {
