@@ -197,7 +197,7 @@ class _SupplierProfileState extends State<SupplierProfile>
                               Positioned.directional(
                                 textDirection: Directionality.of(context),
                                 top: 70,
-                                start: 30,
+                                start: 20,
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
@@ -220,7 +220,7 @@ class _SupplierProfileState extends State<SupplierProfile>
                                       ),
                                     ),
                                     SizedBox(
-                                      width: 10,
+                                      width: 4,
                                     ),
                                     Column(
                                       mainAxisAlignment:
@@ -231,19 +231,20 @@ class _SupplierProfileState extends State<SupplierProfile>
                                         buildText(
                                             supplierProfileData
                                                 .supplierData.name,
-                                            12),
+                                            14,
+                                            fontWeight: FontWeight.w500),
                                         Row(
                                           children: [
                                             Icon(
                                               Icons.access_time_rounded,
-                                              size: 12,
+                                              size: 14,
                                             ),
                                             SizedBox(
                                               width: 5,
                                             ),
                                             buildText(
                                               '${Languages.of(context).memberSince + supplierProfileData.supplierData.supplierInfo.year}',
-                                              8,
+                                              11,
                                               fontWeight: FontWeight.w400,
                                             ),
                                             SizedBox(
@@ -330,7 +331,7 @@ class _SupplierProfileState extends State<SupplierProfile>
                               Positioned.directional(
                                 textDirection: Directionality.of(context),
                                 top: 120,
-                                end: 20,
+                                end: 15,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -341,7 +342,7 @@ class _SupplierProfileState extends State<SupplierProfile>
                                         color: widget.color,
                                       ),
                                       child: chatButtonAnimation(() {},
-                                          size: 35, sizeIcon: 5, padOfIcon: 16),
+                                          size: 35, sizeIcon: 5, padOfIcon: 20),
                                     ),
                                     buildText(
                                       Languages.of(context).startChat,
@@ -1031,7 +1032,9 @@ class _SupplierProfileState extends State<SupplierProfile>
     return second == '' ||
             (frist == Languages.of(context).email && currentUser == null) ||
             (frist == Languages.of(context).phoneNum && currentUser == null) ||
-            (frist == Languages.of(context).addressName && currentUser == null)
+            (frist == Languages.of(context).addressName &&
+                currentUser == null) ||
+            (frist == Languages.of(context).zipCode && currentUser == null)
         ? TableRow(children: [SizedBox(), SizedBox()])
         : TableRow(children: [
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [

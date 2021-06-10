@@ -572,8 +572,16 @@ class _IndividualProductState extends State<IndividualProduct>
   }
 
   Widget companyDetails(String textHeader, String subText) {
-    return subText != ''
-        ? Padding(
+    return subText == '' ||
+            (textHeader == Languages.of(context).email &&
+                currentUser == null) ||
+            (textHeader == Languages.of(context).phoneNum &&
+                currentUser == null) ||
+            (textHeader == Languages.of(context).addressName &&
+                currentUser == null) ||
+            (textHeader == Languages.of(context).zipCode && currentUser == null)
+        ? SizedBox()
+        : Padding(
             padding: const EdgeInsets.all(15.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -590,8 +598,7 @@ class _IndividualProductState extends State<IndividualProduct>
                 ),
                 Text(subText)
               ],
-            ))
-        : SizedBox();
+            ));
   }
 
   Widget tabBar() {
