@@ -828,82 +828,123 @@ class _SupplierProfileState extends State<SupplierProfile>
   Widget _buildTablesRow() {
     return SingleChildScrollView(
       padding:
-          EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.1),
+          EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.05),
       child: Center(
-          child: Column(children: <Widget>[
-        Container(
-          margin: EdgeInsets.all(20),
-          child: Table(
-            textDirection: TextDirection.ltr,
-            border: TableBorder.all(width: 0.3),
-            children: [
-              tableRow(Languages.of(context).companyName,
-                  supplierProfileData.supplierData.supplierInfo.company),
-              tableRow(Languages.of(context).email,
-                  supplierProfileData.supplierData.supplierInfo.email),
-              tableRow(Languages.of(context).phoneNum,
-                  supplierProfileData.supplierData.supplierInfo.phone),
-              tableRow(Languages.of(context).country,
-                  supplierProfileData.supplierData.supplierInfo.country),
-              tableRow(Languages.of(context).city,
-                  supplierProfileData.supplierData.supplierInfo.city),
-              tableRow(Languages.of(context).addressName,
-                  supplierProfileData.supplierData.supplierInfo.address),
-              tableRow(Languages.of(context).zipCode,
-                  supplierProfileData.supplierData.supplierInfo.zipcode),
-              tableRow(Languages.of(context).state,
-                  supplierProfileData.supplierData.supplierInfo.state),
-              tableRow(Languages.of(context).companySite,
-                  supplierProfileData.supplierData.supplierInfo.companySite),
-              tableRow(Languages.of(context).mainProduct,
-                  supplierProfileData.supplierData.supplierInfo.mainProduct),
-              tableRow(Languages.of(context).businessType,
-                  supplierProfileData.supplierData.supplierInfo.businessType),
-              tableRow(Languages.of(context).yearEstablished,
-                  supplierProfileData.supplierData.supplierInfo.year),
-              tableRow(
-                  Languages.of(context).acceptedPaymentCurrency,
-                  supplierProfileData
-                      .supplierData.supplierInfo.paymentCurrency),
-              tableRow(Languages.of(context).acceptedPaymentType,
-                  supplierProfileData.supplierData.supplierInfo.paymentType),
-              tableRow(Languages.of(context).averageLeadTime,
-                  supplierProfileData.supplierData.supplierInfo.leadTime),
-              tableRow(Languages.of(context).sampleOrder,
-                  supplierProfileData.supplierData.supplierInfo.sampleOrder),
-              tableRow(Languages.of(context).totalEmployees,
-                  supplierProfileData.supplierData.supplierInfo.totalEmployees),
-            ],
-          ),
-        ),
-        Center(
-            child: Container(
-          height: 250,
-          margin: EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            boxShadow: [makeShadow()],
-            borderRadius: BorderRadius.circular(20),
-            shape: BoxShape.rectangle,
-            image: DecorationImage(
-              image: NetworkImage(imageProfile),
-              fit: BoxFit.fill,
+          child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
+            Widget>[
+          Padding(
+            padding: const EdgeInsetsDirectional.only(start: 15),
+            child: buildText(
+              Languages.of(context).memberInfo,
+              15,
+              fontWeight: FontWeight.w600,
             ),
           ),
-        )),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          height: 70,
-          child: ListView.builder(
-            physics: PageScrollPhysics(), // this is what you are looking for
-            scrollDirection: Axis.horizontal,
-            itemCount: supplierProfileData.supplierData.companyProfile.length,
-            itemBuilder: (context, index) {
-              return Container(
-                  margin: EdgeInsets.symmetric(horizontal: 5),
-                  width: 100,
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(3)),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            // margin: EdgeInsets.all(20),
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  width: 0.15,
+                ),
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
+              child: Table(
+                border: TableBorder.symmetric(
+                  inside: BorderSide(width: 0.15),
+                ),
+                children: [
+                  tableRow(Languages.of(context).companyName,
+                      supplierProfileData.supplierData.supplierInfo.company),
+                  tableRow(Languages.of(context).email,
+                      supplierProfileData.supplierData.supplierInfo.email),
+                  tableRow(Languages.of(context).phoneNum,
+                      supplierProfileData.supplierData.supplierInfo.phone),
+                  tableRow(Languages.of(context).country,
+                      supplierProfileData.supplierData.supplierInfo.country),
+                  tableRow(Languages.of(context).city,
+                      supplierProfileData.supplierData.supplierInfo.city),
+                  tableRow(Languages.of(context).addressName,
+                      supplierProfileData.supplierData.supplierInfo.address),
+                  tableRow(Languages.of(context).zipCode,
+                      supplierProfileData.supplierData.supplierInfo.zipcode),
+                  tableRow(Languages.of(context).state,
+                      supplierProfileData.supplierData.supplierInfo.state),
+                  tableRow(
+                      Languages.of(context).companySite,
+                      supplierProfileData
+                          .supplierData.supplierInfo.companySite),
+                  tableRow(
+                      Languages.of(context).mainProduct,
+                      supplierProfileData
+                          .supplierData.supplierInfo.mainProduct),
+                  tableRow(
+                      Languages.of(context).businessType,
+                      supplierProfileData
+                          .supplierData.supplierInfo.businessType),
+                  tableRow(Languages.of(context).yearEstablished,
+                      supplierProfileData.supplierData.supplierInfo.year),
+                  tableRow(
+                      Languages.of(context).acceptedPaymentCurrency,
+                      supplierProfileData
+                          .supplierData.supplierInfo.paymentCurrency),
+                  tableRow(
+                      Languages.of(context).acceptedPaymentType,
+                      supplierProfileData
+                          .supplierData.supplierInfo.paymentType),
+                  tableRow(Languages.of(context).averageLeadTime,
+                      supplierProfileData.supplierData.supplierInfo.leadTime),
+                  tableRow(
+                      Languages.of(context).sampleOrder,
+                      supplierProfileData
+                          .supplierData.supplierInfo.sampleOrder),
+                  tableRow(
+                      Languages.of(context).totalEmployees,
+                      supplierProfileData
+                          .supplierData.supplierInfo.totalEmployees),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Padding(
+            padding: const EdgeInsetsDirectional.only(start: 15),
+            child: buildText(
+              Languages.of(context).companyProfile,
+              15,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          Container(
+            height: 250,
+            margin: EdgeInsets.symmetric(vertical: 20),
+            decoration: BoxDecoration(
+              boxShadow: [makeShadow()],
+              borderRadius: BorderRadius.circular(20),
+              shape: BoxShape.rectangle,
+              image: DecorationImage(
+                image: NetworkImage(imageProfile),
+                fit: BoxFit.fill,
+              ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            height: 70,
+            child: ListView.builder(
+              physics: PageScrollPhysics(), // this is what you are looking for
+              scrollDirection: Axis.horizontal,
+              itemCount: supplierProfileData.supplierData.companyProfile.length,
+              itemBuilder: (context, index) {
+                return Container(
+                    width: 100,
                     child: ListTile(
                       contentPadding:
                           EdgeInsets.only(bottom: 7, left: 5, right: 5),
@@ -923,16 +964,16 @@ class _SupplierProfileState extends State<SupplierProfile>
                               .supplierData.companyProfile[index];
                         });
                       },
-                    ),
-                  ));
-            },
+                    ));
+              },
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 20, top: 20),
-          child: certificateListView(),
-        )
-      ])),
+          Padding(
+            padding: const EdgeInsetsDirectional.only(start: 10, top: 20),
+            child: certificateListView(),
+          )
+        ]),
+      )),
     );
   }
 

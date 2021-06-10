@@ -63,9 +63,8 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
             }
             return isLoading
                 ? ListView.builder(
-                    padding: EdgeInsets.only(
+                    padding: EdgeInsetsDirectional.only(
                       top: 20,
-                      left: 11,
                     ),
                     physics: AlwaysScrollableScrollPhysics(),
                     shrinkWrap: true,
@@ -82,7 +81,8 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 20),
                             child: Container(
-                              margin: EdgeInsets.only(left: 12, right: 12),
+                              margin: EdgeInsetsDirectional.only(
+                                  start: 12, end: 12),
                               // width: 333,
                               height: 190,
                               decoration: new BoxDecoration(
@@ -157,7 +157,7 @@ class _GoldenSuppliersState extends State<GoldenSuppliers> {
     @required List<Products> products,
   }) {
     return Padding(
-      padding: const EdgeInsets.only(top: 25, left: 1, right: 11),
+      padding: const EdgeInsetsDirectional.only(top: 25, end: 11),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
