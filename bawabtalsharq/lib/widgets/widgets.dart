@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bawabtalsharq/Model/history_model.dart';
 import 'package:bawabtalsharq/Model/home_model.dart';
 import 'package:bawabtalsharq/Model/search_model.dart' as SearchItem;
@@ -283,7 +285,9 @@ showLoadingDialog(BuildContext context) async {
       builder: (context) {
         return Container(
           child: Center(
-            child: CircularProgressIndicator(),
+            child: Platform.isAndroid
+                ? CircularProgressIndicator()
+                : CupertinoActivityIndicator(),
           ),
         );
       },
@@ -597,10 +601,12 @@ Widget sliderIndicator(int page,
 }
 
 Widget progressBar() {
-  return CircularProgressIndicator(
-    strokeWidth: 1.5,
-    valueColor: new AlwaysStoppedAnimation<Color>(orangeColor),
-  );
+  return Platform.isAndroid
+      ? CircularProgressIndicator(
+          strokeWidth: 1.5,
+          valueColor: new AlwaysStoppedAnimation<Color>(orangeColor),
+        )
+      : CupertinoActivityIndicator();
 }
 // end karem
 
@@ -843,7 +849,9 @@ void showLanguagesDialog(BuildContext context) {
                   ),
                 );
               } else {
-                return CircularProgressIndicator();
+                return Platform.isAndroid
+                    ? CircularProgressIndicator()
+                    : CupertinoActivityIndicator();
               }
             }),
       );
@@ -1837,7 +1845,9 @@ void showCurrencyDialog(BuildContext context) {
                   ),
                 );
               } else {
-                return CircularProgressIndicator();
+                return Platform.isAndroid
+                    ? CircularProgressIndicator()
+                    : CupertinoActivityIndicator();
               }
             }),
       );
@@ -1919,7 +1929,9 @@ void showCountryDialog(BuildContext context) {
                   ),
                 );
               } else {
-                return CircularProgressIndicator();
+                return Platform.isAndroid
+                    ? CircularProgressIndicator()
+                    : CupertinoActivityIndicator();
               }
             }),
       );

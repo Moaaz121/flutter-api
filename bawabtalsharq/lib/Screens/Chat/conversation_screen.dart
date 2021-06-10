@@ -17,6 +17,7 @@ import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_sound/flutter_sound.dart';
@@ -106,7 +107,9 @@ class _ConversationScreenState extends State<ConversationScreen>
           } else {
             return Scaffold(
               body: Center(
-                child: CircularProgressIndicator(),
+                child: Platform.isAndroid
+                    ? CircularProgressIndicator()
+                    : CupertinoActivityIndicator(),
               ),
             );
           }
