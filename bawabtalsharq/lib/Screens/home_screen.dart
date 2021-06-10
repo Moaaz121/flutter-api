@@ -814,27 +814,26 @@ Widget mainMostPopularProduct(
           borderRadius: BorderRadius.circular(15),
           child: Stack(
             children: [
-              // PositionedDirectional(
-              //   top: -40,
-              //   start: -50,
-              //   child: Container(
-              //     height: 120,
-              //     width: 120,
-              //     child: CachedNetworkImage(
-              //       fit: BoxFit.fill,
-              //       imageUrl: img,
-              //       placeholder: (context, url) => Padding(
-              //         padding: EdgeInsets.all(5),
-              //         child: Container(
-              //           child: Image.asset(placeHolder),
-              //           color: Colors.white,
-              //         ),
-              //       ),
-              //       errorWidget: (context, url, error) =>
-              //           Image.asset(placeHolder),
-              //     ),
-              //   ),
-              // ),
+              PositionedDirectional(
+                top: -5,
+                start: -5,
+                child: Container(
+                  height: MediaQuery.of(context).size.width * 0.25,
+                  width: MediaQuery.of(context).size.width * 0.23,
+                  child: CachedNetworkImage(
+                    imageUrl: img,
+                    placeholder: (context, url) => Padding(
+                      padding: EdgeInsets.all(5),
+                      child: Container(
+                        child: Image.asset(placeHolder),
+                        color: Colors.white,
+                      ),
+                    ),
+                    errorWidget: (context, url, error) =>
+                        Image.asset(placeHolder),
+                  ),
+                ),
+              ),
               Align(
                 alignment: Alignment.topRight,
                 child: Padding(
@@ -847,8 +846,8 @@ Widget mainMostPopularProduct(
                 ),
               ),
               Padding(
-                padding:
-                    const EdgeInsetsDirectional.only(top: 80.0, start: 8.0),
+                padding: EdgeInsetsDirectional.only(
+                    top: MediaQuery.of(context).size.width * 0.273, start: 8.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -903,7 +902,6 @@ Widget mainMostPopularProduct(
                           color: const Color(0xffe16036),
                           letterSpacing: 0.12,
                           fontWeight: FontWeight.w600,
-                          height: 0.1,
                         ),
                         textHeightBehavior:
                             TextHeightBehavior(applyHeightToFirstAscent: false),
