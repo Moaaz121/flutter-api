@@ -1,6 +1,6 @@
 import 'package:bawabtalsharq/Model/faq_model.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
-import 'package:bawabtalsharq/Utils/loading.dart';
+import 'package:bawabtalsharq/Utils/loader.dart';
 import 'package:bawabtalsharq/bloc/profileBlocs/faqBloc/faq_bloc.dart';
 import 'package:bawabtalsharq/bloc/profileBlocs/faqBloc/faq_event.dart';
 import 'package:bawabtalsharq/bloc/profileBlocs/faqBloc/faq_state.dart';

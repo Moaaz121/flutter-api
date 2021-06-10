@@ -2,12 +2,11 @@ import 'package:bawabtalsharq/Model/country_model.dart';
 import 'package:bawabtalsharq/Screens/forget_password/verification_OTP_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
-import 'package:bawabtalsharq/Utils/loading.dart';
+import 'package:bawabtalsharq/Utils/loader.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/authBlocs/verifyPhone/verifyphone_bloc.dart';
-import 'package:bawabtalsharq/bloc/authBlocs/verifyPhone/verifyphone_state.dart';
 import 'package:bawabtalsharq/bloc/authBlocs/verifyPhone/verifyphone_event.dart';
-
+import 'package:bawabtalsharq/bloc/authBlocs/verifyPhone/verifyphone_state.dart';
 import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

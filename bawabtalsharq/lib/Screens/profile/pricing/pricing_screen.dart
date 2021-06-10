@@ -1,7 +1,7 @@
 import 'package:bawabtalsharq/Model/plan_model.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
-import 'package:bawabtalsharq/Utils/loading.dart';
+import 'package:bawabtalsharq/Utils/loader.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/planBloc/plan_bloc.dart';
 import 'package:bawabtalsharq/bloc/planBloc/plan_event.dart';

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bawabtalsharq/Model/history_model.dart';
 import 'package:bawabtalsharq/Model/home_model.dart';
 import 'package:bawabtalsharq/Model/search_model.dart' as SearchItem;
@@ -6,7 +8,7 @@ import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
-import 'package:bawabtalsharq/Utils/loading.dart';
+import 'package:bawabtalsharq/Utils/loader.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/Utils/validator_util.dart';
 import 'package:bawabtalsharq/bloc/authBlocs/registerBloc/register_bloc.dart';
@@ -283,7 +285,7 @@ showLoadingDialog(BuildContext context) async {
       builder: (context) {
         return Container(
           child: Center(
-            child: CircularProgressIndicator(),
+            child: progressBar(),
           ),
         );
       },
@@ -597,10 +599,12 @@ Widget sliderIndicator(int page,
 }
 
 Widget progressBar() {
-  return CircularProgressIndicator(
-    strokeWidth: 1.5,
-    valueColor: new AlwaysStoppedAnimation<Color>(orangeColor),
-  );
+  return Platform.isAndroid
+      ? CircularProgressIndicator(
+          strokeWidth: 1.5,
+          valueColor: new AlwaysStoppedAnimation<Color>(orangeColor),
+        )
+      : CupertinoActivityIndicator();
 }
 // end karem
 
@@ -843,7 +847,7 @@ void showLanguagesDialog(BuildContext context) {
                   ),
                 );
               } else {
-                return CircularProgressIndicator();
+                return progressBar();
               }
             }),
       );
@@ -1837,7 +1841,7 @@ void showCurrencyDialog(BuildContext context) {
                   ),
                 );
               } else {
-                return CircularProgressIndicator();
+                return progressBar();
               }
             }),
       );
@@ -1919,7 +1923,7 @@ void showCountryDialog(BuildContext context) {
                   ),
                 );
               } else {
-                return CircularProgressIndicator();
+                return progressBar();
               }
             }),
       );

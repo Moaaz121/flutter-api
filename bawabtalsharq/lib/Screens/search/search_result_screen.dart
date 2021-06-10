@@ -8,7 +8,7 @@ import 'package:bawabtalsharq/Screens/individualProduct/individual_product_scree
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
-import 'package:bawabtalsharq/Utils/loading.dart';
+import 'package:bawabtalsharq/Utils/loader.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/filterBloc/filter_bloc.dart';
 import 'package:bawabtalsharq/bloc/notificationsBloc/notifications_bloc.dart';

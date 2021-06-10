@@ -6,7 +6,7 @@ import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
-import 'package:bawabtalsharq/Utils/loading.dart';
+import 'package:bawabtalsharq/Utils/loader.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/supplierProfileBloc/supplierProfile_bloc.dart';
 import 'package:bawabtalsharq/bloc/supplierProfileBloc/supplierProfile_event.dart';
@@ -26,7 +26,6 @@ class SupplierProfile extends StatefulWidget {
   final double size;
   final Color color;
   final Widget child;
-  final VoidCallback onPressed;
   final String supplierId;
   String errorMessage = '';
 
@@ -35,7 +34,6 @@ class SupplierProfile extends StatefulWidget {
     Key key,
     this.size = 100.0,
     this.color = Colors.red,
-    this.onPressed,
     @required this.child,
   }) : super(key: key);
 
@@ -51,7 +49,6 @@ class _SupplierProfileState extends State<SupplierProfile>
   bool isLoaded = false;
   bool isLoading = false;
   String errorMessage = '';
-
   int selectedIndex = 0;
   String imageProfile = "";
   SupplierProfileModel supplierProfileData;
@@ -930,7 +927,9 @@ class _SupplierProfileState extends State<SupplierProfile>
               borderRadius: BorderRadius.circular(20),
               shape: BoxShape.rectangle,
               image: DecorationImage(
-                image: NetworkImage(imageProfile),
+                image: imageProfile == ""
+                    ? AssetImage(placeHolder)
+                    : NetworkImage(imageProfile),
                 fit: BoxFit.fill,
               ),
             ),
@@ -1029,8 +1028,12 @@ class _SupplierProfileState extends State<SupplierProfile>
   }
 
   TableRow tableRow(String frist, String second) {
-    return second != ''
-        ? TableRow(children: [
+    return second == '' ||
+            (frist == Languages.of(context).email && currentUser == null) ||
+            (frist == Languages.of(context).phoneNum && currentUser == null) ||
+            (frist == Languages.of(context).addressName && currentUser == null)
+        ? TableRow(children: [SizedBox(), SizedBox()])
+        : TableRow(children: [
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -1051,7 +1054,6 @@ class _SupplierProfileState extends State<SupplierProfile>
                 ),
               ),
             ]),
-          ])
-        : TableRow(children: [SizedBox(), SizedBox()]);
+          ]);
   }
 }

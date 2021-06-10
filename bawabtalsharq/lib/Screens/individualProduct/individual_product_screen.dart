@@ -5,7 +5,7 @@ import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
-import 'package:bawabtalsharq/Utils/loading.dart';
+import 'package:bawabtalsharq/Utils/loader.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/individualProductBloc/individualProduct_bloc.dart';
 import 'package:bawabtalsharq/bloc/individualProductBloc/individualProduct_event.dart';
@@ -26,6 +26,7 @@ import 'IndividualSliverPersistentHeader.dart';
 class IndividualProduct extends StatefulWidget {
   String title;
   final String productId;
+
   IndividualProduct(this.productId, {this.title});
 
   @override
@@ -34,7 +35,10 @@ class IndividualProduct extends StatefulWidget {
 
 class _IndividualProductState extends State<IndividualProduct>
     with TickerProviderStateMixin {
-  int _counter = 0;
+  int _initialCounter = 0;
+
+  List<ColorOption> colorOptions = List<ColorOption>();
+
   ScrollController _controller;
   IndividualProductBloc _productBloc;
   bool isLoading = false;
@@ -83,6 +87,11 @@ class _IndividualProductState extends State<IndividualProduct>
             if (state.individualProductResponse.code == 200) {
               isLoaded = true;
               product = state.individualProductResponse;
+
+              for (var i = 0; i < product.data.color.length; i++) {
+                colorOptions.add(ColorOption(
+                    product.data.color[i], int.parse(product.data.minQty)));
+              }
 
               if (currentUser != null) {
                 _productBloc.add(DoHistoryEvent(currentUser.data.userId,
@@ -144,7 +153,7 @@ class _IndividualProductState extends State<IndividualProduct>
                           ),
                         )
                       ],
-                      expandedHeight: MediaQuery.of(context).size.height * 0.45,
+                      expandedHeight: MediaQuery.of(context).size.height * 0.4,
                       floating: true,
                       pinned: true,
                       snap: false,
@@ -163,7 +172,7 @@ class _IndividualProductState extends State<IndividualProduct>
                       flexibleSpace: FlexibleSpaceBar(
                           background: Container(
                               padding: EdgeInsetsDirectional.only(
-                                  top: 55, bottom: 30),
+                                  top: 55, bottom: 10),
                               child: Column(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -179,7 +188,9 @@ class _IndividualProductState extends State<IndividualProduct>
                                         },
                                         autoPlay: false,
                                         viewportFraction: 0.9,
-                                        aspectRatio: 6 / 3,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.27,
                                         initialPage: 0,
                                         autoPlayCurve: Curves.fastOutSlowIn,
                                         scrollDirection: Axis.horizontal,
@@ -226,7 +237,7 @@ class _IndividualProductState extends State<IndividualProduct>
                                       color: Colors.grey[300],
                                     ),
                                     SizedBox(
-                                      height: 10,
+                                      height: 30,
                                     ),
                                     Container(
                                         padding: EdgeInsetsDirectional.only(
@@ -250,7 +261,8 @@ class _IndividualProductState extends State<IndividualProduct>
                                                       StrutStyle(fontSize: 14),
                                                   text: TextSpan(
                                                       style: TextStyle(
-                                                          color: Colors.black,
+                                                          fontSize: 17,
+                                                          color: Colors.black87,
                                                           fontWeight:
                                                               FontWeight.bold),
                                                       text:
@@ -260,31 +272,43 @@ class _IndividualProductState extends State<IndividualProduct>
                                               SizedBox(
                                                 height: 10,
                                               ),
-                                              Row(
-                                                children: [
-                                                  RatingBar.builder(
-                                                    itemSize: 18,
-                                                    initialRating: 3,
-                                                    minRating: 1,
-                                                    direction: Axis.horizontal,
-                                                    allowHalfRating: true,
-                                                    itemCount: 1,
-                                                    itemPadding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal: 5),
-                                                    itemBuilder: (context, _) =>
-                                                        Icon(
-                                                      Icons.star,
-                                                      color: Colors.amber,
-                                                    ),
-                                                    onRatingUpdate: (rating) {
-                                                      print(rating);
-                                                    },
+                                              RatingBar(
+                                                itemSize: 20,
+                                                initialRating: double.parse(
+                                                    product.data.rating),
+                                                minRating: 1,
+                                                unratedColor: Colors.grey,
+                                                direction: Axis.horizontal,
+                                                allowHalfRating: true,
+                                                ignoreGestures: true,
+                                                itemCount: 5,
+                                                ratingWidget: RatingWidget(
+                                                  full: Icon(
+                                                    Icons.star,
+                                                    color: Colors.amber,
                                                   ),
-                                                  Text(product.data.rating)
-                                                ],
+                                                  empty: Icon(
+                                                    Icons.star,
+                                                    color: Colors.grey,
+                                                  ),
+                                                  half: Icon(
+                                                    Icons.star_half,
+                                                    color: Colors.amber,
+                                                  ),
+                                                ),
                                               ),
                                             ])),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    product.data.color.isEmpty
+                                        ? SizedBox()
+                                        : Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 30),
+                                            child:
+                                                Center(child: productColor()),
+                                          ),
                                     Padding(
                                       padding: const EdgeInsets.only(
                                           top: 20, left: 10),
@@ -340,9 +364,6 @@ class _IndividualProductState extends State<IndividualProduct>
                             child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
-                                  // product.data.color.isEmpty
-                                  //     ? SizedBox()
-                                  //     : Center(child: productColor()),
                                   overViewText(
                                       Html(data: product.data.fullDescription),
                                       context),
@@ -492,7 +513,9 @@ class _IndividualProductState extends State<IndividualProduct>
                               borderRadius: BorderRadius.circular(20),
                               shape: BoxShape.rectangle,
                               image: DecorationImage(
-                                image: NetworkImage(imageProfile),
+                                image: imageProfile == ""
+                                    ? AssetImage(placeHolder)
+                                    : NetworkImage(imageProfile),
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -501,8 +524,8 @@ class _IndividualProductState extends State<IndividualProduct>
                             padding: EdgeInsets.symmetric(horizontal: 20),
                             height: 70,
                             child: ListView.builder(
-                              physics:
-                                  PageScrollPhysics(), // this is what you are looking for
+                              physics: PageScrollPhysics(),
+                              // this is what you are looking for
                               scrollDirection: Axis.horizontal,
                               itemCount: product.data.companyProfile.length,
                               itemBuilder: (context, index) {
@@ -646,141 +669,119 @@ class _IndividualProductState extends State<IndividualProduct>
     );
   }
 
-  //bahaa
-
-  //bahaa
-
-  // Widget productColor() {
-  //   return Column(
-  //     crossAxisAlignment: CrossAxisAlignment.start,
-  //     children: [
-  //       Text(
-  //         Languages.of(context).productOption,
-  //         style: TextStyle(
-  //             color: orangeColor, fontWeight: FontWeight.bold, fontSize: 18),
-  //       ),
-  //       SizedBox(
-  //         height: 10,
-  //       ),
-  //       Text(
-  //         Languages.of(context).color,
-  //         style: TextStyle(
-  //             color: Colors.black54, fontWeight: FontWeight.bold, fontSize: 14),
-  //       ),
-  //       ListView.builder(
-  //           physics: BouncingScrollPhysics(
-  //             parent: NeverScrollableScrollPhysics(),
-  //           ),
-  //           padding: EdgeInsetsDirectional.only(top: 5, bottom: 5),
-  //           shrinkWrap: true,
-  //           scrollDirection: Axis.vertical,
-  //           itemCount: 1,
-  //           itemBuilder: (context, position) {
-  //             // if (product.color.length < product.color.length) {
-  //             // _counter.add(0);
-  //             // }
-  //
-  //             return Row(
-  //               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  //               children: [
-  //                 productColorOption(position),
-  //                 Container(
-  //                   margin: EdgeInsetsDirectional.only(end: 5),
-  //                   padding: EdgeInsets.all(5),
-  //                   decoration: BoxDecoration(
-  //                       borderRadius: BorderRadius.circular(100),
-  //                       border: Border.all(width: 1, color: Colors.grey)),
-  //                   child: GestureDetector(
-  //                       child: Icon(
-  //                         Icons.remove,
-  //                         size: 16,
-  //                         color: orangeColor,
-  //                       ),
-  //                       onTap: () => _removeProduct()),
-  //                 ),
-  //                 Container(
-  //                   padding: EdgeInsetsDirectional.only(
-  //                       start: 35, end: 35, top: 4, bottom: 4),
-  //                   decoration: BoxDecoration(
-  //                       borderRadius: BorderRadius.circular(100),
-  //                       border: Border.all(width: 1, color: Colors.grey)),
-  //                   child: Text(
-  //                     '$_counter',
-  //                     style: TextStyle(color: orangeColor),
-  //                   ),
-  //                 ),
-  //                 Container(
-  //                   margin: EdgeInsetsDirectional.only(start: 5),
-  //                   padding: EdgeInsets.all(5),
-  //                   decoration: BoxDecoration(
-  //                       borderRadius: BorderRadius.circular(100),
-  //                       border: Border.all(width: 1, color: Colors.grey)),
-  //                   child: GestureDetector(
-  //                       child: Icon(
-  //                         Icons.add,
-  //                         size: 16,
-  //                         color: orangeColor,
-  //                       ),
-  //                       // onTap: () => _addProduct()),
-  //                 ),
-  //               ],
-  //             );
-  //           })
-  //     ],
-  //   );
-  // }
-
-  // _removeProduct() {
-  //   setState(() {
-  //     if (_counter > 0) {
-  //       _counter--;
-  //     }
-  //   });
-  // }
-  //
-  // _addProduct() {
-  //   setState(() {
-  //     _counter++;
-  //   });
-  // }
-  // Widget _createIncrementDicrementButton(IconData icon, Function onPressed) {
-  //   return RawMaterialButton(
-  //     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-  //     constraints: BoxConstraints(minWidth: 10.0, minHeight: 10.0),
-  //     onPressed: onPressed,
-  //     elevation: 2.0,
-  //     child: Icon(
-  //       icon,
-  //       size: 14,
-  //       color: orangeColor,
-  //     ),
-  //   );
-  // }
-
-  Widget productColorOption(int index) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Icon(
-                Icons.circle,
-                color: Color(int.parse(product.data.color[index])),
-              ),
-              SizedBox(
-                width: 8,
-              ),
-              Text('${product.data.price}'),
-              SizedBox(
-                width: 20,
-              ),
-            ],
-          ),
-        ],
-      ),
+  Widget productColor() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          Languages.of(context).productOption,
+          style: TextStyle(
+              color: orangeColor, fontWeight: FontWeight.bold, fontSize: 18),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Text(
+          Languages.of(context).color,
+          style: TextStyle(
+              color: Colors.black54, fontWeight: FontWeight.bold, fontSize: 16),
+        ),
+        ListView.builder(
+            physics: BouncingScrollPhysics(
+              parent: NeverScrollableScrollPhysics(),
+            ),
+            padding: EdgeInsetsDirectional.only(top: 5, bottom: 5),
+            shrinkWrap: true,
+            scrollDirection: Axis.vertical,
+            itemCount: product.data.color.length,
+            itemBuilder: (context, position) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(
+                              Icons.circle,
+                              color: Color(
+                                  int.parse(product.data.color[position])),
+                            ),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            buildText('${product.data.price}', 14,
+                                color: Colors.black45,
+                                fontWeight: FontWeight.bold),
+                            SizedBox(
+                              width: 20,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsetsDirectional.only(end: 5),
+                    padding: EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        border: Border.all(width: 1, color: Colors.grey)),
+                    child: GestureDetector(
+                      child: Icon(
+                        Icons.remove,
+                        size: 14,
+                        color: orangeColor,
+                      ),
+                      onTap: () {
+                        setState(() {
+                          if (colorOptions[position].counter >
+                              int.parse(product.data.minQty))
+                            colorOptions[position].counter--;
+                        });
+                      },
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsetsDirectional.only(
+                        start: 35, end: 35, top: 4, bottom: 4),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        border: Border.all(width: 1, color: Colors.grey)),
+                    child: Text(
+                      '${colorOptions[position].counter}',
+                      style: TextStyle(color: orangeColor),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsetsDirectional.only(start: 5),
+                    padding: EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        border: Border.all(width: 1, color: Colors.grey)),
+                    child: GestureDetector(
+                      child: Icon(
+                        Icons.add,
+                        size: 14,
+                        color: orangeColor,
+                      ),
+                      onTap: () {
+                        setState(() {
+                          if (colorOptions[position].counter <
+                              int.parse(product.data.maxQty))
+                            colorOptions[position].counter++;
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              );
+            })
+      ],
     );
   }
 
@@ -1000,4 +1001,11 @@ class _IndividualProductState extends State<IndividualProduct>
       ],
     );
   }
+}
+
+class ColorOption {
+  String color;
+  int counter;
+
+  ColorOption(this.color, this.counter);
 }

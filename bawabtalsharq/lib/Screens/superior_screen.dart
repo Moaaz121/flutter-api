@@ -1,7 +1,7 @@
 import 'package:bawabtalsharq/Model/superior_model.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
-import 'package:bawabtalsharq/Utils/loading.dart';
+import 'package:bawabtalsharq/Utils/loader.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/superiorBlocs/superior_bloc.dart';
 import 'package:bawabtalsharq/bloc/superiorBlocs/superior_event.dart';
