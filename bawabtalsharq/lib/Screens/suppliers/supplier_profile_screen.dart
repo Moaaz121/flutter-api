@@ -6,7 +6,7 @@ import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
-import 'package:bawabtalsharq/Utils/loading.dart';
+import 'package:bawabtalsharq/Utils/loader.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/supplierProfileBloc/supplierProfile_bloc.dart';
 import 'package:bawabtalsharq/bloc/supplierProfileBloc/supplierProfile_event.dart';
@@ -921,39 +921,16 @@ class _SupplierProfileState extends State<SupplierProfile>
           ),
           Container(
             height: 250,
-            width: MediaQuery.of(context).size.width,
             margin: EdgeInsets.symmetric(vertical: 20),
             decoration: BoxDecoration(
               boxShadow: [makeShadow()],
               borderRadius: BorderRadius.circular(20),
               shape: BoxShape.rectangle,
-            ),
-            child: CachedNetworkImage(
-              fit: BoxFit.fill,
-              imageUrl: imageProfile,
-              placeholder: (context, url) => Padding(
-                padding: EdgeInsets.all(8),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Image.asset(
-                    placeHolder,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              ),
-              errorWidget: (context, url, error) => Padding(
-                padding: EdgeInsets.all(8),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Image.asset(
-                    placeHolder,
-                    fit: BoxFit.fill,
-                  ),
-                ),
+              image: DecorationImage(
+                image: imageProfile == ""
+                    ? AssetImage(placeHolder)
+                    : NetworkImage(imageProfile),
+                fit: BoxFit.fill,
               ),
             ),
           ),

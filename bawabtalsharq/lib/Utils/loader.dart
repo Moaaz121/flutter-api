@@ -16,9 +16,9 @@ class LoadingLogo extends StatefulWidget {
 
 class _LoadingLogoState extends State<LoadingLogo>
     with SingleTickerProviderStateMixin {
-  Animation<double> animation_rotation;
-  Animation<double> animation_radius_in;
-  Animation<double> animation_radius_out;
+  Animation<double> animationRotation;
+  Animation<double> animationRadiusIn;
+  Animation<double> animationRadiusOut;
   AnimationController controller;
 
   double radius;
@@ -39,21 +39,21 @@ class _LoadingLogoState extends State<LoadingLogo>
         duration: const Duration(milliseconds: 3000),
         vsync: this);
 
-    animation_rotation = Tween(begin: 0.0, end: 1.0).animate(
+    animationRotation = Tween(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: controller,
         curve: Interval(0.0, 1.0, curve: Curves.linear),
       ),
     );
 
-    animation_radius_in = Tween(begin: 1.0, end: 0.0).animate(
+    animationRadiusIn = Tween(begin: 1.0, end: 0.0).animate(
       CurvedAnimation(
         parent: controller,
         curve: Interval(0.75, 1.0, curve: Curves.elasticIn),
       ),
     );
 
-    animation_radius_out = Tween(begin: 0.0, end: 1.0).animate(
+    animationRadiusOut = Tween(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: controller,
         curve: Interval(0.0, 0.25, curve: Curves.elasticOut),
@@ -63,9 +63,9 @@ class _LoadingLogoState extends State<LoadingLogo>
     controller.addListener(() {
       setState(() {
         if (controller.value >= 0.75 && controller.value <= 1.0)
-          radius = widget.radius * animation_radius_in.value;
+          radius = widget.radius * animationRadiusIn.value;
         else if (controller.value >= 0.0 && controller.value <= 0.25)
-          radius = widget.radius * animation_radius_out.value;
+          radius = widget.radius * animationRadiusOut.value;
       });
     });
 
@@ -96,7 +96,7 @@ class _LoadingLogoState extends State<LoadingLogo>
                 width: 40,
               ),
               new RotationTransition(
-                turns: animation_rotation,
+                turns: animationRotation,
                 child: new Container(
                   //color: Colors.limeAccent,
                   child: new Center(

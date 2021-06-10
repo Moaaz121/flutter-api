@@ -1,7 +1,7 @@
 import 'package:bawabtalsharq/Model/user_model.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
-import 'package:bawabtalsharq/Utils/loading.dart';
+import 'package:bawabtalsharq/Utils/loader.dart';
 import 'package:bawabtalsharq/Utils/validator_util.dart';
 import 'package:bawabtalsharq/bloc/updateProfileBlocs/changePassword/change_password_bloc.dart';
 import 'package:bawabtalsharq/bloc/updateProfileBlocs/changePassword/change_password_event.dart';

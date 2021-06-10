@@ -5,7 +5,7 @@ import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
-import 'package:bawabtalsharq/Utils/loading.dart';
+import 'package:bawabtalsharq/Utils/loader.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/individualProductBloc/individualProduct_bloc.dart';
 import 'package:bawabtalsharq/bloc/individualProductBloc/individualProduct_event.dart';
@@ -513,7 +513,9 @@ class _IndividualProductState extends State<IndividualProduct>
                               borderRadius: BorderRadius.circular(20),
                               shape: BoxShape.rectangle,
                               image: DecorationImage(
-                                image: NetworkImage(imageProfile),
+                                image: imageProfile == ""
+                                    ? AssetImage(placeHolder)
+                                    : NetworkImage(imageProfile),
                                 fit: BoxFit.fill,
                               ),
                             ),

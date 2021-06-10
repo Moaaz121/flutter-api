@@ -1,6 +1,6 @@
 import 'package:bawabtalsharq/Model/fillQuotationModel.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
-import 'package:bawabtalsharq/Utils/loading.dart';
+import 'package:bawabtalsharq/Utils/loader.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:bawabtalsharq/bloc/QuotationBloc/quotation_bloc.dart';
 import 'package:bawabtalsharq/main.dart';
