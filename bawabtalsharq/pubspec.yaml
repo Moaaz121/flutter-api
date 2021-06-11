@@ -62,7 +62,8 @@ dependencies:
   flutter_html:
   simple_html_css:
   firebase_core:
-  firebase_auth:
+#  firebase_auth:
+  firebase_auth: "^0.20.1"
   firebase_analytics:
   firebase_crashlytics:
   cached_network_image:
