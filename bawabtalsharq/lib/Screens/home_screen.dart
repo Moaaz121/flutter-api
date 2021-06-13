@@ -303,7 +303,9 @@ Widget mostPopularByCategoryStable(
               ),
             ),
             Positioned(
-                top: 5, left: 5, child: mainMostPopularCategory(category)),
+                top: 5,
+                left: 5,
+                child: mainMostPopularCategory(category, context)),
           ],
         ),
       ),
@@ -1073,16 +1075,24 @@ Widget subMostPopularProduct(
   );
 }
 
-Widget mainMostPopularCategory(CategoryElement category) {
+Widget mainMostPopularCategory(CategoryElement category, BuildContext context) {
   return SizedBox(
     height: 170,
+    width: MediaQuery.of(context).size.width,
     child: ListView.builder(
-      physics: const NeverScrollableScrollPhysics(),
-      reverse: true,
+      physics: const AlwaysScrollableScrollPhysics(),
       scrollDirection: Axis.horizontal,
-      shrinkWrap: true,
-      itemCount: 3,
+      shrinkWrap: false,
+      itemCount: category.data.length,
       itemBuilder: (context, position) {
+        int pos = position;
+        if (pos == 0 || pos % 3 == 0) {
+          pos = 0;
+        } else if (pos == 1 || pos % 4 == 0) {
+          pos = 1;
+        } else {
+          pos = 2;
+        }
         return SizedBox(
           width: MediaQuery.of(context).size.width / 3 - 5,
           child: mostPopularCateg(
@@ -1091,10 +1101,9 @@ Widget mainMostPopularCategory(CategoryElement category) {
               Navigator.pushNamed(context, ScreenRoutes.individualProduct,
                   arguments: category.data[position].id);
             },
-            position: position,
-            backgroundColor: position == 2
-                ? redColor
-                : (position == 1 ? orangeColor : blueColor),
+            position: pos,
+            backgroundColor:
+                pos == 2 ? redColor : (pos == 1 ? orangeColor : blueColor),
             nameProduct: category.data[position].name,
             productImg: category.data[position].image,
             price: category.data[position].price,
@@ -1151,8 +1160,8 @@ Widget mostPopularCateg(
                       children: [
                         PositionedDirectional(
                           top: -40,
-                          start: position == 2 ? -40 : null,
-                          end: position == 0 ? -40 : null,
+                          start: position == 0 ? -40 : null,
+                          end: position == 2 ? -40 : null,
                           child: SizedBox(
                               height: 115,
                               width: 115,
@@ -1167,12 +1176,12 @@ Widget mostPopularCateg(
                                           backgroundColor.withOpacity(0.0),
                                           backgroundColor.withOpacity(0.0),
                                         ],
-                                        begin: position == 2
+                                        begin: position == 0
                                             ? AlignmentDirectional.topStart
                                             : (position == 1
                                                 ? Alignment.topCenter
                                                 : AlignmentDirectional.topEnd),
-                                        end: position == 2
+                                        end: position == 0
                                             ? AlignmentDirectional.bottomEnd
                                             : (position == 1
                                                 ? Alignment.bottomCenter
@@ -1187,8 +1196,8 @@ Widget mostPopularCateg(
             ),
             PositionedDirectional(
                 top: 7,
-                start: position == 2 ? -5 : null,
-                end: position == 0 ? -5 : null,
+                start: position == 0 ? -5 : null,
+                end: position == 2 ? -5 : null,
                 child: SizedBox(
                   width: 70,
                   height: 60,

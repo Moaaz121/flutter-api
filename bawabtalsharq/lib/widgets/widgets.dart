@@ -1724,8 +1724,7 @@ String numberValidator(String value) {
 
 Widget listOfCateWidget(List<CategoryElement> cats) {
   return ListView.builder(
-    physics: NeverScrollableScrollPhysics(),
-    reverse: false,
+    physics: AlwaysScrollableScrollPhysics(),
     scrollDirection: Axis.vertical,
     shrinkWrap: true,
     itemCount: cats.length - 1,
