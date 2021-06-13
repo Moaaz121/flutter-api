@@ -71,7 +71,7 @@ dependencies:
   fluttertoast:
   video_player:
   chewie:
-
+  firebase_messaging: "^8.0.0-dev.15"
 
   numberpicker:
   multi_image_picker:
