@@ -26,13 +26,15 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
+apply plugin: 'com.google.firebase.firebase-perf'
+
 
 
 
 android {
     compileSdkVersion 29
-    ndkVersion "22.0.7026061"
-//    ndkVersion "20.1.5948944"
+//    ndkVersion "22.0.7026061"
+    ndkVersion "20.1.5948944"
 
 
 
@@ -74,6 +76,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics'
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-perf'
 
     
 }
