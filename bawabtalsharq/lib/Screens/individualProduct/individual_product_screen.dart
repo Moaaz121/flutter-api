@@ -22,6 +22,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../../main.dart';
 import 'IndividualSliverPersistentHeader.dart';
+import 'package:bawabtalsharq/Services/AnalyticsService.dart';
 
 class IndividualProduct extends StatefulWidget {
   String title;
@@ -61,6 +62,7 @@ class _IndividualProductState extends State<IndividualProduct>
             // _controller.jumpTo(0);
           })
         });
+    AnalyticsService().setScreenName(name: 'Individual_Product_Screen');
   }
 
   int selectedIndex = 0;
@@ -133,7 +135,15 @@ class _IndividualProductState extends State<IndividualProduct>
                       ),
                       actions: [
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            AnalyticsService().sendAnalyticsEvent(
+                                eventName: 'Save_Product',
+                                param: {
+                                  'product_Id': '${widget.productId}',
+                                  'msg': 'Saving product in the wishlist',
+                                  'bool': true,
+                                });
+                          },
                           child: Padding(
                             padding: const EdgeInsetsDirectional.only(end: 20),
                             child: Icon(
@@ -295,6 +305,15 @@ class _IndividualProductState extends State<IndividualProduct>
                                           '${product.data.countryName}',
                                           '${product.data.category}',
                                           '${product.data.countryImage}', () {
+                                        AnalyticsService().sendAnalyticsEvent(
+                                            eventName: 'Supplier_details',
+                                            param: {
+                                              'Company_Id':
+                                                  '${product.data.companyId}',
+                                              'msg':
+                                                  'Showing the provider\'s profile',
+                                              'bool': true,
+                                            });
                                         Navigator.pushNamed(context,
                                             ScreenRoutes.supplierProfileScreen,
                                             arguments: product.data.companyId);
