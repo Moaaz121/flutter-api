@@ -72,11 +72,13 @@ dependencies:
   fluttertoast:
   video_player:
   chewie:
-  firebase_messaging: "^8.0.0-dev.15"
+  firebase_messaging:
 
   numberpicker:
   multi_image_picker:
   flutter_absolute_path:
+  overlay_support:
+  flutter_local_notifications:
 
 
 dev_dependencies:
