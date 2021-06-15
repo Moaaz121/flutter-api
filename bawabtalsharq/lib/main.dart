@@ -94,14 +94,13 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
   Locale _locale;
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       new FlutterLocalNotificationsPlugin();
+  FirebaseMessaging firebaseMessaging = new FirebaseMessaging();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     // FirebaseCrashlytics.instance.crash();
-    FirebaseMessaging firebaseMessaging = new FirebaseMessaging();
-    firebaseMessaging.subscribeToTopic('UserAdmin');
 
     var initializationSettingsAndroid =
         new AndroidInitializationSettings('@mipmap/ic_launcher');
@@ -118,7 +117,14 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
     FirebaseMessaging.instance
         .getInitialMessage()
         .then((RemoteMessage message) {
-      if (message != null) {}
+      if (message != null) {
+        RemoteNotification notification = message.notification;
+        AndroidNotification android = message.notification?.android;
+        if (notification != null && android != null) {
+          onDidRecieveLocalNotification(notificationId + 1, notification.title,
+              notification.body, "payload");
+        }
+      }
     });
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
@@ -148,6 +154,12 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
       platformChannelSpecifics,
       payload: 'hello',
     );
+  }
+
+  static Future<dynamic> myBackgroundMessageHandler(
+      Map<String, dynamic> message) async {
+    print(message);
+    return Future<void>.value();
   }
 
   Future onSelectNotification(String payload) async {
