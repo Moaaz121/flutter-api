@@ -17,7 +17,7 @@ public class Application extends FlutterApplication implements PluginRegistry.Pl
 
     @Override
     public void registerWith(PluginRegistry registry) {
-        GeneratedPluginRegistrant.registerWith((FlutterEngine) registry);
+        GeneratedPluginRegistrant.registerWith(new FlutterEngine(this));
     }
 
 }

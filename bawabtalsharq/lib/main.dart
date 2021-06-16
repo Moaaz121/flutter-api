@@ -51,9 +51,11 @@ import 'Screens/suppliers/supplier_profile_screen.dart';
 import 'Utils/Localization/AppLocalizationDelgate.dart';
 import 'Utils/Localization/LanguageHelper.dart';
 
-void main() async {
+bool notificationsIsRegisted = false;
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
+  await Firebase.initializeApp();
   await Constants.initSharedPref();
 
   if (Constants.getDate(key: 'currency') == null) {
@@ -90,8 +92,8 @@ class BawabtAlsharqApp extends StatefulWidget {
 }
 
 class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
-  int notificationId = -1;
   Locale _locale;
+
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       new FlutterLocalNotificationsPlugin();
   FirebaseMessaging firebaseMessaging = new FirebaseMessaging();
@@ -101,7 +103,14 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
     // TODO: implement initState
     super.initState();
     // FirebaseCrashlytics.instance.crash();
+    // if (!notificationsIsRegisted) {
+    //   startNotifications();
+    //   notificationsIsRegisted = true;
+    // }
+  }
 
+  void startNotifications() {
+    int notificationId = -1;
     var initializationSettingsAndroid =
         new AndroidInitializationSettings('@mipmap/ic_launcher');
 
@@ -154,12 +163,6 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
       platformChannelSpecifics,
       payload: 'hello',
     );
-  }
-
-  static Future<dynamic> myBackgroundMessageHandler(
-      Map<String, dynamic> message) async {
-    print(message);
-    return Future<void>.value();
   }
 
   Future onSelectNotification(String payload) async {
