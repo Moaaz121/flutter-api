@@ -640,9 +640,9 @@ class _SupplierProfileState extends State<SupplierProfile>
         itemCount: product.length,
         itemBuilder: (context, position) {
           int pos = position;
-          if (pos == 0 || pos % 3 == 0) {
+          if (pos == 0 || pos % 5 == 0) {
             pos = 0;
-          } else if (pos == 1 || pos == 4) {
+          } else if (pos == 1 || pos % 4 == 0) {
             pos = 1;
           } else {
             pos = 2;
