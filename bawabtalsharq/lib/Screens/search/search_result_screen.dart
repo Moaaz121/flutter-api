@@ -257,7 +257,7 @@ class _SearchResultState extends State<SearchResult> {
                                         crossAxisCount: 2,
                                         crossAxisSpacing: 10,
                                         mainAxisSpacing: 0),
-                                itemCount: event.searchResponse.products.length,
+                                itemCount: event.searchResponse.data.length,
                                 itemBuilder: (context, position) {
                                   return GestureDetector(
                                     onTap: () {
@@ -267,12 +267,12 @@ class _SearchResultState extends State<SearchResult> {
                                               builder: (context) =>
                                                   IndividualProduct(event
                                                       .searchResponse
-                                                      .products[position]
+                                                      .data[position]
                                                       .productId)));
                                     },
                                     child: productItem(context,
                                         product: event
-                                            .searchResponse.products[position]),
+                                            .searchResponse.data[position]),
                                   );
                                 },
                               ),
@@ -283,12 +283,12 @@ class _SearchResultState extends State<SearchResult> {
                                     parent: AlwaysScrollableScrollPhysics()),
                                 controller: _resultScrollController,
                                 scrollDirection: Axis.vertical,
-                                itemCount: event.searchResponse.products.length,
+                                itemCount: event.searchResponse.data.length,
                                 itemBuilder: (context, position) {
                                   return GestureDetector(
                                     child: productItemLandscape(context,
                                         product: event
-                                            .searchResponse.products[position]),
+                                            .searchResponse.data[position]),
                                     onTap: () {
                                       Navigator.push(
                                           context,
@@ -296,7 +296,7 @@ class _SearchResultState extends State<SearchResult> {
                                               builder: (context) =>
                                                   IndividualProduct(event
                                                       .searchResponse
-                                                      .products[position]
+                                                      .data[position]
                                                       .productId)));
                                     },
                                   );
