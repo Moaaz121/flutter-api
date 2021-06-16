@@ -27,9 +27,13 @@ import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'Screens/interesting_screen.dart';
 import 'Screens/main_srceen.dart';
@@ -47,10 +51,12 @@ import 'Screens/suppliers/supplier_profile_screen.dart';
 import 'Utils/Localization/AppLocalizationDelgate.dart';
 import 'Utils/Localization/LanguageHelper.dart';
 
+bool notificationsIsRegisted = false;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
   await Constants.initSharedPref();
+  await Firebase.initializeApp();
 
   if (Constants.getDate(key: 'currency') == null) {
     Constants.saveCurrencyId(currency: '1');
@@ -83,12 +89,120 @@ class BawabtAlsharqApp extends StatefulWidget {
 
 class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
   Locale _locale;
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      new FlutterLocalNotificationsPlugin();
+  FirebaseMessaging firebaseMessaging = new FirebaseMessaging();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     // FirebaseCrashlytics.instance.crash();
+    if (!notificationsIsRegisted) {
+      startNotifications();
+      notificationsIsRegisted = true;
+    }
+  }
+
+  void startNotifications() {
+    int notificationId = -1;
+    var initializationSettingsAndroid =
+        new AndroidInitializationSettings('@mipmap/ic_launcher');
+
+    var initializationSettingsIOS = new IOSInitializationSettings(
+        onDidReceiveLocalNotification: onDidRecieveLocalNotification);
+
+    var initializationSettings = new InitializationSettings(
+        android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
+
+    flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onSelectNotification: onSelectNotification);
+
+    FirebaseMessaging.instance
+        .getInitialMessage()
+        .then((RemoteMessage message) {
+      if (message != null) {
+        RemoteNotification notification = message.notification;
+        AndroidNotification android = message.notification?.android;
+        if (notification != null && android != null) {
+          onDidRecieveLocalNotification(notificationId + 1, notification.title,
+              notification.body, "payload");
+        }
+      }
+    });
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification notification = message.notification;
+      AndroidNotification android = message.notification?.android;
+      if (notification != null && android != null) {
+        onDidRecieveLocalNotification(notificationId + 1, notification.title,
+            notification.body, "payload");
+      }
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {});
+  }
+
+  Future displayNotification(RemoteNotification message) async {
+    var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
+        '1', 'flutterfcm', 'description',
+        importance: Importance.high, priority: Priority.max);
+    var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
+    var platformChannelSpecifics = new NotificationDetails(
+        android: androidPlatformChannelSpecifics,
+        iOS: iOSPlatformChannelSpecifics);
+    await flutterLocalNotificationsPlugin.show(
+      0,
+      message.title,
+      message.body,
+      platformChannelSpecifics,
+      payload: 'hello',
+    );
+  }
+
+  Future onSelectNotification(String payload) async {
+    if (payload != null) {
+      debugPrint('notification payload: ' + payload);
+    }
+    await Fluttertoast.showToast(
+        msg: "Notification Clicked",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: orangeColor,
+        textColor: Colors.white,
+        fontSize: 16.0);
+    /*Navigator.push(
+      context,
+      new MaterialPageRoute(builder: (context) => new SecondScreen(payload)),
+    );*/
+  }
+
+  Future onDidRecieveLocalNotification(
+      int id, String title, String body, String payload) async {
+    // display a dialog with the notification details, tap ok to go to another page
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => new CupertinoAlertDialog(
+        title: new Text(title),
+        content: new Text(body),
+        actions: [
+          CupertinoDialogAction(
+            isDefaultAction: true,
+            child: new Text('Ok'),
+            onPressed: () async {
+              Navigator.of(context, rootNavigator: true).pop();
+              await Fluttertoast.showToast(
+                  msg: "Notification Clicked",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  backgroundColor: orangeColor,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
+            },
+          ),
+        ],
+      ),
+    );
   }
 
   @override
