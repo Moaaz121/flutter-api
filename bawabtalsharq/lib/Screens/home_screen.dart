@@ -895,7 +895,7 @@ Widget mainMostPopularProduct(
                       overflow: TextOverflow.ellipsis,
                     ),
                     SizedBox(
-                      height: 11.0,
+                      height: 7.0,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10),
@@ -1083,9 +1083,11 @@ Widget mainMostPopularCategory(Category category, BuildContext context) {
     height: 170,
     width: MediaQuery.of(context).size.width,
     child: ListView.builder(
-      physics: const AlwaysScrollableScrollPhysics(),
+      physics:
+          const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
       scrollDirection: Axis.horizontal,
       shrinkWrap: false,
+      padding: EdgeInsets.symmetric(horizontal: 5),
       itemCount: category.data.length,
       itemBuilder: (context, position) {
         int pos = position;
@@ -1097,7 +1099,7 @@ Widget mainMostPopularCategory(Category category, BuildContext context) {
           pos = 2;
         }
         return SizedBox(
-          width: MediaQuery.of(context).size.width / 3 - 5,
+          width: MediaQuery.of(context).size.width / 3,
           child: mostPopularCateg(
             context: context,
             onPress: () {
@@ -1136,8 +1138,8 @@ Widget mostPopularCateg(
                   : AlignmentDirectional.topStart),
           children: [
             Padding(
-              padding:
-                  const EdgeInsets.only(left: 5, bottom: 15, right: 5, top: 30),
+              padding: const EdgeInsetsDirectional.only(
+                  start: 5, bottom: 15, end: 5, top: 30),
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 alignment: Alignment.center,

@@ -84,13 +84,13 @@ class Category {
   });
 
   String name;
-  int type;
+  dynamic type;
   List<Datum> data;
-  int categoryId;
+  String categoryId;
 
   factory Category.fromJson(Map<String, dynamic> json) => Category(
         name: json["name"] == null ? null : json["name"],
-        type: json["type"] == null ? null : json["type"],
+        type: json["type"],
         data: json["data"] == null
             ? null
             : List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
@@ -99,7 +99,7 @@ class Category {
 
   Map<String, dynamic> toJson() => {
         "name": name == null ? null : name,
-        "type": type == null ? null : type,
+        "type": type,
         "data": data == null
             ? null
             : List<dynamic>.from(data.map((x) => x.toJson())),
@@ -121,7 +121,7 @@ class Datum {
   String id;
   String name;
   String category;
-  int categoryId;
+  String categoryId;
   int save;
   String price;
   String image;
