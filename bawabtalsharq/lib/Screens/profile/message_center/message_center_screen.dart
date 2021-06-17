@@ -413,11 +413,14 @@ class _MessageCenterState extends State<MessageCenter> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15.0),
                     ),
-                    child: Image.asset(
-                      placeHolder,
-                      fit: BoxFit.fill,
-                      height: 80,
-                      width: 110,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.asset(
+                        placeHolder,
+                        fit: BoxFit.fill,
+                        height: 80,
+                        width: 110,
+                      ),
                     ),
                   ),
                 ),
