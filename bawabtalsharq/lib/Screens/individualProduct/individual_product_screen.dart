@@ -645,34 +645,43 @@ class _IndividualProductState extends State<IndividualProduct>
           SizedBox(
             width: 10,
           ),
-          Container(
-            padding: EdgeInsets.all(10),
-            height: 50,
-            width: MediaQuery.of(context).size.width * 0.57,
-            decoration: BoxDecoration(
-                boxShadow: [makeShadow(color: (0x29e16036), offset: 5)],
-                borderRadius: BorderRadius.circular(16),
-                color: orangeColor),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.person_pin_rounded,
-                  size: 25,
-                  color: Colors.white,
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                Text(
-                  Languages.of(context).buyNow,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold),
-                ),
-              ],
+          GestureDetector(
+            onTap: () {
+              currentUser == null
+                  ? Navigator.pushReplacementNamed(
+                      context, ScreenRoutes.loginScreen)
+                  : Navigator.pushReplacementNamed(
+                      context, ScreenRoutes.requestForQuotation);
+            },
+            child: Container(
+              padding: EdgeInsets.all(10),
+              height: 50,
+              width: MediaQuery.of(context).size.width * 0.57,
+              decoration: BoxDecoration(
+                  boxShadow: [makeShadow(color: (0x29e16036), offset: 5)],
+                  borderRadius: BorderRadius.circular(16),
+                  color: orangeColor),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.person_pin_rounded,
+                    size: 25,
+                    color: Colors.white,
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Text(
+                    Languages.of(context).buyNow,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

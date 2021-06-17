@@ -4,6 +4,7 @@ import 'package:bawabtalsharq/Model/search_quary.dart';
 import 'package:bawabtalsharq/Screens/search/search_result_screen.dart';
 import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/Localization/LanguageHelper.dart';
+import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/images.dart';
 import 'package:bawabtalsharq/Utils/loader.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
@@ -152,8 +153,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             //     eventName: 'Chat',
                             //     param: {'bool': true, 'msg': 'Open Chat'});
 
-                            Navigator.pushNamed(
-                                context, ScreenRoutes.chatsScreen);
+                            Constants.getUserInfo2() != null
+                                ? Navigator.pushNamed(
+                                    context, ScreenRoutes.chatsScreen)
+                                : Navigator.pushNamed(
+                                    context, ScreenRoutes.loginScreen);
                           })
                         ],
                       ),

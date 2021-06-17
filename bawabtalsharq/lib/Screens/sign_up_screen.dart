@@ -300,7 +300,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           Flexible(
                             flex: 5,
-                            child: customTextFormField(
+                            child: customTextFormFieldW_Icon(
                               context,
                               textInputType: TextInputType.phone,
                               controller: phoneController,

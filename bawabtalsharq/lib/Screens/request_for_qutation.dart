@@ -166,12 +166,8 @@ class _RequestforqutationState extends State<Requestforqutation> {
     );
   }
 
-  Widget buildBody(/*DataRQF dataList*/) {
-    return
-        // isLoading
-        //     ? LoadingLogo()
-        //     :
-        SingleChildScrollView(
+  Widget buildBody() {
+    return SingleChildScrollView(
       child: Form(
         key: _formKey,
         child: Column(
@@ -202,7 +198,6 @@ class _RequestforqutationState extends State<Requestforqutation> {
             _buildtextFormField(context,
                 text: Languages.of(context).quantity,
                 inputText: '000000000',
-                // margin: 60,
                 controller: quantityCrtl),
 
             dropDownButton(

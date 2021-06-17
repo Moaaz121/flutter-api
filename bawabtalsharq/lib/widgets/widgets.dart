@@ -1077,7 +1077,7 @@ Widget productItem(BuildContext context, {SearchItem.Datum product}) {
                     SizedBox(
                       width: 5,
                     ),
-                    Flexible(
+                    Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -1316,29 +1316,15 @@ Widget productItemLandscape(
         ),
       ),
       Positioned.directional(
-          textDirection: Directionality.of(context),
-          top: height * -.11,
-          end: width * .05,
-          bottom: height * 0.03,
-          child: Icon(
-            LanguageHelper.isEnglish
-                ? Icons.bookmark_border
-                : Icons.bookmark_border,
-            size: 25,
-            color: Colors.black.withOpacity(0.7),
-          )),
-      Positioned.directional(
         textDirection: Directionality.of(context),
         top: height * -.11,
         end: width * .05,
         bottom: height * 0.03,
-        child: Icon(
-          LanguageHelper.isEnglish
-              ? Icons.bookmark_border
-              : Icons.bookmark_border,
-          size: 25,
-          color: Colors.black.withOpacity(0.7),
-        ),
+        child: Constants.getUserInfo2() == null
+            ? SizedBox()
+            : product.save == 1
+                ? Icon(Icons.bookmark, size: 20, color: orangeColor)
+                : Icon(Icons.bookmark, size: 20, color: Colors.black26),
       ),
     ],
   );
@@ -1502,29 +1488,15 @@ Widget productItemLandscape2(BuildContext context,
         // ),
       ),
       Positioned.directional(
-          textDirection: Directionality.of(context),
-          top: height * -.11,
-          end: width * .05,
-          bottom: height * 0.03,
-          child: Icon(
-            LanguageHelper.isEnglish
-                ? Icons.bookmark_border
-                : Icons.bookmark_border,
-            size: 25,
-            color: Colors.black.withOpacity(0.7),
-          )),
-      Positioned.directional(
         textDirection: Directionality.of(context),
         top: height * -.11,
         end: width * .05,
         bottom: height * 0.03,
-        child: Icon(
-          LanguageHelper.isEnglish
-              ? Icons.bookmark_border
-              : Icons.bookmark_border,
-          size: 25,
-          color: Colors.black.withOpacity(0.7),
-        ),
+        child: Constants.getUserInfo2() == null
+            ? SizedBox()
+            : products[index].save == 1
+                ? Icon(Icons.bookmark, size: 20, color: orangeColor)
+                : Icon(Icons.bookmark, size: 20, color: Colors.black26),
       ),
     ],
   );
@@ -2130,9 +2102,6 @@ Widget customTextFormField(BuildContext context,
         } else if (label == Languages.of(context).email &&
             !emailValidator(controller.text.trim())) {
           return 'please enter correct email address';
-        } else if (label == Languages.of(context).tel &&
-            !phoneValidator(controller.text.trim())) {
-          return 'please enter correct Phone Number';
         } else if (label == Languages.of(context).loginPass &&
             !passwordValidator(controller.text.trim())) {
           return 'Weak Password';
@@ -2177,6 +2146,9 @@ Widget customTextFormFieldW_Icon(
         print(value);
         if (value == null || value.isEmpty) {
           return 'Please enter some text';
+        } else if (label == Languages.of(context).tel &&
+            !phoneValidator(controller.text.trim())) {
+          return 'please enter correct Phone Number';
         } else
           return null;
       },
