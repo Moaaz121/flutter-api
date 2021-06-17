@@ -108,11 +108,11 @@ class _MessageCenterState extends State<MessageCenter> {
                     child: Column(
                       children: [
                         if (msgList[i].images.length == 3)
-                          images_3_Product(msgList[i].images)
+                          images3Product(msgList[i].images)
                         else if (msgList[i].images.length == 2)
-                          images_2_Product(msgList[i].images)
+                          images2Product(msgList[i].images)
                         else if (msgList[i].images.length == 1)
-                          images_1_Product(msgList[i].images),
+                          images1Product(msgList[i].images),
                         buildRichText(msgList[i].text),
                         Row(
                             mainAxisAlignment: MainAxisAlignment.end,
@@ -151,7 +151,7 @@ class _MessageCenterState extends State<MessageCenter> {
     );
   }
 
-  Padding images_3_Product(List<String> img) {
+  Padding images3Product(List<String> img) {
     return Padding(
       padding: const EdgeInsets.only(top: 17),
       child: Directionality(
@@ -281,7 +281,7 @@ class _MessageCenterState extends State<MessageCenter> {
     );
   }
 
-  Padding images_2_Product(List<String> img) {
+  Padding images2Product(List<String> img) {
     return Padding(
       padding: const EdgeInsets.only(top: 17),
       child: Directionality(
@@ -378,7 +378,7 @@ class _MessageCenterState extends State<MessageCenter> {
     );
   }
 
-  Padding images_1_Product(List<String> img) {
+  Padding images1Product(List<String> img) {
     return Padding(
       padding: const EdgeInsets.only(top: 17),
       child: Directionality(
