@@ -210,7 +210,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Row(
                         children: [
                           Expanded(
-                            child: customTextFormField(
+                            child: customTextFormFieldW_Icon(
                               context,
                               textInputType: TextInputType.text,
                               controller: firstNameController,
@@ -222,7 +222,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             width: 15,
                           ),
                           Expanded(
-                            child: customTextFormField(context,
+                            child: customTextFormFieldW_Icon(context,
                                 textInputType: TextInputType.text,
                                 label: Languages.of(context).lasttNam,
                                 width: .50,
