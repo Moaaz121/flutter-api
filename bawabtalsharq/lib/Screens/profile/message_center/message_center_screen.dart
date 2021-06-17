@@ -317,7 +317,7 @@ class _MessageCenterState extends State<MessageCenter> {
                       borderRadius: BorderRadius.circular(15.0),
                     ),
                     child: Image.asset(
-                      dominikMarti1,
+                      placeHolder,
                       fit: BoxFit.fill,
                       height: 80,
                       width: 69,
@@ -360,7 +360,7 @@ class _MessageCenterState extends State<MessageCenter> {
                       borderRadius: BorderRadius.circular(15.0),
                     ),
                     child: Image.asset(
-                      dominikMarti1,
+                      placeHolder,
                       fit: BoxFit.fill,
                       height: 80,
                       width: 69,
@@ -411,7 +411,7 @@ class _MessageCenterState extends State<MessageCenter> {
                       borderRadius: BorderRadius.circular(15.0),
                     ),
                     child: Image.asset(
-                      dominikMarti1,
+                      placeHolder,
                       fit: BoxFit.fill,
                       height: 80,
                       width: 110,
