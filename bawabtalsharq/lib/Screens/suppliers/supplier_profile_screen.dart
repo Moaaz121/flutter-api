@@ -19,7 +19,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../main.dart';
-import 'CirclPainter.dart';
 import 'Waves.dart';
 
 class SupplierProfile extends StatefulWidget {
@@ -261,12 +260,36 @@ class _SupplierProfileState extends State<SupplierProfile>
                                 textDirection: Directionality.of(context),
                                 top: 170,
                                 start: 20,
+                                child: Container(
+                                  margin: EdgeInsets.symmetric(horizontal: 5),
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.66,
+                                  // height: 30,
+                                  decoration: new BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(8),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: orangeShadowColor
+                                              .withOpacity(0.3),
+                                          offset: Offset(0, 1),
+                                          blurRadius: 6,
+                                          spreadRadius: 0)
+                                    ],
+                                  ),
+                                  child: chatButtonAnimation(() {},
+                                      size: 40, sizeIcon: 6, padOfIcon: 0),
+                                ),
+                              ),
+                              Positioned.directional(
+                                textDirection: Directionality.of(context),
+                                top: 170,
+                                end: 30,
                                 child: Padding(
-                                  padding: const EdgeInsetsDirectional.only(
-                                      start: 10),
-                                  child: Row(
-                                    children: [
-                                      iconOfSupplier(Icons.location_on, () {
+                                    padding: const EdgeInsetsDirectional.only(
+                                        start: 10),
+                                    child: GestureDetector(
+                                      onTap: () {
                                         if (currentUser == null)
                                           Navigator.pushNamed(context,
                                               ScreenRoutes.loginScreen);
@@ -281,77 +304,33 @@ class _SupplierProfileState extends State<SupplierProfile>
                                                         .supplierInfo
                                                         .address,
                                                   ));
-                                      }),
-                                      SizedBox(
-                                        width: 20,
+                                      },
+                                      child: Container(
+                                        margin:
+                                            EdgeInsets.symmetric(horizontal: 5),
+                                        width: 40,
+                                        height: 40,
+                                        decoration: new BoxDecoration(
+                                          color: orangeColor,
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          boxShadow: [
+                                            BoxShadow(
+                                                color: orangeShadowColor
+                                                    .withOpacity(0.3),
+                                                offset: Offset(0, 1),
+                                                blurRadius: 6,
+                                                spreadRadius: 0)
+                                          ],
+                                        ),
+                                        child: Icon(
+                                          Icons.location_on,
+                                          color: Colors.white,
+                                          size: 20,
+                                        ),
                                       ),
-                                      iconOfSupplier(Icons.phone, () {
-                                        if (currentUser == null)
-                                          Navigator.pushNamed(context,
-                                              ScreenRoutes.loginScreen);
-                                        else
-                                          showCupertinoModalPopup(
-                                              context: context,
-                                              builder: (BuildContext context) =>
-                                                  cupertinoActionSheet(
-                                                      context,
-                                                      supplierProfileData
-                                                          .supplierData
-                                                          .supplierInfo
-                                                          .phone,
-                                                      action: launch(
-                                                          "tel://${supplierProfileData.supplierData.supplierInfo.phone}")));
-                                      }),
-                                      SizedBox(
-                                        width: 20,
-                                      ),
-                                      iconOfSupplier(Icons.email_rounded, () {
-                                        if (currentUser == null)
-                                          Navigator.pushNamed(context,
-                                              ScreenRoutes.loginScreen);
-                                        else
-                                          showCupertinoModalPopup(
-                                              context: context,
-                                              builder: (BuildContext context) =>
-                                                  cupertinoActionSheet(
-                                                      context,
-                                                      supplierProfileData
-                                                          .supplierData
-                                                          .supplierInfo
-                                                          .email,
-                                                      action: _launchURL(
-                                                          '${supplierProfileData.supplierData.supplierInfo.email}',
-                                                          '',
-                                                          '')));
-                                      }),
-                                    ],
-                                  ),
-                                ),
+                                    )),
                               ),
-                              Positioned.directional(
-                                textDirection: Directionality.of(context),
-                                top: 120,
-                                end: 15,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    CustomPaint(
-                                      painter: CirclePainter(
-                                        _controller,
-                                        color: widget.color,
-                                      ),
-                                      child: chatButtonAnimation(() {},
-                                          size: 35, sizeIcon: 5, padOfIcon: 20),
-                                    ),
-                                    buildText(
-                                      Languages.of(context).startChat,
-                                      10,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ],
-                                ),
-                              )
                             ],
                           ),
                         ),
@@ -388,23 +367,23 @@ class _SupplierProfileState extends State<SupplierProfile>
     );
   }
 
-  Widget chatButtonAnimation(Function _function,
+  Widget chatButtonAnimation(Function onPress,
       {double size, double sizeIcon, double padOfIcon}) {
     return Padding(
       padding: EdgeInsets.all(padOfIcon),
-      child: SizedBox(
-        width: size,
-        height: size,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(widget.size),
-          child: ClipOval(
-            child: Material(
-              shadowColor: orangeShadowColor,
-              color: Colors.white,
-              child: InkWell(
-                onTap: _function,
-                splashColor: orangeColor.withOpacity(0.4),
-                highlightColor: orangeShadowColor,
+      child: GestureDetector(
+        onTap: onPress,
+        // splashColor: orangeColor.withOpacity(0.4),
+        // highlightColor: orangeShadowColor,
+        child: SizedBox(
+          width: size,
+          height: size,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(widget.size),
+            child: ClipOval(
+              child: Material(
+                shadowColor: orangeShadowColor,
+                color: Colors.white,
                 child: ScaleTransition(
                   scale: Tween(begin: 0.8, end: 1.0).animate(
                     CurvedAnimation(
@@ -414,44 +393,31 @@ class _SupplierProfileState extends State<SupplierProfile>
                   ),
                   child: Padding(
                     padding: EdgeInsets.all(sizeIcon),
-                    child: Image.asset(
-                      chatSupplier,
-                      width: 25,
-                      height: 25,
-                      fit: BoxFit.fill,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          chatSupplier,
+                          width: 25,
+                          height: 25,
+                          fit: BoxFit.fill,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        buildText(
+                          Languages.of(context).startChat,
+                          15,
+                          color: orangeColor,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ],
                     ),
                   ),
                 ),
               ),
             ),
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget iconOfSupplier(IconData icon, Function onPress) {
-    return GestureDetector(
-      onTap: onPress,
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 5),
-        width: 30,
-        height: 30,
-        decoration: new BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(8),
-          boxShadow: [
-            BoxShadow(
-                color: orangeShadowColor.withOpacity(0.3),
-                offset: Offset(0, 1),
-                blurRadius: 6,
-                spreadRadius: 0)
-          ],
-        ),
-        child: Icon(
-          icon,
-          color: BaseOrange,
-          size: 20,
         ),
       ),
     );
