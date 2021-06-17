@@ -244,7 +244,7 @@ class _MessageCenterState extends State<MessageCenter> {
               ),
               child: CachedNetworkImage(
                 fit: BoxFit.fill,
-                height: 63,
+                height: 80,
                 width: 69,
                 imageUrl: img[2],
                 placeholder: (context, url) => Center(
@@ -267,6 +267,9 @@ class _MessageCenterState extends State<MessageCenter> {
                     ),
                     child: Image.asset(
                       placeHolder,
+                      fit: BoxFit.fill,
+                      height: 80,
+                      width: 69,
                     ),
                   ),
                 ),
