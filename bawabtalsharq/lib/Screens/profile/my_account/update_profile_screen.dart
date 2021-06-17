@@ -5,6 +5,7 @@ import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
 import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:bawabtalsharq/Utils/loader.dart';
 import 'package:bawabtalsharq/Utils/styles.dart';
+import 'package:bawabtalsharq/Utils/validator_util.dart';
 import 'package:bawabtalsharq/bloc/updateProfileBlocs/updateAccount/update_account_bloc.dart';
 import 'package:bawabtalsharq/bloc/updateProfileBlocs/updateAccount/update_account_event.dart';
 import 'package:bawabtalsharq/bloc/updateProfileBlocs/updateAccount/update_account_state.dart';
@@ -203,7 +204,9 @@ class _UpdateProfileState extends State<UpdateProfile> {
                               lastNameError = 'Empty Field';
                             else if (phoneController.text.isEmpty)
                               _phoneErrorMessage = 'Empty Field';
-                            else if (_image == null) {
+                            else if (!phoneValidator(phoneController.text)) {
+                              _phoneErrorMessage = 'Enter Valid Phone';
+                            } else if (_image == null) {
                               Scaffold.of(context).showSnackBar(SnackBar(
                                   content: Text('Please Select Image')));
                             } else {

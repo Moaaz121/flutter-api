@@ -77,7 +77,7 @@ class Datum {
   String price;
   String company;
   String companyId;
-  dynamic save;
+  int save;
   String companyImg;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
