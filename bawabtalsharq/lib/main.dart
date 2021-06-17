@@ -51,10 +51,12 @@ import 'Screens/suppliers/supplier_profile_screen.dart';
 import 'Utils/Localization/AppLocalizationDelgate.dart';
 import 'Utils/Localization/LanguageHelper.dart';
 
+bool notificationsIsRegisted = false;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
   await Constants.initSharedPref();
+  await Firebase.initializeApp();
 
   if (Constants.getDate(key: 'currency') == null) {
     Constants.saveCurrencyId(currency: '1');
@@ -70,11 +72,7 @@ void main() async {
   runApp(
     DevicePreview(
       enabled: false,
-      builder: (context) => MaterialApp(
-          builder: DevicePreview.appBuilder,
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(primaryColor: orangeColor, accentColor: orangeColor),
-          home: BawabtAlsharqApp()),
+      builder: (context) => BawabtAlsharqApp(),
     ),
   );
 }
@@ -90,7 +88,6 @@ class BawabtAlsharqApp extends StatefulWidget {
 }
 
 class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
-  int notificationId = -1;
   Locale _locale;
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       new FlutterLocalNotificationsPlugin();
@@ -101,7 +98,14 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
     // TODO: implement initState
     super.initState();
     // FirebaseCrashlytics.instance.crash();
+    if (!notificationsIsRegisted) {
+      startNotifications();
+      notificationsIsRegisted = true;
+    }
+  }
 
+  void startNotifications() {
+    int notificationId = -1;
     var initializationSettingsAndroid =
         new AndroidInitializationSettings('@mipmap/ic_launcher');
 
@@ -154,12 +158,6 @@ class _BawabtAlsharqAppState extends State<BawabtAlsharqApp> {
       platformChannelSpecifics,
       payload: 'hello',
     );
-  }
-
-  static Future<dynamic> myBackgroundMessageHandler(
-      Map<String, dynamic> message) async {
-    print(message);
-    return Future<void>.value();
   }
 
   Future onSelectNotification(String payload) async {

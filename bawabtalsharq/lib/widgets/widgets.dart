@@ -972,7 +972,7 @@ AppBar appBarSearch(
 }
 
 Widget productItem(BuildContext context,
-    {bool fillSaved = false, SearchItem.Product product}) {
+    {bool fillSaved = false, SearchItem.Datum product}) {
   return Padding(
     padding: const EdgeInsets.all(5),
     child: Stack(
@@ -1169,7 +1169,7 @@ String removeAllHtmlTags(String htmlText) {
 
 Widget productItemLandscape(
   BuildContext context, {
-  SearchItem.Product product,
+  SearchItem.Datum product,
 }) {
   double height = MediaQuery.of(context).size.height;
   double width = MediaQuery.of(context).size.width;

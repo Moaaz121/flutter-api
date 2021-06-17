@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:meta/meta.dart';
+
 SearchModel searchModelFromJson(String str) =>
     SearchModel.fromJson(json.decode(str));
 
@@ -11,50 +13,54 @@ String searchModelToJson(SearchModel data) => json.encode(data.toJson());
 
 class SearchModel {
   SearchModel({
-    this.code,
-    this.status,
-    this.msg,
-    this.products,
+    @required this.code,
+    @required this.status,
+    @required this.msg,
+    @required this.data,
   });
 
   int code;
   String status;
   String msg;
-  List<Product> products;
+  List<Datum> data;
 
   factory SearchModel.fromJson(Map<String, dynamic> json) => SearchModel(
-        code: json["code"],
-        status: json["status"],
-        msg: json["msg"],
-        products:
-            List<Product>.from(json["data"].map((x) => Product.fromJson(x))),
+        code: json["code"] == null ? null : json["code"],
+        status: json["status"] == null ? null : json["status"],
+        msg: json["msg"] == null ? null : json["msg"],
+        data: json["data"] == null
+            ? null
+            : List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "code": code,
-        "status": status,
-        "msg": msg,
-        "data": List<dynamic>.from(products.map((x) => x.toJson())),
+        "code": code == null ? null : code,
+        "status": status == null ? null : status,
+        "msg": msg == null ? null : msg,
+        "data": data == null
+            ? null
+            : List<dynamic>.from(data.map((x) => x.toJson())),
       };
 }
 
-class Product {
-  Product({
-    this.productId,
-    this.product,
-    this.shortDescription,
-    this.searchWords,
-    this.productCode,
-    this.minQty,
-    this.maxQty,
-    this.status,
-    this.categoryId,
-    this.imagePath,
-    this.imageId,
-    this.price,
-    this.company,
-    this.companyId,
-    this.companyImg,
+class Datum {
+  Datum({
+    @required this.productId,
+    @required this.product,
+    @required this.shortDescription,
+    @required this.searchWords,
+    @required this.productCode,
+    @required this.minQty,
+    @required this.maxQty,
+    @required this.status,
+    @required this.categoryId,
+    @required this.imagePath,
+    @required this.imageId,
+    @required this.price,
+    @required this.company,
+    @required this.companyId,
+    @required this.save,
+    @required this.companyImg,
   });
 
   String productId;
@@ -71,41 +77,46 @@ class Product {
   String price;
   String company;
   String companyId;
+  dynamic save;
   String companyImg;
 
-  factory Product.fromJson(Map<String, dynamic> json) => Product(
-        productId: json["product_id"],
-        product: json["product"],
-        shortDescription: json["short_description"],
-        searchWords: json["search_words"],
-        productCode: json["product_code"],
-        minQty: json["min_qty"],
-        maxQty: json["max_qty"],
-        status: json["status"],
-        categoryId: json["category_id"],
-        imagePath: json["image_path"],
-        imageId: json["image_id"],
-        price: json["price"],
-        company: json["company"],
-        companyId: json["company_id"],
-        companyImg: json["company_img"],
+  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+        productId: json["product_id"] == null ? null : json["product_id"],
+        product: json["product"] == null ? null : json["product"],
+        shortDescription: json["short_description"] == null
+            ? null
+            : json["short_description"],
+        searchWords: json["search_words"] == null ? null : json["search_words"],
+        productCode: json["product_code"] == null ? null : json["product_code"],
+        minQty: json["min_qty"] == null ? null : json["min_qty"],
+        maxQty: json["max_qty"] == null ? null : json["max_qty"],
+        status: json["status"] == null ? null : json["status"],
+        categoryId: json["category_id"] == null ? null : json["category_id"],
+        imagePath: json["image_path"] == null ? null : json["image_path"],
+        imageId: json["image_id"] == null ? null : json["image_id"],
+        price: json["price"] == null ? null : json["price"],
+        company: json["company"] == null ? null : json["company"],
+        companyId: json["company_id"] == null ? null : json["company_id"],
+        save: json["save"],
+        companyImg: json["company_img"] == null ? null : json["company_img"],
       );
 
   Map<String, dynamic> toJson() => {
-        "product_id": productId,
-        "product": product,
-        "short_description": shortDescription,
-        "search_words": searchWords,
-        "product_code": productCode,
-        "min_qty": minQty,
-        "max_qty": maxQty,
-        "status": status,
-        "category_id": categoryId,
-        "image_path": imagePath,
-        "image_id": imageId,
-        "price": price,
-        "company": company,
-        "company_id": companyId,
-        "company_img": companyImg,
+        "product_id": productId == null ? null : productId,
+        "product": product == null ? null : product,
+        "short_description": shortDescription == null ? null : shortDescription,
+        "search_words": searchWords == null ? null : searchWords,
+        "product_code": productCode == null ? null : productCode,
+        "min_qty": minQty == null ? null : minQty,
+        "max_qty": maxQty == null ? null : maxQty,
+        "status": status == null ? null : status,
+        "category_id": categoryId == null ? null : categoryId,
+        "image_path": imagePath == null ? null : imagePath,
+        "image_id": imageId == null ? null : imageId,
+        "price": price == null ? null : price,
+        "company": company == null ? null : company,
+        "company_id": companyId == null ? null : companyId,
+        "save": save,
+        "company_img": companyImg == null ? null : companyImg,
       };
 }

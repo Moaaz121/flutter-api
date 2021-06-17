@@ -32,9 +32,9 @@ apply plugin: 'com.google.firebase.firebase-perf'
 
 
 android {
-    compileSdkVersion 29
-//    ndkVersion "22.0.7026061"
-    ndkVersion "20.1.5948944"
+    compileSdkVersion 30
+    ndkVersion "22.0.7026061"
+//    ndkVersion "20.1.5948944"
 
 
 
@@ -50,7 +50,7 @@ android {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.bawabtalsharq"
         minSdkVersion 23
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
