@@ -2166,4 +2166,35 @@ Widget customTextFormField(BuildContext context,
   );
 }
 
+Widget customTextFormFieldW_Icon(
+  BuildContext context, {
+  String label,
+  TextEditingController controller,
+  double width = 1,
+  TextInputType textInputType,
+}) {
+  return SizedBox(
+    width: MediaQuery.of(context).size.width * width,
+    child: TextFormField(
+      keyboardType: textInputType,
+      controller: controller,
+      validator: (value) {
+        print(value);
+        if (value == null || value.isEmpty) {
+          return 'Please enter some text';
+        } else
+          return null;
+      },
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+          labelText: label,
+          labelStyle: TextStyle(
+            fontSize: 12,
+          ),
+          focusedBorder:
+              UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey))),
+    ),
+  );
+}
+
 //End Asmaa
