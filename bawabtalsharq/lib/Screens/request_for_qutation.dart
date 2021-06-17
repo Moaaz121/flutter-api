@@ -141,6 +141,8 @@ class _RequestforqutationState extends State<Requestforqutation> {
                 builder: (context, state) {
                   if (state is LoadingListsState) {
                     return LoadingLogo();
+                  } else if (state is LoadingState) {
+                    return LoadingLogo();
                   } else if (state is LoadedDataState) {
                     dataLists = state.dataLists;
                     return buildBody();

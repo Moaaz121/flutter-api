@@ -353,53 +353,57 @@ class _IndividualProductState extends State<IndividualProduct>
                   Container(
                     color: Colors.white,
                     child: SingleChildScrollView(
+                        physics: NeverScrollableScrollPhysics(),
                         child: Column(
-                      children: [
-                        Container(
-                            margin: EdgeInsets.all(20),
-                            color: Colors.white,
-                            padding: EdgeInsetsDirectional.only(
-                                bottom:
-                                    MediaQuery.of(context).size.height * 0.1),
-                            child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  overViewText(
-                                      Html(data: product.data.fullDescription),
-                                      context),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  product.data.faq.isEmpty
-                                      ? SizedBox()
-                                      : productFaq(
-                                          title: Languages.of(context).faq,
-                                        ),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  product.data.detailedPictures.isEmpty
-                                      ? SizedBox()
-                                      : detailsPictures(),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  product.data.packingShipping.isEmpty
-                                      ? SizedBox()
-                                      : listOfBackingChipping(),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  product.data.certificates.isEmpty
-                                      ? SizedBox()
-                                      : certificateListView(),
-                                ])),
-                      ],
-                    )),
+                          children: [
+                            Container(
+                                margin: EdgeInsets.all(20),
+                                color: Colors.white,
+                                padding: EdgeInsetsDirectional.only(
+                                    bottom: MediaQuery.of(context).size.height *
+                                        0.1),
+                                child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      overViewText(
+                                          Html(
+                                              data:
+                                                  product.data.fullDescription),
+                                          context),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      product.data.faq.isEmpty
+                                          ? SizedBox()
+                                          : productFaq(
+                                              title: Languages.of(context).faq,
+                                            ),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      product.data.detailedPictures.isEmpty
+                                          ? SizedBox()
+                                          : detailsPictures(),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      product.data.packingShipping.isEmpty
+                                          ? SizedBox()
+                                          : listOfBackingChipping(),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      product.data.certificates.isEmpty
+                                          ? SizedBox()
+                                          : certificateListView(),
+                                    ])),
+                          ],
+                        )),
                   ),
                   Container(
                     color: Colors.white,
                     child: SingleChildScrollView(
+                      physics: NeverScrollableScrollPhysics(),
                       padding: EdgeInsets.only(
                           bottom: MediaQuery.of(context).size.height * 0.15),
                       child: Column(
