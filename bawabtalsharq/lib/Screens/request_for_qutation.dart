@@ -126,7 +126,10 @@ class _RequestforqutationState extends State<Requestforqutation> {
             child: BlocListener<QuotationBloc, QuotationState>(
               listener: (context, state) {
                 if (state is PostedQuotationResponseState) {
-                  showToast(text: "Your request was successfully submitted");
+                  showToast(
+                      text: "Your request was successfully submitted",
+                      toastGravity: ToastGravity.CENTER);
+
                   Navigator.pushReplacementNamed(
                       context, ScreenRoutes.mainScreen);
                 } else if (state is NoInternetState) {
@@ -137,6 +140,8 @@ class _RequestforqutationState extends State<Requestforqutation> {
               child: BlocBuilder<QuotationBloc, QuotationState>(
                 builder: (context, state) {
                   if (state is LoadingListsState) {
+                    return LoadingLogo();
+                  } else if (state is LoadingState) {
                     return LoadingLogo();
                   } else if (state is LoadedDataState) {
                     dataLists = state.dataLists;

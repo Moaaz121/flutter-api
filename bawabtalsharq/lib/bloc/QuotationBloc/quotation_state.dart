@@ -51,4 +51,6 @@ class LoadedListsState extends QuotationState {
       @required this.tradeTerms});
 }
 
+class LoadingState extends QuotationState {}
+
 class QuotationNetworkErrorState extends QuotationState {}

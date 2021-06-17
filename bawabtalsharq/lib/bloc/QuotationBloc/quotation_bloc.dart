@@ -33,6 +33,7 @@ class QuotationBloc extends Bloc<QuotationEvent, QuotationState> {
         yield QuotationNetworkErrorState();
       }
     } else if (event is PostReqQuotation) {
+      yield LoadingState();
       bool isConnected = await InternetConnection.isConnected2();
       if (isConnected) {
         ///////////////
