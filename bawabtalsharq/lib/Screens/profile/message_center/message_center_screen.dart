@@ -433,36 +433,44 @@ class _MessageCenterState extends State<MessageCenter> {
         right: 25,
         top: 18,
       ),
-      child: RichText(
-          text: TextSpan(children: [
-        TextSpan(
-            text: text,
-            style: TextStyle(
-              fontFamily: 'SegoeUI',
-              color: Colors.black,
-              fontSize: 10,
-              fontWeight: FontWeight.w400,
-              fontStyle: FontStyle.normal,
-            )),
-        TextSpan(
-            text: " 20",
-            style: TextStyle(
-              fontFamily: 'SegoeUI',
-              color: Colors.red,
-              fontSize: 10,
-              fontWeight: FontWeight.w400,
-              fontStyle: FontStyle.normal,
-            )),
-        TextSpan(
-            text: " quote reply for your RFQ",
-            style: TextStyle(
-              fontFamily: 'SegoeUI',
-              color: Colors.black,
-              fontSize: 10,
-              fontWeight: FontWeight.w400,
-              fontStyle: FontStyle.normal,
-            )),
-      ])),
+      child: Text(
+        text,
+        style: TextStyle(
+          fontFamily: 'SegoeUI',
+          color: Colors.black,
+          fontSize: 14,
+        ),
+        //  RichText(
+        //     text: TextSpan(children: [
+        //   TextSpan(
+        //       text: text,
+        //       style: TextStyle(
+        //         fontFamily: 'SegoeUI',
+        //         color: Colors.black,
+        //         fontSize: 14,
+        //         fontWeight: FontWeight.w400,
+        //         fontStyle: FontStyle.normal,
+        //       )),
+        // TextSpan(
+        //     text: " 20",
+        //     style: TextStyle(
+        //       fontFamily: 'SegoeUI',
+        //       color: Colors.red,
+        //       fontSize: 10,
+        //       fontWeight: FontWeight.w400,
+        //       fontStyle: FontStyle.normal,
+        //     )),
+        // TextSpan(
+        //     text: " quote reply for your RFQ",
+        //     style: TextStyle(
+        //       fontFamily: 'SegoeUI',
+        //       color: Colors.black,
+        //       fontSize: 10,
+        //       fontWeight: FontWeight.w400,
+        //       fontStyle: FontStyle.normal,
+        //     )),
+        // ])
+      ),
     );
   }
 }
