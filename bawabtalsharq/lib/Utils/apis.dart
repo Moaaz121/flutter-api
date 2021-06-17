@@ -61,6 +61,7 @@ class APIS {
 //start Asmaa
   static const String Req_Quotation_API = "request_quotation&lang=";
   static const String Fill_Quotation_API = "rfq_fill&lang=";
+  static const String Message_Center_API = "message_center";
 
 // end Asmaa
 }
