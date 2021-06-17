@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:bawabtalsharq/Model/chat/partner_model.dart';
 import 'package:bawabtalsharq/Model/chat/room_model.dart';
 import 'package:bawabtalsharq/Utils/apis.dart';
+import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:rocket_chat_connector_flutter/models/authentication.dart';
@@ -72,7 +73,9 @@ class RocketChatApi {
     if (response.statusCode == 200) {
       var responseJSON = jsonDecode(response.body);
       List<Im> directRooms = RoomModel.fromJson(responseJSON).ims;
-      return directRooms;
+      return directRooms
+          .where((i) => i.id.contains(Constants.getUserInfo2().data.userId))
+          .toList();
     } else {
       return null;
     }
