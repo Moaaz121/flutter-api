@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:bawabtalsharq/Model/search_model.dart';
 import 'package:bawabtalsharq/Model/search_quary.dart';
 import 'package:bawabtalsharq/Utils/apis.dart';
+import 'package:bawabtalsharq/Utils/constants.dart';
 import 'package:http/http.dart' as http;
 
 class SearchRepo {
@@ -38,6 +39,12 @@ class SearchRepo {
     if (searchQueryModel.countryCode != null &&
         searchQueryModel.countryCode.isNotEmpty) {
       params['country_code'] = searchQueryModel.countryCode;
+    }
+    if (Constants.getUserInfo2() != null &&
+        Constants.getUserInfo2().data.userId != null &&
+        Constants.getUserInfo2().data.apiKey != null) {
+      params['user_id'] = Constants.getUserInfo2().data.userId;
+      params['ApiKey'] = Constants.getUserInfo2().data.apiKey;
     }
     print(params['categories']);
 
