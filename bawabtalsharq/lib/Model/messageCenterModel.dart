@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final messageCenterModel = messageCenterModelFromJson(jsonString);
+
 import 'dart:convert';
 
 MessageCenterModel messageCenterModelFromJson(String str) =>
@@ -17,15 +21,14 @@ class MessageCenterModel {
   int code;
   String status;
   String msg;
-  List<MessageCenterData> data;
+  List<Datum> data;
 
   factory MessageCenterModel.fromJson(Map<String, dynamic> json) =>
       MessageCenterModel(
         code: json["code"],
         status: json["status"],
         msg: json["msg"],
-        data: List<MessageCenterData>.from(
-            json["data"].map((x) => MessageCenterData.fromJson(x))),
+        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -36,8 +39,8 @@ class MessageCenterModel {
       };
 }
 
-class MessageCenterData {
-  MessageCenterData({
+class Datum {
+  Datum({
     this.text,
     this.images,
   });
@@ -45,8 +48,7 @@ class MessageCenterData {
   String text;
   List<String> images;
 
-  factory MessageCenterData.fromJson(Map<String, dynamic> json) =>
-      MessageCenterData(
+  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         text: json["text"],
         images: List<String>.from(json["images"].map((x) => x)),
       );

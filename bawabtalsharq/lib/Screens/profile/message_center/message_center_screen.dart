@@ -21,7 +21,7 @@ class MessageCenter extends StatefulWidget {
 class _MessageCenterState extends State<MessageCenter> {
   MessagecenterBloc msgCenterBloc;
   ScrollController _scrollController = ScrollController();
-  List<MessageCenterData> msgList;
+  List<Datum> msgList;
   @override
   void initState() {
     // TODO: implement initState

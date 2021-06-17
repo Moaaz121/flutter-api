@@ -8,7 +8,7 @@ import 'package:bawabtalsharq/Model/user_model.dart';
 class MessageCenterRepo {
   Map data = {};
 
-  Future<List<MessageCenterData>> messageCenter() async {
+  Future<List<Datum>> messageCenter() async {
     UserModel _userModel = await Constants.getUserInfo();
 
     data['ApiKey'] = _userModel.data.apiKey;

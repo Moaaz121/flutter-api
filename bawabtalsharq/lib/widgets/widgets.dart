@@ -2130,9 +2130,6 @@ Widget customTextFormField(BuildContext context,
         } else if (label == Languages.of(context).email &&
             !emailValidator(controller.text.trim())) {
           return 'please enter correct email address';
-        } else if (label == Languages.of(context).tel &&
-            !phoneValidator(controller.text.trim())) {
-          return 'please enter correct Phone Number';
         } else if (label == Languages.of(context).loginPass &&
             !passwordValidator(controller.text.trim())) {
           return 'Weak Password';
@@ -2177,6 +2174,9 @@ Widget customTextFormFieldW_Icon(
         print(value);
         if (value == null || value.isEmpty) {
           return 'Please enter some text';
+        } else if (label == Languages.of(context).tel &&
+            !phoneValidator(controller.text.trim())) {
+          return 'please enter correct Phone Number';
         } else
           return null;
       },

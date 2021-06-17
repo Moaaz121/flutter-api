@@ -19,8 +19,7 @@ class MessagecenterBloc extends Bloc<MessagecenterEvent, MessagecenterState> {
       yield LoadingState();
       bool isConnected = await InternetConnection.isConnected2();
       if (isConnected) {
-        List<MessageCenterData> messages =
-            await MessageCenterRepo().messageCenter();
+        List<Datum> messages = await MessageCenterRepo().messageCenter();
 
         yield LoadedMessagesState(msgList: messages);
       } else {

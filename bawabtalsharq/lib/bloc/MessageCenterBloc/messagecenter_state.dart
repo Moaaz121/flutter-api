@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'messagecenter_bloc.dart';
 
 import 'package:bawabtalsharq/Model/MessageCenterModel.dart';
 
@@ -10,7 +9,7 @@ class MessagecenterInitial extends MessagecenterState {}
 class LoadingState extends MessagecenterState {}
 
 class LoadedMessagesState extends MessagecenterState {
-  List<MessageCenterData> msgList;
+  List<Datum> msgList;
 
   LoadedMessagesState({@required this.msgList});
 }
