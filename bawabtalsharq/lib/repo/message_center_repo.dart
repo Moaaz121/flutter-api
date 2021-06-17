@@ -13,12 +13,13 @@ class MessageCenterRepo {
 
     data['ApiKey'] = _userModel.data.apiKey;
     data['user_id'] = _userModel.data.userId;
+
     print('data: $data');
     var response = await http.post(
-      Uri.encodeFull(
-          APIS.serverURL + APIS.Req_Quotation_API + Constants.getLanguage()),
+      Uri.encodeFull(APIS.serverURL + APIS.Message_Center_API),
       body: data,
     );
+
     if (response.statusCode == 200) {
       var decodedResponse = json.decode(response.body);
 

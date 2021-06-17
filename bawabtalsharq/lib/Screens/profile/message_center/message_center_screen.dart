@@ -88,7 +88,7 @@ class _MessageCenterState extends State<MessageCenter> {
               physics: AlwaysScrollableScrollPhysics(),
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
-              itemCount: 44,
+              itemCount: msgList.length,
               itemBuilder: (context, i) {
                 return GestureDetector(
                   onTap: () {
@@ -153,19 +153,19 @@ class _MessageCenterState extends State<MessageCenter> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(15),
-                bottomLeft: Radius.circular(15),
-                bottomRight: Radius.circular(0),
-                topRight: Radius.circular(0),
-              ),
-              child: Image(
-                image: AssetImage(dominikMarti1),
-                width: 69,
-                height: 63,
-              ),
-            ),
+            // ClipRRect(
+            //   borderRadius: BorderRadius.only(
+            //     topLeft: Radius.circular(15),
+            //     bottomLeft: Radius.circular(15),
+            //     bottomRight: Radius.circular(0),
+            //     topRight: Radius.circular(0),
+            //   ),
+            //   child: Image(
+            //     image: AssetImage(dominikMarti1),
+            //     width: 69,
+            //     height: 63,
+            //   ),
+            // ),
             SizedBox(
               width: 4,
             ),
@@ -177,17 +177,17 @@ class _MessageCenterState extends State<MessageCenter> {
             SizedBox(
               width: 4,
             ),
-            ClipRRect(
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(15),
-                bottomRight: Radius.circular(15),
-              ),
-              child: Image(
-                image: AssetImage(dominikMarti1),
-                width: 69,
-                height: 63,
-              ),
-            ),
+            // ClipRRect(
+            //   borderRadius: BorderRadius.only(
+            //     topRight: Radius.circular(15),
+            //     bottomRight: Radius.circular(15),
+            //   ),
+            //   child: Image(
+            //     image: AssetImage(dominikMarti1),
+            //     width: 69,
+            //     height: 63,
+            //   ),
+            // ),
           ],
         ),
       ),
