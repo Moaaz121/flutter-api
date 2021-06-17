@@ -41,7 +41,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 //Data Will be filled
-  DataRQF dataLists = null;
+  DataRQF dataLists;
 
   //Sent data
   List selecetedCert = [];
@@ -126,7 +126,10 @@ class _RequestforqutationState extends State<Requestforqutation> {
             child: BlocListener<QuotationBloc, QuotationState>(
               listener: (context, state) {
                 if (state is PostedQuotationResponseState) {
-                  showToast(text: "Your request was successfully submitted");
+                  showToast(
+                      text: "Your request was successfully submitted",
+                      toastGravity: ToastGravity.CENTER);
+
                   Navigator.pushReplacementNamed(
                       context, ScreenRoutes.mainScreen);
                 } else if (state is NoInternetState) {
@@ -146,6 +149,8 @@ class _RequestforqutationState extends State<Requestforqutation> {
                   } else if (state is ReqQuotationErrorState) {
                     _scaffoldKey.currentState.showSnackBar(
                         new SnackBar(content: new Text(state.msg)));
+                  } else if (state is LoadingState) {
+                    return LoadingLogo();
                   } else if (state is QuotationNetworkErrorState) {
                     return Center(
                       child: Text(Languages.of(context).noNetwork),
