@@ -12,6 +12,7 @@ import 'package:bawabtalsharq/bloc/MessageCenterBloc/messagecenter_event.dart';
 import 'package:bawabtalsharq/Utils/loader.dart';
 import 'package:bawabtalsharq/Model/MessageCenterModel.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class MessageCenter extends StatefulWidget {
   @override
@@ -106,7 +107,12 @@ class _MessageCenterState extends State<MessageCenter> {
                     ),
                     child: Column(
                       children: [
-                        imagesProduct(msgList[i].images),
+                        if (msgList[i].images.length == 3)
+                          images_3_Product(msgList[i].images)
+                        else if (msgList[i].images.length == 2)
+                          images_2_Product(msgList[i].images)
+                        else if (msgList[i].images.length == 1)
+                          images_1_Product(msgList[i].images),
                         buildRichText(msgList[i].text),
                         Row(
                             mainAxisAlignment: MainAxisAlignment.end,
@@ -145,7 +151,7 @@ class _MessageCenterState extends State<MessageCenter> {
     );
   }
 
-  Padding imagesProduct(List<String> img) {
+  Padding images_3_Product(List<String> img) {
     return Padding(
       padding: const EdgeInsets.only(top: 17),
       child: Directionality(
@@ -153,41 +159,267 @@ class _MessageCenterState extends State<MessageCenter> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // ClipRRect(
-            //   borderRadius: BorderRadius.only(
-            //     topLeft: Radius.circular(15),
-            //     bottomLeft: Radius.circular(15),
-            //     bottomRight: Radius.circular(0),
-            //     topRight: Radius.circular(0),
-            //   ),
-            //   child: Image(
-            //     image: AssetImage(dominikMarti1),
-            //     width: 69,
-            //     height: 63,
-            //   ),
-            // ),
+            ClipRRect(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15),
+                bottomLeft: Radius.circular(15),
+                bottomRight: Radius.circular(0),
+                topRight: Radius.circular(0),
+              ),
+              child: CachedNetworkImage(
+                fit: BoxFit.fill,
+                height: 80,
+                width: 69,
+                imageUrl: img[0],
+                placeholder: (context, url) => Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Image.asset(
+                        placeHolder,
+                      ),
+                    ),
+                  ),
+                ),
+                errorWidget: (context, url, error) => Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    child: Image.asset(
+                      placeHolder,
+                      fit: BoxFit.fill,
+                      height: 80,
+                      width: 69,
+                    ),
+                  ),
+                ),
+              ),
+            ),
             SizedBox(
               width: 4,
             ),
-            Image(
-              image: AssetImage(dominikMarti1),
+            CachedNetworkImage(
+              fit: BoxFit.fill,
+              height: 80,
               width: 69,
-              height: 63,
+              imageUrl: img[1],
+              placeholder: (context, url) => Center(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Image.asset(
+                      placeHolder,
+                    ),
+                  ),
+                ),
+              ),
+              errorWidget: (context, url, error) => Center(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  child: Image.asset(
+                    placeHolder,
+                    fit: BoxFit.fill,
+                    height: 80,
+                    width: 69,
+                  ),
+                ),
+              ),
             ),
             SizedBox(
               width: 4,
             ),
-            // ClipRRect(
-            //   borderRadius: BorderRadius.only(
-            //     topRight: Radius.circular(15),
-            //     bottomRight: Radius.circular(15),
-            //   ),
-            //   child: Image(
-            //     image: AssetImage(dominikMarti1),
-            //     width: 69,
-            //     height: 63,
-            //   ),
-            // ),
+            ClipRRect(
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(15),
+                bottomRight: Radius.circular(15),
+              ),
+              child: CachedNetworkImage(
+                fit: BoxFit.fill,
+                height: 63,
+                width: 69,
+                imageUrl: img[2],
+                placeholder: (context, url) => Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Image.asset(
+                        placeHolder,
+                      ),
+                    ),
+                  ),
+                ),
+                errorWidget: (context, url, error) => Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    child: Image.asset(
+                      placeHolder,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Padding images_2_Product(List<String> img) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 17),
+      child: Directionality(
+        textDirection: TextDirection.ltr,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15),
+                bottomLeft: Radius.circular(15),
+                bottomRight: Radius.circular(0),
+                topRight: Radius.circular(0),
+              ),
+              child: CachedNetworkImage(
+                fit: BoxFit.fill,
+                height: 80,
+                width: 69,
+                imageUrl: img[0],
+                placeholder: (context, url) => Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Image.asset(
+                        placeHolder,
+                      ),
+                    ),
+                  ),
+                ),
+                errorWidget: (context, url, error) => Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    child: Image.asset(
+                      dominikMarti1,
+                      fit: BoxFit.fill,
+                      height: 80,
+                      width: 69,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 4,
+            ),
+            ClipRRect(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(0),
+                bottomLeft: Radius.circular(0),
+                bottomRight: Radius.circular(15),
+                topRight: Radius.circular(15),
+              ),
+              child: CachedNetworkImage(
+                fit: BoxFit.fill,
+                height: 80,
+                width: 69,
+                imageUrl: img[1],
+                placeholder: (context, url) => Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Image.asset(
+                        placeHolder,
+                      ),
+                    ),
+                  ),
+                ),
+                errorWidget: (context, url, error) => Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    child: Image.asset(
+                      dominikMarti1,
+                      fit: BoxFit.fill,
+                      height: 80,
+                      width: 69,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Padding images_1_Product(List<String> img) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 17),
+      child: Directionality(
+        textDirection: TextDirection.ltr,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.all(
+                Radius.circular(15),
+              ),
+              child: CachedNetworkImage(
+                fit: BoxFit.fill,
+                height: 80,
+                width: 110,
+                imageUrl: img[0],
+                placeholder: (context, url) => Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Image.asset(
+                        placeHolder,
+                      ),
+                    ),
+                  ),
+                ),
+                errorWidget: (context, url, error) => Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    child: Image.asset(
+                      dominikMarti1,
+                      fit: BoxFit.fill,
+                      height: 80,
+                      width: 110,
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -204,7 +436,7 @@ class _MessageCenterState extends State<MessageCenter> {
       child: RichText(
           text: TextSpan(children: [
         TextSpan(
-            text: "Hi Ahmed, you have received",
+            text: text,
             style: TextStyle(
               fontFamily: 'SegoeUI',
               color: Colors.black,
