@@ -41,7 +41,7 @@ class _RequestforqutationState extends State<Requestforqutation> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 //Data Will be filled
-  DataRQF dataLists = null;
+  DataRQF dataLists;
 
   //Sent data
   List selecetedCert = [];
@@ -151,6 +151,8 @@ class _RequestforqutationState extends State<Requestforqutation> {
                   } else if (state is ReqQuotationErrorState) {
                     _scaffoldKey.currentState.showSnackBar(
                         new SnackBar(content: new Text(state.msg)));
+                  } else if (state is LoadingState) {
+                    return LoadingLogo();
                   } else if (state is QuotationNetworkErrorState) {
                     return Center(
                       child: Text(Languages.of(context).noNetwork),

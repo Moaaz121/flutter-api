@@ -479,6 +479,7 @@ class mainSlider extends StatefulWidget {
   final List<String> imgs;
 
   const mainSlider({Key key, this.imgs}) : super(key: key);
+
   @override
   _mainSliderState createState() => _mainSliderState();
 }
@@ -971,8 +972,7 @@ AppBar appBarSearch(
   );
 }
 
-Widget productItem(BuildContext context,
-    {bool fillSaved = false, SearchItem.Datum product}) {
+Widget productItem(BuildContext context, {SearchItem.Datum product}) {
   return Padding(
     padding: const EdgeInsets.all(5),
     child: Stack(
@@ -1115,17 +1115,12 @@ Widget productItem(BuildContext context,
                     SizedBox(
                       width: 5,
                     ),
-                    fillSaved
-                        ? Icon(
-                            Icons.bookmark,
-                            size: 20,
-                            color: orangeColor,
-                          )
-                        : Icon(
-                            Icons.bookmark_border_outlined,
-                            size: 20,
-                            color: Colors.black54,
-                          ),
+                    Constants.getUserInfo2() == null
+                        ? SizedBox()
+                        : product.save == 1
+                            ? Icon(Icons.bookmark, size: 20, color: orangeColor)
+                            : Icon(Icons.bookmark,
+                                size: 20, color: Colors.black26),
                   ],
                 ),
               ),

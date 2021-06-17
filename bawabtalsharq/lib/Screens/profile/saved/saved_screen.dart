@@ -1,9 +1,9 @@
-import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
-import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:bawabtalsharq/Model/golden_suppliers_model.dart';
+import 'package:bawabtalsharq/Utils/Localization/Language/Languages.dart';
+import 'package:bawabtalsharq/main.dart';
+import 'package:bawabtalsharq/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:bawabtalsharq/main.dart';
 
 class SavedScreen extends StatefulWidget {
   @override
@@ -40,7 +40,7 @@ class _SavedScreenState extends State<SavedScreen> {
                     Navigator.pushNamed(
                         context, ScreenRoutes.individualProduct);
                   },
-                  child: productItem(context, fillSaved: true),
+                  child: productItem(context),
                 );
               },
             )
