@@ -4,16 +4,18 @@
 
 import 'dart:convert';
 
+import 'package:meta/meta.dart';
+
 HomeModel homeModelFromJson(String str) => HomeModel.fromJson(json.decode(str));
 
 String homeModelToJson(HomeModel data) => json.encode(data.toJson());
 
 class HomeModel {
   HomeModel({
-    this.code,
-    this.status,
-    this.msg,
-    this.data,
+    @required this.code,
+    @required this.status,
+    @required this.msg,
+    @required this.data,
   });
 
   int code;
@@ -22,52 +24,63 @@ class HomeModel {
   Data data;
 
   factory HomeModel.fromJson(Map<String, dynamic> json) => HomeModel(
-        code: json["code"],
-        status: json["status"],
-        msg: json["msg"],
-        data: Data.fromJson(json["data"]),
+        code: json["code"] == null ? null : json["code"],
+        status: json["status"] == null ? null : json["status"],
+        msg: json["msg"] == null ? null : json["msg"],
+        data: json["data"] == null ? null : Data.fromJson(json["data"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "code": code,
-        "status": status,
-        "msg": msg,
-        "data": data.toJson(),
+        "code": code == null ? null : code,
+        "status": status == null ? null : status,
+        "msg": msg == null ? null : msg,
+        "data": data == null ? null : data.toJson(),
       };
 }
 
 class Data {
   Data({
-    this.slider,
-    this.suppliers,
-    this.categories,
+    @required this.slider,
+    @required this.suppliers,
+    @required this.categories,
   });
 
   List<String> slider;
   List<Supplier> suppliers;
-  List<CategoryElement> categories;
+  List<Category> categories;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        slider: List<String>.from(json["slider"].map((x) => x)),
-        suppliers: List<Supplier>.from(
-            json["suppliers"].map((x) => Supplier.fromJson(x))),
-        categories: List<CategoryElement>.from(
-            json["categories"].map((x) => CategoryElement.fromJson(x))),
+        slider: json["slider"] == null
+            ? null
+            : List<String>.from(json["slider"].map((x) => x)),
+        suppliers: json["suppliers"] == null
+            ? null
+            : List<Supplier>.from(
+                json["suppliers"].map((x) => Supplier.fromJson(x))),
+        categories: json["categories"] == null
+            ? null
+            : List<Category>.from(
+                json["categories"].map((x) => Category.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "slider": List<dynamic>.from(slider.map((x) => x)),
-        "suppliers": List<dynamic>.from(suppliers.map((x) => x.toJson())),
-        "categories": List<dynamic>.from(categories.map((x) => x.toJson())),
+        "slider":
+            slider == null ? null : List<dynamic>.from(slider.map((x) => x)),
+        "suppliers": suppliers == null
+            ? null
+            : List<dynamic>.from(suppliers.map((x) => x.toJson())),
+        "categories": categories == null
+            ? null
+            : List<dynamic>.from(categories.map((x) => x.toJson())),
       };
 }
 
-class CategoryElement {
-  CategoryElement({
-    this.name,
-    this.type,
-    this.data,
-    this.categoryId,
+class Category {
+  Category({
+    @required this.name,
+    @required this.type,
+    @required this.data,
+    @required this.categoryId,
   });
 
   String name;
@@ -75,65 +88,72 @@ class CategoryElement {
   List<Datum> data;
   int categoryId;
 
-  factory CategoryElement.fromJson(Map<String, dynamic> json) =>
-      CategoryElement(
-        name: json["name"],
-        type: json["type"],
-        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+  factory Category.fromJson(Map<String, dynamic> json) => Category(
+        name: json["name"] == null ? null : json["name"],
+        type: json["type"] == null ? null : json["type"],
+        data: json["data"] == null
+            ? null
+            : List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
         categoryId: json["category_id"] == null ? null : json["category_id"],
       );
 
   Map<String, dynamic> toJson() => {
-        "name": name,
-        "type": type,
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "name": name == null ? null : name,
+        "type": type == null ? null : type,
+        "data": data == null
+            ? null
+            : List<dynamic>.from(data.map((x) => x.toJson())),
         "category_id": categoryId == null ? null : categoryId,
       };
 }
 
 class Datum {
   Datum({
-    this.id,
-    this.name,
-    this.category,
-    this.categoryId,
-    this.price,
-    this.image,
+    @required this.id,
+    @required this.name,
+    @required this.category,
+    @required this.categoryId,
+    @required this.save,
+    @required this.price,
+    @required this.image,
   });
 
   String id;
   String name;
   String category;
   int categoryId;
+  int save;
   String price;
   String image;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-        id: json["id"],
-        name: json["name"],
-        category: json["category"],
-        categoryId: json["category_id"],
-        price: json["price"],
-        image: json["image"],
+        id: json["id"] == null ? null : json["id"],
+        name: json["name"] == null ? null : json["name"],
+        category: json["category"] == null ? null : json["category"],
+        categoryId: json["category_id"] == null ? null : json["category_id"],
+        save: json["save"] == null ? null : json["save"],
+        price: json["price"] == null ? null : json["price"],
+        image: json["image"] == null ? null : json["image"],
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "category": category,
-        "category_id": categoryId,
-        "price": price,
-        "image": image,
+        "id": id == null ? null : id,
+        "name": name == null ? null : name,
+        "category": category == null ? null : category,
+        "category_id": categoryId == null ? null : categoryId,
+        "save": save == null ? null : save,
+        "price": price == null ? null : price,
+        "image": image == null ? null : image,
       };
 }
 
 class Supplier {
   Supplier({
-    this.image,
-    this.title,
-    this.category,
-    this.id,
-    this.articipate,
+    @required this.image,
+    @required this.title,
+    @required this.category,
+    @required this.id,
+    @required this.articipate,
   });
 
   String image;
@@ -143,18 +163,18 @@ class Supplier {
   String articipate;
 
   factory Supplier.fromJson(Map<String, dynamic> json) => Supplier(
-        image: json["image"],
-        title: json["title"],
-        category: json["category"],
-        id: json["id"],
-        articipate: json["articipate"],
+        image: json["image"] == null ? null : json["image"],
+        title: json["title"] == null ? null : json["title"],
+        category: json["category"] == null ? null : json["category"],
+        id: json["id"] == null ? null : json["id"],
+        articipate: json["articipate"] == null ? null : json["articipate"],
       );
 
   Map<String, dynamic> toJson() => {
-        "image": image,
-        "title": title,
-        "category": category,
-        "id": id,
-        "articipate": articipate,
+        "image": image == null ? null : image,
+        "title": title == null ? null : title,
+        "category": category == null ? null : category,
+        "id": id == null ? null : id,
+        "articipate": articipate == null ? null : articipate,
       };
 }

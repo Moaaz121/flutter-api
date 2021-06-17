@@ -178,8 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-Widget mostPopularByCategoryStable(
-    BuildContext context, CategoryElement category) {
+Widget mostPopularByCategoryStable(BuildContext context, Category category) {
   return Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
@@ -488,7 +487,7 @@ Widget ourGoldenSupplierHeader(BuildContext context, {Function onPress()}) {
   );
 }
 
-Widget mostPopularIn(BuildContext context, CategoryElement category) {
+Widget mostPopularIn(BuildContext context, Category category) {
   List<List<Datum>> _cates = new List<List<Datum>>();
   for (int x = 1; x < category.data.length / 2; x++) {
     List<Datum> _listSingle = List<Datum>();
@@ -1075,7 +1074,7 @@ Widget subMostPopularProduct(
   );
 }
 
-Widget mainMostPopularCategory(CategoryElement category, BuildContext context) {
+Widget mainMostPopularCategory(Category category, BuildContext context) {
   return SizedBox(
     height: 170,
     width: MediaQuery.of(context).size.width,

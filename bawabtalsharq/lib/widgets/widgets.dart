@@ -1717,7 +1717,7 @@ String numberValidator(String value) {
   return null;
 }
 
-Widget listOfCateWidget(List<CategoryElement> cats) {
+Widget listOfCateWidget(List<Category> cats) {
   return ListView.builder(
     physics: NeverScrollableScrollPhysics(),
     // reverse: true,
